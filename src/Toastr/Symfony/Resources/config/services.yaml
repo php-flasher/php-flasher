@@ -1,0 +1,16 @@
+services:
+    notify.producer.toastr:
+        parent: 'notify.producer.abstract'
+        class: Flasher\Toastr\Prime\Producer\ToastrProducer
+        tags:
+            - { name: 'notify.producer', alias: 'toastr' }
+
+    notify.renderer.toastr:
+        class: Flasher\Toastr\Prime\Renderer\ToastrRenderer
+        arguments:
+            - '@notify.config'
+        tags:
+            - { name: 'notify.renderer', alias: 'toastr' }
+
+    Flasher\Toastr\Prime\Producer\ToastrProducer: '@notify.producer.toastr'
+    Flasher\Toastr\Prime\Renderer\ToastrRenderer: '@notify.renderer.toastr'

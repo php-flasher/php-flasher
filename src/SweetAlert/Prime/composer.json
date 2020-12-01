@@ -1,0 +1,48 @@
+{
+    "name": "php-flasher/flasher-sweet-alert",
+    "description": "PHP sweet alert adapter for php-flasher/flasher",
+    "keywords": [
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "sweetAlert"
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-sweet-alert",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.36"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\SweetAlert\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\SweetAlert\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

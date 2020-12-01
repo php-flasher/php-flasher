@@ -1,0 +1,60 @@
+{
+    "name": "php-flasher/flasher-symfony",
+    "type": "symfony-bundle",
+    "description": "Symfony Flasher Bundle for php-flasher/flasher",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr ",
+        "bundle",
+        "flex"
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-symfony",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher": "^1.0",
+        "symfony/config": "^2.1|^3.0|^4.0|^5.0",
+        "symfony/dependency-injection": "^2.1|^3.0|^4.0|^5.0",
+        "symfony/http-kernel": "^2.1|^3.0|^4.0|^5.0",
+        "symfony/yaml": "^2.1|^3.0|^4.0|^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.36",
+        "twig/twig": "^1.34|^2.0|^3.0"
+    },
+    "suggest": {
+        "twig/twig": "Twig support for Htmlpresenter"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Symfony\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Symfony\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

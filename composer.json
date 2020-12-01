@@ -1,0 +1,41 @@
+{
+    "description": "All flasher components in one place for easy maintenance with splitsh",
+    "name": "php-flasher/flasher",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KHOUBZA Younes",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "ext-json": "*",
+        "illuminate/support": ">=4.0",
+        "symfony/config": ">=2.1",
+        "symfony/dependency-injection": ">=2.1",
+        "symfony/http-kernel": ">=2.1",
+        "symfony/yaml": ">=2.1"
+    },
+    "replace": {
+        "php-flasher/flasher": "self.version",
+        "php-flasher/flasher-laravel": "self.version",
+        "php-flasher/flasher-symfony": "self.version",
+        "php-flasher/flasher-toastr": "self.version",
+        "php-flasher/flasher-laravel-toastr": "self.version",
+        "php-flasher/flasher-symfony-toastr": "self.version"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.8.36",
+        "orchestra/testbench": ">=2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

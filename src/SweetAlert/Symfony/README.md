@@ -1,4 +1,4 @@
-<p align="center"><img width="600" alt="flasher" src="https://user-images.githubusercontent.com/10859693/100492861-fabfd800-3130-11eb-8c5e-242fff1706a9.png"></p>
+<p align="center"><img width="600" alt="notify" src="https://user-images.githubusercontent.com/10859693/100492861-fabfd800-3130-11eb-8c5e-242fff1706a9.png"></p>
 
 <h1 align="center">Easy flash notifications for PHP, Laravel, Symfony, Lumen</h1>
 
@@ -6,7 +6,7 @@
 
 <p align="center">
     <a href="https://github.com/php-flasher/flasher">
-        <img src="https://img.shields.io/badge/source-php--flasher/flasher-blue.svg?style=flat-square">
+        <img src="https://img.shields.io/badge/source-php--notify/notify-blue.svg?style=flat-square">
     </a>
     <a href="https://github.com/php-flasher/flasher/releases">
         <img src="https://img.shields.io/github/tag/php-flasher/flasher.svg">
