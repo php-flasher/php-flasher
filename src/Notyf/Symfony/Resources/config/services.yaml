@@ -1,0 +1,16 @@
+services:
+    notify.producer.notyf:
+        parent: 'notify.producer.abstract'
+        class: Flasher\Notyf\Prime\Producer\NotyfProducer
+        tags:
+            - { name: 'notify.producer', alias: 'notyf' }
+
+    notify.renderer.notyf:
+        class: Flasher\Notyf\Prime\Renderer\NotyfRenderer
+        arguments:
+            - '@notify.config'
+        tags:
+            - { name: 'notify.renderer', alias: 'notyf' }
+
+    Flasher\Notyf\Prime\Producer\NotyfProducer: '@notify.producer.notyf'
+    Flasher\Notyf\Prime\Renderer\NotyfRenderer: '@notify.renderer.notyf'

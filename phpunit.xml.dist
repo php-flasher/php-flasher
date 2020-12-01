@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="true">
+    <testsuites>
+        <testsuite name="notify">
+            <directory>src/Prime</directory>
+        </testsuite>
+        <testsuite name="notify laravel">
+            <directory>src/Laravel</directory>
+        </testsuite>
+        <testsuite name="notify symfony">
+            <directory>src/Symfony</directory>
+        </testsuite>
+
+        <testsuite name="notify toastr">
+            <directory>src/Toastr/Prime</directory>
+        </testsuite>
+        <testsuite name="notify toastr laravel">
+            <directory>src/Toastr/Laravel</directory>
+        </testsuite>
+        <testsuite name="notify toastr symfony">
+            <directory>src/Toastr/Symfony</directory>
+        </testsuite>
+
+        <testsuite name="notify notyf">
+            <directory>src/Notyf/Prime</directory>
+        </testsuite>
+        <testsuite name="notify notyf laravel">
+            <directory>src/Notyf/Laravel</directory>
+        </testsuite>
+        <testsuite name="notify notyf symfony">
+            <directory>src/Notyf/Symfony</directory>
+        </testsuite>
+
+        <testsuite name="notify sweet alert">
+            <directory>src/SweetAlert/Prime</directory>
+        </testsuite>
+        <testsuite name="notify sweet alert laravel">
+            <directory>src/SweetAlert/Laravel</directory>
+        </testsuite>
+        <testsuite name="notify sweet alert symfony">
+            <directory>src/SweetAlert/Symfony</directory>
+        </testsuite>
+
+        <testsuite name="notify pnotify">
+            <directory>src/Pnotify/Prime</directory>
+        </testsuite>
+        <testsuite name="notify pnotify laravel">
+            <directory>src/Pnotify/Laravel</directory>
+        </testsuite>
+        <testsuite name="notify pnotify symfony">
+            <directory>src/Pnotify/Symfony</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+</phpunit>

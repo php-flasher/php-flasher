@@ -28,7 +28,7 @@ PHP Flasher library helps you to add flash notifications to your projects. This 
 
 # Why use PHP Flasher ?
 
-The PHP Flasher project supports a variety of notification libraries : __toastr.js__, __sweet alert 2__, __pnotify__ and __notyf__
+The PHP Flasher project supports a variety of notification libraries : __toastr.js__, __sweet alert 2__, __pflasher__ and __notyf__
 and its highly extendable so you can add custom adapters.
 
 This library is designed, so you can take full control when creating you notifications :

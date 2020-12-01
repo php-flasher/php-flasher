@@ -1,0 +1,49 @@
+{
+    "name": "php-flasher/flasher-pnotify",
+    "description": "PHP pnotify adapter for php-flasher/flasher",
+    "keywords": [
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr",
+        "sweet alert"
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-pnotify",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.36"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Pnotify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Pnotify\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

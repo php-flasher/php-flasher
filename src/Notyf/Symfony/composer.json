@@ -1,0 +1,55 @@
+{
+    "name": "php-flasher/flasher-symfony-notyf",
+    "type": "symfony-bundle",
+    "description": "Symfony Flasher adapter for Sweet Alert 2 library for php-flasher/flasher-symfony",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "notyf ",
+        "toastr",
+        "bundle",
+        "flex",
+        "notyf"
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-symfony-notyf",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher-symfony": "^1.0",
+        "php-flasher/flasher-notyf": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.36"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Symfony\\Notyf\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Symfony\\Notyf\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

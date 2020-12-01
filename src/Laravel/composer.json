@@ -1,0 +1,66 @@
+{
+    "name": "php-flasher/flasher-laravel",
+    "description": "Laravel Flasher package for php-flasher/flasher",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr ",
+        "bundle",
+        "flex"
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-laravel",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "illuminate/support": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+        "php-flasher/flasher": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8 || ^5.7 || ^6.0 || ^7.0 || ^8.3 || ^9.0",
+        "orchestra/testbench": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Laravel\\": "src/"
+        },
+        "files": [
+          "helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Laravel\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Flasher\\Laravel\\NotifyServiceProvider"
+            ],
+            "aliases": {
+                "Flasher": "Flasher\\Laravel\\Facades\\Flasher"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
