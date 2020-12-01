@@ -1,0 +1,63 @@
+<?php
+
+namespace Flasher\Laravel\ServiceProvider;
+
+use Flasher\Laravel\NotifyServiceProvider;
+use Flasher\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
+
+final class ServiceProviderManager
+{
+    private $provider;
+
+    /**
+     * @var ServiceProviderInterface[]
+     */
+    private $providers = array(
+        'Flasher\Laravel\ServiceProvider\Providers\Laravel4',
+        'Flasher\Laravel\ServiceProvider\Providers\Laravel50',
+        'Flasher\Laravel\ServiceProvider\Providers\Laravel',
+        'Flasher\Laravel\ServiceProvider\Providers\Lumen',
+    );
+
+    private $notifyServiceProvider;
+
+    public function __construct(NotifyServiceProvider $notifyServiceProvider)
+    {
+        $this->notifyServiceProvider = $notifyServiceProvider;
+    }
+
+    public function boot()
+    {
+        $provider = $this->resolveServiceProvider();
+
+        $provider->publishConfig($this->notifyServiceProvider);
+        $provider->publishAssets($this->notifyServiceProvider);
+        $provider->registerBladeDirectives();
+    }
+
+    public function register()
+    {
+        $provider = $this->resolveServiceProvider();
+        $provider->registerNotifyServices();
+    }
+
+    /**
+     * @return ServiceProviderInterface
+     */
+    private function resolveServiceProvider()
+    {
+        if ($this->provider instanceof ServiceProviderInterface) {
+            return $this->provider;
+        }
+
+        foreach ($this->providers as $providerClass) {
+            $provider = new $providerClass($this->notifyServiceProvider->getApplication());
+
+            if ($provider->shouldBeUsed()) {
+                return $this->provider = $provider;
+            }
+        }
+
+        throw new \InvalidArgumentException('Service Provider not found.');
+    }
+}
