@@ -1,0 +1,49 @@
+{
+    "name": "php-flasher/flasher",
+    "description": "a flash notifications library for PHP",
+    "keywords": [
+        "notify",
+        "flash",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr "
+    ],
+    "homepage": "https://github.com/php-flasher/flasher",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.8.36"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Prime\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "files": [
+          "helpers.php"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
