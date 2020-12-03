@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\PFlasher\Prime\TestsRenderer;
+namespace Flasher\PFlasher\Prime\Renderer;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
