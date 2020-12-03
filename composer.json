@@ -48,7 +48,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\Toastr\\NotifyToastrServiceProvider"
+                "Flasher\\Laravel\\Toastr\Flasher\PrimeToastrServiceProvider"
             ]
         }
     },
