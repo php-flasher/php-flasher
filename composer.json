@@ -49,7 +49,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\SweetAlert\\NotifySweetAlertServiceProvider"
+                "Flasher\\Laravel\\SweetAlert\Flasher\PrimeSweetAlertServiceProvider"
             ]
         }
     },

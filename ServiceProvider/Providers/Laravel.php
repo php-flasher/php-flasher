@@ -4,7 +4,7 @@ namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\RendererManager;
-use Flasher\SweetAlert\Laravel\NotifySweetAlertServiceProvider;
+use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
 use Flasher\SweetAlert\Prime\Producer\SweetAlertProducer;
 use Flasher\SweetAlert\Prime\Renderer\SweetAlertRenderer;
 use Illuminate\Container\Container;

@@ -2,7 +2,7 @@
 
 namespace Flasher\SweetAlert\Laravel\ServiceProvider;
 
-use Flasher\SweetAlert\Laravel\NotifySweetAlertServiceProvider;
+use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
 use Flasher\SweetAlert\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
