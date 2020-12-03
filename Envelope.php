@@ -1,9 +1,9 @@
 <?php
 
-namespace Notify;
+namespace Flasher\Prime;
 
-use Flasher\Prime\TestsNotification\NotificationInterface;
-use Flasher\Prime\TestsStamp\StampInterface;
+use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Stamp\StampInterface;
 
 final class Envelope
 {

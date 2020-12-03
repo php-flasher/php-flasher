@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsNotification;
+namespace Flasher\Prime\Notification;
 
 class Notification implements NotificationInterface
 {

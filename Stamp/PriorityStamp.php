@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
 
 final class PriorityStamp implements StampInterface, OrderableStampInterface
 {
@@ -26,7 +26,7 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface
     }
 
     /**
-     * @param \Flasher\Prime\TestsStamp\OrderableStampInterface $orderable
+     * @param OrderableStampInterface $orderable
      *
      * @return int
      */

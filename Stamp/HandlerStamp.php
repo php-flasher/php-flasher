@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
 
 final class HandlerStamp implements StampInterface
 {

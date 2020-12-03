@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter;
+namespace Flasher\Prime\Filter;
 
 interface FilterInterface
 {

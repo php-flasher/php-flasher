@@ -1,26 +1,30 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
+
+use DateTime;
+use DateTimeZone;
+use Exception;
 
 final class CreatedAtStamp implements StampInterface, OrderableStampInterface
 {
     /**
-     * @param \DateTime
+     * @param DateTime
      */
     private $createdAt;
 
     /**
-     * @param \DateTime|null $createdAt
+     * @param DateTime|null $createdAt
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __construct(\DateTime $createdAt = null)
+    public function __construct(DateTime $createdAt = null)
     {
-        $this->createdAt = $createdAt ?: new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
+        $this->createdAt = $createdAt ?: new DateTime('now', new DateTimeZone('Africa/Casablanca'));
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -28,7 +32,7 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface
     }
 
     /**
-     * @param \Flasher\Prime\TestsStamp\OrderableStampInterface $orderable
+     * @param OrderableStampInterface $orderable
      *
      * @return int
      */

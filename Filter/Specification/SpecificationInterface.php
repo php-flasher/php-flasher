@@ -1,13 +1,13 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter\Specification;
+namespace Flasher\Prime\Filter\Specification;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 
 interface SpecificationInterface
 {
     /**
-     * @param \Notify\Envelope $envelope
+     * @param \Flasher\Prime\Envelope $envelope
      *
      * @return bool
      */

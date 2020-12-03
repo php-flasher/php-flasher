@@ -1,12 +1,12 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter;
+namespace Flasher\Prime\Filter;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsFilter\Specification\AndSpecification;
-use Flasher\Prime\TestsFilter\Specification\OrSpecification;
-use Flasher\Prime\TestsFilter\Specification\SpecificationInterface;
-use Flasher\Prime\TestsStamp\OrderableStampInterface;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Filter\Specification\AndSpecification;
+use Flasher\Prime\Filter\Specification\OrSpecification;
+use Flasher\Prime\Filter\Specification\SpecificationInterface;
+use Flasher\Prime\Stamp\OrderableStampInterface;
 
 final class FilterBuilder
 {
@@ -14,7 +14,7 @@ final class FilterBuilder
     const DESC = 'DESC';
 
     /**
-     * @var \Flasher\Prime\TestsFilter\Specification\SpecificationInterface
+     * @var SpecificationInterface
      */
     private $specification;
 
@@ -103,7 +103,7 @@ final class FilterBuilder
     }
 
     /**
-     * @return \Flasher\Prime\TestsFilter\Specification\SpecificationInterface
+     * @return SpecificationInterface
      */
     public function getSpecification()
     {
@@ -131,7 +131,7 @@ final class FilterBuilder
     }
 
     /**
-     * @param \Flasher\Prime\TestsFilter\Specification\SpecificationInterface $specification
+     * @param SpecificationInterface $specification
      *
      * @return $this
      */
@@ -147,7 +147,7 @@ final class FilterBuilder
     }
 
     /**
-     * @param \Flasher\Prime\TestsFilter\Specification\SpecificationInterface $specification
+     * @param SpecificationInterface $specification
      *
      * @return $this
      */
@@ -159,7 +159,7 @@ final class FilterBuilder
     }
 
     /**
-     * @param \Flasher\Prime\TestsFilter\Specification\SpecificationInterface $specification
+     * @param SpecificationInterface $specification
      *
      * @return $this
      */
@@ -172,5 +172,15 @@ final class FilterBuilder
         $this->specification = new OrSpecification($this->specification, $specification);
 
         return $this;
+    }
+
+    public function whereType()
+    {
+
+    }
+
+    public function wherePriority()
+    {
+
     }
 }

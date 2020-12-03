@@ -3,13 +3,13 @@
 namespace Flasher\Prime\Tests\Filter;
 
 use Notify\Config\Config;
-use Notify\Envelope;
-use Flasher\Prime\TestsFilter\FilterBuilder;
-use Flasher\Prime\TestsFilter\Specification\PrioritySpecification;
-use Flasher\Prime\TestsMiddleware\AddCreatedAtStampMiddleware;
-use Flasher\Prime\TestsMiddleware\AddPriorityStampMiddleware;
-use Flasher\Prime\TestsMiddleware\NotifyBus;
-use Flasher\Prime\TestsStamp\PriorityStamp;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Filter\FilterBuilder;
+use Flasher\Prime\Filter\Specification\PrioritySpecification;
+use Flasher\Prime\Middleware\AddCreatedAtStampMiddleware;
+use Flasher\Prime\Middleware\AddPriorityStampMiddleware;
+use Flasher\Prime\MiddlewareFlasher\PrimeBus;
+use Flasher\Prime\Stamp\PriorityStamp;
 use PHPUnit\Framework\TestCase;
 
 final class FilterManagerTest extends TestCase
@@ -17,23 +17,23 @@ final class FilterManagerTest extends TestCase
     public function testFilterWhere()
     {
         $notifications = array(
-            $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock(),
-            $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock(),
-            $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock(),
+            $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock(),
+            $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock(),
+            $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock(),
         );
 
         $notifications[3] = new Envelope(
-            $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock(),
+            $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock(),
             array(new PriorityStamp(5))
         );
 
         $notifications[4] = new Envelope(
-            $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock(),
+            $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock(),
             array(new PriorityStamp(-1))
         );
 
         $notifications[5] = new Envelope(
-            $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock(),
+            $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock(),
             array(new PriorityStamp(1))
         );
 
@@ -68,7 +68,7 @@ final class FilterManagerTest extends TestCase
             ->andWhere(new PrioritySpecification(1, 5))
             ->orderBy(
                 array(
-                    'Flasher\Prime\TestsStamp\PriorityStamp' => 'ASC'
+                    'Flasher\Prime\Stamp\PriorityStamp' => 'ASC'
                 )
             )
             ->setMaxResults(2)
@@ -83,8 +83,8 @@ final class FilterManagerTest extends TestCase
             ->orWhere(new PrioritySpecification(1, 5))
             ->orderBy(
                 array(
-                    'Flasher\Prime\TestsStamp\PriorityStamp'      => 'ASC',
-                    'Notify\Envelope\Stamp\NotExists' => 'ASC',
+                    'Flasher\Prime\Stamp\PriorityStamp'      => 'ASC',
+                    'Flasher\Prime\Envelope\Stamp\NotExists' => 'ASC',
                 )
             )
             ->setMaxResults(2)

@@ -1,10 +1,10 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter\Specification;
+namespace Flasher\Prime\Filter\Specification;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 
-final class LifeSpecification implements SpecificationInterface
+final class ReplaySpecification implements SpecificationInterface
 {
     /**
      * @var int
@@ -23,22 +23,22 @@ final class LifeSpecification implements SpecificationInterface
     }
 
     /**
-     * @param \Notify\Envelope $envelope
+     * @param Envelope $envelope
      *
      * @return bool
      */
     public function isSatisfiedBy(Envelope $envelope)
     {
-        $stamp = $envelope->get('Flasher\Prime\TestsStamp\ReplayStamp');
+        $stamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
 
         if (null === $stamp) {
             return false;
         }
 
-        if (null !== $this->maxLife && $stamp->getLife() > $this->maxLife) {
+        if (null !== $this->maxLife && $stamp->getCount() > $this->maxLife) {
             return false;
         }
 
-        return $stamp->getLife() >= $this->minLife;
+        return $stamp->getCount() >= $this->minLife;
     }
 }

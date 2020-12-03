@@ -2,12 +2,12 @@
 
 namespace Flasher\Prime\Tests\Storage;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsNotification\Notification;
-use Flasher\Prime\TestsStamp\ReplayStamp;
-use Flasher\Prime\TestsStamp\UuidStamp;
-use Flasher\Prime\TestsStorage\ArrayStorage;
-use Flasher\Prime\TestsStorage\StorageManager;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Storage\ArrayStorage;
+use Flasher\Prime\Storage\StorageManager;
 use PHPUnit\Framework\TestCase;
 
 class StorageManagerTest extends TestCase
@@ -49,7 +49,7 @@ class StorageManagerTest extends TestCase
 
         $this->assertCount(1, $envelopes);
 
-        $uuid = $envelopes[0]->get('Flasher\Prime\TestsStamp\UuidStamp');
+        $uuid = $envelopes[0]->get('Flasher\Prime\Stamp\UuidStamp');
         $this->assertNotNull($uuid);
     }
 
@@ -59,7 +59,7 @@ class StorageManagerTest extends TestCase
 
         $envelope = new Envelope(
             new Notification('error message', 'error'),
-            new ReplayStamp(2),
+            new HopsStamp(2),
             new UuidStamp('fake-uuid')
         );
         $storageManager->add($envelope);

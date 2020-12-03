@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Tests\Manager;
 
-use Notify\Notify;
+use NotifyFlasher\Prime;
 use Flasher\Prime\Tests\TestCase;
 
 final class ManagerTest extends TestCase
@@ -27,7 +27,7 @@ final class ManagerTest extends TestCase
 
         $manager = new Notify($config);
 
-        $producer = $this->getMockBuilder('Notify\NotifyFactory')->getMock();
+        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
         $producer->method('supports')->willReturn(true);
         $manager->addDriver($producer);
 
@@ -45,7 +45,7 @@ final class ManagerTest extends TestCase
 
         $manager = new Notify($config);
 
-        $producer = $this->getMockBuilder('Notify\NotifyFactory')->getMock();
+        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
         $manager->addDriver($producer);
 
         $manager->make('test_driver');

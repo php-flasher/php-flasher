@@ -1,45 +1,45 @@
 <?php
 
-namespace Flasher\Prime\TestsPresenter;
+namespace Flasher\Prime\Presenter;
 
-use Notify\Config\ConfigInterface;
-use Notify\Envelope;
-use Flasher\Prime\TestsFilter\FilterManager;
-use Flasher\Prime\TestsRenderer\HasOptionsInterface;
-use Flasher\Prime\TestsRenderer\HasScriptsInterface;
-use Flasher\Prime\TestsRenderer\HasStylesInterface;
-use Flasher\Prime\TestsRenderer\RendererManager;
-use Flasher\Prime\TestsStorage\StorageInterface;
+use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Filter\FilterManager;
+use Flasher\Prime\Renderer\HasOptionsInterface;
+use Flasher\Prime\Renderer\HasScriptsInterface;
+use Flasher\Prime\Renderer\HasStylesInterface;
+use Flasher\Prime\Renderer\RendererManager;
+use Flasher\Prime\Storage\StorageInterface;
 
 abstract class AbstractPresenter implements PresenterInterface
 {
     /**
-     * @var \Notify\Config\ConfigInterface
+     * @var ConfigInterface
      */
     protected $config;
 
     /**
-     * @var \Flasher\Prime\TestsStorage\StorageInterface
+     * @var Flasher\Prime\Storage\StorageInterface
      */
     protected $storage;
 
     /**
-     * @var \Flasher\Prime\TestsFilter\FilterManager
+     * @var \Flasher\Prime\Filter\FilterManager
      */
     protected $filterManager;
 
     /**
-     * @var \Flasher\Prime\TestsRenderer\RendererManager
+     * @var \Flasher\Prime\Renderer\RendererManager
      */
     protected $rendererManager;
 
     /**
      * AbstractPresenter constructor.
      *
-     * @param \Notify\Config\ConfigInterface   $config
-     * @param \Flasher\Prime\TestsStorage\StorageInterface $storage
-     * @param \Flasher\Prime\TestsFilter\FilterManager     $filterManager
-     * @param \Flasher\Prime\TestsRenderer\RendererManager $rendererManager
+     * @param Flasher\Prime\Config\ConfigInterface   $config
+     * @param \Flasher\Prime\Storage\StorageInterface $storage
+     * @param \Flasher\Prime\Filter\FilterManager     $filterManager
+     * @param \Flasher\Prime\Renderer\RendererManager $rendererManager
      */
     public function __construct(
         ConfigInterface $config,
@@ -69,7 +69,7 @@ abstract class AbstractPresenter implements PresenterInterface
         return array_filter(
             $envelopes,
             static function (Envelope $envelope) {
-                $lifeStamp = $envelope->get('Flasher\Prime\TestsStamp\ReplayStamp');
+                $lifeStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
 
                 return $lifeStamp->getLife() > 0;
             }
@@ -87,7 +87,7 @@ abstract class AbstractPresenter implements PresenterInterface
         $renderers = array();
 
         foreach ($envelopes as $envelope) {
-            $rendererStamp = $envelope->get('Flasher\Prime\TestsStamp\HandlerStamp');
+            $rendererStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
             if (in_array($rendererStamp->getHandler(), $renderers)) {
                 continue;
             }
@@ -115,7 +115,7 @@ abstract class AbstractPresenter implements PresenterInterface
         $renderers = array();
 
         foreach ($envelopes as $envelope) {
-            $rendererStamp = $envelope->get('Flasher\Prime\TestsStamp\HandlerStamp');
+            $rendererStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
             if (in_array($rendererStamp->getHandler(), $renderers)) {
                 continue;
             }
@@ -143,7 +143,7 @@ abstract class AbstractPresenter implements PresenterInterface
         $renderers = array();
 
         foreach ($envelopes as $envelope) {
-            $rendererStamp = $envelope->get('Flasher\Prime\TestsStamp\HandlerStamp');
+            $rendererStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
             if (in_array($rendererStamp->getHandler(), $renderers)) {
                 continue;
             }
@@ -158,5 +158,10 @@ abstract class AbstractPresenter implements PresenterInterface
         }
 
         return array_values(array_filter(array_unique($options)));
+    }
+
+    public function hasNotifications()
+    {
+
     }
 }

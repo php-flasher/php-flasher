@@ -2,10 +2,10 @@
 
 namespace Flasher\Prime\Tests\Storage;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsNotification\Notification;
-use Flasher\Prime\TestsStamp\UuidStamp;
-use Flasher\Prime\TestsStorage\ArrayStorage;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Storage\ArrayStorage;
 use Flasher\Prime\Tests\TestCase;
 
 final class ArrayStorageTest extends TestCase
@@ -32,7 +32,7 @@ final class ArrayStorageTest extends TestCase
 
         $this->assertCount(1, $envelopes);
 
-        $uuid = $envelopes[0]->get('Flasher\Prime\TestsStamp\UuidStamp');
+        $uuid = $envelopes[0]->get('Flasher\Prime\Stamp\UuidStamp');
         $this->assertNotNull($uuid);
     }
 
