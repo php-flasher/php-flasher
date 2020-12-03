@@ -1,13 +1,13 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter\Specification;
+namespace Flasher\Prime\Filter\Specification;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 
 final class OrSpecification implements SpecificationInterface
 {
     /**
-     * @var \Flasher\Prime\TestsFilter\Specification\SpecificationInterface[]
+     * @var \Flasher\Prime\Filter\Specification\SpecificationInterface[]
      */
     private $specifications;
 

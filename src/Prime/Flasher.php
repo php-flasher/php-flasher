@@ -2,9 +2,9 @@
 
 namespace Flasher\Prime;
 
-use Flasher\Prime\Config\ConfigInterface;
-use Flasher\Prime\TestsNotification\NotificationBuilderInterface;
-use Flasher\Prime\TestsNotification\NotificationInterface;
+use Flasher\Prime\Manager\AbstractManager;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
+use Flasher\Prime\Notification\NotificationInterface;
 
 /**
  * @method NotificationBuilderInterface type($type, $message = null, array $options = array())

@@ -3,7 +3,7 @@
 namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
 use Laravel\Lumen\Application;
-use Flasher\SweetAlert\Laravel\NotifySweetAlertServiceProvider;
+use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
 
 final class Lumen extends Laravel
 {

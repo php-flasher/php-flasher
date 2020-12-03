@@ -1,8 +1,8 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter\Specification;
+namespace Flasher\Prime\Filter\Specification;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 
 final class TimeSpecification implements SpecificationInterface
 {
@@ -23,13 +23,13 @@ final class TimeSpecification implements SpecificationInterface
     }
 
     /**
-     * @param \Notify\Envelope $envelope
+     * @param \Flasher\Prime\Envelope $envelope
      *
      * @return bool
      */
     public function isSatisfiedBy(Envelope $envelope)
     {
-        $stamp = $envelope->get('Flasher\Prime\TestsStamp\CreatedAtStamp');
+        $stamp = $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp');
 
         if (null === $stamp) {
             return false;

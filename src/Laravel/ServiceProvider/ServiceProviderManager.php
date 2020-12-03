@@ -2,7 +2,7 @@
 
 namespace Flasher\Laravel\ServiceProvider;
 
-use Flasher\Laravel\NotifyServiceProvider;
+use Flasher\LaravelFlasher\PrimeServiceProvider;
 use Flasher\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager

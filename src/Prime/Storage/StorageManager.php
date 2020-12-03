@@ -1,19 +1,19 @@
 <?php
 
-namespace Flasher\Prime\TestsStorage;
+namespace Flasher\Prime\Storage;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsStamp\ReplayStamp;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\HopsStamp;
 
 final class StorageManager implements StorageManagerInterface
 {
     /**
-     * @var \Flasher\Prime\TestsStorage\StorageInterface
+     * @var StorageInterface
      */
     private $storage;
 
     /**
-     * @param \Flasher\Prime\TestsStorage\StorageInterface $storage
+     * @param StorageInterface $storage
      */
     public function __construct(StorageInterface $storage)
     {
@@ -30,14 +30,14 @@ final class StorageManager implements StorageManagerInterface
         $this->storage->remove($envelopes);
 
         foreach ($envelopes as $envelope) {
-            $replayStamp = $envelope->get('Flasher\Prime\TestsStamp\ReplayStamp');
+            $replayStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
             $replayCount = null === $replayStamp ? 0 : $replayStamp->getCount() - 1;
 
             if (1 > $replayCount) {
                 continue;
             }
 
-            $envelope->with(new ReplayStamp($replayCount));
+            $envelope->with(new HopsStamp($replayCount));
             $this->storage->add($envelope);
         }
     }

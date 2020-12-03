@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsNotification;
+namespace Flasher\Prime\Notification;
 
 interface NotificationBuilderInterface
 {
@@ -9,14 +9,14 @@ interface NotificationBuilderInterface
      * @param string|null $message
      * @param array       $options
      *
-     * @return \Flasher\Prime\TestsNotification\NotificationBuilder
+     * @return NotificationBuilder
      */
     public function type($type, $message = null, array $options = array());
 
     /**
      * @param string $message
      *
-     * @return \Flasher\Prime\TestsNotification\NotificationBuilder
+     * @return NotificationBuilder
      */
     public function message($message);
 
@@ -24,7 +24,7 @@ interface NotificationBuilderInterface
      * @param array<string, mixed> $options
      * @param bool                 $merge
      *
-     * @return \Flasher\Prime\TestsNotification\NotificationBuilder
+     * @return NotificationBuilder
      */
     public function options($options, $merge = true);
 
@@ -32,12 +32,12 @@ interface NotificationBuilderInterface
      * @param string $name
      * @param mixed  $value
      *
-     * @return \Flasher\Prime\TestsNotification\NotificationBuilder
+     * @return NotificationBuilder
      */
     public function option($name, $value);
 
     /**
-     * @return \Flasher\Prime\TestsNotification\NotificationInterface
+     * @return NotificationInterface
      */
     public function getNotification();
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Flasher\Prime\TestsMiddleware;
+namespace Flasher\Prime\Middleware;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsStamp\PriorityStamp;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\PriorityStamp;
 
 final class AddPriorityStampMiddleware implements MiddlewareInterface
 {
     public function handle(Envelope $envelope, callable $next)
     {
-        if (null === $envelope->get('Flasher\Prime\TestsStamp\PriorityStamp')) {
+        if (null === $envelope->get('Flasher\Prime\Stamp\PriorityStamp')) {
             $envelope->withStamp(new PriorityStamp(0));
         }
 

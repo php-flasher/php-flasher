@@ -49,7 +49,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\Notyf\\NotifyNotyfServiceProvider"
+                "Flasher\\Laravel\\Notyf\Flasher\PrimeNotyfServiceProvider"
             ]
         }
     },

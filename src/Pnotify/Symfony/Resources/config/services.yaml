@@ -6,11 +6,11 @@ services:
             - { name: 'notify.producer', alias: 'pnotify' }
 
     notify.renderer.pnotify:
-        class: Flasher\PFlasher\Prime\TestsRenderer\PnotifyRenderer
+        class: Flasher\PFlasher\Prime\Renderer\PnotifyRenderer
         arguments:
             - '@notify.config'
         tags:
             - { name: 'notify.renderer', alias: 'pnotify' }
 
     Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer: '@notify.producer.pnotify'
-    Flasher\PFlasher\Prime\TestsRenderer\PnotifyRenderer: '@notify.renderer.pnotify'
+    Flasher\PFlasher\Prime\Renderer\PnotifyRenderer: '@notify.renderer.pnotify'

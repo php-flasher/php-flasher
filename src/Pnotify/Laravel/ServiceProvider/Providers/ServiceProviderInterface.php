@@ -2,7 +2,7 @@
 
 namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
-use Flasher\Pnotify\Laravel\NotifyPnotifyServiceProvider;
+use Flasher\Pnotify\LaravelFlasher\PrimePnotifyServiceProvider;
 
 interface ServiceProviderInterface
 {

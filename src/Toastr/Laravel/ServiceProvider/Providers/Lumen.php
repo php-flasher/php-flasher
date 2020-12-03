@@ -3,7 +3,7 @@
 namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
 use Laravel\Lumen\Application;
-use Flasher\Toastr\Laravel\NotifyToastrServiceProvider;
+use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
 
 final class Lumen extends Laravel
 {

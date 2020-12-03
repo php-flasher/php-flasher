@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter;
+namespace Flasher\Prime\Filter;
 
-use Flasher\Prime\TestsManager\AbstractManager;
+use Flasher\Prime\Manager\AbstractManager;
 
 /**
- * @method \Flasher\Prime\TestsFilter\FilterInterface make($driver = null)
+ * @method \Flasher\Prime\Filter\FilterInterface make($driver = null)
  */
 final class FilterManager extends AbstractManager
 {

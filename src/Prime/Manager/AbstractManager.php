@@ -1,9 +1,9 @@
 <?php
 
-namespace Flasher\Prime\TestsManager;
+namespace Flasher\Prime\Manager;
 
 use InvalidArgumentException;
-use Notify\Config\ConfigInterface;
+use Flasher\Prime\Config\ConfigInterface;
 
 abstract class AbstractManager
 {

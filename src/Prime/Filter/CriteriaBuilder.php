@@ -1,14 +1,14 @@
 <?php
 
-namespace Flasher\Prime\TestsFilter;
+namespace Flasher\Prime\Filter;
 
-use Flasher\Prime\TestsFilter\Specification\LifeSpecification;
-use Flasher\Prime\TestsFilter\Specification\PrioritySpecification;
+use Flasher\Prime\Filter\Specification\ReplaySpecification;
+use Flasher\Prime\Filter\Specification\PrioritySpecification;
 
 final class CriteriaBuilder
 {
     /**
-     * @var \Flasher\Prime\TestsFilter\FilterBuilder
+     * @var \Flasher\Prime\Filter\FilterBuilder
      */
     private $filterBuilder;
 
@@ -66,7 +66,7 @@ final class CriteriaBuilder
         $min = isset($life['min']) ? $life['min'] : null;
         $max = isset($life['max']) ? $life['max'] : null;
 
-        $this->filterBuilder->andWhere(new LifeSpecification($min, $max));
+        $this->filterBuilder->andWhere(new ReplaySpecification($min, $max));
     }
 
     public function buildLimit()
