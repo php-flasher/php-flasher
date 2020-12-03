@@ -2,7 +2,7 @@
 
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
-use Flasher\Notyf\Laravel\NotifyNotyfServiceProvider;
+use Flasher\Notyf\LaravelFlasher\PrimeNotyfServiceProvider;
 use Flasher\Notyf\Prime\Producer\NotyfProducer;
 use Flasher\Notyf\Prime\Renderer\NotyfRenderer;
 use Flasher\Prime\Flasher;

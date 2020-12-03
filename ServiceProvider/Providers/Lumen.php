@@ -3,7 +3,7 @@
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
 use Laravel\Lumen\Application;
-use Flasher\Notyf\Laravel\NotifyNotyfServiceProvider;
+use Flasher\Notyf\LaravelFlasher\PrimeNotyfServiceProvider;
 
 final class Lumen extends Laravel
 {
