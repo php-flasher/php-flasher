@@ -30,7 +30,7 @@ final class NotifyToastrExtension extends Extension implements PrependExtensionI
     public function prepend(ContainerBuilder $container)
     {
         if (!$container->hasExtension('notify')) {
-            throw new \RuntimeException('[Flasher\Symfony\NotifyBundle] is not registered');
+            throw new \RuntimeException('[Flasher\SymfonyFlasher\PrimeBundle] is not registered');
         }
 
         $configs = $container->getExtensionConfig($this->getAlias());
