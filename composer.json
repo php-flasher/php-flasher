@@ -51,7 +51,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\NotifyServiceProvider"
+                "Flasher\\Laravel\Flasher\PrimeServiceProvider"
             ],
             "aliases": {
                 "Flasher": "Flasher\\Laravel\\Facades\\Flasher"
