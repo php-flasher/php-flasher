@@ -61,7 +61,7 @@ services:
             - { name: 'notify.presenter', alias: 'json' }
 
     notify.twig_extension:
-        class: Flasher\Symfony\Twig\NotifyTwigExtension
+        class: Flasher\Symfony\TwigFlasher\PrimeTwigExtension
         arguments:
             - '@notify.presenter.html'
         public: false
