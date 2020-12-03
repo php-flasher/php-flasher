@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsRenderer;
+namespace Flasher\Prime\Renderer;
 
 interface HasOptionsInterface
 {

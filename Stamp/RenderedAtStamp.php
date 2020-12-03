@@ -1,26 +1,30 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
+
+use DateTime;
+use DateTimeZone;
+use Exception;
 
 final class RenderedAtStamp implements StampInterface
 {
     /**
-     * @param \DateTime
+     * @param DateTime
      */
     private $renderedAt;
 
     /**
-     * @param \DateTime|null $renderedAt
+     * @param DateTime|null $renderedAt
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __construct(\DateTime $renderedAt = null)
+    public function __construct(DateTime $renderedAt = null)
     {
-        $this->renderedAt = $renderedAt ?: new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
+        $this->renderedAt = $renderedAt ?: new DateTime('now', new DateTimeZone('Africa/Casablanca'));
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRenderedAt()
     {

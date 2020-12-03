@@ -1,21 +1,22 @@
 <?php
 
-namespace Flasher\Prime\TestsMiddleware;
+namespace Flasher\Prime\Middleware;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\NotificationInterface;
 
 final class NotifyBus
 {
     /**
-     * @var \Flasher\Prime\TestsMiddleware\MiddlewareInterface[]
+     * @var MiddlewareInterface[]
      */
     private $middlewares;
 
     /**
      * Executes the given command and optionally returns a value
      *
-     * @param \Notify\Envelope|\Flasher\Prime\TestsNotification\NotificationInterface $envelope
-     * @param array                                                       $stamps
+     * @param Envelope|NotificationInterface $envelope
+     * @param array                          $stamps
      *
      * @return mixed
      */
@@ -31,7 +32,7 @@ final class NotifyBus
     }
 
     /**
-     * @param \Flasher\Prime\TestsMiddleware\MiddlewareInterface $middleware
+     * @param MiddlewareInterface $middleware
      *
      * @return $this
      */

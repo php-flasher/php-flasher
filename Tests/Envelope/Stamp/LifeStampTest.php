@@ -2,20 +2,20 @@
 
 namespace Flasher\Prime\Tests\Envelope\Stamp;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 use PHPUnit\Framework\TestCase;
 
 final class LifeStampTest extends TestCase
 {
     public function testConstruct()
     {
-        $notification = $this->getMockBuilder('Flasher\Prime\TestsNotification\NotificationInterface')->getMock();
-        $stamp        = new \Flasher\Prime\TestsStamp\ReplayStamp(5);
+        $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
+        $stamp        = new \Flasher\Prime\Stamp\HopsStamp(5);
 
         $envelop = new Envelope($notification, array($stamp));
 
-        $this->assertSame($stamp, $envelop->get('Flasher\Prime\TestsStamp\ReplayStamp'));
-        $this->assertInstanceOf('Flasher\Prime\TestsStamp\ReplayStamp', $stamp);
+        $this->assertSame($stamp, $envelop->get('Flasher\Prime\Stamp\HopsStamp'));
+        $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $stamp);
         $this->assertSame(5, $stamp->getCount());
     }
 }

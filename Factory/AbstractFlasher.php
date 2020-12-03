@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Prime;
+namespace Flasher\Prime\Factory;
 
-use Flasher\Prime\TestsNotification\Notification;
-use Flasher\Prime\TestsNotification\NotificationBuilder;
-use Flasher\Prime\TestsNotification\NotificationBuilderInterface;
-use Flasher\Prime\TestsNotification\NotificationInterface;
+use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Notification\NotificationBuilder;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
+use Flasher\Prime\Notification\NotificationInterface;
 
 /**
  * @method NotificationBuilderInterface type($type, $message = null, array $options = array())
@@ -19,7 +19,7 @@ use Flasher\Prime\TestsNotification\NotificationInterface;
  * @method NotificationBuilderInterface warning($message = null, array $options = array())
  * @method NotificationInterface getNotification()
  */
-abstract class AbstractFlasher implements NotifyFactoryInterface
+abstract class AbstractFlasher implements FactoryInterface
 {
     /**
      * {@inheritdoc}

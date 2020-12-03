@@ -10,9 +10,9 @@ final class ProducerManagerTest extends TestCase
     public function testExtendToAddMoreNotifiersFactory()
     {
         $config  = $this->getMockBuilder('Notify\Config\ConfigInterface')->getMock();
-        $manager = new \Notify\Notify($config);
+        $manager = new Flasher\PrimeFlasher\Prime($config);
 
-        $producer = $this->getMockBuilder('Notify\NotifyFactory')->getMock();
+        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
         $producer->method('supports')->willReturn(true);
         $manager->addDriver($producer);
 
@@ -34,9 +34,9 @@ final class ProducerManagerTest extends TestCase
         $config = $this->getMockBuilder('Notify\Config\ConfigInterface')->getMock();
         $config->method('get')->willReturn(null);
 
-        $manager = new \Notify\Notify($config);
+        $manager = new Flasher\PrimeFlasher\Prime($config);
 
-        $producer = $this->getMockBuilder('Notify\NotifyFactory')->getMock();
+        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
         $manager->addDriver($producer);
 
         $this->assertSame($producer, $manager->make());
@@ -47,9 +47,9 @@ final class ProducerManagerTest extends TestCase
         $this->setExpectedException('InvalidArgumentException', 'Driver [not_supported] not supported.');
 
         $config  = $this->getMockBuilder('Notify\Config\ConfigInterface')->getMock();
-        $manager = new \Notify\Notify($config);
+        $manager = new Flasher\PrimeFlasher\Prime($config);
 
-        $producer = $this->getMockBuilder('Notify\NotifyFactory')->getMock();
+        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
         $manager->addDriver($producer);
 
         $this->assertSame($producer, $manager->make('not_supported'));

@@ -1,6 +1,8 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
+
+use Flasher\Prime\Envelope;
 
 final class UuidStamp implements StampInterface
 {
@@ -28,9 +30,9 @@ final class UuidStamp implements StampInterface
     }
 
     /**
-     * @param \Notify\Envelope|\Notify\Envelope[] $envelopes
+     * @param Envelope|Envelope[] $envelopes
      *
-     * @return array<string, \Notify\Envelope>
+     * @return array<string, Envelope>
      */
     public static function indexWithUuid($envelopes)
     {
@@ -39,7 +41,7 @@ final class UuidStamp implements StampInterface
         $map = array();
 
         foreach ($envelopes as $envelope) {
-            $uuid = $envelope->get('Flasher\Prime\TestsStamp\UuidStamp')->getUuid();
+            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
 
             $map[$uuid] = $envelope;
         }

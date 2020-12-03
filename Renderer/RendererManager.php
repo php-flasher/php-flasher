@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Prime\TestsRenderer;
+namespace Flasher\Prime\Renderer;
 
-use Flasher\Prime\TestsManager\AbstractManager;
+use Flasher\Prime\Manager\AbstractManager;
 
 /**
- * @method \Flasher\Prime\TestsRenderer\RendererInterface make($name = null, array $context = array())
+ * @method RendererInterface make($name = null, array $context = array())
  */
 class RendererManager extends AbstractManager
 {
