@@ -3,7 +3,7 @@
 namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
 use Illuminate\Foundation\Application;
-use Flasher\SweetAlert\Laravel\NotifySweetAlertServiceProvider;
+use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
 
 final class Laravel4 extends Laravel
 {
