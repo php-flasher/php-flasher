@@ -2,7 +2,7 @@
 
 namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
-use Flasher\Toastr\Laravel\NotifyToastrServiceProvider;
+use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
 
 interface ServiceProviderInterface
 {
