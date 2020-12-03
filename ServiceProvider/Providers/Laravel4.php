@@ -5,7 +5,7 @@ namespace Flasher\Laravel\ServiceProvider\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Flasher\Laravel\Config\Config;
-use Flasher\Laravel\NotifyServiceProvider;
+use Flasher\LaravelFlasher\PrimeServiceProvider;
 use Flasher\Prime\Middleware\MiddlewareManager;
 
 final class Laravel4 extends Laravel
