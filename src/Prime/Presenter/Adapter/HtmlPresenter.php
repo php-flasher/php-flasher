@@ -1,8 +1,8 @@
 <?php
 
-namespace Flasher\Prime\TestsPresenter\Adapter;
+namespace Flasher\Prime\Presenter\Adapter;
 
-use Flasher\Prime\TestsPresenter\AbstractPresenter;
+use Flasher\Prime\Presenter\AbstractPresenter;
 
 final class HtmlPresenter extends AbstractPresenter
 {
@@ -53,7 +53,7 @@ HTML;
     }
 
     /**
-     * @param \Notify\Envelope[] $envelopes
+     * @param \Flasher\Prime\Envelope[] $envelopes
      *
      * @return string
      */
@@ -62,7 +62,7 @@ HTML;
         $html = '';
 
         foreach ($envelopes as $envelope) {
-            $rendererStamp = $envelope->get('Flasher\Prime\TestsStamp\HandlerStamp');
+            $rendererStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
             $renderer      = $this->rendererManager->make($rendererStamp->getHandler());
 
             $html .= $renderer->render($envelope).PHP_EOL;
@@ -72,7 +72,7 @@ HTML;
     }
 
     /**
-     * @param \Notify\Envelope[] $envelopes
+     * @param \Flasher\Prime\Envelope[] $envelopes
      *
      * @return string
      */
@@ -88,7 +88,7 @@ HTML;
     }
 
     /**
-     * @param \Notify\Envelope[] $envelopes
+     * @param \Flasher\Prime\Envelope[] $envelopes
      *
      * @return string
      */

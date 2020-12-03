@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
 
 interface OrderableStampInterface
 {
     /**
-     * @param \Flasher\Prime\TestsStamp\OrderableStampInterface $orderable
+     * @param OrderableStampInterface $orderable
      *
      * @return int
      */

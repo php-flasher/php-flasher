@@ -3,7 +3,7 @@
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
 use Illuminate\Foundation\Application;
-use Flasher\Notyf\Laravel\NotifyNotyfServiceProvider;
+use Flasher\Notyf\LaravelFlasher\PrimeNotyfServiceProvider;
 
 final class Laravel4 extends Laravel
 {

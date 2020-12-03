@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Prime\TestsPresenter;
+namespace Flasher\Prime\Presenter;
 
-use Flasher\Prime\TestsManager\AbstractManager;
+use Flasher\Prime\Manager\AbstractManager;
 
 /**
- * @method \Flasher\Prime\TestsPresenter\PresenterInterface make($name = null, array $context = array())
+ * @method PresenterInterface make($name = null, array $context = array())
  */
 final class PresenterManager extends AbstractManager
 {

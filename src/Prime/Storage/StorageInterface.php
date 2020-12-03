@@ -1,21 +1,23 @@
 <?php
 
-namespace Flasher\Prime\TestsStorage;
+namespace Flasher\Prime\Storage;
+
+use Flasher\Prime\Envelope;
 
 interface StorageInterface
 {
     /**
-     * @return \Notify\Envelope[]
+     * @return Envelope[]
      */
     public function all();
 
     /**
-     * @param \Notify\Envelope|\Notify\Envelope[] $envelopes
+     * @param Envelope|Envelope[] $envelopes
      */
     public function add($envelopes);
 
     /**
-     * @param \Notify\Envelope|\Notify\Envelope[] $envelopes
+     * @param Envelope|Envelope[] $envelopes
      */
     public function remove($envelopes);
 

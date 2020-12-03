@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\TestsPresenter;
+namespace Flasher\Prime\Presenter;
 
 interface PresenterInterface
 {

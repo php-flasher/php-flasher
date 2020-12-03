@@ -4,7 +4,7 @@ namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\RendererManager;
-use Flasher\Toastr\Laravel\NotifyToastrServiceProvider;
+use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
 use Flasher\Toastr\Prime\Producer\ToastrProducer;
 use Flasher\Toastr\Prime\Renderer\ToastrRenderer;
 use Illuminate\Container\Container;

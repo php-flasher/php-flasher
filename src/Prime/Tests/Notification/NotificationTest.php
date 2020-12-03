@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Tests\Notification;
 
-use Flasher\Prime\TestsNotification\Notification;
+use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Tests\TestCase;
 
 final class NotificationTest extends TestCase

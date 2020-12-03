@@ -3,7 +3,7 @@
 namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
 use Illuminate\Foundation\Application;
-use Flasher\Pnotify\Laravel\NotifyPnotifyServiceProvider;
+use Flasher\Pnotify\LaravelFlasher\PrimePnotifyServiceProvider;
 
 final class Laravel4 extends Laravel
 {

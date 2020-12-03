@@ -1,15 +1,15 @@
 <?php
 
-namespace Flasher\Prime\TestsMiddleware;
+namespace Flasher\Prime\Middleware;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsStamp\RenderedAtStamp;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\RenderedAtStamp;
 
 final class AddRenderedAtStampMiddleware implements MiddlewareInterface
 {
     public function handle(Envelope $envelope, callable $next)
     {
-        if (null === $envelope->get('Flasher\Prime\TestsStamp\RenderedAtStamp')) {
+        if (null === $envelope->get('Flasher\Prime\Stamp\RenderedAtStamp')) {
             $envelope->withStamp(new RenderedAtStamp());
         }
 

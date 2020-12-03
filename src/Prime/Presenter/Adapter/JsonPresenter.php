@@ -1,8 +1,8 @@
 <?php
 
-namespace Flasher\Prime\TestsPresenter\Adapter;
+namespace Flasher\Prime\Presenter\Adapter;
 
-use Flasher\Prime\TestsPresenter\AbstractPresenter;
+use Flasher\Prime\Presenter\AbstractPresenter;
 
 final class JsonPresenter extends AbstractPresenter
 {
@@ -39,7 +39,7 @@ final class JsonPresenter extends AbstractPresenter
     }
 
     /**
-     * @param \Notify\Envelope[] $envelopes
+     * @param \Flasher\Prime\Envelope[] $envelopes
      *
      * @return array
      */
@@ -48,7 +48,7 @@ final class JsonPresenter extends AbstractPresenter
         $notifications = array();
 
         foreach ($envelopes as $envelope) {
-            $rendererStamp = $envelope->get('Flasher\Prime\TestsStamp\HandlerStamp');
+            $rendererStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
             $renderer      = $this->rendererManager->make($rendererStamp->getHandler());
 
             $notifications[] = array(

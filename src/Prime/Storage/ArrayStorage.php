@@ -1,9 +1,9 @@
 <?php
 
-namespace Flasher\Prime\TestsStorage;
+namespace Flasher\Prime\Storage;
 
-use Notify\Envelope;
-use Flasher\Prime\TestsStamp\UuidStamp;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\UuidStamp;
 
 final class ArrayStorage implements StorageInterface
 {
@@ -28,7 +28,7 @@ final class ArrayStorage implements StorageInterface
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
         foreach ($envelopes as $envelope) {
-            if (null === $envelope->get('Flasher\Prime\TestsStamp\UuidStamp')) {
+            if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
                 $envelope->withStamp(new UuidStamp());
             }
 
@@ -37,7 +37,7 @@ final class ArrayStorage implements StorageInterface
     }
 
     /**
-     * @param \Notify\Envelope[] $envelopes
+     * @param Envelope[] $envelopes
      */
     public function remove($envelopes)
     {
@@ -48,7 +48,7 @@ final class ArrayStorage implements StorageInterface
         $this->envelopes = array_filter(
             $this->envelopes,
             function (Envelope $envelope) use ($map) {
-                $uuid = $envelope->get('Flasher\Prime\TestsStamp\UuidStamp')->getUuid();
+                $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
 
                 return !isset($map[$uuid]);
             }

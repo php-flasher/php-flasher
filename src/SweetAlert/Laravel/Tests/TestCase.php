@@ -19,8 +19,8 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app = null)
     {
         return array(
-            'Flasher\Laravel\NotifyServiceProvider',
-            'Flasher\SweetAlert\Laravel\NotifySweetAlertServiceProvider',
+            'Flasher\LaravelFlasher\PrimeServiceProvider',
+            'Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider',
         );
     }
 

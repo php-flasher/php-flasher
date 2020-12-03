@@ -1,13 +1,13 @@
 <?php
 
-namespace Flasher\Prime\TestsRenderer;
+namespace Flasher\Prime\Renderer;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 
 interface RendererInterface
 {
     /**
-     * @param \Notify\Envelope $envelope
+     * @param Envelope $envelope
      *
      * @return string
      */

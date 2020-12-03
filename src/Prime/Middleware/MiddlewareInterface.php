@@ -1,16 +1,16 @@
 <?php
 
-namespace Flasher\Prime\TestsMiddleware;
+namespace Flasher\Prime\Middleware;
 
-use Notify\Envelope;
+use Flasher\Prime\Envelope;
 
 interface MiddlewareInterface
 {
     /**
-     * @param \Notify\Envelope $envelope
+     * @param Envelope $envelope
      * @param callable         $next
      *
-     * @return \Notify\Envelope
+     * @return Envelope
      */
     public function handle(Envelope $envelope, callable $next);
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Flasher\Prime\TestsStamp;
+namespace Flasher\Prime\Stamp;
 
-final class ReplayStamp implements StampInterface
+final class HopsStamp implements StampInterface
 {
     /**
      * @var int

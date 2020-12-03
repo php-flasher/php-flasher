@@ -1,16 +1,16 @@
 <?php
 
-namespace Flasher\Prime\TestsNotification;
+namespace Flasher\Prime\Notification;
 
 class NotificationBuilder implements NotificationBuilderInterface
 {
     /**
-     * @var \Flasher\Prime\TestsNotification\NotificationInterface
+     * @var NotificationInterface
      */
     protected $notification;
 
     /**
-     * @param \Flasher\Prime\TestsNotification\NotificationInterface|null $notification
+     * @param NotificationInterface|null $notification
      */
     public function __construct(NotificationInterface $notification = null)
     {
@@ -107,5 +107,20 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function warning($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_WARNING, $message, $options);
+    }
+
+    public function priority($priority)
+    {
+
+    }
+
+    public function hops()
+    {
+
+    }
+
+    public function sticky()
+    {
+
     }
 }

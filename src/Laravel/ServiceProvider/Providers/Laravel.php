@@ -3,7 +3,7 @@
 namespace Flasher\Laravel\ServiceProvider\Providers;
 
 use Flasher\Laravel\Config\Config;
-use Flasher\Laravel\NotifyServiceProvider;
+use Flasher\LaravelFlasher\PrimeServiceProvider;
 use Flasher\Laravel\Storage\Storage;
 use Flasher\Prime\Filter\DefaultFilter;
 use Flasher\Prime\Filter\FilterBuilder;
