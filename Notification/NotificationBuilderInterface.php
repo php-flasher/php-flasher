@@ -73,4 +73,23 @@ interface NotificationBuilderInterface
      * @return self
      */
     public function warning($message = null, array $options = array());
+
+    /**
+     * @param int $priority
+     *
+     * @return self
+     */
+    public function priority($priority);
+
+    /**
+     * @return self
+     */
+    public function keep();
+
+    /**
+     * @param int $amount
+     *
+     * @return self
+     */
+    public function hops($amount);
 }

@@ -7,7 +7,7 @@ use Flasher\Prime\Envelope;
 final class OrSpecification implements SpecificationInterface
 {
     /**
-     * @var \Flasher\Prime\Filter\Specification\SpecificationInterface[]
+     * @var SpecificationInterface[]
      */
     private $specifications;
 

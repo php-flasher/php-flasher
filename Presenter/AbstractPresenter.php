@@ -3,6 +3,8 @@
 namespace Flasher\Prime\Presenter;
 
 use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Prime\EventDispatcher\Event\EnvelopesEvent;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Filter\FilterManager;
 use Flasher\Prime\Renderer\HasOptionsInterface;
@@ -14,39 +16,47 @@ use Flasher\Prime\Storage\StorageInterface;
 abstract class AbstractPresenter implements PresenterInterface
 {
     /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @var ConfigInterface
      */
     protected $config;
 
     /**
-     * @var Flasher\Prime\Storage\StorageInterface
+     * @var StorageInterface
      */
     protected $storage;
 
     /**
-     * @var \Flasher\Prime\Filter\FilterManager
+     * @var FilterManager
      */
     protected $filterManager;
 
     /**
-     * @var \Flasher\Prime\Renderer\RendererManager
+     * @var RendererManager
      */
     protected $rendererManager;
 
     /**
      * AbstractPresenter constructor.
      *
-     * @param Flasher\Prime\Config\ConfigInterface   $config
-     * @param \Flasher\Prime\Storage\StorageInterface $storage
-     * @param \Flasher\Prime\Filter\FilterManager     $filterManager
-     * @param \Flasher\Prime\Renderer\RendererManager $rendererManager
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param ConfigInterface          $config
+     * @param StorageInterface         $storage
+     * @param FilterManager            $filterManager
+     * @param RendererManager          $rendererManager
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         ConfigInterface $config,
         StorageInterface $storage,
         FilterManager $filterManager,
         RendererManager $rendererManager
     ) {
+        $this->eventDispatcher = $eventDispatcher;
         $this->config          = $config;
         $this->storage         = $storage;
         $this->filterManager   = $filterManager;
@@ -64,16 +74,12 @@ abstract class AbstractPresenter implements PresenterInterface
     protected function getEnvelopes($filterName, $criteria = array())
     {
         $filter    = $this->filterManager->make($filterName);
-        $envelopes = $filter->filter($this->storage->get(), $criteria);
+        $envelopes = $filter->filter($this->storage->all(), $criteria);
 
-        return array_filter(
-            $envelopes,
-            static function (Envelope $envelope) {
-                $lifeStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
+        $event = new EnvelopesEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
 
-                return $lifeStamp->getLife() > 0;
-            }
-        );
+        return $event->getEnvelopes();
     }
 
     /**
@@ -158,10 +164,5 @@ abstract class AbstractPresenter implements PresenterInterface
         }
 
         return array_values(array_filter(array_unique($options)));
-    }
-
-    public function hasNotifications()
-    {
-
     }
 }

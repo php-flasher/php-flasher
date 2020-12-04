@@ -5,7 +5,7 @@ namespace Flasher\Prime;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 
-final class Envelope
+final class Envelope implements NotificationInterface
 {
     /**
      * @var NotificationInterface
@@ -103,5 +103,50 @@ final class Envelope
     public function getNotification()
     {
         return $this->notification;
+    }
+
+    public function getType()
+    {
+        return $this->notification->getType();
+    }
+
+    public function setType($type)
+    {
+        $this->notification->setType($type);
+    }
+
+    public function getMessage()
+    {
+        return $this->notification->getMessage();
+    }
+
+    public function setMessage($message)
+    {
+        $this->notification->setMessage($message);
+    }
+
+    public function getOptions()
+    {
+        return $this->notification->getOptions();
+    }
+
+    public function setOptions(array $options)
+    {
+        $this->notification->setOptions($options);
+    }
+
+    public function getOption($name, $default = null)
+    {
+        return $this->notification->getOption($name, $default);
+    }
+
+    public function setOption($name, $value)
+    {
+        $this->notification->setOption($name, $value);
+    }
+
+    public function unsetOption($name)
+    {
+        $this->notification->unsetOption($name);
     }
 }
