@@ -2,13 +2,13 @@
 
 namespace Flasher\Prime\Filter;
 
-use Flasher\Prime\Filter\Specification\ReplaySpecification;
+use Flasher\Prime\Filter\Specification\HopsSpecification;
 use Flasher\Prime\Filter\Specification\PrioritySpecification;
 
 final class CriteriaBuilder
 {
     /**
-     * @var \Flasher\Prime\Filter\FilterBuilder
+     * @var FilterBuilder
      */
     private $filterBuilder;
 
@@ -66,7 +66,7 @@ final class CriteriaBuilder
         $min = isset($life['min']) ? $life['min'] : null;
         $max = isset($life['max']) ? $life['max'] : null;
 
-        $this->filterBuilder->andWhere(new ReplaySpecification($min, $max));
+        $this->filterBuilder->andWhere(new HopsSpecification($min, $max));
     }
 
     public function buildLimit()

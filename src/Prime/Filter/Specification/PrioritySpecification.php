@@ -23,7 +23,7 @@ final class PrioritySpecification implements SpecificationInterface
     }
 
     /**
-     * @param \Flasher\Prime\Envelope $envelope
+     * @param Envelope $envelope
      *
      * @return bool
      */
