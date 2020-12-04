@@ -3,6 +3,9 @@
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\EventDispatcher\Event\PostFlushEvent;
+use Flasher\Prime\EventDispatcher\Event\PreFlushEvent;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Stamp\HopsStamp;
 
 final class StorageManager implements StorageManagerInterface
@@ -13,11 +16,18 @@ final class StorageManager implements StorageManagerInterface
     private $storage;
 
     /**
-     * @param StorageInterface $storage
+     * @var EventDispatcherInterface
      */
-    public function __construct(StorageInterface $storage)
+    private $eventDispatcher;
+
+    /**
+     * @param StorageInterface         $storage
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(StorageInterface $storage, EventDispatcherInterface $eventDispatcher)
     {
         $this->storage = $storage;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -27,19 +37,13 @@ final class StorageManager implements StorageManagerInterface
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $this->storage->remove($envelopes);
+        $event = new PreFlushEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
 
-        foreach ($envelopes as $envelope) {
-            $replayStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
-            $replayCount = null === $replayStamp ? 0 : $replayStamp->getAmount() - 1;
+        $this->storage->remove($event->getEnvelopes());
 
-            if (1 > $replayCount) {
-                continue;
-            }
-
-            $envelope->with(new HopsStamp($replayCount));
-            $this->storage->add($envelope);
-        }
+        $event = new PostFlushEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
     }
 
     /**

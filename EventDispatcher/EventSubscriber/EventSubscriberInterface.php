@@ -5,7 +5,7 @@ namespace Flasher\Prime\EventDispatcher\EventSubscriber;
 interface EventSubscriberInterface
 {
     /**
-     * @return array
+     * @return string|array
      */
     public static function getSubscribedEvents();
 }
