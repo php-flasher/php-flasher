@@ -2,17 +2,17 @@
 
 namespace Flasher\Prime\EventDispatcher\EventSubscriber;
 
-use Flasher\Prime\EventDispatcher\Event\EnvelopesEvent;
+use Flasher\Prime\EventDispatcher\Event\PostFilterEvent;
 use Flasher\Prime\Envelope;
 
 final class FilterEnvelopesByHopsListener implements EventSubscriberInterface
 {
     /**
-     * @param EnvelopesEvent $event
+     * @param PostFilterEvent $event
      *
      * @return Envelope[]
      */
-    public function __invoke(EnvelopesEvent $event)
+    public function __invoke(PostFilterEvent $event)
     {
         $envelopes = $event->getEnvelopes();
 
@@ -28,10 +28,11 @@ final class FilterEnvelopesByHopsListener implements EventSubscriberInterface
         $event->setEnvelopes($envelopes);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getSubscribedEvents()
     {
-        return array(
-            'Flasher\Prime\EventDispatcher\Event\EnvelopesEvent'
-        );
+        return 'Flasher\Prime\EventDispatcher\Event\PostFilterEvent';
     }
 }

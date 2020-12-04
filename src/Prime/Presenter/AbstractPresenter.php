@@ -3,9 +3,9 @@
 namespace Flasher\Prime\Presenter;
 
 use Flasher\Prime\Config\ConfigInterface;
-use Flasher\Prime\EventDispatcher\Event\EnvelopesEvent;
-use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Envelope;
+use Flasher\Prime\EventDispatcher\Event\PostFilterEvent;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Filter\FilterManager;
 use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
@@ -71,12 +71,24 @@ abstract class AbstractPresenter implements PresenterInterface
         return get_class($this) === $name;
     }
 
+    /**
+     * @param string $filterName
+     * @param array  $criteria
+     *
+     * @return Envelope[]
+     */
     protected function getEnvelopes($filterName, $criteria = array())
     {
-        $filter    = $this->filterManager->make($filterName);
-        $envelopes = $filter->filter($this->storage->all(), $criteria);
+        $filter = $this->filterManager->make($filterName);
 
-        $event = new EnvelopesEvent($envelopes);
+        $envelopes = $this->storage->all();
+
+        $event = new PostFilterEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
+
+        $envelopes = $filter->filter($event->getEnvelopes(), $criteria);
+
+        $event = new PostFilterEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
         return $event->getEnvelopes();
