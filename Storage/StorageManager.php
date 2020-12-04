@@ -31,7 +31,7 @@ final class StorageManager implements StorageManagerInterface
 
         foreach ($envelopes as $envelope) {
             $replayStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
-            $replayCount = null === $replayStamp ? 0 : $replayStamp->getCount() - 1;
+            $replayCount = null === $replayStamp ? 0 : $replayStamp->getAmount() - 1;
 
             if (1 > $replayCount) {
                 continue;
