@@ -7,7 +7,7 @@ use Flasher\Prime\Envelope;
 interface SpecificationInterface
 {
     /**
-     * @param \Flasher\Prime\Envelope $envelope
+     * @param Envelope $envelope
      *
      * @return bool
      */

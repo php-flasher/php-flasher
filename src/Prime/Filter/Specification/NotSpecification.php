@@ -11,6 +11,9 @@ final class NotSpecification implements SpecificationInterface
      */
     private $specification;
 
+    /**
+     * @param SpecificationInterface $specification
+     */
     public function __construct(SpecificationInterface $specification)
     {
         $this->specification = $specification;

@@ -2,6 +2,7 @@
 
 namespace Flasher\Prime\Filter\Specification;
 
+use DateTime;
 use Flasher\Prime\Envelope;
 
 final class TimeSpecification implements SpecificationInterface
@@ -16,14 +17,18 @@ final class TimeSpecification implements SpecificationInterface
      */
     private $maxTime;
 
-    public function __construct($minTime, $maxTime = null)
+    /**
+     * @param DateTime      $minTime
+     * @param DateTime|null $maxTime
+     */
+    public function __construct(DateTime $minTime, DateTime $maxTime = null)
     {
         $this->minTime = $minTime;
         $this->maxTime = $maxTime;
     }
 
     /**
-     * @param \Flasher\Prime\Envelope $envelope
+     * @param Envelope $envelope
      *
      * @return bool
      */

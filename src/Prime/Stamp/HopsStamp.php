@@ -7,21 +7,21 @@ final class HopsStamp implements StampInterface
     /**
      * @var int
      */
-    private $count;
+    private $amount;
 
     /**
-     * @param int $count
+     * @param int $amount
      */
-    public function __construct($count)
+    public function __construct($amount)
     {
-        $this->count = $count;
+        $this->amount = $amount;
     }
 
     /**
      * @return int
      */
-    public function getCount()
+    public function getAmount()
     {
-        return $this->count;
+        return $this->amount;
     }
 }

@@ -16,6 +16,6 @@ final class LifeStampTest extends TestCase
 
         $this->assertSame($stamp, $envelop->get('Flasher\Prime\Stamp\HopsStamp'));
         $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $stamp);
-        $this->assertSame(5, $stamp->getCount());
+        $this->assertSame(5, $stamp->getAmount());
     }
 }

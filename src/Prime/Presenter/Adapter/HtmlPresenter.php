@@ -2,6 +2,7 @@
 
 namespace Flasher\Prime\Presenter\Adapter;
 
+use Flasher\Prime\Envelope;
 use Flasher\Prime\Presenter\AbstractPresenter;
 
 final class HtmlPresenter extends AbstractPresenter
@@ -53,7 +54,7 @@ HTML;
     }
 
     /**
-     * @param \Flasher\Prime\Envelope[] $envelopes
+     * @param Envelope[] $envelopes
      *
      * @return string
      */
@@ -72,7 +73,7 @@ HTML;
     }
 
     /**
-     * @param \Flasher\Prime\Envelope[] $envelopes
+     * @param Envelope[] $envelopes
      *
      * @return string
      */
@@ -88,7 +89,7 @@ HTML;
     }
 
     /**
-     * @param \Flasher\Prime\Envelope[] $envelopes
+     * @param Envelope[] $envelopes
      *
      * @return string
      */

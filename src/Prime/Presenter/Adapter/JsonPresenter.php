@@ -2,6 +2,7 @@
 
 namespace Flasher\Prime\Presenter\Adapter;
 
+use Flasher\Prime\Envelope;
 use Flasher\Prime\Presenter\AbstractPresenter;
 
 final class JsonPresenter extends AbstractPresenter
@@ -39,7 +40,7 @@ final class JsonPresenter extends AbstractPresenter
     }
 
     /**
-     * @param \Flasher\Prime\Envelope[] $envelopes
+     * @param Envelope[] $envelopes
      *
      * @return array
      */
