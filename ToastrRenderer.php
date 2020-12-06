@@ -1,18 +1,18 @@
 <?php
 
-namespace Flasher\Toastr\Prime\Renderer;
+namespace Flasher\Toastr\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Renderer\HasGlobalOptionsInterface;
+use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
 use Flasher\Prime\Renderer\RendererInterface;
 
-class ToastrRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasGlobalOptionsInterface
+final class ToastrRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
     /**
-     * @var \Flasher\Prime\Config\ConfigInterface
+     * @var ConfigInterface
      */
     private $config;
 
@@ -44,14 +44,14 @@ class ToastrRenderer implements RendererInterface, HasScriptsInterface, HasStyle
      */
     public function render(Envelope $envelope)
     {
-        $context = $envelope->getContext();
-        $options = isset($context['options']) ? $context['options'] : array();
+        $notification = $envelope->getNotification();
+        $options = $envelope->getOptions();
 
         return sprintf(
             "toastr.%s('%s', '%s', %s);",
-            $envelope->getType(),
-            $envelope->getMessage(),
-            $envelope->getTitle(),
+            $notification->getType(),
+            $notification->getMessage(),
+            $notification->getTitle(),
             json_encode($options)
         );
     }
@@ -75,5 +75,13 @@ class ToastrRenderer implements RendererInterface, HasScriptsInterface, HasStyle
     public function renderOptions()
     {
         return sprintf('toastr.options = %s;', json_encode($this->options));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports($name = null, array $context = array())
+    {
+        return in_array($name, array(__CLASS__, 'toastr', 'Flasher\Toastr\Prime\ToastrFactory', 'Flasher\Toastr\Prime\Toastr'));
     }
 }
