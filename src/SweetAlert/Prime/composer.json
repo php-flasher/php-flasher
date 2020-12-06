@@ -40,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\SweetAlert\\Tests\\": "Tests/"
+            "Flasher\\SweetAlert\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {

@@ -6,7 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Flasher\Pnotify\Laravel\ServiceProvider\ServiceProviderManager;
 
-class FlasherPnotifyServiceProvider extends ServiceProvider
+final class FlasherPnotifyServiceProvider extends ServiceProvider
 {
     public function boot()
     {

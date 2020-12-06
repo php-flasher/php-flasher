@@ -10,7 +10,7 @@ interface ServiceProviderInterface
 
     public function publishConfig(FlasherPnotifyServiceProvider $provider);
 
-    public function registerNotifyPnotifyServices();
+    public function registerServices();
 
     public function mergeConfigFromPnotify();
 }

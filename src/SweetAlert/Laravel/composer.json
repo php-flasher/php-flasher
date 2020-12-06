@@ -38,7 +38,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Laravel\\SweetAlert\\": ""
+            "Flasher\\SweetAlert\\Laravel\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -46,7 +46,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Laravel\\SweetAlert\\Tests\\": "Tests/"
+            "Flasher\\SweetAlert\\Laravel\\Tests\\": "Tests/"
         }
     },
     "extra": {
