@@ -26,19 +26,19 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36"
+        "php-flasher/flasher": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Pnotify\\": "src"
+            "Flasher\\Pnotify\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Pnotify\\Tests\\": "tests/"
+            "Flasher\\Pnotify\\Tests\\": "Tests/"
         }
     },
     "config": {
