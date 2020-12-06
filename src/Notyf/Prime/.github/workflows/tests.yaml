@@ -35,7 +35,7 @@ jobs:
 
             -   name: Require phpunit 5.7 for php >= 5.6
                 if: matrix.php >= 5.6
-                run: COMPOSER_MEMORY_LIMIT=-1 composer require "phpunit/phpunit:6.*" --no-interaction --no-update
+                run: COMPOSER_MEMORY_LIMIT=-1 composer require "phpunit/phpunit:5.7.*" --no-interaction --no-update
 
             -   name: Require phpunit 6 for php >= 7.0
                 if: matrix.php >= 7.0
