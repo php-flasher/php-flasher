@@ -1,13 +1,13 @@
 <?php
 
-namespace Flasher\Toastr\Laravel\Tests;
+namespace Flasher\SweetAlert\Laravel\Tests;
 
-class NotifyToastrServiceProviderTest extends TestCase
+class FlasherSweetAlertServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
         $this->assertTrue($this->app->bound('flasher'));
-        $this->assertTrue($this->app->bound('flasher.factory.toastr'));
+        $this->assertTrue($this->app->bound('flasher.factory.sweet_alert'));
     }
 
     public function testNotifyFactoryIsAddedToExtensionsArray()
@@ -24,7 +24,7 @@ class NotifyToastrServiceProviderTest extends TestCase
         $this->assertInstanceOf('Flasher\Prime\Factory\FlasherFactoryInterface', $extensions[0]);
     }
 
-    public function testConfigToastrInjectedInGlobalNotifyConfig()
+    public function testConfigSweetAlertInjectedInGlobalNotifyConfig()
     {
         $flasher = $this->app->make('flasher');
 
@@ -34,10 +34,10 @@ class NotifyToastrServiceProviderTest extends TestCase
 
         $config = $property->getValue($flasher);
 
-        $this->assertArrayHasKey('toastr', $config->get('adapters'));
+        $this->assertArrayHasKey('sweet_alert', $config->get('adapters'));
 
         $this->assertEquals(array(
-            'toastr' => array('scripts' => array('jquery.js'), 'styles' => array('styles.css'), 'options' => array()),
+            'sweet_alert' => array('scripts' => array('jquery.js'), 'styles' => array('styles.css'), 'options' => array()),
         ), $config->get('adapters'));
     }
 }

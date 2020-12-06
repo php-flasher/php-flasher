@@ -26,7 +26,7 @@ class Laravel implements ServiceProviderInterface
 
     public function publishConfig(FlasherNotyfServiceProvider $provider)
     {
-        $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
+        $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
 
         $provider->publishes(array($source => config_path('flasher_notyf.php')), 'config');
 

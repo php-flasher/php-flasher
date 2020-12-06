@@ -2,7 +2,7 @@
 
 namespace Flasher\Toastr\Laravel;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Flasher\Toastr\Laravel\ServiceProvider\ServiceProviderManager;
 
@@ -31,14 +31,13 @@ final class FlasherToastrServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory',
             'flasher.factory.toastr',
             'flasher.renderer.toastr',
         );
     }
 
     /**
-     * @return \Illuminate\Container\Container
+     * @return Container
      */
     public function getApplication()
     {

@@ -2,7 +2,7 @@
 
 namespace Flasher\Notyf\Laravel;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Flasher\Notyf\Laravel\ServiceProvider\ServiceProviderManager;
 
@@ -37,7 +37,7 @@ class FlasherNotyfServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return \Illuminate\Container\Container
+     * @return Container
      */
     public function getApplication()
     {
