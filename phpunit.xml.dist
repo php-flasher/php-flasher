@@ -10,53 +10,53 @@
          processIsolation="false"
          stopOnFailure="true">
     <testsuites>
-        <testsuite name="notify">
+        <testsuite name="flasher">
             <directory>src/Prime</directory>
         </testsuite>
-        <testsuite name="notify laravel">
+        <testsuite name="flasher laravel">
             <directory>src/Laravel</directory>
         </testsuite>
-        <testsuite name="notify symfony">
+        <testsuite name="flasher symfony">
             <directory>src/Symfony</directory>
         </testsuite>
 
-        <testsuite name="notify toastr">
+        <testsuite name="flasher toastr">
             <directory>src/Toastr/Prime</directory>
         </testsuite>
-        <testsuite name="notify toastr laravel">
+        <testsuite name="flasher toastr laravel">
             <directory>src/Toastr/Laravel</directory>
         </testsuite>
-        <testsuite name="notify toastr symfony">
+        <testsuite name="flasher toastr symfony">
             <directory>src/Toastr/Symfony</directory>
         </testsuite>
 
-        <testsuite name="notify notyf">
+        <testsuite name="flasher notyf">
             <directory>src/Notyf/Prime</directory>
         </testsuite>
-        <testsuite name="notify notyf laravel">
+        <testsuite name="flasher notyf laravel">
             <directory>src/Notyf/Laravel</directory>
         </testsuite>
-        <testsuite name="notify notyf symfony">
+        <testsuite name="flasher notyf symfony">
             <directory>src/Notyf/Symfony</directory>
         </testsuite>
 
-        <testsuite name="notify sweet alert">
+        <testsuite name="flasher sweet alert">
             <directory>src/SweetAlert/Prime</directory>
         </testsuite>
-        <testsuite name="notify sweet alert laravel">
+        <testsuite name="flasher sweet alert laravel">
             <directory>src/SweetAlert/Laravel</directory>
         </testsuite>
-        <testsuite name="notify sweet alert symfony">
+        <testsuite name="flasher sweet alert symfony">
             <directory>src/SweetAlert/Symfony</directory>
         </testsuite>
 
-        <testsuite name="notify pnotify">
+        <testsuite name="flasher pnotify">
             <directory>src/Pnotify/Prime</directory>
         </testsuite>
-        <testsuite name="notify pnotify laravel">
+        <testsuite name="flasher pnotify laravel">
             <directory>src/Pnotify/Laravel</directory>
         </testsuite>
-        <testsuite name="notify pnotify symfony">
+        <testsuite name="flasher pnotify symfony">
             <directory>src/Pnotify/Symfony</directory>
         </testsuite>
     </testsuites>
