@@ -14,7 +14,7 @@ final class Laravel4 extends Laravel
 
     public function publishConfig(FlasherToastrServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel-toastr', 'flasher_toastr', __DIR__.'/../../../resources');
+        $provider->package('php-flasher/flasher-laravel-toastr', 'flasher_toastr', __DIR__.'/../../Resources');
     }
 
     public function mergeConfigFromToastr()
