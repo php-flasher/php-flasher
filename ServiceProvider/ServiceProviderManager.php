@@ -2,6 +2,7 @@
 
 namespace Flasher\Laravel\ServiceProvider;
 
+use Flasher\Laravel\FlasherServiceProvider;
 use Flasher\LaravelFlasher\PrimeServiceProvider;
 use Flasher\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
@@ -21,7 +22,7 @@ final class ServiceProviderManager
 
     private $notifyServiceProvider;
 
-    public function __construct(NotifyServiceProvider $notifyServiceProvider)
+    public function __construct(FlasherServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
     }
@@ -38,7 +39,7 @@ final class ServiceProviderManager
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerNotifyServices();
+        $provider->registerServices();
     }
 
     /**

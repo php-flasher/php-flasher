@@ -21,11 +21,11 @@ final class Lumen extends Laravel
         $provider->mergeConfigFrom($source, 'notify');
     }
 
-    public function registerNotifyServices()
+    public function registerServices()
     {
         $this->app->register('\Illuminate\Session\SessionServiceProvider');
         $this->app->configure('session');
 
-        parent::registerNotifyServices();
+        parent::registerServices();
     }
 }
