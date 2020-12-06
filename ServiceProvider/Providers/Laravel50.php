@@ -17,7 +17,7 @@ final class Laravel50 extends Laravel
         Blade::extend(function ($view, $compiler) {
             $pattern = $compiler->createPlainMatcher('notify_render(.*)');
 
-            return preg_replace($pattern, '$1<?php echo app(\'notify.presenter.html\')->render($2); ?>', $view);
+            return preg_replace($pattern, '$1<?php echo app(\'flasher.presenter.html\')->render($2); ?>', $view);
         });
     }
 }
