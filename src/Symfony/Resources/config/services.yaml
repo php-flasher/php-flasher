@@ -1,91 +1,25 @@
 services:
-    notify.config:
+    flasher.config:
         class: Flasher\Prime\Config\Config
         arguments:
             - null
 
-    notify.producer:
-        class: Flasher\Prime\Producer\ProducerManager
+    flasher.abstract_manager:
+        class: Flasher\Prime\Manager\AbstractManager
+        abstract: true
         arguments:
-            - '@notify.config'
+            - '@flasher.config'
 
-    notify.presenter:
-        class: Flasher\Prime\Presenter\PresenterManager
+    flasher:
+        class: Flasher\Prime\Flasher
+        parent: 'flasher.abstract_manager'
 
-    notify.renderer:
+    flasher.renderer_manager:
         class: Flasher\Prime\Renderer\RendererManager
-        arguments:
-            - '@notify.config'
+        parent: 'flasher.abstract_manager'
 
-    notify.middleware:
-        class: Flasher\Prime\Middleware\MiddlewareManager
-        arguments:
-            - '@notify.config'
-
-    notify.storage:
-        class: Flasher\Symfony\Storage\Storage
-        arguments:
-            - '@session'
-
-    notify.filter:
-        class: Flasher\Prime\Filter\FilterManager
-        arguments:
-            - '@notify.config'
-
-    notify.producer.abstract:
-        class: Flasher\Prime\Producer\AbstractProducer
+    flasher.abstract_factory:
+        class: Flasher\Prime\Factory\AbstractFactory
         abstract: true
         arguments:
-            - '@notify.storage'
-            - '@notify.middleware'
-
-    notify.presenter.abstract:
-        class: Flasher\Prime\Presenter\AbstractPresenter
-        abstract: true
-        arguments:
-            - '@notify.config'
-            - '@notify.storage'
-            - '@notify.filter'
-            - '@notify.renderer'
-
-    notify.presenter.html:
-        class: Flasher\Prime\Presenter\Adapter\HtmlPresenter
-        parent: 'notify.presenter.abstract'
-        tags:
-            - { name: 'notify.presenter', alias: 'html' }
-
-    notify.presenter.json:
-        class: Flasher\Prime\Presenter\Adapter\JsonPresenter
-        parent: 'notify.presenter.abstract'
-        tags:
-            - { name: 'notify.presenter', alias: 'json' }
-
-    notify.twig_extension:
-        class: Flasher\Symfony\TwigFlasher\PrimeTwigExtension
-        arguments:
-            - '@notify.presenter.html'
-        public: false
-        tags:
-            - { name: twig.extension }
-
-    notify.filter_builder:
-        class: Flasher\Prime\Filter\FilterBuilder
-
-    notify.filter.default:
-        class: Flasher\Prime\Filter\DefaultFilter
-        arguments:
-            - '@notify.filter_builder'
-        tags:
-            - { name: 'notify.filter', alias: 'default' }
-
-    Flasher\Prime\Config\Config: '@notify.config'
-    Flasher\Prime\Producer\ProducerManager: '@notify.producer'
-    Flasher\Prime\Presenter\PresenterManager: '@notify.presenter'
-    Flasher\Prime\Renderer\RendererManager: '@notify.renderer'
-    Flasher\Prime\Middleware\MiddlewareManager: '@notify.middleware'
-    Flasher\Symfony\Storage\Storage: '@notify.storage'
-    Flasher\Prime\Filter\FilterManager: '@notify.filter'
-    Flasher\Prime\Filter\DefaultFilter: '@notify.filter.default'
-    Flasher\Prime\Filter\FilterBuilder: '@notify.filter_builder'
-    Flasher\Prime\Presenter\Json\JsonPresenter: '@notify.presenter.json'
-    Flasher\Prime\Presenter\Html\HtmlPresenter: '@notify.presenter.html'
+            - '@flasher.flasher_bus'

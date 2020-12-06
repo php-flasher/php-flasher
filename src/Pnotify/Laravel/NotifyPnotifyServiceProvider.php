@@ -31,9 +31,9 @@ class NotifyPnotifyServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'notify.producer',
-            'notify.producer.pnotify',
-            'notify.renderer.pnotify',
+            'flasher.factory',
+            'flasher.factory.pnotify',
+            'flasher.renderer.pnotify',
         );
     }
 

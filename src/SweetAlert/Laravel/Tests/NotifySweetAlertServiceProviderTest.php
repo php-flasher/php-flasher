@@ -6,13 +6,13 @@ class NotifySweetAlertServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
-        $this->assertTrue($this->app->bound('notify.producer'));
-        $this->assertTrue($this->app->bound('notify.producer.sweet_alert'));
+        $this->assertTrue($this->app->bound('flasher.factory'));
+        $this->assertTrue($this->app->bound('flasher.factory.sweet_alert'));
     }
 
     public function testNotifyFactoryIsAddedToExtensionsArray()
     {
-        $manager = $this->app->make('notify.producer');
+        $manager = $this->app->make('flasher.factory');
 
         $reflection = new \ReflectionClass($manager);
         $property = $reflection->getProperty('drivers');
@@ -26,7 +26,7 @@ class NotifySweetAlertServiceProviderTest extends TestCase
 
     public function testConfigSweetAlertInjectedInGlobalNotifyConfig()
     {
-        $manager = $this->app->make('notify.producer');
+        $manager = $this->app->make('flasher.factory');
 
         $reflection = new \ReflectionClass($manager);
         $property = $reflection->getProperty('config');

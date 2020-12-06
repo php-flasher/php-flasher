@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\EventDispatcher\EventSubscriber;
+namespace Flasher\Prime\EventDispatcher\EventListener;
 
 interface EventSubscriberInterface
 {

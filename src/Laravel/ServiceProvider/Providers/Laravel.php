@@ -36,7 +36,7 @@ class Laravel implements ServiceProviderInterface
     {
         $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
 
-        $provider->publishes(array($source => config_path('notify.php')), 'config');
+        $provider->publishes(array($source => config_path('flasher.php')), 'config');
 
         $provider->mergeConfigFrom($source, 'notify');
     }
@@ -48,7 +48,7 @@ class Laravel implements ServiceProviderInterface
 
     public function registerNotifyServices()
     {
-        $this->app->singleton('notify.config', function (Application $app) {
+        $this->app->singleton('flasher.config', function (Application $app) {
             return new Config($app['config'], '.');
         });
 
@@ -57,80 +57,80 @@ class Laravel implements ServiceProviderInterface
 
     public function registerCommonServices()
     {
-        $this->app->singleton('notify.producer', function (Application $app) {
-            return new Flasher($app['notify.config']);
+        $this->app->singleton('flasher.factory', function (Application $app) {
+            return new Flasher($app['flasher.config']);
         });
 
-        $this->app->singleton('notify.storage', function (Application $app) {
+        $this->app->singleton('flasher.storage', function (Application $app) {
             return new Storage($app['session']);
         });
 
-        $this->app->singleton('notify.filter', function (Application $app) {
-            return new FilterManager($app['notify.config']);
+        $this->app->singleton('flasher.filter', function (Application $app) {
+            return new FilterManager($app['flasher.config']);
         });
 
-        $this->app->singleton('notify.renderer', function (Application $app) {
-            return new RendererManager($app['notify.config']);
+        $this->app->singleton('flasher.renderer', function (Application $app) {
+            return new RendererManager($app['flasher.config']);
         });
 
-        $this->app->singleton('notify.presenter', function (Application $app) {
+        $this->app->singleton('flasher.presenter', function (Application $app) {
             return new PresenterManager();
         });
 
-        $this->app->singleton('notify.presenter.html', function (Application $app) {
-            return new HtmlPresenter($app['notify.config'], $app['notify.storage'], $app['notify.filter'], $app['notify.renderer']);
+        $this->app->singleton('flasher.presenter.html', function (Application $app) {
+            return new HtmlPresenter($app['flasher.config'], $app['flasher.storage'], $app['flasher.filter'], $app['flasher.renderer']);
         });
 
-        $this->app->singleton('notify.presenter.json', function (Application $app) {
-            return new JsonPresenter($app['notify.config'], $app['notify.storage'], $app['notify.filter'], $app['notify.renderer']);
+        $this->app->singleton('flasher.presenter.json', function (Application $app) {
+            return new JsonPresenter($app['flasher.config'], $app['flasher.storage'], $app['flasher.filter'], $app['flasher.renderer']);
         });
 
-        $this->app->singleton('notify.filter_builder', function (Application $app) {
+        $this->app->singleton('flasher.filter_builder', function (Application $app) {
             return new FilterBuilder();
         });
 
-        $this->app->singleton('notify.filter.default', function (Application $app) {
-            return new DefaultFilter($app['notify.filter_builder']);
+        $this->app->singleton('flasher.filter.default', function (Application $app) {
+            return new DefaultFilter($app['flasher.filter_builder']);
         });
 
-        $this->app->singleton('notify.middleware', function (Application $app) {
-            return new MiddlewareManager($app['notify.config']);
+        $this->app->singleton('flasher.middleware', function (Application $app) {
+            return new MiddlewareManager($app['flasher.config']);
         });
 
-        $this->app->extend('notify.presenter', function (PresenterManager $manager, Container $app) {
-            $manager->addDriver('html', $app['notify.presenter.html']);
+        $this->app->extend('flasher.presenter', function (PresenterManager $manager, Container $app) {
+            $manager->addDriver('html', $app['flasher.presenter.html']);
 
             return $manager;
         });
 
-        $this->app->extend('notify.presenter', function (PresenterManager $manager, Container $app) {
-            $manager->addDriver('json', $app['notify.presenter.json']);
+        $this->app->extend('flasher.presenter', function (PresenterManager $manager, Container $app) {
+            $manager->addDriver('json', $app['flasher.presenter.json']);
 
             return $manager;
         });
 
-        $this->app->extend('notify.filter', function (FilterManager $manager, Container $app) {
-            $manager->addDriver('default', $app['notify.filter.default']);
+        $this->app->extend('flasher.filter', function (FilterManager $manager, Container $app) {
+            $manager->addDriver('default', $app['flasher.filter.default']);
 
             return $manager;
         });
 
-        $this->app->alias('notify.config', 'Flasher\Laravel\Config\Config');
-        $this->app->alias('notify.producer', 'Flasher\Prime\Flasher');
-        $this->app->alias('notify.presenter', 'Flasher\Prime\Presenter\PresenterManager');
-        $this->app->alias('notify.middleware', 'Flasher\Prime\Middleware\MiddlewareManager');
-        $this->app->alias('notify.storage', 'Flasher\Laravel\Storage\Storage');
-        $this->app->alias('notify.filter', 'Flasher\Prime\Filter\FilterManager');
-        $this->app->alias('notify.presenter.html', 'Flasher\Prime\Presenter\Adapter\HtmlPresenter');
-        $this->app->alias('notify.presenter.json', 'Flasher\Prime\Presenter\Adapter\JsonPresenter');
-        $this->app->alias('notify.filter_builder', 'Flasher\Prime\Filter\FilterBuilder');
-        $this->app->alias('notify.filter.default', 'Flasher\Prime\Filter\DefaultFilter');
+        $this->app->alias('flasher.config', 'Flasher\Laravel\Config\Config');
+        $this->app->alias('flasher.factory', 'Flasher\Prime\Flasher');
+        $this->app->alias('flasher.presenter', 'Flasher\Prime\Presenter\PresenterManager');
+        $this->app->alias('flasher.middleware', 'Flasher\Prime\Middleware\MiddlewareManager');
+        $this->app->alias('flasher.storage', 'Flasher\Laravel\Storage\Storage');
+        $this->app->alias('flasher.filter', 'Flasher\Prime\Filter\FilterManager');
+        $this->app->alias('flasher.presenter.html', 'Flasher\Prime\Presenter\Adapter\HtmlPresenter');
+        $this->app->alias('flasher.presenter.json', 'Flasher\Prime\Presenter\Adapter\JsonPresenter');
+        $this->app->alias('flasher.filter_builder', 'Flasher\Prime\Filter\FilterBuilder');
+        $this->app->alias('flasher.filter.default', 'Flasher\Prime\Filter\DefaultFilter');
     }
 
     public function registerBladeDirectives()
     {
         Blade::directive('notify_render', function ($criteria = null) {
-            return "<?php echo app('notify.presenter.html')->render($criteria); ?>";
+            return "<?php echo app('flasher.presenter.html')->render($criteria); ?>";
         });
     }
 }

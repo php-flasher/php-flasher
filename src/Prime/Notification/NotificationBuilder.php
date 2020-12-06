@@ -3,6 +3,9 @@
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\EventDispatcher\Event\EnvelopeDispatchedEvent;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 
@@ -14,13 +17,27 @@ class NotificationBuilder implements NotificationBuilderInterface
     protected $envelope;
 
     /**
-     * @param NotificationInterface|null $notification
+     * @var EventDispatcherInterface
      */
-    public function __construct(NotificationInterface $notification = null)
-    {
-        $notification = $notification ?: new Notification();
+    protected $eventDispatcher;
 
+    /**
+     * @param EventDispatcherInterface   $eventDispatcher
+     * @param NotificationInterface|null $notification
+     * @param string                     $handler
+     */
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        NotificationInterface $notification = null,
+        $handler = null
+    ) {
+        $this->eventDispatcher = $eventDispatcher;
+
+        $notification   = $notification ?: new Notification();
         $this->envelope = Envelope::wrap($notification);
+
+        $handler = $handler ?: get_class($notification);
+        $this->handler($handler);
     }
 
     /**
@@ -126,6 +143,16 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * @inheritDoc
      */
+    public function handler($handler)
+    {
+        $this->envelope->withStamp(new HandlerStamp($handler));
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function priority($priority)
     {
         $this->envelope->withStamp(new PriorityStamp($priority));
@@ -149,10 +176,50 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function keep()
     {
         $hopsStamp = $this->envelope->get('Flasher\Prime\Stamp\HopsStamp');
-        $amount = $hopsStamp instanceof HopsStamp ? $hopsStamp->getAmount() : 1;
+        $amount    = $hopsStamp instanceof HopsStamp ? $hopsStamp->getAmount() : 1;
 
         $this->envelope->withStamp(new HopsStamp($amount + 1));
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function with($stamps = array())
+    {
+        $this->envelope->with($stamps);
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function withStamp($stamps = array())
+    {
+        $this->envelope->withStamp($stamps);
+
+        return $this;
+    }
+
+    /**
+     * Dispatch the notification to the flasher bus
+     *
+     * @param array $stamps
+     *
+     * @return Envelope|mixed
+     */
+    public function dispatch($stamps = array())
+    {
+        if (!empty($stamps)) {
+            $this->with($stamps);
+        }
+
+        $envelope = $this->getEnvelope();
+
+        $event = new EnvelopeDispatchedEvent($envelope);
+
+        return $this->eventDispatcher->dispatch($event);
     }
 }

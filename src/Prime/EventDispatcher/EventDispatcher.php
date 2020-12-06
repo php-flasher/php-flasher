@@ -3,7 +3,7 @@
 namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
-use Flasher\Prime\EventDispatcher\EventSubscriber\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
@@ -81,10 +81,15 @@ final class EventDispatcher implements EventDispatcherInterface
      */
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
-        foreach ((array) $subscriber->getSubscribedEvents() as $eventName => $params) {
-            if (\is_string($params)) {
+        foreach ((array) $subscriber->getSubscribedEvents()  as $eventName => $params) {
+            if (is_int($eventName)) {
+                $eventName = $params;
+                $params = '__invoke';
+            }
+
+            if (is_string($params)) {
                 $this->addListener($eventName, array($subscriber, $params));
-            } elseif (\is_string($params[0])) {
+            } elseif (is_string($params[0])) {
                 $this->addListener($eventName, array($subscriber, $params[0]), isset($params[1]) ? $params[1] : 0);
             } else {
                 foreach ($params as $listener) {

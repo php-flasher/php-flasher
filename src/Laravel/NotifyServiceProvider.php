@@ -33,7 +33,7 @@ final class NotifyServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'notify.producer',
+            'flasher.factory',
         );
     }
 

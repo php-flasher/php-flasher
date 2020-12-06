@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Notyf\Prime\Producer;
+namespace Flasher\Notyf\Prime\Factory;
 
 final class NotyfProducer extends \Flasher\Prime\AbstractFlasher
 {

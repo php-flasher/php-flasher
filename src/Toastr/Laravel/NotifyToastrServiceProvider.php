@@ -31,9 +31,9 @@ class NotifyToastrServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'notify.producer',
-            'notify.producer.toastr',
-            'notify.renderer.toastr',
+            'flasher.factory',
+            'flasher.factory.toastr',
+            'flasher.renderer.toastr',
         );
     }
 

@@ -2,6 +2,7 @@
 
 namespace Flasher\Symfony\DependencyInjection\Compiler;
 
+use Flasher\Prime\Renderer\RendererManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -13,20 +14,15 @@ final class RendererCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('notify.renderer')) {
+        if (!$container->has('flasher.renderer_manager')) {
             return;
         }
 
-        /** @var \Flasher\Prime\Renderer\RendererManager $manager */
-        $manager = $container->findDefinition('notify.renderer');
+        /** @var RendererManager $manager */
+        $manager = $container->findDefinition('flasher.renderer_manager');
 
-        foreach ($container->findTaggedServiceIds('notify.renderer') as $id => $tags) {
-            foreach ($tags as $attributes) {
-                $manager->addMethodCall('addDriver', array(
-                    $attributes['alias'],
-                    new Reference($id),
-                ));
-            }
+        foreach ($container->findTaggedServiceIds('flasher.renderer') as $id => $tags) {
+            $manager->addMethodCall('addDriver', array(new Reference($id)));
         }
     }
 }
