@@ -16,8 +16,3 @@ services:
         public: false
         tags:
             - 'flasher.middleware'
-
-    Flasher\Prime\Middleware\AddRenderedAtStampMiddleware:
-        public: false
-        tags:
-            - 'flasher.middleware'
