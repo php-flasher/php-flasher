@@ -1,0 +1,56 @@
+{
+    "name": "php-flasher/flasher-noty-symfony",
+    "type": "symfony-bundle",
+    "description": "Symfony Flasher adapter for noty.js library for php-flasher/flasher-symfony",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "noty ",
+        "bundle",
+        "flex"
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-symfony-noty",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher-symfony": "dev-main",
+        "php-flasher/flasher-noty": "dev-main"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Noty\\Symfony\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Noty\\Symfony\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

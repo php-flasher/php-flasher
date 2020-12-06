@@ -38,6 +38,10 @@ remote pnotify git@github.com:php-flasher/flasher-pnotify.git
 remote pnotify-laravel git@github.com:php-flasher/flasher-pnotify-laravel.git
 remote pnotify-symfony git@github.com:php-flasher/flasher-pnotify-symfony.git
 
+remote noty git@github.com:php-flasher/flasher-noty.git
+remote noty-laravel git@github.com:php-flasher/flasher-noty-laravel.git
+remote noty-symfony git@github.com:php-flasher/flasher-noty-symfony.git
+
 split 'src/Prime' flasher
 split 'src/Laravel' laravel
 split 'src/Symfony' symfony
@@ -57,3 +61,7 @@ split 'src/SweetAlert/Symfony' sweet-alert-symfony
 split 'src/Pnotify/Prime' pnotify
 split 'src/Pnotify/Laravel' pnotify-laravel
 split 'src/Pnotify/Symfony' pnotify-symfony
+
+split 'src/Noty/Prime' noty
+split 'src/Noty/Laravel' noty-laravel
+split 'src/Noty/Symfony' noty-symfony
