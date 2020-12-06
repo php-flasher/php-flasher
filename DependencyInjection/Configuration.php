@@ -12,13 +12,13 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('notify');
+        $treeBuilder = new TreeBuilder('flasher');
 
         if (\method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('notify');
+            $rootNode = $treeBuilder->root('flasher');
         }
 
         $rootNode
@@ -30,7 +30,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        '/vendor/php-flasher/flasher/assets/js/notify.js'
+                        '/bundles/flasher/js/flasher.js'
                     ))
                 ->end()
                 ->arrayNode('styles')
@@ -40,10 +40,6 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('adapters')
                     ->ignoreExtraKeys(false)
                     ->useAttributeAsKey('name')
-                    ->prototype('variable')->end()
-                ->end()
-                ->arrayNode('stamps_middlewares')
-                    ->ignoreExtraKeys(false)
                     ->prototype('variable')->end()
                 ->end()
             ->end()

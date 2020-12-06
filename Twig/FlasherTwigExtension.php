@@ -3,11 +3,10 @@
 namespace Flasher\Symfony\Twig;
 
 use Flasher\Prime\Presenter\Adapter\HtmlPresenter;
-use Flasher\Prime\Presenter\PresenterManager;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-final class NotifyTwigExtension extends AbstractExtension
+final class FlasherTwigExtension extends AbstractExtension
 {
     private $htmlPresenter;
 
@@ -21,7 +20,7 @@ final class NotifyTwigExtension extends AbstractExtension
         $options = array('is_safe' => array('html'));
 
         return array(
-            new TwigFunction('notify_render', array($this, 'notifyRender'), $options),
+            new TwigFunction('flasher_render', array($this, 'flasherRender'), $options),
         );
     }
 
@@ -30,7 +29,7 @@ final class NotifyTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function notifyRender($criteria = null)
+    public function flasherRender($criteria = null)
     {
         return $this->htmlPresenter->render($criteria);
     }
