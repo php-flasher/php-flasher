@@ -3,6 +3,7 @@
 namespace Flasher\Prime\Tests\Storage;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\UuidStamp;
@@ -14,7 +15,7 @@ class StorageManagerTest extends TestCase
 {
     public function testAll()
     {
-        $storageManager = new StorageManager(new ArrayStorage());
+        $storageManager = new StorageManager(new ArrayStorage(), new EventDispatcher());
         $envelopes      = array();
 
         foreach (range(0, 4) as $index) {
@@ -27,7 +28,7 @@ class StorageManagerTest extends TestCase
 
     public function testClear()
     {
-        $storageManager = new StorageManager(new ArrayStorage());
+        $storageManager = new StorageManager(new ArrayStorage(), new EventDispatcher());
         $envelopes      = array();
 
         foreach (range(0, 4) as $index) {
@@ -42,7 +43,7 @@ class StorageManagerTest extends TestCase
 
     public function testAdd()
     {
-        $storageManager = new StorageManager(new ArrayStorage());
+        $storageManager = new StorageManager(new ArrayStorage(),new EventDispatcher());
         $storageManager->add(new Envelope(new Notification('success')));
 
         $envelopes = $storageManager->all();
@@ -55,7 +56,7 @@ class StorageManagerTest extends TestCase
 
     public function testFlush()
     {
-        $storageManager = new StorageManager(new ArrayStorage());
+        $storageManager = new StorageManager(new ArrayStorage(), new EventDispatcher());
 
         $envelope = new Envelope(
             new Notification('error message', 'error'),

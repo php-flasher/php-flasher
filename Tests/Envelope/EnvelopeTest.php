@@ -67,7 +67,7 @@ final class EnvelopeTest extends TestCase
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),
         );
 
-        $envelope = new \Flasher\Prime\Envelope($notification, $stamps);
+        $envelope = new Envelope($notification, $stamps);
 
         $this->assertSame($notification, $envelope->getNotification());
 

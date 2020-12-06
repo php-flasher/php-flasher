@@ -22,8 +22,8 @@ final class CreatedAtStampTest extends TestCase
 
     public function testCompare()
     {
-        $createdAt1 = new \Flasher\Prime\Stamp\CreatedAtStamp(new \DateTime('+2 h'));
-        $createdAt2 = new \Flasher\Prime\Stamp\CreatedAtStamp(new \DateTime('+1 h'));
+        $createdAt1 = new CreatedAtStamp(new \DateTime('+2 h'));
+        $createdAt2 = new CreatedAtStamp(new \DateTime('+1 h'));
 
         $this->assertFalse($createdAt1->compare($createdAt2));
         $this->assertSame(0, $createdAt1->compare(new HopsStamp(1)));

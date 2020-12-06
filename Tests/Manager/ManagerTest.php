@@ -2,32 +2,32 @@
 
 namespace Flasher\Prime\Tests\Manager;
 
-use NotifyFlasher\Prime;
+use Flasher\Prime\Flasher;
 use Flasher\Prime\Tests\TestCase;
 
 final class ManagerTest extends TestCase
 {
     public function testDefaultDriver()
     {
-        $config = $this->getMockBuilder('Notify\Config\ConfigInterface')->getMock();
+        $config = $this->getMockBuilder('Flasher\Prime\Config\ConfigInterface')->getMock();
         $config->method('get')
             ->with('default')
             ->willReturn('default_notifier');
 
-        $manager = new Notify($config);
+        $manager = new Flasher($config);
         $this->assertEquals('default_notifier', $manager->getDefaultDriver());
     }
 
     public function testMakeDriver()
     {
-        $config = $this->getMockBuilder('Notify\Config\ConfigInterface')->getMock();
+        $config = $this->getMockBuilder('Flasher\Prime\Config\ConfigInterface')->getMock();
         $config->method('get')
             ->with('default')
             ->willReturn('default_notifier');
 
-        $manager = new Notify($config);
+        $manager = new Flasher($config);
 
-        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
+        $producer = $this->getMockBuilder('Flasher\Prime\Factory\FlasherFactoryInterface')->getMock();
         $producer->method('supports')->willReturn(true);
         $manager->addDriver($producer);
 
@@ -38,14 +38,14 @@ final class ManagerTest extends TestCase
     {
         $this->setExpectedException('InvalidArgumentException', 'Driver [test_driver] not supported.');
 
-        $config = $this->getMockBuilder('Notify\Config\ConfigInterface')->getMock();
+        $config = $this->getMockBuilder('Flasher\Prime\Config\ConfigInterface')->getMock();
         $config->method('get')
             ->with('default')
             ->willReturn('default_notifier');
 
-        $manager = new Notify($config);
+        $manager = new Flasher($config);
 
-        $producer = $this->getMockBuilder('NotifyFlasher\PrimeFactory')->getMock();
+        $producer = $this->getMockBuilder('Flasher\Prime\Factory\FlasherFactoryInterface')->getMock();
         $manager->addDriver($producer);
 
         $manager->make('test_driver');

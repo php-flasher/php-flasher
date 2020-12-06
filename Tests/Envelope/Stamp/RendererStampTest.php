@@ -3,6 +3,7 @@
 namespace Flasher\Prime\Tests\Envelope\Stamp;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\HandlerStamp;
 use PHPUnit\Framework\TestCase;
 
 final class RendererStampTest extends TestCase
@@ -10,7 +11,7 @@ final class RendererStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new \Flasher\Prime\Stamp\HandlerStamp('toastr');
+        $stamp        = new HandlerStamp('toastr');
 
         $envelop = new Envelope($notification, array($stamp));
 
