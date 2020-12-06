@@ -8,7 +8,7 @@ use Flasher\Laravel\Tests\TestCase;
 
 final class ConfigTest extends TestCase
 {
-    public function test_simple_config()
+    public function testSimpleConfig()
     {
         $separator = $this->isLaravel4() ? '::' : '.';
         $config = new Config($this->app->make('config'), $separator);
