@@ -2,37 +2,37 @@
 
 namespace Flasher\Notyf\Laravel\Tests;
 
-final class NotifyNotyfServiceProviderTest extends TestCase
+final class FlasherNotyfServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
-        $this->assertTrue($this->app->bound('flasher.factory'));
+        $this->assertTrue($this->app->bound('flasher'));
         $this->assertTrue($this->app->bound('flasher.factory.notyf'));
     }
 
     public function testNotifyFactoryIsAddedToExtensionsArray()
     {
-        $manager = $this->app->make('flasher.factory');
+        $flasher = $this->app->make('flasher');
 
-        $reflection = new \ReflectionClass($manager);
+        $reflection = new \ReflectionClass($flasher);
         $property = $reflection->getProperty('drivers');
         $property->setAccessible(true);
 
-        $extensions = $property->getValue($manager);
+        $extensions = $property->getValue($flasher);
 
         $this->assertCount(1, $extensions);
-        $this->assertInstanceOf('Flasher\Prime\FlasherInterface', $extensions['notyf']);
+        $this->assertInstanceOf('Flasher\Prime\Factory\FlasherFactoryInterface', $extensions[0]);
     }
 
     public function testConfigNotyfInjectedInGlobalNotifyConfig()
     {
-        $manager = $this->app->make('flasher.factory');
+        $flasher = $this->app->make('flasher');
 
-        $reflection = new \ReflectionClass($manager);
+        $reflection = new \ReflectionClass($flasher);
         $property = $reflection->getProperty('config');
         $property->setAccessible(true);
 
-        $config = $property->getValue($manager);
+        $config = $property->getValue($flasher);
 
         $this->assertArrayHasKey('notyf', $config->get('adapters'));
 
