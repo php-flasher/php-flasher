@@ -32,11 +32,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Prime\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
+            "Flasher\\Prime\\": ""
         },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ],
         "files": [
           "helpers.php"
         ]

@@ -30,11 +30,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Notyf\\Prime\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        }
+            "Flasher\\Notyf\\Prime\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
