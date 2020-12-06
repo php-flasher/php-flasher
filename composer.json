@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\SweetAlert\\prime\\": ""
+            "Flasher\\SweetAlert\\Prime\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
