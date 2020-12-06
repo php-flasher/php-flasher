@@ -12,7 +12,7 @@ use Flasher\Prime\Renderer\RendererInterface;
 final class SweetAlertRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
     /**
-     * @var \Flasher\Prime\Config\ConfigInterface
+     * @var ConfigInterface
      */
     private $config;
 
