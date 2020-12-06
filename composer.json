@@ -1,5 +1,5 @@
 {
-    "name": "php-flasher/flasher-symfony-toastr",
+    "name": "php-flasher/flasher-toastr-symfony",
     "type": "symfony-bundle",
     "description": "Symfony Flasher adapter for toastr.js library for php-flasher/flasher-symfony",
     "keywords": [
