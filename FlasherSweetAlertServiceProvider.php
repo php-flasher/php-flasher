@@ -2,7 +2,7 @@
 
 namespace Flasher\SweetAlert\Laravel;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Flasher\SweetAlert\Laravel\ServiceProvider\ServiceProviderManager;
 
@@ -37,7 +37,7 @@ final class FlasherSweetAlertServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return \Illuminate\Container\Container
+     * @return Container
      */
     public function getApplication()
     {

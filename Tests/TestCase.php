@@ -12,28 +12,27 @@ use Orchestra\Testbench\TestCase as Orchestra;
 class TestCase extends Orchestra
 {
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      *
      * @return array
      */
     protected function getPackageProviders($app = null)
     {
         return array(
-            'Flasher\LaravelFlasher\PrimeServiceProvider',
-            'Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider',
+            'Flasher\Laravel\FlasherServiceProvider',
+            'Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider',
         );
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
         $separator = $this->isLaravel4() ? '::config' : '';
 
         $app['config']->set('session'.$separator.'.driver', 'array');
-        $app['config']->set('notify'.$separator.'.stamps_middlewares', array());
-        $app['config']->set('notify'.$separator.'.adapters', array(
+        $app['config']->set('flasher'.$separator.'.adapters', array(
             'sweet_alert' => array('scripts' => array('jquery.js'), 'styles' => array('styles.css'), 'options' => array()),
         ));
     }
