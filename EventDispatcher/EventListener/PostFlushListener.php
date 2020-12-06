@@ -1,12 +1,12 @@
 <?php
 
-namespace Flasher\Prime\EventDispatcher\EventSubscriber;
+namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PostFlushEvent;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Storage\StorageInterface;
 
-class RemoveRenderedEnvelopesSubscriber implements EventSubscriberInterface
+final class PostFlushListener implements EventSubscriberInterface
 {
     /**
      * @var StorageInterface
