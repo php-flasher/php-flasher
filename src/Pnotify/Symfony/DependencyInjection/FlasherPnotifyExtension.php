@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Notyf\Symfony\DependencyInjection;
+namespace Flasher\Pnotify\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class NotifyNotyfExtension extends Extension implements PrependExtensionInterface
+final class FlasherPnotifyExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ final class NotifyNotyfExtension extends Extension implements PrependExtensionIn
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yaml');
+        $loader->load('config.yaml');
 
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
@@ -29,18 +29,16 @@ final class NotifyNotyfExtension extends Extension implements PrependExtensionIn
      */
     public function prepend(ContainerBuilder $container)
     {
-        if (!$container->hasExtension('notify')) {
-            throw new \RuntimeException('[Flasher\SymfonyFlasher\PrimeBundle] is not registered');
+        if (!$container->hasExtension('flasher')) {
+            throw new \RuntimeException('[Flasher\Symfony\FlasherBundle] is not registered');
         }
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $notifyConfig = $container->getExtensionConfig('notify');
-
-        $container->prependExtensionConfig('notify', array(
+        $container->prependExtensionConfig('flasher', array(
             'adapters' => array(
-                'notyf' => $config,
+                'pnotify' => $config,
             ),
         ));
     }

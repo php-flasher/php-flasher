@@ -1,12 +1,12 @@
 <?php
 
-namespace Flasher\Notyf\Laravel;
+namespace Flasher\SweetAlert\Laravel;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use Flasher\Notyf\Laravel\ServiceProvider\ServiceProviderManager;
+use Flasher\SweetAlert\Laravel\ServiceProvider\ServiceProviderManager;
 
-class NotifyNotyfServiceProvider extends ServiceProvider
+final class FlasherSweetAlertServiceProvider extends ServiceProvider
 {
     public function boot()
     {
@@ -31,9 +31,8 @@ class NotifyNotyfServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory',
-            'flasher.factory.notyf',
-            'flasher.renderer.notyf',
+            'flasher.factory.sweet_alert',
+            'flasher.renderer.sweet_alert',
         );
     }
 

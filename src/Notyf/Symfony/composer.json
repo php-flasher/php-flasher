@@ -1,5 +1,5 @@
 {
-    "name": "php-flasher/flasher-symfony-notyf",
+    "name": "php-flasher/flasher-notyf-symfony",
     "type": "symfony-bundle",
     "description": "Symfony Flasher adapter for Sweet Alert 2 library for php-flasher/flasher-symfony",
     "keywords": [
@@ -31,20 +31,20 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "^1.0",
-        "php-flasher/flasher-notyf": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36"
+        "php-flasher/flasher-symfony": "dev-main",
+        "php-flasher/flasher-notyf": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Symfony\\Notyf\\": "src/"
+            "Flasher\\Notyf\\Symfony\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Symfony\\Notyf\\Tests\\": "tests/"
+            "Flasher\\Notyf\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {

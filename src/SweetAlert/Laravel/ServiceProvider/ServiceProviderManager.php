@@ -2,7 +2,7 @@
 
 namespace Flasher\SweetAlert\Laravel\ServiceProvider;
 
-use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
+use Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider;
 use Flasher\SweetAlert\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
@@ -20,7 +20,7 @@ final class ServiceProviderManager
 
     private $notifyServiceProvider;
 
-    public function __construct(NotifySweetAlertServiceProvider $notifyServiceProvider)
+    public function __construct(FlasherSweetAlertServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
     }
@@ -36,7 +36,7 @@ final class ServiceProviderManager
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerNotifySweetAlertServices();
+        $provider->registerServices();
     }
 
     /**

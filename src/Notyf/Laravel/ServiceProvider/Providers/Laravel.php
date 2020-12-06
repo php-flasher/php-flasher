@@ -2,9 +2,9 @@
 
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
-use Flasher\Notyf\LaravelFlasher\PrimeNotyfServiceProvider;
-use Flasher\Notyf\Prime\Factory\NotyfProducer;
-use Flasher\Notyf\Prime\Renderer\NotyfRenderer;
+use Flasher\Notyf\Laravel\FlasherNotyfServiceProvider;
+use Flasher\Notyf\Prime\NotyfFactory;
+use Flasher\Notyf\Prime\NotyfRenderer;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\RendererManager;
 use Illuminate\Container\Container;
@@ -24,36 +24,36 @@ class Laravel implements ServiceProviderInterface
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(NotifyNotyfServiceProvider $provider)
+    public function publishConfig(FlasherNotyfServiceProvider $provider)
     {
         $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
 
-        $provider->publishes(array($source => config_path('notify_notyf.php')), 'config');
+        $provider->publishes(array($source => config_path('flasher_notyf.php')), 'config');
 
-        $provider->mergeConfigFrom($source, 'notify_notyf');
+        $provider->mergeConfigFrom($source, 'flasher_notyf');
     }
 
-    public function registerNotifyNotyfServices()
+    public function registerServices()
     {
         $this->app->singleton('flasher.factory.notyf', function (Container $app) {
-            return new NotyfProducer($app['flasher.storage'], $app['flasher.middleware']);
+            return new NotyfFactory($app['flasher.event_dispatcher']);
         });
 
         $this->app->singleton('flasher.renderer.notyf', function (Container $app) {
             return new NotyfRenderer($app['flasher.config']);
         });
 
-        $this->app->alias('flasher.factory.notyf', 'Flasher\Notyf\Prime\Factory\NotyfProducer');
-        $this->app->alias('flasher.renderer.notyf', 'Flasher\Notyf\Prime\Renderer\NotyfRenderer');
+        $this->app->alias('flasher.factory.notyf', 'Flasher\Notyf\Prime\NotyfFactory');
+        $this->app->alias('flasher.renderer.notyf', 'Flasher\Notyf\Prime\NotyfRenderer');
 
-        $this->app->extend('flasher.factory', function (Flasher $manager, Container $app) {
-            $manager->addDriver('notyf', $app['flasher.factory.notyf']);
+        $this->app->extend('flasher', function (Flasher $manager, Container $app) {
+            $manager->addDriver($app['flasher.factory.notyf']);
 
             return $manager;
         });
 
-        $this->app->extend('flasher.renderer', function (RendererManager $manager, Container $app) {
-            $manager->addDriver('notyf', $app['flasher.renderer.notyf']);
+        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
+            $manager->addDriver($app['flasher.renderer.notyf']);
 
             return $manager;
         });
@@ -61,10 +61,10 @@ class Laravel implements ServiceProviderInterface
 
     public function mergeConfigFromNotyf()
     {
-        $notifyConfig = $this->app['config']->get('flasher.adapters.notyf', array());
+        $flasherConfig = $this->app['config']->get('flasher.adapters.notyf', array());
 
-        $notyfConfig = $this->app['config']->get('notify_notyf', array());
+        $notyfConfig = $this->app['config']->get('flasher_notyf', array());
 
-        $this->app['config']->set('flasher.adapters.notyf', array_merge($notyfConfig, $notifyConfig));
+        $this->app['config']->set('flasher.adapters.notyf', array_merge($notyfConfig, $flasherConfig));
     }
 }

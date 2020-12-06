@@ -1,5 +1,5 @@
 {
-    "name": "php-flasher/flasher-laravel-sweet-alert",
+    "name": "php-flasher/flasher-sweet-alert-laravel",
     "description": "Laravel Flasher adapter package for php-flasher/flasher-sweet-alert",
     "keywords": [
         "yoeunes",
@@ -29,27 +29,26 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^1.0.4",
-        "php-flasher/flasher-sweet-alert": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8 || ^5.7 || ^6.0 || ^7.0 || ^8.3 || ^9.0",
-        "orchestra/testbench": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+        "php-flasher/flasher-laravel": "dev-main",
+        "php-flasher/flasher-sweet-alert": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Laravel\\SweetAlert\\": "src/"
+            "Flasher\\Laravel\\SweetAlert\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Laravel\\SweetAlert\\Tests\\": "tests/"
+            "Flasher\\Laravel\\SweetAlert\\Tests\\": "Tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\SweetAlert\Flasher\PrimeSweetAlertServiceProvider"
+                "Flasher\\SweetAlert\\Laravel\\FlasherSweetAlertServiceProvider"
             ]
         }
     },

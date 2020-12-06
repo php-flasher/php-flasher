@@ -44,7 +44,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Symfony\\": ""
+            "Flasher\\Symfony\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {

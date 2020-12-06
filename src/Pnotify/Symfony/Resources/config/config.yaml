@@ -1,0 +1,16 @@
+services:
+    flasher.factory.pnotify:
+        parent: 'flasher.abstract_factory'
+        class: Flasher\Pnotify\Prime\PnotifyFactory
+        tags:
+            - { name: 'flasher.factory' }
+
+    flasher.renderer.pnotify:
+        class: Flasher\PFlasher\Prime\PnotifyRenderer
+        arguments:
+            - '@flasher.config'
+        tags:
+            - { name: 'flasher.renderer' }
+
+    Flasher\PFlasher\Prime\PnotifyFactory: '@flasher.factory.pnotify'
+    Flasher\PFlasher\Prime\PnotifyRenderer: '@flasher.renderer.pnotify'

@@ -1,6 +1,6 @@
 {
-    "name": "php-flasher/flasher-laravel-notyf",
-    "description": "Laravel Flasher adapter package for php-flasher/flasher-notyf",
+    "name": "php-flasher/flasher-notyf-laravel",
+    "description": "Laravel adapter for php-flasher/flasher-notyf library",
     "keywords": [
         "yoeunes",
         "notify",
@@ -29,27 +29,26 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^1.0.4",
-        "php-flasher/flasher-notyf": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8 || ^5.7 || ^6.0 || ^7.0 || ^8.3 || ^9.0",
-        "orchestra/testbench": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+        "php-flasher/flasher-laravel": "dev-main",
+        "php-flasher/flasher-notyf": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Laravel\\Notyf\\": "src/"
+            "Flasher\\Notyf\\Laravel\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Laravel\\Notyf\\Tests\\": "tests/"
+            "Flasher\\Notyf\\Laravel\\Tests\\": "Tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\Notyf\Flasher\PrimeNotyfServiceProvider"
+                "Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider"
             ]
         }
     },

@@ -2,15 +2,15 @@
 
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
-use Flasher\Notyf\LaravelFlasher\PrimeNotyfServiceProvider;
+use Flasher\Notyf\Laravel\FlasherNotyfServiceProvider;
 
 interface ServiceProviderInterface
 {
     public function shouldBeUsed();
 
-    public function publishConfig(NotifyNotyfServiceProvider $provider);
+    public function publishConfig(FlasherNotyfServiceProvider $provider);
 
-    public function registerNotifyNotyfServices();
+    public function registerServices();
 
     public function mergeConfigFromNotyf();
 }

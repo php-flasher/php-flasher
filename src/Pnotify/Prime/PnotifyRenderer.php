@@ -1,15 +1,15 @@
 <?php
 
-namespace Flasher\PFlasher\Prime\Renderer;
+namespace Flasher\PFlasher\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Renderer\HasGlobalOptionsInterface;
+use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
 use Flasher\Prime\Renderer\RendererInterface;
 
-class PnotifyRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasGlobalOptionsInterface
+class PnotifyRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
     /**
      * @var ConfigInterface
@@ -44,10 +44,8 @@ class PnotifyRenderer implements RendererInterface, HasScriptsInterface, HasStyl
      */
     public function render(Envelope $envelope)
     {
-        $context = $envelope->getContext();
-        $options = isset($context['options']) ? $context['options'] : array();
+        $options = $envelope->getOptions();
 
-        $options['title'] = " " . $envelope->getTitle();
         $options['text'] = $envelope->getMessage();
         $options['type'] = $envelope->getType();
 
@@ -73,5 +71,13 @@ class PnotifyRenderer implements RendererInterface, HasScriptsInterface, HasStyl
     public function renderOptions()
     {
         return sprintf('PNotify.defaults = %s;', json_encode($this->options));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports($name = null, array $context = array())
+    {
+        return in_array($name, array(__CLASS__, 'pnotify', 'Flasher\Pnotify\Prime\PnotifyFactory', 'Flasher\Pnotify\Prime\Pnotify'));
     }
 }
