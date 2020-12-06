@@ -13,12 +13,18 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ext-json": "*"
+        "ext-json": "*",
+        "phpunit/phpunit": "^4.8"
     },
     "autoload": {
         "psr-4": {
             "Flasher\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "config": {
+        "platform": {
+            "php": "5.4"
+        }
+    }
 }

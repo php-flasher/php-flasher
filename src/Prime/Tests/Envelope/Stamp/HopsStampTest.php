@@ -3,14 +3,15 @@
 namespace Flasher\Prime\Tests\Envelope\Stamp;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\HopsStamp;
 use PHPUnit\Framework\TestCase;
 
-final class LifeStampTest extends TestCase
+final class HopsStampTest extends TestCase
 {
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new \Flasher\Prime\Stamp\HopsStamp(5);
+        $stamp        = new HopsStamp(5);
 
         $envelop = new Envelope($notification, array($stamp));
 

@@ -6,11 +6,11 @@ use Flasher\Prime\Config\Config;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Middleware\AddCreatedAtStampMiddleware;
 use Flasher\Prime\Middleware\AddPriorityStampMiddleware;
-use Flasher\Prime\Middleware\MiddlewareManager;
+use Flasher\Prime\Middleware\FlasherBus;
 use Flasher\Prime\Stamp\PriorityStamp;
 use PHPUnit\Framework\TestCase;
 
-final class MiddlewareStackTest extends TestCase
+final class FlasherBusTest extends TestCase
 {
     public function testHandle()
     {
@@ -29,7 +29,7 @@ final class MiddlewareStackTest extends TestCase
             )
         ));
 
-        $stack = new MiddlewareManager($config);
+        $stack = new FlasherBus($config);
 
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $envelope     = new Envelope($notification);
@@ -66,7 +66,7 @@ final class MiddlewareStackTest extends TestCase
             )
         ));
 
-        $stack = new MiddlewareManager($config);
+        $stack = new FlasherBus($config);
 
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $stamps       = array(
