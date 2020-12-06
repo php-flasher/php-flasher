@@ -158,7 +158,7 @@ class Laravel implements ServiceProviderInterface
 
     public function registerBladeDirectives()
     {
-        Blade::directive('notify_render', function ($criteria = null) {
+        Blade::directive('flasher_render', function ($criteria = null) {
             return "<?php echo app('flasher.presenter.html')->render($criteria); ?>";
         });
     }
