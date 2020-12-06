@@ -1,5 +1,5 @@
 /*!
- * PHPNotify js 1.0.0
+ * PHPFlasher js 0.1.0
  * https://github.com/php-flasher/flasher
  * @license MIT licensed
  *
@@ -11,7 +11,7 @@
     } else if (typeof exports === 'object') {
         module.exports = factory(root);
     } else {
-        root.PHPNotify = factory(root);
+        root.PHPFlasher = factory(root);
     }
 })(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this, function (window) {
 

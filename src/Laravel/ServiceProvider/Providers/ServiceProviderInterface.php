@@ -2,17 +2,17 @@
 
 namespace Flasher\Laravel\ServiceProvider\Providers;
 
-use Flasher\LaravelFlasher\PrimeServiceProvider;
+use Flasher\Laravel\FlasherServiceProvider;
 
 interface ServiceProviderInterface
 {
     public function shouldBeUsed();
 
-    public function publishConfig(NotifyServiceProvider $provider);
+    public function publishConfig(FlasherServiceProvider $provider);
 
-    public function publishAssets(NotifyServiceProvider $provider);
+    public function publishAssets(FlasherServiceProvider $provider);
 
-    public function registerNotifyServices();
+    public function registerServices();
 
     public function registerBladeDirectives();
 }
