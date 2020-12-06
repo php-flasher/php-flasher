@@ -1,15 +1,15 @@
 <?php
 
-namespace Flasher\Notyf\Prime\Renderer;
+namespace Flasher\Notyf\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Renderer\HasGlobalOptionsInterface;
+use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
 use Flasher\Prime\Renderer\RendererInterface;
 
-class NotyfRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasGlobalOptionsInterface
+final class NotyfRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
     /**
      * @var ConfigInterface
@@ -44,8 +44,7 @@ class NotyfRenderer implements RendererInterface, HasScriptsInterface, HasStyles
      */
     public function render(Envelope $envelope)
     {
-        $context = $envelope->getContext();
-        $options = isset($context['options']) ? $context['options'] : array();
+        $options = $envelope->getOptions();
 
         $options['message'] = $envelope->getMessage();
         $options['type'] = $envelope->getType();
@@ -72,5 +71,15 @@ class NotyfRenderer implements RendererInterface, HasScriptsInterface, HasStyles
     public function renderOptions()
     {
         return sprintf('if ("undefined" === typeof notyf) { var notyf = new Notyf(%s); }', json_encode($this->options));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports($name = null, array $context = array())
+    {
+        return in_array($name, array(__CLASS__, 'notyf', 'Flasher\Notyf\Prime\NotyfFactory',
+                                     'Flasher\Notyf\Prime\Pnotify'
+        ));
     }
 }
