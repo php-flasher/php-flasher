@@ -4,7 +4,7 @@ return array(
     'default' => 'toastr',
 
     'scripts' => array(
-        '/vendor/php-flasher/flasher/assets/js/notify.js'
+        '/vendor/php-flasher/flasher/assets/js/flasher.js'
     ),
 
     'styles' => array(
