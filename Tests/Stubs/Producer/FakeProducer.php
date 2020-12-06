@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\Tests\Stubs\Producer;
+namespace Flasher\Prime\Tests\Stubs\Factory;
 
 use Flasher\Prime\AbstractFlasher;
 

@@ -6,12 +6,12 @@ use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\PostFilterEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
-use Flasher\Prime\Filter\FilterManager;
+use Flasher\Prime\Filter\FilterManagerInterface;
 use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
-use Flasher\Prime\Renderer\RendererManager;
-use Flasher\Prime\Storage\StorageInterface;
+use Flasher\Prime\Renderer\RendererManagerInterface;
+use Flasher\Prime\Storage\StorageManagerInterface;
 
 abstract class AbstractPresenter implements PresenterInterface
 {
@@ -26,17 +26,17 @@ abstract class AbstractPresenter implements PresenterInterface
     protected $config;
 
     /**
-     * @var StorageInterface
+     * @var StorageManagerInterface
      */
-    protected $storage;
+    protected $storageManager;
 
     /**
-     * @var FilterManager
+     * @var FilterManagerInterface
      */
     protected $filterManager;
 
     /**
-     * @var RendererManager
+     * @var RendererManagerInterface
      */
     protected $rendererManager;
 
@@ -45,20 +45,20 @@ abstract class AbstractPresenter implements PresenterInterface
      *
      * @param EventDispatcherInterface $eventDispatcher
      * @param ConfigInterface          $config
-     * @param StorageInterface         $storage
-     * @param FilterManager            $filterManager
-     * @param RendererManager          $rendererManager
+     * @param StorageManagerInterface  $storageManager
+     * @param FilterManagerInterface   $filterManager
+     * @param RendererManagerInterface $rendererManager
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         ConfigInterface $config,
-        StorageInterface $storage,
-        FilterManager $filterManager,
-        RendererManager $rendererManager
+        StorageManagerInterface $storageManager,
+        FilterManagerInterface $filterManager,
+        RendererManagerInterface $rendererManager
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->config          = $config;
-        $this->storage         = $storage;
+        $this->storageManager  = $storageManager;
         $this->filterManager   = $filterManager;
         $this->rendererManager = $rendererManager;
     }
@@ -81,7 +81,7 @@ abstract class AbstractPresenter implements PresenterInterface
     {
         $filter = $this->filterManager->make($filterName);
 
-        $envelopes = $this->storage->all();
+        $envelopes = $this->storageManager->all();
 
         $event = new PostFilterEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
@@ -133,18 +133,18 @@ abstract class AbstractPresenter implements PresenterInterface
         $renderers = array();
 
         foreach ($envelopes as $envelope) {
-            $rendererStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
-            if (in_array($rendererStamp->getHandler(), $renderers)) {
+            $handlerStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
+            if (in_array($handlerStamp->getHandler(), $renderers)) {
                 continue;
             }
 
-            $renderer = $this->rendererManager->make($rendererStamp->getHandler());
+            $renderer = $this->rendererManager->make($handlerStamp->getHandler());
             if (!$renderer instanceof HasScriptsInterface) {
                 continue;
             }
 
             $files       = array_merge($files, $renderer->getScripts());
-            $renderers[] = $rendererStamp->getHandler();
+            $renderers[] = $handlerStamp->getHandler();
         }
 
         return array_values(array_filter(array_unique($files)));

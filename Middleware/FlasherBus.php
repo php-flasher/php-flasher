@@ -3,22 +3,16 @@
 namespace Flasher\Prime\Middleware;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
 
-final class NotifyBus
+final class FlasherBus implements FlasherBusInterface
 {
     /**
      * @var MiddlewareInterface[]
      */
-    private $middlewares;
+    private $middlewares = array();
 
     /**
-     * Executes the given command and optionally returns a value
-     *
-     * @param Envelope|NotificationInterface $envelope
-     * @param array                          $stamps
-     *
-     * @return mixed
+     * @inheritDoc
      */
     public function dispatch($envelope, $stamps = array())
     {
@@ -32,9 +26,7 @@ final class NotifyBus
     }
 
     /**
-     * @param MiddlewareInterface $middleware
-     *
-     * @return $this
+     * @inheritDoc
      */
     public function addMiddleware(MiddlewareInterface $middleware)
     {

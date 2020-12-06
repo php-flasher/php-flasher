@@ -1,10 +1,8 @@
 <?php
 
-namespace Flasher\Prime;
+namespace Flasher\Prime\Renderer;
 
-use Flasher\Prime\Factory\FlasherFactoryInterface;
-
-interface FlasherInterface
+interface RendererManagerInterface
 {
     /**
      * Get a driver instance.
@@ -12,7 +10,7 @@ interface FlasherInterface
      * @param string|null $name
      * @param array       $context
      *
-     * @return FlasherFactoryInterface
+     * @return RendererInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -21,7 +19,7 @@ interface FlasherInterface
     /**
      * Register a custom driver creator.
      *
-     * @param \Closure|FlasherFactoryInterface $driver
+     * @param \Closure|RendererInterface $driver
      *
      * @return $this
      */

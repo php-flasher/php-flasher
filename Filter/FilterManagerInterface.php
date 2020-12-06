@@ -1,10 +1,8 @@
 <?php
 
-namespace Flasher\Prime;
+namespace Flasher\Prime\Filter;
 
-use Flasher\Prime\Factory\FlasherFactoryInterface;
-
-interface FlasherInterface
+interface FilterManagerInterface
 {
     /**
      * Get a driver instance.
@@ -12,7 +10,7 @@ interface FlasherInterface
      * @param string|null $name
      * @param array       $context
      *
-     * @return FlasherFactoryInterface
+     * @return FilterInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -21,7 +19,7 @@ interface FlasherInterface
     /**
      * Register a custom driver creator.
      *
-     * @param \Closure|FlasherFactoryInterface $driver
+     * @param \Closure|FilterInterface $driver
      *
      * @return $this
      */
