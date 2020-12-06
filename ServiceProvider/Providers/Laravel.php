@@ -35,25 +35,25 @@ class Laravel implements ServiceProviderInterface
 
     public function registerNotifyPnotifyServices()
     {
-        $this->app->singleton('notify.producer.pnotify', function (Container $app) {
-            return new PnotifyProducer($app['notify.storage'], $app['notify.middleware']);
+        $this->app->singleton('flasher.factory.pnotify', function (Container $app) {
+            return new PnotifyProducer($app['flasher.storage'], $app['flasher.middleware']);
         });
 
-        $this->app->singleton('notify.renderer.pnotify', function (Container $app) {
-            return new PnotifyRenderer($app['notify.config']);
+        $this->app->singleton('flasher.renderer.pnotify', function (Container $app) {
+            return new PnotifyRenderer($app['flasher.config']);
         });
 
-        $this->app->alias('notify.producer.pnotify', 'Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer');
-        $this->app->alias('notify.renderer.pnotify', 'Flasher\PFlasher\Prime\Renderer\PnotifyRenderer');
+        $this->app->alias('flasher.factory.pnotify', 'Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer');
+        $this->app->alias('flasher.renderer.pnotify', 'Flasher\PFlasher\Prime\Renderer\PnotifyRenderer');
 
-        $this->app->extend('notify.producer', function (Flasher $manager, Container $app) {
-            $manager->addDriver('pnotify', $app['notify.producer.pnotify']);
+        $this->app->extend('flasher.factory', function (Flasher $manager, Container $app) {
+            $manager->addDriver('pnotify', $app['flasher.factory.pnotify']);
 
             return $manager;
         });
 
-        $this->app->extend('notify.renderer', function (RendererManager $manager, Container $app) {
-            $manager->addDriver('pnotify', $app['notify.renderer.pnotify']);
+        $this->app->extend('flasher.renderer', function (RendererManager $manager, Container $app) {
+            $manager->addDriver('pnotify', $app['flasher.renderer.pnotify']);
 
             return $manager;
         });
@@ -61,10 +61,10 @@ class Laravel implements ServiceProviderInterface
 
     public function mergeConfigFromPnotify()
     {
-        $notifyConfig = $this->app['config']->get('notify.adapters.pnotify', array());
+        $notifyConfig = $this->app['config']->get('flasher.adapters.pnotify', array());
 
         $pnotifyConfig = $this->app['config']->get('notify_pnotify', array());
 
-        $this->app['config']->set('notify.adapters.pnotify', array_merge($pnotifyConfig, $notifyConfig));
+        $this->app['config']->set('flasher.adapters.pnotify', array_merge($pnotifyConfig, $notifyConfig));
     }
 }
