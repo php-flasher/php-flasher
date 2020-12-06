@@ -5,18 +5,20 @@ namespace Flasher\Laravel\Storage;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageInterface;
+use Illuminate\Session\SessionManager;
+use Illuminate\Session\Store;
 
 final class Storage implements StorageInterface
 {
     const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @var \Illuminate\Session\SessionManager|\Illuminate\Session\Store
+     * @var SessionManager|Store
      */
     private $session;
 
     /**
-     * @param \Illuminate\Session\SessionManager|\Illuminate\Session\Store $session
+     * @param SessionManager|Store $session
      */
     public function __construct($session)
     {
@@ -26,7 +28,7 @@ final class Storage implements StorageInterface
     /**
      * @inheritDoc
      */
-    public function get()
+    public function all()
     {
         return $this->session->get(self::ENVELOPES_NAMESPACE, array());
     }

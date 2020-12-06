@@ -4,16 +4,16 @@ namespace Flasher\Laravel\Tests;
 
 use Illuminate\View\Compilers\BladeCompiler;
 
-class NotifyServiceProviderTest extends TestCase
+final class FlasherServiceProviderTest extends TestCase
 {
-    public function test_notify_service_exists()
+    public function testNotifyServiceExists()
     {
-        $this->assertTrue($this->app->bound('flasher.factory'));
+        $this->assertTrue($this->app->bound('flasher'));
     }
 
-    public function test_notify_manager_get_config()
+    public function testNotifyManagerGetConfig()
     {
-        $notify = $this->app->make('flasher.factory');
+        $notify = $this->app->make('flasher');
 
         $reflection = new \ReflectionClass(get_class($notify));
         $config = $reflection->getProperty('config');
@@ -22,11 +22,11 @@ class NotifyServiceProviderTest extends TestCase
         $this->assertInstanceOf('Flasher\Prime\Config\ConfigInterface', $config->getValue($notify));
     }
 
-    public function test_blade_directive()
+    public function testBladeDirective()
     {
         /** @var BladeCompiler $blade */
         $blade = $this->app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $this->assertEquals("<?php echo app('flasher.presenter.html')->render(); ?>", $blade->compileString('@notify_render'));
+        $this->assertEquals("<?php echo app('flasher.presenter.html')->render(); ?>", $blade->compileString('@flasher_render'));
     }
 }
