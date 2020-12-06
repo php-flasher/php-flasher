@@ -14,7 +14,7 @@ final class Laravel4 extends Laravel
 
     public function publishConfig(FlasherPnotifyServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel-pnotify', 'notify_pnotify', __DIR__.'/../../Resources');
+        $provider->package('php-flasher/flasher-pnotify-laravel', 'notify_pnotify', __DIR__.'/../../Resources');
     }
 
     public function mergeConfigFromPnotify()
