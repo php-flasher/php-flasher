@@ -8,6 +8,7 @@ use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
+use Flasher\Prime\Stamp\StampInterface;
 
 class NotificationBuilder implements NotificationBuilderInterface
 {
@@ -186,7 +187,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * @inheritDoc
      */
-    public function with($stamps = array())
+    public function with(array $stamps = array())
     {
         $this->envelope->with($stamps);
 
@@ -196,9 +197,9 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * @inheritDoc
      */
-    public function withStamp($stamps = array())
+    public function withStamp(StampInterface $stamp)
     {
-        $this->envelope->withStamp($stamps);
+        $this->envelope->withStamp($stamp);
 
         return $this;
     }
