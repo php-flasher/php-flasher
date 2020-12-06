@@ -1,9 +1,10 @@
 {
     "name": "php-flasher/flasher-laravel",
-    "description": "Laravel Flasher package for php-flasher/flasher",
+    "description": "Laravel adapter for php-flasher/flasher library",
     "keywords": [
         "yoeunes",
         "notify",
+        "flasher",
         "php",
         "laravel",
         "symfony",
@@ -31,13 +32,12 @@
         "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0",
         "php-flasher/flasher": "dev-main"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.7|^6.0|^7.0|^8.3|^9.0",
-        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0"
-    },
     "autoload": {
         "psr-4": {
-            "Flasher\\Laravel\\": ""
+            "Flasher\\Laravel\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         },
         "files": [
           "helpers.php"
@@ -52,10 +52,7 @@
         "laravel": {
             "providers": [
                 "Flasher\\Laravel\\FlasherServiceProvider"
-            ],
-            "aliases": {
-                "Flasher": "Flasher\\Laravel\\Facades\\Flasher"
-            }
+            ]
         }
     },
     "config": {

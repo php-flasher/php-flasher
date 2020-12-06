@@ -1,5 +1,5 @@
 {
-    "name": "php-flasher/flasher-symfony-sweet-alert",
+    "name": "php-flasher/flasher-sweet-alert-symfony",
     "type": "symfony-bundle",
     "description": "Symfony Flasher adapter for Sweet Alert 2 library for php-flasher/flasher-symfony",
     "keywords": [
@@ -30,20 +30,20 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "^1.0",
-        "php-flasher/flasher-sweet-alert": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36"
+        "php-flasher/flasher-symfony": "dev-main",
+        "php-flasher/flasher-sweet-alert": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Symfony\\SweetAlert\\": "src/"
+            "Flasher\\SweetAlert\\Symfony\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Symfony\\SweetAlert\\Tests\\": "tests/"
+            "Flasher\\SweetAlert\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {

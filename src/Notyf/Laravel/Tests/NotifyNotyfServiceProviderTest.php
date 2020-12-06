@@ -2,7 +2,7 @@
 
 namespace Flasher\Notyf\Laravel\Tests;
 
-class NotifyNotyfServiceProviderTest extends TestCase
+final class NotifyNotyfServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
