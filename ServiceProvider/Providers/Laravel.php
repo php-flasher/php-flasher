@@ -2,9 +2,9 @@
 
 namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
-use Flasher\PFlasher\Prime\PnotifyRenderer;
 use Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider;
 use Flasher\Pnotify\Prime\PnotifyFactory;
+use Flasher\Pnotify\Prime\PnotifyRenderer;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\RendererManager;
 use Illuminate\Container\Container;
@@ -43,8 +43,8 @@ class Laravel implements ServiceProviderInterface
             return new PnotifyRenderer($app['flasher.config']);
         });
 
-        $this->app->alias('flasher.factory.pnotify', 'Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer');
-        $this->app->alias('flasher.renderer.pnotify', 'Flasher\PFlasher\Prime\Renderer\PnotifyRenderer');
+        $this->app->alias('flasher.factory.pnotify', 'Flasher\Pnotify\Prime\PnotifyFactory');
+        $this->app->alias('flasher.renderer.pnotify', 'Flasher\Pnotify\Prime\PnotifyRenderer');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
             $manager->addDriver($app['flasher.factory.pnotify']);
@@ -52,7 +52,7 @@ class Laravel implements ServiceProviderInterface
             return $manager;
         });
 
-        $this->app->extend('flasher.renderer', function (RendererManager $manager, Container $app) {
+        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
             $manager->addDriver($app['flasher.renderer.pnotify']);
 
             return $manager;
