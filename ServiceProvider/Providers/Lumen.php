@@ -2,8 +2,8 @@
 
 namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
+use Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider;
 use Laravel\Lumen\Application;
-use Flasher\Pnotify\LaravelFlasher\PrimePnotifyServiceProvider;
 
 final class Lumen extends Laravel
 {
@@ -12,12 +12,12 @@ final class Lumen extends Laravel
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(NotifyPnotifyServiceProvider $provider)
+    public function publishConfig(FlasherPnotifyServiceProvider $provider)
     {
-        $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
+        $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
 
-        $this->app->configure('notify_pnotify');
+        $this->app->configure('flasher_pnotify');
 
-        $provider->mergeConfigFrom($source, 'notify_pnotify');
+        $provider->mergeConfigFrom($source, 'flasher_pnotify');
     }
 }

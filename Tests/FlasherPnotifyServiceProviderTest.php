@@ -2,31 +2,31 @@
 
 namespace Flasher\Pnotify\Laravel\Tests;
 
-class NotifyPnotifyServiceProviderTest extends TestCase
+class FlasherPnotifyServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
-        $this->assertTrue($this->app->bound('flasher.factory'));
+        $this->assertTrue($this->app->bound('flasher'));
         $this->assertTrue($this->app->bound('flasher.factory.pnotify'));
     }
 
     public function testNotifyFactoryIsAddedToExtensionsArray()
     {
-        $manager = $this->app->make('flasher.factory');
+        $flasher = $this->app->make('flasher');
 
-        $reflection = new \ReflectionClass($manager);
+        $reflection = new \ReflectionClass($flasher);
         $property = $reflection->getProperty('drivers');
         $property->setAccessible(true);
 
-        $extensions = $property->getValue($manager);
+        $extensions = $property->getValue($flasher);
 
         $this->assertCount(1, $extensions);
-        $this->assertInstanceOf('Flasher\Prime\FlasherInterface', $extensions['pnotify']);
+        $this->assertInstanceOf('Flasher\Prime\Factory\FlasherFactoryInterface', $extensions[0]);
     }
 
     public function testConfigPnotifyInjectedInGlobalNotifyConfig()
     {
-        $manager = $this->app->make('flasher.factory');
+        $manager = $this->app->make('flasher');
 
         $reflection = new \ReflectionClass($manager);
         $property = $reflection->getProperty('config');
