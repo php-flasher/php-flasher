@@ -26,7 +26,7 @@ class Laravel implements ServiceProviderInterface
 
     public function publishConfig(FlasherToastrServiceProvider $provider)
     {
-        $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
+        $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
 
         $provider->publishes(array($source => config_path('flasher_toastr.php')), 'config');
 
@@ -46,7 +46,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.factory.toastr', 'Flasher\Toastr\Prime\ToastrFactory');
         $this->app->alias('flasher.renderer.toastr', 'Flasher\Toastr\Prime\ToastrRenderer');
 
-        $this->app->extend('flasher.factory', function (Flasher $flasher, Container $app) {
+        $this->app->extend('flasher', function (Flasher $flasher, Container $app) {
             $flasher->addDriver($app['flasher.factory.toastr']);
 
             return $flasher;
