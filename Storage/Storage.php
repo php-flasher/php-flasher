@@ -54,6 +54,28 @@ final class Storage implements StorageInterface
     /**
      * @inheritDoc
      */
+    public function update($envelopes)
+    {
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+        $map = UuidStamp::indexWithUuid($envelopes);
+
+        $store = $this->all();
+        foreach ($store as $index => $envelope) {
+            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+
+            if (!isset($map[$uuid])) {
+                continue;
+            }
+
+            $store[$index] = $map[$uuid];
+        }
+
+        $this->session->set(self::ENVELOPES_NAMESPACE, $store);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function remove($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
