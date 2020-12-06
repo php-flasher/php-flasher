@@ -38,6 +38,11 @@
             "/Tests/"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Prime\\Tests\\": "Tests/"
+        }
+    },
     "config": {
         "sort-packages": true
     },
