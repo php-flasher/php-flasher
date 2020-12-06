@@ -2,8 +2,8 @@
 
 namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
+use Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider;
 use Illuminate\Foundation\Application;
-use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
 
 final class Laravel4 extends Laravel
 {
@@ -12,17 +12,17 @@ final class Laravel4 extends Laravel
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(NotifySweetAlertServiceProvider $provider)
+    public function publishConfig(FlasherSweetAlertServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel-sweet_alert', 'notify_sweet_alert', __DIR__.'/../../../resources');
+        $provider->package('php-flasher/flasher-laravel-sweet_alert', 'flasher_sweet_alert', __DIR__.'/../../../resources');
     }
 
     public function mergeConfigFromSweetAlert()
     {
-        $notifyConfig = $this->app['config']->get('notify::config.adapters.sweet_alert', array());
+        $flasherConfig = $this->app['config']->get('flasher::config.adapters.sweet_alert', array());
 
-        $sweet_alertConfig = $this->app['config']->get('notify_sweet_alert::config', array());
+        $sweetAlertConfig = $this->app['config']->get('flasher_sweet_alert::config', array());
 
-        $this->app['config']->set('notify::config.adapters.sweet_alert', array_merge($sweet_alertConfig, $notifyConfig));
+        $this->app['config']->set('flasher::config.adapters.sweet_alert', array_merge($sweetAlertConfig, $flasherConfig));
     }
 }
