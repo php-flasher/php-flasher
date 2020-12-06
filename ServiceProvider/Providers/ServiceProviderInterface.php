@@ -2,15 +2,15 @@
 
 namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
-use Flasher\SweetAlert\LaravelFlasher\PrimeSweetAlertServiceProvider;
+use Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider;
 
 interface ServiceProviderInterface
 {
     public function shouldBeUsed();
 
-    public function publishConfig(NotifySweetAlertServiceProvider $provider);
+    public function publishConfig(FlasherSweetAlertServiceProvider $provider);
 
-    public function registerNotifySweetAlertServices();
+    public function registerServices();
 
     public function mergeConfigFromSweetAlert();
 }

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Flasher\SweetAlert\Laravel\ServiceProvider\ServiceProviderManager;
 
-class NotifySweetAlertServiceProvider extends ServiceProvider
+final class FlasherSweetAlertServiceProvider extends ServiceProvider
 {
     public function boot()
     {
@@ -31,7 +31,6 @@ class NotifySweetAlertServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory',
             'flasher.factory.sweet_alert',
             'flasher.renderer.sweet_alert',
         );
