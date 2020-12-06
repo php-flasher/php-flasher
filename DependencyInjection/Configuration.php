@@ -12,13 +12,13 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('notify_notyf');
+        $treeBuilder = new TreeBuilder('flasher_notyf');
 
         if (\method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('notify_notyf');
+            $rootNode = $treeBuilder->root('flasher_notyf');
         }
 
         $rootNode
