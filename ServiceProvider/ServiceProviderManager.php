@@ -36,7 +36,7 @@ final class ServiceProviderManager
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerNotifyPnotifyServices();
+        $provider->registerServices();
     }
 
     /**
