@@ -14,7 +14,7 @@ final class Laravel4 extends Laravel
 
     public function publishConfig(FlasherSweetAlertServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel-sweet_alert', 'flasher_sweet_alert', __DIR__.'/../../../resources');
+        $provider->package('php-flasher/flasher-laravel-sweet_alert', 'flasher_sweet_alert', __DIR__.'/../../Resources');
     }
 
     public function mergeConfigFromSweetAlert()
