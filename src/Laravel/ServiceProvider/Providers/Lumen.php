@@ -16,9 +16,9 @@ final class Lumen extends Laravel
     {
         $source = realpath($raw = __DIR__.'/../../../Resources/config/config.php') ?: $raw;
 
-        $this->app->configure('notify');
+        $this->app->configure('flasher');
 
-        $provider->mergeConfigFrom($source, 'notify');
+        $provider->mergeConfigFrom($source, 'flasher');
     }
 
     public function registerServices()

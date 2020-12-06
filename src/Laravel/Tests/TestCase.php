@@ -2,6 +2,7 @@
 
 namespace Flasher\Laravel\Tests;
 
+use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -19,7 +20,7 @@ class TestCase extends Orchestra
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
