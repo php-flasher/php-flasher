@@ -2,8 +2,8 @@
 
 namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
+use Flasher\Toastr\Laravel\FlasherToastrServiceProvider;
 use Laravel\Lumen\Application;
-use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
 
 final class Lumen extends Laravel
 {
@@ -12,12 +12,12 @@ final class Lumen extends Laravel
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(NotifyToastrServiceProvider $provider)
+    public function publishConfig(FlasherToastrServiceProvider $provider)
     {
         $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
 
-        $this->app->configure('notify_toastr');
+        $this->app->configure('flasher_toastr');
 
-        $provider->mergeConfigFrom($source, 'notify_toastr');
+        $provider->mergeConfigFrom($source, 'flasher_toastr');
     }
 }

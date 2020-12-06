@@ -2,8 +2,8 @@
 
 namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
+use Flasher\Toastr\Laravel\FlasherToastrServiceProvider;
 use Illuminate\Foundation\Application;
-use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
 
 final class Laravel4 extends Laravel
 {
@@ -12,17 +12,17 @@ final class Laravel4 extends Laravel
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(NotifyToastrServiceProvider $provider)
+    public function publishConfig(FlasherToastrServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel-toastr', 'notify_toastr', __DIR__.'/../../../resources');
+        $provider->package('php-flasher/flasher-laravel-toastr', 'flasher_toastr', __DIR__.'/../../../resources');
     }
 
     public function mergeConfigFromToastr()
     {
-        $notifyConfig = $this->app['config']->get('notify::config.adapters.toastr', array());
+        $flasherConfig = $this->app['config']->get('flasher::config.adapters.toastr', array());
 
-        $toastrConfig = $this->app['config']->get('notify_toastr::config', array());
+        $toastrConfig = $this->app['config']->get('flasher_toastr::config', array());
 
-        $this->app['config']->set('notify::config.adapters.toastr', array_merge($toastrConfig, $notifyConfig));
+        $this->app['config']->set('flasher::config.adapters.toastr', array_merge($toastrConfig, $flasherConfig));
     }
 }
