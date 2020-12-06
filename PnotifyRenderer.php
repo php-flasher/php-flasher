@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\PFlasher\Prime;
+namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
@@ -9,7 +9,7 @@ use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
 use Flasher\Prime\Renderer\RendererInterface;
 
-class PnotifyRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
+final class PnotifyRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
     /**
      * @var ConfigInterface
