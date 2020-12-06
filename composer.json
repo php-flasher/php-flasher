@@ -1,0 +1,51 @@
+{
+    "name": "php-flasher/flasher-noty",
+    "description": "PHP noty adapter for php-flasher/flasher",
+    "keywords": [
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "noty "
+    ],
+    "homepage": "https://github.com/php-flasher/flasher-noty",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher": "dev-main"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Noty\\Prime\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Noty\\Prime\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
