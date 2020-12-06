@@ -2,15 +2,15 @@
 
 namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
-use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
+use Flasher\Toastr\Laravel\FlasherToastrServiceProvider;
 
 interface ServiceProviderInterface
 {
     public function shouldBeUsed();
 
-    public function publishConfig(NotifyToastrServiceProvider $provider);
+    public function publishConfig(FlasherToastrServiceProvider $provider);
 
-    public function registerNotifyToastrServices();
+    public function registerToastrServices();
 
     public function mergeConfigFromToastr();
 }

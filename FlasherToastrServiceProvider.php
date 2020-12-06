@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Flasher\Toastr\Laravel\ServiceProvider\ServiceProviderManager;
 
-class NotifyToastrServiceProvider extends ServiceProvider
+class FlasherToastrServiceProvider extends ServiceProvider
 {
     public function boot()
     {

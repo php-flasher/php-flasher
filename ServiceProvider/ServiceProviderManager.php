@@ -2,7 +2,7 @@
 
 namespace Flasher\Toastr\Laravel\ServiceProvider;
 
-use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
+use Flasher\Toastr\Laravel\FlasherToastrServiceProvider;
 use Flasher\Toastr\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
@@ -20,7 +20,7 @@ final class ServiceProviderManager
 
     private $notifyServiceProvider;
 
-    public function __construct(NotifyToastrServiceProvider $notifyServiceProvider)
+    public function __construct(FlasherToastrServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
     }
@@ -36,7 +36,7 @@ final class ServiceProviderManager
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerNotifyToastrServices();
+        $provider->registerToastrServices();
     }
 
     /**
