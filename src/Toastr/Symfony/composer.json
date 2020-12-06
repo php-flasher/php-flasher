@@ -34,11 +34,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Toastr\\Symfony\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        }
+            "Flasher\\Toastr\\Symfony\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

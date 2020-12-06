@@ -29,11 +29,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Toastr\\Prime\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        }
+            "Flasher\\Toastr\\Prime\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
