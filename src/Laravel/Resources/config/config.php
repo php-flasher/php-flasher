@@ -14,8 +14,4 @@ return array(
     'adapters' => array(
 
     ),
-
-    'stamps_middlewares' => array(
-
-    ),
 );

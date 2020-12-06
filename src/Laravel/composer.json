@@ -28,16 +28,16 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "illuminate/support": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
-        "php-flasher/flasher": "^1.0"
+        "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0",
+        "php-flasher/flasher": "dev-main"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8 || ^5.7 || ^6.0 || ^7.0 || ^8.3 || ^9.0",
-        "orchestra/testbench": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+        "phpunit/phpunit": "^4.8|^5.7|^6.0|^7.0|^8.3|^9.0",
+        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Laravel\\": "src/"
+            "Flasher\\Laravel\\": ""
         },
         "files": [
           "helpers.php"
@@ -45,13 +45,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Laravel\\Tests\\": "tests/"
+            "Flasher\\Laravel\\Tests\\": "Tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\Flasher\PrimeServiceProvider"
+                "Flasher\\Laravel\\FlasherServiceProvider"
             ],
             "aliases": {
                 "Flasher": "Flasher\\Laravel\\Facades\\Flasher"

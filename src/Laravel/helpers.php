@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('notify')) {
+if (!function_exists('flasher')) {
     /**
      * @param string $message
      * @param string $type
@@ -10,7 +10,7 @@ if (!function_exists('notify')) {
      *
      * @return \Flasher\Prime\Flasher
      */
-    function notify($message = null, $type = 'success', $title = '', array $options = array(), array $stamps = array())
+    function flasher($message = null, $type = 'success', $title = '', array $options = array(), array $stamps = array())
     {
         if (is_null($message) && 0 === func_num_args()) {
             return app('flasher.factory');

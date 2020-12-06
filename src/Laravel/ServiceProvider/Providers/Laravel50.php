@@ -15,7 +15,7 @@ final class Laravel50 extends Laravel
     public function registerBladeDirectives()
     {
         Blade::extend(function ($view, $compiler) {
-            $pattern = $compiler->createPlainMatcher('notify_render(.*)');
+            $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
 
             return preg_replace($pattern, '$1<?php echo app(\'flasher.presenter.html\')->render($2); ?>', $view);
         });
