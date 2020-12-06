@@ -37,6 +37,25 @@ final class ArrayStorage implements StorageInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function update($envelopes)
+    {
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+        $map = UuidStamp::indexWithUuid($envelopes);
+
+        foreach ($this->envelopes as $index => $envelope) {
+            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+
+            if (!isset($map[$uuid])) {
+                continue;
+            }
+
+            $this->envelopes[$index] = $map[$uuid];
+        }
+    }
+
+    /**
      * @param Envelope[] $envelopes
      */
     public function remove($envelopes)
