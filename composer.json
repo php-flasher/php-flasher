@@ -37,11 +37,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Laravel\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
+            "Flasher\\Laravel\\": ""
         },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ],
         "files": [
           "helpers.php"
         ]
