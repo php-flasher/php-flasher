@@ -2,13 +2,13 @@
 
 namespace Flasher\Prime\Tests\Filter;
 
-use Notify\Config\Config;
+use Flasher\Prime\Config\Config;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Filter\FilterBuilder;
 use Flasher\Prime\Filter\Specification\PrioritySpecification;
 use Flasher\Prime\Middleware\AddCreatedAtStampMiddleware;
 use Flasher\Prime\Middleware\AddPriorityStampMiddleware;
-use Flasher\Prime\MiddlewareFlasher\PrimeBus;
+use Flasher\Prime\Middleware\FlasherBus;
 use Flasher\Prime\Stamp\PriorityStamp;
 use PHPUnit\Framework\TestCase;
 
@@ -54,7 +54,7 @@ final class FilterManagerTest extends TestCase
             )
         );
 
-        $middleware = new NotifyBus($config);
+        $middleware = new FlasherBus($config);
 
         $envelopes = array();
         foreach ($notifications as $notification) {

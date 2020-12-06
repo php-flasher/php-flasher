@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Tests\Filter;
 
-use Notify\Config\Config;
+use Flasher\Prime\Config\Config;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Middleware\AddCreatedAtStampMiddleware;
 use Flasher\Prime\Middleware\AddPriorityStampMiddleware;

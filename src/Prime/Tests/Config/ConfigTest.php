@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Tests\Config;
 
-use Notify\Config\Config;
+use Flasher\Prime\Config\Config;
 use PHPUnit\Framework\TestCase;
 
 final class ConfigTest extends TestCase
@@ -11,9 +11,9 @@ final class ConfigTest extends TestCase
     {
         $config = new Config(
             array(
-                'default' => 'notify',
+                'default' => 'default_flasher',
                 'drivers' => array(
-                    'notify' => array(
+                    'toastr' => array(
                         'scripts' => array('script.js'),
                         'styles'  => array('styles.css'),
                         'options' => array()
@@ -22,14 +22,14 @@ final class ConfigTest extends TestCase
             )
         );
 
-        $this->assertEquals('notify', $config->get('default'));
+        $this->assertEquals('default_flasher', $config->get('default'));
         $this->assertEquals(
             array(
                 'scripts' => array('script.js'),
                 'styles'  => array('styles.css'),
                 'options' => array()
             ),
-            $config->get('drivers.notify')
+            $config->get('drivers.toastr')
         );
         $this->assertEquals(array('styles.css'), $config->get('drivers.flasher.styles'));
         $this->assertEquals(array(), $config->get('drivers.flasher.options'));
