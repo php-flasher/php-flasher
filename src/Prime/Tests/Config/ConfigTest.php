@@ -31,8 +31,8 @@ final class ConfigTest extends TestCase
             ),
             $config->get('drivers.notify')
         );
-        $this->assertEquals(array('styles.css'), $config->get('drivers.notify.styles'));
-        $this->assertEquals(array(), $config->get('drivers.notify.options'));
+        $this->assertEquals(array('styles.css'), $config->get('drivers.flasher.styles'));
+        $this->assertEquals(array(), $config->get('drivers.flasher.options'));
         $this->assertEquals(null, $config->get('drivers.not_exists.options'));
         $this->assertEquals('now_it_exists', $config->get('drivers.not_exists.options', 'now_it_exists'));
     }

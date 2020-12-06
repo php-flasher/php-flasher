@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\EventDispatcher;
 
-use Flasher\Prime\EventDispatcher\EventSubscriber\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 
 interface EventDispatcherInterface
 {

@@ -2,6 +2,7 @@
 
 namespace Flasher\Prime\Factory;
 
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
@@ -22,14 +23,27 @@ use Flasher\Prime\Notification\NotificationInterface;
  * @method NotificationBuilderInterface warning($message = null, array $options = array())
  * @method NotificationInterface getNotification()
  */
-abstract class AbstractFlasher implements FactoryInterface
+abstract class AbstractFactory implements FlasherFactoryInterface
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function createNotificationBuilder()
     {
-        return new NotificationBuilder($this->createNotification());
+        return new NotificationBuilder($this->getEventDispatcher(), $this->createNotification(), $this->createHandler());
     }
 
     /**
@@ -38,6 +52,14 @@ abstract class AbstractFlasher implements FactoryInterface
     public function createNotification()
     {
         return new Notification();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createHandler()
+    {
+        return null;
     }
 
     /**
@@ -59,5 +81,13 @@ abstract class AbstractFlasher implements FactoryInterface
     public function __call($method, array $parameters)
     {
         return call_user_func_array(array($this->createNotificationBuilder(), $method), $parameters);
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
     }
 }

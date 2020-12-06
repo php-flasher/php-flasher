@@ -34,7 +34,7 @@ final class JsonPresenter extends AbstractPresenter
             'notifications' => $this->renderEnvelopes($envelopes),
         );
 
-        $this->storage->flush($envelopes);
+        $this->storageManager->flush($envelopes);
 
         return $response;
     }

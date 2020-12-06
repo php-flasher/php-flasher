@@ -4,10 +4,7 @@ namespace Flasher\Prime\Filter;
 
 use Flasher\Prime\Manager\AbstractManager;
 
-/**
- * @method \Flasher\Prime\Filter\FilterInterface make($driver = null)
- */
-final class FilterManager extends AbstractManager
+final class FilterManager extends AbstractManager implements FilterManagerInterface
 {
     protected function getDefaultDriver()
     {

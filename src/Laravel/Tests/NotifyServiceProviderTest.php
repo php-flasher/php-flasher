@@ -8,12 +8,12 @@ class NotifyServiceProviderTest extends TestCase
 {
     public function test_notify_service_exists()
     {
-        $this->assertTrue($this->app->bound('notify.producer'));
+        $this->assertTrue($this->app->bound('flasher.factory'));
     }
 
     public function test_notify_manager_get_config()
     {
-        $notify = $this->app->make('notify.producer');
+        $notify = $this->app->make('flasher.factory');
 
         $reflection = new \ReflectionClass(get_class($notify));
         $config = $reflection->getProperty('config');
@@ -27,6 +27,6 @@ class NotifyServiceProviderTest extends TestCase
         /** @var BladeCompiler $blade */
         $blade = $this->app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $this->assertEquals("<?php echo app('notify.presenter.html')->render(); ?>", $blade->compileString('@notify_render'));
+        $this->assertEquals("<?php echo app('flasher.presenter.html')->render(); ?>", $blade->compileString('@notify_render'));
     }
 }

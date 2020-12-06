@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Prime\EventDispatcher\EventSubscriber;
+namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PostFilterEvent;
 use Flasher\Prime\Envelope;
 
-final class FilterEnvelopesByHopsListener implements EventSubscriberInterface
+final class PostFilterListener implements EventSubscriberInterface
 {
     /**
      * @param PostFilterEvent $event
@@ -16,14 +16,11 @@ final class FilterEnvelopesByHopsListener implements EventSubscriberInterface
     {
         $envelopes = $event->getEnvelopes();
 
-        $envelopes = array_filter(
-            $envelopes,
-            static function (Envelope $envelope) {
-                $hopsStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
+        $envelopes = array_filter($envelopes, static function (Envelope $envelope) {
+            $hopsStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
 
-                return $hopsStamp->getAmount() > 0;
-            }
-        );
+            return $hopsStamp->getAmount() > 0;
+        });
 
         $event->setEnvelopes($envelopes);
     }

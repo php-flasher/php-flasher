@@ -41,8 +41,8 @@ abstract class AbstractManager
     {
         $name = $name ?: $this->getDefaultDriver();
 
-        if (is_array($name)) {
-            $context = $name;
+        if (!is_string($name)) {
+            $context = is_array($name) ? $name : array($name);
             $name    = null;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\SweetAlert\Prime\Producer;
+namespace Flasher\SweetAlert\Prime\Factory;
 
 final class SweetAlertProducer extends \Flasher\Prime\AbstractFlasher
 {

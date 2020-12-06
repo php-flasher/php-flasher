@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class NotifyToastrExtension extends Extension implements PrependExtensionInterface
+final class FlasherToastrExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -29,14 +29,14 @@ final class NotifyToastrExtension extends Extension implements PrependExtensionI
      */
     public function prepend(ContainerBuilder $container)
     {
-        if (!$container->hasExtension('notify')) {
+        if (!$container->hasExtension('flasher')) {
             throw new \RuntimeException('[Flasher\SymfonyFlasher\PrimeBundle] is not registered');
         }
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $container->prependExtensionConfig('notify', array(
+        $container->prependExtensionConfig('flasher', array(
             'adapters' => array(
                 'toastr' => $config,
             ),

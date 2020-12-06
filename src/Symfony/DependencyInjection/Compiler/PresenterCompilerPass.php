@@ -2,6 +2,7 @@
 
 namespace Flasher\Symfony\DependencyInjection\Compiler;
 
+use Flasher\Prime\Presenter\PresenterManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -13,20 +14,15 @@ final class PresenterCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('notify.presenter')) {
+        if (!$container->has('flasher.presenter_manager')) {
             return;
         }
 
-        /** @var \Flasher\Prime\Presenter\PresenterManager $manager */
-        $manager = $container->findDefinition('notify.presenter');
+        /** @var PresenterManager $manager */
+        $manager = $container->findDefinition('flasher.presenter_manager');
 
-        foreach ($container->findTaggedServiceIds('notify.presenter') as $id => $tags) {
-            foreach ($tags as $attributes) {
-                $manager->addMethodCall('addDriver', array(
-                    $attributes['alias'],
-                    new Reference($id),
-                ));
-            }
+        foreach ($container->findTaggedServiceIds('flasher.presenter') as $id => $tags) {
+            $manager->addMethodCall('addDriver', array(new Reference($id)));
         }
     }
 }

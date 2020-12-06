@@ -1,0 +1,35 @@
+imports:
+#    - { resource: 'services.yaml' }
+    - { resource: 'middlewares.yaml' }
+    - { resource: 'storage.yaml' }
+    - { resource: 'presenters.yaml' }
+    - { resource: 'filters.yaml' }
+    - { resource: 'twig.yaml' }
+    - { resource: 'event_subscribers.yaml' }
+    - { resource: 'aliases.yaml' }
+
+services:
+    flasher.config:
+        class: Flasher\Prime\Config\Config
+        arguments:
+            - null
+
+    flasher.abstract_manager:
+        class: Flasher\Prime\Manager\AbstractManager
+        abstract: true
+        arguments:
+            - '@flasher.config'
+
+    flasher:
+        class: Flasher\Prime\Flasher
+        parent: 'flasher.abstract_manager'
+
+    flasher.abstract_factory:
+        class: Flasher\Prime\Factory\AbstractFactory
+        abstract: true
+        arguments:
+            - '@flasher.event_dispatcher'
+
+    flasher.renderer_manager:
+        class: Flasher\Prime\Renderer\RendererManager
+        parent: 'flasher.abstract_manager'

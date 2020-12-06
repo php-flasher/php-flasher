@@ -2,6 +2,8 @@
 
 namespace Flasher\Prime;
 
+use Flasher\Prime\Factory\FlasherFactoryInterface;
+
 interface FlasherInterface
 {
     /**
@@ -10,7 +12,7 @@ interface FlasherInterface
      * @param string|null $name
      * @param array       $context
      *
-     * @return NotifyFactoryInterface
+     * @return FlasherFactoryInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -19,7 +21,7 @@ interface FlasherInterface
     /**
      * Register a custom driver creator.
      *
-     * @param \Closure|NotifyFactoryInterface $driver
+     * @param \Closure|FlasherFactoryInterface $driver
      *
      * @return $this
      */

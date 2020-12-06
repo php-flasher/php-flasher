@@ -1,0 +1,7 @@
+services:
+    Flasher\Symfony\Twig\FlasherTwigExtension:
+        class:
+        arguments:
+            - '@flasher.presenter.html'
+        tags:
+            - 'twig.extension'

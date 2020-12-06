@@ -6,7 +6,6 @@ use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\PostFlushEvent;
 use Flasher\Prime\EventDispatcher\Event\PreFlushEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
-use Flasher\Prime\Stamp\HopsStamp;
 
 final class StorageManager implements StorageManagerInterface
 {

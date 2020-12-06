@@ -35,20 +35,20 @@ final class HtmlPresenter extends AbstractPresenter
         $html = <<<HTML
 {$scripts}
 <script type="text/javascript">
-var renderPHPNotifyNotifications = function () {
+var renderPHPFlasherNotifications = function () {
     {$options}
     {$notifications}
 }
 
-if ("undefined" !== typeof PHPNotify) {
-    PHPNotify.addStyles({$styles}, renderPHPNotifyNotifications);
+if ("undefined" !== typeof PHPFlasher) {
+    PHPFlasher.addStyles({$styles}, renderPHPFlasherNotifications);
 } else {
-    renderPHPNotifyNotifications();
+    renderPHPFlasherNotifications();
 }
 </script>
 HTML;
 
-        $this->storage->flush($envelopes);
+        $this->storageManager->flush($envelopes);
 
         return $html;
     }

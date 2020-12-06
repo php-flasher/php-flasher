@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\Tests\Producer;
+namespace Flasher\Prime\Tests\Factory;
 
 use Flasher\Prime\EventDispatcher\Event\BeforeFilter;
 use Flasher\Prime\EventDispatcher\EventDispatcher;

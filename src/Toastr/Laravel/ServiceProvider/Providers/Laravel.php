@@ -5,7 +5,7 @@ namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\RendererManager;
 use Flasher\Toastr\LaravelFlasher\PrimeToastrServiceProvider;
-use Flasher\Toastr\Prime\Producer\ToastrProducer;
+use Flasher\Toastr\Prime\Factory\ToastrProducer;
 use Flasher\Toastr\Prime\Renderer\ToastrRenderer;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
@@ -35,25 +35,25 @@ class Laravel implements ServiceProviderInterface
 
     public function registerNotifyToastrServices()
     {
-        $this->app->singleton('notify.producer.toastr', function (Container $app) {
-            return new ToastrProducer($app['notify.storage'], $app['notify.middleware']);
+        $this->app->singleton('flasher.factory.toastr', function (Container $app) {
+            return new ToastrProducer($app['flasher.storage'], $app['flasher.middleware']);
         });
 
-        $this->app->singleton('notify.renderer.toastr', function (Container $app) {
-            return new ToastrRenderer($app['notify.config']);
+        $this->app->singleton('flasher.renderer.toastr', function (Container $app) {
+            return new ToastrRenderer($app['flasher.config']);
         });
 
-        $this->app->alias('notify.producer.toastr', 'Flasher\Toastr\Prime\Producer\ToastrProducer');
-        $this->app->alias('notify.renderer.toastr', 'Flasher\Toastr\Prime\Renderer\ToastrRenderer');
+        $this->app->alias('flasher.factory.toastr', 'Flasher\Toastr\Prime\Factory\ToastrProducer');
+        $this->app->alias('flasher.renderer.toastr', 'Flasher\Toastr\Prime\Renderer\ToastrRenderer');
 
-        $this->app->extend('notify.producer', function (Flasher $manager, Container $app) {
-            $manager->addDriver('toastr', $app['notify.producer.toastr']);
+        $this->app->extend('flasher.factory', function (Flasher $manager, Container $app) {
+            $manager->addDriver('toastr', $app['flasher.factory.toastr']);
 
             return $manager;
         });
 
-        $this->app->extend('notify.renderer', function (RendererManager $manager, Container $app) {
-            $manager->addDriver('toastr', $app['notify.renderer.toastr']);
+        $this->app->extend('flasher.renderer', function (RendererManager $manager, Container $app) {
+            $manager->addDriver('toastr', $app['flasher.renderer.toastr']);
 
             return $manager;
         });
@@ -61,10 +61,10 @@ class Laravel implements ServiceProviderInterface
 
     public function mergeConfigFromToastr()
     {
-        $notifyConfig = $this->app['config']->get('notify.adapters.toastr', array());
+        $notifyConfig = $this->app['config']->get('flasher.adapters.toastr', array());
 
         $toastrConfig = $this->app['config']->get('notify_toastr', array());
 
-        $this->app['config']->set('notify.adapters.toastr', array_merge($toastrConfig, $notifyConfig));
+        $this->app['config']->set('flasher.adapters.toastr', array_merge($toastrConfig, $notifyConfig));
     }
 }
