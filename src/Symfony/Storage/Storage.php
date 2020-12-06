@@ -38,8 +38,6 @@ final class Storage implements StorageInterface
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-        $envelopes = array_merge($envelopes, $this->all());
-
         $store = $this->all();
 
         foreach ($envelopes as $envelope) {
