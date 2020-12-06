@@ -52,7 +52,7 @@ class Laravel implements ServiceProviderInterface
             return $flasher;
         });
 
-        $this->app->extend('flasher.renderer', function (RendererManager $manager, Container $app) {
+        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
             $manager->addDriver($app['flasher.renderer.toastr']);
 
             return $manager;

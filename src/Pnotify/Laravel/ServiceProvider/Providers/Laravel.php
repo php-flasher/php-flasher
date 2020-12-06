@@ -33,7 +33,7 @@ class Laravel implements ServiceProviderInterface
         $provider->mergeConfigFrom($source, 'flasher_pnotify');
     }
 
-    public function registerNotifyPnotifyServices()
+    public function registerServices()
     {
         $this->app->singleton('flasher.factory.pnotify', function (Container $app) {
             return new PnotifyFactory($app['flasher.event_dispatcher']);
