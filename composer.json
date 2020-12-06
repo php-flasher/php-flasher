@@ -1,5 +1,5 @@
 {
-    "name": "php-flasher/flasher-symfony-pnotify",
+    "name": "php-flasher/flasher-pnotify-symfony",
     "type": "symfony-bundle",
     "description": "Symfony Flasher adapter for pnotify.js library for php-flasher/flasher-symfony",
     "keywords": [
@@ -29,20 +29,20 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "^1.0",
-        "php-flasher/flasher-pnotify": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36"
+        "php-flasher/flasher-symfony": "dev-main",
+        "php-flasher/flasher-pnotify": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Symfony\\Pnotify\\": "src/"
+            "Flasher\\Pnotify\\Symfony\\": "",
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Symfony\\Pnotify\\Tests\\": "tests/"
+            "Flasher\\Pnotify\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {
