@@ -3,83 +3,101 @@
 namespace Flasher\Laravel\Storage;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\LifeStamp;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageInterface;
 
 final class Storage implements StorageInterface
 {
-    const ENVELOPES_NAMESPACE = 'notify::envelopes';
+    const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
      * @var \Illuminate\Session\SessionManager|\Illuminate\Session\Store
      */
     private $session;
 
+    /**
+     * @param \Illuminate\Session\SessionManager|\Illuminate\Session\Store $session
+     */
     public function __construct($session)
     {
         $this->session = $session;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function get()
     {
         return $this->session->get(self::ENVELOPES_NAMESPACE, array());
     }
 
-    public function add(Envelope $envelope)
-    {
-        if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
-            $envelope->withStamp(new UuidStamp());
-        }
-
-        if (null === $envelope->get('Flasher\Prime\Stamp\LifeStamp')) {
-            $envelope->withStamp(new LifeStamp(1));
-        }
-
-        if (null === $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp')) {
-            $envelope->withStamp(new CreatedAtStamp());
-        }
-
-
-        $envelopes = $this->get();
-        $envelopes[] = $envelope;
-
-        $this->session->put(self::ENVELOPES_NAMESPACE, $envelopes);
-    }
-
     /**
-     * @param \Flasher\Prime\Envelope[] $envelopes
+     * @inheritDoc
      */
-    public function flush($envelopes)
+    public function add($envelopes)
     {
-        $envelopesMap = array();
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+        $store = $this->all();
 
         foreach ($envelopes as $envelope) {
-            $life = $envelope->get('Flasher\Prime\Stamp\LifeStamp')->getLife();
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
-
-            $envelopesMap[$uuid] = $life;
-        }
-
-        $store = array();
-
-        foreach ($this->session->get(self::ENVELOPES_NAMESPACE, array()) as $envelope) {
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
-
-            if(isset($envelopesMap[$uuid])) {
-                $life = $envelopesMap[$uuid] - 1;
-
-                if ($life <= 0) {
-                    continue;
-                }
-
-                $envelope->with(new LifeStamp($life));
+            if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
+                $envelope->withStamp(new UuidStamp());
             }
 
             $store[] = $envelope;
         }
 
         $this->session->put(self::ENVELOPES_NAMESPACE, $store);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update($envelopes)
+    {
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+        $map = UuidStamp::indexWithUuid($envelopes);
+
+        $store = $this->all();
+        foreach ($store as $index => $envelope) {
+            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+
+            if (!isset($map[$uuid])) {
+                continue;
+            }
+
+            $store[$index] = $map[$uuid];
+        }
+
+        $this->session->put(self::ENVELOPES_NAMESPACE, $store);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function remove($envelopes)
+    {
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+
+        $map = UuidStamp::indexWithUuid($envelopes);
+
+        $store = array_filter(
+            $this->all(),
+            function (Envelope $envelope) use ($map) {
+                $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+
+                return !isset($map[$uuid]);
+            }
+        );
+
+        $this->session->put(self::ENVELOPES_NAMESPACE, $store);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear()
+    {
+        $this->session->set(self::ENVELOPES_NAMESPACE, array());
     }
 }

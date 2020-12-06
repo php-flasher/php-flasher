@@ -5,7 +5,7 @@ namespace Flasher\Laravel;
 use Illuminate\Support\ServiceProvider;
 use Flasher\Laravel\ServiceProvider\ServiceProviderManager;
 
-final class NotifyServiceProvider extends ServiceProvider
+final class FlasherServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application events.
