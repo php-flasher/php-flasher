@@ -33,11 +33,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Toastr\\Laravel\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        }
+            "Flasher\\Toastr\\Laravel\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
