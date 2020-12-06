@@ -1,16 +1,16 @@
 services:
-    notify.producer.pnotify:
-        parent: 'notify.producer.abstract'
+    flasher.factory.pnotify:
+        parent: 'flasher.factory.abstract'
         class: Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer
         tags:
-            - { name: 'notify.producer', alias: 'pnotify' }
+            - { name: 'flasher.factory', alias: 'pnotify' }
 
-    notify.renderer.pnotify:
+    flasher.renderer.pnotify:
         class: Flasher\PFlasher\Prime\Renderer\PnotifyRenderer
         arguments:
-            - '@notify.config'
+            - '@flasher.config'
         tags:
-            - { name: 'notify.renderer', alias: 'pnotify' }
+            - { name: 'flasher.renderer', alias: 'pnotify' }
 
-    Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer: '@notify.producer.pnotify'
-    Flasher\PFlasher\Prime\Renderer\PnotifyRenderer: '@notify.renderer.pnotify'
+    Flasher\PFlasher\Prime\TestsProducer\PnotifyProducer: '@flasher.factory.pnotify'
+    Flasher\PFlasher\Prime\Renderer\PnotifyRenderer: '@flasher.renderer.pnotify'
