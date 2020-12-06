@@ -31,9 +31,9 @@ class NotifySweetAlertServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'notify.producer',
-            'notify.producer.sweet_alert',
-            'notify.renderer.sweet_alert',
+            'flasher.factory',
+            'flasher.factory.sweet_alert',
+            'flasher.renderer.sweet_alert',
         );
     }
 
