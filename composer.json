@@ -14,7 +14,8 @@
     "require": {
         "php": ">=5.3",
         "ext-json": "*",
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.8",
+        "orchestra/testbench": "^3.0"
     },
     "autoload": {
         "psr-4": {

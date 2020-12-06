@@ -9,13 +9,13 @@ use Flasher\Prime\Notification\Notification;
 
 final class StorageTest extends TestCase
 {
-    public function test_simple()
+    public function testSimple()
     {
         $session = new Storage($this->app->make('session'));
 
         $envelope = new Envelope(new Notification('success', 'message'));
         $session->add($envelope);
 
-        $this->assertEquals(array($envelope), $session->get());
+        $this->assertEquals(array($envelope), $session->all());
     }
 }

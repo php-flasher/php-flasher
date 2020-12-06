@@ -3,7 +3,6 @@
 namespace Flasher\Laravel\ServiceProvider;
 
 use Flasher\Laravel\FlasherServiceProvider;
-use Flasher\LaravelFlasher\PrimeServiceProvider;
 use Flasher\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager

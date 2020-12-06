@@ -16,7 +16,7 @@ final class Laravel4 extends Laravel
 
     public function publishConfig(FlasherServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel', 'notify', __DIR__.'/../../../resources');
+        $provider->package('php-flasher/flasher-laravel', 'notify', __DIR__.'/../../resources');
     }
 
     public function publishAssets(FlasherServiceProvider $provider)

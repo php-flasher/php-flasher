@@ -25,4 +25,9 @@ interface StorageInterface
      * Remove all notifications from the storage
      */
     public function clear();
+
+    /**
+     * @param Envelope|Envelope[] $envelopes
+     */
+    public function update($envelopes);
 }
