@@ -1,15 +1,15 @@
 <?php
 
-namespace Flasher\SweetAlert\Prime\Renderer;
+namespace Flasher\SweetAlert\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Renderer\HasGlobalOptionsInterface;
+use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
 use Flasher\Prime\Renderer\RendererInterface;
 
-class SweetAlertRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasGlobalOptionsInterface
+final class SweetAlertRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
     /**
      * @var \Flasher\Prime\Config\ConfigInterface
@@ -44,10 +44,8 @@ class SweetAlertRenderer implements RendererInterface, HasScriptsInterface, HasS
      */
     public function render(Envelope $envelope)
     {
-        $context = $envelope->getContext();
-        $options = isset($context['options']) ? $context['options'] : array();
+        $options = $envelope->getOptions();
 
-        $options['title'] = " " . $envelope->getTitle();
         $options['text'] = $envelope->getMessage();
         $options['icon'] = $envelope->getType();
 
@@ -77,5 +75,13 @@ class SweetAlertRenderer implements RendererInterface, HasScriptsInterface, HasS
     public function renderOptions()
     {
         return sprintf('var SwalToast = Swal.mixin(%s);', json_encode($this->options));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports($name = null, array $context = array())
+    {
+        return in_array($name, array(__CLASS__, 'sweet_alert', 'Flasher\SweetAlert\Prime\SweetAlertFactory', 'Flasher\SweetAlert\Prime\SweetAlert'));
     }
 }
