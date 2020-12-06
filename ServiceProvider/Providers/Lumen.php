@@ -2,8 +2,8 @@
 
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
+use Flasher\Notyf\Laravel\FlasherNotyfServiceProvider;
 use Laravel\Lumen\Application;
-use Flasher\Notyf\LaravelFlasher\PrimeNotyfServiceProvider;
 
 final class Lumen extends Laravel
 {
@@ -12,12 +12,12 @@ final class Lumen extends Laravel
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(NotifyNotyfServiceProvider $provider)
+    public function publishConfig(FlasherNotyfServiceProvider $provider)
     {
         $source = realpath($raw = __DIR__.'/../../../resources/config/config.php') ?: $raw;
 
-        $this->app->configure('notify_notyf');
+        $this->app->configure('flasher_notyf');
 
-        $provider->mergeConfigFrom($source, 'notify_notyf');
+        $provider->mergeConfigFrom($source, 'flasher_notyf');
     }
 }
