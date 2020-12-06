@@ -2,7 +2,7 @@
 
 namespace Flasher\Toastr\Laravel\Tests;
 
-class NotifyToastrServiceProviderTest extends TestCase
+class FlasherToastrServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
