@@ -29,11 +29,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\SweetAlert\\prime\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        }
+            "Flasher\\SweetAlert\\prime\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
