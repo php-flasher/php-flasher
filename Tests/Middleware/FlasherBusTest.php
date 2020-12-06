@@ -14,73 +14,44 @@ final class FlasherBusTest extends TestCase
 {
     public function testHandle()
     {
-        $config = new Config(array(
-            'default' => 'notify',
-            'adapters' => array(
-                'notify' => array(
-                    'scripts' => array('script.js'),
-                    'styles' => array('styles.css'),
-                    'options' => array()
-                )
-            ),
-            'stamps_middlewares' => array(
-                new AddPriorityStampMiddleware(),
-                new AddCreatedAtStampMiddleware(),
-            )
-        ));
-
-        $stack = new FlasherBus($config);
+        $flasherBus = new FlasherBus();
+        $flasherBus->addMiddleware(new AddPriorityStampMiddleware());
+        $flasherBus->addMiddleware(new AddCreatedAtStampMiddleware());
 
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $envelope     = new Envelope($notification);
 
-        $stack->handle($envelope);
+        $flasherBus->dispatch($envelope);
 
         $this->assertSame($notification, $envelope->getNotification());
-        $this->assertCount(3, $envelope->all());
+        $this->assertCount(2, $envelope->all());
 
         $priorityStamp = $envelope->get('Flasher\Prime\Stamp\PriorityStamp');
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp', $priorityStamp);
-//        $this->assertEquals(0, $priorityStamp->getPriority());
+        $this->assertEquals(0, $priorityStamp->getPriority());
 
-        $timeStamp = $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp');
-        $this->assertInstanceOf('Flasher\Prime\Stamp\CreatedAtStamp', $timeStamp);
-
-        $this->assertEquals(time(), $timeStamp->getCreatedAt()->getTimestamp());
+        $createdAtStamp = $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp');
+        $this->assertInstanceOf('DateTime', $createdAtStamp->getCreatedAt());
     }
 
     public function testHandleWithExistingStamps()
     {
-        $config = new Config(array(
-            'default' => 'notify',
-            'adapters' => array(
-                'notify' => array(
-                    'scripts' => array('script.js'),
-                    'styles' => array('styles.css'),
-                    'options' => array()
-                )
-            ),
-            'stamps_middlewares' => array(
-                new AddPriorityStampMiddleware(),
-                new AddCreatedAtStampMiddleware(),
-            )
-        ));
-
-        $stack = new FlasherBus($config);
+        $flasherBus = new FlasherBus();
+        $flasherBus->addMiddleware(new AddPriorityStampMiddleware());
+        $flasherBus->addMiddleware(new AddCreatedAtStampMiddleware());
 
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamps       = array(
+        $stamps = array(
             new PriorityStamp(1),
         );
-        $envelope     = new Envelope($notification, $stamps);
+        $envelope = new Envelope($notification, $stamps);
 
-        $stack->handle($envelope);
+        $flasherBus->dispatch($envelope);
 
         $this->assertSame($notification, $envelope->getNotification());
-        $this->assertCount(3, $envelope->all());
+        $this->assertCount(2, $envelope->all());
 
         $priorityStamp = $envelope->get('Flasher\Prime\Stamp\PriorityStamp');
         $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp', $priorityStamp);
-//        $this->assertEquals(1, $priorityStamp->getPriority());
+        $this->assertEquals(1, $priorityStamp->getPriority());
     }
 }
