@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Stamp;
 
-final class HopsStamp implements StampInterface
+final class HopsStamp implements StampInterface, \Flasher\Prime\Stamp\OrderableStampInterface
 {
     /**
      * @var int
