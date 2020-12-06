@@ -29,20 +29,20 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "^1.0",
-        "php-flasher/flasher-toastr": "^1.0"
+        "php-flasher/flasher-symfony": "dev-main",
+        "php-flasher/flasher-toastr": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.36"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Symfony\\Toastr\\": "src/"
+            "Flasher\\Toastr\\Symfony\\": ""
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Symfony\\Toastr\\Tests\\": "tests/"
+            "Flasher\\Toastr\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {
