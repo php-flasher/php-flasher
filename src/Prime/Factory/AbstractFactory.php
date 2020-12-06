@@ -2,11 +2,13 @@
 
 namespace Flasher\Prime\Factory;
 
+use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Stamp\StampInterface;
 
 /**
  * @method NotificationBuilderInterface type($type, $message = null, array $options = array())
@@ -14,6 +16,9 @@ use Flasher\Prime\Notification\NotificationInterface;
  * @method NotificationBuilderInterface options($options)
  * @method NotificationBuilderInterface setOption($name, $value)
  * @method NotificationBuilderInterface unsetOption($name)
+ * @method NotificationBuilderInterface handler(string $handler)
+ * @method NotificationBuilderInterface with(StampInterface[] $stamps)
+ * @method NotificationBuilderInterface withStamp(StampInterface $stamp)
  * @method NotificationBuilderInterface priority($priority)
  * @method NotificationBuilderInterface hops($amount)
  * @method NotificationBuilderInterface keep()
@@ -21,7 +26,9 @@ use Flasher\Prime\Notification\NotificationInterface;
  * @method NotificationBuilderInterface error($message = null, array $options = array())
  * @method NotificationBuilderInterface info($message = null, array $options = array())
  * @method NotificationBuilderInterface warning($message = null, array $options = array())
+ * @method Envelope dispatch(StampInterface[] $stamps)
  * @method NotificationInterface getNotification()
+ * @method NotificationInterface getEnvelope()
  */
 abstract class AbstractFactory implements FlasherFactoryInterface
 {
