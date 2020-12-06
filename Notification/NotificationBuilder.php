@@ -5,6 +5,7 @@ namespace Flasher\Prime\Notification;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\EnvelopeDispatchedEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
@@ -182,6 +183,26 @@ class NotificationBuilder implements NotificationBuilderInterface
         $this->envelope->withStamp(new HopsStamp($amount + 1));
 
         return $this;
+    }
+
+    /**
+     * @param int $delay
+     *
+     * @return $this
+     */
+    public function delay($delay)
+    {
+        $this->envelope->withStamp(new DelayStamp($delay));
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function now()
+    {
+        return $this->delay(0);
     }
 
     /**

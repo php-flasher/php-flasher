@@ -18,7 +18,7 @@ use Flasher\Prime\Notification\NotificationInterface;
  * @method NotificationBuilderInterface warning($message = null, array $options = array())
  * @method NotificationInterface getNotification()
  */
-final class Flasher extends AbstractManager
+final class Flasher extends AbstractManager implements FlasherInterface
 {
     public function getDefaultDriver()
     {
