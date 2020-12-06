@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Pnotify\\": ""
+            "Flasher\\Pnotify\\Prime\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -41,7 +41,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Pnotify\\Tests\\": "Tests/"
+            "Flasher\\Pnotify\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {
