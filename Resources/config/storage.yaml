@@ -1,0 +1,11 @@
+services:
+    flasher.storage:
+        class: Flasher\Symfony\Storage\Storage
+        arguments:
+            - '@session'
+
+    flasher.storage_manager:
+        class: Flasher\Prime\Storage\StorageManager
+        arguments:
+            - '@flasher.storage'
+            - '@flasher.event_dispatcher'

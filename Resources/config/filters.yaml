@@ -1,0 +1,14 @@
+services:
+    flasher.filter_manager:
+        class: Flasher\Prime\Filter\FilterManager
+        parent: 'flasher.abstract_manager'
+
+    flasher.filter_builder:
+        class: Flasher\Prime\Filter\FilterBuilder
+
+    flasher.filter.default:
+        class: Flasher\Prime\Filter\DefaultFilter
+        arguments:
+            - '@flasher.filter_builder'
+        tags:
+            - 'flasher.filter'
