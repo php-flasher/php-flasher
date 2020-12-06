@@ -41,7 +41,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Notyf\\prime\\Tests\\": "Tests/"
+            "Flasher\\Notyf\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {
