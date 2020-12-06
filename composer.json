@@ -40,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Toastr\\Tests\\": "Tests/"
+            "Flasher\\Toastr\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {
