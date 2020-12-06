@@ -2,8 +2,8 @@
 
 namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
+use Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider;
 use Illuminate\Foundation\Application;
-use Flasher\Pnotify\LaravelFlasher\PrimePnotifyServiceProvider;
 
 final class Laravel4 extends Laravel
 {
@@ -12,17 +12,17 @@ final class Laravel4 extends Laravel
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(NotifyPnotifyServiceProvider $provider)
+    public function publishConfig(FlasherPnotifyServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel-pnotify', 'notify_pnotify', __DIR__.'/../../../resources');
+        $provider->package('php-flasher/flasher-laravel-pnotify', 'notify_pnotify', __DIR__.'/../../Resources');
     }
 
     public function mergeConfigFromPnotify()
     {
-        $notifyConfig = $this->app['config']->get('notify::config.adapters.pnotify', array());
+        $flasherConfig = $this->app['config']->get('flasher::config.adapters.pnotify', array());
 
-        $pnotifyConfig = $this->app['config']->get('notify_pnotify::config', array());
+        $pnotifyConfig = $this->app['config']->get('flasher_pnotify::config', array());
 
-        $this->app['config']->set('notify::config.adapters.pnotify', array_merge($pnotifyConfig, $notifyConfig));
+        $this->app['config']->set('flasher::config.adapters.pnotify', array_merge($pnotifyConfig, $flasherConfig));
     }
 }
