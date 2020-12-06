@@ -30,11 +30,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Pnotify\\": "",
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        }
+            "Flasher\\Pnotify\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
