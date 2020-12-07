@@ -232,7 +232,7 @@ class NotificationBuilder implements NotificationBuilderInterface
      *
      * @return Envelope|mixed
      */
-    public function dispatch($stamps = array())
+    public function flash($stamps = array())
     {
         if (!empty($stamps)) {
             $this->with($stamps);
@@ -243,5 +243,23 @@ class NotificationBuilder implements NotificationBuilderInterface
         $event = new EnvelopeDispatchedEvent($envelope);
 
         return $this->eventDispatcher->dispatch($event);
+    }
+
+    /**
+     * @param string $type
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope|mixed
+     */
+    public function addFlash($type, $message, array $options = array())
+    {
+        if (is_string($type)) {
+            $this->type($type, $message, $options);
+        } elseif ($type instanceof NotificationInterface) {
+            $this->envelope = Envelope::wrap($type);
+        }
+
+        return $this->flash();
     }
 }
