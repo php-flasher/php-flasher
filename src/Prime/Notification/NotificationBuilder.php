@@ -262,4 +262,47 @@ class NotificationBuilder implements NotificationBuilderInterface
 
         return $this->flash();
     }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addSuccess($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_SUCCESS, $message, $options);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addError($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_ERROR, $message, $options);
+    }
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addWarning($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_WARNING, $message, $options);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addInfo($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_INFO, $message, $options);
+    }
 }
