@@ -51,7 +51,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "FlasherNotyfServiceProvider"
+              "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider"
             ]
         }
     },

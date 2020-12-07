@@ -4,7 +4,7 @@ namespace Flasher\Noty\Laravel\ServiceProvider\Providers;
 
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\RendererManager;
-use Flasher\Noty\Laravel\FlasherNotyfServiceProvider;
+use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 use Flasher\Noty\Prime\NotyFactory;
 use Flasher\Noty\Prime\NotyRenderer;
 use Illuminate\Container\Container;
@@ -24,7 +24,7 @@ class Laravel implements ServiceProviderInterface
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(FlasherNotyfServiceProvider $provider)
+    public function publishConfig(FlasherNotyServiceProvider $provider)
     {
         $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
 

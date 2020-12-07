@@ -35,7 +35,7 @@ return array(
         'onHidden'          => null,
         'onShown'           => null,
         'positionClass'     => 'toast-top-right',
-        'preventDuplicates' => true,
+        'preventDuplicates' => false,
         'progressBar'       => true,
         'progressClass'     => 'toast-progress',
         'rtl'               => false,
