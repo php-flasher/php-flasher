@@ -37,6 +37,18 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(array())
                 ->end()
+                ->booleanNode('auto_create_from_session')
+                    ->defaultValue(true)
+                ->end()
+                ->arrayNode('types_mapping')
+                    ->prototype('variable')->end()
+                    ->defaultValue(array(
+                          'success' => array('success'),
+                          'error'   => array('error', 'danger'),
+                          'warning' => array('warning', 'alarm'),
+                          'info'    => array('info', 'notice', 'alert'),
+                     ))
+                ->end()
                 ->arrayNode('adapters')
                     ->ignoreExtraKeys(false)
                     ->useAttributeAsKey('name')
