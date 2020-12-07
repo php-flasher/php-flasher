@@ -60,4 +60,12 @@ final class FlasherServiceProvider extends ServiceProvider
     {
         parent::publishes($paths, $groups);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function loadTranslationsFrom($path, $namespace)
+    {
+        parent::loadTranslationsFrom($path, $namespace);
+    }
 }
