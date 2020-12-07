@@ -47,10 +47,10 @@ final class NotyRenderer implements RendererInterface, HasScriptsInterface, HasS
         $notification = $envelope->getNotification();
         $options = $envelope->getOptions();
 
-        $options['message'] = $envelope->getMessage();
+        $options['text'] = $envelope->getMessage();
         $options['type'] = $envelope->getType();
 
-        return sprintf("new Noty(%s);", json_encode($options));
+        return sprintf("new Noty(%s).show();", json_encode($options));
     }
 
     /**
