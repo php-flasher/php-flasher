@@ -2,13 +2,13 @@
 
 namespace Flasher\Noty\Laravel\ServiceProvider\Providers;
 
-use Flasher\Noty\Laravel\FlasherNotyfServiceProvider;
+use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 
 interface ServiceProviderInterface
 {
     public function shouldBeUsed();
 
-    public function publishConfig(FlasherNotyfServiceProvider $provider);
+    public function publishConfig(FlasherNotyServiceProvider $provider);
 
     public function registerServices();
 

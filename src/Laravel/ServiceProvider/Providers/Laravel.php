@@ -53,7 +53,7 @@ class Laravel implements ServiceProviderInterface
 
     public function publishAssets(FlasherServiceProvider $provider)
     {
-        $provider->publishes(array(__DIR__.'/../../public' => public_path('vendor/php-flasher/flasher/assets/js')), 'public');
+        $provider->publishes(array(__DIR__.'/../../Resources/public' => public_path('vendor/php-flasher/flasher/assets/js')), 'public');
     }
 
     public function registerServices()
@@ -146,6 +146,7 @@ class Laravel implements ServiceProviderInterface
 
         $this->app->alias('flasher', 'flasher.factory_manager');
 
+        $this->app->bind('Flasher\Prime\Config\ConfigInterface', 'flasher.config');
         $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
         $this->app->bind('Flasher\Prime\Storage\StorageManagerInterface', 'flasher.storage_manager');
         $this->app->bind('Flasher\Prime\Renderer\RendererManagerInterface', 'flasher.renderer_manager');
