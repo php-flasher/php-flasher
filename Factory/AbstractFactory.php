@@ -26,7 +26,8 @@ use Flasher\Prime\Stamp\StampInterface;
  * @method NotificationBuilderInterface error($message = null, array $options = array())
  * @method NotificationBuilderInterface info($message = null, array $options = array())
  * @method NotificationBuilderInterface warning($message = null, array $options = array())
- * @method Envelope dispatch(StampInterface[] $stamps)
+ * @method Envelope flash(StampInterface[] $stamps)
+ * @method Envelope addFlash(string|Envelope $type, string $message = null, array $options = array())
  * @method NotificationInterface getNotification()
  * @method NotificationInterface getEnvelope()
  */
