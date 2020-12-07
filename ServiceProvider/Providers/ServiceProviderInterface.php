@@ -12,6 +12,8 @@ interface ServiceProviderInterface
 
     public function publishAssets(FlasherServiceProvider $provider);
 
+    public function publishTranslations(FlasherServiceProvider $provider);
+
     public function registerServices();
 
     public function registerBladeDirectives();

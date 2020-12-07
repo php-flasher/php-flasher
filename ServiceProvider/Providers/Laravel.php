@@ -56,6 +56,12 @@ class Laravel implements ServiceProviderInterface
         $provider->publishes(array(__DIR__.'/../../Resources/public' => public_path('vendor/php-flasher/flasher/assets/js')), 'public');
     }
 
+    public function publishTranslations(FlasherServiceProvider $provider)
+    {
+        $provider->loadTranslationsFrom(__DIR__.'/../../Resources/lang', 'flasher');
+        $provider->publishes(array(__DIR__.'/../../Resources/lang' => resource_path('lang/vendor/flasher')));
+    }
+
     public function registerServices()
     {
         $this->app->singleton('flasher.config', function (Application $app) {
