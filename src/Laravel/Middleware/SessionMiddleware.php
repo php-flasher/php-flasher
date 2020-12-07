@@ -60,7 +60,7 @@ final class SessionMiddleware
                 continue;
             }
 
-            $this->flasher->type($type, $request->session()->get($alias))->dispatch();
+            $this->flasher->addFlash($type, $request->session()->get($alias));
         }
 
 
