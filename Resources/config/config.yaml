@@ -144,6 +144,15 @@ services:
         tags:
             - { name: 'twig.extension' }
 
+    flasher.session_listener:
+        class: Flasher\Symfony\EventListener\SessionListener
+        arguments:
+            - '@flasher.config'
+            - '@flasher'
+            - '@flasher.presenter.html'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
     Flasher\Prime\Config\Config: '@flasher.config'
     Flasher\Prime\Flasher: '@flasher'
     Flasher\Prime\Presenter\PresenterManager: '@flasher.presenter_manager'
