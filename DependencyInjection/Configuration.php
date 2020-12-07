@@ -41,7 +41,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(array(
                         'layout' => 'topRight',
                         'theme' => 'mint',
-                        'timeout' => 5000,
+                        'timeout' => false,
                         'progressBar' => true,
                         'animation.open' => 'noty_effects_open',
                         'animation.close' => 'noty_effects_close',
