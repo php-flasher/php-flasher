@@ -2,7 +2,7 @@
 
 namespace Flasher\Noty\Laravel\ServiceProvider\Providers;
 
-use Flasher\Noty\Laravel\FlasherNotyfServiceProvider;
+use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 use Illuminate\Foundation\Application;
 
 final class Laravel4 extends Laravel
@@ -12,7 +12,7 @@ final class Laravel4 extends Laravel
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(FlasherNotyfServiceProvider $provider)
+    public function publishConfig(FlasherNotyServiceProvider $provider)
     {
         $provider->package('php-flasher/flasher-noty-laravel', 'flasher_noty', __DIR__.'/../../Resources');
     }

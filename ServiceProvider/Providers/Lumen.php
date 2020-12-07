@@ -2,7 +2,7 @@
 
 namespace Flasher\Noty\Laravel\ServiceProvider\Providers;
 
-use Flasher\Noty\Laravel\FlasherNotyfServiceProvider;
+use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 use Laravel\Lumen\Application;
 
 final class Lumen extends Laravel
@@ -12,7 +12,7 @@ final class Lumen extends Laravel
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(FlasherNotyfServiceProvider $provider)
+    public function publishConfig(FlasherNotyServiceProvider $provider)
     {
         $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
 

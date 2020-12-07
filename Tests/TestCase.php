@@ -20,7 +20,7 @@ class TestCase extends Orchestra
     {
         return array(
             'Flasher\Laravel\FlasherServiceProvider',
-            'Flasher\Noty\Laravel\FlasherNotyfServiceProvider',
+            'Flasher\Noty\Laravel\FlasherNotyServiceProvider',
         );
     }
 

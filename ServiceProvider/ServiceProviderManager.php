@@ -2,7 +2,7 @@
 
 namespace Flasher\Noty\Laravel\ServiceProvider;
 
-use Flasher\Noty\Laravel\FlasherNotyfServiceProvider;
+use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 use Flasher\Noty\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
@@ -20,7 +20,7 @@ final class ServiceProviderManager
 
     private $notifyServiceProvider;
 
-    public function __construct(FlasherNotyfServiceProvider $notifyServiceProvider)
+    public function __construct(FlasherNotyServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
     }
