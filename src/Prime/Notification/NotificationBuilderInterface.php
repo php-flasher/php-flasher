@@ -2,6 +2,8 @@
 
 namespace Flasher\Prime\Notification;
 
+use Flasher\Prime\Envelope;
+
 interface NotificationBuilderInterface
 {
     /**
@@ -92,4 +94,45 @@ interface NotificationBuilderInterface
      * @return self
      */
     public function hops($amount);
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addWarning($message, array $options = array());
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addInfo($message, array $options = array());
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addSuccess($message, array $options = array());
+
+    /**
+     * @param string $type
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope|mixed
+     */
+    public function addFlash($type, $message, array $options = array());
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addError($message, array $options = array());
 }
