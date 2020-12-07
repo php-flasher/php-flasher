@@ -54,7 +54,7 @@ final class SessionListener implements EventSubscriberInterface
             }
 
             foreach ($messages as $message) {
-                $this->flasher->type($mapping[$type], $message)->dispatch();
+                $this->flasher->addFlash($mapping[$type], $message);
             }
         }
 
