@@ -17,7 +17,7 @@ final class ToastrBuilder extends NotificationBuilder
     public function title($title)
     {
         $notification = $this->envelope->getNotification();
-        $notification->setTitle($title);
+        $notification->setTitle(addslashes($title));
 
         return $this;
     }
@@ -78,10 +78,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function closeHtml($closeHtml)
     {
         $this->option('closeHtml', $closeHtml);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $closeMethod
      *
@@ -90,10 +90,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function closeMethod($closeMethod)
     {
         $this->option('closeMethod', $closeMethod);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $closeOnHover
      *
@@ -102,10 +102,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function closeOnHover($closeOnHover = true)
     {
         $this->option('closeOnHover', $closeOnHover);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $containerId
      *
@@ -114,10 +114,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function containerId($containerId)
     {
         $this->option('containerId', $containerId);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $debug
      *
@@ -126,10 +126,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function debug($debug = true)
     {
         $this->option('debug', $debug);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $escapeHtml
      *
@@ -138,10 +138,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function escapeHtml($escapeHtml = true)
     {
         $this->option('escapeHtml', $escapeHtml);
-    
+
         return $this;
     }
-    
+
     /**
      * @param int $extendedTimeOut
      *
@@ -150,10 +150,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function extendedTimeOut($extendedTimeOut)
     {
         $this->option('extendedTimeOut', $extendedTimeOut);
-    
+
         return $this;
     }
-    
+
     /**
      * @param int $hideDuration
      *
@@ -162,10 +162,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function hideDuration($hideDuration)
     {
         $this->option('hideDuration', $hideDuration);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $hideEasing
      *
@@ -174,10 +174,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function hideEasing($hideEasing)
     {
         $this->option('hideEasing', $hideEasing);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $hideMethod
      *
@@ -186,10 +186,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function hideMethod($hideMethod)
     {
         $this->option('hideMethod', $hideMethod);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $iconClass
      *
@@ -198,10 +198,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function iconClass($iconClass)
     {
         $this->option('iconClass', $iconClass);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $messageClass
      *
@@ -210,10 +210,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function messageClass($messageClass)
     {
         $this->option('messageClass', $messageClass);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $newestOnTop
      *
@@ -222,10 +222,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function newestOnTop($newestOnTop = true)
     {
         $this->option('newestOnTop', $newestOnTop);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $onHidden
      *
@@ -234,10 +234,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function onHidden($onHidden)
     {
         $this->option('onHidden', $onHidden);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $onShown
      *
@@ -246,10 +246,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function onShown($onShown)
     {
         $this->option('onShown', $onShown);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $positionClass
      *
@@ -258,10 +258,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function positionClass($positionClass)
     {
         $this->option('positionClass', $positionClass);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $preventDuplicates
      *
@@ -270,10 +270,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function preventDuplicates($preventDuplicates = true)
     {
         $this->option('preventDuplicates', $preventDuplicates);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $progressBar
      *
@@ -282,10 +282,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function progressBar($progressBar = true)
     {
         $this->option('progressBar', $progressBar);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $progressClass
      *
@@ -294,10 +294,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function progressClass($progressClass)
     {
         $this->option('progressClass', $progressClass);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $rtl
      *
@@ -306,10 +306,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function rtl($rtl = true)
     {
         $this->option('rtl', $rtl);
-    
+
         return $this;
     }
-    
+
     /**
      * @param int $showDuration
      *
@@ -318,10 +318,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function showDuration($showDuration)
     {
         $this->option('showDuration', $showDuration);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $showEasing
      *
@@ -330,10 +330,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function showEasing($showEasing)
     {
         $this->option('showEasing', $showEasing);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $showMethod
      *
@@ -342,10 +342,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function showMethod($showMethod)
     {
         $this->option('showMethod', $showMethod);
-    
+
         return $this;
     }
-    
+
     /**
      * @param bool $tapToDismiss
      *
@@ -354,10 +354,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function tapToDismiss($tapToDismiss = true)
     {
         $this->option('tapToDismiss', $tapToDismiss);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $target
      *
@@ -366,10 +366,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function target($target)
     {
         $this->option('target', $target);
-    
+
         return $this;
     }
-    
+
     /**
      * @param int $timeOut
      *
@@ -378,10 +378,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function timeOut($timeOut)
     {
         $this->option('timeOut', $timeOut);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $titleClass
      *
@@ -390,10 +390,10 @@ final class ToastrBuilder extends NotificationBuilder
     public function titleClass($titleClass)
     {
         $this->option('titleClass', $titleClass);
-    
+
         return $this;
     }
-    
+
     /**
      * @param string $toastClass
      *
@@ -402,7 +402,7 @@ final class ToastrBuilder extends NotificationBuilder
     public function toastClass($toastClass)
     {
         $this->option('toastClass', $toastClass);
-    
+
         return $this;
     }
 }
