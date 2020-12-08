@@ -80,6 +80,6 @@ class StorageManagerTest extends TestCase
 
         $storageManager->flush($envelopes);
 
-        $this->assertSame(array('fake-uuid'), array_keys(UuidStamp::indexWithUuid($storageManager->all())));
+        $this->assertSame(array('fake-uuid'), array_keys(UuidStamp::indexByUuid($storageManager->all())));
     }
 }

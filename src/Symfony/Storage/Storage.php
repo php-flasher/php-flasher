@@ -57,7 +57,7 @@ final class Storage implements StorageInterface
     public function update($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-        $map = UuidStamp::indexWithUuid($envelopes);
+        $map = UuidStamp::indexByUuid($envelopes);
 
         $store = $this->all();
         foreach ($store as $index => $envelope) {
@@ -80,7 +80,7 @@ final class Storage implements StorageInterface
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $map = UuidStamp::indexWithUuid($envelopes);
+        $map = UuidStamp::indexByUuid($envelopes);
 
         $store = array_filter(
             $this->all(),

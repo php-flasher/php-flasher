@@ -1,18 +1,22 @@
 {
     "name": "php-flasher/flasher",
-    "description": "a flash notifications library for PHP",
+    "description": "A powerful and flexible flash notifications system for PHP",
     "keywords": [
+        "flasher",
+        "toastr",
         "notify",
+        "notyf",
+        "noty",
+        "pnotify",
+        "sweet alert",
         "flash",
+        "notifications",
         "php",
         "laravel",
         "symfony",
         "Lumen",
-        "notifications",
         "messages",
-        "alerts",
-        "pnotify",
-        "toastr "
+        "alerts"
     ],
     "homepage": "https://github.com/php-flasher/flasher",
     "authors": [

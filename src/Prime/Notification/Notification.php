@@ -20,18 +20,6 @@ class Notification implements NotificationInterface
     protected $options = array();
 
     /**
-     * @param string|null $message
-     * @param string|null $type
-     * @param array       $options
-     */
-    public function __construct($message = null, $type = self::TYPE_SUCCESS, array $options = array())
-    {
-        $this->message = $message;
-        $this->type    = $type;
-        $this->options = $options;
-    }
-
-    /**
      * @inheritDoc
      */
     public function getType()
@@ -105,5 +93,17 @@ class Notification implements NotificationInterface
     public function unsetOption($name)
     {
         unset($this->options[$name]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray()
+    {
+        return array(
+            'type'    => $this->getType(),
+            'message' => $this->getMessage(),
+            'options' => $this->getOptions(),
+        );
     }
 }

@@ -34,7 +34,7 @@ final class UuidStamp implements StampInterface
      *
      * @return array<string, Envelope>
      */
-    public static function indexWithUuid($envelopes)
+    public static function indexByUuid($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 

@@ -30,7 +30,7 @@ final class PreFilterEvent
     /**
      * @param Envelope[] $envelopes
      */
-    public function setEnvelopes($envelopes)
+    public function setEnvelopes(array $envelopes)
     {
         $this->envelopes = $envelopes;
     }

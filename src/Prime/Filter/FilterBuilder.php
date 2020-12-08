@@ -28,14 +28,16 @@ final class FilterBuilder
      */
     private $maxResults;
 
+    /**
+     * @param array $orderings
+     *
+     * @return self
+     */
     public function orderBy(array $orderings)
     {
-        $this->orderings = array_map(
-            static function ($ordering) {
-                return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
-            },
-            $orderings
-        );
+        $this->orderings = array_map(static function ($ordering) {
+            return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
+        }, $orderings);
 
         return $this;
     }
@@ -48,6 +50,11 @@ final class FilterBuilder
         return $this->orderings;
     }
 
+    /**
+     * @param $criteria
+     *
+     * @return $this
+     */
     public function withCriteria($criteria)
     {
         $criteriaBuilder = new CriteriaBuilder($this, $criteria);
@@ -56,40 +63,39 @@ final class FilterBuilder
         return $this;
     }
 
+    /**
+     * @param Envelope[] $envelopes
+     *
+     * @return array
+     */
     public function filter(array $envelopes)
     {
         $specification = $this->getSpecification();
 
         if (null !== $specification) {
-            $envelopes = array_filter(
-                $envelopes,
-                static function (Envelope $envelope) use ($specification) {
-                    return $specification->isSatisfiedBy($envelope);
-                }
-            );
+            $envelopes = array_filter($envelopes, static function (Envelope $envelope) use ($specification) {
+                return $specification->isSatisfiedBy($envelope);
+            });
         }
 
         $orderings = $this->getOrderings();
 
         if (null !== $orderings) {
             foreach ($orderings as $field => $ordering) {
-                usort(
-                    $envelopes,
-                    static function (Envelope $a, Envelope $b) use ($field, $ordering) {
-                        if (FilterBuilder::ASC === $ordering) {
-                            list($a, $b) = array($b, $a);
-                        }
-
-                        $stampA = $a->get($field);
-                        $stampB = $b->get($field);
-
-                        if (!$stampA instanceof OrderableStampInterface) {
-                            return 0;
-                        }
-
-                        return $stampA->compare($stampB);
+                usort($envelopes, static function (Envelope $a, Envelope $b) use ($field, $ordering) {
+                    if (FilterBuilder::ASC === $ordering) {
+                        list($a, $b) = array($b, $a);
                     }
-                );
+
+                    $stampA = $a->get($field);
+                    $stampB = $b->get($field);
+
+                    if (!$stampA instanceof OrderableStampInterface) {
+                        return 0;
+                    }
+
+                    return $stampA->compare($stampB);
+                });
             }
         }
 
@@ -172,15 +178,5 @@ final class FilterBuilder
         $this->specification = new OrSpecification($this->specification, $specification);
 
         return $this;
-    }
-
-    public function whereType()
-    {
-
-    }
-
-    public function wherePriority()
-    {
-
     }
 }

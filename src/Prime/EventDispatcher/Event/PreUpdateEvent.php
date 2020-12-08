@@ -4,7 +4,7 @@ namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Envelope;
 
-final class PostFlushEvent
+final class PreUpdateEvent
 {
     /**
      * @var Envelope[]
@@ -30,7 +30,7 @@ final class PostFlushEvent
     /**
      * @param Envelope[] $envelopes
      */
-    public function setEnvelopes($envelopes)
+    public function setEnvelopes(array $envelopes)
     {
         $this->envelopes = $envelopes;
     }
