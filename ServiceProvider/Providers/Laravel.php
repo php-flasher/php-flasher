@@ -47,7 +47,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.renderer.toastr', 'Flasher\Toastr\Prime\ToastrRenderer');
 
         $this->app->extend('flasher', function (Flasher $flasher, Container $app) {
-            $flasher->addDriver($app['flasher.factory.toastr']);
+            $flasher->addFactory($app['flasher.factory.toastr']);
 
             return $flasher;
         });
