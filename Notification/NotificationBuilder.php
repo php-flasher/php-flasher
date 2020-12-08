@@ -3,13 +3,12 @@
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\EventDispatcher\Event\PostBuildEvent;
-use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Storage\StorageManagerInterface;
 
 class NotificationBuilder implements NotificationBuilderInterface
 {
@@ -19,18 +18,18 @@ class NotificationBuilder implements NotificationBuilderInterface
     protected $envelope;
 
     /**
-     * @var EventDispatcherInterface
+     * @var StorageManagerInterface
      */
-    protected $eventDispatcher;
+    protected $storageManager;
 
     /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param NotificationInterface    $notification
-     * @param string                   $handler
+     * @param StorageManagerInterface $storageManager
+     * @param NotificationInterface   $notification
+     * @param string                  $handler
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, NotificationInterface $notification, $handler)
+    public function __construct(StorageManagerInterface $storageManager, NotificationInterface $notification, $handler)
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->storageManager = $storageManager;
         $this->envelope = Envelope::wrap($notification);
         $this->handler($handler);
     }
@@ -103,9 +102,9 @@ class NotificationBuilder implements NotificationBuilderInterface
             $this->with($stamps);
         }
 
-        $event = new PostBuildEvent($this->getEnvelope());
+        $this->storageManager->add($this->getEnvelope());
 
-        return $this->eventDispatcher->dispatch($event);
+        return $this->getEnvelope();
     }
 
     /**
@@ -218,7 +217,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function keep()
     {
         $hopsStamp = $this->envelope->get('Flasher\Prime\Stamp\HopsStamp');
-        $amount    = $hopsStamp instanceof HopsStamp ? $hopsStamp->getAmount() : 1;
+        $amount = $hopsStamp instanceof HopsStamp ? $hopsStamp->getAmount() : 1;
 
         $this->envelope->withStamp(new HopsStamp($amount + 1));
 

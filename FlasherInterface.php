@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime;
 
-use Flasher\Prime\Factory\FlasherFactoryInterface;
+use Flasher\Prime\Factory\FactoryInterface;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
@@ -15,19 +15,19 @@ interface FlasherInterface
      *
      * @param string|null $alias
      *
-     * @return FlasherFactoryInterface
+     * @return FactoryInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function make($alias = null);
+    public function create($alias = null);
 
     /**
      * Register a custom driver creator.
      *
      * @param string
-     * @param \Closure|FlasherFactoryInterface $driver
+     * @param FactoryInterface $factory
      *
      * @return $this
      */
-    public function addDriver($alias, $driver);
+    public function addFactory($alias, FactoryInterface $factory);
 }

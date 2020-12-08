@@ -4,7 +4,7 @@ namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Envelope;
 
-final class PostBuildEvent
+final class BuildEvent
 {
     /**
      * @var Envelope

@@ -60,7 +60,7 @@ final class EventDispatcher implements EventDispatcherInterface
      * @param callable[]     $listeners
      * @param object $event
      */
-    protected function callListeners(array $listeners, $event)
+    private function callListeners(array $listeners, $event)
     {
         foreach ($listeners as $listener) {
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {

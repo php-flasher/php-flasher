@@ -3,11 +3,7 @@
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Filter\FilterInterface;
 
-/**
- * @mixin FilterInterface
- */
 interface StorageManagerInterface
 {
     /**

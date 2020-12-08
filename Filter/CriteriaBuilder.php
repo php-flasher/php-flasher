@@ -17,7 +17,11 @@ final class CriteriaBuilder
      */
     private $criteria;
 
-    public function __construct(FilterBuilder $filterBuilder, $criteria = array())
+    /**
+     * @param FilterBuilder $filterBuilder
+     * @param array         $criteria
+     */
+    public function __construct(FilterBuilder $filterBuilder, array $criteria)
     {
         $this->filterBuilder = $filterBuilder;
         $this->criteria = $criteria;
