@@ -47,7 +47,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.renderer.pnotify', 'Flasher\Pnotify\Prime\PnotifyRenderer');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addDriver($app['flasher.factory.pnotify']);
+            $manager->addFactory($app['flasher.factory.pnotify']);
 
             return $manager;
         });
