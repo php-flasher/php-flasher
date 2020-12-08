@@ -4,7 +4,7 @@ namespace Flasher\Laravel\Middleware;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Presenter\Adapter\HtmlPresenter;
+use Flasher\Prime\Renderer\Adapter\HtmlPresenter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

@@ -32,7 +32,7 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface
     }
 
     /**
-     * @param OrderableStampInterface $orderable
+     * @param mixed $orderable
      *
      * @return int
      */

@@ -71,7 +71,7 @@ final class ToastrFactory extends AbstractFactory
      */
     public function createNotificationBuilder()
     {
-        return new ToastrBuilder($this->getEventDispatcher(), $this->createNotification(), 'toastr');
+        return new ToastrBuilder($this->getStorageManager(), $this->createNotification(), 'toastr');
     }
 
     /**

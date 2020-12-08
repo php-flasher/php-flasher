@@ -15,7 +15,7 @@ final class ManagerTest extends TestCase
             ->willReturn('default_notifier');
 
         $manager = new Flasher($config);
-        $this->assertEquals('default_notifier', $manager->getDefaultDriver());
+        $this->assertEquals('default_notifier', $manager->getDefaultFactory());
     }
 
     public function testMakeDriver()
@@ -27,9 +27,9 @@ final class ManagerTest extends TestCase
 
         $manager = new Flasher($config);
 
-        $producer = $this->getMockBuilder('Flasher\Prime\Factory\FlasherFactoryInterface')->getMock();
+        $producer = $this->getMockBuilder('Flasher\Prime\Factory\FactoryInterface')->getMock();
         $producer->method('supports')->willReturn(true);
-        $manager->addDriver($producer);
+        $manager->addFactory($producer);
 
         $this->assertSame($producer, $manager->make('fake'));
     }
@@ -45,8 +45,8 @@ final class ManagerTest extends TestCase
 
         $manager = new Flasher($config);
 
-        $producer = $this->getMockBuilder('Flasher\Prime\Factory\FlasherFactoryInterface')->getMock();
-        $manager->addDriver($producer);
+        $producer = $this->getMockBuilder('Flasher\Prime\Factory\FactoryInterface')->getMock();
+        $manager->addFactory($producer);
 
         $manager->make('test_driver');
     }

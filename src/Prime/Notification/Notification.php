@@ -12,7 +12,7 @@ class Notification implements NotificationInterface
     /**
      * @var string
      */
-    protected $type = self::TYPE_SUCCESS;
+    protected $type = self::TYPE_INFO;
 
     /**
      * @var array<string, mixed>

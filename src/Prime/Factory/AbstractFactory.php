@@ -2,27 +2,23 @@
 
 namespace Flasher\Prime\Factory;
 
-use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
-use Flasher\Prime\Notification\NotificationBuilderInterface;
+use Flasher\Prime\Storage\StorageManagerInterface;
 
-/**
- * @mixin NotificationBuilderInterface
- */
-abstract class AbstractFactory implements FlasherFactoryInterface
+abstract class AbstractFactory implements FactoryInterface
 {
     /**
-     * @var EventDispatcherInterface
+     * @var StorageManagerInterface
      */
-    protected $eventDispatcher;
+    protected $storageManager;
 
     /**
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param StorageManagerInterface $eventDispatcher
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(StorageManagerInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->storageManager = $eventDispatcher;
     }
 
     /**
@@ -30,7 +26,7 @@ abstract class AbstractFactory implements FlasherFactoryInterface
      */
     public function createNotificationBuilder()
     {
-        return new NotificationBuilder($this->getEventDispatcher(), new Notification(), 'default');
+        return new NotificationBuilder($this->getStorageManager(), new Notification(), 'default');
     }
 
     /**
@@ -47,10 +43,10 @@ abstract class AbstractFactory implements FlasherFactoryInterface
     }
 
     /**
-     * @return EventDispatcherInterface
+     * @return StorageManagerInterface
      */
-    public function getEventDispatcher()
+    public function getStorageManager()
     {
-        return $this->eventDispatcher;
+        return $this->storageManager;
     }
 }

@@ -38,7 +38,7 @@ final class NotyFactory extends AbstractFactory
      */
     public function createNotificationBuilder()
     {
-        return new NotyBuilder($this->getEventDispatcher(), $this->createNotification(), 'noty');
+        return new NotyBuilder($this->getStorageManager(), $this->createNotification(), 'noty');
     }
 
     /**

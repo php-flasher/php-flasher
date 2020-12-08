@@ -2,7 +2,7 @@
 
 namespace Flasher\Symfony\DependencyInjection\Compiler;
 
-use Flasher\Prime\Presenter\PresenterManager;
+use Flasher\Prime\Renderer\PresenterManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

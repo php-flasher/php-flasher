@@ -3,19 +3,20 @@
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\EventDispatcher\Event\PrePersistEvent;
+use Flasher\Prime\EventDispatcher\Event\PersistEvent;
+use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\UuidStamp;
 
-final class PrePersistListener implements EventSubscriberInterface
+final class StampsListener implements EventSubscriberInterface
 {
     /**
-     * @param PrePersistEvent $event
+     * @param PersistEvent|UpdateEvent $event
      */
-    public function __invoke(PrePersistEvent $event)
+    public function __invoke($event)
     {
         foreach ($event->getEnvelopes() as $envelope) {
             $this->attachStamps($envelope);
@@ -53,6 +54,9 @@ final class PrePersistListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PrePersistEvent';
+        return array(
+            'Flasher\Prime\EventDispatcher\Event\PersistEvent',
+            'Flasher\Prime\EventDispatcher\Event\UpdateEvent',
+        );
     }
 }

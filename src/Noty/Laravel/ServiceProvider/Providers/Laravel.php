@@ -47,7 +47,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.renderer.noty', 'Flasher\Noty\Prime\NotyRenderer');
 
         $this->app->extend('flasher', function (Flasher $flasher, Container $app) {
-            $flasher->addDriver($app['flasher.factory.noty']);
+            $flasher->addFactory($app['flasher.factory.noty']);
 
             return $flasher;
         });

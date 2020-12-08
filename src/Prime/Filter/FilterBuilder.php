@@ -29,7 +29,7 @@ final class FilterBuilder
     private $maxResults;
 
     /**
-     * @param array $orderings
+     * @param array<string, string> $orderings
      *
      * @return self
      */
@@ -51,11 +51,11 @@ final class FilterBuilder
     }
 
     /**
-     * @param $criteria
+     * @param array $criteria
      *
      * @return $this
      */
-    public function withCriteria($criteria)
+    public function withCriteria(array $criteria)
     {
         $criteriaBuilder = new CriteriaBuilder($this, $criteria);
         $criteriaBuilder->build();
