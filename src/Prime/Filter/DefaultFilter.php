@@ -29,12 +29,4 @@ final class DefaultFilter implements FilterInterface
     {
         return $this->filterBuilder->withCriteria($criteria)->filter($envelopes);
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function supports($name = null, array $context = array())
-    {
-        return in_array($name, array(__CLASS__, 'default'));
-    }
 }

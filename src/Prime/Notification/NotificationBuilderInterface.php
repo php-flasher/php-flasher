@@ -3,22 +3,64 @@
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\Stamp\StampInterface;
 
 interface NotificationBuilderInterface
 {
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addSuccess($message, array $options = array());
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addError($message, array $options = array());
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addWarning($message, array $options = array());
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addInfo($message, array $options = array());
+
+    /**
+     * @param string $type
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope|mixed
+     */
+    public function addFlash($type, $message, array $options = array());
+
     /**
      * @param string      $type
      * @param string|null $message
      * @param array       $options
      *
-     * @return NotificationBuilder
+     * @return self
      */
     public function type($type, $message = null, array $options = array());
 
     /**
      * @param string $message
      *
-     * @return NotificationBuilder
+     * @return self
      */
     public function message($message);
 
@@ -26,7 +68,7 @@ interface NotificationBuilderInterface
      * @param array<string, mixed> $options
      * @param bool                 $merge
      *
-     * @return NotificationBuilder
+     * @return self
      */
     public function options($options, $merge = true);
 
@@ -34,14 +76,9 @@ interface NotificationBuilderInterface
      * @param string $name
      * @param mixed  $value
      *
-     * @return NotificationBuilder
+     * @return self
      */
     public function option($name, $value);
-
-    /**
-     * @return NotificationInterface
-     */
-    public function getNotification();
 
     /**
      * @param string|null $message
@@ -96,43 +133,47 @@ interface NotificationBuilderInterface
     public function hops($amount);
 
     /**
-     * @param string $message
-     * @param array  $options
+     * @param string $handler
      *
-     * @return Envelope
+     * @return self
      */
-    public function addWarning($message, array $options = array());
+    public function handler($handler);
 
     /**
-     * @param string $message
-     * @param array  $options
+     * @param StampInterface $stamp
      *
-     * @return Envelope
+     * @return self
      */
-    public function addInfo($message, array $options = array());
+    public function withStamp(StampInterface $stamp);
 
     /**
-     * @param string $message
-     * @param array  $options
+     * @param StampInterface[] $stamps
      *
-     * @return Envelope
+     * @return self
      */
-    public function addSuccess($message, array $options = array());
+    public function with(array $stamps = array());
 
     /**
-     * @param string $type
-     * @param string $message
-     * @param array  $options
-     *
-     * @return Envelope|mixed
+     * @return self
      */
-    public function addFlash($type, $message, array $options = array());
+    public function now();
 
     /**
-     * @param string $message
-     * @param array  $options
+     * @param int $delay
      *
+     * @return self
+     */
+    public function delay($delay);
+
+    /**
+     * @param StampInterface[] $stamps
+     *
+     * @return self
+     */
+    public function flash($stamps = array());
+
+    /**
      * @return Envelope
      */
-    public function addError($message, array $options = array());
+    public function getEnvelope();
 }

@@ -24,7 +24,9 @@ final class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $eventName
+     *
+     * @return array
      */
     public function getListeners($eventName)
     {
@@ -77,7 +79,7 @@ final class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {

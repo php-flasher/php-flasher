@@ -7,21 +7,21 @@ interface FilterManagerInterface
     /**
      * Get a driver instance.
      *
-     * @param string|null $name
-     * @param array       $context
+     * @param string|null $alias
      *
      * @return FilterInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function make($name = null, array $context = array());
+    public function make($alias = null);
 
     /**
      * Register a custom driver creator.
      *
+     * @param string                   $alias
      * @param \Closure|FilterInterface $driver
      *
      * @return $this
      */
-    public function addDriver($driver);
+    public function addDriver($alias, $driver);
 }

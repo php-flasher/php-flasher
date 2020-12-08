@@ -10,7 +10,7 @@ abstract class AbstractManager
     /**
      * The array of created "drivers".
      *
-     * @var array<object>
+     * @var array<string, object>
      */
     protected $drivers = array();
 
@@ -30,51 +30,44 @@ abstract class AbstractManager
     /**
      * Get a driver instance.
      *
-     * @param string|null $name
-     * @param array       $context
+     * @param string|null $alias
      *
      * @return object
      *
      * @throws \InvalidArgumentException
      */
-    public function make($name = null, array $context = array())
+    public function make($alias = null)
     {
-        $name = $name ?: $this->getDefaultDriver();
+        $alias = $alias ?: $this->getDefaultDriver();
 
-        if (!is_string($name)) {
-            $context = is_array($name) ? $name : array($name);
-            $name    = null;
+        if (!isset($this->drivers[$alias])) {
+            throw new InvalidArgumentException(sprintf('Driver [%s] not supported.', $alias));
         }
 
-        foreach ($this->drivers as $driver) {
-            if ($driver->supports($name, $context)) {
-                return $driver;
-            }
-        }
-
-        throw new InvalidArgumentException(sprintf('Driver [%s] not supported.', $name));
+        return $this->drivers[$alias];
     }
 
     /**
      * Register a custom driver creator.
      *
+     * @param string $alias
      * @param \Closure|object $driver
      *
      * @return $this
      */
-    public function addDriver($driver)
+    public function addDriver($alias, $driver)
     {
-        $this->drivers[] = $driver;
+        $this->drivers[$alias] = $driver;
 
         return $this;
     }
 
     /**
-     * @return ConfigInterface
+     * @return string|null
      */
-    public function getConfig()
+    protected function getDefaultDriver()
     {
-        return $this->config;
+        return null;
     }
 
     /**
@@ -88,13 +81,5 @@ abstract class AbstractManager
     public function __call($method, array $parameters)
     {
         return call_user_func_array(array($this->make(), $method), $parameters);
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getDefaultDriver()
-    {
-        return null;
     }
 }
