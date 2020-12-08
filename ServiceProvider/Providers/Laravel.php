@@ -47,7 +47,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.renderer.sweet_alert', 'Flasher\SweetAlert\Prime\SweetAlertRenderer');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addDriver($app['flasher.factory.sweet_alert']);
+            $manager->addFactory($app['flasher.factory.sweet_alert']);
 
             return $manager;
         });
