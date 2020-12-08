@@ -20,7 +20,7 @@ final class CriteriaBuilder
     public function __construct(FilterBuilder $filterBuilder, $criteria = array())
     {
         $this->filterBuilder = $filterBuilder;
-        $this->criteria      = $criteria;
+        $this->criteria = $criteria;
     }
 
     public function build()

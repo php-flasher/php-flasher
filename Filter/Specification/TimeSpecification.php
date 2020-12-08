@@ -28,9 +28,7 @@ final class TimeSpecification implements SpecificationInterface
     }
 
     /**
-     * @param Envelope $envelope
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function isSatisfiedBy(Envelope $envelope)
     {

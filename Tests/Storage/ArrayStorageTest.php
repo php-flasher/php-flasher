@@ -63,8 +63,8 @@ final class ArrayStorageTest extends TestCase
 
         $storage->remove($envelopes[0], $envelopes[2]);
 
-        $actual   = UuidStamp::indexWithUuid($storage->all());
-        $expected = UuidStamp::indexWithUuid($envelopes[1], $envelopes[3], $envelopes[4]);
+        $actual   = UuidStamp::indexByUuid($storage->all());
+        $expected = UuidStamp::indexByUuid($envelopes[1], $envelopes[3], $envelopes[4]);
 
         $this->assertSame(array(), array_diff_key($actual, $expected));
     }

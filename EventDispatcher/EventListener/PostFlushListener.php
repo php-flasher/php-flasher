@@ -2,29 +2,29 @@
 
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
-use Flasher\Prime\EventDispatcher\Event\PostFlushEvent;
+use Flasher\Prime\EventDispatcher\Event\PreFlushEvent;
 use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Prime\Storage\StorageInterface;
+use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class PostFlushListener implements EventSubscriberInterface
 {
     /**
-     * @var StorageInterface
+     * @var StorageManagerInterface
      */
-    private $storage;
+    private $storageManager;
 
     /**
-     * @param StorageInterface $storage
+     * @param StorageManagerInterface $storageManager
      */
-    public function __construct(StorageInterface $storage)
+    public function __construct(StorageManagerInterface $storageManager)
     {
-        $this->storage = $storage;
+        $this->storageManager = $storageManager;
     }
 
     /**
-     * @param PostFlushEvent $event
+     * @param PreFlushEvent $event
      */
-    public function __invoke(PostFlushEvent $event)
+    public function __invoke(PreFlushEvent $event)
     {
         foreach ($event->getEnvelopes() as $envelope) {
             $replayStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
@@ -35,7 +35,7 @@ final class PostFlushListener implements EventSubscriberInterface
             }
 
             $envelope->with(new HopsStamp($replayCount));
-            $this->storage->add($envelope);
+            $this->storageManager->add($envelope);
         }
     }
 
@@ -44,6 +44,6 @@ final class PostFlushListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PostFlushEvent';
+        return 'Flasher\Prime\EventDispatcher\Event\PreFlushEvent';
     }
 }

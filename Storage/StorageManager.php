@@ -2,10 +2,10 @@
 
 namespace Flasher\Prime\Storage;
 
-use Flasher\Prime\Envelope;
-use Flasher\Prime\EventDispatcher\Event\PostFlushEvent;
-use Flasher\Prime\EventDispatcher\Event\PreFlushEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\EventDispatcher\Event\PrePersistEvent;
+use Flasher\Prime\EventDispatcher\Event\PreRemoveEvent;
+use Flasher\Prime\EventDispatcher\Event\PreUpdateEvent;
 
 final class StorageManager implements StorageManagerInterface
 {
@@ -32,22 +32,6 @@ final class StorageManager implements StorageManagerInterface
     /**
      * @inheritDoc
      */
-    public function flush($envelopes)
-    {
-        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-
-        $event = new PreFlushEvent($envelopes);
-        $this->eventDispatcher->dispatch($event);
-
-        $this->storage->remove($event->getEnvelopes());
-
-        $event = new PostFlushEvent($envelopes);
-        $this->eventDispatcher->dispatch($event);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function all()
     {
         return $this->storage->all();
@@ -56,9 +40,27 @@ final class StorageManager implements StorageManagerInterface
     /**
      * @inheritDoc
      */
-    public function add(Envelope $envelope)
+    public function add($envelopes)
     {
-        $this->storage->add($envelope);
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+
+        $event = new PrePersistEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
+
+        $this->storage->add($event->getEnvelopes());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update($envelopes)
+    {
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+
+        $event = new PreUpdateEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
+
+        $this->storage->update($event->getEnvelopes());
     }
 
     /**
@@ -66,7 +68,12 @@ final class StorageManager implements StorageManagerInterface
      */
     public function remove($envelopes)
     {
-        $this->storage->remove($envelopes);
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+
+        $event = new PreRemoveEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
+
+        $this->storage->remove($event->getEnvelopes());
     }
 
     /**
