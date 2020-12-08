@@ -19,7 +19,7 @@ final class SweetAlertFactory extends AbstractFactory
      */
     public function createNotificationBuilder()
     {
-        return new SweetAlertBuilder($this->getEventDispatcher(), $this->createNotification(), 'sweet_alert');
+        return new SweetAlertBuilder($this->getStorageManager(), $this->createNotification(), 'sweet_alert');
     }
 
     /**
