@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
-use Flasher\Prime\EventDispatcher\Event\PostBuildEvent;
+use Flasher\Prime\EventDispatcher\Event\BuildEvent;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class PostBuildListener implements EventSubscriberInterface
@@ -21,9 +21,9 @@ final class PostBuildListener implements EventSubscriberInterface
     }
 
     /**
-     * @param PostBuildEvent $event
+     * @param BuildEvent $event
      */
-    public function __invoke(PostBuildEvent $event)
+    public function __invoke(BuildEvent $event)
     {
         $this->storageManager->add($event->getEnvelope());
     }
@@ -33,6 +33,6 @@ final class PostBuildListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PostBuildEvent';
+        return 'Flasher\Prime\EventDispatcher\Event\BuildEvent';
     }
 }

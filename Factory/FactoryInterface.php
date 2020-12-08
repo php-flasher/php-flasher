@@ -7,7 +7,7 @@ use Flasher\Prime\Notification\NotificationBuilderInterface;
 /**
  * @mixin NotificationBuilderInterface
  */
-interface FlasherFactoryInterface
+interface FactoryInterface
 {
     /**
      * @return NotificationBuilderInterface

@@ -18,10 +18,10 @@ final class Envelope implements NotificationInterface
     private $stamps = array();
 
     /**
-     * @param Envelope|NotificationInterface $notification
-     * @param StampInterface[]               $stamps
+     * @param NotificationInterface $notification
+     * @param StampInterface[]      $stamps
      */
-    public function __construct($notification, $stamps = array())
+    public function __construct(NotificationInterface $notification, $stamps = array())
     {
         $this->notification = $notification;
         $this->with(is_array($stamps) ? $stamps : array_slice(func_get_args(), 1));
@@ -30,16 +30,16 @@ final class Envelope implements NotificationInterface
     /**
      * Makes sure the notification is in an Envelope and adds the given stamps.
      *
-     * @param NotificationInterface|Envelope $notification
-     * @param StampInterface[]               $stamps
+     * @param NotificationInterface $notification
+     * @param StampInterface[]      $stamps
      *
      * @return Envelope
      */
-    public static function wrap($notification, array $stamps = array())
+    public static function wrap(NotificationInterface $notification, $stamps = array())
     {
         $envelope = $notification instanceof self ? $notification : new self($notification);
 
-        return $envelope->with($stamps);
+        return $envelope->with(is_array($stamps) ? $stamps : array_slice(func_get_args(), 1));
     }
 
     /**
@@ -47,7 +47,7 @@ final class Envelope implements NotificationInterface
      *
      * @return Envelope a new Envelope instance with additional stamp
      */
-    public function with($stamps = array())
+    public function with($stamps)
     {
         $stamps = is_array($stamps) ? $stamps : func_get_args();
 

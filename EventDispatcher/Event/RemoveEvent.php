@@ -4,7 +4,7 @@ namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Envelope;
 
-final class PrePersistEvent
+final class RemoveEvent
 {
     /**
      * @var Envelope[]

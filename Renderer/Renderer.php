@@ -1,6 +1,6 @@
 <?php
 
-namespace Flasher\Prime\Presenter;
+namespace Flasher\Prime\Renderer;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
@@ -8,7 +8,7 @@ use Flasher\Prime\EventDispatcher\Event\FilterEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
-final class Presenter implements PresenterInterface
+final class Renderer implements RendererInterface
 {
     /**
      * @var StorageManagerInterface
@@ -30,19 +30,22 @@ final class Presenter implements PresenterInterface
      * @param EventDispatcherInterface $eventDispatcher
      * @param ConfigInterface          $config
      */
-    public function __construct(StorageManagerInterface $storageManager, EventDispatcherInterface $eventDispatcher, ConfigInterface $config)
-    {
+    public function __construct(
+        StorageManagerInterface $storageManager,
+        EventDispatcherInterface $eventDispatcher,
+        ConfigInterface $config
+    ) {
         $this->storageManager = $storageManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->config = $config;
     }
 
     /**
-     * @param string|array $criteria
+     * @param array $criteria
      *
      * @return array
      */
-    public function render($criteria = null)
+    public function render(array $criteria = array())
     {
         $envelopes = $this->getEnvelopes($criteria);
 
@@ -63,11 +66,11 @@ final class Presenter implements PresenterInterface
     }
 
     /**
-     * @param string|array $criteria
+     * @param array $criteria
      *
      * @return Envelope[]
      */
-    protected function getEnvelopes($criteria = array())
+    private function getEnvelopes(array $criteria)
     {
         $envelopes = $this->storageManager->all();
 
@@ -82,22 +85,9 @@ final class Presenter implements PresenterInterface
      *
      * @return string[]
      */
-    protected function getStyles($envelopes)
+    private function getStyles(array $envelopes)
     {
-        $files = $this->config->get('styles', array());
-        $handlers = array();
-
-        foreach ($envelopes as $envelope) {
-            $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
-            if (in_array($handler, $handlers)) {
-                continue;
-            }
-
-            $handlers[] = $handler;
-            $files = array_merge($files, $this->config->get(sprintf('adapters.%s.styles', $handler), array()));
-        }
-
-        return array_values(array_filter(array_unique($files)));
+        return $this->getAssets('styles', $envelopes);
     }
 
     /**
@@ -105,22 +95,9 @@ final class Presenter implements PresenterInterface
      *
      * @return string[]
      */
-    protected function getScripts($envelopes)
+    private function getScripts(array $envelopes)
     {
-        $files     = $this->config->get('scripts', array());
-        $handlers = array();
-
-        foreach ($envelopes as $envelope) {
-            $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
-            if (in_array($handler, $handlers)) {
-                continue;
-            }
-
-            $handlers[] = $handler;
-            $files = array_merge($files, $this->config->get(sprintf('adapters.%s.scripts', $handler), array()));
-        }
-
-        return array_values(array_filter(array_unique($files)));
+        return $this->getAssets('scripts', $envelopes);
     }
 
     /**
@@ -128,9 +105,9 @@ final class Presenter implements PresenterInterface
      *
      * @return string[]
      */
-    protected function getOptions($envelopes)
+    private function getOptions(array $envelopes)
     {
-        $options   = array();
+        $options = array();
         $handlers = array();
 
         foreach ($envelopes as $envelope) {
@@ -143,7 +120,7 @@ final class Presenter implements PresenterInterface
             $options[$handler] = $this->config->get(sprintf('adapters.%s.options', $handler), array());
         }
 
-        return array_values(array_filter(array_unique($options)));
+        return array_filter($options);
     }
 
     /**
@@ -151,15 +128,37 @@ final class Presenter implements PresenterInterface
      *
      * @return array[]
      */
-    public function getNotifications($envelopes)
+    private function getNotifications(array $envelopes)
     {
-        $notifications = array();
+        return array_map(function (Envelope $envelope) {
+            return array(
+                'handler' => $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler(),
+                'notification' => $envelope->toArray(),
+            );
+        }, $envelopes);
+    }
 
-        foreach ($envelopes as $index => $envelope) {
-            $notifications[$index] = $envelope->toArray();
-            $notifications[$index]['library'] = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
+    /**
+     * @param string     $keyword
+     * @param Envelope[] $envelopes
+     *
+     * @return string[]
+     */
+    private function getAssets($keyword, $envelopes)
+    {
+        $files = $this->config->get($keyword, array());
+        $handlers = array();
+
+        foreach ($envelopes as $envelope) {
+            $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
+            if (in_array($handler, $handlers)) {
+                continue;
+            }
+
+            $handlers[] = $handler;
+            $files = array_merge($files, $this->config->get(sprintf('adapters.%s.%s', $handler, $keyword), array()));
         }
 
-        return $notifications;
+        return array_values(array_filter(array_unique($files)));
     }
 }
