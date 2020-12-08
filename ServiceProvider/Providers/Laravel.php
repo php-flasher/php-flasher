@@ -47,7 +47,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.renderer.notyf', 'Flasher\Notyf\Prime\NotyfRenderer');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addDriver($app['flasher.factory.notyf']);
+            $manager->addFactory($app['flasher.factory.notyf']);
 
             return $manager;
         });
