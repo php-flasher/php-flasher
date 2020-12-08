@@ -59,4 +59,9 @@ interface NotificationInterface
      * @param string $name
      */
     public function unsetOption($name);
+
+    /**
+     * @return array
+     */
+    public function toArray();
 }

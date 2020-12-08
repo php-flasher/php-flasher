@@ -3,10 +3,7 @@
 namespace PHPSTORM_META;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\Flasher;
 use Flasher\Prime\Notification\NotificationInterface;
-use Flasher\Prime\Presenter\PresenterManager;
-use Flasher\Prime\Renderer\RendererManager;
 
 override(Envelope::get(), type(0));
 override(ManagerInterface::make(0), map(['' => '@']));

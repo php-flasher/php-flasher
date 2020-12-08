@@ -3,7 +3,7 @@
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Envelope;
-use Flasher\Prime\EventDispatcher\Event\EnvelopeDispatchedEvent;
+use Flasher\Prime\EventDispatcher\Event\PostBuildEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HandlerStamp;
@@ -24,22 +24,88 @@ class NotificationBuilder implements NotificationBuilderInterface
     protected $eventDispatcher;
 
     /**
-     * @param EventDispatcherInterface   $eventDispatcher
-     * @param NotificationInterface|null $notification
-     * @param string                     $handler
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param NotificationInterface    $notification
+     * @param string                   $handler
      */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        NotificationInterface $notification = null,
-        $handler = null
-    ) {
+    public function __construct(EventDispatcherInterface $eventDispatcher, NotificationInterface $notification, $handler)
+    {
         $this->eventDispatcher = $eventDispatcher;
-
-        $notification   = $notification ?: new Notification();
         $this->envelope = Envelope::wrap($notification);
-
-        $handler = $handler ?: get_class($notification);
         $this->handler($handler);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addSuccess($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_SUCCESS, $message, $options);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addError($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_ERROR, $message, $options);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addWarning($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_WARNING, $message, $options);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $options
+     *
+     * @return Envelope
+     */
+    public function addInfo($message, array $options = array())
+    {
+        return $this->addFlash(NotificationInterface::TYPE_INFO, $message, $options);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addFlash($type, $message = null, array $options = array())
+    {
+        if ($type instanceof NotificationInterface) {
+            $this->envelope = Envelope::wrap($type);
+            $type = $this->envelope->getType();
+        }
+
+        $this->type($type, $message, $options);
+
+        return $this->flash();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function flash($stamps = array())
+    {
+        if (!empty($stamps)) {
+            $this->with($stamps);
+        }
+
+        $event = new PostBuildEvent($this->getEnvelope());
+
+        return $this->eventDispatcher->dispatch($event);
     }
 
     /**
@@ -97,22 +163,6 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * @inheritDoc
      */
-    public function getNotification()
-    {
-        return $this->getEnvelope();
-    }
-
-    /**
-     * @return NotificationInterface
-     */
-    public function getEnvelope()
-    {
-        return $this->envelope;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function success($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_SUCCESS, $message, $options);
@@ -140,16 +190,6 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function warning($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_WARNING, $message, $options);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function handler($handler)
-    {
-        $this->envelope->withStamp(new HandlerStamp($handler));
-
-        return $this;
     }
 
     /**
@@ -186,9 +226,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param int $delay
-     *
-     * @return $this
+     * @inheritDoc
      */
     public function delay($delay)
     {
@@ -198,7 +236,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @return $this
+     * @inheritDoc
      */
     public function now()
     {
@@ -226,83 +264,20 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * Dispatch the notification to the flasher bus
-     *
-     * @param array $stamps
-     *
-     * @return Envelope|mixed
+     * @inheritDoc
      */
-    public function flash($stamps = array())
+    public function getEnvelope()
     {
-        if (!empty($stamps)) {
-            $this->with($stamps);
-        }
-
-        $envelope = $this->getEnvelope();
-
-        $event = new EnvelopeDispatchedEvent($envelope);
-
-        return $this->eventDispatcher->dispatch($event);
+        return $this->envelope;
     }
 
     /**
-     * @param string $type
-     * @param string $message
-     * @param array  $options
-     *
-     * @return Envelope|mixed
+     * @inheritDoc
      */
-    public function addFlash($type, $message, array $options = array())
+    public function handler($handler)
     {
-        if (is_string($type)) {
-            $this->type($type, $message, $options);
-        } elseif ($type instanceof NotificationInterface) {
-            $this->envelope = Envelope::wrap($type);
-        }
+        $this->envelope->withStamp(new HandlerStamp($handler));
 
-        return $this->flash();
-    }
-
-    /**
-     * @param string $message
-     * @param array  $options
-     *
-     * @return Envelope
-     */
-    public function addSuccess($message, array $options = array())
-    {
-        return $this->addFlash(NotificationInterface::TYPE_SUCCESS, $message, $options);
-    }
-
-    /**
-     * @param string $message
-     * @param array  $options
-     *
-     * @return Envelope
-     */
-    public function addError($message, array $options = array())
-    {
-        return $this->addFlash(NotificationInterface::TYPE_ERROR, $message, $options);
-    }
-    /**
-     * @param string $message
-     * @param array  $options
-     *
-     * @return Envelope
-     */
-    public function addWarning($message, array $options = array())
-    {
-        return $this->addFlash(NotificationInterface::TYPE_WARNING, $message, $options);
-    }
-
-    /**
-     * @param string $message
-     * @param array  $options
-     *
-     * @return Envelope
-     */
-    public function addInfo($message, array $options = array())
-    {
-        return $this->addFlash(NotificationInterface::TYPE_INFO, $message, $options);
+        return $this;
     }
 }

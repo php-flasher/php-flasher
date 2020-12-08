@@ -12,7 +12,7 @@ final class AndSpecification implements SpecificationInterface
     private $specifications;
 
     /**
-     * @param array|mixed ...$specifications
+     * @param SpecificationInterface|SpecificationInterface[] $specifications
      */
     public function __construct($specifications = array())
     {

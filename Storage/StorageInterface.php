@@ -7,7 +7,7 @@ use Flasher\Prime\Envelope;
 interface StorageInterface
 {
     /**
-     * @return Envelope[]
+     * @return Envelope|Envelope[]
      */
     public function all();
 

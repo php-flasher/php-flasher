@@ -3,26 +3,30 @@
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\Envelope;
+use Flasher\Prime\Filter\FilterInterface;
 
+/**
+ * @mixin FilterInterface
+ */
 interface StorageManagerInterface
 {
-    /**
-     * @param Envelope[] $envelopes
-     */
-    public function flush($envelopes);
-
     /**
      * @return Envelope[]
      */
     public function all();
 
     /**
-     * @param Envelope $envelope
+     * @param Envelope|Envelope[] $envelopes
      */
-    public function add(Envelope $envelope);
+    public function add($envelopes);
 
     /**
-     * @param Envelope[] $envelopes
+     * @param Envelope|Envelope[] $envelopes
+     */
+    public function update($envelopes);
+
+    /**
+     * @param Envelope|Envelope[] $envelopes
      */
     public function remove($envelopes);
 

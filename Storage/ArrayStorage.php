@@ -25,15 +25,7 @@ final class ArrayStorage implements StorageInterface
      */
     public function add($envelopes)
     {
-        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-
-        foreach ($envelopes as $envelope) {
-            if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
-                $envelope->withStamp(new UuidStamp());
-            }
-
-            $this->envelopes[] = $envelope;
-        }
+        $this->envelopes[] = is_array($envelopes) ? $envelopes : func_get_args();
     }
 
     /**
@@ -42,7 +34,7 @@ final class ArrayStorage implements StorageInterface
     public function update($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-        $map = UuidStamp::indexWithUuid($envelopes);
+        $map = UuidStamp::indexByUuid($envelopes);
 
         foreach ($this->envelopes as $index => $envelope) {
             $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
@@ -56,22 +48,18 @@ final class ArrayStorage implements StorageInterface
     }
 
     /**
-     * @param Envelope[] $envelopes
+     * @inheritDoc
      */
     public function remove($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+        $map = UuidStamp::indexByUuid($envelopes);
 
-        $map = UuidStamp::indexWithUuid($envelopes);
+        $this->envelopes = array_filter($this->envelopes, function (Envelope $envelope) use ($map) {
+            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
 
-        $this->envelopes = array_filter(
-            $this->envelopes,
-            function (Envelope $envelope) use ($map) {
-                $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
-
-                return !isset($map[$uuid]);
-            }
-        );
+            return !isset($map[$uuid]);
+        });
     }
 
     /**

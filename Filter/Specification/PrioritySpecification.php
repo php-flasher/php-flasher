@@ -16,6 +16,10 @@ final class PrioritySpecification implements SpecificationInterface
      */
     private $maxPriority;
 
+    /**
+     * @param int      $minPriority
+     * @param int|null $maxPriority
+     */
     public function __construct($minPriority, $maxPriority = null)
     {
         $this->minPriority = $minPriority;
@@ -23,9 +27,7 @@ final class PrioritySpecification implements SpecificationInterface
     }
 
     /**
-     * @param Envelope $envelope
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function isSatisfiedBy(Envelope $envelope)
     {
