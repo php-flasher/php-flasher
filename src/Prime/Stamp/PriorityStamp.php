@@ -26,7 +26,7 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface
     }
 
     /**
-     * @param OrderableStampInterface $orderable
+     * @param mixed $orderable
      *
      * @return int
      */

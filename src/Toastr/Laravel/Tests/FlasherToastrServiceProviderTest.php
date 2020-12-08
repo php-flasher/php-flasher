@@ -21,7 +21,7 @@ class FlasherToastrServiceProviderTest extends TestCase
         $extensions = $property->getValue($flasher);
 
         $this->assertCount(1, $extensions);
-        $this->assertInstanceOf('Flasher\Prime\Factory\FlasherFactoryInterface', $extensions[0]);
+        $this->assertInstanceOf('Flasher\Prime\Factory\FactoryInterface', $extensions[0]);
     }
 
     public function testConfigToastrInjectedInGlobalNotifyConfig()

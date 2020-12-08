@@ -2,10 +2,10 @@
 
 namespace Flasher\Prime\Storage;
 
+use Flasher\Prime\EventDispatcher\Event\PersistEvent;
+use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
+use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
-use Flasher\Prime\EventDispatcher\Event\PrePersistEvent;
-use Flasher\Prime\EventDispatcher\Event\PreRemoveEvent;
-use Flasher\Prime\EventDispatcher\Event\PreUpdateEvent;
 
 final class StorageManager implements StorageManagerInterface
 {
@@ -44,7 +44,7 @@ final class StorageManager implements StorageManagerInterface
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $event = new PrePersistEvent($envelopes);
+        $event = new PersistEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
         $this->storage->add($event->getEnvelopes());
@@ -57,7 +57,7 @@ final class StorageManager implements StorageManagerInterface
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $event = new PreUpdateEvent($envelopes);
+        $event = new UpdateEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
         $this->storage->update($event->getEnvelopes());
@@ -70,7 +70,7 @@ final class StorageManager implements StorageManagerInterface
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $event = new PreRemoveEvent($envelopes);
+        $event = new RemoveEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
         $this->storage->remove($event->getEnvelopes());

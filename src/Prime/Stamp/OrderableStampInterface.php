@@ -5,7 +5,7 @@ namespace Flasher\Prime\Stamp;
 interface OrderableStampInterface
 {
     /**
-     * @param OrderableStampInterface $orderable
+     * @param mixed $orderable
      *
      * @return int
      */
