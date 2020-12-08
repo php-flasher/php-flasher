@@ -19,7 +19,7 @@ final class NotyfFactory extends AbstractFactory
      */
     public function createNotificationBuilder()
     {
-        return new PnotifyBuilder($this->getEventDispatcher(), $this->createNotification(), 'notyf');
+        return new PnotifyBuilder($this->getStorageManager(), $this->createNotification(), 'notyf');
     }
 
     /**
