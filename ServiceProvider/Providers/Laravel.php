@@ -6,10 +6,10 @@ use Flasher\Laravel\Config\Config;
 use Flasher\Laravel\FlasherServiceProvider;
 use Flasher\Laravel\Storage\Storage;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\MiddlewareListener;
+use Flasher\Prime\EventDispatcher\EventListener\PrePersistListener;
 use Flasher\Prime\EventDispatcher\EventListener\PostFilterListener;
 use Flasher\Prime\EventDispatcher\EventListener\PostFlushListener;
-use Flasher\Prime\EventDispatcher\EventListener\StorageListener;
+use Flasher\Prime\EventDispatcher\EventListener\PostBuildListener;
 use Flasher\Prime\Filter\DefaultFilter;
 use Flasher\Prime\Filter\FilterBuilder;
 use Flasher\Prime\Filter\FilterManager;
@@ -20,7 +20,7 @@ use Flasher\Prime\Middleware\AddHopsStampMiddleware;
 use Flasher\Prime\Middleware\AddPriorityStampMiddleware;
 use Flasher\Prime\Middleware\FlasherBus;
 use Flasher\Prime\Presenter\Adapter\HtmlPresenter;
-use Flasher\Prime\Presenter\Adapter\JsonPresenter;
+use Flasher\Prime\Presenter\Adapter\Presenter;
 use Flasher\Prime\Presenter\PresenterManager;
 use Flasher\Prime\Renderer\RendererManager;
 use Flasher\Prime\Storage\StorageManager;
@@ -103,8 +103,8 @@ class Laravel implements ServiceProviderInterface
             $eventDispatcher = new EventDispatcher();
             $eventDispatcher->addSubscriber(new PostFilterListener($app['flasher.storage']));
             $eventDispatcher->addSubscriber(new PostFlushListener($app['flasher.storage']));
-            $eventDispatcher->addSubscriber(new MiddlewareListener($app['flasher.flasher_bus']));
-            $eventDispatcher->addSubscriber(new StorageListener($app['flasher.storage']));
+            $eventDispatcher->addSubscriber(new PrePersistListener($app['flasher.flasher_bus']));
+            $eventDispatcher->addSubscriber(new PostBuildListener($app['flasher.storage']));
 
             return $eventDispatcher;
         });
@@ -133,7 +133,7 @@ class Laravel implements ServiceProviderInterface
         });
 
         $this->app->singleton('flasher.presenter.json', function (Application $app) {
-            return new JsonPresenter($app['flasher.event_dispatcher'], $app['flasher.config'], $app['flasher.storage_manager'], $app['flasher.filter_manager'], $app['flasher.renderer_manager']);
+            return new Presenter($app['flasher.event_dispatcher'], $app['flasher.config'], $app['flasher.storage_manager'], $app['flasher.filter_manager'], $app['flasher.renderer_manager']);
         });
 
         $this->app->alias('flasher.config', 'Flasher\Laravel\Config\Config');
@@ -148,7 +148,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.filter_builder', 'Flasher\Prime\Filter\FilterBuilder');
         $this->app->alias('flasher.filter.default', 'Flasher\Prime\Filter\DefaultFilter');
         $this->app->alias('flasher.presenter.html', 'Flasher\Prime\Presenter\Adapter\HtmlPresenter');
-        $this->app->alias('flasher.presenter.json', 'Flasher\Prime\Presenter\Adapter\JsonPresenter');
+        $this->app->alias('flasher.presenter.json', 'Flasher\Prime\Presenter\Adapter\Presenter');
 
         $this->app->alias('flasher', 'flasher.factory_manager');
 
