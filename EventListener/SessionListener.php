@@ -4,7 +4,7 @@ namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Presenter\Adapter\HtmlPresenter;
+use Flasher\Prime\Renderer\Adapter\HtmlPresenter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
