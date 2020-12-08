@@ -3,7 +3,6 @@
 namespace Flasher\Toastr\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
-use Flasher\Prime\Envelope;
 use Flasher\Prime\Renderer\HasOptionsInterface;
 use Flasher\Prime\Renderer\HasScriptsInterface;
 use Flasher\Prime\Renderer\HasStylesInterface;
@@ -11,11 +10,6 @@ use Flasher\Prime\Renderer\RendererInterface;
 
 final class ToastrRenderer implements RendererInterface, HasScriptsInterface, HasStylesInterface, HasOptionsInterface
 {
-    /**
-     * @var ConfigInterface
-     */
-    private $config;
-
     /**
      * @var array
      */
@@ -33,27 +27,9 @@ final class ToastrRenderer implements RendererInterface, HasScriptsInterface, Ha
 
     public function __construct(ConfigInterface $config)
     {
-        $this->config  = $config;
         $this->scripts = $config->get('adapters.toastr.scripts', array());
         $this->styles  = $config->get('adapters.toastr.styles', array());
         $this->options = $config->get('adapters.toastr.options', array());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function render(Envelope $envelope)
-    {
-        $notification = $envelope->getNotification();
-        $options = $envelope->getOptions();
-
-        return sprintf(
-            "toastr.%s('%s', '%s', %s);",
-            $notification->getType(),
-            $notification->getMessage(),
-            $notification->getTitle(),
-            json_encode($options)
-        );
     }
 
     /**
@@ -72,9 +48,12 @@ final class ToastrRenderer implements RendererInterface, HasScriptsInterface, Ha
         return $this->styles;
     }
 
-    public function renderOptions()
+    /**
+     * @inheritDoc
+     */
+    public function getOptions()
     {
-        return sprintf('toastr.options = %s;', json_encode($this->options));
+        return $this->options;
     }
 
     /**
