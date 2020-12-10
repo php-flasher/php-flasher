@@ -6,7 +6,7 @@ use Flasher\Prime\EventDispatcher\Event\PreFlushEvent;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
-final class PostFlushListener implements EventSubscriberInterface
+final class RemoveListener implements EventSubscriberInterface
 {
     /**
      * @var StorageManagerInterface
@@ -26,17 +26,23 @@ final class PostFlushListener implements EventSubscriberInterface
      */
     public function __invoke(PreFlushEvent $event)
     {
-        foreach ($event->getEnvelopes() as $envelope) {
-            $replayStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
-            $replayCount = null === $replayStamp ? 0 : $replayStamp->getAmount() - 1;
+        $envelopesToKeep = array();
+        $envelopesToRemove = array();
 
-            if (1 > $replayCount) {
+        foreach ($event->getEnvelopes() as $envelope) {
+            $hopsStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
+
+            if (1 === $hopsStamp->getAmount()) {
+                $envelopesToRemove[] = $envelope;
                 continue;
             }
 
-            $envelope->with(new HopsStamp($replayCount));
-            $this->storageManager->add($envelope);
+            $envelope->with(new HopsStamp($hopsStamp->getAmount() - 1));
+            $envelopesToKeep[] = $envelope;
         }
+
+        $event->setEnvelopes($envelopesToRemove);
+        $this->storageManager->update($envelopesToKeep);
     }
 
     /**
