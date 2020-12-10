@@ -28,6 +28,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(array(
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
                         'https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js',
+                        '/bundles/flasherpnotify/flasher-pnotify.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
