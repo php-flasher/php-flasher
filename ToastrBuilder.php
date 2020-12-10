@@ -4,9 +4,6 @@ namespace Flasher\Toastr\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
-/**
- * @method Toastr getNotification()
- */
 final class ToastrBuilder extends NotificationBuilder
 {
     /**
