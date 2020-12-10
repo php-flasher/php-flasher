@@ -6,6 +6,8 @@ use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Renderer\Response\ResponseManager;
+use Flasher\Prime\Renderer\Response\ResponseManagerInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class Renderer implements RendererInterface
@@ -26,26 +28,32 @@ final class Renderer implements RendererInterface
     private $config;
 
     /**
+     * @var ResponseManagerInterface
+     */
+    private $responseManager;
+
+    /**
      * @param StorageManagerInterface  $storageManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param ConfigInterface          $config
+     * @param ResponseManagerInterface|null     $responseManager
      */
     public function __construct(
         StorageManagerInterface $storageManager,
         EventDispatcherInterface $eventDispatcher,
-        ConfigInterface $config
+        ConfigInterface $config,
+        ResponseManagerInterface $responseManager = null
     ) {
         $this->storageManager = $storageManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->config = $config;
+        $this->responseManager = $responseManager ?: new ResponseManager();
     }
 
     /**
-     * @param array $criteria
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function render(array $criteria = array())
+    public function render(array $criteria = array(), array $context = array())
     {
         $envelopes = $this->getEnvelopes($criteria);
 
@@ -62,7 +70,7 @@ final class Renderer implements RendererInterface
 
         $this->storageManager->remove($envelopes);
 
-        return $response;
+        return $this->responseManager->create(isset($context['format']) ? $context['format'] : 'array')->render($response, $context);
     }
 
     /**
@@ -132,10 +140,11 @@ final class Renderer implements RendererInterface
     {
         return array_map(function (Envelope $envelope) {
             return array(
-                'handler' => $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler(),
+                'handler'      => $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler(),
                 'notification' => $envelope->toArray(),
             );
-        }, $envelopes);
+        },
+            $envelopes);
     }
 
     /**
