@@ -6,5 +6,4 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class SweetAlertBuilder extends NotificationBuilder
 {
-
 }

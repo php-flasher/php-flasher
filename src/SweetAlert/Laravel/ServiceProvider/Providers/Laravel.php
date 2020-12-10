@@ -3,10 +3,8 @@
 namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
 use Flasher\Prime\Flasher;
-use Flasher\Prime\Renderer\RendererManager;
 use Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider;
 use Flasher\SweetAlert\Prime\SweetAlertFactory;
-use Flasher\SweetAlert\Prime\SweetAlertRenderer;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -36,24 +34,13 @@ class Laravel implements ServiceProviderInterface
     public function registerServices()
     {
         $this->app->singleton('flasher.factory.sweet_alert', function (Container $app) {
-            return new SweetAlertFactory($app['flasher.event_dispatcher']);
+            return new SweetAlertFactory($app['flasher.storage_manager']);
         });
 
-        $this->app->singleton('flasher.renderer.sweet_alert', function (Container $app) {
-            return new SweetAlertRenderer($app['flasher.config']);
-        });
-
-        $this->app->alias('flasher.factory.sweet_alert', 'Flasher\SweetAlert\Prime\SweetAlertFactory');
-        $this->app->alias('flasher.renderer.sweet_alert', 'Flasher\SweetAlert\Prime\SweetAlertRenderer');
+        $this->app->alias('flasher.sweet_alert', 'Flasher\SweetAlert\Prime\SweetAlertFactory');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addFactory($app['flasher.factory.sweet_alert']);
-
-            return $manager;
-        });
-
-        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
-            $manager->addDriver($app['flasher.renderer.sweet_alert']);
+            $manager->addFactory('sweet_alert', $app['flasher.factory.sweet_alert']);
 
             return $manager;
         });

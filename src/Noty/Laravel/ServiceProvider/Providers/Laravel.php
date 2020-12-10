@@ -3,10 +3,8 @@
 namespace Flasher\Noty\Laravel\ServiceProvider\Providers;
 
 use Flasher\Prime\Flasher;
-use Flasher\Prime\Renderer\RendererManager;
 use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 use Flasher\Noty\Prime\NotyFactory;
-use Flasher\Noty\Prime\NotyRenderer;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -35,27 +33,16 @@ class Laravel implements ServiceProviderInterface
 
     public function registerServices()
     {
-        $this->app->singleton('flasher.factory.noty', function (Container $app) {
-            return new NotyFactory($app['flasher.event_dispatcher']);
+        $this->app->singleton('flasher.noty', function (Container $app) {
+            return new NotyFactory($app['flasher.storage_manager']);
         });
 
-        $this->app->singleton('flasher.renderer.noty', function (Container $app) {
-            return new NotyRenderer($app['flasher.config']);
-        });
-
-        $this->app->alias('flasher.factory.noty', 'Flasher\Noty\Prime\NotyFactory');
-        $this->app->alias('flasher.renderer.noty', 'Flasher\Noty\Prime\NotyRenderer');
+        $this->app->alias('flasher.noty', 'Flasher\Noty\Prime\NotyFactory');
 
         $this->app->extend('flasher', function (Flasher $flasher, Container $app) {
-            $flasher->addFactory($app['flasher.factory.noty']);
+            $flasher->addFactory('toastr', $app['flasher.noty']);
 
             return $flasher;
-        });
-
-        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
-            $manager->addDriver($app['flasher.renderer.noty']);
-
-            return $manager;
         });
     }
 

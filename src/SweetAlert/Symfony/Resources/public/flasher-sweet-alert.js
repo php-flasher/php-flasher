@@ -1,4 +1,4 @@
-PHPFlasher.addFactory('noty', (function () {
+PHPFlasher.addFactory('sweet_alert', (function () {
     'use strict';
 
     var exports = {};
@@ -6,15 +6,17 @@ PHPFlasher.addFactory('noty', (function () {
     exports.render = function (data) {
         var options = {
             text: data.message,
-            type: data.type,
+            icon: data.type,
             ...data.options
         }
 
-        new Noty(options).show();
+        window.SwalToast.fire(options);
     };
 
     exports.renderOptions = function (options) {
-        Noty.overrideDefaults(options);
+        if ("undefined" === typeof window.SwalToast) {
+            window.SwalToast = Swal.mixin(options);
+        }
     };
 
     return exports;

@@ -1,4 +1,4 @@
-PHPFlasher.addFactory('noty', (function () {
+PHPFlasher.addFactory('pnotify', (function () {
     'use strict';
 
     var exports = {};
@@ -10,11 +10,11 @@ PHPFlasher.addFactory('noty', (function () {
             ...data.options
         }
 
-        new Noty(options).show();
+        new PNotify(options);
     };
 
     exports.renderOptions = function (options) {
-        Noty.overrideDefaults(options);
+        PNotify.defaults = options;
     };
 
     return exports;

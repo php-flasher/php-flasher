@@ -1,16 +1,8 @@
 services:
-    flasher.factory.notyf:
+    flasher.notyf:
         parent: 'flasher.abstract_factory'
-        class: Flasher\Notyf\Prime\NotyfProducer
+        class: Flasher\Notyf\Prime\NotyfFactory
         tags:
-            - { name: 'flasher.factory' }
+            - { name: 'flasher.factory', alias: 'notyf' }
 
-    flasher.renderer.notyf:
-        class: Flasher\Notyf\Prime\NotyfRenderer
-        arguments:
-            - '@flasher.config'
-        tags:
-            - { name: 'flasher.renderer' }
-
-    Flasher\Notyf\Prime\NotyfProducer: '@flasher.factory.notyf'
-    Flasher\Notyf\Prime\NotyfRenderer: '@flasher.renderer.notyf'
+    Flasher\Notyf\Prime\NotyfFactory: '@flasher.notyf'

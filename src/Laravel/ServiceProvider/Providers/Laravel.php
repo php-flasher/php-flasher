@@ -10,7 +10,6 @@ use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 use Flasher\Prime\EventDispatcher\EventListener\FilterListener;
 use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\Filter\Filter;
-use Flasher\Prime\Filter\FilterBuilder;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\Renderer;
 use Flasher\Prime\Storage\StorageManager;
