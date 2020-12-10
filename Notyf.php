@@ -6,5 +6,4 @@ use Flasher\Prime\Notification\Notification;
 
 final class Notyf extends Notification
 {
-
 }
