@@ -1,16 +1,8 @@
 services:
-    flasher.factory.sweet_alert:
-        parent: 'flasher.factory.abstract'
+    flasher.sweet_alert:
+        parent: 'flasher.abstract_factory'
         class: Flasher\SweetAlert\Prime\SweetAlertFactory
         tags:
-            - { name: 'flasher.factory' }
+            - { name: 'flasher.factory', alias: 'sweet_alert' }
 
-    flasher.renderer.sweet_alert:
-        class: Flasher\SweetAlert\Prime\SweetAlertRenderer
-        arguments:
-            - '@flasher.config'
-        tags:
-            - { name: 'flasher.renderer' }
-
-    Flasher\SweetAlert\Prime\SweetAlertFactory: '@flasher.factory.sweet_alert'
-    Flasher\SweetAlert\Prime\SweetAlertRenderer: '@flasher.renderer.sweet_alert'
+    Flasher\SweetAlert\Prime\SweetAlertFactory: '@flasher.sweet_alert'
