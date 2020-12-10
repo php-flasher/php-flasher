@@ -38,17 +38,8 @@ final class Storage implements StorageInterface
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-        $store = $this->all();
 
-        foreach ($envelopes as $envelope) {
-            if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
-                $envelope->withStamp(new UuidStamp());
-            }
-
-            $store[] = $envelope;
-        }
-
-        $this->session->set(self::ENVELOPES_NAMESPACE, $store);
+        $this->session->set(self::ENVELOPES_NAMESPACE, array_merge($this->all(), $envelopes));
     }
 
     /**
@@ -79,17 +70,13 @@ final class Storage implements StorageInterface
     public function remove($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
-
         $map = UuidStamp::indexByUuid($envelopes);
 
-        $store = array_filter(
-            $this->all(),
-            function (Envelope $envelope) use ($map) {
-                $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+        $store = array_filter($this->all(), function (Envelope $envelope) use ($map) {
+            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
 
-                return !isset($map[$uuid]);
-            }
-        );
+            return !isset($map[$uuid]);
+        });
 
         $this->session->set(self::ENVELOPES_NAMESPACE, $store);
     }
