@@ -102,6 +102,7 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * @param string $option
+     * @param mixed $value
      *
      * @return $this
      */

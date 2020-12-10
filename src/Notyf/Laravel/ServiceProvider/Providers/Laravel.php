@@ -4,9 +4,7 @@ namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
 use Flasher\Notyf\Laravel\FlasherNotyfServiceProvider;
 use Flasher\Notyf\Prime\NotyfFactory;
-use Flasher\Notyf\Prime\NotyfRenderer;
 use Flasher\Prime\Flasher;
-use Flasher\Prime\Renderer\RendererManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -36,24 +34,13 @@ class Laravel implements ServiceProviderInterface
     public function registerServices()
     {
         $this->app->singleton('flasher.factory.notyf', function (Container $app) {
-            return new NotyfFactory($app['flasher.event_dispatcher']);
+            return new NotyfFactory($app['flasher.storage_manager']);
         });
 
-        $this->app->singleton('flasher.renderer.notyf', function (Container $app) {
-            return new NotyfRenderer($app['flasher.config']);
-        });
-
-        $this->app->alias('flasher.factory.notyf', 'Flasher\Notyf\Prime\NotyfFactory');
-        $this->app->alias('flasher.renderer.notyf', 'Flasher\Notyf\Prime\NotyfRenderer');
+        $this->app->alias('flasher.notyf', 'Flasher\Notyf\Prime\NotyfFactory');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addFactory($app['flasher.factory.notyf']);
-
-            return $manager;
-        });
-
-        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
-            $manager->addDriver($app['flasher.renderer.notyf']);
+            $manager->addFactory('notyf', $app['flasher.notyf']);
 
             return $manager;
         });

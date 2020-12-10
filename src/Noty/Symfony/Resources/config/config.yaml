@@ -1,16 +1,8 @@
 services:
-    flasher.factory.noty:
+    flasher.noty:
         parent: 'flasher.abstract_factory'
         class: Flasher\Noty\Prime\NotyFactory
         tags:
-            - { name: 'flasher.factory' }
+            - { name: 'flasher.factory', alias: 'noty' }
 
-    flasher.renderer.noty:
-        class: Flasher\Noty\Prime\NotyRenderer
-        arguments:
-            - '@flasher.config'
-        tags:
-            - { name: 'flasher.renderer' }
-
-    Flasher\Noty\Prime\NotyFactory: '@flasher.factory.noty'
-    Flasher\Noty\Prime\NotyRenderer: '@flasher.renderer.noty'
+    Flasher\Noty\Prime\NotyFactory: '@flasher.noty'

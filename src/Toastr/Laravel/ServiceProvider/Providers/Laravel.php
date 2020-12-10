@@ -3,10 +3,8 @@
 namespace Flasher\Toastr\Laravel\ServiceProvider\Providers;
 
 use Flasher\Prime\Flasher;
-use Flasher\Prime\Renderer\RendererManager;
 use Flasher\Toastr\Laravel\FlasherToastrServiceProvider;
 use Flasher\Toastr\Prime\ToastrFactory;
-use Flasher\Toastr\Prime\ToastrRenderer;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -35,27 +33,16 @@ class Laravel implements ServiceProviderInterface
 
     public function registerToastrServices()
     {
-        $this->app->singleton('flasher.factory.toastr', function (Container $app) {
-            return new ToastrFactory($app['flasher.event_dispatcher']);
+        $this->app->singleton('flasher.toastr', function (Container $app) {
+            return new ToastrFactory($app['flasher.storage_manager']);
         });
 
-        $this->app->singleton('flasher.renderer.toastr', function (Container $app) {
-            return new ToastrRenderer($app['flasher.config']);
-        });
-
-        $this->app->alias('flasher.factory.toastr', 'Flasher\Toastr\Prime\ToastrFactory');
-        $this->app->alias('flasher.renderer.toastr', 'Flasher\Toastr\Prime\ToastrRenderer');
+        $this->app->alias('flasher.toastr', 'Flasher\Toastr\Prime\ToastrFactory');
 
         $this->app->extend('flasher', function (Flasher $flasher, Container $app) {
-            $flasher->addFactory($app['flasher.factory.toastr']);
+            $flasher->addFactory('toastr', $app['flasher.toastr']);
 
             return $flasher;
-        });
-
-        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
-            $manager->addDriver($app['flasher.renderer.toastr']);
-
-            return $manager;
         });
     }
 
