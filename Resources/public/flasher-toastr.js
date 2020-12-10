@@ -4,7 +4,7 @@ PHPFlasher.addFactory('toastr', (function () {
     var exports = {};
 
     exports.render = function (data) {
-        toastr[data.type](data.message, data.title, data);
+        toastr[data.type](data.message, data.title, data.options);
     };
 
     exports.renderOptions = function (options) {
