@@ -4,6 +4,9 @@ namespace Flasher\Toastr\Prime;
 
 use Flasher\Prime\Factory\AbstractFactory;
 
+/**
+ * @mixin ToastrBuilder
+ */
 final class ToastrFactory extends AbstractFactory
 {
     /**

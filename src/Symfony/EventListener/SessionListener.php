@@ -73,7 +73,7 @@ final class SessionListener implements EventSubscriberInterface
         }
 
         $content = $response->getContent();
-
+//dd($content);
         $html = '';
 
         foreach ($rendereResponse['scripts'] as $script) {
@@ -94,7 +94,7 @@ if ("undefined" === typeof PHPFlasher) {
 </script>
 HTML;
 
-        $pos = strripos($content, '</body>');
+        $pos = strripos($content, '</html>');
         $content = substr($content, 0, $pos).$html.substr($content, $pos);
         $response->setContent($content);
     }
