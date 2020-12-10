@@ -4,9 +4,7 @@ namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
 use Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider;
 use Flasher\Pnotify\Prime\PnotifyFactory;
-use Flasher\Pnotify\Prime\PnotifyRenderer;
 use Flasher\Prime\Flasher;
-use Flasher\Prime\Renderer\RendererManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -35,25 +33,14 @@ class Laravel implements ServiceProviderInterface
 
     public function registerServices()
     {
-        $this->app->singleton('flasher.factory.pnotify', function (Container $app) {
-            return new PnotifyFactory($app['flasher.event_dispatcher']);
+        $this->app->singleton('flasher.pnotify', function (Container $app) {
+            return new PnotifyFactory($app['flasher.storage_manager']);
         });
 
-        $this->app->singleton('flasher.renderer.pnotify', function (Container $app) {
-            return new PnotifyRenderer($app['flasher.config']);
-        });
-
-        $this->app->alias('flasher.factory.pnotify', 'Flasher\Pnotify\Prime\PnotifyFactory');
-        $this->app->alias('flasher.renderer.pnotify', 'Flasher\Pnotify\Prime\PnotifyRenderer');
+        $this->app->alias('flasher.pnotify', 'Flasher\Pnotify\Prime\PnotifyFactory');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addFactory($app['flasher.factory.pnotify']);
-
-            return $manager;
-        });
-
-        $this->app->extend('flasher.renderer_manager', function (RendererManager $manager, Container $app) {
-            $manager->addDriver($app['flasher.renderer.pnotify']);
+            $manager->addFactory('pnotify', $app['flasher.factory.pnotify']);
 
             return $manager;
         });
