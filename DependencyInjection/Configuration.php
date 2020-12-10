@@ -27,6 +27,7 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
                           'https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js',
+                          '/bundles/flashernoty/flasher-noty.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
