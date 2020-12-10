@@ -69,6 +69,6 @@ final class Flasher implements FlasherInterface
      */
     public function __call($method, array $parameters)
     {
-        return call_user_func_array(array($this->make(), $method), $parameters);
+        return call_user_func_array(array($this->create(), $method), $parameters);
     }
 }
