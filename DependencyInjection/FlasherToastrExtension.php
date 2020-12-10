@@ -30,7 +30,7 @@ final class FlasherToastrExtension extends Extension implements PrependExtension
     public function prepend(ContainerBuilder $container)
     {
         if (!$container->hasExtension('flasher')) {
-            throw new \RuntimeException('[Flasher\SymfonyFlasher\PrimeBundle] is not registered');
+            throw new \RuntimeException('[Flasher\Symfony\FlasherBundle] is not registered');
         }
 
         $configs = $container->getExtensionConfig($this->getAlias());

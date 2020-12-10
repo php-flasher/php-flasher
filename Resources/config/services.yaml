@@ -1,16 +1,8 @@
 services:
-    flasher.factory.toastr:
+    flasher.toastr:
         parent: 'flasher.abstract_factory'
         class: Flasher\Toastr\Prime\ToastrFactory
         tags:
-            - { name: 'flasher.factory' }
+            - { name: 'flasher.factory', alias: 'toastr' }
 
-    flasher.renderer.toastr:
-        class: Flasher\Toastr\Prime\ToastrRenderer
-        arguments:
-            - '@flasher.config'
-        tags:
-            - { name: 'flasher.renderer' }
-
-    Flasher\Toastr\Prime\ToastrFactory: '@flasher.factory.toastr'
-    Flasher\Toastr\Prime\ToastrRenderer: '@flasher.renderer.toastr'
+    Flasher\Toastr\Prime\ToastrFactory: '@flasher.toastr'
