@@ -8,8 +8,8 @@ use Flasher\Laravel\Storage\Storage;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 use Flasher\Prime\EventDispatcher\EventListener\FilterListener;
-use Flasher\Prime\EventDispatcher\EventListener\PostFlushListener;
-use Flasher\Prime\EventDispatcher\EventListener\PostBuildListener;
+use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
+use Flasher\Prime\EventDispatcher\EventListener\BuildListener;
 use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Filter\FilterBuilder;
 use Flasher\Prime\Filter\FilterManager;
@@ -102,9 +102,9 @@ class Laravel implements ServiceProviderInterface
         $this->app->singleton('flasher.event_dispatcher', function (Application $app) {
             $eventDispatcher = new EventDispatcher();
             $eventDispatcher->addSubscriber(new FilterListener($app['flasher.storage']));
-            $eventDispatcher->addSubscriber(new PostFlushListener($app['flasher.storage']));
+            $eventDispatcher->addSubscriber(new RemoveListener($app['flasher.storage']));
             $eventDispatcher->addSubscriber(new StampsListener($app['flasher.flasher_bus']));
-            $eventDispatcher->addSubscriber(new PostBuildListener($app['flasher.storage']));
+            $eventDispatcher->addSubscriber(new BuildListener($app['flasher.storage']));
 
             return $eventDispatcher;
         });
