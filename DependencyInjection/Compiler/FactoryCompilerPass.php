@@ -14,15 +14,17 @@ final class FactoryCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('flasher.factory_manager')) {
+        if (!$container->has('flasher')) {
             return;
         }
 
         /** @var Flasher $manager */
-        $manager = $container->findDefinition('flasher.factory_manager');
+        $manager = $container->findDefinition('flasher');
 
         foreach ($container->findTaggedServiceIds('flasher.factory') as $id => $tags) {
-            $manager->addMethodCall('addDriver', array(new Reference($id)));
+            foreach ($tags as $attributes) {
+                $manager->addMethodCall('addFactory', array($attributes['alias'], new Reference($id)));
+            }
         }
     }
 }

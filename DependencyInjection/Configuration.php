@@ -30,7 +30,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        '/bundles/flasher/js/flasher.js'
+                        '/bundles/flasher/flasher.js'
                     ))
                 ->end()
                 ->arrayNode('styles')
