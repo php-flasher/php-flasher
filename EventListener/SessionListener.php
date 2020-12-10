@@ -4,7 +4,7 @@ namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Renderer\Adapter\HtmlPresenter;
+use Flasher\Prime\Renderer\RendererInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -21,19 +21,20 @@ final class SessionListener implements EventSubscriberInterface
     private $flasher;
 
     /**
-     * @var HtmlPresenter
+     * @var RendererInterface
      */
-    private $htmlPresenter;
+    private $renderer;
 
     /**
-     * @param FlasherInterface $flasher
-     * @param HtmlPresenter    $htmlPresenter
+     * @param ConfigInterface   $config
+     * @param FlasherInterface  $flasher
+     * @param RendererInterface $htmlPresenter
      */
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, HtmlPresenter $htmlPresenter)
+    public function __construct(ConfigInterface $config, FlasherInterface $flasher, RendererInterface $renderer)
     {
-        $this->config        = $config;
-        $this->flasher       = $flasher;
-        $this->htmlPresenter = $htmlPresenter;
+        $this->config = $config;
+        $this->flasher = $flasher;
+        $this->renderer = $renderer;
     }
 
     public function onKernelResponse(ResponseEvent $event)
@@ -48,6 +49,8 @@ final class SessionListener implements EventSubscriberInterface
 
         $mapping = $this->typesMapping();
 
+        $readyToRender = false;
+
         foreach ($request->getSession()->getFlashBag()->all() as $type => $messages) {
             if (!isset($mapping[$type])) {
                 continue;
@@ -56,18 +59,50 @@ final class SessionListener implements EventSubscriberInterface
             foreach ($messages as $message) {
                 $this->flasher->addFlash($mapping[$type], $message);
             }
+
+            $readyToRender = true;
+        }
+
+        if (false === $readyToRender) {
+            return;
+        }
+
+        $rendereResponse = $this->renderer->render();
+        if (empty($rendereResponse['notifications'])) {
+            return;
         }
 
         $content = $response->getContent();
-        $pos     = strripos($content, '</body>');
-        $content = substr($content, 0, $pos).$this->htmlPresenter->render().substr($content, $pos);
+
+        $html = '';
+
+        foreach ($rendereResponse['scripts'] as $script) {
+            if (false === strpos($content, $script)) {
+                $html .= sprintf('<script src="%s"></script>', $script).PHP_EOL;
+            }
+        }
+
+        $notifications = json_encode($rendereResponse);
+
+        $html .= <<<HTML
+<script type="text/javascript">
+if ("undefined" === typeof PHPFlasher) {
+    alert("[PHPFlasher] not found, please include the '/bundles/flasher/flasher.js' file");
+} else {
+    PHPFlasher.render({$notifications});
+}
+</script>
+HTML;
+
+        $pos = strripos($content, '</body>');
+        $content = substr($content, 0, $pos).$html.substr($content, $pos);
         $response->setContent($content);
     }
 
     public static function getSubscribedEvents()
     {
         return array(
-            'kernel.response' => 'onKernelResponse'
+            'kernel.response' => 'onKernelResponse',
         );
     }
 
@@ -83,7 +118,7 @@ final class SessionListener implements EventSubscriberInterface
                 $type = $aliases;
             }
 
-            foreach ((array) $aliases as $alias) {
+            foreach ((array)$aliases as $alias) {
                 $mapping[$alias] = $type;
             }
         }
