@@ -27,6 +27,7 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
                         'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js',
+                        '/bundles/flashernotyf/flasher-notyf.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
