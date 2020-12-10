@@ -4,52 +4,16 @@ services:
         arguments:
             - null
 
-    flasher.abstract_manager:
-        class: Flasher\Prime\Manager\AbstractManager
-        abstract: true
-        arguments:
-            - '@flasher.config'
-
     flasher:
         class: Flasher\Prime\Flasher
-        parent: 'flasher.abstract_manager'
+        arguments:
+            - '@flasher.config'
 
     flasher.abstract_factory:
         class: Flasher\Prime\Factory\AbstractFactory
         abstract: true
         arguments:
-            - '@flasher.event_dispatcher'
-
-    flasher.renderer_manager:
-        class: Flasher\Prime\Renderer\RendererManager
-        parent: 'flasher.abstract_manager'
-
-    flasher.flasher_bus:
-        class: Flasher\Prime\Middleware\FlasherBus
-
-    flasher.middleware.add_created_stamp:
-        class: Flasher\Prime\Middleware\AddCreatedAtStampMiddleware
-        public: false
-        tags:
-            - { name: 'flasher.middleware' }
-
-    flasher.middleware.add_hops_stamp:
-        class: Flasher\Prime\Middleware\AddHopsStampMiddleware
-        public: false
-        tags:
-            - { name: 'flasher.middleware' }
-
-    flasher.middleware.add_priority_stamp:
-        class: Flasher\Prime\Middleware\AddPriorityStampMiddleware
-        public: false
-        tags:
-            - { name: 'flasher.middleware' }
-
-    flasher.middleware.add_delay_stamp:
-        class: Flasher\Prime\Middleware\AddDelayStampMiddleware
-        public: false
-        tags:
-            - { name: 'flasher.middleware' }
+            - '@flasher.storage_manager'
 
     flasher.storage:
         class: Flasher\Symfony\Storage\Storage
@@ -62,117 +26,76 @@ services:
             - '@flasher.storage'
             - '@flasher.event_dispatcher'
 
+    flasher.filter:
+        class: Flasher\Prime\Filter\Filter
+
     flasher.event_dispatcher:
         class: Flasher\Prime\EventDispatcher\EventDispatcher
 
-    flasher.event_listener.post_filter:
-        class: Flasher\Prime\EventDispatcher\EventListener\PostFilterListener
+    flasher.event_listener.filter_listener:
+        class: Flasher\Prime\EventDispatcher\EventListener\FilterListener
         public: false
         arguments:
-            - '@flasher.storage'
+            - '@flasher.filter'
         tags:
             - { name: 'flasher.event_subscriber' }
 
-    flasher.event_listener.post_flush:
+    flasher.event_listener.post_build_listener:
+        class: Flasher\Prime\EventDispatcher\EventListener\PostBuildListener
+        public: false
+        arguments:
+            - '@flasher.storage_manager'
+        tags:
+            - { name: 'flasher.event_subscriber' }
+
+    flasher.event_listener.post_flush_listener:
         class: Flasher\Prime\EventDispatcher\EventListener\PostFlushListener
         public: false
         arguments:
-            - '@flasher.storage'
-        tags:
-            - { name: 'flasher.event_subscriber' }
-
-    flasher.event_listener.middleware:
-        class: Flasher\Prime\EventDispatcher\EventListener\MiddlewareListener
-        public: false
-        arguments:
-            - '@flasher.flasher_bus'
-        tags:
-            - { name: 'flasher.event_subscriber' }
-
-    flasher.event_listener.storage:
-        class: Flasher\Prime\EventDispatcher\EventListener\StorageListener
-        public: false
-        arguments:
-            - '@flasher.storage'
-        tags:
-            - { name: 'flasher.event_subscriber' }
-
-    flasher.filter_manager:
-        class: Flasher\Prime\Filter\FilterManager
-        parent: 'flasher.abstract_manager'
-
-    flasher.filter_builder:
-        class: Flasher\Prime\Filter\FilterBuilder
-
-    flasher.filter.default:
-        class: Flasher\Prime\Filter\DefaultFilter
-        arguments:
-            - '@flasher.filter_builder'
-        tags:
-            - { name: 'flasher.filter' }
-
-    flasher.presenter_manager:
-        class: Flasher\Prime\Presenter\PresenterManager
-        parent: 'flasher.abstract_manager'
-
-    flasher.abstract_presenter:
-        class: Flasher\Prime\Presenter\AbstractPresenter
-        abstract: true
-        arguments:
-            - '@flasher.event_dispatcher'
-            - '@flasher.config'
             - '@flasher.storage_manager'
-            - '@flasher.filter_manager'
-            - '@flasher.renderer_manager'
-
-    flasher.presenter.html:
-        class: Flasher\Prime\Presenter\Adapter\HtmlPresenter
-        parent: 'flasher.abstract_presenter'
         tags:
-            - { name: 'flasher.presenter' }
+            - { name: 'flasher.event_subscriber' }
 
-    flasher.presenter.json:
-        class: Flasher\Prime\Presenter\Adapter\JsonPresenter
-        parent: 'flasher.abstract_presenter'
+    flasher.event_listener.stamps_listener:
+        class: Flasher\Prime\EventDispatcher\EventListener\StampsListener
+        public: false
         tags:
-            - { name: 'flasher.presenter' }
+            - { name: 'flasher.event_subscriber' }
 
     flasher.twig.extension:
         class: Flasher\Symfony\Twig\FlasherTwigExtension
         arguments:
-            - '@flasher.presenter.html'
+            - '@flasher.renderer'
         tags:
             - { name: 'twig.extension' }
+
+    flasher.renderer:
+        class: Flasher\Prime\Renderer\Renderer
+        arguments:
+            - '@flasher.storage_manager'
+            - '@flasher.event_dispatcher'
+            - '@flasher.config'
 
     flasher.session_listener:
         class: Flasher\Symfony\EventListener\SessionListener
         arguments:
             - '@flasher.config'
             - '@flasher'
-            - '@flasher.presenter.html'
+            - '@flasher.renderer'
         tags:
             - { name: 'kernel.event_subscriber' }
 
     Flasher\Prime\Config\Config: '@flasher.config'
     Flasher\Prime\Flasher: '@flasher'
-    Flasher\Prime\Presenter\PresenterManager: '@flasher.presenter_manager'
-    Flasher\Prime\Renderer\RendererManager: '@flasher.renderer_manager'
-    Flasher\Prime\Middleware\FlasherBus: '@flasher.flasher_bus'
+    Flasher\Prime\Renderer\Renderer: '@flasher.renderer'
     Flasher\Prime\EventDispatcher\EventDispatcher: '@flasher.event_dispatcher'
     Flasher\Symfony\Storage\Storage: '@flasher.storage'
     Flasher\Prime\Storage\StorageManager: '@flasher.storage_manager'
-    Flasher\Prime\Filter\FilterManager: '@flasher.filter_manager'
-    Flasher\Prime\Filter\FilterBuilder: '@flasher.filter_builder'
-    Flasher\Prime\Filter\DefaultFilter: '@flasher.filter.default'
-    Flasher\Prime\Presenter\Adapter\JsonPresenter: '@flasher.presenter.json'
-    Flasher\Prime\Presenter\Adapter\HtmlPresenter: '@flasher.presenter.html'
+    Flasher\Prime\Filter\Filter: '@flasher.filter'
 
-    flasher.factory_manager: '@flasher'
     Flasher\Prime\FlasherInterface: '@flasher'
     Flasher\Prime\Storage\StorageManagerInterface: '@flasher.storage_manager'
-    Flasher\Prime\Renderer\RendererManagerInterface: '@flasher.renderer_manager'
-    Flasher\Prime\Presenter\PresenterManagerInterface: '@flasher.presenter_manager'
-    Flasher\Prime\Middleware\FlasherBusInterface: '@flasher.flasher_bus'
-    Flasher\Prime\Filter\FilterManagerInterface: '@flasher.filter_manager'
+    Flasher\Prime\Renderer\RendererInterface: '@flasher.renderer'
+    Flasher\Prime\Filter\FilterInterface: '@flasher.filter'
     Flasher\Prime\EventDispatcher\EventDispatcherInterface: '@flasher.event_dispatcher'
     Flasher\Prime\Storage\StorageInterface: '@flasher.storage'
