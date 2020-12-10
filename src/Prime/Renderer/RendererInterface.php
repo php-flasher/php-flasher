@@ -6,8 +6,9 @@ interface RendererInterface
 {
     /**
      * @param array $criteria
+     * @param array $context
      *
-     * @return string
+     * @return mixed
      */
-    public function render(array $criteria = array());
+    public function render(array $criteria = array(), array $context = array());
 }

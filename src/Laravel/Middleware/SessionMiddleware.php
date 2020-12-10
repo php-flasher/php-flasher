@@ -4,7 +4,7 @@ namespace Flasher\Laravel\Middleware;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Renderer\Adapter\HtmlPresenter;
+use Flasher\Prime\Renderer\RendererInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -21,19 +21,20 @@ final class SessionMiddleware
     private $flasher;
 
     /**
-     * @var HtmlPresenter
+     * @var RendererInterface
      */
-    private $htmlPresenter;
+    private $renderer;
 
     /**
-     * @param FlasherInterface $flasher
-     * @param HtmlPresenter    $htmlPresenter
+     * @param ConfigInterface   $config
+     * @param FlasherInterface  $flasher
+     * @param RendererInterface $renderer
      */
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, HtmlPresenter $htmlPresenter)
+    public function __construct(ConfigInterface $config, FlasherInterface $flasher, RendererInterface $renderer)
     {
-        $this->config        = $config;
-        $this->flasher       = $flasher;
-        $this->htmlPresenter = $htmlPresenter;
+        $this->config = $config;
+        $this->flasher = $flasher;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -46,14 +47,16 @@ final class SessionMiddleware
      */
     public function handle(Request $request, \Closure $next)
     {
-        if ($request->isXmlHttpRequest() || true !== $this->config->get('auto_create_from_session')) {
-            return;
-        }
-
         /**
          * @var Response $response
          */
         $response = $next($request);
+
+        if ($request->isXmlHttpRequest() || true !== $this->config->get('auto_create_from_session')) {
+            return $response;
+        }
+
+        $readyToRender = false;
 
         foreach ($this->typesMapping() as $alias => $type) {
             if (false === $request->session()->has($alias)) {
@@ -61,12 +64,28 @@ final class SessionMiddleware
             }
 
             $this->flasher->addFlash($type, $request->session()->get($alias));
+
+            $readyToRender = true;
         }
 
+        if (false === $readyToRender) {
+            return $response;
+        }
 
         $content = $response->getContent();
-        $pos     = strripos($content, '</body>');
-        $content = substr($content, 0, $pos).$this->htmlPresenter->render().substr($content, $pos);
+
+        $htmlResponse = $this->renderer->render(array(),
+            array(
+                'format'  => 'html',
+                'content' => $content,
+            ));
+
+        if (empty($htmlResponse)) {
+            return $response;
+        }
+
+        $pos = strripos($content, '</body>');
+        $content = substr($content, 0, $pos).$htmlResponse.substr($content, $pos);
         $response->setContent($content);
 
         return $response;
