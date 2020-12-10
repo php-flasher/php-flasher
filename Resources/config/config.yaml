@@ -40,16 +40,8 @@ services:
         tags:
             - { name: 'flasher.event_subscriber' }
 
-    flasher.event_listener.post_build_listener:
-        class: Flasher\Prime\EventDispatcher\EventListener\PostBuildListener
-        public: false
-        arguments:
-            - '@flasher.storage_manager'
-        tags:
-            - { name: 'flasher.event_subscriber' }
-
     flasher.event_listener.post_flush_listener:
-        class: Flasher\Prime\EventDispatcher\EventListener\PostFlushListener
+        class: Flasher\Prime\EventDispatcher\EventListener\RemoveListener
         public: false
         arguments:
             - '@flasher.storage_manager'
@@ -93,6 +85,7 @@ services:
     Flasher\Prime\Storage\StorageManager: '@flasher.storage_manager'
     Flasher\Prime\Filter\Filter: '@flasher.filter'
 
+    Flasher\Prime\Config\ConfigInterface: '@flasher.config'
     Flasher\Prime\FlasherInterface: '@flasher'
     Flasher\Prime\Storage\StorageManagerInterface: '@flasher.storage_manager'
     Flasher\Prime\Renderer\RendererInterface: '@flasher.renderer'

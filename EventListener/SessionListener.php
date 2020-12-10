@@ -28,7 +28,7 @@ final class SessionListener implements EventSubscriberInterface
     /**
      * @param ConfigInterface   $config
      * @param FlasherInterface  $flasher
-     * @param RendererInterface $htmlPresenter
+     * @param RendererInterface $renderer
      */
     public function __construct(ConfigInterface $config, FlasherInterface $flasher, RendererInterface $renderer)
     {
@@ -67,35 +67,19 @@ final class SessionListener implements EventSubscriberInterface
             return;
         }
 
-        $rendereResponse = $this->renderer->render();
-        if (empty($rendereResponse['notifications'])) {
+        $content = $response->getContent();
+
+        $htmlResponse = $this->renderer->render(array(), array(
+            'format'  => 'html',
+            'content' => $content,
+        ));
+
+        if (empty($htmlResponse)) {
             return;
         }
 
-        $content = $response->getContent();
-
-        $html = '';
-
-        foreach ($rendereResponse['scripts'] as $script) {
-            if (false === strpos($content, $script)) {
-                $html .= sprintf('<script src="%s"></script>', $script).PHP_EOL;
-            }
-        }
-
-        $notifications = json_encode($rendereResponse);
-
-        $html .= <<<HTML
-<script type="text/javascript">
-if ("undefined" === typeof PHPFlasher) {
-    alert("[PHPFlasher] not found, please include the '/bundles/flasher/flasher.js' file");
-} else {
-    PHPFlasher.render({$notifications});
-}
-</script>
-HTML;
-
         $pos = strripos($content, '</html>');
-        $content = substr($content, 0, $pos).$html.substr($content, $pos);
+        $content = substr($content, 0, $pos).$htmlResponse.substr($content, $pos);
         $response->setContent($content);
     }
 
