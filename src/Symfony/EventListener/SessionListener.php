@@ -73,7 +73,7 @@ final class SessionListener implements EventSubscriberInterface
         }
 
         $content = $response->getContent();
-//dd($content);
+
         $html = '';
 
         foreach ($rendereResponse['scripts'] as $script) {
