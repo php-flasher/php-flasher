@@ -4,7 +4,7 @@ namespace Flasher\Prime\Tests\Storage;
 
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\PostFlushListener;
+use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\UuidStamp;
@@ -60,7 +60,7 @@ class StorageManagerTest extends TestCase
         $storage = new ArrayStorage();
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addSubscriber(new PostFlushListener($storage));
+        $eventDispatcher->addSubscriber(new RemoveListener($storage));
 
         $storageManager = new StorageManager($storage, $eventDispatcher);
 
