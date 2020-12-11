@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-noty-laravel",
-    "description": "Laravel Flasher adapter package for php-flasher/flasher-noty",
+    "description": "PHP Flasher Laravel adapter for Noty",
     "keywords": [
         "yoeunes",
         "notify",

@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-toastr-laravel",
-    "description": "Laravel Flasher adapter package for php-flasher/flasher-toastr",
+    "description": "PHP Flasher Laravel adapter for Toastr",
     "keywords": [
         "yoeunes",
         "notify",

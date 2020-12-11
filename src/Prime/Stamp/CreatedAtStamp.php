@@ -9,7 +9,7 @@ use Exception;
 final class CreatedAtStamp implements StampInterface, OrderableStampInterface
 {
     /**
-     * @param DateTime
+     * @var DateTime
      */
     private $createdAt;
 
@@ -34,12 +34,12 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface
     /**
      * @param mixed $orderable
      *
-     * @return int
+     * @return bool
      */
     public function compare($orderable)
     {
         if (!$orderable instanceof CreatedAtStamp) {
-            return 0;
+            return false;
         }
 
         return $this->createdAt > $orderable->createdAt;

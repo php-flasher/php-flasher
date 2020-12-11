@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-sweet-alert-symfony",
     "type": "symfony-bundle",
-    "description": "Symfony Flasher adapter for Sweet Alert 2 library for php-flasher/flasher-symfony",
+    "description": "PHP Flasher Symfony adapter for Sweet Alert 2",
     "keywords": [
         "yoeunes",
         "notify",
