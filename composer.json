@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-notyf-laravel",
-    "description": "Laravel adapter for php-flasher/flasher-notyf library",
+    "description": "PHP Flasher Laravel adapter for Notyf",
     "keywords": [
         "yoeunes",
         "notify",
