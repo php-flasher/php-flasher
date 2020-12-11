@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-laravel",
-    "description": "Laravel adapter for php-flasher/flasher library",
+    "description": "Laravel package integrating PHP Flasher into Laravel applications",
     "keywords": [
         "yoeunes",
         "notify",
