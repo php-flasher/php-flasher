@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-toastr-symfony",
     "type": "symfony-bundle",
-    "description": "Symfony Flasher adapter for toastr.js library for php-flasher/flasher-symfony",
+    "description": "PHP Flasher Symfony adapter for Toastr",
     "keywords": [
         "yoeunes",
         "notify",
