@@ -4,10 +4,7 @@ namespace Flasher\Prime\Tests\Storage;
 
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\ArrayStorage;
 use Flasher\Prime\Storage\StorageManager;
 use PHPUnit\Framework\TestCase;
