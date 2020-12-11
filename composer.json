@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-sweet-alert-laravel",
-    "description": "Laravel Flasher adapter package for php-flasher/flasher-sweet-alert",
+    "description": "PHP Flasher Laravel adapter for Sweet Alert 2",
     "keywords": [
         "yoeunes",
         "notify",
