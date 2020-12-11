@@ -81,8 +81,8 @@ final class FilterBuilder
         $orderings = $this->getOrderings();
 
         if (null !== $orderings) {
-            foreach ($orderings as $field => $ordering) {
-                usort($envelopes, static function (Envelope $a, Envelope $b) use ($field, $ordering) {
+            usort($envelopes, static function (Envelope $a, Envelope $b) use ($orderings) {
+                foreach ($orderings as $field => $ordering) {
                     if (FilterBuilder::ASC === $ordering) {
                         list($a, $b) = array($b, $a);
                     }
@@ -95,8 +95,10 @@ final class FilterBuilder
                     }
 
                     return $stampA->compare($stampB);
-                });
-            }
+                }
+
+                return 0;
+            });
         }
 
         $length = $this->getMaxResults();
