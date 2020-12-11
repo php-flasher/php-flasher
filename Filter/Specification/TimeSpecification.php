@@ -8,12 +8,12 @@ use Flasher\Prime\Envelope;
 final class TimeSpecification implements SpecificationInterface
 {
     /**
-     * @var int
+     * @var DateTime
      */
     private $minTime;
 
     /**
-     * @var int|null
+     * @var DateTime|null
      */
     private $maxTime;
 

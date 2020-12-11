@@ -40,7 +40,7 @@ interface NotificationBuilderInterface
     public function addInfo($message, array $options = array());
 
     /**
-     * @param string $type
+     * @param string|NotificationInterface $type
      * @param string $message
      * @param array  $options
      *
@@ -168,7 +168,7 @@ interface NotificationBuilderInterface
     /**
      * @param StampInterface[] $stamps
      *
-     * @return self
+     * @return Envelope
      */
     public function flash($stamps = array());
 

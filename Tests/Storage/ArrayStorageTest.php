@@ -16,7 +16,7 @@ final class ArrayStorageTest extends TestCase
         $envelopes = array();
 
         foreach (range(0, 4) as $index) {
-            $envelopes[$index] = new Envelope(new Notification('success', 'success message'));
+            $envelopes[$index] = new Envelope(new Notification());
             $storage->add($envelopes[$index]);
         }
 
@@ -26,14 +26,14 @@ final class ArrayStorageTest extends TestCase
     public function testAddNotificationWithUuidStamp()
     {
         $storage = new ArrayStorage();
-        $storage->add(new Envelope(new Notification('success')));
+        $storage->add(new Envelope(new Notification()));
 
         $envelopes = $storage->all();
 
         $this->assertCount(1, $envelopes);
 
         $uuid = $envelopes[0]->get('Flasher\Prime\Stamp\UuidStamp');
-        $this->assertNotNull($uuid);
+        $this->assertNull($uuid);
     }
 
     public function testClear()

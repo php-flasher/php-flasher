@@ -7,8 +7,14 @@ use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
+    /**
+     * @var array
+     */
     private $listeners = array();
 
+    /**
+     * @var array
+     */
     private $sorted = array();
 
     /**
@@ -42,7 +48,7 @@ final class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * @param $eventName
+     * @param string $eventName
      */
     private function sortListeners($eventName)
     {
