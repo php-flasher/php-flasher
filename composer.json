@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-noty",
-    "description": "PHP noty adapter for php-flasher/flasher",
+    "description": "PHP Flasher adapter for Noty",
     "keywords": [
         "notify",
         "php",
