@@ -24,7 +24,7 @@ interface FlasherInterface
     /**
      * Register a custom driver creator.
      *
-     * @param string
+     * @param string           $alias
      * @param FactoryInterface $factory
      *
      * @return $this

@@ -7,7 +7,7 @@ interface OrderableStampInterface
     /**
      * @param mixed $orderable
      *
-     * @return int
+     * @return bool
      */
     public function compare($orderable);
 }

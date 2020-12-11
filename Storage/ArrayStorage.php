@@ -25,7 +25,8 @@ final class ArrayStorage implements StorageInterface
      */
     public function add($envelopes)
     {
-        $this->envelopes[] = is_array($envelopes) ? $envelopes : func_get_args();
+        $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
+        $this->envelopes = array_merge($this->envelopes, $envelopes);
     }
 
     /**

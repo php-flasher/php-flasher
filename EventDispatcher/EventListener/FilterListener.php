@@ -23,8 +23,6 @@ final class FilterListener implements EventSubscriberInterface
 
     /**
      * @param FilterEvent $event
-     *
-     * @return Envelope[]
      */
     public function __invoke(FilterEvent $event)
     {

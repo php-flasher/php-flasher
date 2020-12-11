@@ -6,7 +6,7 @@ use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\HandlerStamp;
 use PHPUnit\Framework\TestCase;
 
-final class RendererStampTest extends TestCase
+final class HandlerStampTest extends TestCase
 {
     public function testConstruct()
     {

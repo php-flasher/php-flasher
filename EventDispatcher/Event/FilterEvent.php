@@ -12,7 +12,7 @@ final class FilterEvent
     private $envelopes;
 
     /**
-     * @var string
+     * @var array
      */
     private $criteria;
 
