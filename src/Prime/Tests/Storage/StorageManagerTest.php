@@ -20,7 +20,7 @@ class StorageManagerTest extends TestCase
         $envelopes      = array();
 
         foreach (range(0, 4) as $index) {
-            $envelopes[$index] = new Envelope(new Notification('success', 'success message'));
+            $envelopes[$index] = new Envelope(new Notification());
             $storageManager->add($envelopes[$index]);
         }
 
@@ -33,7 +33,7 @@ class StorageManagerTest extends TestCase
         $envelopes      = array();
 
         foreach (range(0, 4) as $index) {
-            $envelopes[$index] = new Envelope(new Notification('success', 'success message'));
+            $envelopes[$index] = new Envelope(new Notification());
             $storageManager->add($envelopes[$index]);
         }
 
@@ -45,41 +45,13 @@ class StorageManagerTest extends TestCase
     public function testAdd()
     {
         $storageManager = new StorageManager(new ArrayStorage(),new EventDispatcher());
-        $storageManager->add(new Envelope(new Notification('success')));
+        $storageManager->add(new Envelope(new Notification()));
 
         $envelopes = $storageManager->all();
 
         $this->assertCount(1, $envelopes);
 
         $uuid = $envelopes[0]->get('Flasher\Prime\Stamp\UuidStamp');
-        $this->assertNotNull($uuid);
-    }
-
-    public function testFlush()
-    {
-        $storage = new ArrayStorage();
-
-        $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addSubscriber(new RemoveListener($storage));
-
-        $storageManager = new StorageManager($storage, $eventDispatcher);
-
-        $envelope = new Envelope(
-            new Notification('error message', 'error'),
-            new HopsStamp(2),
-            new UuidStamp('fake-uuid')
-        );
-        $storageManager->add($envelope);
-
-        $envelopes = array();
-        foreach (range(0, 2) as $index) {
-            $envelopes[$index] = new Envelope(new Notification('success message', 'success'));
-            $storageManager->add($envelopes[$index]);
-        }
-        $envelopes[] = $envelope;
-
-        $storageManager->flush($envelopes);
-
-        $this->assertSame(array('fake-uuid'), array_keys(UuidStamp::indexByUuid($storageManager->all())));
+        $this->assertNull($uuid);
     }
 }

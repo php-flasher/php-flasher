@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-notyf",
-    "description": "PHP sweet alert adapter for php-flasher/flasher",
+    "description": "PHP Flasher adapter for Notyf",
     "keywords": [
         "notify",
         "php",

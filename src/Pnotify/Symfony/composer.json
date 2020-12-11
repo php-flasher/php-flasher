@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-pnotify-symfony",
     "type": "symfony-bundle",
-    "description": "Symfony Flasher adapter for pnotify.js library for php-flasher/flasher-symfony",
+    "description": "PHP Flasher Symfony adapter for Pnotify",
     "keywords": [
         "yoeunes",
         "notify",

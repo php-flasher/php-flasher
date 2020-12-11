@@ -26,6 +26,6 @@ final class CreatedAtStampTest extends TestCase
         $createdAt2 = new CreatedAtStamp(new \DateTime('+1 h'));
 
         $this->assertFalse($createdAt1->compare($createdAt2));
-        $this->assertSame(0, $createdAt1->compare(new HopsStamp(1)));
+        $this->assertSame(false, $createdAt1->compare(new HopsStamp(1)));
     }
 }

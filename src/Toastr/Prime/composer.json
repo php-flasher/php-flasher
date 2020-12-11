@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-toastr",
-    "description": "PHP toastr adapter for php-flasher/flasher",
+    "description": "PHP Flasher adapter for Toastr",
     "keywords": [
         "notify",
         "php",

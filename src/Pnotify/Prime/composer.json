@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-pnotify",
-    "description": "PHP pnotify adapter for php-flasher/flasher",
+    "description": "PHP Flasher adapter for Pnotify",
     "keywords": [
         "notify",
         "php",

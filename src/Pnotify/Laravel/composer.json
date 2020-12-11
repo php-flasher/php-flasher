@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-pnotify-laravel",
-    "description": "Laravel Flasher adapter package for php-flasher/flasher-pnotify",
+    "description": "PHP Flasher Laravel adapter for Pnotify",
     "keywords": [
         "yoeunes",
         "notify",
