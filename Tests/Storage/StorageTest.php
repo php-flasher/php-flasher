@@ -13,47 +13,36 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class StorageTest extends TestCase
 {
-    /**
-     * @var Storage
-     */
-    private $storage;
-
-    protected function setUp()
-    {
-        $this->storage = new Storage(new Session(new MockArraySessionStorage()));
-    }
-
-    protected function tearDown()
-    {
-        $this->storage = null;
-    }
-
     public function testInitialState()
     {
-        $this->assertSame(array(), $this->storage->all());
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $this->assertSame(array(), $storage->all());
     }
 
     public function testAddEnvelope()
     {
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
         $envelope = new Envelope(new Notification());
-        $this->storage->add($envelope);
+        $storage->add($envelope);
 
-        $this->assertSame(array($envelope), $this->storage->all());
+        $this->assertSame(array($envelope), $storage->all());
     }
 
     public function testAddMultipleEnvelopes()
     {
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
         $envelopes = array(
             new Envelope(new Notification()),
             new Envelope(new Notification()),
         );
 
-        $this->storage->add($envelopes);
-        $this->assertSame($envelopes, $this->storage->all());
+        $storage->add($envelopes);
+        $this->assertSame($envelopes, $storage->all());
     }
 
     public function testUpdateEnvelopes()
     {
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -63,18 +52,19 @@ class StorageTest extends TestCase
             )),
         );
 
-        $this->storage->add($envelopes);
-        $this->assertSame($envelopes, $this->storage->all());
+        $storage->add($envelopes);
+        $this->assertSame($envelopes, $storage->all());
 
         $envelopes[1]->withStamp(new PriorityStamp(1));
-        $this->storage->update($envelopes[1]);
+        $storage->update($envelopes[1]);
 
-        $this->assertSame($envelopes, $this->storage->all());
+        $this->assertSame($envelopes, $storage->all());
         $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp', $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp'));
     }
 
     public function testRemoveEnvelopes()
     {
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -84,15 +74,16 @@ class StorageTest extends TestCase
             )),
         );
 
-        $this->storage->add($envelopes);
-        $this->assertSame($envelopes, $this->storage->all());
+        $storage->add($envelopes);
+        $this->assertSame($envelopes, $storage->all());
 
-        $this->storage->remove($envelopes[1]);
-        $this->assertSame(array($envelopes[0]), $this->storage->all());
+        $storage->remove($envelopes[1]);
+        $this->assertSame(array($envelopes[0]), $storage->all());
     }
 
     public function testRemoveMultipleEnvelopes()
     {
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -102,15 +93,16 @@ class StorageTest extends TestCase
             )),
         );
 
-        $this->storage->add($envelopes);
-        $this->assertSame($envelopes, $this->storage->all());
+        $storage->add($envelopes);
+        $this->assertSame($envelopes, $storage->all());
 
-        $this->storage->remove($envelopes);
-        $this->assertSame(array(), $this->storage->all());
+        $storage->remove($envelopes);
+        $this->assertSame(array(), $storage->all());
     }
 
     public function testClearAllEnvelopes()
     {
+        $storage = new Storage(new Session(new MockArraySessionStorage()));
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -120,10 +112,10 @@ class StorageTest extends TestCase
             )),
         );
 
-        $this->storage->add($envelopes);
-        $this->assertSame($envelopes, $this->storage->all());
+        $storage->add($envelopes);
+        $this->assertSame($envelopes, $storage->all());
 
-        $this->storage->clear();
-        $this->assertSame(array(), $this->storage->all());
+        $storage->clear();
+        $this->assertSame(array(), $storage->all());
     }
 }
