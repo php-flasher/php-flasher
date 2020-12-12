@@ -15,43 +15,27 @@ class EventDispatcherTest extends TestCase
     const preBar  = 'pre.bar';
     const postBar = 'post.bar';
 
-    /**
-     * @var EventDispatcher
-     */
-    private $dispatcher;
-
-    /**
-     * @var TestEventListener
-     */
-    private $listener;
-
-    protected function setUp()
-    {
-        $this->dispatcher = new EventDispatcher();
-        $this->listener = new TestEventListener();
-    }
-
-    protected function tearDown()
-    {
-        $this->dispatcher = null;
-        $this->listener = null;
-    }
-
     public function testInitialState()
     {
-        $this->assertSame(array(), $this->dispatcher->getListeners('fake_event'));
+        $dispatcher = new EventDispatcher();
+        $this->assertSame(array(), $dispatcher->getListeners('fake_event'));
     }
 
     public function testAddListener()
     {
-        $this->dispatcher->addListener('pre.foo', array($this->listener, 'preFoo'));
-        $this->dispatcher->addListener('post.foo', array($this->listener, 'postFoo'));
-        $this->assertCount(1, $this->dispatcher->getListeners(self::preFoo));
-        $this->assertCount(1, $this->dispatcher->getListeners(self::postFoo));
+        $dispatcher = new EventDispatcher();
+        $listener = new TestEventListener();
+
+        $dispatcher->addListener('pre.foo', array($listener, 'preFoo'));
+        $dispatcher->addListener('post.foo', array($listener, 'postFoo'));
+        $this->assertCount(1, $dispatcher->getListeners(self::preFoo));
+        $this->assertCount(1, $dispatcher->getListeners(self::postFoo));
     }
 
     public function testGetListenersSortsByPriority()
     {
+        $dispatcher = new EventDispatcher();
+
         $listener1 = new TestEventListener();
         $listener2 = new TestEventListener();
         $listener3 = new TestEventListener();
@@ -59,9 +43,9 @@ class EventDispatcherTest extends TestCase
         $listener2->name = '2';
         $listener3->name = '3';
 
-        $this->dispatcher->addListener('pre.foo', array($listener1, 'preFoo'), -10);
-        $this->dispatcher->addListener('pre.foo', array($listener2, 'preFoo'), 10);
-        $this->dispatcher->addListener('pre.foo', array($listener3, 'preFoo'));
+        $dispatcher->addListener('pre.foo', array($listener1, 'preFoo'), -10);
+        $dispatcher->addListener('pre.foo', array($listener2, 'preFoo'), 10);
+        $dispatcher->addListener('pre.foo', array($listener3, 'preFoo'));
 
         $expected = array(
             array($listener2, 'preFoo'),
@@ -69,19 +53,22 @@ class EventDispatcherTest extends TestCase
             array($listener1, 'preFoo'),
         );
 
-        $this->assertSame($expected, $this->dispatcher->getListeners('pre.foo'));
+        $this->assertSame($expected, $dispatcher->getListeners('pre.foo'));
     }
 
     public function testDispatch()
     {
+        $dispatcher = new EventDispatcher();
+        $listener = new TestEventListener();
+
         $event = new Event();
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', array($this->listener, 'preFoo'));
-        $this->dispatcher->addListener('NotFoundEvent', array($this->listener, 'postFoo'));
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', array($listener, 'preFoo'));
+        $dispatcher->addListener('NotFoundEvent', array($listener, 'postFoo'));
 
-        $return = $this->dispatcher->dispatch($event);
+        $return = $dispatcher->dispatch($event);
 
-        $this->assertTrue($this->listener->preFooInvoked);
-        $this->assertFalse($this->listener->postFooInvoked);
+        $this->assertTrue($listener->preFooInvoked);
+        $this->assertFalse($listener->postFooInvoked);
 
         $this->assertInstanceOf('Flasher\Prime\Tests\EventDispatcher\Event', $return);
         $this->assertSame($event, $return);
@@ -89,35 +76,42 @@ class EventDispatcherTest extends TestCase
 
     public function testDispatchForClosure()
     {
+        $dispatcher = new EventDispatcher();
+
         $invoked = 0;
         $listener = function () use (&$invoked) {
             ++$invoked;
         };
 
         $event = new Event();
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener);
-        $this->dispatcher->addListener('AnotherEvent', $listener);
-        $this->dispatcher->dispatch($event);
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener);
+        $dispatcher->addListener('AnotherEvent', $listener);
+        $dispatcher->dispatch($event);
         $this->assertEquals(1, $invoked);
     }
 
     public function testStopEventPropagation()
     {
+        $dispatcher = new EventDispatcher();
+        $listener = new TestEventListener();
+
         $otherListener = new TestEventListener();
 
         $event = new Event();
         // postFoo() stops the propagation, so only one listener should
         // be executed
-        // Manually set priority to enforce $this->listener to be called first
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', array($this->listener, 'postFoo'), 10);
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', array($otherListener, 'preFoo'));
-        $this->dispatcher->dispatch($event);
-        $this->assertTrue($this->listener->postFooInvoked);
+        // Manually set priority to enforce $listener to be called first
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', array($listener, 'postFoo'), 10);
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', array($otherListener, 'preFoo'));
+        $dispatcher->dispatch($event);
+        $this->assertTrue($listener->postFooInvoked);
         $this->assertFalse($otherListener->postFooInvoked);
     }
 
     public function testDispatchByPriority()
     {
+        $dispatcher = new EventDispatcher();
+
         $event = new Event();
 
         $invoked = array();
@@ -130,10 +124,10 @@ class EventDispatcherTest extends TestCase
         $listener3 = function () use (&$invoked) {
             $invoked[] = '3';
         };
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener1, -10);
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener2);
-        $this->dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener3, 10);
-        $this->dispatcher->dispatch($event);
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener1, -10);
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener2);
+        $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener3, 10);
+        $dispatcher->dispatch($event);
         $this->assertEquals(array('3', '2', '1'), $invoked);
     }
 }
