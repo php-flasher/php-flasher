@@ -83,21 +83,21 @@ final class FilterBuilder
         if (null !== $orderings) {
             usort($envelopes, static function (Envelope $a, Envelope $b) use ($orderings) {
                 foreach ($orderings as $field => $ordering) {
-                    if (FilterBuilder::ASC === $ordering) {
+                    if (FilterBuilder::ASC !== $ordering) {
                         list($a, $b) = array($b, $a);
                     }
 
                     $stampA = $a->get($field);
                     $stampB = $b->get($field);
 
-                    if (!$stampA instanceof OrderableStampInterface) {
-                        return 0;
+                    if (!$stampA instanceof OrderableStampInterface || !$stampB instanceof OrderableStampInterface) {
+                        return 1;
                     }
 
                     return $stampA->compare($stampB);
                 }
 
-                return 0;
+                return -1;
             });
         }
 
