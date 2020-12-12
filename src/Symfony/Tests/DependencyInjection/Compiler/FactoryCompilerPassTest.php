@@ -2,9 +2,9 @@
 
 namespace Flasher\Symfony\Tests\DependencyInjection\Compiler;
 
+use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Flasher\Symfony\FlasherBundle;
-use Flasher\Symfony\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 

@@ -6,8 +6,8 @@ use Flasher\Prime\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\Storage\Storage;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
