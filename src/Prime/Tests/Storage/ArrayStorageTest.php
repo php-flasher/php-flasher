@@ -42,7 +42,7 @@ final class ArrayStorageTest extends TestCase
         $envelopes = array();
 
         foreach (range(0, 4) as $index) {
-            $envelopes[$index] = new Envelope(new Notification('success', 'success message'));
+            $envelopes[$index] = new Envelope(new Notification());
             $storage->add($envelopes[$index]);
         }
 
@@ -57,7 +57,7 @@ final class ArrayStorageTest extends TestCase
         $envelopes = array();
 
         foreach (range(0, 4) as $index) {
-            $envelopes[$index] = new Envelope(new Notification('success', 'success message'), new UuidStamp());
+            $envelopes[$index] = new Envelope(new Notification(), new UuidStamp());
             $storage->add($envelopes[$index]);
         }
 
