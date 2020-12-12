@@ -25,7 +25,7 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()
-                    ->defaultValue('notyf')
+                    ->defaultValue('toastr')
                 ->end()
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
