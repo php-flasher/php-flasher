@@ -3,7 +3,7 @@
 namespace Flasher\Symfony\Tests\Twig;
 
 use Flasher\Prime\Renderer\RendererInterface;
-use Flasher\Symfony\Tests\TestCase;
+use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\Twig\FlasherTwigExtension;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
