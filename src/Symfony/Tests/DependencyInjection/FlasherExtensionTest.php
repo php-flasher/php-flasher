@@ -2,9 +2,9 @@
 
 namespace Flasher\Symfony\Tests\DependencyInjection;
 
+use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Flasher\Symfony\FlasherBundle;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherExtensionTest extends TestCase

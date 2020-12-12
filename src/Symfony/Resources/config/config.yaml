@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     flasher.config:
         class: Flasher\Prime\Config\Config
         arguments:
