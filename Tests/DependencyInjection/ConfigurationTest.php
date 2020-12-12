@@ -2,8 +2,8 @@
 
 namespace Flasher\Symfony\Tests\DependencyInjection;
 
+use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\Configuration;
-use Flasher\Symfony\Tests\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
