@@ -2,7 +2,6 @@
 
 namespace Flasher\Symfony\Twig;
 
-use Flasher\Prime\Renderer\Adapter\HtmlPresenter;
 use Flasher\Prime\Renderer\RendererInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
