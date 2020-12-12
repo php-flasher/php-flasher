@@ -34,14 +34,14 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface
     /**
      * @param mixed $orderable
      *
-     * @return bool
+     * @return int
      */
     public function compare($orderable)
     {
         if (!$orderable instanceof CreatedAtStamp) {
-            return false;
+            return 1;
         }
 
-        return $this->createdAt > $orderable->createdAt;
+        return $this->createdAt->getTimestamp() - $orderable->createdAt->getTimestamp();
     }
 }
