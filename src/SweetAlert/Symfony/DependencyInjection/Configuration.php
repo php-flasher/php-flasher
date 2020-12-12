@@ -12,7 +12,7 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('flasher_sweet-alert');
+        $treeBuilder = new TreeBuilder('flasher_sweet_alert');
 
         if (\method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
@@ -44,8 +44,6 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('variable')->end()
                     ->defaultValue(array(
                         'timer'             => 5000,
-                      //'width'             => '32rem',
-                      //'heightAuto'        => true,
                         'padding'           => '1.25rem',
                         'showConfirmButton' => false,
                         'showCloseButton'   => false,
