@@ -14,7 +14,7 @@ final class Laravel4 extends Laravel
 
     public function publishConfig(FlasherNotyServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-noty-laravel', 'flasher_noty', __DIR__.'/../../Resources');
+        $provider->package('php-flasher/flasher-noty-laravel', 'flasher_noty', flasher_path(__DIR__.'/../../Resources'));
     }
 
     public function mergeConfigFromNoty()
