@@ -14,7 +14,7 @@ final class Lumen extends Laravel
 
     public function publishConfig(FlasherPnotifyServiceProvider $provider)
     {
-        $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
+        $source = realpath($raw = flasher_path(__DIR__.'/../../Resources/config/config.php')) ?: $raw;
 
         $this->app->configure('flasher_pnotify');
 
