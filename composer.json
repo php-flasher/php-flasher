@@ -38,6 +38,9 @@
         "psr-4": {
             "Flasher\\Prime\\": ""
         },
+        "files": [
+            "helpers.php"
+        ],
         "exclude-from-classmap": [
             "/Tests/"
         ]
