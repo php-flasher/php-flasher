@@ -33,14 +33,14 @@ class Laravel implements ServiceProviderInterface
 
     public function registerServices()
     {
-        $this->app->singleton('flasher.factory.sweet_alert', function (Container $app) {
+        $this->app->singleton('flasher.sweet_alert', function (Container $app) {
             return new SweetAlertFactory($app['flasher.storage_manager']);
         });
 
         $this->app->alias('flasher.sweet_alert', 'Flasher\SweetAlert\Prime\SweetAlertFactory');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addFactory('sweet_alert', $app['flasher.factory.sweet_alert']);
+            $manager->addFactory('sweet_alert', $app['flasher.sweet_alert']);
 
             return $manager;
         });
