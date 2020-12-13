@@ -90,14 +90,18 @@ final class FilterBuilder
                     $stampA = $a->get($field);
                     $stampB = $b->get($field);
 
-                    if (!$stampA instanceof OrderableStampInterface || !$stampB instanceof OrderableStampInterface) {
+                    if (!$stampA instanceof OrderableStampInterface) {
+                        return -1;
+                    }
+
+                    if (!$stampB instanceof OrderableStampInterface) {
                         return 1;
                     }
 
                     return $stampA->compare($stampB);
                 }
 
-                return -1;
+                return 0;
             });
         }
 
