@@ -31,8 +31,7 @@ final class FlasherSweetAlertServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory.sweet_alert',
-            'flasher.renderer.sweet_alert',
+            'flasher.sweet_alert',
         );
     }
 
