@@ -8,24 +8,13 @@ final class FlasherServiceProviderTest extends TestCase
 {
     public function testNotifyServiceExists()
     {
-        $this->assertTrue($this->app->bound('flasher'));
-        $this->assertTrue($this->app->bound('flasher.renderer'));
-        $this->assertTrue($this->app->bound('flasher.storage'));
-        $this->assertTrue($this->app->bound('flasher.storage_manager'));
-        $this->assertTrue($this->app->bound('flasher.event_dispatcher'));
-        $this->assertTrue($this->app->bound('flasher.filter'));
-        $this->assertTrue($this->app->bound('flasher.config'));
-    }
-
-    public function testNotifyManagerGetConfig()
-    {
-        $notify = $this->app->make('flasher');
-
-        $reflection = new \ReflectionClass(get_class($notify));
-        $config = $reflection->getProperty('config');
-        $config->setAccessible(true);
-
-        $this->assertInstanceOf('Flasher\Prime\Config\ConfigInterface', $config->getValue($notify));
+        $this->assertInstanceOf('Flasher\Laravel\Config\Config', $this->app->make('flasher.config'));
+        $this->assertInstanceOf('Flasher\Prime\Flasher', $this->app->make('flasher'));
+        $this->assertInstanceOf('Flasher\Prime\Renderer\Renderer', $this->app->make('flasher.renderer'));
+        $this->assertInstanceOf('Flasher\Laravel\Storage\Storage', $this->app->make('flasher.storage'));
+        $this->assertInstanceOf('Flasher\Prime\Storage\StorageManager', $this->app->make('flasher.storage_manager'));
+        $this->assertInstanceOf('Flasher\Prime\EventDispatcher\EventDispatcher', $this->app->make('flasher.event_dispatcher'));
+        $this->assertInstanceOf('Flasher\Prime\Filter\Filter', $this->app->make('flasher.filter'));
     }
 
     public function testBladeDirective()
