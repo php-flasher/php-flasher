@@ -40,7 +40,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.pnotify', 'Flasher\Pnotify\Prime\PnotifyFactory');
 
         $this->app->extend('flasher', function (Flasher $manager, Container $app) {
-            $manager->addFactory('pnotify', $app['flasher.factory.pnotify']);
+            $manager->addFactory('pnotify', $app['flasher.pnotify']);
 
             return $manager;
         });

@@ -33,7 +33,7 @@ class Laravel implements ServiceProviderInterface
 
     public function registerServices()
     {
-        $this->app->singleton('flasher.factory.notyf', function (Container $app) {
+        $this->app->singleton('flasher.notyf', function (Container $app) {
             return new NotyfFactory($app['flasher.storage_manager']);
         });
 

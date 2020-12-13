@@ -20,7 +20,7 @@ class TestCase extends Orchestra
     {
         return array(
             'Flasher\Laravel\FlasherServiceProvider',
-            '\Flasher\Notyf\Laravel\FlasherNotyfServiceProvider',
+            'Flasher\Notyf\Laravel\FlasherNotyfServiceProvider',
         );
     }
 
@@ -32,9 +32,6 @@ class TestCase extends Orchestra
         $separator = $this->isLaravel4() ? '::config' : '';
 
         $app['config']->set('session'.$separator.'.driver', 'array');
-        $app['config']->set('flasher'.$separator.'.adapters', array(
-            'notyf' => array('scripts' => array('jquery.js'), 'styles' => array('styles.css'), 'options' => array()),
-        ));
     }
 
     private function isLaravel4()
