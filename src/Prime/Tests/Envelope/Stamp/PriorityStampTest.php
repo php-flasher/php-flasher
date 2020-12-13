@@ -26,7 +26,7 @@ final class PriorityStampTest extends TestCase
         $stamp1 = new PriorityStamp(1);
         $stamp2 = new PriorityStamp(2);
 
-        $this->assertFalse($stamp1->compare($stamp2));
-        $this->assertSame(false, $stamp1->compare(new HopsStamp(1)));
+        $this->assertNotNull($stamp1->compare($stamp2));
+        $this->assertSame(1, $stamp1->compare(new HopsStamp(1)));
     }
 }

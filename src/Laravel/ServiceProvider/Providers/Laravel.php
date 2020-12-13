@@ -78,17 +78,18 @@ class Laravel implements ServiceProviderInterface
             return new StorageManager($app['flasher.storage'], $app['flasher.event_dispatcher']);
         });
 
+        $this->app->singleton('flasher.filter', function (Application $app) {
+            return new Filter();
+        });
+
         $this->app->singleton('flasher.event_dispatcher', function (Application $app) {
             $eventDispatcher = new EventDispatcher();
+
             $eventDispatcher->addSubscriber(new FilterListener($app['flasher.filter']));
-            $eventDispatcher->addSubscriber(new RemoveListener($app['flasher.storage_manager']));
+            $eventDispatcher->addSubscriber(new RemoveListener());
             $eventDispatcher->addSubscriber(new StampsListener());
 
             return $eventDispatcher;
-        });
-
-        $this->app->singleton('flasher.filter', function (Application $app) {
-            return new Filter();
         });
 
         $this->app->alias('flasher.config', 'Flasher\Laravel\Config\Config');
@@ -111,7 +112,10 @@ class Laravel implements ServiceProviderInterface
 
     public function registerBladeDirectives()
     {
-        Blade::directive('flasher_render', function ($criteria = null) {
+        Blade::directive('flasher_render', function ($criteria = array()) {
+            if (empty($criteria)) {
+                $criteria = "array()";
+            }
             return "<?php echo app('flasher.renderer')->render($criteria, 'html'); ?>";
         });
     }

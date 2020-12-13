@@ -73,7 +73,8 @@ final class StorageManager implements StorageManagerInterface
         $event = new RemoveEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->remove($event->getEnvelopes());
+        $this->storage->update($event->getEnvelopesToKeep());
+        $this->storage->remove($event->getEnvelopesToRemove());
     }
 
     /**
