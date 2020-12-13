@@ -33,7 +33,7 @@ class Laravel implements ServiceProviderInterface
 
     public function publishConfig(FlasherServiceProvider $provider)
     {
-        $source = realpath($raw = __DIR__.'/../../Resources/config/config.php') ?: $raw;
+        $source = realpath($raw = flasher_path(__DIR__.'/../../Resources/config/config.php')) ?: $raw;
 
         $provider->publishes(array($source => config_path('flasher.php')), 'config');
 
@@ -42,13 +42,13 @@ class Laravel implements ServiceProviderInterface
 
     public function publishAssets(FlasherServiceProvider $provider)
     {
-        $provider->publishes(array(__DIR__.'/../../Resources/public' => public_path('vendor/php-flasher/flasher/assets/js')), 'public');
+        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/php-flasher/flasher/assets/js'))), 'public');
     }
 
     public function publishTranslations(FlasherServiceProvider $provider)
     {
-        $provider->loadTranslationsFrom(__DIR__.'/../../Resources/lang', 'flasher');
-        $provider->publishes(array(__DIR__.'/../../Resources/lang' => resource_path('lang/vendor/flasher')));
+        $provider->loadTranslationsFrom(flasher_path(__DIR__.'/../../Resources/lang'), 'flasher');
+        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => resource_path(flasher_path('lang/vendor/flasher'))));
     }
 
     public function registerServices()
