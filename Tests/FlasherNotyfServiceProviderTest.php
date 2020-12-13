@@ -2,42 +2,78 @@
 
 namespace Flasher\Notyf\Laravel\Tests;
 
-final class FlasherNotyfServiceProviderTest extends TestCase
+class FlasherNotyfServiceProviderTest extends TestCase
 {
     public function testContainerContainNotifyServices()
     {
-        $this->assertTrue($this->app->bound('flasher'));
-        $this->assertTrue($this->app->bound('flasher.factory.notyf'));
+        $this->assertTrue($this->app->bound('flasher.notyf'));
+        $this->assertInstanceOf('Flasher\Notyf\Prime\NotyfFactory', $this->app->make('flasher.notyf'));
     }
 
     public function testNotifyFactoryIsAddedToExtensionsArray()
     {
         $flasher = $this->app->make('flasher');
+        $adapter = $flasher->create('notyf');
 
-        $reflection = new \ReflectionClass($flasher);
-        $property = $reflection->getProperty('drivers');
-        $property->setAccessible(true);
-
-        $extensions = $property->getValue($flasher);
-
-        $this->assertCount(1, $extensions);
-        $this->assertInstanceOf('Flasher\Prime\Factory\FactoryInterface', $extensions[0]);
+        $this->assertInstanceOf('Flasher\Notyf\Prime\NotyfFactory', $adapter);
     }
 
-    public function testConfigNotyfInjectedInGlobalNotifyConfig()
+    public function testConfigNotyInjectedInGlobalNotifyConfig()
     {
-        $flasher = $this->app->make('flasher');
+        $config = $this->app->make('flasher.config');
 
-        $reflection = new \ReflectionClass($flasher);
-        $property = $reflection->getProperty('config');
-        $property->setAccessible(true);
+        $expected = array(
+            'notyf' => array(
+                'scripts' => array(
+                    'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js',
+                ),
+                'styles'  => array(
+                    'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css',
+                ),
+                'options' => array(
+                    'duration'    => 5000,
+                    'ripple'      => true,
+                    'position'    => array(
+                        'x' => 'right',
+                        'y' => 'top',
+                    ),
+                    'dismissible' => false,
+                    'types'       => array(
+                        array(
+                            'type'            => 'success',
+                            'className'       => 'notyf__toast--success',
+                            'backgroundColor' => '#3dc763',
+                            'icon'            => array(
+                                'className' => 'notyf__icon--success',
+                                'tagName'   => 'i',
+                            ),
+                        ),
+                        array(
+                            'type'            => 'error',
+                            'className'       => 'notyf__toast--error',
+                            'backgroundColor' => '#ed3d3d',
+                            'icon'            => array(
+                                'className' => 'notyf__icon--error',
+                                'tagName'   => 'i',
+                            ),
+                        ),
+                        array(
+                            'type'            => 'info',
+                            'className'       => 'notyf__toast--info',
+                            'backgroundColor' => '#5784E5',
+                            'icon'            => false,
+                        ),
+                        array(
+                            'type'            => 'warning',
+                            'className'       => 'notyf__toast--warning',
+                            'backgroundColor' => '#E3A008',
+                            'icon'            => false,
+                        ),
+                    ),
+                ),
+            ),
+        );
 
-        $config = $property->getValue($flasher);
-
-        $this->assertArrayHasKey('notyf', $config->get('adapters'));
-
-        $this->assertEquals(array(
-            'notyf' => array('scripts' => array('jquery.js'), 'styles' => array('styles.css'), 'options' => array()),
-        ), $config->get('adapters'));
+        $this->assertEquals($expected, $config->get('adapters'));
     }
 }
