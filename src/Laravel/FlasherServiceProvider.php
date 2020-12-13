@@ -33,7 +33,7 @@ final class FlasherServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory',
+            'flasher',
         );
     }
 

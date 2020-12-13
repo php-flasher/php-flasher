@@ -31,8 +31,7 @@ final class FlasherToastrServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory.toastr',
-            'flasher.renderer.toastr',
+            'flasher.toastr',
         );
     }
 

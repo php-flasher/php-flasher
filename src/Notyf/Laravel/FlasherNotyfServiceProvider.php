@@ -31,8 +31,7 @@ class FlasherNotyfServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory.notyf',
-            'flasher.renderer.notyf',
+            'flasher.notyf',
         );
     }
 

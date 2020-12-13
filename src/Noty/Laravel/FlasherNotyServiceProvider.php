@@ -31,8 +31,7 @@ final class FlasherNotyServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.factory.noty',
-            'flasher.renderer.noty',
+            'flasher.noty',
         );
     }
 

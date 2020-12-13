@@ -2,10 +2,11 @@
 
 namespace Flasher\Laravel\ServiceProvider\Providers;
 
+use Flasher\Laravel\Config\Config;
 use Flasher\Laravel\FlasherServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
-use Flasher\Laravel\Config\Config;
+use Illuminate\View\Compilers\BladeCompiler;
 
 final class Laravel4 extends Laravel
 {
@@ -16,10 +17,14 @@ final class Laravel4 extends Laravel
 
     public function publishConfig(FlasherServiceProvider $provider)
     {
-        $provider->package('php-flasher/flasher-laravel', 'flasher', __DIR__.'/../../Resources');
+        $provider->package('php-flasher/flasher-laravel', 'flasher', flasher_path(__DIR__.'/../../Resources'));
     }
 
     public function publishAssets(FlasherServiceProvider $provider)
+    {
+    }
+
+    public function publishTranslations(FlasherServiceProvider $provider)
     {
     }
 
@@ -34,10 +39,31 @@ final class Laravel4 extends Laravel
 
     public function registerBladeDirectives()
     {
-        Blade::extend(function ($view, $compiler) {
-            $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
+        $startsWith = function($haystack, $needle) {
+            return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
+        };
 
-            return preg_replace($pattern, "$1<?php echo app('flasher.renderer')->render($2, 'html'); ?>", $view);
+        $endsWith = function($haystack, $needle) {
+            return substr_compare($haystack, $needle, -strlen($needle)) === 0;
+        };
+
+        Blade::extend(function ($view, BladeCompiler $compiler) use ($startsWith, $endsWith) {
+            $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
+            $matches = array();
+
+            preg_match($pattern, $view, $matches);
+
+            $value = $matches[2];
+
+            if (!empty($value) && $startsWith($value, "(") && $endsWith($value, ")")) {
+                $value = substr($value, 1, -1);
+            }
+
+            if (empty($value)) {
+                $value = "array()";
+            }
+
+            return str_replace("%criteria%", $value, $matches[1] . "<?php echo app('flasher.renderer')->render(%criteria%, 'html'); ?>");
         });
     }
 }
