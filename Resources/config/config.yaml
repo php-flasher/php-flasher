@@ -46,8 +46,6 @@ services:
     flasher.event_listener.post_flush_listener:
         class: Flasher\Prime\EventDispatcher\EventListener\RemoveListener
         public: false
-        arguments:
-            - '@flasher.storage_manager'
         tags:
             - { name: 'flasher.event_subscriber' }
 
