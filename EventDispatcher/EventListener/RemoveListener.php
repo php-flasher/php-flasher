@@ -2,34 +2,20 @@
 
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
-use Flasher\Prime\EventDispatcher\Event\PreFlushEvent;
+use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class RemoveListener implements EventSubscriberInterface
 {
     /**
-     * @var StorageManagerInterface
+     * @param RemoveEvent $event
      */
-    private $storageManager;
-
-    /**
-     * @param StorageManagerInterface $storageManager
-     */
-    public function __construct(StorageManagerInterface $storageManager)
+    public function __invoke(RemoveEvent $event)
     {
-        $this->storageManager = $storageManager;
-    }
-
-    /**
-     * @param PreFlushEvent $event
-     */
-    public function __invoke(PreFlushEvent $event)
-    {
-        $envelopesToKeep = array();
+        $envelopesToKeep = $event->getEnvelopesToKeep();
         $envelopesToRemove = array();
 
-        foreach ($event->getEnvelopes() as $envelope) {
+        foreach ($event->getEnvelopesToRemove() as $envelope) {
             $hopsStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
 
             if (1 === $hopsStamp->getAmount()) {
@@ -41,8 +27,8 @@ final class RemoveListener implements EventSubscriberInterface
             $envelopesToKeep[] = $envelope;
         }
 
-        $event->setEnvelopes($envelopesToRemove);
-        $this->storageManager->update($envelopesToKeep);
+        $event->setEnvelopesToKeep($envelopesToKeep);
+        $event->setEnvelopesToRemove($envelopesToRemove);
     }
 
     /**
@@ -50,6 +36,6 @@ final class RemoveListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PreFlushEvent';
+        return 'Flasher\Prime\EventDispatcher\Event\RemoveEvent';
     }
 }
