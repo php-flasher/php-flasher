@@ -24,7 +24,7 @@ final class FilterBuilderTest extends TestCase
         $filtered = $builder->filter($envelopes);
         $expected = $envelopes;
 
-        $this->assertSame($expected, $filtered);
+        $this->assertEquals($expected, $filtered);
     }
 
     public function testMaxResults()
