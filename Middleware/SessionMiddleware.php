@@ -2,6 +2,7 @@
 
 namespace Flasher\Laravel\Middleware;
 
+use Closure;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Renderer\RendererInterface;
@@ -40,12 +41,12 @@ final class SessionMiddleware
     /**
      * Run the request filter.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param Request  $request
+     * @param Closure $next
      *
      * @return mixed
      */
-    public function handle(Request $request, \Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         /**
          * @var Response $response
@@ -74,11 +75,10 @@ final class SessionMiddleware
 
         $content = $response->getContent();
 
-        $htmlResponse = $this->renderer->render(array(),
-            array(
-                'format'  => 'html',
-                'content' => $content,
-            ));
+        $htmlResponse = $this->renderer->render(array(), array(
+            'format'  => 'html',
+            'content' => $content,
+        ));
 
         if (empty($htmlResponse)) {
             return $response;
