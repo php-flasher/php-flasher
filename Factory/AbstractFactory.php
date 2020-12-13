@@ -14,11 +14,11 @@ abstract class AbstractFactory implements FactoryInterface
     protected $storageManager;
 
     /**
-     * @param StorageManagerInterface $eventDispatcher
+     * @param StorageManagerInterface $storageManager
      */
-    public function __construct(StorageManagerInterface $eventDispatcher)
+    public function __construct(StorageManagerInterface $storageManager)
     {
-        $this->storageManager = $eventDispatcher;
+        $this->storageManager = $storageManager;
     }
 
     /**
