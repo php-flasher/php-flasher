@@ -40,7 +40,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.noty', 'Flasher\Noty\Prime\NotyFactory');
 
         $this->app->extend('flasher', function (Flasher $flasher, Container $app) {
-            $flasher->addFactory('toastr', $app['flasher.noty']);
+            $flasher->addFactory('noty', $app['flasher.noty']);
 
             return $flasher;
         });
