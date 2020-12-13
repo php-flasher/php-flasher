@@ -112,10 +112,23 @@ class Laravel implements ServiceProviderInterface
 
     public function registerBladeDirectives()
     {
-        Blade::directive('flasher_render', function ($criteria = array()) {
+        $startsWith = function($haystack, $needle) {
+            return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
+        };
+
+        $endsWith = function($haystack, $needle) {
+            return substr_compare($haystack, $needle, -strlen($needle)) === 0;
+        };
+
+        Blade::directive('flasher_render', function ($criteria = array()) use($startsWith, $endsWith) {
+            if (!empty($criteria) && $startsWith($criteria, "(") && $endsWith($criteria, ")")) {
+                $criteria = substr($criteria, 1, -1);
+            }
+
             if (empty($criteria)) {
                 $criteria = "array()";
             }
+
             return "<?php echo app('flasher.renderer')->render($criteria, 'html'); ?>";
         });
     }

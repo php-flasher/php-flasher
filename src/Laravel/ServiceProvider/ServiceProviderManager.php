@@ -15,6 +15,7 @@ final class ServiceProviderManager
     private $providers = array(
         'Flasher\Laravel\ServiceProvider\Providers\Laravel4',
         'Flasher\Laravel\ServiceProvider\Providers\Laravel50',
+        'Flasher\Laravel\ServiceProvider\Providers\Laravel51',
         'Flasher\Laravel\ServiceProvider\Providers\Laravel',
         'Flasher\Laravel\ServiceProvider\Providers\Lumen',
     );
