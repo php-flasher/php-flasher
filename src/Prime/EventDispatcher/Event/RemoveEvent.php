@@ -9,29 +9,50 @@ final class RemoveEvent
     /**
      * @var Envelope[]
      */
-    private $envelopes;
+    private $envelopesToRemove = array();
 
     /**
-     * @param Envelope[] $envelopes
+     * @var Envelope[]
      */
-    public function __construct(array $envelopes)
+    private $envelopesToKeep = array();
+
+    /**
+     * @param Envelope[] $envelopesToRemove
+     */
+    public function __construct(array $envelopesToRemove)
     {
-        $this->envelopes = $envelopes;
+        $this->envelopesToRemove = $envelopesToRemove;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopesToRemove()
     {
-        return $this->envelopes;
+        return $this->envelopesToRemove;
     }
 
     /**
-     * @param Envelope[] $envelopes
+     * @param Envelope[] $envelopesToRemove
      */
-    public function setEnvelopes(array $envelopes)
+    public function setEnvelopesToRemove($envelopesToRemove)
     {
-        $this->envelopes = $envelopes;
+        $this->envelopesToRemove = $envelopesToRemove;
+    }
+
+    /**
+     * @return Envelope[]
+     */
+    public function getEnvelopesToKeep()
+    {
+        return $this->envelopesToKeep;
+    }
+
+    /**
+     * @param Envelope[] $envelopesToKeep
+     */
+    public function setEnvelopesToKeep($envelopesToKeep)
+    {
+        $this->envelopesToKeep = $envelopesToKeep;
     }
 }
