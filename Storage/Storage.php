@@ -88,6 +88,6 @@ final class Storage implements StorageInterface
      */
     public function clear()
     {
-        $this->session->set(self::ENVELOPES_NAMESPACE, array());
+        $this->session->put(self::ENVELOPES_NAMESPACE, array());
     }
 }

@@ -9,6 +9,12 @@ final class FlasherServiceProviderTest extends TestCase
     public function testNotifyServiceExists()
     {
         $this->assertTrue($this->app->bound('flasher'));
+        $this->assertTrue($this->app->bound('flasher.renderer'));
+        $this->assertTrue($this->app->bound('flasher.storage'));
+        $this->assertTrue($this->app->bound('flasher.storage_manager'));
+        $this->assertTrue($this->app->bound('flasher.event_dispatcher'));
+        $this->assertTrue($this->app->bound('flasher.filter'));
+        $this->assertTrue($this->app->bound('flasher.config'));
     }
 
     public function testNotifyManagerGetConfig()
@@ -27,6 +33,6 @@ final class FlasherServiceProviderTest extends TestCase
         /** @var BladeCompiler $blade */
         $blade = $this->app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $this->assertEquals("<?php echo app('flasher.presenter.html')->render(); ?>", $blade->compileString('@flasher_render'));
+        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), 'html'); ?>", $blade->compileString('@flasher_render()'));
     }
 }
