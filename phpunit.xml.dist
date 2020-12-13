@@ -59,6 +59,16 @@
         <testsuite name="flasher pnotify symfony">
             <directory>src/Pnotify/Symfony</directory>
         </testsuite>
+
+        <testsuite name="flasher noty">
+            <directory>src/Noty/Prime</directory>
+        </testsuite>
+        <testsuite name="flasher noty laravel">
+            <directory>src/Noty/Laravel</directory>
+        </testsuite>
+        <testsuite name="flasher noty symfony">
+            <directory>src/Noty/Symfony</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist>
