@@ -15,9 +15,6 @@
         "php": ">=5.3",
         "ext-json": "*"
     },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36"
-    },
     "autoload": {
         "psr-4": {
             "Flasher\\": "src/"
@@ -25,11 +22,6 @@
         "files": [
             "src/Prime/helpers.php"
         ]
-    },
-    "config": {
-        "platform": {
-            "php": "5.5.38"
-        }
     },
     "minimum-stability": "dev"
 }
