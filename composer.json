@@ -29,7 +29,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher": "dev-main",
+        "php-flasher/flasher": "^0.1",
         "symfony/config": "^2.7|^3.0|^4.0|^5.0",
         "symfony/dependency-injection": "^2.7|^3.0|^4.0|^5.0",
         "symfony/http-kernel": "^2.7|^3.0|^4.0|^5.0",
