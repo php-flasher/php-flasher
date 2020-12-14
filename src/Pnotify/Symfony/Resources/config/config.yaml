@@ -5,4 +5,4 @@ services:
         tags:
             - { name: 'flasher.factory', alias: 'pnotify' }
 
-    Flasher\PFlasher\Prime\PnotifyFactory: '@flasher.pnotify'
+    Flasher\Pnotify\Prime\PnotifyFactory: '@flasher.pnotify'
