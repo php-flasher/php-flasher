@@ -31,10 +31,14 @@ class FlasherToastrExtensionTest extends TestCase
         $flasher = $container->getDefinition('flasher');
         $calls = $flasher->getMethodCalls();
 
-        $this->assertCount(1, $calls);
+        $this->assertCount(2, $calls);
         $this->assertSame('addFactory', $calls[0][0]);
-        $this->assertSame('toastr', $calls[0][1][0]);
-        $this->assertSame('flasher.toastr', (string) $calls[0][1][1]);
+        $this->assertSame('template', $calls[0][1][0]);
+        $this->assertSame('flasher.notification_factory', (string) $calls[0][1][1]);
+
+        $this->assertSame('addFactory', $calls[1][0]);
+        $this->assertSame('toastr', $calls[1][1][0]);
+        $this->assertSame('flasher.toastr', (string) $calls[1][1][1]);
     }
 
     public function testConfigurationInjectedIntoFlasherConfig()
