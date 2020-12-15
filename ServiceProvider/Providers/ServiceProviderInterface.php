@@ -8,11 +8,7 @@ interface ServiceProviderInterface
 {
     public function shouldBeUsed();
 
-    public function publishConfig(FlasherServiceProvider $provider);
-
-    public function publishAssets(FlasherServiceProvider $provider);
-
-    public function publishTranslations(FlasherServiceProvider $provider);
+    public function publishes(FlasherServiceProvider $provider);
 
     public function registerServices();
 
