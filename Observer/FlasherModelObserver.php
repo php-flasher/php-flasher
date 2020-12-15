@@ -4,34 +4,43 @@ namespace Flasher\Laravel\Observer;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\Model;
 
 final class FlasherModelObserver
 {
-    /**
-     * @var FlasherInterface
-     */
-    private $flasher;
-
     /**
      * @var ConfigInterface
      */
     private $config;
 
     /**
-     * @param FlasherInterface $flasher
-     * @param ConfigInterface  $config
+     * @var FlasherInterface
      */
-    public function __construct(FlasherInterface $flasher, ConfigInterface $config)
+    private $flasher;
+
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    /**
+     * @param ConfigInterface  $config
+     * @param FlasherInterface $flasher
+     * @param Translator       $translator
+     */
+    public function __construct(ConfigInterface $config, FlasherInterface $flasher, Translator $translator)
     {
-        $this->flasher = $flasher;
         $this->config = $config;
+        $this->flasher = $flasher;
+        $this->translator = $translator;
     }
 
     /**
      * Handle the Model "created" event.
      *
-     * @param  Model  $model
+     * @param Model $model
+     *
      * @return void
      */
     public function created(Model $model)
@@ -42,7 +51,8 @@ final class FlasherModelObserver
     /**
      * Handle the Model "updated" event.
      *
-     * @param  Model  $model
+     * @param Model $model
+     *
      * @return void
      */
     public function updated(Model $model)
@@ -53,7 +63,8 @@ final class FlasherModelObserver
     /**
      * Handle the Model "deleted" event.
      *
-     * @param  Model  $model
+     * @param Model $model
+     *
      * @return void
      */
     public function deleted(Model $model)
@@ -64,7 +75,8 @@ final class FlasherModelObserver
     /**
      * Handle the Model "restored" event.
      *
-     * @param  Model  $model
+     * @param Model $model
+     *
      * @return void
      */
     public function restored(Model $model)
@@ -75,7 +87,8 @@ final class FlasherModelObserver
     /**
      * Handle the Model "force deleted" event.
      *
-     * @param  Model  $model
+     * @param Model $model
+     *
      * @return void
      */
     public function forceDeleted(Model $model)
@@ -87,12 +100,21 @@ final class FlasherModelObserver
      * @param string $method
      * @param Model  $model
      */
-    private function addFlash(string $method, Model $model)
+    private function addFlash($method, Model $model)
     {
-        $message = $this->config->get(sprintf('flashable.%s.%s', get_class($model), $method));
+        $exludes = $this->config->get('observer_events.exclude', array());
+        if (in_array($method, $exludes)) {
+            return;
+        }
 
-        if(null === $message) {
-            $message = $this->config->get(sprintf('flashable.default.%s', $method));
+        if (isset($exludes[$method]) && in_array(get_class($model), $exludes[$method])) {
+            return;
+        }
+
+        if ($this->translator->has(sprintf('flasher::messages.flashable.%s.%s', get_class($model), $method))) {
+            $message = $this->translator->get(sprintf('flasher::messages.flashable.%s.%s', get_class($model), $method));
+        } else {
+            $message = $this->translator->get(sprintf('flasher::messages.flashable.default.%s', $method));
             $message = str_replace('{{ model }}', substr(strrchr(get_class($model), "\\"), 1), $message);
         }
 

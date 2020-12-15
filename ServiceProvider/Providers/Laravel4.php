@@ -15,17 +15,9 @@ final class Laravel4 extends Laravel
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(FlasherServiceProvider $provider)
+    public function publishes(FlasherServiceProvider $provider)
     {
         $provider->package('php-flasher/flasher-laravel', 'flasher', flasher_path(__DIR__.'/../../Resources'));
-    }
-
-    public function publishAssets(FlasherServiceProvider $provider)
-    {
-    }
-
-    public function publishTranslations(FlasherServiceProvider $provider)
-    {
     }
 
     public function registerServices()

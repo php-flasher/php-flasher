@@ -12,7 +12,7 @@ final class Laravel51 extends Laravel
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '5.1');
     }
 
-    public function publishTranslations(FlasherServiceProvider $provider)
+    public function publishes(FlasherServiceProvider $provider)
     {
         $provider->loadTranslationsFrom(flasher_path(__DIR__.'/../../Resources/lang'), 'flasher');
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => base_path(flasher_path('resources/lang/vendor/flasher'))));
