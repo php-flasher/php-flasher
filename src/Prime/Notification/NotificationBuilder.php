@@ -9,6 +9,7 @@ use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
+use Flasher\Toastr\Prime\ToastrBuilder;
 
 class NotificationBuilder implements NotificationBuilderInterface
 {

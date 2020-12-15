@@ -2,12 +2,12 @@
 
 namespace Flasher\Toastr\Prime;
 
-use Flasher\Prime\Factory\AbstractFactory;
+use Flasher\Prime\Factory\NotificationFactory;
 
 /**
  * @mixin ToastrBuilder
  */
-final class ToastrFactory extends AbstractFactory
+final class ToastrFactory extends NotificationFactory
 {
     /**
      * {@inheritdoc}

@@ -12,11 +12,12 @@ services:
         arguments:
             - '@flasher.config'
 
-    flasher.abstract_factory:
-        class: Flasher\Prime\Factory\AbstractFactory
-        abstract: true
+    flasher.notification_factory:
+        class: Flasher\Prime\Factory\NotificationFactory
         arguments:
             - '@flasher.storage_manager'
+        tags:
+            - { name: 'flasher.factory', alias: 'template' }
 
     flasher.storage:
         class: Flasher\Symfony\Storage\Storage
@@ -55,6 +56,15 @@ services:
         tags:
             - { name: 'flasher.event_subscriber' }
 
+    flasher.event_listener.template_listener:
+        class: Flasher\Prime\EventDispatcher\EventListener\TemplateListener
+        public: false
+        arguments:
+            - '@flasher.config'
+            - '@flasher.template_engine'
+        tags:
+            - { name: 'flasher.event_subscriber' }
+
     flasher.twig.extension:
         class: Flasher\Symfony\Twig\FlasherTwigExtension
         arguments:
@@ -78,6 +88,11 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
 
+    flasher.template_engine:
+        class: Flasher\Symfony\Template\TwigEngine
+        arguments:
+            - '@twig'
+
     Flasher\Prime\Config\Config: '@flasher.config'
     Flasher\Prime\Flasher: '@flasher'
     Flasher\Prime\Renderer\Renderer: '@flasher.renderer'
@@ -85,6 +100,8 @@ services:
     Flasher\Symfony\Storage\Storage: '@flasher.storage'
     Flasher\Prime\Storage\StorageManager: '@flasher.storage_manager'
     Flasher\Prime\Filter\Filter: '@flasher.filter'
+    Flasher\Prime\Factory\NotificationFactory: '@flasher.notification_factory'
+    Flasher\Symfony\Template\TwigEngine: '@flasher.template_engine'
 
     Flasher\Prime\Config\ConfigInterface: '@flasher.config'
     Flasher\Prime\FlasherInterface: '@flasher'
@@ -93,3 +110,5 @@ services:
     Flasher\Prime\Filter\FilterInterface: '@flasher.filter'
     Flasher\Prime\EventDispatcher\EventDispatcherInterface: '@flasher.event_dispatcher'
     Flasher\Prime\Storage\StorageInterface: '@flasher.storage'
+    Flasher\Prime\Factory\NotificationFactoryInterface: '@flasher.notification_factory'
+    Flasher\Prime\Template\EngineInterface: '@flasher.template_engine'

@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Stamp;
 
-final class PriorityStamp implements StampInterface, OrderableStampInterface
+final class PriorityStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
 {
     /**
      * @var int
@@ -37,5 +37,15 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface
         }
 
         return $this->priority - $orderable->priority;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray()
+    {
+        return array(
+            'priority' => $this->getPriority(),
+        );
     }
 }

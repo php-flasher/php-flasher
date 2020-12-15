@@ -3,7 +3,7 @@
 namespace Flasher\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
-use Flasher\Prime\Factory\FactoryInterface;
+use Flasher\Prime\Factory\NotificationFactoryInterface;
 
 final class Flasher implements FlasherInterface
 {
@@ -44,7 +44,7 @@ final class Flasher implements FlasherInterface
     /**
      * @inheritDoc
      */
-    public function addFactory($alias, FactoryInterface $factory)
+    public function addFactory($alias, NotificationFactoryInterface $factory)
     {
         $this->factories[$alias] = $factory;
 

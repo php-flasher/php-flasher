@@ -6,7 +6,7 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 
-final class CreatedAtStamp implements StampInterface, OrderableStampInterface
+final class CreatedAtStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
 {
     /**
      * @var DateTime
@@ -14,13 +14,20 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface
     private $createdAt;
 
     /**
+     * @var string
+     */
+    private $format;
+
+    /**
      * @param DateTime|null $createdAt
+     * @param string|null          $format
      *
      * @throws Exception
      */
-    public function __construct(DateTime $createdAt = null)
+    public function __construct(DateTime $createdAt = null, $format = null)
     {
         $this->createdAt = $createdAt ?: new DateTime('now', new DateTimeZone('Africa/Casablanca'));
+        $this->format = $format ?: 'Y-m-d H:i:s';
     }
 
     /**
@@ -43,5 +50,15 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface
         }
 
         return $this->createdAt->getTimestamp() - $orderable->createdAt->getTimestamp();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray()
+    {
+        return array(
+            'created_at' => $this->getCreatedAt()->format($this->format),
+        );
     }
 }
