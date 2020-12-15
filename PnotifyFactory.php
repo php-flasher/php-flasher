@@ -2,12 +2,12 @@
 
 namespace Flasher\Pnotify\Prime;
 
-use Flasher\Prime\Factory\AbstractFactory;
+use Flasher\Prime\Factory\NotificationFactory;
 
 /**
  * @mixin PnotifyBuilder
  */
-final class PnotifyFactory extends AbstractFactory
+final class PnotifyFactory extends NotificationFactory
 {
     /**
      * @inheritDoc
