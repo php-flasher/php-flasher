@@ -13,7 +13,6 @@ class ConfigurationTest extends TestCase
         $config = $this->process(array());
 
         $expected = array(
-            'default' => 'toastr',
             'scripts' => array(
                 '/bundles/flasher/flasher.js',
             ),
