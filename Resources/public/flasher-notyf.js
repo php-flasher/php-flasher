@@ -4,7 +4,7 @@ PHPFlasher.addFactory('notyf', (function () {
     var exports = {};
 
     exports.render = function (data) {
-        window.notyf.open(data);
+        window.notyf.open(data.notification);
     };
 
     exports.renderOptions = function (options) {
