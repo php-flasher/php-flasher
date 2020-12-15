@@ -2,12 +2,12 @@
 
 namespace Flasher\SweetAlert\Prime;
 
-use Flasher\Prime\Factory\AbstractFactory;
+use Flasher\Prime\Factory\NotificationFactory;
 
 /**
  * @mixin SweetAlertBuilder
  */
-final class SweetAlertFactory extends AbstractFactory
+final class SweetAlertFactory extends NotificationFactory
 {
     /**
      * @inheritDoc
