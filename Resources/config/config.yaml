@@ -1,6 +1,6 @@
 services:
     flasher.noty:
-        parent: 'flasher.abstract_factory'
+        parent: 'flasher.notification_factory'
         class: Flasher\Noty\Prime\NotyFactory
         tags:
             - { name: 'flasher.factory', alias: 'noty' }

@@ -4,10 +4,11 @@ PHPFlasher.addFactory('noty', (function () {
     var exports = {};
 
     exports.render = function (data) {
+        var notification = data.notification;
         var options = {
-            text: data.message,
-            type: data.type,
-            ...data.options
+            text: notification.message,
+            type: notification.type,
+            ...notification.options
         }
 
         new Noty(options).show();
