@@ -5,9 +5,10 @@ namespace Flasher\Prime\Renderer;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
+use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
-use Flasher\Prime\Renderer\Response\ResponseManager;
-use Flasher\Prime\Renderer\Response\ResponseManagerInterface;
+use Flasher\Prime\Renderer\Presenter\PresenterManager;
+use Flasher\Prime\Renderer\Presenter\PresenterManagerInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class Renderer implements RendererInterface
@@ -28,26 +29,26 @@ final class Renderer implements RendererInterface
     private $config;
 
     /**
-     * @var ResponseManagerInterface
+     * @var PresenterManagerInterface
      */
-    private $responseManager;
+    private $presenterManager;
 
     /**
-     * @param StorageManagerInterface  $storageManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ConfigInterface          $config
-     * @param ResponseManagerInterface|null     $responseManager
+     * @param StorageManagerInterface        $storageManager
+     * @param EventDispatcherInterface       $eventDispatcher
+     * @param ConfigInterface                $config
+     * @param PresenterManagerInterface|null $presenterManager
      */
     public function __construct(
         StorageManagerInterface $storageManager,
         EventDispatcherInterface $eventDispatcher,
         ConfigInterface $config,
-        ResponseManagerInterface $responseManager = null
+        PresenterManagerInterface $presenterManager = null
     ) {
         $this->storageManager = $storageManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->config = $config;
-        $this->responseManager = $responseManager ?: new ResponseManager();
+        $this->presenterManager = $presenterManager ?: new PresenterManager($config);
     }
 
     /**
@@ -57,20 +58,14 @@ final class Renderer implements RendererInterface
     {
         $envelopes = $this->getEnvelopes($criteria);
 
-        if (empty($envelopes)) {
-            return array();
-        }
-
-        $response = array(
-            'scripts'       => $this->getScripts($envelopes),
-            'styles'        => $this->getStyles($envelopes),
-            'options'       => $this->getOptions($envelopes),
-            'notifications' => $this->getNotifications($envelopes),
-        );
-
         $this->storageManager->remove($envelopes);
 
-        return $this->responseManager->create(isset($context['format']) ? $context['format'] : 'array')->render($response, $context);
+        $event = new ResponseEvent($envelopes);
+        $this->eventDispatcher->dispatch($event);
+
+        $format = isset($context['format']) ? $context['format'] : 'array';
+
+        return $this->presenterManager->create($format)->render($event->getEnvelopes(), $context);
     }
 
     /**
@@ -86,88 +81,5 @@ final class Renderer implements RendererInterface
         $this->eventDispatcher->dispatch($event);
 
         return $event->getEnvelopes();
-    }
-
-    /**
-     * @param Envelope[] $envelopes
-     *
-     * @return string[]
-     */
-    private function getStyles(array $envelopes)
-    {
-        return $this->getAssets('styles', $envelopes);
-    }
-
-    /**
-     * @param Envelope[] $envelopes
-     *
-     * @return string[]
-     */
-    private function getScripts(array $envelopes)
-    {
-        return $this->getAssets('scripts', $envelopes);
-    }
-
-    /**
-     * @param Envelope[] $envelopes
-     *
-     * @return string[]
-     */
-    private function getOptions(array $envelopes)
-    {
-        $options = array();
-        $handlers = array();
-
-        foreach ($envelopes as $envelope) {
-            $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
-            if (in_array($handler, $handlers)) {
-                continue;
-            }
-
-            $handlers[] = $handler;
-            $options[$handler] = $this->config->get(sprintf('adapters.%s.options', $handler), array());
-        }
-
-        return array_filter($options);
-    }
-
-    /**
-     * @param Envelope[] $envelopes
-     *
-     * @return array[]
-     */
-    private function getNotifications(array $envelopes)
-    {
-        return array_map(function (Envelope $envelope) {
-            return array(
-                'handler'      => $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler(),
-                'notification' => $envelope->toArray(),
-            );
-        },
-            $envelopes);
-    }
-
-    /**
-     * @param string     $keyword
-     * @param Envelope[] $envelopes
-     *
-     * @return string[]
-     */
-    private function getAssets($keyword, $envelopes)
-    {
-        $files = $this->config->get($keyword, array());
-        $handlers = array();
-
-        foreach ($envelopes as $envelope) {
-            $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
-            if (in_array($handler, $handlers)) {
-                continue;
-            }
-
-            $handlers[] = $handler;
-            $files = array_merge($files, $this->config->get(sprintf('adapters.%s.%s', $handler, $keyword), array()));
-        }
-
-        return array_values(array_filter(array_unique($files)));
     }
 }

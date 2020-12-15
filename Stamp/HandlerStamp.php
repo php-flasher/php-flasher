@@ -2,7 +2,7 @@
 
 namespace Flasher\Prime\Stamp;
 
-final class HandlerStamp implements StampInterface
+final class HandlerStamp implements StampInterface, PresentableStampInterface
 {
     /**
      * @var string
@@ -23,5 +23,15 @@ final class HandlerStamp implements StampInterface
     public function getHandler()
     {
         return $this->handler;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray()
+    {
+        return array(
+            'handler' => $this->getHandler(),
+        );
     }
 }
