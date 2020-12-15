@@ -2,12 +2,12 @@
 
 namespace Flasher\Noty\Prime;
 
-use Flasher\Prime\Factory\AbstractFactory;
+use Flasher\Prime\Factory\NotificationFactory;
 
 /**
  * @mixin NotyBuilder
  */
-final class NotyFactory extends AbstractFactory
+final class NotyFactory extends NotificationFactory
 {
     /**
      * @inheritDoc
