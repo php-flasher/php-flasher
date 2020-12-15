@@ -25,12 +25,11 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()
-                    ->defaultValue('toastr')
                 ->end()
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        '/bundles/flasher/flasher.js'
+                        '/bundles/flasher/flasher.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
