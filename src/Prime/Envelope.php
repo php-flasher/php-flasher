@@ -3,6 +3,7 @@
 namespace Flasher\Prime;
 
 use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Stamp\PresentableStampInterface;
 use Flasher\Prime\Stamp\StampInterface;
 
 final class Envelope implements NotificationInterface
@@ -181,6 +182,16 @@ final class Envelope implements NotificationInterface
      */
     public function toArray()
     {
-        return $this->notification->toArray();
+        $array = array(
+            'notification' => $this->notification->toArray(),
+        );
+
+        foreach ($this->all() as $stamp) {
+            if ($stamp instanceof PresentableStampInterface) {
+                $array = array_merge($array, $stamp->toArray());
+            }
+        }
+
+        return $array;
     }
 }

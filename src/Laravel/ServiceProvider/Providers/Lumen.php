@@ -12,7 +12,7 @@ final class Lumen extends Laravel
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(FlasherServiceProvider $provider)
+    public function publishes(FlasherServiceProvider $provider)
     {
         $source = realpath($raw = flasher_path(__DIR__.'/../../../Resources/config/config.php')) ?: $raw;
 

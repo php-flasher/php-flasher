@@ -31,9 +31,7 @@ final class ServiceProviderManager
     {
         $provider = $this->resolveServiceProvider();
 
-        $provider->publishConfig($this->notifyServiceProvider);
-        $provider->publishAssets($this->notifyServiceProvider);
-        $provider->publishTranslations($this->notifyServiceProvider);
+        $provider->publishes($this->notifyServiceProvider);
         $provider->registerBladeDirectives();
     }
 

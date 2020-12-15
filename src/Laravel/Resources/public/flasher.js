@@ -8,7 +8,7 @@ var PHPFlasher = (function () {
         exports.addStyles(_options.styles, function () {
             exports.addScripts(_options.scripts, function () {
                 exports.renderOptions(_options.options);
-                exports.renderNotifications(_options.notifications);
+                exports.renderEnvelopes(_options.envelopes);
             });
         });
     };
@@ -76,9 +76,9 @@ var PHPFlasher = (function () {
         });
     };
 
-    exports.renderNotifications = function (notifications) {
-        notifications.forEach(function (flash) {
-            factories[flash.handler].render(flash.notification);
+    exports.renderEnvelopes = function (envelopes) {
+        envelopes.forEach(function (envelope) {
+            factories[envelope.handler].render(envelope);
         })
     };
 
