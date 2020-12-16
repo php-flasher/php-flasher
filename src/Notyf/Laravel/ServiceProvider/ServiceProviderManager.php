@@ -7,6 +7,9 @@ use Flasher\Notyf\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
 {
+    /**
+     * @var ServiceProviderInterface
+     */
     private $provider;
 
     /**
@@ -18,8 +21,14 @@ final class ServiceProviderManager
         'Flasher\Notyf\Laravel\ServiceProvider\Providers\Lumen',
     );
 
+    /**
+     * @var FlasherNotyfServiceProvider
+     */
     private $notifyServiceProvider;
 
+    /**
+     * @param FlasherNotyfServiceProvider $notifyServiceProvider
+     */
     public function __construct(FlasherNotyfServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
@@ -28,15 +37,13 @@ final class ServiceProviderManager
     public function boot()
     {
         $provider = $this->resolveServiceProvider();
-
-        $provider->publishConfig($this->notifyServiceProvider);
-        $provider->mergeConfigFromNotyf();
+        $provider->boot($this->notifyServiceProvider);
     }
 
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerServices();
+        $provider->register($this->notifyServiceProvider);
     }
 
     /**

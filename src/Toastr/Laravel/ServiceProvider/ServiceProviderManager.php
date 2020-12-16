@@ -7,6 +7,9 @@ use Flasher\Toastr\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
 {
+    /**
+     * @var ServiceProviderInterface
+     */
     private $provider;
 
     /**
@@ -15,11 +18,16 @@ final class ServiceProviderManager
     private $providers = array(
         'Flasher\Toastr\Laravel\ServiceProvider\Providers\Laravel4',
         'Flasher\Toastr\Laravel\ServiceProvider\Providers\Laravel',
-        'Flasher\Toastr\Laravel\ServiceProvider\Providers\Lumen',
     );
 
+    /**
+     * @var FlasherToastrServiceProvider
+     */
     private $notifyServiceProvider;
 
+    /**
+     * @param FlasherToastrServiceProvider $notifyServiceProvider
+     */
     public function __construct(FlasherToastrServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
@@ -28,15 +36,13 @@ final class ServiceProviderManager
     public function boot()
     {
         $provider = $this->resolveServiceProvider();
-
-        $provider->publishConfig($this->notifyServiceProvider);
-        $provider->mergeConfigFromToastr();
+        $provider->boot($this->notifyServiceProvider);
     }
 
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerToastrServices();
+        $provider->register($this->notifyServiceProvider);
     }
 
     /**

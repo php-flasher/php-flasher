@@ -6,11 +6,18 @@ use Flasher\Toastr\Laravel\FlasherToastrServiceProvider;
 
 interface ServiceProviderInterface
 {
+    /**
+     * @return bool
+     */
     public function shouldBeUsed();
 
-    public function publishConfig(FlasherToastrServiceProvider $provider);
+    /**
+     * @param FlasherToastrServiceProvider $provider
+     */
+    public function boot(FlasherToastrServiceProvider $provider);
 
-    public function registerToastrServices();
-
-    public function mergeConfigFromToastr();
+    /**
+     * @param FlasherToastrServiceProvider $provider
+     */
+    public function register(FlasherToastrServiceProvider $provider);
 }

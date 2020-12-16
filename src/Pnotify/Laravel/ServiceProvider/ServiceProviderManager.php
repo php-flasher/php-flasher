@@ -7,6 +7,9 @@ use Flasher\Pnotify\Laravel\ServiceProvider\Providers\ServiceProviderInterface;
 
 final class ServiceProviderManager
 {
+    /**
+     * @var ServiceProviderInterface
+     */
     private $provider;
 
     /**
@@ -15,11 +18,16 @@ final class ServiceProviderManager
     private $providers = array(
         'Flasher\Pnotify\Laravel\ServiceProvider\Providers\Laravel4',
         'Flasher\Pnotify\Laravel\ServiceProvider\Providers\Laravel',
-        'Flasher\Pnotify\Laravel\ServiceProvider\Providers\Lumen',
     );
 
+    /**
+     * @var FlasherPnotifyServiceProvider
+     */
     private $notifyServiceProvider;
 
+    /**
+     * @param FlasherPnotifyServiceProvider $notifyServiceProvider
+     */
     public function __construct(FlasherPnotifyServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;
@@ -28,15 +36,13 @@ final class ServiceProviderManager
     public function boot()
     {
         $provider = $this->resolveServiceProvider();
-
-        $provider->publishConfig($this->notifyServiceProvider);
-        $provider->mergeConfigFromPnotify();
+        $provider->boot($this->notifyServiceProvider);
     }
 
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerServices();
+        $provider->register($this->notifyServiceProvider);
     }
 
     /**
