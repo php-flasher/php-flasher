@@ -7,17 +7,32 @@ use Illuminate\Foundation\Application;
 
 final class Laravel4 extends Laravel
 {
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(FlasherSweetAlertServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherSweetAlertServiceProvider $provider)
     {
         $provider->package('php-flasher/flasher-sweet_alert-laravel', 'flasher_sweet_alert', flasher_path(__DIR__.'/../../Resources'));
+        $this->appendToFlasherConfig();
     }
 
-    public function mergeConfigFromSweetAlert()
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherSweetAlertServiceProvider $provider)
+    {
+        $this->registerServices();
+    }
+
+    public function appendToFlasherConfig()
     {
         $flasherConfig = $this->app['config']->get('flasher::config.adapters.sweet_alert', array());
 
