@@ -7,17 +7,32 @@ use Illuminate\Foundation\Application;
 
 final class Laravel4 extends Laravel
 {
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishConfig(FlasherToastrServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherToastrServiceProvider $provider)
     {
         $provider->package('php-flasher/flasher-toastr-laravel', 'flasher_toastr', flasher_path(__DIR__.'/../../Resources'));
+        $this->appendToFlasherConfig();
     }
 
-    public function mergeConfigFromToastr()
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherToastrServiceProvider $provider)
+    {
+        $this->registerServices();
+    }
+
+    public function appendToFlasherConfig()
     {
         $flasherConfig = $this->app['config']->get('flasher::config.adapters.toastr', array());
 

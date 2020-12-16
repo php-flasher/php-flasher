@@ -17,7 +17,6 @@ final class ServiceProviderManager
         'Flasher\Laravel\ServiceProvider\Providers\Laravel50',
         'Flasher\Laravel\ServiceProvider\Providers\Laravel51',
         'Flasher\Laravel\ServiceProvider\Providers\Laravel',
-        'Flasher\Laravel\ServiceProvider\Providers\Lumen',
     );
 
     private $notifyServiceProvider;
@@ -30,15 +29,13 @@ final class ServiceProviderManager
     public function boot()
     {
         $provider = $this->resolveServiceProvider();
-
-        $provider->publishes($this->notifyServiceProvider);
-        $provider->registerBladeDirectives();
+        $provider->boot($this->notifyServiceProvider);
     }
 
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerServices();
+        $provider->register($this->notifyServiceProvider);
     }
 
     /**

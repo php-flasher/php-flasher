@@ -6,11 +6,18 @@ use Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider;
 
 interface ServiceProviderInterface
 {
+    /**
+     * @return bool
+     */
     public function shouldBeUsed();
 
-    public function publishConfig(FlasherPnotifyServiceProvider $provider);
+    /**
+     * @param FlasherPnotifyServiceProvider $provider
+     */
+    public function boot(FlasherPnotifyServiceProvider $provider);
 
-    public function registerServices();
-
-    public function mergeConfigFromPnotify();
+    /**
+     * @param FlasherPnotifyServiceProvider $provider
+     */
+    public function register(FlasherPnotifyServiceProvider $provider);
 }

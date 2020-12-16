@@ -6,11 +6,18 @@ use Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider;
 
 interface ServiceProviderInterface
 {
+    /**
+     * @return bool
+     */
     public function shouldBeUsed();
 
-    public function publishConfig(FlasherSweetAlertServiceProvider $provider);
+    /**
+     * @param FlasherSweetAlertServiceProvider $provider
+     */
+    public function boot(FlasherSweetAlertServiceProvider $provider);
 
-    public function registerServices();
-
-    public function mergeConfigFromSweetAlert();
+    /**
+     * @param FlasherSweetAlertServiceProvider $provider
+     */
+    public function register(FlasherSweetAlertServiceProvider $provider);
 }

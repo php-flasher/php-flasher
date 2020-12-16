@@ -10,28 +10,47 @@ use Illuminate\Foundation\Application;
 
 class Laravel implements ServiceProviderInterface
 {
+    /**
+     * @var Container
+     */
     protected $app;
 
+    /**
+     * @param Container $app
+     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(FlasherToastrServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherToastrServiceProvider $provider)
     {
-        $source = realpath($raw = flasher_path(__DIR__.'/../../Resources/config/config.php')) ?: $raw;
-
-        $provider->publishes(array($source => config_path('flasher_toastr.php')), 'config');
-
-        $provider->mergeConfigFrom($source, 'flasher_toastr');
+        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_toastr.php')), 'config');
     }
 
-    public function registerToastrServices()
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherToastrServiceProvider $provider)
+    {
+        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher_toastr');
+        $this->appendToFlasherConfig();
+
+        $this->registerServices();
+    }
+
+    public function registerServices()
     {
         $this->app->singleton('flasher.toastr', function (Container $app) {
             return new ToastrFactory($app['flasher.storage_manager']);
@@ -46,7 +65,7 @@ class Laravel implements ServiceProviderInterface
         });
     }
 
-    public function mergeConfigFromToastr()
+    public function appendToFlasherConfig()
     {
         $flasherConfig = $this->app['config']->get('flasher.adapters.toastr', array());
 
