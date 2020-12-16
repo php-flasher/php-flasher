@@ -13,9 +13,6 @@ jobs:
             fail-fast: true
             matrix:
                 laravel: [8.*, 7.*, 6.*, 5.8.*, 5.7.*, 5.6.*, 5.5.*, 5.4.*, 5.3.*, 5.2.*, 5.1.*, 5.0.*, 4.2.*, 4.1.*, 4.0.*]
-                dependency-version:
-#                    - prefer-lowest
-                    - prefer-stable
                 include:
                     -   laravel: 8.*
                         testbench: 6.*
@@ -92,7 +89,7 @@ jobs:
                         php: 5.4
                         phpunit: 4.8.*
 
-        name: L${{ matrix.laravel }} - P${{ matrix.php }} - ${{ matrix.dependency-version }}
+        name: L${{ matrix.laravel }} - P${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -114,8 +111,8 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    COMPOSER_MEMORY_LIMIT=-1 composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" monolog/monolog --no-interaction --no-update
-                    COMPOSER_MEMORY_LIMIT=-1 composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                    composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" monolog/monolog --no-interaction --no-update
+                    composer update --prefer-dist --no-interaction --no-suggest
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
