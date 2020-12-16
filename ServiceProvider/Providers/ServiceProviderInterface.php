@@ -6,11 +6,18 @@ use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 
 interface ServiceProviderInterface
 {
+    /**
+     * @return bool
+     */
     public function shouldBeUsed();
 
-    public function publishConfig(FlasherNotyServiceProvider $provider);
+    /**
+     * @param FlasherNotyServiceProvider $provider
+     */
+    public function boot(FlasherNotyServiceProvider $provider);
 
-    public function registerServices();
-
-    public function mergeConfigFromNoty();
+    /**
+     * @param FlasherNotyServiceProvider $provider
+     */
+    public function register(FlasherNotyServiceProvider $provider);
 }

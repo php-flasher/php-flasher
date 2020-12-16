@@ -10,28 +10,47 @@ use Illuminate\Foundation\Application;
 
 class Laravel implements ServiceProviderInterface
 {
+    /**
+     * @var Container
+     */
     protected $app;
 
+    /**
+     * @param Container $app
+     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(FlasherNotyServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherNotyServiceProvider $provider)
     {
-        $source = realpath($raw = flasher_path(__DIR__.'/../../Resources/config/config.php')) ?: $raw;
-
-        $provider->publishes(array($source => config_path('flasher_noty.php')), 'config');
-
-        $provider->mergeConfigFrom($source, 'flasher_noty');
+        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_noty.php')), 'flasher-config');
     }
 
-    public function registerServices()
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherNotyServiceProvider $provider)
+    {
+        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher_noty');
+        $this->appendToFlasherConfig();
+
+        $this->registerServices();
+    }
+
+    protected function registerServices()
     {
         $this->app->singleton('flasher.noty', function (Container $app) {
             return new NotyFactory($app['flasher.storage_manager']);
@@ -46,7 +65,7 @@ class Laravel implements ServiceProviderInterface
         });
     }
 
-    public function mergeConfigFromNoty()
+    protected function appendToFlasherConfig()
     {
         $flasherConfig = $this->app['config']->get('flasher.adapters.noty', array());
 

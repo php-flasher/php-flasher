@@ -15,7 +15,6 @@ final class ServiceProviderManager
     private $providers = array(
         'Flasher\Noty\Laravel\ServiceProvider\Providers\Laravel4',
         'Flasher\Noty\Laravel\ServiceProvider\Providers\Laravel',
-        'Flasher\Noty\Laravel\ServiceProvider\Providers\Lumen',
     );
 
     private $notifyServiceProvider;
@@ -28,15 +27,13 @@ final class ServiceProviderManager
     public function boot()
     {
         $provider = $this->resolveServiceProvider();
-
-        $provider->publishConfig($this->notifyServiceProvider);
-        $provider->mergeConfigFromNoty();
+        $provider->boot($this->notifyServiceProvider);
     }
 
     public function register()
     {
         $provider = $this->resolveServiceProvider();
-        $provider->registerServices();
+        $provider->register($this->notifyServiceProvider);
     }
 
     /**
