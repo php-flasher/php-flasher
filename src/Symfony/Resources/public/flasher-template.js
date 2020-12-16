@@ -10,6 +10,14 @@ PHPFlasher.addFactory('template', (function () {
     };
 
     exports.render = function (envelope) {
+        renderEnvelope(envelope);
+    };
+
+    exports.renderOptions = function (_setting) {
+        options = extend({}, options, _setting);
+    };
+
+    var renderEnvelope = function (envelope) {
         var position = options.position;
 
         if (undefined !== envelope.options && undefined !== envelope.options.position) {
@@ -60,39 +68,36 @@ PHPFlasher.addFactory('template', (function () {
         }
 
         var progressBar = template.querySelector('.flasher-progress');
+        if (null !== progressBar) {
+            var width = 0;
+            var lapse = 1000 / options.fps;
 
-        var width = 0;
-        var lapse = 1000 / options.fps;
+            var showProgress = function () {
+                width++;
+                var percent = (1 - lapse * width / options.timeout) * 100;
+                progressBar.style.width = percent + '%';
 
-        var showProgress = function () {
-            width++;
-            var percent = (1 - lapse * width / options.timeout) * 100;
-            progressBar.style.width = percent + '%';
+                if (percent <= 0) {
+                    template.style.opacity = 0;
+                    clearInterval(progress);
 
-            if (percent <= 0) {
-                template.style.opacity = 0;
-                clearInterval(progress);
-
-                setTimeout(function () {
-                    template.remove();
-                }, 900);
+                    setTimeout(function () {
+                        template.remove();
+                    }, 900);
+                }
             }
+
+            var progress = setInterval(showProgress, lapse);
+
+            template.addEventListener('mouseover', function () {
+                clearInterval(progress);
+            });
+
+            template.addEventListener("mouseout", function () {
+                progress = setInterval(showProgress, lapse);
+            });
         }
-
-        var progress = setInterval(showProgress, lapse);
-
-        template.addEventListener('mouseover', function () {
-            clearInterval(progress);
-        });
-
-        template.addEventListener("mouseout", function () {
-            progress = setInterval(showProgress, lapse);
-        });
-    };
-
-    exports.renderOptions = function (_setting) {
-        options = extend({}, options, _setting);
-    };
+    }
 
     var stringToHTML = function (str) {
         var support = (function () {

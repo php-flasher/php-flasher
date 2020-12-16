@@ -5,8 +5,8 @@ var PHPFlasher = (function () {
     var factories = {};
 
     exports.render = function (_options) {
-        exports.addStyles(_options.styles, function () {
-            exports.addScripts(_options.scripts, function () {
+        exports.addStyles(getStyles(_options), function () {
+            exports.addScripts(getScripts(_options), function () {
                 exports.renderOptions(_options.options);
                 exports.renderEnvelopes(_options.envelopes);
             });
@@ -81,6 +81,34 @@ var PHPFlasher = (function () {
             factories[envelope.handler].render(envelope);
         })
     };
+
+    var getStyles = function (_options) {
+        var styles = _options.styles;
+
+        _options.envelopes.forEach(function (envelope) {
+            if (undefined !== envelope.context && undefined !== envelope.context.styles) {
+                styles = styles.concat(envelope.context.styles);
+            }
+        });
+
+        return styles.filter(function (item, pos) {
+            return styles.indexOf(item) === pos;
+        });
+    }
+
+    var getScripts = function (_options) {
+        var scripts = _options.scripts;
+
+        _options.envelopes.forEach(function (envelope) {
+            if (undefined !== envelope.context && undefined !== envelope.context.scripts) {
+                scripts = scripts.concat(envelope.context.scripts);
+            }
+        });
+
+        return scripts.filter(function (item, pos) {
+            return scripts.indexOf(item) === pos;
+        });
+    }
 
     return exports;
 })();
