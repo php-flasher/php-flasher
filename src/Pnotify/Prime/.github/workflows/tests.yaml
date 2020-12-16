@@ -13,9 +13,6 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ 8.0, 7.4, 7.3, 7.2, 7.1, 7.0, 5.6, 5.5, 5.4 ]
-                dependency-version:
-#                    - prefer-lowest
-                    - prefer-stable
         name: php ${{ matrix.php }} - ${{ matrix.dependency-version }}
 
         steps:
@@ -36,18 +33,18 @@ jobs:
 
             -   name: Require phpunit 4.8 for php <= 5.6
                 if: matrix.php <= 5.6
-                run: COMPOSER_MEMORY_LIMIT=-1 composer require "phpunit/phpunit:4.8.36" --no-interaction --no-update
+                run: composer require "phpunit/phpunit:4.8.36" --no-interaction --no-update
 
             -   name: Require phpunit 6 for php >= 7.0
                 if: matrix.php >= 7.0
-                run: COMPOSER_MEMORY_LIMIT=-1 composer require "phpunit/phpunit:6.*" --no-interaction --no-update
+                run: composer require "phpunit/phpunit:6.*" --no-interaction --no-update
 
             -   name: Require phpunit 9 for php >= 7.3
                 if: matrix.php >= 7.3
-                run: COMPOSER_MEMORY_LIMIT=-1 composer require "phpunit/phpunit:9.*" --no-interaction --no-update
+                run: composer require "phpunit/phpunit:9.*" --no-interaction --no-update
 
             -   name: Install dependencies
-                run: COMPOSER_MEMORY_LIMIT=-1 composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                run: composer update --prefer-dist --no-interaction --no-suggest
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
