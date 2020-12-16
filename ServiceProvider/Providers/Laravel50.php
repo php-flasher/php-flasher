@@ -9,18 +9,25 @@ use Illuminate\View\Compilers\BladeCompiler;
 
 final class Laravel50 extends Laravel
 {
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '5.0');
     }
 
-    public function publishes(FlasherServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherServiceProvider $provider)
     {
-        $provider->loadTranslationsFrom(flasher_path(__DIR__.'/../../Resources/lang'), 'flasher');
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => base_path(flasher_path('resources/lang/vendor/flasher'))));
+
+        $this->registerBladeDirectives();
     }
 
-    public function registerBladeDirectives()
+    protected function registerBladeDirectives()
     {
         $startsWith = function($haystack, $needle) {
             return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;

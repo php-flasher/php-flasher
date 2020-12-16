@@ -10,17 +10,28 @@ use Illuminate\View\Compilers\BladeCompiler;
 
 final class Laravel4 extends Laravel
 {
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '4.');
     }
 
-    public function publishes(FlasherServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherServiceProvider $provider)
     {
         $provider->package('php-flasher/flasher-laravel', 'flasher', flasher_path(__DIR__.'/../../Resources'));
+
+        $this->registerBladeDirectives();
     }
 
-    public function registerServices()
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherServiceProvider $provider)
     {
         $this->app->singleton('flasher.config', function (Application $app) {
             return new Config($app['config'], '::');
@@ -29,7 +40,7 @@ final class Laravel4 extends Laravel
         $this->registerCommonServices();
     }
 
-    public function registerBladeDirectives()
+    protected function registerBladeDirectives()
     {
         $startsWith = function($haystack, $needle) {
             return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
