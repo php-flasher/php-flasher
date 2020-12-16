@@ -22,9 +22,9 @@ final class FlasherServiceProviderTest extends TestCase
         /** @var BladeCompiler $blade */
         $blade = $this->app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), 'html'); ?>", $blade->compileString('@flasher_render'));
-        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), 'html'); ?>", $blade->compileString('@flasher_render()'));
-        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), 'html'); ?>", $blade->compileString('@flasher_render(array())'));
-        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(\"priority\" => array(\"min\" => 4, \"max\" => 5)), 'html'); ?>", $blade->compileString('@flasher_render(array("priority" => array("min" => 4, "max" => 5)))'));
+        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), array('format' => 'html')); ?>", $blade->compileString('@flasher_render'));
+        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), array('format' => 'html')); ?>", $blade->compileString('@flasher_render()'));
+        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(), array('format' => 'html')); ?>", $blade->compileString('@flasher_render(array())'));
+        $this->assertEquals("<?php echo app('flasher.renderer')->render(array(\"priority\" => array(\"min\" => 4, \"max\" => 5)), array('format' => 'html')); ?>", $blade->compileString('@flasher_render(array("priority" => array("min" => 4, "max" => 5)))'));
     }
 }
