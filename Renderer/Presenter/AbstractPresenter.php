@@ -83,10 +83,10 @@ abstract class AbstractPresenter implements PresenterInterface
     protected function toArray(array $envelopes = array())
     {
         return array(
-            'scripts'       => $this->getScripts($envelopes),
-            'styles'        => $this->getStyles($envelopes),
-            'options'       => $this->getOptions($envelopes),
-            'envelopes'     => $this->getEnvelopes($envelopes),
+            'scripts'   => $this->getScripts($envelopes),
+            'styles'    => $this->getStyles($envelopes),
+            'options'   => $this->getOptions($envelopes),
+            'envelopes' => $this->getEnvelopes($envelopes),
         );
     }
 

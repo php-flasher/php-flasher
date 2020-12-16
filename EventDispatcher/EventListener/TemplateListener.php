@@ -41,24 +41,30 @@ final class TemplateListener implements EventSubscriberInterface
                 continue;
             }
 
+            $view = null;
+            $template = null;
             $viewStamp = $envelope->get('Flasher\Prime\Stamp\TemplateStamp');
-            $view = 'default';
+
             if (null !== $viewStamp) {
                 $view = $viewStamp->getView();
+                $template = $this->config->get('adapters.template.templates.'.$view.'.view');
             }
 
-            $template = $this->config->get('adapters.template.views.'.$view);
-
             if (null === $template) {
-                $default = $this->config->get('adapters.template.default');
-                $template = $this->config->get('adapters.template.views.'.$default);
+                $view = $this->config->get('adapters.template.default');
+                $template = $this->config->get('adapters.template.templates.'.$view.'.view');
             }
 
             $compiled = $this->templateEngine->render($template, array(
                 'envelope' => $envelope,
             ));
 
-            $envelope->withStamp(new TemplateStamp($view, $compiled));
+            $envelope->withStamp(new TemplateStamp($view, $compiled, array(
+                'styles'  => $this->config->get('adapters.template.templates.'.$view.'.styles', array()),
+                'scripts' => $this->config->get('adapters.template.templates.'.$view.'.scripts', array()),
+                'options' => $this->config->get('adapters.template.templates.'.$view.'.options', array()),
+            )));
+
             $envelopes[] = $envelope;
         }
 
