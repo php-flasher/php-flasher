@@ -10,25 +10,44 @@ use Illuminate\Foundation\Application;
 
 class Laravel implements ServiceProviderInterface
 {
+    /**
+     * @var Container
+     */
     protected $app;
 
+    /**
+     * @param Container $app
+     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    public function publishConfig(FlasherNotyfServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherNotyfServiceProvider $provider)
     {
-        $source = realpath($raw = flasher_path(__DIR__.'/../../Resources/config/config.php')) ?: $raw;
+        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_notyf.php')), 'flasher-config');
+    }
 
-        $provider->publishes(array($source => config_path('flasher_notyf.php')), 'config');
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherNotyfServiceProvider $provider)
+    {
+        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher_notyf');
+        $this->appendToFlasherConfig();
 
-        $provider->mergeConfigFrom($source, 'flasher_notyf');
+        $this->registerServices();
     }
 
     public function registerServices()
@@ -46,7 +65,7 @@ class Laravel implements ServiceProviderInterface
         });
     }
 
-    public function mergeConfigFromNotyf()
+    protected function appendToFlasherConfig()
     {
         $flasherConfig = $this->app['config']->get('flasher.adapters.notyf', array());
 
