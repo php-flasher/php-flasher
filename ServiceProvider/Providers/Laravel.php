@@ -7,37 +7,47 @@ use Flasher\Laravel\FlasherServiceProvider;
 use Flasher\Laravel\Storage\Storage;
 use Flasher\Laravel\Template\BladeEngine;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 use Flasher\Prime\EventDispatcher\EventListener\FilterListener;
 use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
+use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 use Flasher\Prime\EventDispatcher\EventListener\TemplateListener;
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Renderer\Renderer;
 use Flasher\Prime\Storage\StorageManager;
-use Flasher\Toastr\Prime\ToastrFactory;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 
 class Laravel implements ServiceProviderInterface
 {
+    /**
+     * @var Container
+     */
     protected $app;
 
+    /**
+     * @param Container $app
+     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    public function publishes(FlasherServiceProvider $provider)
+    /**
+     * @inheritDoc
+     */
+    public function boot(FlasherServiceProvider $provider)
     {
-        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher');
         $provider->loadTranslationsFrom(flasher_path(__DIR__.'/../../Resources/lang'), 'flasher');
         $provider->loadViewsFrom(flasher_path(__DIR__.'/../../Resources/views'), 'flasher');
 
@@ -45,10 +55,17 @@ class Laravel implements ServiceProviderInterface
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/flasher'))), 'flasher-public');
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => resource_path(flasher_path('lang/vendor/flasher'))), 'flasher-lang');
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/views') => resource_path(flasher_path('views/vendor/flasher'))), 'flasher-views');
+
+        $this->registerBladeDirectives();
     }
 
-    public function registerServices()
+    /**
+     * @inheritDoc
+     */
+    public function register(FlasherServiceProvider $provider)
     {
+        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher');
+
         $this->app->singleton('flasher.config', function (Application $app) {
             return new Config($app['config'], '.');
         });
@@ -56,7 +73,7 @@ class Laravel implements ServiceProviderInterface
         $this->registerCommonServices();
     }
 
-    public function registerCommonServices()
+    protected function registerCommonServices()
     {
         $this->app->singleton('flasher', function (Application $app) {
             $flasher = new Flasher($app['flasher.config']);
@@ -123,7 +140,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->bind('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.notification_factory');
     }
 
-    public function registerBladeDirectives()
+    protected function registerBladeDirectives()
     {
         $startsWith = function($haystack, $needle) {
             return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
