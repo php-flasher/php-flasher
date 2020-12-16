@@ -66,7 +66,7 @@ final class Laravel4 extends Laravel
                 $value = "array()";
             }
 
-            return str_replace("%criteria%", $value, $matches[1] . "<?php echo app('flasher.renderer')->render(%criteria%, 'html'); ?>");
+            return str_replace("%criteria%", $value, $matches[1] . "<?php echo app('flasher.renderer')->render(%criteria%, array('format' => 'html')); ?>");
         });
     }
 }
