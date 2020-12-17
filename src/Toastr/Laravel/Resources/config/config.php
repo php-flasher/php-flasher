@@ -4,6 +4,7 @@ return array(
     'scripts' => array(
         'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js',
+        '/vendor/flasher/flasher-toastr.js',
     ),
     'styles' => array(
         'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css',
