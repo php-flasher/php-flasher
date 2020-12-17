@@ -25,6 +25,7 @@ class FlasherNotyfServiceProviderTest extends TestCase
         $expected = array(
             'scripts' => array(
                 'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js',
+                '/vendor/flasher/flasher-notyf.js',
             ),
             'styles'  => array(
                 'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css',
