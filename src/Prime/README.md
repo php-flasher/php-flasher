@@ -1,8 +1,12 @@
-<p align="center"><img width="600" alt="flasher" src="https://user-images.githubusercontent.com/10859693/100492861-fabfd800-3130-11eb-8c5e-242fff1706a9.png"></p>
+<p align="center"><img width="600" alt="flasher" src="https://user-images.githubusercontent.com/10859693/102468596-03317180-4052-11eb-9df3-44dc6235b238.png"></p>
 
-<h1 align="center">Easy flash notifications for PHP, Laravel, Symfony, Lumen</h1>
+<h1 align="center">A powerful and flexible flash notifications system for PHP, Laravel, Symfony</h1>
 
-<p align="center">:eyes: PHP Flasher library helps you to add flash notifications to your projects. This library was developed with the idea that you should be able to add flash notification to your application with ease and with few lines of code. No application-wide rewrites and no big investments upfront.</p>
+<p align="center">
+    :eyes: PHP Flasher helps you to add flash notifications to your PHP projects. 
+    This library was developed with the idea that you should be able to add flash notification to your application with ease and with few lines of code. 
+    No application-wide rewrites and no big investments upfront.
+</p>
 
 <p align="center">
     <a href="https://github.com/php-flasher/flasher">
@@ -20,32 +24,42 @@
     <a href="https://packagist.org/packages/php-flasher/flasher">
         <img src="https://img.shields.io/packagist/php-v/php-flasher/flasher.svg?style=flat-square">
     </a>
+    <a href="https://opencollective.com/php-flasher">
+        <img src="https://opencollective.com/php-flasher/tiers/backer/badge.svg?label=backer&color=brightgreen" />
+    </a>
 </p>
-
-## Introduction
-
-PHP Flasher library helps you to add flash notifications to your projects. This library was developed with the idea that you should be able to add flash notification to your application with ease and with few lines of code. No application-wide rewrites and no big investments upfront.
 
 # Why use PHP Flasher ?
 
-The PHP Flasher project supports a variety of notification libraries : __toastr.js__, __sweet alert 2__, __pflasher__ and __notyf__
-and its highly extendable so you can add custom adapters.
+The PHP Flasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __toastr.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
+and its highly extendable so you can add your custom notifications.
 
 This library is designed, so you can take full control when creating you notifications :
 
 > * Display multiple notifications
 > * Sort and filter notifications
-> * Render notification from JSON response with Ajax or Websockets
+> * Render notification from JSON object
 > * Limit the number of displayed notifications
-> * Show notifications from different adapters at the same time
-> * implementations for popular frameworks : Symfony and Laravel
+> * Show notifications from different libraries at the same time
+> * Framework angostic with integration for : Symfony and Laravel
+> * Support templates
+> * Easy migration from similar libraries.
+> * Very flexible so you can add you own adapters
 > * ...and more
 
 
 ## Official Documentation
 
-Documentation for Valet can be found on the [PHP Flasher website](https://php-flasher.github.io/).
+Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.github.io/).
+
+## Sponsors
+
+Support this project by becoming a backer. Your name will show up in the Contribute page of all PHP Flasher installations as well as here with a link to your website!
+
+[<img src="https://opencollective.com/php-flasher/tiers/backer.svg?avatarHeight=36&width=600" />](https://opencollective.com/php-flasher)
 
 ## License
 
 PHP Flasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-khoubza/">Younes KHOUBZA</a> <b> </p>
