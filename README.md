@@ -27,6 +27,9 @@
     <a href="https://opencollective.com/php-flasher">
         <img src="https://opencollective.com/php-flasher/tiers/backer/badge.svg?label=backer&color=brightgreen" />
     </a>
+    <a href="https://opencollective.com/php-flasher">
+        <img src="https://opencollective.com/php-flasher/tiers/sponsor/badge.svg?label=sponsor&color=brightgreen" />
+    </a>
 </p>
 
 # Why use PHP Flasher ?
@@ -52,11 +55,30 @@ This library is designed, so you can take full control when creating you notific
 
 Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.github.io/).
 
-## Sponsors
+## Backers && Sponsors
 
-Support this project by becoming a backer. Your name will show up in the Contribute page of all PHP Flasher installations as well as here with a link to your website!
+Support this project by becoming a sponsor. Your name will show up in the Contribute page of all PHP Flasher installations as well as here with a link to your website!
 
-[<img src="https://opencollective.com/php-flasher/tiers/backer.svg?avatarHeight=36&width=600" />](https://opencollective.com/php-flasher)
+Thank you to all our backers and sponsors! 🙏
+
+<a href="https://opencollective.com/php-flasher#backers" target="_blank">
+  <img src="https://opencollective.com/php-flasher/backers.svg?width=890" title="Backers" alt="Backers">
+</a>
+
+<a href="https://opencollective.com/php-flasher#sponsors" target="_blank">
+  <img src="https://opencollective.com/php-flasher/sponsors.svg?width=890" title="Sponsors" alt="Sponsors">
+</a>
+
+### Contact
+
+PHP Flasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. You can reach out with questions, bug reports, or feature requests 
+on any of the following:
+
+- [Github Issues](https://github.com/php-flasher/flasher/issues) 
+- [Github](https://github.com/yoeunes)
+- [Twitter](https://twitter.com/yoeunes)
+- [Linkedin](https://www.linkedin.com/in/younes-khoubza/)
+- [Email me directly](mailto:younes.khoubza@gmail.com)
 
 ## License
 
