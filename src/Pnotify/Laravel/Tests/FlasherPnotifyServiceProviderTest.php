@@ -26,6 +26,7 @@ class FlasherPnotifyServiceProviderTest extends TestCase
             'scripts' => array(
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js',
+                '/vendor/flasher/flasher-pnotify.js',
             ),
             'styles'  => array(
                 'https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css',
