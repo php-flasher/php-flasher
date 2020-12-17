@@ -5,6 +5,7 @@ return array(
         'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.10.2/sweetalert2.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.2.0/polyfill.min.js',
+        '/vendor/flasher/flasher-sweet-alert.js',
     ),
     'styles' => array(
         'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
