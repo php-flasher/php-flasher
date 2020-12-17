@@ -37,6 +37,7 @@ class Laravel implements ServiceProviderInterface
     public function boot(FlasherNotyfServiceProvider $provider)
     {
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_notyf.php')), 'flasher-config');
+        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/flasher'))), 'flasher-public');
     }
 
     /**
