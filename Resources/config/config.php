@@ -3,6 +3,7 @@
 return array(
     'scripts' => array(
         'https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js',
+        '/vendor/flasher/flasher-noty.js',
     ),
     'styles' => array(
         'https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css',
