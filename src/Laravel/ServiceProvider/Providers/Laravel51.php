@@ -21,5 +21,7 @@ final class Laravel51 extends Laravel
     public function boot(FlasherServiceProvider $provider)
     {
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => base_path(flasher_path('resources/lang/vendor/flasher'))));
+
+        $this->registerBladeDirectives();
     }
 }
