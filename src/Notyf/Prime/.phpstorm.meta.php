@@ -1,3 +1,7 @@
 <?php
 
 namespace PHPSTORM_META;
+
+expectedArguments(\Flasher\Notyf\Prime\NotyfBuilder::duration(), 0, 2000, 3000, 4000, 5000);
+expectedArguments(\Flasher\Notyf\Prime\NotyfBuilder::position(), 0, 'x', 'y');
+expectedArguments(\Flasher\Notyf\Prime\NotyfBuilder::position(), 1, 'top', 'right', 'bottom', 'left', 'center');
