@@ -2,8 +2,11 @@
 
 namespace PHPSTORM_META;
 
-use Flasher\Noty\Prime\NotyBuilder;
-
-expectedArguments(NotyBuilder::showMethod(), 1, ['fadeIn', 'slideDown', 'show']);
-expectedArguments(NotyBuilder::showEasing(), 1, ['swing', 'linear']);
-expectedArguments(NotyBuilder::positionClass(), 1, ['toast-top-right', 'toast-top-center', 'toast-bottom-center', 'toast-top-full-width', 'toast-bottom-full-width', 'toast-top-left', 'toast-bottom-right', 'toast-bottom-left']);
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::layout(), 0, 'top', 'topLeft', 'topCenter', 'topRight', 'center', 'centerLeft', 'centerRight', 'bottom', 'bottomLeft', 'bottomCenter', 'bottomRight');
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::theme(), 0, 'relax', 'mint', 'metroui');
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::timeout(), 0, false, 1000, 3000, 3500, 5000);
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::closeWith(), 0, 'click', 'button', array('click', 'button'));
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::animation(), 0, 'open', 'close');
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::sounds(), 0, 'sources', 'volume', 'conditions');
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::docTitle(), 0, 'conditions');
+expectedArguments(\Flasher\Noty\Prime\NotyBuilder::queue(), 0, 'global');
