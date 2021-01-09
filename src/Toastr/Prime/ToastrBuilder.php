@@ -20,6 +20,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * enable a close button
+     *
      * @param bool $closeButton
      *
      * @return $this
@@ -68,6 +70,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * override the close button's HTML.
+     *
      * @param string $closeHtml
      *
      * @return $this
@@ -128,6 +132,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * In case you want to escape HTML characters in title and message
+     *
      * @param bool $escapeHtml
      *
      * @return $this
@@ -140,6 +146,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * How long the toast will display after a user hovers over it
+     *
      * @param int $extendedTimeOut
      *
      * @return $this
@@ -212,6 +220,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Show newest toast at bottom (top is default)
+     *
      * @param bool $newestOnTop
      *
      * @return $this
@@ -260,6 +270,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content.
+     *
      * @param bool $preventDuplicates
      *
      * @return $this
@@ -272,6 +284,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Visually indicate how long before a toast expires.
+     *
      * @param bool $progressBar
      *
      * @return $this
@@ -296,6 +310,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Flip the toastr to be displayed properly for right-to-left languages.
+     *
      * @param bool $rtl
      *
      * @return $this
@@ -368,13 +384,20 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * @param int $timeOut
+     * How long the toast will display without user interaction
+     *
+     * @param int  $timeOut
+     * @param int $extendedTimeOut
      *
      * @return $this
      */
-    public function timeOut($timeOut)
+    public function timeOut($timeOut, $extendedTimeOut = null)
     {
         $this->option('timeOut', $timeOut);
+
+        if (null !== $extendedTimeOut) {
+            $this->extendedTimeOut($extendedTimeOut);
+        }
 
         return $this;
     }
@@ -401,5 +424,14 @@ final class ToastrBuilder extends NotificationBuilder
         $this->option('toastClass', $toastClass);
 
         return $this;
+    }
+
+    /**
+     * Prevent from Auto Hiding
+     */
+    public function persistent()
+    {
+        $this->timeOut(0);
+        $this->extendedTimeOut(0);
     }
 }
