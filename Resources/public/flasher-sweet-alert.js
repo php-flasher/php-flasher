@@ -5,14 +5,8 @@ PHPFlasher.addFactory('sweet_alert', (function () {
 
     exports.render = function (data) {
         var notification = data.notification;
-        var options = {
-            title: ' ',
-            text: notification.message,
-            icon: notification.type,
-            ...notification.options
-        }
 
-        window.SwalToast.fire(options);
+        window.SwalToast.fire(notification.options);
     };
 
     exports.renderOptions = function (options) {
