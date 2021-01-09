@@ -1,0 +1,14 @@
+{
+    "name": "@php-flasher/flasher",
+    "description": "Flasher factory adapter for the PHP Flasher library",
+    "license": "MIT",
+    "version": "0.1.0",
+    "scripts": {
+        "build": "babel src -d dist",
+        "lint": "eslint src test"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.12",
+        "@babel/preset-env": "^7.12"
+    }
+}
