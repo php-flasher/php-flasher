@@ -14,7 +14,7 @@ use Flasher\Prime\EventDispatcher\EventListener\TemplateListener;
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Flasher;
-use Flasher\Prime\Renderer\Renderer;
+use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Storage\StorageManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
@@ -83,7 +83,7 @@ class Laravel implements ServiceProviderInterface
         });
 
         $this->app->singleton('flasher.renderer', function (Application $app) {
-            return new Renderer($app['flasher.storage_manager'], $app['flasher.event_dispatcher'], $app['flasher.config']);
+            return new ResponseManager($app['flasher.storage_manager'], $app['flasher.event_dispatcher'], $app['flasher.config']);
         });
 
         $this->app->singleton('flasher.storage', function (Application $app) {
