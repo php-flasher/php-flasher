@@ -4,7 +4,7 @@ namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Renderer\RendererInterface;
+use Flasher\Prime\Response\ResponseManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -21,16 +21,16 @@ final class SessionListener implements EventSubscriberInterface
     private $flasher;
 
     /**
-     * @var RendererInterface
+     * @var ResponseManagerInterface
      */
     private $renderer;
 
     /**
-     * @param ConfigInterface   $config
-     * @param FlasherInterface  $flasher
-     * @param RendererInterface $renderer
+     * @param ConfigInterface          $config
+     * @param FlasherInterface         $flasher
+     * @param ResponseManagerInterface $renderer
      */
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, RendererInterface $renderer)
+    public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $renderer)
     {
         $this->config = $config;
         $this->flasher = $flasher;
@@ -69,8 +69,7 @@ final class SessionListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        $htmlResponse = $this->renderer->render(array(), array(
-            'format'  => 'html',
+        $htmlResponse = $this->renderer->render(array(), 'html', array(
             'content' => $content,
         ));
 

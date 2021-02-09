@@ -25,16 +25,56 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()
+                    ->defaultValue('toastr')
                 ->end()
-                ->arrayNode('scripts')
+                ->arrayNode('root_scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        '/bundles/flasher/flasher.js',
-                    ))
+                       '/bundles/flasher/flasher.js',
+                   ))
                 ->end()
-                ->arrayNode('styles')
-                    ->prototype('scalar')->end()
-                    ->defaultValue(array())
+                ->arrayNode('template_factory')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('default')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                            ->defaultValue('tailwindcss')
+                        ->end()
+                        ->arrayNode('templates')
+                            ->ignoreExtraKeys()
+                            ->prototype('scalar')->end()
+                            ->children()
+                                ->scalarNode('view')
+                                    ->isRequired()
+                                    ->cannotBeEmpty()
+                                ->end()
+                                ->arrayNode('styles')->end()
+                                ->arrayNode('scripts')->end()
+                                ->arrayNode('options')->end()
+                            ->end()
+                            ->defaultValue(array(
+                                'tailwindcss'    => array(
+                                    'view'   => '@Flasher/tailwindcss.html.twig',
+                                    'styles' => array(
+                                        'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
+                                    ),
+                                ),
+                                'tailwindcss_bg' => array(
+                                    'view'   => '@Flasher/tailwindcss_bg.html.twig',
+                                    'styles' => array(
+                                        'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
+                                    ),
+                                ),
+                                'bootstrap'      => array(
+                                    'view'   => '@Flasher/bootstrap.html.twig',
+                                    'styles' => array(
+                                        'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css',
+                                    ),
+                                ),
+                            ))
+                        ->end()
+                    ->end()
                 ->end()
                 ->booleanNode('auto_create_from_session')
                     ->defaultValue(true)
@@ -47,11 +87,6 @@ final class Configuration implements ConfigurationInterface
                           'warning' => array('warning', 'alarm'),
                           'info'    => array('info', 'notice', 'alert'),
                      ))
-                ->end()
-                ->arrayNode('adapters')
-                    ->ignoreExtraKeys(false)
-                    ->useAttributeAsKey('name')
-                    ->prototype('variable')->end()
                 ->end()
             ->end()
         ;
