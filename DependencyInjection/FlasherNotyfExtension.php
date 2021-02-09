@@ -2,44 +2,24 @@
 
 namespace Flasher\Notyf\Symfony\DependencyInjection;
 
+use Flasher\Symfony\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class FlasherNotyfExtension extends Extension implements PrependExtensionInterface
+final class FlasherNotyfExtension extends Extension
 {
     /**
-     * {@inheritdoc}
-     *
-     * @throws \Exception
+     * @inheritDoc
      */
-    public function load(array $configs, ContainerBuilder $container)
+    protected function getConfigFileLocator()
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('config.yaml');
-
-        $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
+        return new FileLocator(__DIR__.'/../Resources/config');
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function prepend(ContainerBuilder $container)
+    protected function getConfigClass()
     {
-        if (!$container->hasExtension('flasher')) {
-            throw new \RuntimeException('[Flasher\Symfony\FlasherBundle] is not registered');
-        }
-
-        $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
-
-        $container->prependExtensionConfig('flasher', array(
-            'adapters' => array(
-                'notyf' => $config,
-            ),
-        ));
+        return new Configuration();
     }
 }
