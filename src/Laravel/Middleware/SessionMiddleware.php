@@ -5,7 +5,7 @@ namespace Flasher\Laravel\Middleware;
 use Closure;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Renderer\RendererInterface;
+use Flasher\Prime\Response\ResponseManagerInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -22,16 +22,16 @@ final class SessionMiddleware
     private $flasher;
 
     /**
-     * @var RendererInterface
+     * @var ResponseManagerInterface
      */
     private $renderer;
 
     /**
-     * @param ConfigInterface   $config
-     * @param FlasherInterface  $flasher
-     * @param RendererInterface $renderer
+     * @param ConfigInterface          $config
+     * @param FlasherInterface         $flasher
+     * @param ResponseManagerInterface $renderer
      */
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, RendererInterface $renderer)
+    public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $renderer)
     {
         $this->config = $config;
         $this->flasher = $flasher;

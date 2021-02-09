@@ -5,7 +5,7 @@ services:
     flasher.config:
         class: Flasher\Prime\Config\Config
         arguments:
-            - null
+            - []
 
     flasher:
         class: Flasher\Prime\Flasher
@@ -68,23 +68,38 @@ services:
     flasher.twig.extension:
         class: Flasher\Symfony\Twig\FlasherTwigExtension
         arguments:
-            - '@flasher.renderer'
+            - '@flasher.response_manager'
         tags:
             - { name: 'twig.extension' }
 
-    flasher.renderer:
-        class: Flasher\Prime\Renderer\Renderer
+    flasher.resource_manager:
+        class: Flasher\Prime\Response\Resource\ResourceManager
+        arguments:
+            - '@flasher.config'
+
+    flasher.response_manager:
+        class: Flasher\Prime\Response\ResponseManager
         arguments:
             - '@flasher.storage_manager'
             - '@flasher.event_dispatcher'
-            - '@flasher.config'
+            - '@flasher.resource_manager'
+
+    flasher.presenter.html:
+        class: Flasher\Prime\Response\Presenter\HtmlPresenter
+        tags:
+            - { name: 'flasher.presenter', alias: 'html' }
+
+    flasher.presenter.array:
+        class: Flasher\Prime\Response\Presenter\ArrayPresenter
+        tags:
+            - { name: 'flasher.presenter', alias: 'array' }
 
     flasher.session_listener:
         class: Flasher\Symfony\EventListener\SessionListener
         arguments:
             - '@flasher.config'
             - '@flasher'
-            - '@flasher.renderer'
+            - '@flasher.response_manager'
         tags:
             - { name: 'kernel.event_subscriber' }
 
@@ -95,7 +110,6 @@ services:
 
     Flasher\Prime\Config\Config: '@flasher.config'
     Flasher\Prime\Flasher: '@flasher'
-    Flasher\Prime\Renderer\Renderer: '@flasher.renderer'
     Flasher\Prime\EventDispatcher\EventDispatcher: '@flasher.event_dispatcher'
     Flasher\Symfony\Storage\Storage: '@flasher.storage'
     Flasher\Prime\Storage\StorageManager: '@flasher.storage_manager'
@@ -106,7 +120,6 @@ services:
     Flasher\Prime\Config\ConfigInterface: '@flasher.config'
     Flasher\Prime\FlasherInterface: '@flasher'
     Flasher\Prime\Storage\StorageManagerInterface: '@flasher.storage_manager'
-    Flasher\Prime\Renderer\RendererInterface: '@flasher.renderer'
     Flasher\Prime\Filter\FilterInterface: '@flasher.filter'
     Flasher\Prime\EventDispatcher\EventDispatcherInterface: '@flasher.event_dispatcher'
     Flasher\Prime\Storage\StorageInterface: '@flasher.storage'

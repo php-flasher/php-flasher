@@ -13,12 +13,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ext-json": "*",
-        "illuminate/support": "4.0.*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36",
-        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0"
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,10 +23,5 @@
             "src/Prime/helpers.php"
         ]
     },
-    "minimum-stability": "dev",
-    "config": {
-        "platform": {
-            "php": "5.4"
-        }
-    }
+    "minimum-stability": "dev"
 }

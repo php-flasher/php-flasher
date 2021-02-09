@@ -2,21 +2,21 @@
 
 namespace Flasher\Symfony\Twig;
 
-use Flasher\Prime\Renderer\RendererInterface;
+use Flasher\Prime\Response\ResponseManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 final class FlasherTwigExtension extends AbstractExtension
 {
     /**
-     * @var RendererInterface
+     * @var ResponseManagerInterface
      */
     private $renderer;
 
     /**
-     * @param RendererInterface $renderer
+     * @param ResponseManagerInterface $renderer
      */
-    public function __construct(RendererInterface $renderer)
+    public function __construct(ResponseManagerInterface $renderer)
     {
         $this->renderer = $renderer;
     }
@@ -37,8 +37,6 @@ final class FlasherTwigExtension extends AbstractExtension
      */
     public function flasherRender(array $criteria = array())
     {
-        return $this->renderer->render($criteria, array(
-            'format' => 'html',
-        ));
+        return $this->renderer->render($criteria);
     }
 }
