@@ -39,27 +39,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('options')
                     ->prototype('variable')->end()
                     ->ignoreExtraKeys(false)
-                    ->defaultValue(array(
-                        'layout' => 'topRight',
-                        'theme' => 'mint',
-                        'timeout' => 5000,
-                        'progressBar' => true,
-                        'animation.open' => 'noty_effects_open',
-                        'animation.close' => 'noty_effects_close',
-                        'sounds.sources' => array(),
-                        'closeWith' => array('click'),
-                        'sounds.volume' => 1,
-                        'sounds.conditions' => array(),
-                        'docTitle.conditions' => array(),
-                        'modal' => false,
-                        'id' => false,
-                        'force' => false,
-                        'queue' => 'global',
-                        'killer' => false,
-                        'container' => false,
-                        'buttons' => array(),
-                        'visibilityControl' => false,
-                    ))
+                    ->defaultValue(array())
                 ->end()
             ->end()
         ;
