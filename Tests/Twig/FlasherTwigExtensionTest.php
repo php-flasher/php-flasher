@@ -2,7 +2,7 @@
 
 namespace Flasher\Symfony\Tests\Twig;
 
-use Flasher\Prime\Renderer\RendererInterface;
+use Flasher\Prime\Response\ResponseManagerInterface;
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\Twig\FlasherTwigExtension;
 use Twig\Environment;
@@ -20,7 +20,7 @@ class FlasherTwigExtensionTest extends TestCase
         $this->assertEquals($expected, $this->render('{{ flasher_render() }}', $renderer));
     }
 
-    private function render($template, RendererInterface $renderer)
+    private function render($template, ResponseManagerInterface $renderer)
     {
         $twig = new Environment(new ArrayLoader(array('template' => $template)), array(
             'debug' => true, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0,
