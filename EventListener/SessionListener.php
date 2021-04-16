@@ -23,18 +23,18 @@ final class SessionListener implements EventSubscriberInterface
     /**
      * @var ResponseManagerInterface
      */
-    private $renderer;
+    private $responseManager;
 
     /**
      * @param ConfigInterface          $config
      * @param FlasherInterface         $flasher
-     * @param ResponseManagerInterface $renderer
+     * @param ResponseManagerInterface $responseManager
      */
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $renderer)
+    public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $responseManager)
     {
         $this->config = $config;
         $this->flasher = $flasher;
-        $this->renderer = $renderer;
+        $this->responseManager = $responseManager;
     }
 
     public function onKernelResponse(ResponseEvent $event)
@@ -69,7 +69,7 @@ final class SessionListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        $htmlResponse = $this->renderer->render(array(), 'html', array(
+        $htmlResponse = $this->responseManager->render(array(), 'html', array(
             'content' => $content,
         ));
 

@@ -14,10 +14,10 @@ class FlasherTwigExtensionTest extends TestCase
     {
         $expected = "<script>toastr.success('success title')</script>";
 
-        $renderer = $this->getMockBuilder('Flasher\Prime\Renderer\RendererInterface')->getMock();
-        $renderer->method('render')->willReturn($expected);
+        $responseManager = $this->getMockBuilder('Flasher\Prime\Response\ResponseManagerInterface')->getMock();
+        $responseManager->method('render')->willReturn($expected);
 
-        $this->assertEquals($expected, $this->render('{{ flasher_render() }}', $renderer));
+        $this->assertEquals($expected, $this->render('{{ flasher_render() }}', $responseManager));
     }
 
     private function render($template, ResponseManagerInterface $renderer)

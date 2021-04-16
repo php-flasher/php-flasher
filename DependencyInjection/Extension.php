@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension as SymfonyExtension;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 abstract class Extension extends SymfonyExtension implements CompilerPassInterface
 {
