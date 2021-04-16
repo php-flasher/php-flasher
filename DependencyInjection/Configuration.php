@@ -26,20 +26,21 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
-                        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js',
-                        '/bundles/flashertoastr/flasher-toastr.js',
+                        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@0.1.3/dist/flasher-toastr.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css',
-                    ))
+                    ->defaultValue(array())
                 ->end()
                 ->arrayNode('options')
                     ->prototype('variable')->end()
-                    ->defaultValue(array())
+                    ->ignoreExtraKeys(false)
+                    ->defaultValue(array(
+                       'progressBar' => true,
+                       'timeOut'     => 5000,
+                    ))
                 ->end()
             ->end()
         ;

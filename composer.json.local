@@ -27,6 +27,22 @@
         }
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Prime",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher-symfony": "@dev",
@@ -49,7 +65,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "5.3.10"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
