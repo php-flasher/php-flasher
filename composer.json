@@ -29,8 +29,8 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "@dev",
-        "php-flasher/flasher-pnotify": "@dev"
+        "php-flasher/flasher-symfony": "^0.1",
+        "php-flasher/flasher-pnotify": "^0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
