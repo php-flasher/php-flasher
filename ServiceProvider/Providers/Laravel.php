@@ -2,9 +2,11 @@
 
 namespace Flasher\Notyf\Laravel\ServiceProvider\Providers;
 
+use Flasher\Laravel\ServiceProvider\ResourceManagerHelper;
 use Flasher\Notyf\Laravel\FlasherNotyfServiceProvider;
 use Flasher\Notyf\Prime\NotyfFactory;
 use Flasher\Prime\Flasher;
+use Flasher\Prime\Response\Resource\ResourceManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -37,7 +39,6 @@ class Laravel implements ServiceProviderInterface
     public function boot(FlasherNotyfServiceProvider $provider)
     {
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_notyf.php')), 'flasher-config');
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/flasher'))), 'flasher-public');
     }
 
     /**
@@ -63,6 +64,12 @@ class Laravel implements ServiceProviderInterface
             $manager->addFactory('notyf', $app['flasher.notyf']);
 
             return $manager;
+        });
+
+        $this->app->extend('flasher.resource_manager', function (ResourceManager $resourceManager) {
+            ResourceManagerHelper::process($resourceManager, 'notyf');
+
+            return $resourceManager;
         });
     }
 
