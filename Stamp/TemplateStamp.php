@@ -7,35 +7,14 @@ final class TemplateStamp implements StampInterface, PresentableStampInterface
     /**
      * @var string
      */
-    private $view;
-
-    /**
-     * @var string
-     */
     private $template;
 
     /**
-     * @var array
-     */
-    private $context = array();
-
-    /**
-     * @param string $view
      * @param string $template
      */
-    public function __construct($view, $template = null, array $context = array())
+    public function __construct($template)
     {
-        $this->view = $view;
         $this->template = $template;
-        $this->context = $context;
-    }
-
-    /**
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
     }
 
     /**
@@ -47,21 +26,12 @@ final class TemplateStamp implements StampInterface, PresentableStampInterface
     }
 
     /**
-     * @return array
-     */
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    /**
      * @inheritDoc
      */
     public function toArray()
     {
         return array(
             'template' => $this->getTemplate(),
-            'context'  => $this->getContext(),
         );
     }
 }
