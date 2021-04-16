@@ -13,20 +13,14 @@ class FlasherNotyExtensionTest extends TestCase
 {
     public function testContainerContainFlasherServices()
     {
-        $container = $this->getRawContainer();
-        $container->loadFromExtension('flasher', array());
-        $container->loadFromExtension('flasher_noty', array());
-        $container->compile();
+        $container = $this->getContainer();
 
         $this->assertTrue($container->has('flasher.noty'));
     }
 
     public function testCreateInstanceOfNotyAdapter()
     {
-        $container = $this->getRawContainer();
-        $container->loadFromExtension('flasher');
-        $container->loadFromExtension('flasher_noty');
-        $container->compile();
+        $container = $this->getContainer();
 
         $flasher = $container->getDefinition('flasher');
         $calls = $flasher->getMethodCalls();
@@ -40,13 +34,6 @@ class FlasherNotyExtensionTest extends TestCase
         $this->assertSame('addFactory', $calls[1][0]);
         $this->assertSame('noty', $calls[1][1][0]);
         $this->assertSame('flasher.noty', (string) $calls[1][1][1]);
-    }
-
-    public function testConfigurationInjectedIntoFlasherConfig()
-    {
-        $container = $this->getContainer();
-        $config = $container->get('flasher.config');
-        $this->assertNotEmpty($config->get('adapters.noty'));
     }
 
     private function getRawContainer()
@@ -71,6 +58,8 @@ class FlasherNotyExtensionTest extends TestCase
     private function getContainer()
     {
         $container = $this->getRawContainer();
+        $container->loadFromExtension('flasher', array());
+        $container->loadFromExtension('flasher_noty', array());
         $container->compile();
 
         return $container;

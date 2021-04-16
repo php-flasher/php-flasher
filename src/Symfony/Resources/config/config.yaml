@@ -56,15 +56,6 @@ services:
         tags:
             - { name: 'flasher.event_subscriber' }
 
-    flasher.event_listener.template_listener:
-        class: Flasher\Prime\EventDispatcher\EventListener\TemplateListener
-        public: false
-        arguments:
-            - '@flasher.config'
-            - '@flasher.template_engine'
-        tags:
-            - { name: 'flasher.event_subscriber' }
-
     flasher.twig.extension:
         class: Flasher\Symfony\Twig\FlasherTwigExtension
         arguments:
@@ -76,6 +67,7 @@ services:
         class: Flasher\Prime\Response\Resource\ResourceManager
         arguments:
             - '@flasher.config'
+            - '@flasher.template_engine'
 
     flasher.response_manager:
         class: Flasher\Prime\Response\ResponseManager

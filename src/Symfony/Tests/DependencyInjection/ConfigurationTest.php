@@ -13,79 +13,57 @@ class ConfigurationTest extends TestCase
         $config = $this->process(array());
 
         $expected = array(
-            'scripts' => array(
-                '/bundles/flasher/flasher.js',
+            'default' => 'template',
+            'root_scripts' => array(
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js'
             ),
-            'styles' => array(),
+            'template_factory' => array(
+                'default' => 'tailwindcss',
+                'templates' => array(
+                    'tailwindcss' => array(
+                        'view' => '@Flasher/tailwindcss.html.twig',
+                        'styles' => array(
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css'
+                        ),
+                    ),
+                    'tailwindcss_bg' => array(
+                        'view' => '@Flasher/tailwindcss_bg.html.twig',
+                        "styles" => array(
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                        ),
+                    ),
+                    'bootstrap' => array(
+                        'view' => "@Flasher/bootstrap.html.twig",
+                        'styles' => array(
+                            "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css",
+                        ),
+                    ),
+                ),
+            ),
             'auto_create_from_session' => true,
             'types_mapping' => array(
-                'success' => array('success'),
-                'error'   => array('error', 'danger'),
-                'warning' => array('warning', 'alarm'),
-                'info'    => array('info', 'notice', 'alert'),
+                'success' => array(
+                    'success',
+                ),
+                'error' => array(
+                    'error',
+                    'danger',
+                ),
+                'warning' => array(
+                    'warning',
+                    'alarm',
+                ),
+                'info' => array(
+                    'info',
+                    'notice',
+                    'alert',
+                ),
             ),
-            'adapters' => array(),
         );
 
         $this->assertSame($expected, $config);
-    }
-
-    public function testSimpleConfig()
-    {
-        $config = $this->process(array(array(
-            'default' => 'notyf',
-            'adapters' => array(
-                'notyf' => array(
-                    'scripts' => array(
-                        'jquery.js',
-                        'notyf.js'
-                    ),
-                    'styles' => array(
-                        'notyf.css'
-                    ),
-                    'options' => array(
-                        'timeout' => 5000,
-                        'position' => 'top-right'
-                    )
-                )
-            ),
-            'scripts' => array(),
-            'styles' => array(
-               '/bundles/flasher/flasher.css',
-            )
-        )));
-
-        $expected = array(
-            'default' => 'notyf',
-            'scripts' => array(),
-            'styles' => array(
-               '/bundles/flasher/flasher.css',
-            ),
-            'auto_create_from_session' => true,
-            'types_mapping' => array(
-                'success' => array('success'),
-                'error'   => array('error', 'danger'),
-                'warning' => array('warning', 'alarm'),
-                'info'    => array('info', 'notice', 'alert'),
-            ),
-            'adapters' => array(
-                'notyf' => array(
-                    'scripts' => array(
-                        'jquery.js',
-                        'notyf.js'
-                    ),
-                    'styles' => array(
-                        'notyf.css'
-                    ),
-                    'options' => array(
-                        'timeout' => 5000,
-                        'position' => 'top-right'
-                    )
-                )
-            ),
-        );
-
-        $this->assertEquals($expected, $config);
     }
 
     public function testEmptyDefault()

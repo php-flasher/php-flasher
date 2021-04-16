@@ -3,7 +3,10 @@
 namespace Flasher\Prime\Response\Resource;
 
 use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Prime\Envelope;
 use Flasher\Prime\Response\Response;
+use Flasher\Prime\Stamp\TemplateStamp;
+use Flasher\Prime\Template\EngineInterface;
 
 final class ResourceManager implements ResourceManagerInterface
 {
@@ -13,11 +16,18 @@ final class ResourceManager implements ResourceManagerInterface
     private $config;
 
     /**
-     * @param ConfigInterface $config
+     * @var EngineInterface
      */
-    public function __construct(ConfigInterface $config)
+    private $templateEngine;
+
+    /**
+     * @param ConfigInterface $config
+     * @param EngineInterface $templateEngine
+     */
+    public function __construct(ConfigInterface $config, EngineInterface $templateEngine)
     {
         $this->config = $config;
+        $this->templateEngine = $templateEngine;
     }
 
     /**
@@ -46,6 +56,11 @@ final class ResourceManager implements ResourceManagerInterface
 
         foreach ($response->getEnvelopes() as $envelope) {
             $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
+
+            if ('template' === $handler) {
+                $handler = $this->handleTemplateStamp($envelope);
+            }
+
             if (in_array($handler, $handlers)) {
                 continue;
             }
@@ -56,11 +71,11 @@ final class ResourceManager implements ResourceManagerInterface
                 $response->addScripts($this->scripts[$handler]);
             }
 
-            if (isset($this->scripts[$handler])) {
+            if (isset($this->styles[$handler])) {
                 $response->addStyles($this->styles[$handler]);
             }
 
-            if (isset($this->scripts[$handler])) {
+            if (isset($this->options[$handler])) {
                 $response->addOptions($handler, $this->options[$handler]);
             }
         }
@@ -90,5 +105,27 @@ final class ResourceManager implements ResourceManagerInterface
     public function addOptions($alias, array $options)
     {
         $this->options[$alias] = $options;
+    }
+
+    private function handleTemplateStamp(Envelope $envelope)
+    {
+        $view = $this->config->get('template_factory.default');
+        $template = $this->config->get('template_factory.templates.'.$view.'.view');
+
+        $compiled = $this->templateEngine->render($template, array(
+            'envelope' => $envelope,
+        ));
+
+        $envelope->withStamp(new TemplateStamp($compiled));
+
+        return 'template_' . $view;
+    }
+
+    /**
+     * @return ConfigInterface
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 }

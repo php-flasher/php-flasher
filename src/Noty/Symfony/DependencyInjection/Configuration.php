@@ -26,20 +26,19 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                          'https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js',
-                          '/bundles/flashernoty/flasher-noty.js',
+                          'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@0.1.3/dist/flasher-noty.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array(
-                          'https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css',
-                    ))
+                    ->defaultValue(array())
                 ->end()
                 ->arrayNode('options')
                     ->prototype('variable')->end()
                     ->ignoreExtraKeys(false)
-                    ->defaultValue(array())
+                    ->defaultValue(array(
+                       'timeout' => 5000,
+                    ))
                 ->end()
             ->end()
         ;

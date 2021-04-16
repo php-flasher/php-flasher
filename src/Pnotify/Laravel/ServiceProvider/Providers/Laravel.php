@@ -2,9 +2,11 @@
 
 namespace Flasher\Pnotify\Laravel\ServiceProvider\Providers;
 
+use Flasher\Laravel\ServiceProvider\ResourceManagerHelper;
 use Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider;
 use Flasher\Pnotify\Prime\PnotifyFactory;
 use Flasher\Prime\Flasher;
+use Flasher\Prime\Response\Resource\ResourceManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 
@@ -37,7 +39,6 @@ class Laravel implements ServiceProviderInterface
     public function boot(FlasherPnotifyServiceProvider $provider)
     {
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_pnotify.php')), 'flasher-config');
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/flasher'))), 'flasher-public');
     }
 
     /**
@@ -63,6 +64,12 @@ class Laravel implements ServiceProviderInterface
             $manager->addFactory('pnotify', $app['flasher.pnotify']);
 
             return $manager;
+        });
+
+        $this->app->extend('flasher.resource_manager', function (ResourceManager $resourceManager) {
+            ResourceManagerHelper::process($resourceManager, 'pnotify');
+
+            return $resourceManager;
         });
     }
 

@@ -26,23 +26,19 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
-                        'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.10.2/sweetalert2.min.js',
-                        'https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.2.0/polyfill.min.js',
-                        '/bundles/flashersweetalert/flasher-sweet-alert.js',
+                        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweet-alert@0.1.3/dist/flasher-sweet-alert.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.10.2/sweetalert2.min.css',
-                    ))
+                    ->defaultValue(array())
                 ->end()
                 ->arrayNode('options')
                     ->ignoreExtraKeys(false)
                     ->prototype('variable')->end()
                     ->defaultValue(array(
-                        'timer'            => 50000,
+                        'timer' => 50000,
                         'timerProgressBar' => true,
                     ))
                 ->end()

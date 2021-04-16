@@ -2,39 +2,12 @@
 
 return array(
     'scripts' => array(
-        'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js',
-        '/vendor/flasher/flasher-notyf.js',
+        'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@0.1.5/dist/flasher-notyf.min.js',
     ),
-    'styles' => array(
-        'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css',
-    ),
+    'styles' => array(),
     'options' => array(
         'duration' => 5000,
-        'ripple' => true,
-        'position' => array(
-            'x' => 'right',
-            'y' => 'top',
-        ),
-        'dismissible' => false,
         'types' => array(
-            array(
-                'type'            => 'success',
-                'className'       => 'notyf__toast--success',
-                'backgroundColor' => '#3dc763',
-                'icon'            => array(
-                    'className' => 'notyf__icon--success',
-                    'tagName'   => 'i',
-                ),
-            ),
-            array(
-                'type'            => 'error',
-                'className'       => 'notyf__toast--error',
-                'backgroundColor' => '#ed3d3d',
-                'icon'            => array(
-                    'className' => 'notyf__icon--error',
-                    'tagName'   => 'i',
-                ),
-            ),
             array(
                 'type'            => 'info',
                 'className'       => 'notyf__toast--info',

@@ -25,17 +25,17 @@ final class FlasherExtension extends Extension
         $config = $container->getDefinition('flasher.config');
         $config->replaceArgument(0, $configration);
 
-//        $responseManager = $container->getDefinition('flasher.response_manager');
-//        foreach ($configration['template_factory']['templates'] as $template => $factory) {
-//            if (isset($factory['scripts'])) {
-//                $responseManager->addMethodCall('addScripts', array('template_'.$template, $factory['scripts']));
-//            }
-//            if (isset($factory['styles'])) {
-//                $responseManager->addMethodCall('addStyles', array('template_'.$template, $factory['styles']));
-//            }
-//            if (isset($factory['options'])) {
-//                $responseManager->addMethodCall('addOptions', array('template_'.$template, $factory['options']));
-//            }
-//        }
+        $responseManager = $container->getDefinition('flasher.resource_manager');
+        foreach ($configration['template_factory']['templates'] as $template => $factory) {
+            if (isset($factory['scripts'])) {
+                $responseManager->addMethodCall('addScripts', array('template_'.$template, $factory['scripts']));
+            }
+            if (isset($factory['styles'])) {
+                $responseManager->addMethodCall('addStyles', array('template_'.$template, $factory['styles']));
+            }
+            if (isset($factory['options'])) {
+                $responseManager->addMethodCall('addOptions', array('template_'.$template, $factory['options']));
+            }
+        }
     }
 }

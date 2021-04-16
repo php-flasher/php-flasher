@@ -1,6 +1,6 @@
 {
-    "name": "php-flasher/flasher-pnotify-laravel",
-    "description": "PHP Flasher Laravel adapter for Pnotify",
+    "name": "php-flasher/flasher-toastr-laravel",
+    "description": "PHP Flasher Laravel adapter for Toastr",
     "keywords": [
         "yoeunes",
         "notify",
@@ -26,18 +26,34 @@
         }
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Laravel",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Prime",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher-laravel": "@dev",
-        "php-flasher/flasher-pnotify": "@dev"
+        "php-flasher/flasher-toastr": "@dev"
     },
     "require-dev": {
-        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "6.*"
+        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0",
+        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Pnotify\\Laravel\\": ""
+            "Flasher\\Toastr\\Laravel\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -45,18 +61,21 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Pnotify\\Laravel\\Tests\\": "Tests/"
+            "Flasher\\Toastr\\Laravel\\Tests\\": "Tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Flasher\\Pnotify\\Laravel\\FlasherPnotifyServiceProvider"
+                "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
             ]
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "5.3.10"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
