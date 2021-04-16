@@ -25,8 +25,8 @@
 ?>
 
 <div style="margin-top: 0.5rem;cursor: pointer;">
-    <div class="alert {{ $alertClass }} alert-dismissible fade in show" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid {{ progress_bg_color }}">
-{#        <strong>{{ $title }} !</strong> #}
+    <div class="alert {{ $alertClass }} alert-dismissible fade in show" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid {{ $progressBackgroundColor }}">
+        <strong>{{ $title }} !</strong>
         {{ $envelope->getMessage() }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">
             <span aria-hidden="true">&times;</span>
