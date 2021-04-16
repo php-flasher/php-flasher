@@ -22,7 +22,7 @@ class EventSubscriberCompilerPassTest extends TestCase
         $manager = $container->getDefinition('flasher.event_dispatcher');
         $calls = $manager->getMethodCalls();
 
-        $this->assertCount(5, $calls);
+        $this->assertCount(4, $calls);
 
         $this->assertEquals('addSubscriber', $calls[0][0]);
         $this->assertEquals('test_subscriber', $calls[0][1][0]);
