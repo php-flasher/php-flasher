@@ -21,11 +21,8 @@ final class HtmlPresenter implements PresenterInterface
         return <<<HTML
 {$scripts}
 <script type="text/javascript">
-if ("undefined" === typeof PHPFlasher) {
-    alert("[PHPFlasher] not found, please include ['/path/to/flasher.js'] file");
-} else {
-    PHPFlasher.render({$options});
-}
+const flasher = Flasher.getInstance();
+flasher.render({$options});
 </script>
 HTML;
     }
