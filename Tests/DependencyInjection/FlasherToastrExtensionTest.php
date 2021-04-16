@@ -41,13 +41,6 @@ class FlasherToastrExtensionTest extends TestCase
         $this->assertSame('flasher.toastr', (string) $calls[1][1][1]);
     }
 
-    public function testConfigurationInjectedIntoFlasherConfig()
-    {
-        $container = $this->getContainer();
-        $config = $container->get('flasher.config');
-        $this->assertNotEmpty($config->get('adapters.toastr'));
-    }
-
     private function getRawContainer()
     {
         $container = new ContainerBuilder();
@@ -70,6 +63,8 @@ class FlasherToastrExtensionTest extends TestCase
     private function getContainer()
     {
         $container = $this->getRawContainer();
+        $container->loadFromExtension('flasher', array());
+        $container->loadFromExtension('flasher_toastr', array());
         $container->compile();
 
         return $container;
