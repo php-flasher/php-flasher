@@ -26,6 +26,22 @@
         }
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Laravel",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Prime",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher-laravel": "@dev",
@@ -56,7 +72,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "5.3.10"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
