@@ -26,46 +26,19 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js',
-                        '/bundles/flashernotyf/flasher-notyf.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@0.1.5/dist/flasher-notyf.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array(
-                        'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css',
-                    ))
+                    ->defaultValue(array())
                 ->end()
                 ->arrayNode('options')
                     ->ignoreExtraKeys(false)
                     ->prototype('variable')->end()
                     ->defaultValue(array(
                         'duration' => 5000,
-                        'ripple' => true,
-                        'position' => array(
-                            'x' => 'right',
-                            'y' => 'top',
-                        ),
-                        'dismissible' => false,
                         'types' => array(
-                            array(
-                                'type'            => 'success',
-                                'className'       => 'notyf__toast--success',
-                                'backgroundColor' => '#3dc763',
-                                'icon'            => array(
-                                    'className' => 'notyf__icon--success',
-                                    'tagName'   => 'i',
-                                ),
-                            ),
-                            array(
-                                'type'            => 'error',
-                                'className'       => 'notyf__toast--error',
-                                'backgroundColor' => '#ed3d3d',
-                                'icon'            => array(
-                                    'className' => 'notyf__icon--error',
-                                    'tagName'   => 'i',
-                                ),
-                            ),
                             array(
                                 'type'            => 'info',
                                 'className'       => 'notyf__toast--info',
