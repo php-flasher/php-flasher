@@ -13,20 +13,14 @@ class FlasherSweetAlertExtensionTest extends TestCase
 {
     public function testContainerContainFlasherServices()
     {
-        $container = $this->getRawContainer();
-        $container->loadFromExtension('flasher', array());
-        $container->loadFromExtension('flasher_sweet_alert', array());
-        $container->compile();
+        $container = $this->getContainer();
 
         $this->assertTrue($container->has('flasher.sweet_alert'));
     }
 
     public function testCreateInstanceOfSweetAlertAdapter()
     {
-        $container = $this->getRawContainer();
-        $container->loadFromExtension('flasher');
-        $container->loadFromExtension('flasher_sweet_alert');
-        $container->compile();
+        $container = $this->getContainer();
 
         $flasher = $container->getDefinition('flasher');
         $calls = $flasher->getMethodCalls();
@@ -40,13 +34,6 @@ class FlasherSweetAlertExtensionTest extends TestCase
         $this->assertSame('addFactory', $calls[1][0]);
         $this->assertSame('sweet_alert', $calls[1][1][0]);
         $this->assertSame('flasher.sweet_alert', (string) $calls[1][1][1]);
-    }
-
-    public function testConfigurationInjectedIntoFlasherConfig()
-    {
-        $container = $this->getContainer();
-        $config = $container->get('flasher.config');
-        $this->assertNotEmpty($config->get('adapters.sweet_alert'));
     }
 
     private function getRawContainer()
@@ -71,6 +58,8 @@ class FlasherSweetAlertExtensionTest extends TestCase
     private function getContainer()
     {
         $container = $this->getRawContainer();
+        $container->loadFromExtension('flasher', array());
+        $container->loadFromExtension('flasher_sweet_alert', array());
         $container->compile();
 
         return $container;

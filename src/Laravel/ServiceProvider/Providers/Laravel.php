@@ -10,10 +10,12 @@ use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\FilterListener;
 use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
-use Flasher\Prime\EventDispatcher\EventListener\TemplateListener;
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Flasher;
+use Flasher\Prime\Response\Presenter\ArrayPresenter;
+use Flasher\Prime\Response\Presenter\HtmlPresenter;
+use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Storage\StorageManager;
 use Illuminate\Container\Container;
@@ -52,7 +54,6 @@ class Laravel implements ServiceProviderInterface
         $provider->loadViewsFrom(flasher_path(__DIR__.'/../../Resources/views'), 'flasher');
 
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher.php')), 'flasher-config');
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/flasher'))), 'flasher-public');
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => resource_path(flasher_path('lang/vendor/flasher'))), 'flasher-lang');
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/views') => resource_path(flasher_path('views/vendor/flasher'))), 'flasher-views');
 
@@ -82,8 +83,32 @@ class Laravel implements ServiceProviderInterface
             return $flasher;
         });
 
-        $this->app->singleton('flasher.renderer', function (Application $app) {
-            return new ResponseManager($app['flasher.storage_manager'], $app['flasher.event_dispatcher'], $app['flasher.config']);
+        $this->app->singleton('flasher.resource_manager', function (Application $app) {
+            $resourceManager = new ResourceManager($app['flasher.config'], $app['flasher.template_engine']);
+
+            $templates = $app['flasher.config']->get('template_factory.templates');
+            foreach ($templates as $template => $factory) {
+                if (isset($factory['scripts'])) {
+                    $resourceManager->addScripts('template_'.$template, $factory['scripts']);
+                }
+                if (isset($factory['styles'])) {
+                    $resourceManager->addStyles('template_'.$template, $factory['styles']);
+                }
+                if (isset($factory['options'])) {
+                    $resourceManager->addOptions('template_'.$template, $factory['options']);
+                }
+            }
+
+            return $resourceManager;
+        });
+
+        $this->app->singleton('flasher.response_manager', function (Application $app) {
+            $responseManager = new ResponseManager($app['flasher.storage_manager'], $app['flasher.event_dispatcher'], $app['flasher.resource_manager']);
+
+            $responseManager->addPresenter('html', new HtmlPresenter());
+            $responseManager->addPresenter('array', new ArrayPresenter());
+
+            return $responseManager;
         });
 
         $this->app->singleton('flasher.storage', function (Application $app) {
@@ -108,7 +133,6 @@ class Laravel implements ServiceProviderInterface
             $eventDispatcher->addSubscriber(new FilterListener($app['flasher.filter']));
             $eventDispatcher->addSubscriber(new RemoveListener());
             $eventDispatcher->addSubscriber(new StampsListener());
-            $eventDispatcher->addSubscriber(new TemplateListener($app['flasher.config'], $app['flasher.template_engine']));
 
             return $eventDispatcher;
         });
@@ -119,7 +143,7 @@ class Laravel implements ServiceProviderInterface
 
         $this->app->alias('flasher.config', 'Flasher\Laravel\Config\Config');
         $this->app->alias('flasher', 'Flasher\Prime\Flasher');
-        $this->app->alias('flasher.renderer', 'Flasher\Prime\Renderer\Renderer');
+        $this->app->alias('flasher.response_manager', 'Flasher\Prime\Response\ResponseManager');
         $this->app->alias('flasher.event_dispatcher', 'Flasher\Prime\EventDispatcher\EventDispatcher');
         $this->app->alias('flasher.storage', 'Flasher\Laravel\Storage\Storage');
         $this->app->alias('flasher.storage_manager', 'Flasher\Laravel\Storage\StorageManager');
@@ -132,7 +156,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->bind('Flasher\Prime\Config\ConfigInterface', 'flasher.config');
         $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
         $this->app->bind('Flasher\Prime\Storage\StorageManagerInterface', 'flasher.storage_manager');
-        $this->app->bind('Flasher\Prime\Renderer\RendererInterface', 'flasher.renderer');
+        $this->app->bind('Flasher\Prime\Response\ResponseManagerInterface', 'flasher.response_manager');
         $this->app->bind('Flasher\Prime\Filter\FilterInterface', 'flasher.filter');
         $this->app->bind('Flasher\Prime\EventDispatcher\EventDispatcherInterface', 'flasher.event_dispatcher');
         $this->app->bind('Flasher\Prime\Storage\StorageInterface', 'flasher.storage');
@@ -159,7 +183,7 @@ class Laravel implements ServiceProviderInterface
                 $criteria = "array()";
             }
 
-            return "<?php echo app('flasher.renderer')->render($criteria, array('format' => 'html')); ?>";
+            return "<?php echo app('flasher.response_manager')->render($criteria, 'html'); ?>";
         });
     }
 }

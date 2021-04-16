@@ -25,12 +25,12 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()
-                    ->defaultValue('toastr')
+                    ->defaultValue('template')
                 ->end()
                 ->arrayNode('root_scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                       '/bundles/flasher/flasher.js',
+                       'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
                    ))
                 ->end()
                 ->arrayNode('template_factory')
@@ -57,13 +57,15 @@ final class Configuration implements ConfigurationInterface
                                 'tailwindcss'    => array(
                                     'view'   => '@Flasher/tailwindcss.html.twig',
                                     'styles' => array(
-                                        'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                                     ),
                                 ),
                                 'tailwindcss_bg' => array(
                                     'view'   => '@Flasher/tailwindcss_bg.html.twig',
                                     'styles' => array(
-                                        'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                                     ),
                                 ),
                                 'bootstrap'      => array(

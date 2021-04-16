@@ -1,6 +1,7 @@
 {
-    "name": "php-flasher/flasher-pnotify-laravel",
-    "description": "PHP Flasher Laravel adapter for Pnotify",
+    "name": "php-flasher/flasher-noty-symfony",
+    "type": "symfony-bundle",
+    "description": "PHP Flasher Symfony adapter for Noty",
     "keywords": [
         "yoeunes",
         "notify",
@@ -12,7 +13,7 @@
         "messages",
         "alerts",
         "pnotify",
-        "toastr ",
+        "noty ",
         "bundle",
         "flex"
     ],
@@ -25,19 +26,34 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Prime",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "@dev",
-        "php-flasher/flasher-pnotify": "@dev"
+        "php-flasher/flasher-symfony": "@dev",
+        "php-flasher/flasher-noty": "@dev"
     },
     "require-dev": {
-        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "6.*"
+        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Pnotify\\Laravel\\": ""
+            "Flasher\\Noty\\Symfony\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -45,18 +61,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Pnotify\\Laravel\\Tests\\": "Tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Flasher\\Pnotify\\Laravel\\FlasherPnotifyServiceProvider"
-            ]
+            "Flasher\\Noty\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "5.3.10"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

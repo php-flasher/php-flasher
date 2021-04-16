@@ -11,6 +11,6 @@ final class ArrayPresenter implements PresenterInterface
      */
     public function render(Response $response)
     {
-        return array();
+        return $response->toArray();
     }
 }

@@ -26,55 +26,19 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
-                        'https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js',
-                        '/bundles/flasherpnotify/flasher-pnotify.js',
+                        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@0.1.1/dist/flasher-pnotify.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css',
-                        'https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.brighttheme.css',
-                    ))
+                    ->defaultValue(array())
                 ->end()
                 ->arrayNode('options')
                     ->prototype('variable')->end()
                     ->ignoreExtraKeys(false)
                     ->defaultValue(array(
-                        'type'             => 'notice',
-                        'title'            => false,
-                        'titleTrusted'     => false,
-                        'text'             => false,
-                        'textTrusted'      => false,
-                        'styling'          => 'brighttheme',
-                        'icons'            => 'brighttheme',
-                        'mode'             => 'no-preference',
-                        'addClass'         => '',
-                        'addModalClass'    => '',
-                        'addModelessClass' => '',
-                        'autoOpen'         => true,
-                        'width'            => '360px',
-                        'minHeight'        => '16px',
-                        'maxTextHeight'    => '200px',
-                        'icon'             => true,
-                        'animation'        => 'fade',
-                        'animateSpeed'     => 'normal',
-                        'shadow'           => true,
-                        'hide'             => true,
-                        'delay'            => 5000,
-                        'mouseReset'       => true,
-                        'closer'           => true,
-                        'closerHover'      => true,
-                        'sticker'          => true,
-                        'stickerHover'     => true,
-                        'labels'           => array(
-                            'close'   => 'Close',
-                            'stick'   => 'Pin',
-                            'unstick' => 'Unpin'
-                        ),
-                        'remove'           => true,
-                        'destroy'          => true,
+                        'delay' => 1000,
                     ))
                 ->end()
             ->end()

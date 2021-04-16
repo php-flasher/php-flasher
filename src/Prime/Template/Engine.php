@@ -6,6 +6,7 @@ final class Engine implements EngineInterface
 {
     public function render($name, array $context = array())
     {
-        return 'cute template';
+        /** @TODO use a native template engine */
+        return 'template ' . $name;
     }
 }
