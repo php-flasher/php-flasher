@@ -26,6 +26,22 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Prime",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "license": "MIT",
     "require": {
         "php": ">=5.3",
@@ -49,7 +65,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "5.3.10"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
