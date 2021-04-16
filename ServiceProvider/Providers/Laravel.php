@@ -2,7 +2,9 @@
 
 namespace Flasher\SweetAlert\Laravel\ServiceProvider\Providers;
 
+use Flasher\Laravel\ServiceProvider\ResourceManagerHelper;
 use Flasher\Prime\Flasher;
+use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider;
 use Flasher\SweetAlert\Prime\SweetAlertFactory;
 use Illuminate\Container\Container;
@@ -37,7 +39,6 @@ class Laravel implements ServiceProviderInterface
     public function boot(FlasherSweetAlertServiceProvider $provider)
     {
         $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_sweet_alert.php')), 'flasher-config');
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/public') => public_path(flasher_path('vendor/flasher'))), 'flasher-public');
     }
 
     /**
@@ -63,6 +64,12 @@ class Laravel implements ServiceProviderInterface
             $manager->addFactory('sweet_alert', $app['flasher.sweet_alert']);
 
             return $manager;
+        });
+
+        $this->app->extend('flasher.resource_manager', function (ResourceManager $resourceManager) {
+            ResourceManagerHelper::process($resourceManager, 'sweet_alert');
+
+            return $resourceManager;
         });
     }
 
