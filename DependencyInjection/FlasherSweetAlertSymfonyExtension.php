@@ -5,7 +5,7 @@ namespace Flasher\SweetAlert\Symfony\DependencyInjection;
 use Flasher\Symfony\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
-final class FlasherSweetAlertExtension extends Extension
+final class FlasherSweetAlertSymfonyExtension extends Extension
 {
     /**
      * @inheritDoc
