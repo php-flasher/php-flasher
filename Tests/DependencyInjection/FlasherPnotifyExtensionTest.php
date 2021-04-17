@@ -4,9 +4,9 @@ namespace Flasher\Pnotify\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
-use Flasher\Symfony\FlasherBundle;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Flasher\Pnotify\Symfony\DependencyInjection\FlasherPnotifyExtension;
-use Flasher\Pnotify\Symfony\FlasherPnotifyBundle;
+use Flasher\Pnotify\Symfony\FlasherPnotifySymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherPnotifyExtensionTest extends TestCase
@@ -41,11 +41,11 @@ class FlasherPnotifyExtensionTest extends TestCase
         $container = new ContainerBuilder();
 
         $container->registerExtension(new FlasherExtension());
-        $flasherBundle = new FlasherBundle();
+        $flasherBundle = new FlasherSymfonyBundle();
         $flasherBundle->build($container);
 
         $container->registerExtension(new FlasherPnotifyExtension());
-        $adapterBundle = new FlasherPnotifyBundle();
+        $adapterBundle = new FlasherPnotifySymfonyBundle();
         $adapterBundle->build($container);
 
         $container->getCompilerPassConfig()->setOptimizationPasses(array());
