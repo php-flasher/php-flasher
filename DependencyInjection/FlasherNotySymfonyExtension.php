@@ -5,7 +5,7 @@ namespace Flasher\Noty\Symfony\DependencyInjection;
 use Flasher\Symfony\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
-final class FlasherNotyExtension extends Extension
+final class FlasherNotySymfonyExtension extends Extension
 {
     /**
      * @inheritDoc
