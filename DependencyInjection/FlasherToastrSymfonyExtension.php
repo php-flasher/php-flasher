@@ -5,7 +5,7 @@ namespace Flasher\Toastr\Symfony\DependencyInjection;
 use Flasher\Symfony\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
-final class FlasherToastrExtension extends Extension
+final class FlasherToastrSymfonyExtension extends Extension
 {
     /**
      * @inheritDoc
