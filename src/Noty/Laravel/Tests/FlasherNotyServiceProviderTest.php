@@ -17,21 +17,4 @@ class FlasherNotyServiceProviderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Noty\Prime\NotyFactory', $adapter);
     }
-
-    public function testConfigNotyInjectedInGlobalNotifyConfig()
-    {
-        $config = $this->app->make('flasher.config');
-
-        $expected = array(
-            'scripts' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@0.1.3/dist/flasher-noty.min.js',
-            ),
-            'styles'  => array(),
-            'options' => array(
-                'timeout' => 5000,
-            ),
-        );
-
-        $this->assertEquals($expected, $config->get('adapters.noty'));
-    }
 }
