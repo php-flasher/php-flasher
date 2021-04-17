@@ -8,7 +8,7 @@ use Flasher\Symfony\DependencyInjection\Compiler\PresenterCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class FlasherBundle extends Bundle
+class FlasherSymfonyBundle extends Bundle
 {
     /**
      * {@inheritdoc}
