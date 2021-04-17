@@ -3,9 +3,9 @@
 namespace Flasher\Notyf\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
-use Flasher\Symfony\DependencyInjection\FlasherExtension;
+use Flasher\Symfony\DependencyInjection\FlasherSymfonyExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
-use Flasher\Notyf\Symfony\DependencyInjection\FlasherNotyfExtension;
+use Flasher\Notyf\Symfony\DependencyInjection\FlasherNotyfSymfonyExtension;
 use Flasher\Notyf\Symfony\FlasherNotyfSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -40,11 +40,11 @@ class FlasherNotyfExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->registerExtension(new FlasherExtension());
+        $container->registerExtension(new FlasherSymfonyExtension());
         $flasherBundle = new FlasherSymfonyBundle();
         $flasherBundle->build($container);
 
-        $container->registerExtension(new FlasherNotyfExtension());
+        $container->registerExtension(new FlasherNotyfSymfonyExtension());
         $adapterBundle = new FlasherNotyfSymfonyBundle();
         $adapterBundle->build($container);
 
