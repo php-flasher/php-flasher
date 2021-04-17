@@ -3,7 +3,7 @@
 namespace Flasher\Symfony\Tests\DependencyInjection\Compiler;
 
 use Flasher\Prime\Tests\TestCase;
-use Flasher\Symfony\DependencyInjection\FlasherExtension;
+use Flasher\Symfony\DependencyInjection\FlasherSymfonyExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -35,7 +35,7 @@ class FactoryCompilerPassTest extends TestCase
         $flasher->addTag('flasher.factory', array('alias' => 'test_flasher'));
         $container->setDefinition('test_flasher', $flasher);
 
-        $extension = new FlasherExtension();
+        $extension = new FlasherSymfonyExtension();
         $container->registerExtension($extension);
 
         $bundle = new FlasherSymfonyBundle();

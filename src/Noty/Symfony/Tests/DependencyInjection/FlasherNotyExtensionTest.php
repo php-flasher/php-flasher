@@ -3,9 +3,9 @@
 namespace Flasher\Noty\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
-use Flasher\Symfony\DependencyInjection\FlasherExtension;
+use Flasher\Symfony\DependencyInjection\FlasherSymfonyExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
-use Flasher\Noty\Symfony\DependencyInjection\FlasherNotyExtension;
+use Flasher\Noty\Symfony\DependencyInjection\FlasherNotySymfonyExtension;
 use Flasher\Noty\Symfony\FlasherNotySymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -40,11 +40,11 @@ class FlasherNotyExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->registerExtension(new FlasherExtension());
+        $container->registerExtension(new FlasherSymfonyExtension());
         $flasherBundle = new FlasherSymfonyBundle();
         $flasherBundle->build($container);
 
-        $container->registerExtension(new FlasherNotyExtension());
+        $container->registerExtension(new FlasherNotySymfonyExtension());
         $adapterBundle = new FlasherNotySymfonyBundle();
         $adapterBundle->build($container);
 
