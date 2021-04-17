@@ -3,7 +3,7 @@
 namespace Flasher\Symfony\Tests\DependencyInjection\Compiler;
 
 use Flasher\Prime\Tests\TestCase;
-use Flasher\Symfony\DependencyInjection\FlasherSymfonyExtension;
+use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -45,7 +45,7 @@ class EventSubscriberCompilerPassTest extends TestCase
         $flasher->addTag('flasher.event_subscriber');
         $container->setDefinition('test_subscriber', $flasher);
 
-        $extension = new FlasherSymfonyExtension();
+        $extension = new FlasherExtension();
         $container->registerExtension($extension);
 
         $bundle = new FlasherSymfonyBundle();

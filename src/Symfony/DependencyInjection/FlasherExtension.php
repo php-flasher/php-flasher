@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class FlasherSymfonyExtension extends Extension
+final class FlasherExtension extends Extension
 {
     /**
      * {@inheritdoc}

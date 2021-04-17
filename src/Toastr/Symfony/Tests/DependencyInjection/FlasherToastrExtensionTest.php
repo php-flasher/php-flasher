@@ -3,9 +3,9 @@
 namespace Flasher\Toastr\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
-use Flasher\Symfony\DependencyInjection\FlasherSymfonyExtension;
+use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
-use Flasher\Toastr\Symfony\DependencyInjection\FlasherToastrSymfonyExtension;
+use Flasher\Toastr\Symfony\DependencyInjection\FlasherToastrExtension;
 use Flasher\Toastr\Symfony\FlasherToastrSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -45,11 +45,11 @@ class FlasherToastrExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->registerExtension(new FlasherSymfonyExtension());
+        $container->registerExtension(new FlasherExtension());
         $flasherBundle = new FlasherSymfonyBundle();
         $flasherBundle->build($container);
 
-        $container->registerExtension(new FlasherToastrSymfonyExtension());
+        $container->registerExtension(new FlasherToastrExtension());
         $adapterBundle = new FlasherToastrSymfonyBundle();
         $adapterBundle->build($container);
 
