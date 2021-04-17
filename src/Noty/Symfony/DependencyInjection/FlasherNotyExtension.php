@@ -1,11 +1,11 @@
 <?php
 
-namespace Flasher\Toastr\Symfony\DependencyInjection;
+namespace Flasher\Noty\Symfony\DependencyInjection;
 
 use Flasher\Symfony\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
-final class FlasherToastrSymfonyExtension extends Extension
+final class FlasherNotyExtension extends Extension
 {
     /**
      * @inheritDoc
