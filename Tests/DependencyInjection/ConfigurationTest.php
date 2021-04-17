@@ -21,21 +21,21 @@ class ConfigurationTest extends TestCase
                 'default' => 'tailwindcss',
                 'templates' => array(
                     'tailwindcss' => array(
-                        'view' => '@Flasher/tailwindcss.html.twig',
+                        'view' => '@FlasherSymfony/tailwindcss.html.twig',
                         'styles' => array(
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css'
                         ),
                     ),
                     'tailwindcss_bg' => array(
-                        'view' => '@Flasher/tailwindcss_bg.html.twig',
+                        'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
                         "styles" => array(
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                         ),
                     ),
                     'bootstrap' => array(
-                        'view' => "@Flasher/bootstrap.html.twig",
+                        'view' => "@FlasherSymfony/bootstrap.html.twig",
                         'styles' => array(
                             "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css",
                         ),
