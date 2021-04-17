@@ -4,7 +4,7 @@ namespace Flasher\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
-use Flasher\Symfony\FlasherBundle;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherExtensionTest extends TestCase
@@ -25,7 +25,7 @@ class FlasherExtensionTest extends TestCase
         $extension = new FlasherExtension();
         $container->registerExtension($extension);
 
-        $bundle = new FlasherBundle();
+        $bundle = new FlasherSymfonyBundle();
         $bundle->build($container);
 
         $container->getCompilerPassConfig()->setOptimizationPasses(array());

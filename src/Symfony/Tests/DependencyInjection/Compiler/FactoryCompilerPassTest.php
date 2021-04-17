@@ -4,7 +4,7 @@ namespace Flasher\Symfony\Tests\DependencyInjection\Compiler;
 
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
-use Flasher\Symfony\FlasherBundle;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -38,7 +38,7 @@ class FactoryCompilerPassTest extends TestCase
         $extension = new FlasherExtension();
         $container->registerExtension($extension);
 
-        $bundle = new FlasherBundle();
+        $bundle = new FlasherSymfonyBundle();
         $bundle->build($container);
 
         $container->getCompilerPassConfig()->setOptimizationPasses(array());
