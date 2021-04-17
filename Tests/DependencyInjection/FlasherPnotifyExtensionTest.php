@@ -58,6 +58,8 @@ class FlasherPnotifyExtensionTest extends TestCase
     private function getContainer()
     {
         $container = $this->getRawContainer();
+        $container->loadFromExtension('flasher', array());
+        $container->loadFromExtension('flasher_pnotify', array());
         $container->compile();
 
         return $container;
