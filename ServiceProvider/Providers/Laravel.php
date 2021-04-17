@@ -86,7 +86,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->singleton('flasher.resource_manager', function (Application $app) {
             $resourceManager = new ResourceManager($app['flasher.config'], $app['flasher.template_engine']);
 
-            $templates = $app['flasher.config']->get('template_factory.templates');
+            $templates = $app['flasher.config']->get('template_factory.templates', array());
             foreach ($templates as $template => $factory) {
                 if (isset($factory['scripts'])) {
                     $resourceManager->addScripts('template_'.$template, $factory['scripts']);
