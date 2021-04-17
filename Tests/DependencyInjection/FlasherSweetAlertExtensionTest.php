@@ -4,9 +4,9 @@ namespace Flasher\SweetAlert\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
-use Flasher\Symfony\FlasherBundle;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Flasher\SweetAlert\Symfony\DependencyInjection\FlasherSweetAlertExtension;
-use Flasher\SweetAlert\Symfony\FlasherSweetAlertBundle;
+use Flasher\SweetAlert\Symfony\FlasherSweetAlertSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherSweetAlertExtensionTest extends TestCase
@@ -41,11 +41,11 @@ class FlasherSweetAlertExtensionTest extends TestCase
         $container = new ContainerBuilder();
 
         $container->registerExtension(new FlasherExtension());
-        $flasherBundle = new FlasherBundle();
+        $flasherBundle = new FlasherSymfonyBundle();
         $flasherBundle->build($container);
 
         $container->registerExtension(new FlasherSweetAlertExtension());
-        $adapterBundle = new FlasherSweetAlertBundle();
+        $adapterBundle = new FlasherSweetAlertSymfonyBundle();
         $adapterBundle->build($container);
 
         $container->getCompilerPassConfig()->setOptimizationPasses(array());
