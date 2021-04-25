@@ -39,6 +39,9 @@
         "psr-4": {
             "Flasher\\Noty\\Laravel\\": ""
         },
+        "files": [
+            "Resources/functions/noty.php"
+        ],
         "exclude-from-classmap": [
             "/Tests/"
         ]
