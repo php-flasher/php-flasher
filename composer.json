@@ -39,6 +39,9 @@
         "psr-4": {
             "Flasher\\Toastr\\Laravel\\": ""
         },
+        "files": [
+            "Resources/functions/toastr.php"
+        ],
         "exclude-from-classmap": [
             "/Tests/"
         ]
