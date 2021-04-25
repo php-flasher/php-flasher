@@ -42,31 +42,10 @@ final class Laravel4 extends Laravel
 
     protected function registerBladeDirectives()
     {
-        $startsWith = function($haystack, $needle) {
-            return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
-        };
+        Blade::extend(function ($view, BladeCompiler $compiler) {
+            $pattern = $compiler->createMatcher('flasher_render');
 
-        $endsWith = function($haystack, $needle) {
-            return substr_compare($haystack, $needle, -strlen($needle)) === 0;
-        };
-
-        Blade::extend(function ($view, BladeCompiler $compiler) use ($startsWith, $endsWith) {
-            $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
-            $matches = array();
-
-            preg_match($pattern, $view, $matches);
-
-            $value = $matches[2];
-
-            if (!empty($value) && $startsWith($value, "(") && $endsWith($value, ")")) {
-                $value = substr($value, 1, -1);
-            }
-
-            if (empty($value)) {
-                $value = "array()";
-            }
-
-            return str_replace("%criteria%", $value, $matches[1] . "<?php echo app('flasher.response_manager')->render(%criteria%, 'html'); ?>");
+            return preg_replace($pattern, '$1<?php echo app(\'flasher.response_manager\')->render$2; ?>', $view);
         });
     }
 }
