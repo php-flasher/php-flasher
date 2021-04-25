@@ -20,7 +20,12 @@
             "Flasher\\": "src/"
         },
         "files": [
-            "src/Prime/helpers.php"
+            "src/Prime/helpers.php",
+            "src/Toastr/Laravel/Resources/functions/toastr.php",
+            "src/Noty/Laravel/Resources/functions/noty.php",
+            "src/Notyf/Laravel/Resources/functions/notyf.php",
+            "src/Pnotify/Laravel/Resources/functions/pnotify.php",
+            "src/SweetAlert/Laravel/Resources/functions/sweetAlert.php"
         ]
     },
     "minimum-stability": "dev"

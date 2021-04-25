@@ -39,6 +39,9 @@
         "psr-4": {
             "Flasher\\Pnotify\\Laravel\\": ""
         },
+        "files": [
+            "Resources/functions/pnotify.php"
+        ],
         "exclude-from-classmap": [
             "/Tests/"
         ]

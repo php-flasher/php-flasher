@@ -40,6 +40,9 @@
         "psr-4": {
             "Flasher\\Notyf\\Laravel\\": ""
         },
+        "files": [
+            "Resources/functions/notyf.php"
+        ],
         "exclude-from-classmap": [
             "/Tests/"
         ]
