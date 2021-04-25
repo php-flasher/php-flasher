@@ -38,7 +38,7 @@ final class Configuration implements ConfigurationInterface
                     ->ignoreExtraKeys(false)
                     ->prototype('variable')->end()
                     ->defaultValue(array(
-                        'timer' => 50000,
+                        'timer' => 5000,
                         'timerProgressBar' => true,
                     ))
                 ->end()
