@@ -7,7 +7,7 @@ return array(
     ),
     'styles'  => array(),
     'options' => array(
-        'timer' => 50000,
+        'timer' => 5000,
         'timerProgressBar' => true,
     ),
 );
