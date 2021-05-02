@@ -7,8 +7,9 @@ CURRENT_BRANCH="main"
 
 function split()
 {
+    git merge --strategy recursive --strategy-option subtree="$1" "$2/$CURRENT_BRANCH" --allow-unrelated-histories -m "Merge remote-tracking branch '$2/$CURRENT_BRANCH'"
     SHA1=$(./bin/splitsh-lite --prefix="$1")
-    git push "$2" "$SHA1:refs/heads/$CURRENT_BRANCH" -f
+    git push $2 "$SHA1:refs/heads/$CURRENT_BRANCH" -f
 }
 
 function remote()
