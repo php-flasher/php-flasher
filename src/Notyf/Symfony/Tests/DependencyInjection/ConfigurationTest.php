@@ -14,7 +14,7 @@ class ConfigurationTest extends TestCase
 
         $expected = array(
             'scripts' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@0.1.5/dist/flasher-notyf.min.js',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@0.1.6/dist/flasher-notyf.min.js',
             ),
             'styles' => array(),
             'options' => array(
