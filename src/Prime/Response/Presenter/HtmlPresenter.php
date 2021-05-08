@@ -21,8 +21,7 @@ final class HtmlPresenter implements PresenterInterface
         return <<<HTML
 {$scripts}
 <script type="text/javascript">
-const flasher = Flasher.getInstance();
-flasher.render({$options});
+Flasher.getInstance().render({$options});
 </script>
 HTML;
     }

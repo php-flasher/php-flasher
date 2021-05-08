@@ -117,3 +117,4 @@ services:
     Flasher\Prime\Storage\StorageInterface: '@flasher.storage'
     Flasher\Prime\Factory\NotificationFactoryInterface: '@flasher.notification_factory'
     Flasher\Prime\Template\EngineInterface: '@flasher.template_engine'
+    Flasher\Prime\Response\ResponseManagerInterface: '@flasher.response_manager'
