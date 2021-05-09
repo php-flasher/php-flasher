@@ -2,9 +2,9 @@
 
 namespace Flasher\Pnotify\Laravel;
 
+use Flasher\Pnotify\Laravel\ServiceProvider\ServiceProviderManager;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
-use Flasher\Pnotify\Laravel\ServiceProvider\ServiceProviderManager;
 
 final class FlasherPnotifyServiceProvider extends ServiceProvider
 {
@@ -43,17 +43,11 @@ final class FlasherPnotifyServiceProvider extends ServiceProvider
         return $this->app;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function mergeConfigFrom($path, $key)
     {
         parent::mergeConfigFrom($path, $key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function publishes(array $paths, $groups = null)
     {
         parent::publishes($paths, $groups);

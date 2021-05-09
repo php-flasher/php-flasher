@@ -5,8 +5,8 @@ namespace Flasher\Prime\Response;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
-use Flasher\Prime\Response\Resource\ResourceManagerInterface;
 use Flasher\Prime\Response\Presenter\PresenterInterface;
+use Flasher\Prime\Response\Resource\ResourceManagerInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class ResponseManager implements ResponseManagerInterface
@@ -31,11 +31,6 @@ final class ResponseManager implements ResponseManagerInterface
      */
     private $resourceManager;
 
-    /**
-     * @param StorageManagerInterface  $storageManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ResourceManagerInterface $resourceManager
-     */
     public function __construct(
         StorageManagerInterface $storageManager,
         EventDispatcherInterface $eventDispatcher,
@@ -46,9 +41,6 @@ final class ResponseManager implements ResponseManagerInterface
         $this->resourceManager = $resourceManager;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function render(array $criteria = array(), $format = 'html', array $context = array())
     {
         $envelopes = $this->getEnvelopes($criteria);
@@ -60,19 +52,6 @@ final class ResponseManager implements ResponseManagerInterface
         $presenter = $this->createPresenter($format);
 
         return $presenter->render($response);
-    }
-
-    /**
-     * @param Envelope[] $envelopes
-     * @param array $context
-     *
-     * @return Response
-     */
-    private function filterResponse($envelopes, $context)
-    {
-        $response = new Response($envelopes, $context);
-
-        return $this->resourceManager->filterResponse($response);
     }
 
     /**
@@ -91,7 +70,6 @@ final class ResponseManager implements ResponseManagerInterface
 
     /**
      * @param string $alias
-     * @param PresenterInterface $presenter
      */
     public function addPresenter($alias, PresenterInterface $presenter)
     {
@@ -99,8 +77,19 @@ final class ResponseManager implements ResponseManagerInterface
     }
 
     /**
-     * @param array $criteria
+     * @param Envelope[] $envelopes
+     * @param array $context
      *
+     * @return Response
+     */
+    private function filterResponse($envelopes, $context)
+    {
+        $response = new Response($envelopes, $context);
+
+        return $this->resourceManager->filterResponse($response);
+    }
+
+    /**
      * @return Envelope[]
      */
     private function getEnvelopes(array $criteria)

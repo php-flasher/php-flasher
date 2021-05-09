@@ -3,11 +3,10 @@
 use Flasher\Prime\Notification\NotificationInterface;
 use Illuminate\Support\Facades\App;
 
-if (! function_exists('sweetAlert'))  {
+if (!function_exists('sweetAlert')) {
     /**
      * @param string $message
      * @param string $type
-     * @param array  $options
      *
      * @return \Flasher\SweetAlert\Prime\SweetAlertFactory
      */

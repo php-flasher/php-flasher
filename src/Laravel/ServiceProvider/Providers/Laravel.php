@@ -29,43 +29,37 @@ class Laravel implements ServiceProviderInterface
      */
     protected $app;
 
-    /**
-     * @param Container $app
-     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function boot(FlasherServiceProvider $provider)
     {
-        $provider->loadTranslationsFrom(flasher_path(__DIR__.'/../../Resources/lang'), 'flasher');
-        $provider->loadViewsFrom(flasher_path(__DIR__.'/../../Resources/views'), 'flasher');
+        $provider->loadTranslationsFrom(flasher_path(__DIR__ . '/../../Resources/lang'), 'flasher');
+        $provider->loadViewsFrom(flasher_path(__DIR__ . '/../../Resources/views'), 'flasher');
 
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher.php')), 'flasher-config');
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => resource_path(flasher_path('lang/vendor/flasher'))), 'flasher-lang');
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/views') => resource_path(flasher_path('views/vendor/flasher'))), 'flasher-views');
+        $provider->publishes(array(
+            flasher_path(__DIR__ . '/../../Resources/config/config.php') => config_path('flasher.php'),
+        ), 'flasher-config');
+        $provider->publishes(array(
+            flasher_path(__DIR__ . '/../../Resources/lang') => resource_path(flasher_path('lang/vendor/flasher')),
+        ), 'flasher-lang');
+        $provider->publishes(array(
+            flasher_path(__DIR__ . '/../../Resources/views') => resource_path(flasher_path('views/vendor/flasher')),
+        ), 'flasher-views');
 
         $this->registerBladeDirectives();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function register(FlasherServiceProvider $provider)
     {
-        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher');
+        $provider->mergeConfigFrom(flasher_path(__DIR__ . '/../../Resources/config/config.php'), 'flasher');
 
         $this->app->singleton('flasher.config', function (Application $app) {
             return new Config($app['config'], '.');
@@ -89,13 +83,13 @@ class Laravel implements ServiceProviderInterface
             $templates = $app['flasher.config']->get('template_factory.templates', array());
             foreach ($templates as $template => $factory) {
                 if (isset($factory['scripts'])) {
-                    $resourceManager->addScripts('template_'.$template, $factory['scripts']);
+                    $resourceManager->addScripts('template_' . $template, $factory['scripts']);
                 }
                 if (isset($factory['styles'])) {
-                    $resourceManager->addStyles('template_'.$template, $factory['styles']);
+                    $resourceManager->addStyles('template_' . $template, $factory['styles']);
                 }
                 if (isset($factory['options'])) {
-                    $resourceManager->addOptions('template_'.$template, $factory['options']);
+                    $resourceManager->addOptions('template_' . $template, $factory['options']);
                 }
             }
 
@@ -103,7 +97,11 @@ class Laravel implements ServiceProviderInterface
         });
 
         $this->app->singleton('flasher.response_manager', function (Application $app) {
-            $responseManager = new ResponseManager($app['flasher.storage_manager'], $app['flasher.event_dispatcher'], $app['flasher.resource_manager']);
+            $responseManager = new ResponseManager(
+                $app['flasher.storage_manager'],
+                $app['flasher.event_dispatcher'],
+                $app['flasher.resource_manager']
+            );
 
             $responseManager->addPresenter('html', new HtmlPresenter());
             $responseManager->addPresenter('array', new ArrayPresenter());
@@ -152,7 +150,6 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.notification_factory', 'Flasher\Prime\Factory\NotificationFactory');
         $this->app->alias('Flasher\Prime\Factory\NotificationFactory', 'flasher.template');
 
-
         $this->app->bind('Flasher\Prime\Config\ConfigInterface', 'flasher.config');
         $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
         $this->app->bind('Flasher\Prime\Storage\StorageManagerInterface', 'flasher.storage_manager');
@@ -166,24 +163,24 @@ class Laravel implements ServiceProviderInterface
 
     protected function registerBladeDirectives()
     {
-        $startsWith = function($haystack, $needle) {
+        $startsWith = function ($haystack, $needle) {
             return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
         };
 
-        $endsWith = function($haystack, $needle) {
+        $endsWith = function ($haystack, $needle) {
             return substr_compare($haystack, $needle, -strlen($needle)) === 0;
         };
 
-        Blade::directive('flasher_render', function ($criteria = array()) use($startsWith, $endsWith) {
-            if (!empty($criteria) && $startsWith($criteria, "(") && $endsWith($criteria, ")")) {
+        Blade::directive('flasher_render', function ($criteria = array()) use ($startsWith, $endsWith) {
+            if (!empty($criteria) && $startsWith($criteria, '(') && $endsWith($criteria, ')')) {
                 $criteria = substr($criteria, 1, -1);
             }
 
             if (empty($criteria)) {
-                $criteria = "array()";
+                $criteria = 'array()';
             }
 
-            return "<?php echo app('flasher.response_manager')->render($criteria, 'html'); ?>";
+            return "<?php echo app('flasher.response_manager')->render(${criteria}, 'html'); ?>";
         });
     }
 }

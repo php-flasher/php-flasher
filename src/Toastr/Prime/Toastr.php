@@ -27,9 +27,6 @@ final class Toastr extends Notification
         $this->title = $title;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function toArray()
     {
         return array_merge(parent::toArray(), array(

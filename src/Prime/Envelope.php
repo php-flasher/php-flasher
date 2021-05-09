@@ -19,7 +19,6 @@ final class Envelope implements NotificationInterface
     private $stamps = array();
 
     /**
-     * @param NotificationInterface $notification
      * @param StampInterface[]      $stamps
      */
     public function __construct(NotificationInterface $notification, $stamps = array())
@@ -31,7 +30,6 @@ final class Envelope implements NotificationInterface
     /**
      * Makes sure the notification is in an Envelope and adds the given stamps.
      *
-     * @param NotificationInterface $notification
      * @param StampInterface[]      $stamps
      *
      * @return Envelope
@@ -60,8 +58,6 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * @param StampInterface $stamp
-     *
      * @return $this
      */
     public function withStamp(StampInterface $stamp)
@@ -105,81 +101,51 @@ final class Envelope implements NotificationInterface
         return $this->notification;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getType()
     {
         return $this->notification->getType();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setType($type)
     {
         $this->notification->setType($type);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMessage()
     {
         return $this->notification->getMessage();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setMessage($message)
     {
         $this->notification->setMessage($message);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getOptions()
     {
         return $this->notification->getOptions();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setOptions(array $options)
     {
         $this->notification->setOptions($options);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getOption($name, $default = null)
     {
         return $this->notification->getOption($name, $default);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setOption($name, $value)
     {
         $this->notification->setOption($name, $value);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function unsetOption($name)
     {
         $this->notification->unsetOption($name);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function toArray()
     {
         $array = array(

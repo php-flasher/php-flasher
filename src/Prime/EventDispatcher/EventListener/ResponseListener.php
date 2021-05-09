@@ -12,17 +12,11 @@ final class ResponseListener implements EventSubscriberInterface
      */
     private $filter;
 
-    /**
-     * @param FilterInterface $filter
-     */
     public function __construct(FilterInterface $filter)
     {
         $this->filter = $filter;
     }
 
-    /**
-     * @param FilterEvent $event
-     */
     public function __invoke(FilterEvent $event)
     {
         $criteria = $event->getCriteria();
@@ -34,9 +28,6 @@ final class ResponseListener implements EventSubscriberInterface
         $event->setEnvelopes($envelopes);
     }
 
-    /**
-     * @inheritDoc
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\FilterEvent';

@@ -17,7 +17,7 @@ class ConfigurationTest extends TestCase
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
                 'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweet-alert@0.1.3/dist/flasher-sweet-alert.min.js',
             ),
-            'styles'  => array(),
+            'styles' => array(),
             'options' => array(
                 'timer' => 50000,
                 'timerProgressBar' => true,

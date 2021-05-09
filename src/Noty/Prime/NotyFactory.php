@@ -9,9 +9,6 @@ use Flasher\Prime\Factory\NotificationFactory;
  */
 final class NotyFactory extends NotificationFactory
 {
-    /**
-     * @inheritDoc
-     */
     public function createNotificationBuilder()
     {
         return new NotyBuilder($this->getStorageManager(), new Noty(), 'noty');

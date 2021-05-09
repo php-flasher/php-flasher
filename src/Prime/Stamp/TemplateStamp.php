@@ -25,9 +25,6 @@ final class TemplateStamp implements StampInterface, PresentableStampInterface
         return $this->template;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function toArray()
     {
         return array(

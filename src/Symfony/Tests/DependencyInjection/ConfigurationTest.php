@@ -15,7 +15,7 @@ class ConfigurationTest extends TestCase
         $expected = array(
             'default' => 'template',
             'root_scripts' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js'
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
             ),
             'template_factory' => array(
                 'default' => 'tailwindcss',
@@ -24,20 +24,20 @@ class ConfigurationTest extends TestCase
                         'view' => '@FlasherSymfony/tailwindcss.html.twig',
                         'styles' => array(
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css'
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                         ),
                     ),
                     'tailwindcss_bg' => array(
                         'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
-                        "styles" => array(
+                        'styles' => array(
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
                             'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                         ),
                     ),
                     'bootstrap' => array(
-                        'view' => "@FlasherSymfony/bootstrap.html.twig",
+                        'view' => '@FlasherSymfony/bootstrap.html.twig',
                         'styles' => array(
-                            "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css",
+                            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css',
                         ),
                     ),
                 ),
@@ -68,8 +68,13 @@ class ConfigurationTest extends TestCase
 
     public function testEmptyDefault()
     {
-        $this->setExpectedException('\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException', 'The path "flasher.default" cannot contain an empty value, but got "".');
-        $this->process(array(array('default' => '')));
+        $this->setExpectedException(
+            '\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException',
+            'The path "flasher.default" cannot contain an empty value, but got "".'
+        );
+        $this->process(array(array(
+            'default' => '',
+        )));
     }
 
     /**

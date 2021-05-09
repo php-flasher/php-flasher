@@ -8,7 +8,6 @@ interface FilterInterface
 {
     /**
      * @param Envelope[] $envelopes
-     * @param array      $criteria
      *
      * @return array
      */

@@ -7,9 +7,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('flasher');
@@ -30,8 +27,8 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('root_scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                       'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
-                   ))
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
+                    ))
                 ->end()
                 ->arrayNode('template_factory')
                     ->addDefaultsIfNotSet()
@@ -54,22 +51,22 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('options')->end()
                             ->end()
                             ->defaultValue(array(
-                                'tailwindcss'    => array(
-                                    'view'   => '@FlasherSymfony/tailwindcss.html.twig',
+                                'tailwindcss' => array(
+                                    'view' => '@FlasherSymfony/tailwindcss.html.twig',
                                     'styles' => array(
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                                     ),
                                 ),
                                 'tailwindcss_bg' => array(
-                                    'view'   => '@FlasherSymfony/tailwindcss_bg.html.twig',
+                                    'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
                                     'styles' => array(
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
                                     ),
                                 ),
-                                'bootstrap'      => array(
-                                    'view'   => '@FlasherSymfony/bootstrap.html.twig',
+                                'bootstrap' => array(
+                                    'view' => '@FlasherSymfony/bootstrap.html.twig',
                                     'styles' => array(
                                         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css',
                                     ),
@@ -84,11 +81,11 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('types_mapping')
                     ->prototype('variable')->end()
                     ->defaultValue(array(
-                          'success' => array('success'),
-                          'error'   => array('error', 'danger'),
-                          'warning' => array('warning', 'alarm'),
-                          'info'    => array('info', 'notice', 'alert'),
-                     ))
+                        'success' => array('success'),
+                        'error' => array('error', 'danger'),
+                        'warning' => array('warning', 'alarm'),
+                        'info' => array('info', 'notice', 'alert'),
+                    ))
                 ->end()
             ->end()
         ;

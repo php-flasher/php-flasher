@@ -26,11 +26,6 @@ final class SessionMiddleware
      */
     private $renderer;
 
-    /**
-     * @param ConfigInterface          $config
-     * @param FlasherInterface         $flasher
-     * @param ResponseManagerInterface $renderer
-     */
     public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $renderer)
     {
         $this->config = $config;
@@ -41,16 +36,11 @@ final class SessionMiddleware
     /**
      * Run the request filter.
      *
-     * @param Request  $request
-     * @param Closure $next
-     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        /**
-         * @var Response $response
-         */
+        /** @var Response $response */
         $response = $next($request);
 
         if ($request->isXmlHttpRequest() || true !== $this->config->get('auto_create_from_session')) {
@@ -76,7 +66,7 @@ final class SessionMiddleware
         $content = $response->getContent();
 
         $htmlResponse = $this->renderer->render(array(), array(
-            'format'  => 'html',
+            'format' => 'html',
             'content' => $content,
         ));
 
@@ -85,7 +75,7 @@ final class SessionMiddleware
         }
 
         $pos = strripos($content, '</body>');
-        $content = substr($content, 0, $pos).$htmlResponse.substr($content, $pos);
+        $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
         $response->setContent($content);
 
         return $response;
@@ -103,7 +93,7 @@ final class SessionMiddleware
                 $type = $aliases;
             }
 
-            foreach ((array)$aliases as $alias) {
+            foreach ((array) $aliases as $alias) {
                 $mapping[$alias] = $type;
             }
         }

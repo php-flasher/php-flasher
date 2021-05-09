@@ -9,7 +9,6 @@ interface NotificationBuilderInterface
 {
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -17,7 +16,6 @@ interface NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -25,7 +23,6 @@ interface NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -33,7 +30,6 @@ interface NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -42,7 +38,6 @@ interface NotificationBuilderInterface
     /**
      * @param string|NotificationInterface $type
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope|mixed
      */
@@ -51,7 +46,6 @@ interface NotificationBuilderInterface
     /**
      * @param string      $type
      * @param string|null $message
-     * @param array       $options
      *
      * @return self
      */
@@ -82,7 +76,6 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
-     * @param array       $options
      *
      * @return self
      */
@@ -90,16 +83,13 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
-     * @param array       $options
      *
      * @return self
      */
     public function error($message = null, array $options = array());
 
-
     /**
      * @param string|null $message
-     * @param array       $options
      *
      * @return self
      */
@@ -107,7 +97,6 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
-     * @param array       $options
      *
      * @return self
      */
@@ -140,8 +129,6 @@ interface NotificationBuilderInterface
     public function handler($handler);
 
     /**
-     * @param StampInterface $stamp
-     *
      * @return self
      */
     public function withStamp(StampInterface $stamp);

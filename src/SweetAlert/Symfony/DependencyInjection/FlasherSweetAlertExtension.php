@@ -7,17 +7,11 @@ use Symfony\Component\Config\FileLocator;
 
 final class FlasherSweetAlertExtension extends Extension
 {
-    /**
-     * @inheritDoc
-     */
     protected function getConfigFileLocator()
     {
-        return new FileLocator(__DIR__.'/../Resources/config');
+        return new FileLocator(__DIR__ . '/../Resources/config');
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getConfigClass()
     {
         return new Configuration();

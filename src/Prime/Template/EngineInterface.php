@@ -6,7 +6,6 @@ interface EngineInterface
 {
     /**
      * @param string $name
-     * @param array  $context
      *
      * @return string
      */

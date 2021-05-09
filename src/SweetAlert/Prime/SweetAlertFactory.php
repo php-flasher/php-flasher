@@ -9,9 +9,6 @@ use Flasher\Prime\Factory\NotificationFactory;
  */
 final class SweetAlertFactory extends NotificationFactory
 {
-    /**
-     * @inheritDoc
-     */
     public function createNotificationBuilder()
     {
         return new SweetAlertBuilder($this->getStorageManager(), new SweetAlert(), 'sweet_alert');

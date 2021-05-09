@@ -5,8 +5,11 @@ namespace Flasher\Prime\Notification;
 interface NotificationInterface
 {
     const TYPE_SUCCESS = 'success';
-    const TYPE_ERROR   = 'error';
-    const TYPE_INFO    = 'info';
+
+    const TYPE_ERROR = 'error';
+
+    const TYPE_INFO = 'info';
+
     const TYPE_WARNING = 'warning';
 
     /**

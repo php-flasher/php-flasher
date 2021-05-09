@@ -9,7 +9,6 @@ use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
-use Flasher\Toastr\Prime\ToastrBuilder;
 
 class NotificationBuilder implements NotificationBuilderInterface
 {
@@ -24,8 +23,6 @@ class NotificationBuilder implements NotificationBuilderInterface
     protected $storageManager;
 
     /**
-     * @param StorageManagerInterface $storageManager
-     * @param NotificationInterface   $notification
      * @param string                  $handler
      */
     public function __construct(StorageManagerInterface $storageManager, NotificationInterface $notification, $handler)
@@ -37,7 +34,6 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -48,7 +44,6 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -59,7 +54,6 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -70,7 +64,6 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $message
-     * @param array  $options
      *
      * @return Envelope
      */
@@ -79,9 +72,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->addFlash(NotificationInterface::TYPE_INFO, $message, $options);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function addFlash($type, $message = null, array $options = array())
     {
         if ($type instanceof NotificationInterface) {
@@ -94,9 +84,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->flash();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function flash($stamps = array())
     {
         if (!empty($stamps)) {
@@ -108,9 +95,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->getEnvelope();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function type($type, $message = null, array $options = array())
     {
         $this->envelope->setType($type);
@@ -126,9 +110,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function message($message)
     {
         $this->envelope->setMessage(addslashes($message));
@@ -136,9 +117,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function options($options, $merge = true)
     {
         if (true === $merge) {
@@ -150,9 +128,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function option($name, $value)
     {
         $this->envelope->setOption($name, $value);
@@ -160,41 +135,26 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function success($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_SUCCESS, $message, $options);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function error($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_ERROR, $message, $options);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function info($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_INFO, $message, $options);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function warning($message = null, array $options = array())
     {
         return $this->type(NotificationInterface::TYPE_WARNING, $message, $options);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function priority($priority)
     {
         $this->envelope->withStamp(new PriorityStamp($priority));
@@ -202,9 +162,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function hops($amount)
     {
         $this->envelope->withStamp(new HopsStamp($amount));
@@ -212,9 +169,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function keep()
     {
         $hopsStamp = $this->envelope->get('Flasher\Prime\Stamp\HopsStamp');
@@ -225,9 +179,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function delay($delay)
     {
         $this->envelope->withStamp(new DelayStamp($delay));
@@ -235,17 +186,11 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function now()
     {
         return $this->delay(0);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function with(array $stamps = array())
     {
         $this->envelope->with($stamps);
@@ -253,9 +198,6 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function withStamp(StampInterface $stamp)
     {
         $this->envelope->withStamp($stamp);
@@ -263,17 +205,11 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getEnvelope()
     {
         return $this->envelope;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function handler($handler)
     {
         $this->envelope->withStamp(new HandlerStamp($handler));

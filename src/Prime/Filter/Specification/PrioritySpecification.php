@@ -26,9 +26,6 @@ final class PrioritySpecification implements SpecificationInterface
         $this->maxPriority = $maxPriority;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\PriorityStamp');

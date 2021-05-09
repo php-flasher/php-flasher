@@ -25,9 +25,6 @@ final class HandlerStamp implements StampInterface, PresentableStampInterface
         return $this->handler;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function toArray()
     {
         return array(

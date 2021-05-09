@@ -10,42 +10,49 @@ final class EnvelopeTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
+        $stamp = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
 
         $envelope = new Envelope($notification, array($stamp));
 
         $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(get_class($stamp) => $stamp), $envelope->all());
+        $this->assertSame(array(
+            get_class($stamp) => $stamp,
+        ), $envelope->all());
     }
 
     public function testWith()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp1       = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
-        $stamp2       = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
+        $stamp1 = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
+        $stamp2 = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
 
         $envelope = new Envelope($notification);
         $envelope->with($stamp1, $stamp2);
 
         $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(get_class($stamp1) => $stamp1, get_class($stamp2) => $stamp2), $envelope->all());
+        $this->assertSame(array(
+            get_class($stamp1) => $stamp1,
+            get_class($stamp2) => $stamp2,
+        ), $envelope->all());
     }
 
     public function testWrap()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
+        $stamp = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
 
         $envelope = Envelope::wrap($notification, array($stamp));
 
         $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(get_class($stamp) => $stamp), $envelope->all());
+        $this->assertSame(array(
+            get_class($stamp) => $stamp,
+        ), $envelope->all());
     }
 
     public function testAll()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamps       = array(
+        $stamps = array(
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),
@@ -55,13 +62,15 @@ final class EnvelopeTest extends TestCase
         $envelope = new Envelope($notification, $stamps);
 
         $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(get_class($stamps[0]) => $stamps[3]), $envelope->all());
+        $this->assertSame(array(
+            get_class($stamps[0]) => $stamps[3],
+        ), $envelope->all());
     }
 
     public function testGet()
     {
         $notification = $this->getMockBuilder('\Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamps       = array(
+        $stamps = array(
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),
             $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock(),

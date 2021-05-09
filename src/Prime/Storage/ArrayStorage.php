@@ -12,26 +12,17 @@ final class ArrayStorage implements StorageInterface
      */
     private $envelopes = array();
 
-    /**
-     * @inheritDoc
-     */
     public function all()
     {
         return $this->envelopes;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
         $this->envelopes = array_merge($this->envelopes, $envelopes);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function update($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -48,9 +39,6 @@ final class ArrayStorage implements StorageInterface
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function remove($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -63,9 +51,6 @@ final class ArrayStorage implements StorageInterface
         });
     }
 
-    /**
-     * @inheritDoc
-     */
     public function clear()
     {
         $this->envelopes = array();

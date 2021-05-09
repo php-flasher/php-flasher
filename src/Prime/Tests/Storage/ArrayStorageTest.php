@@ -12,7 +12,7 @@ final class ArrayStorageTest extends TestCase
 {
     public function testAdd()
     {
-        $storage   = new ArrayStorage();
+        $storage = new ArrayStorage();
         $envelopes = array();
 
         foreach (range(0, 4) as $index) {
@@ -38,7 +38,7 @@ final class ArrayStorageTest extends TestCase
 
     public function testClear()
     {
-        $storage   = new ArrayStorage();
+        $storage = new ArrayStorage();
         $envelopes = array();
 
         foreach (range(0, 4) as $index) {
@@ -53,7 +53,7 @@ final class ArrayStorageTest extends TestCase
 
     public function testRemove()
     {
-        $storage   = new ArrayStorage();
+        $storage = new ArrayStorage();
         $envelopes = array();
 
         foreach (range(0, 4) as $index) {
@@ -63,7 +63,7 @@ final class ArrayStorageTest extends TestCase
 
         $storage->remove($envelopes[0], $envelopes[2]);
 
-        $actual   = UuidStamp::indexByUuid($storage->all());
+        $actual = UuidStamp::indexByUuid($storage->all());
         $expected = UuidStamp::indexByUuid($envelopes[1], $envelopes[3], $envelopes[4]);
 
         $this->assertSame(array(), array_diff_key($actual, $expected));

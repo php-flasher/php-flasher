@@ -13,9 +13,6 @@ final class FlasherTwigExtension extends AbstractExtension
      */
     private $responseManager;
 
-    /**
-     * @param ResponseManagerInterface $responseManager
-     */
     public function __construct(ResponseManagerInterface $responseManager)
     {
         $this->responseManager = $responseManager;
@@ -23,7 +20,9 @@ final class FlasherTwigExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        $options = array('is_safe' => array('html'));
+        $options = array(
+            'is_safe' => array('html'),
+        );
 
         return array(
             new TwigFunction('flasher_render', array($this, 'flasherRender'), $options),
@@ -31,8 +30,6 @@ final class FlasherTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param array $criteria
-     *
      * @return string
      */
     public function flasherRender(array $criteria = array())

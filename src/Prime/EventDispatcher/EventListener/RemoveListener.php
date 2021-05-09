@@ -7,9 +7,6 @@ use Flasher\Prime\Stamp\HopsStamp;
 
 final class RemoveListener implements EventSubscriberInterface
 {
-    /**
-     * @param RemoveEvent $event
-     */
     public function __invoke(RemoveEvent $event)
     {
         $envelopesToKeep = $event->getEnvelopesToKeep();
@@ -31,9 +28,6 @@ final class RemoveListener implements EventSubscriberInterface
         $event->setEnvelopesToRemove($envelopesToRemove);
     }
 
-    /**
-     * @inheritDoc
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\RemoveEvent';

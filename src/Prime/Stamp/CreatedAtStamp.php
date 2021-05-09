@@ -19,7 +19,6 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface, P
     private $format;
 
     /**
-     * @param DateTime|null $createdAt
      * @param string|null          $format
      *
      * @throws Exception
@@ -45,16 +44,13 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface, P
      */
     public function compare($orderable)
     {
-        if (!$orderable instanceof CreatedAtStamp) {
+        if (!$orderable instanceof self) {
             return 1;
         }
 
         return $this->createdAt->getTimestamp() - $orderable->createdAt->getTimestamp();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function toArray()
     {
         return array(

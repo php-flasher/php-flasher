@@ -11,7 +11,7 @@ final class HandlerStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new HandlerStamp('toastr');
+        $stamp = new HandlerStamp('toastr');
 
         $envelop = new Envelope($notification, array($stamp));
 

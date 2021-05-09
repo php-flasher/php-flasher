@@ -20,7 +20,6 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * @param string  $message
-     * @param array $options
      *
      * @return NotyBuilder
      */
@@ -30,8 +29,8 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * top, topLeft, topCenter, topRight, center, centerLeft, centerRight, bottom, bottomLeft, bottomCenter,
-     * bottomRight - ClassName generator uses this value → noty_layout__${layout}
+     * top, topLeft, topCenter, topRight, center, centerLeft, centerRight, bottom, bottomLeft, bottomCenter, bottomRight
+     * - ClassName generator uses this value → noty_layout__${layout}
      *
      * @param string $layout
      *
@@ -111,7 +110,7 @@ final class NotyBuilder extends NotificationBuilder
      */
     public function animation($animation, $effect)
     {
-        $this->option('animation.'.$animation, $effect);
+        $this->option('animation.' . $animation, $effect);
 
         return $this;
     }
@@ -124,7 +123,7 @@ final class NotyBuilder extends NotificationBuilder
      */
     public function sounds($option, $value)
     {
-        $this->option('sounds.'.$option, $value);
+        $this->option('sounds.' . $option, $value);
 
         return $this;
     }
@@ -137,7 +136,7 @@ final class NotyBuilder extends NotificationBuilder
      */
     public function docTitle($option, $docTitle)
     {
-        $this->option('docTitle'.$option, $docTitle);
+        $this->option('docTitle' . $option, $docTitle);
 
         return $this;
     }
@@ -195,7 +194,8 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * If true closes all visible notifications and shows itself. If string(queueName) closes all visible notification on this queue and shows itself.
+     * If true closes all visible notifications and shows itself. If string(queueName) closes all visible notification
+     * on this queue and shows itself.
      *
      * @param string|bool $killer
      *

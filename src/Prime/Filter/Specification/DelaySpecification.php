@@ -26,9 +26,6 @@ final class DelaySpecification implements SpecificationInterface
         $this->maxDelay = $maxDelay;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\DelayStamp');

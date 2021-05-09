@@ -11,13 +11,7 @@ interface ServiceProviderInterface
      */
     public function shouldBeUsed();
 
-    /**
-     * @param FlasherPnotifyServiceProvider $provider
-     */
     public function boot(FlasherPnotifyServiceProvider $provider);
 
-    /**
-     * @param FlasherPnotifyServiceProvider $provider
-     */
     public function register(FlasherPnotifyServiceProvider $provider);
 }

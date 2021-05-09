@@ -6,9 +6,6 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class PnotifyBuilder extends NotificationBuilder
 {
-    /**
-     * @inheritDoc
-     */
     public function warning($message = null, array $options = array())
     {
         return $this->type('notice', $message, $options);
@@ -56,9 +53,6 @@ final class PnotifyBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function message($message)
     {
         parent::message($message);
@@ -81,8 +75,8 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * What styling classes to use. (Can be either "brighttheme", "bootstrap3", "fontawesome", or a custom style
-     * object. See the source in the end of pnotify.js for the properties in a style object.)
+     * What styling classes to use. (Can be either "brighttheme", "bootstrap3", "fontawesome", or a custom style object.
+     * See the source in the end of pnotify.js for the properties in a style object.)
      *
      * @param string $styling
      *
@@ -166,8 +160,8 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Set icon to true to use the default icon for the selected style/type, false for no icon, or a string for your
-     * own icon class.
+     * Set icon to true to use the default icon for the selected style/type, false for no icon, or a string for your own
+     * icon class.
      *
      * @param bool $icon
      *

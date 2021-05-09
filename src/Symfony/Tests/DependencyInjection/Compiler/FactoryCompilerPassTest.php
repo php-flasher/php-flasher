@@ -23,8 +23,8 @@ class FactoryCompilerPassTest extends TestCase
         $calls = $manager->getMethodCalls();
 
         $this->assertCount(2, $calls);
-        $this->assertEquals('addFactory', $calls[0][0]);
-        $this->assertEquals('test_flasher', $calls[0][1][0]);
+        $this->assertSame('addFactory', $calls[0][0]);
+        $this->assertSame('test_flasher', $calls[0][1][0]);
     }
 
     private function getContainer()
@@ -32,7 +32,9 @@ class FactoryCompilerPassTest extends TestCase
         $container = new ContainerBuilder();
 
         $flasher = new Definition('test_flasher');
-        $flasher->addTag('flasher.factory', array('alias' => 'test_flasher'));
+        $flasher->addTag('flasher.factory', array(
+            'alias' => 'test_flasher',
+        ));
         $container->setDefinition('test_flasher', $flasher);
 
         $extension = new FlasherExtension();

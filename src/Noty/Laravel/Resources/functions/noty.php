@@ -3,11 +3,10 @@
 use Flasher\Prime\Notification\NotificationInterface;
 use Illuminate\Support\Facades\App;
 
-if (! function_exists('noty'))  {
+if (!function_exists('noty')) {
     /**
      * @param string $message
      * @param string $type
-     * @param array  $options
      *
      * @return \Flasher\Noty\Prime\NotyFactory
      */

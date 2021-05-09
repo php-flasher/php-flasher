@@ -17,9 +17,6 @@ final class Filter implements FilterInterface
         $this->filterBuilder = $filterBuilder ?: new FilterBuilder();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function filter(array $envelopes, array $criteria)
     {
         return $this->filterBuilder->withCriteria($criteria)->filter($envelopes);

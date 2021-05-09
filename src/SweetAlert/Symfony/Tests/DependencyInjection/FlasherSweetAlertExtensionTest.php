@@ -3,10 +3,10 @@
 namespace Flasher\SweetAlert\Symfony\Tests\DependencyInjection;
 
 use Flasher\Prime\Tests\TestCase;
-use Flasher\Symfony\DependencyInjection\FlasherExtension;
-use Flasher\Symfony\FlasherSymfonyBundle;
 use Flasher\SweetAlert\Symfony\DependencyInjection\FlasherSweetAlertExtension;
 use Flasher\SweetAlert\Symfony\FlasherSweetAlertSymfonyBundle;
+use Flasher\Symfony\DependencyInjection\FlasherExtension;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherSweetAlertExtensionTest extends TestCase
