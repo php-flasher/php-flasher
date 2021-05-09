@@ -7,9 +7,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('flasher_toastr');
@@ -38,8 +35,8 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('variable')->end()
                     ->ignoreExtraKeys(false)
                     ->defaultValue(array(
-                       'progressBar' => true,
-                       'timeOut'     => 5000,
+                        'progressBar' => true,
+                        'timeOut' => 5000,
                     ))
                 ->end()
             ->end()

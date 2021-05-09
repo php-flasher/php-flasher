@@ -21,7 +21,7 @@ class ConfigurationTest extends TestCase
             'options' => array(
                 'progressBar' => true,
                 'timeOut' => 5000,
-            )
+            ),
         );
 
         $this->assertSame($expected, $config);
