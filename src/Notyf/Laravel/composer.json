@@ -56,7 +56,10 @@
         "laravel": {
             "providers": [
                 "Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Notyf": "Flasher\\Notyf\\Laravel\\Facade\\Notyf"
+            }
         }
     },
     "config": {

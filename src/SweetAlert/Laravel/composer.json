@@ -56,7 +56,10 @@
         "laravel": {
             "providers": [
                 "Flasher\\SweetAlert\\Laravel\\FlasherSweetAlertServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "SweetAlert": "Flasher\\SweetAlert\\Laravel\\Facade\\SweetAlert"
+            }
         }
     },
     "config": {

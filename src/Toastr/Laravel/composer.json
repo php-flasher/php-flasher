@@ -55,7 +55,10 @@
         "laravel": {
             "providers": [
                 "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Toastr": "Flasher\\Toastr\\Laravel\\Facade\\Toastr"
+            }
         }
     },
     "config": {

@@ -55,7 +55,10 @@
         "laravel": {
             "providers": [
                 "Flasher\\Pnotify\\Laravel\\FlasherPnotifyServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Pnotify": "Flasher\\Pnotify\\Laravel\\Facade\\Pnotify"
+            }
         }
     },
     "config": {
