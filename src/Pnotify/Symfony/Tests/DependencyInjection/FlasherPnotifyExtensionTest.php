@@ -27,13 +27,13 @@ class FlasherPnotifyExtensionTest extends TestCase
 
         $this->assertCount(2, $calls);
 
-        $this->assertSame('addFactory', $calls[0][0]);
-        $this->assertSame('template', $calls[0][1][0]);
-        $this->assertSame('flasher.notification_factory', (string) $calls[0][1][1]);
+        $this->assertEquals('addFactory', $calls[0][0]);
+        $this->assertEquals('template', $calls[0][1][0]);
+        $this->assertEquals('flasher.notification_factory', (string) $calls[0][1][1]);
 
-        $this->assertSame('addFactory', $calls[1][0]);
-        $this->assertSame('pnotify', $calls[1][1][0]);
-        $this->assertSame('flasher.pnotify', (string) $calls[1][1][1]);
+        $this->assertEquals('addFactory', $calls[1][0]);
+        $this->assertEquals('pnotify', $calls[1][1][0]);
+        $this->assertEquals('flasher.pnotify', (string) $calls[1][1][1]);
     }
 
     private function getRawContainer()

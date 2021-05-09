@@ -23,8 +23,8 @@ class FactoryCompilerPassTest extends TestCase
         $calls = $manager->getMethodCalls();
 
         $this->assertCount(2, $calls);
-        $this->assertSame('addFactory', $calls[0][0]);
-        $this->assertSame('test_flasher', $calls[0][1][0]);
+        $this->assertEquals('addFactory', $calls[0][0]);
+        $this->assertEquals('test_flasher', $calls[0][1][0]);
     }
 
     private function getContainer()

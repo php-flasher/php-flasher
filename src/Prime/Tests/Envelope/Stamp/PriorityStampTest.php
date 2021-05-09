@@ -16,9 +16,9 @@ final class PriorityStampTest extends TestCase
 
         $envelop = new Envelope($notification, array($stamp));
 
-        $this->assertSame($stamp, $envelop->get('Flasher\Prime\Stamp\PriorityStamp'));
+        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\PriorityStamp'));
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertSame(5, $stamp->getPriority());
+        $this->assertEquals(5, $stamp->getPriority());
     }
 
     public function testCompare()
@@ -27,6 +27,6 @@ final class PriorityStampTest extends TestCase
         $stamp2 = new PriorityStamp(2);
 
         $this->assertNotNull($stamp1->compare($stamp2));
-        $this->assertSame(1, $stamp1->compare(new HopsStamp(1)));
+        $this->assertEquals(1, $stamp1->compare(new HopsStamp(1)));
     }
 }

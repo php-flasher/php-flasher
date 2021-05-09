@@ -24,7 +24,7 @@ final class FilterBuilderTest extends TestCase
         $filtered = $builder->filter($envelopes);
         $expected = $envelopes;
 
-        $this->assertSame($expected, $filtered);
+        $this->assertEquals($expected, $filtered);
     }
 
     public function testMaxResults()
@@ -41,7 +41,7 @@ final class FilterBuilderTest extends TestCase
         $filtered = $builder->filter($envelopes);
         $expected = array_slice($envelopes, 0, 2);
 
-        $this->assertSame($expected, $filtered);
+        $this->assertEquals($expected, $filtered);
     }
 
     public function testOrderingByPriority()
@@ -87,6 +87,6 @@ final class FilterBuilderTest extends TestCase
             $envelopes[4],
         );
 
-        $this->assertSame($expected, $filtered);
+        $this->assertEquals($expected, $filtered);
     }
 }

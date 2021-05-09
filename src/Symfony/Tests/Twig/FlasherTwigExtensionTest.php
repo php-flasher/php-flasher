@@ -17,7 +17,7 @@ class FlasherTwigExtensionTest extends TestCase
         $responseManager = $this->getMockBuilder('Flasher\Prime\Response\ResponseManagerInterface')->getMock();
         $responseManager->method('render')->willReturn($expected);
 
-        $this->assertSame($expected, $this->render('{{ flasher_render() }}', $responseManager));
+        $this->assertEquals($expected, $this->render('{{ flasher_render() }}', $responseManager));
     }
 
     private function render($template, ResponseManagerInterface $renderer)

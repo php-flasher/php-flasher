@@ -15,8 +15,8 @@ final class HandlerStampTest extends TestCase
 
         $envelop = new Envelope($notification, array($stamp));
 
-        $this->assertSame($stamp, $envelop->get('Flasher\Prime\Stamp\HandlerStamp'));
+        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\HandlerStamp'));
         $this->assertInstanceOf('Flasher\Prime\Stamp\HandlerStamp', $stamp);
-        $this->assertSame('toastr', $stamp->getHandler());
+        $this->assertEquals('toastr', $stamp->getHandler());
     }
 }
