@@ -148,7 +148,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Minimum height of the notice. It will expand to fit content.
      *
-     * @param string $minHeight
+     * @param int $minHeight
      *
      * @return $this
      */

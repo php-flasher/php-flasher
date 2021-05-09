@@ -429,10 +429,14 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Prevent from Auto Hiding
+     *
+     * @return $this
      */
     public function persistent()
     {
         $this->timeOut(0);
         $this->extendedTimeOut(0);
+
+        return $this;
     }
 }
