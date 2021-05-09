@@ -16,7 +16,7 @@ final class CreatedAtStampTest extends TestCase
 
         $envelop = new Envelope($notification, array($stamp));
 
-        $this->assertSame($stamp, $envelop->get('Flasher\Prime\Stamp\CreatedAtStamp'));
+        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\CreatedAtStamp'));
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
     }
 
@@ -26,6 +26,6 @@ final class CreatedAtStampTest extends TestCase
         $createdAt2 = new CreatedAtStamp(new \DateTime('+1 h'));
 
         $this->assertNotNull($createdAt1->compare($createdAt2));
-        $this->assertSame(1, $createdAt1->compare(new HopsStamp(1)));
+        $this->assertEquals(1, $createdAt1->compare(new HopsStamp(1)));
     }
 }

@@ -36,7 +36,7 @@ class StorageManagerTest extends TestCase
 
         $storageManager->clear();
 
-        $this->assertSame(array(), $storageManager->all());
+        $this->assertEquals(array(), $storageManager->all());
     }
 
     public function testAdd()

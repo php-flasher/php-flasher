@@ -14,8 +14,8 @@ final class EnvelopeTest extends TestCase
 
         $envelope = new Envelope($notification, array($stamp));
 
-        $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(
+        $this->assertEquals($notification, $envelope->getNotification());
+        $this->assertEquals(array(
             get_class($stamp) => $stamp,
         ), $envelope->all());
     }
@@ -29,8 +29,8 @@ final class EnvelopeTest extends TestCase
         $envelope = new Envelope($notification);
         $envelope->with($stamp1, $stamp2);
 
-        $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(
+        $this->assertEquals($notification, $envelope->getNotification());
+        $this->assertEquals(array(
             get_class($stamp1) => $stamp1,
             get_class($stamp2) => $stamp2,
         ), $envelope->all());
@@ -43,8 +43,8 @@ final class EnvelopeTest extends TestCase
 
         $envelope = Envelope::wrap($notification, array($stamp));
 
-        $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(
+        $this->assertEquals($notification, $envelope->getNotification());
+        $this->assertEquals(array(
             get_class($stamp) => $stamp,
         ), $envelope->all());
     }
@@ -61,8 +61,8 @@ final class EnvelopeTest extends TestCase
 
         $envelope = new Envelope($notification, $stamps);
 
-        $this->assertSame($notification, $envelope->getNotification());
-        $this->assertSame(array(
+        $this->assertEquals($notification, $envelope->getNotification());
+        $this->assertEquals(array(
             get_class($stamps[0]) => $stamps[3],
         ), $envelope->all());
     }
@@ -78,12 +78,12 @@ final class EnvelopeTest extends TestCase
 
         $envelope = new Envelope($notification, $stamps);
 
-        $this->assertSame($notification, $envelope->getNotification());
+        $this->assertEquals($notification, $envelope->getNotification());
 
         $last = $envelope->get(get_class($stamps[0]));
 
-        $this->assertSame($stamps[2], $last);
-        $this->assertSame($last, $envelope->get(get_class($stamps[0])));
+        $this->assertEquals($stamps[2], $last);
+        $this->assertEquals($last, $envelope->get(get_class($stamps[0])));
 
         $this->assertNull($envelope->get('NotFoundStamp'));
     }

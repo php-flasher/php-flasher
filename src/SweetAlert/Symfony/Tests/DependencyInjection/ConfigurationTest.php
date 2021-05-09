@@ -19,12 +19,12 @@ class ConfigurationTest extends TestCase
             ),
             'styles' => array(),
             'options' => array(
-                'timer' => 50000,
+                'timer' => 5000,
                 'timerProgressBar' => true,
             ),
         );
 
-        $this->assertSame($expected, $config);
+        $this->assertEquals($expected, $config);
     }
 
     /**

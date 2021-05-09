@@ -48,7 +48,7 @@ final class ArrayStorageTest extends TestCase
 
         $storage->clear();
 
-        $this->assertSame(array(), $storage->all());
+        $this->assertEquals(array(), $storage->all());
     }
 
     public function testRemove()
@@ -66,6 +66,6 @@ final class ArrayStorageTest extends TestCase
         $actual = UuidStamp::indexByUuid($storage->all());
         $expected = UuidStamp::indexByUuid($envelopes[1], $envelopes[3], $envelopes[4]);
 
-        $this->assertSame(array(), array_diff_key($actual, $expected));
+        $this->assertEquals(array(), array_diff_key($actual, $expected));
     }
 }

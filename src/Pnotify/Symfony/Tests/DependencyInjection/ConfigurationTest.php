@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
             ),
         );
 
-        $this->assertSame($expected, $config);
+        $this->assertEquals($expected, $config);
     }
 
     /**

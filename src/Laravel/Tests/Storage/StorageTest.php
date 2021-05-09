@@ -14,7 +14,7 @@ final class StorageTest extends TestCase
     public function testInitialState()
     {
         $storage = new Storage($this->app->make('session'));
-        $this->assertSame(array(), $storage->all());
+        $this->assertEquals(array(), $storage->all());
     }
 
     public function testAddEnvelope()
@@ -23,7 +23,7 @@ final class StorageTest extends TestCase
         $envelope = new Envelope(new Notification());
         $storage->add($envelope);
 
-        $this->assertSame(array($envelope), $storage->all());
+        $this->assertEquals(array($envelope), $storage->all());
     }
 
     public function testAddMultipleEnvelopes()
@@ -35,7 +35,7 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertSame($envelopes, $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
     }
 
     public function testUpdateEnvelopes()
@@ -51,12 +51,12 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertSame($envelopes, $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $envelopes[1]->withStamp(new PriorityStamp(1));
         $storage->update($envelopes[1]);
 
-        $this->assertSame($envelopes, $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
         $this->assertInstanceOf(
             'Flasher\Prime\Stamp\PriorityStamp',
             $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp')
@@ -76,10 +76,10 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertSame($envelopes, $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes[1]);
-        $this->assertSame(array($envelopes[0]), $storage->all());
+        $this->assertEquals(array($envelopes[0]), $storage->all());
     }
 
     public function testRemoveMultipleEnvelopes()
@@ -95,10 +95,10 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertSame($envelopes, $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes);
-        $this->assertSame(array(), $storage->all());
+        $this->assertEquals(array(), $storage->all());
     }
 
     public function testClearAllEnvelopes()
@@ -114,9 +114,9 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertSame($envelopes, $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $storage->clear();
-        $this->assertSame(array(), $storage->all());
+        $this->assertEquals(array(), $storage->all());
     }
 }

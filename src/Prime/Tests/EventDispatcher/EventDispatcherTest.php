@@ -21,7 +21,7 @@ class EventDispatcherTest extends TestCase
     public function testInitialState()
     {
         $dispatcher = new EventDispatcher();
-        $this->assertSame(array(), $dispatcher->getListeners('fake_event'));
+        $this->assertEquals(array(), $dispatcher->getListeners('fake_event'));
     }
 
     public function testAddListener()
@@ -56,7 +56,7 @@ class EventDispatcherTest extends TestCase
             array($listener1, 'preFoo'),
         );
 
-        $this->assertSame($expected, $dispatcher->getListeners('pre.foo'));
+        $this->assertEquals($expected, $dispatcher->getListeners('pre.foo'));
     }
 
     public function testDispatch()
@@ -74,7 +74,7 @@ class EventDispatcherTest extends TestCase
         $this->assertFalse($listener->postFooInvoked);
 
         $this->assertInstanceOf('Flasher\Prime\Tests\EventDispatcher\Event', $return);
-        $this->assertSame($event, $return);
+        $this->assertEquals($event, $return);
     }
 
     public function testDispatchForClosure()
@@ -90,7 +90,7 @@ class EventDispatcherTest extends TestCase
         $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener);
         $dispatcher->addListener('AnotherEvent', $listener);
         $dispatcher->dispatch($event);
-        $this->assertSame(1, $invoked);
+        $this->assertEquals(1, $invoked);
     }
 
     public function testStopEventPropagation()
@@ -131,7 +131,7 @@ class EventDispatcherTest extends TestCase
         $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener2);
         $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener3, 10);
         $dispatcher->dispatch($event);
-        $this->assertSame(array('3', '2', '1'), $invoked);
+        $this->assertEquals(array('3', '2', '1'), $invoked);
     }
 }
 

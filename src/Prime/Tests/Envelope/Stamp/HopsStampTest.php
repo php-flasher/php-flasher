@@ -15,8 +15,8 @@ final class HopsStampTest extends TestCase
 
         $envelop = new Envelope($notification, array($stamp));
 
-        $this->assertSame($stamp, $envelop->get('Flasher\Prime\Stamp\HopsStamp'));
+        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\HopsStamp'));
         $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $stamp);
-        $this->assertSame(5, $stamp->getAmount());
+        $this->assertEquals(5, $stamp->getAmount());
     }
 }
