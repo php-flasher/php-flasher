@@ -969,7 +969,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     /**
      * Custom int height in px.
      *
-     * @param string $imageHeight
+     * @param int $imageHeight
      *
      * @return $this
      */

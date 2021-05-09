@@ -64,7 +64,7 @@ interface NotificationBuilderInterface
      *
      * @return self
      */
-    public function options($options, $merge = true);
+    public function options(array $options, $merge = true);
 
     /**
      * @param string $name
@@ -157,7 +157,7 @@ interface NotificationBuilderInterface
      *
      * @return Envelope
      */
-    public function flash($stamps = array());
+    public function flash(array $stamps = array());
 
     /**
      * @return Envelope
