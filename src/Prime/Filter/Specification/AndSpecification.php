@@ -21,9 +21,6 @@ final class AndSpecification implements SpecificationInterface
         $this->specifications = $specifications;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         foreach ($this->specifications as $specification) {

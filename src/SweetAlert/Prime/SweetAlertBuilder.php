@@ -6,9 +6,6 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class SweetAlertBuilder extends NotificationBuilder
 {
-    /**
-     * @inheritDoc
-     */
     public function type($type, $message = null, array $options = array())
     {
         $this->icon($type);
@@ -20,7 +17,6 @@ final class SweetAlertBuilder extends NotificationBuilder
      * Display a question typed alert message
      *
      * @param string $message
-     * @param array  $options
      *
      * @return SweetAlertBuilder
      */
@@ -88,9 +84,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function message($message)
     {
         parent::message($message);
@@ -394,9 +387,8 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * If set to false, the user can't dismiss the popup by clicking outside it.
-     * You can also pass a custom function returning a boolean value, e.g. if you want to disable outside clicks for
-     * the loading state of a popup.
+     * If set to false, the user can't dismiss the popup by clicking outside it. You can also pass a custom function
+     * returning a boolean value, e.g. if you want to disable outside clicks for the loading state of a popup.
      *
      * @param bool|string $allowOutsideClick
      *
@@ -425,8 +417,8 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * If set to false, the user can't confirm the popup by pressing the Enter or Space keys, unless they manually
-     * focus the confirm button. You can also pass a custom function returning a boolean value.
+     * If set to false, the user can't confirm the popup by pressing the Enter or Space keys, unless they manually focus
+     * the confirm button. You can also pass a custom function returning a boolean value.
      *
      * @param bool|string $allowEnterKey
      *
@@ -479,8 +471,12 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return $this
      */
-    public function showConfirmButton($showConfirmButton = true, $confirmButtonText = null, $confirmButtonColor = null, $confirmButtonAriaLabel = null)
-    {
+    public function showConfirmButton(
+        $showConfirmButton = true,
+        $confirmButtonText = null,
+        $confirmButtonColor = null,
+        $confirmButtonAriaLabel = null
+    ) {
         $this->option('showConfirmButton', $showConfirmButton);
 
         if (null !== $confirmButtonText) {
@@ -508,8 +504,12 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return $this
      */
-    public function showDenyButton($showDenyButton = true, $denyButtonText = null, $denyButtonColor = null, $denyButtonAriaLabel = null)
-    {
+    public function showDenyButton(
+        $showDenyButton = true,
+        $denyButtonText = null,
+        $denyButtonColor = null,
+        $denyButtonAriaLabel = null
+    ) {
         $this->option('showDenyButton', $showDenyButton);
 
         if (null !== $denyButtonText) {
@@ -537,8 +537,12 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return $this
      */
-    public function showCancelButton($showCancelButton = true, $cancelButtonText = null, $cancelButtonColor = null, $cancelButtonAriaLabel = null)
-    {
+    public function showCancelButton(
+        $showCancelButton = true,
+        $cancelButtonText = null,
+        $cancelButtonColor = null,
+        $cancelButtonAriaLabel = null
+    ) {
         $this->option('showCancelButton', $showCancelButton);
 
         if (null !== $cancelButtonText) {
@@ -713,8 +717,8 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Apply default styling to buttons. If you want to use your own classes (e.g. Bootstrap classes) set this
-     * parameter to false.
+     * Apply default styling to buttons. If you want to use your own classes (e.g. Bootstrap classes) set this parameter
+     * to false.
      *
      * @param bool $buttonsStyling
      *
@@ -905,8 +909,8 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * If you want to return the input value as result.value when denying the popup, set to true. Otherwise, the
-     * denying will set result.value to false.
+     * If you want to return the input value as result.value when denying the popup, set to true. Otherwise, the denying
+     * will set result.value to false.
      *
      * @param bool $returnInputValueOnDeny
      *
@@ -1083,9 +1087,9 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     /**
      * If input parameter is set to "select" or "radio", you can provide options. Can be a Map or a plain object, with
-     * keys that represent option values and values that represent option text. You can also provide plain object or
-     * Map as values that will represented a group of options, being the label of this <optgroup> the key. Finally, you
-     * can also provide a Promise that resolves with one of those types.
+     * keys that represent option values and values that represent option text. You can also provide plain object or Map
+     * as values that will represented a group of options, being the label of this <optgroup> the key. Finally, you can
+     * also provide a Promise that resolves with one of those types.
      *
      * @param string $inputOptions
      *

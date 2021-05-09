@@ -9,9 +9,6 @@ use Flasher\Prime\Factory\NotificationFactory;
  */
 final class ToastrFactory extends NotificationFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createNotificationBuilder()
     {
         return new ToastrBuilder($this->getStorageManager(), new Toastr(), 'toastr');

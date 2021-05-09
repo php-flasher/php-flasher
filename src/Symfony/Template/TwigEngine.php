@@ -12,17 +12,11 @@ final class TwigEngine implements EngineInterface
      */
     private $engine;
 
-    /**
-     * @param Environment $engine
-     */
     public function __construct(Environment $engine)
     {
         $this->engine = $engine;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function render($name, array $context = array())
     {
         return $this->engine->render($name, $context);

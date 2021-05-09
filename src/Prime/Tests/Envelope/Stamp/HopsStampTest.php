@@ -11,7 +11,7 @@ final class HopsStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new HopsStamp(5);
+        $stamp = new HopsStamp(5);
 
         $envelop = new Envelope($notification, array($stamp));
 

@@ -9,7 +9,6 @@ final class ResourceManagerHelper
     /**
      * @param string $alias
      * @param array $config
-     * @param ResourceManager $responseManager
      */
     public static function process(ResourceManager $responseManager, $alias, $config = null)
     {

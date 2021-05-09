@@ -9,15 +9,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class FlasherExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader(
-            $container,
-            new FileLocator(__DIR__.'/../Resources/config')
-        );
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('config.yaml');
 
         $configration = $this->processConfiguration(new Configuration(), $configs);
@@ -28,13 +22,13 @@ final class FlasherExtension extends Extension
         $responseManager = $container->getDefinition('flasher.resource_manager');
         foreach ($configration['template_factory']['templates'] as $template => $factory) {
             if (isset($factory['scripts'])) {
-                $responseManager->addMethodCall('addScripts', array('template_'.$template, $factory['scripts']));
+                $responseManager->addMethodCall('addScripts', array('template_' . $template, $factory['scripts']));
             }
             if (isset($factory['styles'])) {
-                $responseManager->addMethodCall('addStyles', array('template_'.$template, $factory['styles']));
+                $responseManager->addMethodCall('addStyles', array('template_' . $template, $factory['styles']));
             }
             if (isset($factory['options'])) {
-                $responseManager->addMethodCall('addOptions', array('template_'.$template, $factory['options']));
+                $responseManager->addMethodCall('addOptions', array('template_' . $template, $factory['options']));
             }
         }
     }

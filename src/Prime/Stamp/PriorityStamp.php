@@ -32,16 +32,13 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface, Pr
      */
     public function compare($orderable)
     {
-        if (!$orderable instanceof PriorityStamp) {
+        if (!$orderable instanceof self) {
             return 1;
         }
 
         return $this->priority - $orderable->priority;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function toArray()
     {
         return array(

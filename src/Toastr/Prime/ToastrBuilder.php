@@ -270,7 +270,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content.
+     * Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to
+     * the previous toast based on their message content.
      *
      * @param bool $preventDuplicates
      *

@@ -10,9 +10,12 @@ use Flasher\Prime\Tests\TestCase;
 class EventDispatcherTest extends TestCase
 {
     /* Some pseudo events */
-    const preFoo  = 'pre.foo';
+    const preFoo = 'pre.foo';
+
     const postFoo = 'post.foo';
-    const preBar  = 'pre.bar';
+
+    const preBar = 'pre.bar';
+
     const postBar = 'post.bar';
 
     public function testInitialState()
@@ -87,7 +90,7 @@ class EventDispatcherTest extends TestCase
         $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener);
         $dispatcher->addListener('AnotherEvent', $listener);
         $dispatcher->dispatch($event);
-        $this->assertEquals(1, $invoked);
+        $this->assertSame(1, $invoked);
     }
 
     public function testStopEventPropagation()
@@ -128,7 +131,7 @@ class EventDispatcherTest extends TestCase
         $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener2);
         $dispatcher->addListener('Flasher\Prime\Tests\EventDispatcher\Event', $listener3, 10);
         $dispatcher->dispatch($event);
-        $this->assertEquals(array('3', '2', '1'), $invoked);
+        $this->assertSame(array('3', '2', '1'), $invoked);
     }
 }
 
@@ -184,7 +187,10 @@ class TestEventSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array('pre.foo' => 'preFoo', 'post.foo' => 'postFoo');
+        return array(
+            'pre.foo' => 'preFoo',
+            'post.foo' => 'postFoo',
+        );
     }
 }
 
@@ -193,7 +199,7 @@ class TestEventSubscriberWithPriorities implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'pre.foo'  => array('preFoo', 10),
+            'pre.foo' => array('preFoo', 10),
             'post.foo' => array('postFoo'),
         );
     }

@@ -2,9 +2,9 @@
 
 namespace Flasher\SweetAlert\Laravel;
 
+use Flasher\SweetAlert\Laravel\ServiceProvider\ServiceProviderManager;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
-use Flasher\SweetAlert\Laravel\ServiceProvider\ServiceProviderManager;
 
 final class FlasherSweetAlertServiceProvider extends ServiceProvider
 {
@@ -43,17 +43,11 @@ final class FlasherSweetAlertServiceProvider extends ServiceProvider
         return $this->app;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function mergeConfigFrom($path, $key)
     {
         parent::mergeConfigFrom($path, $key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function publishes(array $paths, $groups = null)
     {
         parent::publishes($paths, $groups);

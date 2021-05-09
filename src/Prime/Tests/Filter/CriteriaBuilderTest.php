@@ -12,8 +12,8 @@ final class CriteriaBuilderTest extends TestCase
     {
         $criteria = new CriteriaBuilder(new FilterBuilder(), array(
             'priority' => 1,
-            'life'     => 2,
-            'limit'    => 2,
+            'life' => 2,
+            'limit' => 2,
             'order_by' => 'Flasher\Prime\Stamp\HopsStamp',
         ));
 

@@ -7,9 +7,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('flasher_noty');
@@ -26,7 +23,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                          'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@0.1.3/dist/flasher-noty.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@0.1.3/dist/flasher-noty.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
@@ -37,7 +34,7 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('variable')->end()
                     ->ignoreExtraKeys(false)
                     ->defaultValue(array(
-                       'timeout' => 5000,
+                        'timeout' => 5000,
                     ))
                 ->end()
             ->end()

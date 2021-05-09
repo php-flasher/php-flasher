@@ -18,12 +18,11 @@ final class FilterEvent
 
     /**
      * @param Envelope[]   $envelopes
-     * @param array $criteria
      */
     public function __construct(array $envelopes, array $criteria)
     {
         $this->envelopes = $envelopes;
-        $this->criteria  = $criteria;
+        $this->criteria = $criteria;
     }
 
     /**
@@ -50,9 +49,6 @@ final class FilterEvent
         return $this->criteria;
     }
 
-    /**
-     * @param array $criteria
-     */
     public function setCriteria(array $criteria)
     {
         $this->criteria = $criteria;

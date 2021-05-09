@@ -14,7 +14,7 @@ class StorageManagerTest extends TestCase
     public function testAll()
     {
         $storageManager = new StorageManager(new ArrayStorage(), new EventDispatcher());
-        $envelopes      = array();
+        $envelopes = array();
 
         foreach (range(0, 4) as $index) {
             $envelopes[$index] = new Envelope(new Notification());
@@ -27,7 +27,7 @@ class StorageManagerTest extends TestCase
     public function testClear()
     {
         $storageManager = new StorageManager(new ArrayStorage(), new EventDispatcher());
-        $envelopes      = array();
+        $envelopes = array();
 
         foreach (range(0, 4) as $index) {
             $envelopes[$index] = new Envelope(new Notification());
@@ -41,7 +41,7 @@ class StorageManagerTest extends TestCase
 
     public function testAdd()
     {
-        $storageManager = new StorageManager(new ArrayStorage(),new EventDispatcher());
+        $storageManager = new StorageManager(new ArrayStorage(), new EventDispatcher());
         $storageManager->add(new Envelope(new Notification()));
 
         $envelopes = $storageManager->all();

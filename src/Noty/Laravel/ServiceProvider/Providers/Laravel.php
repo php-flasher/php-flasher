@@ -3,9 +3,9 @@
 namespace Flasher\Noty\Laravel\ServiceProvider\Providers;
 
 use Flasher\Laravel\ServiceProvider\ResourceManagerHelper;
-use Flasher\Prime\Flasher;
 use Flasher\Noty\Laravel\FlasherNotyServiceProvider;
 use Flasher\Noty\Prime\NotyFactory;
+use Flasher\Prime\Flasher;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
@@ -17,36 +17,26 @@ class Laravel implements ServiceProviderInterface
      */
     protected $app;
 
-    /**
-     * @param Container $app
-     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function boot(FlasherNotyServiceProvider $provider)
     {
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_noty.php')), 'flasher-config');
+        $provider->publishes(array(
+            flasher_path(__DIR__ . '/../../Resources/config/config.php') => config_path('flasher_noty.php'),
+        ), 'flasher-config');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function register(FlasherNotyServiceProvider $provider)
     {
-        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher_noty');
+        $provider->mergeConfigFrom(flasher_path(__DIR__ . '/../../Resources/config/config.php'), 'flasher_noty');
         $this->appendToFlasherConfig();
 
         $this->registerServices();

@@ -17,36 +17,26 @@ class Laravel implements ServiceProviderInterface
      */
     protected $app;
 
-    /**
-     * @param Container $app
-     */
     public function __construct(Container $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function boot(FlasherPnotifyServiceProvider $provider)
     {
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_pnotify.php')), 'flasher-config');
+        $provider->publishes(array(
+            flasher_path(__DIR__ . '/../../Resources/config/config.php') => config_path('flasher_pnotify.php'),
+        ), 'flasher-config');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function register(FlasherPnotifyServiceProvider $provider)
     {
-        $provider->mergeConfigFrom(flasher_path(__DIR__.'/../../Resources/config/config.php'), 'flasher_pnotify');
+        $provider->mergeConfigFrom(flasher_path(__DIR__ . '/../../Resources/config/config.php'), 'flasher_pnotify');
         $this->appendToFlasherConfig();
 
         $this->registerServices();

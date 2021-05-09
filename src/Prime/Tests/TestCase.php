@@ -30,7 +30,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function callMethod(&$object, $methodName, $parameters = array())
     {
         $reflection = new ReflectionClass(get_class($object));
-        $method     = $reflection->getMethod($methodName);
+        $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
         $parameters = is_array($parameters) ? $parameters : array_slice(func_get_args(), 2);

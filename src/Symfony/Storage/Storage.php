@@ -16,25 +16,16 @@ final class Storage implements StorageInterface
      */
     private $session;
 
-    /**
-     * @param Session $session
-     */
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function all()
     {
         return $this->session->get(self::ENVELOPES_NAMESPACE, array());
     }
 
-    /**
-     * @inheritDoc
-     */
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -42,9 +33,6 @@ final class Storage implements StorageInterface
         $this->session->set(self::ENVELOPES_NAMESPACE, array_merge($this->all(), $envelopes));
     }
 
-    /**
-     * @inheritDoc
-     */
     public function update($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -64,9 +52,6 @@ final class Storage implements StorageInterface
         $this->session->set(self::ENVELOPES_NAMESPACE, $store);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function remove($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -81,9 +66,6 @@ final class Storage implements StorageInterface
         $this->session->set(self::ENVELOPES_NAMESPACE, $store);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function clear()
     {
         $this->session->set(self::ENVELOPES_NAMESPACE, array());

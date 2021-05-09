@@ -7,20 +7,16 @@ use Illuminate\Foundation\Application;
 
 final class Laravel51 extends Laravel
 {
-    /**
-     * @inheritDoc
-     */
     public function shouldBeUsed()
     {
         return $this->app instanceof Application && 0 === strpos(Application::VERSION, '5.1');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function boot(FlasherServiceProvider $provider)
     {
-        $provider->publishes(array(flasher_path(__DIR__.'/../../Resources/lang') => base_path(flasher_path('resources/lang/vendor/flasher'))));
+        $provider->publishes(array(
+            flasher_path(__DIR__ . '/../../Resources/lang') => base_path(flasher_path('resources/lang/vendor/flasher')),
+        ));
 
         $this->registerBladeDirectives();
     }

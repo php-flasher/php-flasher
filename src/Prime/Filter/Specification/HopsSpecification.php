@@ -26,9 +26,6 @@ final class HopsSpecification implements SpecificationInterface
         $this->maxAmount = $maxAmount;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');

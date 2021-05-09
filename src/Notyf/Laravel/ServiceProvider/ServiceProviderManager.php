@@ -26,9 +26,6 @@ final class ServiceProviderManager
      */
     private $notifyServiceProvider;
 
-    /**
-     * @param FlasherNotyfServiceProvider $notifyServiceProvider
-     */
     public function __construct(FlasherNotyfServiceProvider $notifyServiceProvider)
     {
         $this->notifyServiceProvider = $notifyServiceProvider;

@@ -11,7 +11,7 @@ final class Engine implements EngineInterface
         extract($context, \EXTR_SKIP);
 
         if (!file_exists($name)) {
-            $name = __DIR__.'/views/'.$name;
+            $name = __DIR__ . '/views/' . $name;
 
             if (!file_exists($name)) {
                 throw new \Exception(sprintf('Cannot find template "%s"', $name));

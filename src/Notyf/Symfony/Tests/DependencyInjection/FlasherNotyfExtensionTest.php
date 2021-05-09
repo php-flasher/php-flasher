@@ -2,11 +2,11 @@
 
 namespace Flasher\Notyf\Symfony\Tests\DependencyInjection;
 
+use Flasher\Notyf\Symfony\DependencyInjection\FlasherNotyfExtension;
+use Flasher\Notyf\Symfony\FlasherNotyfSymfonyBundle;
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
-use Flasher\Notyf\Symfony\DependencyInjection\FlasherNotyfExtension;
-use Flasher\Notyf\Symfony\FlasherNotyfSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherNotyfExtensionTest extends TestCase

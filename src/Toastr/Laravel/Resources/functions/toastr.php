@@ -3,12 +3,11 @@
 use Flasher\Prime\Notification\NotificationInterface;
 use Illuminate\Support\Facades\App;
 
-if (! function_exists('toastr'))  {
+if (!function_exists('toastr')) {
     /**
      * @param string $message
      * @param string $type
      * @param string $title
-     * @param array  $options
      *
      * @return \Flasher\Toastr\Prime\ToastrFactory
      */

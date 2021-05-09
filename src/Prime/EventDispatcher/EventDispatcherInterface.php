@@ -20,8 +20,5 @@ interface EventDispatcherInterface
      */
     public function addListener($eventName, $listener, $priority = 0);
 
-    /**
-     * @param EventSubscriberInterface $subscriber
-     */
     public function addSubscriber(EventSubscriberInterface $subscriber);
 }

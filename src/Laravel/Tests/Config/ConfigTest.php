@@ -13,7 +13,7 @@ final class ConfigTest extends TestCase
         $separator = $this->isLaravel4() ? '::' : '.';
         $config = new Config($this->app->make('config'), $separator);
 
-        $this->assertEquals('template', $config->get('default'));
+        $this->assertSame('template', $config->get('default'));
     }
 
     private function isLaravel4()

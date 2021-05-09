@@ -11,13 +11,7 @@ interface ServiceProviderInterface
      */
     public function shouldBeUsed();
 
-    /**
-     * @param FlasherSweetAlertServiceProvider $provider
-     */
     public function boot(FlasherSweetAlertServiceProvider $provider);
 
-    /**
-     * @param FlasherSweetAlertServiceProvider $provider
-     */
     public function register(FlasherSweetAlertServiceProvider $provider);
 }

@@ -57,8 +57,10 @@ final class StorageTest extends TestCase
         $storage->update($envelopes[1]);
 
         $this->assertSame($envelopes, $storage->all());
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp',
-            $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp'));
+        $this->assertInstanceOf(
+            'Flasher\Prime\Stamp\PriorityStamp',
+            $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp')
+        );
     }
 
     public function testRemoveEnvelopes()

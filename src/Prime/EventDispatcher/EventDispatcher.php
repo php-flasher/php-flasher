@@ -17,9 +17,6 @@ final class EventDispatcher implements EventDispatcherInterface
      */
     private $sorted = array();
 
-    /**
-     * @inheritDoc
-     */
     public function dispatch($event)
     {
         $listeners = $this->getListeners(get_class($event));
@@ -45,6 +42,35 @@ final class EventDispatcher implements EventDispatcherInterface
         }
 
         return $this->sorted[$eventName];
+    }
+
+    public function addListener($eventName, $listener, $priority = 0)
+    {
+        $this->listeners[$eventName][$priority][] = $listener;
+    }
+
+    public function addSubscriber(EventSubscriberInterface $subscriber)
+    {
+        foreach ((array) $subscriber->getSubscribedEvents()  as $eventName => $params) {
+            if (is_int($eventName)) {
+                $eventName = $params;
+                $params = '__invoke';
+            }
+
+            if (is_string($params)) {
+                $this->addListener($eventName, array($subscriber, $params));
+            } elseif (is_string($params[0])) {
+                $this->addListener($eventName, array($subscriber, $params[0]), isset($params[1]) ? $params[1] : 0);
+            } else {
+                foreach ($params as $listener) {
+                    $this->addListener(
+                        $eventName,
+                        array($subscriber, $listener[0]),
+                        isset($listener[1]) ? $listener[1] : 0
+                    );
+                }
+            }
+        }
     }
 
     /**
@@ -73,37 +99,6 @@ final class EventDispatcher implements EventDispatcherInterface
                 break;
             }
             $listener($event, $this);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addListener($eventName, $listener, $priority = 0)
-    {
-        $this->listeners[$eventName][$priority][] = $listener;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function addSubscriber(EventSubscriberInterface $subscriber)
-    {
-        foreach ((array) $subscriber->getSubscribedEvents()  as $eventName => $params) {
-            if (is_int($eventName)) {
-                $eventName = $params;
-                $params = '__invoke';
-            }
-
-            if (is_string($params)) {
-                $this->addListener($eventName, array($subscriber, $params));
-            } elseif (is_string($params[0])) {
-                $this->addListener($eventName, array($subscriber, $params[0]), isset($params[1]) ? $params[1] : 0);
-            } else {
-                foreach ($params as $listener) {
-                    $this->addListener($eventName, array($subscriber, $listener[0]), isset($listener[1]) ? $listener[1] : 0);
-                }
-            }
         }
     }
 }

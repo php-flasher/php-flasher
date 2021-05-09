@@ -7,8 +7,6 @@ use Flasher\Prime\Response\Response;
 interface ResourceManagerInterface
 {
     /**
-     * @param Response $response
-     *
      * @return Response
      */
     public function filterResponse(Response $response);
@@ -27,7 +25,6 @@ interface ResourceManagerInterface
 
     /**
      * @param string $alias
-     * @param array  $options
      */
     public function addOptions($alias, array $options);
 }

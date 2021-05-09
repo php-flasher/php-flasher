@@ -25,13 +25,11 @@ final class SessionListener implements EventSubscriberInterface
      */
     private $responseManager;
 
-    /**
-     * @param ConfigInterface          $config
-     * @param FlasherInterface         $flasher
-     * @param ResponseManagerInterface $responseManager
-     */
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $responseManager)
-    {
+    public function __construct(
+        ConfigInterface $config,
+        FlasherInterface $flasher,
+        ResponseManagerInterface $responseManager
+    ) {
         $this->config = $config;
         $this->flasher = $flasher;
         $this->responseManager = $responseManager;
@@ -41,7 +39,9 @@ final class SessionListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!$event->isMasterRequest() || $request->isXmlHttpRequest() || true !== $this->config->get('auto_create_from_session')) {
+        if (!$event->isMasterRequest() || $request->isXmlHttpRequest() || true !== $this->config->get(
+            'auto_create_from_session'
+        )) {
             return;
         }
 
@@ -78,7 +78,7 @@ final class SessionListener implements EventSubscriberInterface
         }
 
         $pos = strripos($content, '</html>');
-        $content = substr($content, 0, $pos).$htmlResponse.substr($content, $pos);
+        $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
         $response->setContent($content);
     }
 
@@ -101,7 +101,7 @@ final class SessionListener implements EventSubscriberInterface
                 $type = $aliases;
             }
 
-            foreach ((array)$aliases as $alias) {
+            foreach ((array) $aliases as $alias) {
                 $mapping[$alias] = $type;
             }
         }

@@ -11,13 +11,7 @@ interface ServiceProviderInterface
      */
     public function shouldBeUsed();
 
-    /**
-     * @param FlasherToastrServiceProvider $provider
-     */
     public function boot(FlasherToastrServiceProvider $provider);
 
-    /**
-     * @param FlasherToastrServiceProvider $provider
-     */
     public function register(FlasherToastrServiceProvider $provider);
 }

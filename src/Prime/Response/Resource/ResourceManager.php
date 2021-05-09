@@ -21,16 +21,6 @@ final class ResourceManager implements ResourceManagerInterface
     private $templateEngine;
 
     /**
-     * @param ConfigInterface $config
-     * @param EngineInterface $templateEngine
-     */
-    public function __construct(ConfigInterface $config, EngineInterface $templateEngine)
-    {
-        $this->config = $config;
-        $this->templateEngine = $templateEngine;
-    }
-
-    /**
      * @var array<string, string[]>
      */
     private $scripts = array();
@@ -45,9 +35,12 @@ final class ResourceManager implements ResourceManagerInterface
      */
     private $options = array();
 
-    /**
-     * @inheritDoc
-     */
+    public function __construct(ConfigInterface $config, EngineInterface $templateEngine)
+    {
+        $this->config = $config;
+        $this->templateEngine = $templateEngine;
+    }
+
     public function filterResponse(Response $response)
     {
         $response->addScripts($this->config->get('root_scripts', array()));
@@ -61,7 +54,7 @@ final class ResourceManager implements ResourceManagerInterface
                 $handler = $this->handleTemplateStamp($envelope);
             }
 
-            if (in_array($handler, $handlers)) {
+            if (in_array($handler, $handlers, true)) {
                 continue;
             }
 
@@ -83,42 +76,19 @@ final class ResourceManager implements ResourceManagerInterface
         return $response;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function addScripts($alias, array $scripts)
     {
         $this->scripts[$alias] = $scripts;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function addStyles($alias, array $styles)
     {
         $this->styles[$alias] = $styles;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function addOptions($alias, array $options)
     {
         $this->options[$alias] = $options;
-    }
-
-    private function handleTemplateStamp(Envelope $envelope)
-    {
-        $view = $this->config->get('template_factory.default');
-        $template = $this->config->get('template_factory.templates.'.$view.'.view');
-
-        $compiled = $this->templateEngine->render($template, array(
-            'envelope' => $envelope,
-        ));
-
-        $envelope->withStamp(new TemplateStamp($compiled));
-
-        return 'template_' . $view;
     }
 
     /**
@@ -127,5 +97,19 @@ final class ResourceManager implements ResourceManagerInterface
     public function getConfig()
     {
         return $this->config;
+    }
+
+    private function handleTemplateStamp(Envelope $envelope)
+    {
+        $view = $this->config->get('template_factory.default');
+        $template = $this->config->get('template_factory.templates.' . $view . '.view');
+
+        $compiled = $this->templateEngine->render($template, array(
+            'envelope' => $envelope,
+        ));
+
+        $envelope->withStamp(new TemplateStamp($compiled));
+
+        return 'template_' . $view;
     }
 }

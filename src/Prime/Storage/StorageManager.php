@@ -19,27 +19,17 @@ final class StorageManager implements StorageManagerInterface
      */
     private $eventDispatcher;
 
-    /**
-     * @param StorageInterface         $storage
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(StorageInterface $storage, EventDispatcherInterface $eventDispatcher)
     {
         $this->storage = $storage;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function all()
     {
         return $this->storage->all();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -50,9 +40,6 @@ final class StorageManager implements StorageManagerInterface
         $this->storage->add($event->getEnvelopes());
     }
 
-    /**
-     * @inheritDoc
-     */
     public function update($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -63,9 +50,6 @@ final class StorageManager implements StorageManagerInterface
         $this->storage->update($event->getEnvelopes());
     }
 
-    /**
-     * @inheritDoc
-     */
     public function remove($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
@@ -77,9 +61,6 @@ final class StorageManager implements StorageManagerInterface
         $this->storage->remove($event->getEnvelopesToRemove());
     }
 
-    /**
-     * @inheritDoc
-     */
     public function clear()
     {
         $this->storage->clear();

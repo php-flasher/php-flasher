@@ -18,10 +18,6 @@ final class CriteriaBuilder
      */
     private $criteria;
 
-    /**
-     * @param FilterBuilder $filterBuilder
-     * @param array         $criteria
-     */
     public function __construct(FilterBuilder $filterBuilder, array $criteria)
     {
         $this->filterBuilder = $filterBuilder;
@@ -49,7 +45,9 @@ final class CriteriaBuilder
         $priority = $this->criteria['priority'];
 
         if (!is_array($priority)) {
-            $priority = array('min' => $priority);
+            $priority = array(
+                'min' => $priority,
+            );
         }
 
         $min = isset($priority['min']) ? $priority['min'] : null;
@@ -67,7 +65,9 @@ final class CriteriaBuilder
         $hops = $this->criteria['hops'];
 
         if (!is_array($hops)) {
-            $hops = array('min' => $hops);
+            $hops = array(
+                'min' => $hops,
+            );
         }
 
         $min = isset($hops['min']) ? $hops['min'] : null;
@@ -85,7 +85,9 @@ final class CriteriaBuilder
         $delay = $this->criteria['delay'];
 
         if (!is_array($delay)) {
-            $delay = array('min' => $delay);
+            $delay = array(
+                'min' => $delay,
+            );
         }
 
         $min = isset($delay['min']) ? $delay['min'] : null;
@@ -103,7 +105,9 @@ final class CriteriaBuilder
         $life = $this->criteria['life'];
 
         if (!is_array($life)) {
-            $life = array('min' => $life);
+            $life = array(
+                'min' => $life,
+            );
         }
 
         $min = isset($life['min']) ? $life['min'] : null;
@@ -130,7 +134,9 @@ final class CriteriaBuilder
         $orderings = $this->criteria['order_by'];
 
         if (!is_array($orderings)) {
-            $orderings = array($orderings => FilterBuilder::ASC);
+            $orderings = array(
+                $orderings => FilterBuilder::ASC,
+            );
         }
 
         $this->filterBuilder->orderBy($orderings);

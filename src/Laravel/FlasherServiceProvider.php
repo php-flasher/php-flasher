@@ -2,8 +2,8 @@
 
 namespace Flasher\Laravel;
 
-use Illuminate\Support\ServiceProvider;
 use Flasher\Laravel\ServiceProvider\ServiceProviderManager;
+use Illuminate\Support\ServiceProvider;
 
 final class FlasherServiceProvider extends ServiceProvider
 {
@@ -45,33 +45,21 @@ final class FlasherServiceProvider extends ServiceProvider
         return $this->app;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function mergeConfigFrom($path, $key)
     {
         parent::mergeConfigFrom($path, $key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function publishes(array $paths, $groups = null)
     {
         parent::publishes($paths, $groups);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadTranslationsFrom($path, $namespace)
     {
         parent::loadTranslationsFrom($path, $namespace);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadViewsFrom($path, $namespace)
     {
         parent::loadViewsFrom($path, $namespace);

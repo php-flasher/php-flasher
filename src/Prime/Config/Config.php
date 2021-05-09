@@ -9,17 +9,11 @@ final class Config implements ConfigInterface
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config)
     {
         $this->config = $config;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function get($key, $default = null)
     {
         $data = $this->config;

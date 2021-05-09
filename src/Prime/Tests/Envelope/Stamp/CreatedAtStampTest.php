@@ -12,7 +12,7 @@ final class CreatedAtStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new CreatedAtStamp();
+        $stamp = new CreatedAtStamp();
 
         $envelop = new Envelope($notification, array($stamp));
 

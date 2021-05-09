@@ -19,17 +19,23 @@ final class Flasher implements FlasherInterface
      */
     private $config;
 
-    /**
-     * @param ConfigInterface $config
-     */
     public function __construct(ConfigInterface $config)
     {
         $this->config = $config;
     }
 
     /**
-     * @inheritDoc
+     * Dynamically call the default factory instance.
+     *
+     * @param string $method
+     *
+     * @return mixed
      */
+    public function __call($method, array $parameters)
+    {
+        return call_user_func_array(array($this->create(), $method), $parameters);
+    }
+
     public function create($alias = null)
     {
         $alias = $alias ?: $this->getDefaultFactory();
@@ -41,9 +47,6 @@ final class Flasher implements FlasherInterface
         return $this->factories[$alias];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function addFactory($alias, NotificationFactoryInterface $factory)
     {
         $this->factories[$alias] = $factory;
@@ -57,18 +60,5 @@ final class Flasher implements FlasherInterface
     private function getDefaultFactory()
     {
         return $this->config->get('default');
-    }
-
-    /**
-     * Dynamically call the default factory instance.
-     *
-     * @param string $method
-     * @param array  $parameters
-     *
-     * @return mixed
-     */
-    public function __call($method, array $parameters)
-    {
-        return call_user_func_array(array($this->create(), $method), $parameters);
     }
 }

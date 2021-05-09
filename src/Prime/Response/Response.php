@@ -31,10 +31,6 @@ final class Response
      */
     private $context;
 
-    /**
-     * @param array $envelopes
-     * @param array $context
-     */
     public function __construct(array $envelopes, array $context)
     {
         $this->envelopes = $envelopes;
@@ -59,7 +55,6 @@ final class Response
 
     /**
      * @param string $alias
-     * @param array  $options
      */
     public function addOptions($alias, array $options)
     {
@@ -119,7 +114,7 @@ final class Response
                 $this->getEnvelopes()
             ),
             'scripts' => $this->getScripts(),
-            'styles'  => $this->getStyles(),
+            'styles' => $this->getStyles(),
             'options' => $this->getOptions(),
         );
     }

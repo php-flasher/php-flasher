@@ -2,11 +2,11 @@
 
 namespace Flasher\Pnotify\Symfony\Tests\DependencyInjection;
 
+use Flasher\Pnotify\Symfony\DependencyInjection\FlasherPnotifyExtension;
+use Flasher\Pnotify\Symfony\FlasherPnotifySymfonyBundle;
 use Flasher\Prime\Tests\TestCase;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Flasher\Symfony\FlasherSymfonyBundle;
-use Flasher\Pnotify\Symfony\DependencyInjection\FlasherPnotifyExtension;
-use Flasher\Pnotify\Symfony\FlasherPnotifySymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherPnotifyExtensionTest extends TestCase

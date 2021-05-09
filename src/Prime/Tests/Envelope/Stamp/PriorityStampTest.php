@@ -12,7 +12,7 @@ final class PriorityStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new PriorityStamp(5);
+        $stamp = new PriorityStamp(5);
 
         $envelop = new Envelope($notification, array($stamp));
 

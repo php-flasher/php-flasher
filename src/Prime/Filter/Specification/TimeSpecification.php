@@ -17,19 +17,12 @@ final class TimeSpecification implements SpecificationInterface
      */
     private $maxTime;
 
-    /**
-     * @param DateTime      $minTime
-     * @param DateTime|null $maxTime
-     */
     public function __construct(DateTime $minTime, DateTime $maxTime = null)
     {
         $this->minTime = $minTime;
         $this->maxTime = $maxTime;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp');

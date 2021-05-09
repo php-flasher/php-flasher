@@ -23,9 +23,14 @@ final class StampsListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param Envelope $envelope
-     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'Flasher\Prime\EventDispatcher\Event\PersistEvent',
+            'Flasher\Prime\EventDispatcher\Event\UpdateEvent',
+        );
+    }
+
     private function attachStamps(Envelope $envelope)
     {
         if (null === $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp')) {
@@ -47,16 +52,5 @@ final class StampsListener implements EventSubscriberInterface
         if (null === $envelope->get('Flasher\Prime\Stamp\PriorityStamp')) {
             $envelope->withStamp(new PriorityStamp(0));
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'Flasher\Prime\EventDispatcher\Event\PersistEvent',
-            'Flasher\Prime\EventDispatcher\Event\UpdateEvent',
-        );
     }
 }

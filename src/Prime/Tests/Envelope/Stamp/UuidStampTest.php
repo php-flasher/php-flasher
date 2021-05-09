@@ -11,7 +11,7 @@ final class UuidStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp        = new UuidStamp();
+        $stamp = new UuidStamp();
 
         $envelop = new Envelope($notification, array($stamp));
 

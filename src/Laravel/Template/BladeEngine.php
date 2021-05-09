@@ -19,9 +19,6 @@ final class BladeEngine implements EngineInterface
         $this->engine = $engine;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function render($name, array $context = array())
     {
         return (string) $this->engine->make($name, $context);
