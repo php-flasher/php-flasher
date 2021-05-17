@@ -20,7 +20,7 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * enable a close button
+     * Enable a close button
      *
      * @param bool $closeButton
      *
@@ -70,7 +70,7 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * override the close button's HTML.
+     * Override the close button's HTML.
      *
      * @param string $closeHtml
      *
@@ -160,6 +160,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Specifies the time during which the pop-up closes in ms
+     *
      * @param int $hideDuration
      *
      * @return $this
@@ -172,6 +174,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Indicates the entry transition of the pop-up
+     *
      * @param string $hideEasing
      *
      * @return $this
@@ -184,6 +188,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Indicates the opening animation of the pop-up
+     *
      * @param string $hideMethod
      *
      * @return $this
@@ -325,6 +331,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Specifies the time during which the pop-up opens in ms
+     *
      * @param int $showDuration
      *
      * @return $this
@@ -337,6 +345,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Indicates the entry transition of the pop-up
+     *
      * @param string $showEasing
      *
      * @return $this
@@ -349,6 +359,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Indicates the opening animation of the pop-up
+     *
      * @param string $showMethod
      *
      * @return $this
@@ -361,6 +373,8 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
+     * Forces the user to validate the pop-up before closing
+     *
      * @param bool $tapToDismiss
      *
      * @return $this
