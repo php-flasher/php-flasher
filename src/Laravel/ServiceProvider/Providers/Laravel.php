@@ -176,11 +176,7 @@ class Laravel implements ServiceProviderInterface
                 $criteria = substr($criteria, 1, -1);
             }
 
-            if (empty($criteria)) {
-                $criteria = 'array()';
-            }
-
-            return "<?php echo app('flasher.response_manager')->render(${criteria}, 'html'); ?>";
+            return "<?php echo app('flasher.response_manager')->render(${criteria}); ?>";
         });
     }
 }
