@@ -45,14 +45,10 @@ final class Laravel50 extends Laravel
                 $value = substr($value, 1, -1);
             }
 
-            if (empty($value)) {
-                $value = 'array()';
-            }
-
             return str_replace(
                 '%criteria%',
                 $value,
-                $matches[1] . "<?php echo app('flasher.response_manager')->render(%criteria%, 'html'); ?>"
+                $matches[1] . "<?php echo app('flasher.response_manager')->render(%criteria%); ?>"
             );
         });
     }
