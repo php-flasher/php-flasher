@@ -29,7 +29,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0",
+        "illuminate/support": "5.0.*",
         "php-flasher/flasher": "^0.4"
     },
     "require-dev": {
@@ -63,7 +63,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "5.4"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
