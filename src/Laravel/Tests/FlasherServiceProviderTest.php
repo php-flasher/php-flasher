@@ -30,19 +30,15 @@ final class FlasherServiceProviderTest extends TestCase
         $blade = $this->app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
         $this->assertEquals(
-            "<?php echo app('flasher.response_manager')->render(array(), 'html'); ?>",
-            $blade->compileString('@flasher_render')
-        );
-        $this->assertEquals(
-            "<?php echo app('flasher.response_manager')->render(array(), 'html'); ?>",
+            "<?php echo app('flasher.response_manager')->render(); ?>",
             $blade->compileString('@flasher_render()')
         );
         $this->assertEquals(
-            "<?php echo app('flasher.response_manager')->render(array(), 'html'); ?>",
+            "<?php echo app('flasher.response_manager')->render(array()); ?>",
             $blade->compileString('@flasher_render(array())')
         );
         $this->assertEquals(
-            "<?php echo app('flasher.response_manager')->render(array(\"priority\" => array(\"min\" => 4, \"max\" => 5)), 'html'); ?>",
+            "<?php echo app('flasher.response_manager')->render(array(\"priority\" => array(\"min\" => 4, \"max\" => 5))); ?>",
             $blade->compileString('@flasher_render(array("priority" => array("min" => 4, "max" => 5)))')
         );
     }
