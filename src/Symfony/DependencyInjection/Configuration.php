@@ -40,7 +40,7 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                         ->arrayNode('templates')
                             ->ignoreExtraKeys()
-                            ->prototype('scalar')->end()
+                            ->prototype('variable')->end()
                             ->children()
                                 ->scalarNode('view')
                                     ->isRequired()
