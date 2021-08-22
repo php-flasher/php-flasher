@@ -28,8 +28,8 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^0.4",
-        "php-flasher/flasher-pnotify": "^0.4"
+        "php-flasher/flasher-laravel": "^0.4.11",
+        "php-flasher/flasher-pnotify": "^0.4.11"
     },
     "require-dev": {
         "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0",
