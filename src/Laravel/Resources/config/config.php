@@ -4,7 +4,7 @@ return array(
     'default' => 'template',
 
     'root_scripts' => array(
-        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
+        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.6/dist/flasher.min.js',
     ),
 
     'template_factory' => array(
@@ -13,15 +13,15 @@ return array(
             'tailwindcss' => array(
                 'view' => 'flasher::tailwindcss',
                 'styles' => array(
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
                 ),
             ),
             'tailwindcss_bg' => array(
                 'view' => 'flasher::tailwindcss_bg',
                 'styles' => array(
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
                 ),
             ),
             'bootstrap' => array(

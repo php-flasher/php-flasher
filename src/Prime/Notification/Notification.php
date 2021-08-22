@@ -46,7 +46,7 @@ class Notification implements NotificationInterface
 
     public function setOptions(array $options)
     {
-        $this->options = $options;
+        $this->options = array_replace($this->options, $options);
     }
 
     public function getOption($name, $default = null)
