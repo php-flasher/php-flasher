@@ -3,21 +3,10 @@
 set -e
 set -x
 
-CURRENT_BRANCH="main"
-
-function split()
-{
-#    git merge --strategy recursive --strategy-option subtree="$1" "$2/$CURRENT_BRANCH" --allow-unrelated-histories -m "Merge remote-tracking branch '$2/$CURRENT_BRANCH'"
-    SHA1=$(./bin/splitsh-lite --prefix="$1")
-    git push $2 "$SHA1:refs/heads/$CURRENT_BRANCH" -f
-}
-
 function remote()
 {
-    git remote add "$1" "$2" || true
+    git remote set-url "$1" "$2" || true
 }
-
-git pull origin $CURRENT_BRANCH
 
 remote flasher git@github.com-yoeunes:php-flasher/flasher.git
 remote laravel git@github.com-yoeunes:php-flasher/flasher-laravel.git
@@ -43,26 +32,3 @@ remote noty git@github.com-yoeunes:php-flasher/flasher-noty.git
 remote noty-laravel git@github.com-yoeunes:php-flasher/flasher-noty-laravel.git
 remote noty-symfony git@github.com-yoeunes:php-flasher/flasher-noty-symfony.git
 
-split 'src/Prime' flasher
-split 'src/Laravel' laravel
-split 'src/Symfony' symfony
-
-split 'src/Toastr/Prime' toastr
-split 'src/Toastr/Laravel' toastr-laravel
-split 'src/Toastr/Symfony' toastr-symfony
-
-split 'src/Notyf/Prime' notyf
-split 'src/Notyf/Laravel' notyf-laravel
-split 'src/Notyf/Symfony' notyf-symfony
-
-split 'src/SweetAlert/Prime' sweet-alert
-split 'src/SweetAlert/Laravel' sweet-alert-laravel
-split 'src/SweetAlert/Symfony' sweet-alert-symfony
-
-split 'src/Pnotify/Prime' pnotify
-split 'src/Pnotify/Laravel' pnotify-laravel
-split 'src/Pnotify/Symfony' pnotify-symfony
-
-split 'src/Noty/Prime' noty
-split 'src/Noty/Laravel' noty-laravel
-split 'src/Noty/Symfony' noty-symfony
