@@ -18,7 +18,9 @@ final class HtmlPresenter implements PresenterInterface
         return <<<CODE_SAMPLE
 {$scripts}
 <script type="text/javascript">
-Flasher.getInstance().render({$options});
+document.addEventListener('DOMContentLoaded', function(event) {
+  Flasher.getInstance().render({$options});
+})
 </script>
 CODE_SAMPLE;
     }

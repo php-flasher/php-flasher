@@ -24,7 +24,7 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweet-alert@0.1.3/dist/flasher-sweet-alert.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweet-alert@0.1.6/dist/flasher-sweet-alert.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')

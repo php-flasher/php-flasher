@@ -27,7 +27,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('root_scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.6/dist/flasher.min.js',
                     ))
                 ->end()
                 ->arrayNode('template_factory')
@@ -54,15 +54,15 @@ final class Configuration implements ConfigurationInterface
                                 'tailwindcss' => array(
                                     'view' => '@FlasherSymfony/tailwindcss.html.twig',
                                     'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
                                     ),
                                 ),
                                 'tailwindcss_bg' => array(
                                     'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
                                     'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
                                     ),
                                 ),
                                 'bootstrap' => array(
