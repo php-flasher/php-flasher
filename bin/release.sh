@@ -64,7 +64,7 @@ do
     echo "Releasing $REMOTE";
 
     TMP_DIR="/tmp/php-flasher"
-    REMOTE_URL="git@github.com:php-flasher/$REMOTE.git"
+    REMOTE_URL="git@github.com-yoeunes:php-flasher/$REMOTE.git"
 
     rm -rf $TMP_DIR;
     mkdir $TMP_DIR;
