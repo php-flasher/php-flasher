@@ -22,7 +22,7 @@ services:
     flasher.storage:
         class: Flasher\Symfony\Storage\Storage
         arguments:
-            - '@session'
+            - '@request_stack'
 
     flasher.storage_manager:
         class: Flasher\Prime\Storage\StorageManager

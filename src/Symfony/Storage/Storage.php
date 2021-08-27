@@ -5,32 +5,36 @@ namespace Flasher\Symfony\Storage;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class Storage implements StorageInterface
 {
     const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @var Session
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
-    public function __construct(Session $session)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     public function all()
     {
-        return $this->session->get(self::ENVELOPES_NAMESPACE, array());
+        $session = $this->getSession();
+
+        return $session->get(self::ENVELOPES_NAMESPACE, array());
     }
 
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $this->session->set(self::ENVELOPES_NAMESPACE, array_merge($this->all(), $envelopes));
+        $session = $this->getSession();
+        $session->set(self::ENVELOPES_NAMESPACE, array_merge($this->all(), $envelopes));
     }
 
     public function update($envelopes)
@@ -49,7 +53,8 @@ final class Storage implements StorageInterface
             $store[$index] = $map[$uuid];
         }
 
-        $this->session->set(self::ENVELOPES_NAMESPACE, $store);
+        $session = $this->getSession();
+        $session->set(self::ENVELOPES_NAMESPACE, $store);
     }
 
     public function remove($envelopes)
@@ -63,11 +68,27 @@ final class Storage implements StorageInterface
             return !isset($map[$uuid]);
         });
 
-        $this->session->set(self::ENVELOPES_NAMESPACE, $store);
+        $session = $this->getSession();
+        $session->set(self::ENVELOPES_NAMESPACE, $store);
     }
 
     public function clear()
     {
-        $this->session->set(self::ENVELOPES_NAMESPACE, array());
+        $session = $this->getSession();
+        $session->set(self::ENVELOPES_NAMESPACE, array());
+    }
+
+    /**
+     * @return SessionInterface
+     */
+    private function getSession()
+    {
+        if (method_exists($this->requestStack, 'getSession')) {
+            return $this->requestStack->getSession();
+        }
+
+        $request = $this->requestStack->getCurrentRequest();
+
+        return $request->getSession();
     }
 }
