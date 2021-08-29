@@ -22,6 +22,9 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     protected $storageManager;
 
+    /** @var array<string, object | callable>  */
+    protected static $macros = array();
+
     /**
      * @param string                  $handler
      */
@@ -84,7 +87,7 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->flash();
     }
 
-    public function flash($stamps = array())
+    public function flash(array $stamps = array())
     {
         if (!empty($stamps)) {
             $this->with($stamps);
@@ -117,7 +120,7 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
-    public function options($options, $merge = true)
+    public function options(array $options, $merge = true)
     {
         if (true === $merge) {
             $options = array_merge($this->envelope->getOptions(), $options);
@@ -215,5 +218,83 @@ class NotificationBuilder implements NotificationBuilderInterface
         $this->envelope->withStamp(new HandlerStamp($handler));
 
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param object|callable $macro
+     */
+    public static function macro($name, $macro)
+    {
+        static::$macros[$name] = $macro;
+    }
+
+    /**
+     * @param object $mixin
+     * @param bool $replace
+     */
+    public static function mixin($mixin, $replace = true)
+    {
+        $reflection = new \ReflectionClass($mixin);
+        $methods = $reflection->getMethods(
+            \ReflectionMethod::IS_PUBLIC | \ReflectionMethod::IS_PROTECTED
+        );
+
+        foreach ($methods as $method) {
+            if ($replace || ! static::hasMacro($method->name)) {
+                $method->setAccessible(true);
+                static::macro($method->name, $method->invoke($mixin));
+            }
+        }
+    }
+
+    /**
+     * @param string $name
+     */
+    public static function hasMacro($name)
+    {
+        return isset(static::$macros[$name]);
+    }
+
+    /**
+     * @param string $method
+     * @param array $parameters
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        if (! static::hasMacro($method)) {
+            throw new \BadMethodCallException(sprintf(
+                'Method %s::%s does not exist.', get_called_class(), $method
+            ));
+        }
+
+        $macro = static::$macros[$method];
+
+        if ($macro instanceof \Closure) {
+            return call_user_func_array(\Closure::bind($macro, null, get_called_class()), $parameters);
+        }
+
+        return call_user_func_array($macro, $parameters);
+    }
+
+    /**
+     * @param string $method
+     * @param array $parameters
+     */
+    public function __call($method, $parameters)
+    {
+        if (! static::hasMacro($method)) {
+            throw new \BadMethodCallException(sprintf(
+                'Method %s::%s does not exist.', get_called_class(), $method
+            ));
+        }
+
+        $macro = static::$macros[$method];
+
+        if ($macro instanceof \Closure) {
+            return call_user_func_array($macro->bindTo($this, get_called_class()), $parameters);
+        }
+
+        return call_user_func_array($macro, $parameters);
     }
 }
