@@ -1,6 +1,7 @@
 {
     "name": "php-flasher/flasher-laravel",
     "description": "Laravel package integrating PHP Flasher into Laravel applications",
+    "type": "library",
     "keywords": [
         "yoeunes",
         "notify",
@@ -58,7 +59,7 @@
                 "Flasher\\Laravel\\FlasherServiceProvider"
             ],
             "aliases": {
-                "Noty": "Flasher\\Noty\\Laravel\\Facade\\Noty"
+                "Flasher": "Flasher\\Laravel\\Facade\\Flasher"
             }
         }
     },
