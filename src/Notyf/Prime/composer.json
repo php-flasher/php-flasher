@@ -1,6 +1,7 @@
 {
     "name": "php-flasher/flasher-notyf",
     "description": "PHP Flasher adapter for Notyf",
+    "type": "library",
     "keywords": [
         "notify",
         "php",

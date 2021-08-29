@@ -1,6 +1,7 @@
 {
     "name": "php-flasher/flasher-sweet-alert",
     "description": "PHP Flasher adapter for Sweet Alert 2",
+    "type": "library",
     "keywords": [
         "notify",
         "php",

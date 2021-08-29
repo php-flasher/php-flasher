@@ -1,6 +1,7 @@
 {
     "name": "php-flasher/flasher",
     "description": "A powerful and flexible flash notifications system for PHP",
+    "type": "library",
     "keywords": [
         "flasher",
         "toastr",
