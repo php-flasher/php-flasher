@@ -12,34 +12,42 @@ final class HtmlPresenter implements PresenterInterface
             return '';
         }
 
-        $scripts = $this->renderScripts($response->getScripts(), $response->getContext());
         $options = json_encode($response->toArray());
 
-        return <<<CODE_SAMPLE
-{$scripts}
+        $renderScript = "Flasher.getInstance().render(${options});";
+
+        $rootScript = $response->getRootScript();
+        if (empty($rootScript)) {
+            return <<<JAVASCRIPT
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function(event) {
-  Flasher.getInstance().render({$options});
-})
+    document.addEventListener('DOMContentLoaded', function() {
+        ${renderScript}
+    })
 </script>
-CODE_SAMPLE;
-    }
-
-    /**
-     * @param string[] $scripts
-     *
-     * @return string
-     */
-    public function renderScripts($scripts, array $context)
-    {
-        $html = '';
-
-        foreach ($scripts as $file) {
-            if (empty($context['content']) || false === strpos($context['content'], $file)) {
-                $html .= sprintf('<script src="%s"></script>', $file) . PHP_EOL;
-            }
+JAVASCRIPT;
         }
 
-        return $html;
+
+        return <<<JAVASCRIPT
+<script type="text/javascript">
+    flasherRender = function() {
+      ${renderScript}
+    }
+
+    if (!window.Flasher && !document.querySelector('script[src="${rootScript}"]')) {
+        var tag = document.createElement('script');
+
+        tag.setAttribute('src', '${rootScript}');
+        tag.setAttribute('type', 'text/javascript');
+        tag.onload = flasherRender
+
+        document.body.appendChild(tag);
+    } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          flasherRender()
+        })
+    }
+</script>
+JAVASCRIPT;
     }
 }

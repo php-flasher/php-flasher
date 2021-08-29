@@ -43,7 +43,12 @@ final class ResourceManager implements ResourceManagerInterface
 
     public function filterResponse(Response $response)
     {
-        $response->addScripts($this->config->get('root_scripts', array()));
+        $rootScript = $this->config->get('root_script');
+        if (null === $rootScript) {
+            $rootScripts = $this->config->get('root_scripts', array());
+            $rootScript = reset($rootScripts);
+        }
+        $response->setRootScript($rootScript);
 
         $handlers = array();
 

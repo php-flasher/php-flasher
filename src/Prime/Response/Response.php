@@ -11,6 +11,9 @@ final class Response
      */
     private $envelopes;
 
+    /** @var string */
+    private $rootScript;
+
     /**
      * @var string[]
      */
@@ -67,6 +70,22 @@ final class Response
     public function getEnvelopes()
     {
         return $this->envelopes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRootScript()
+    {
+        return $this->rootScript;
+    }
+
+    /**
+     * @param string $rootScript
+     */
+    public function setRootScript($rootScript)
+    {
+        $this->rootScript = $rootScript;
     }
 
     /**
