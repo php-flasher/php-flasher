@@ -24,11 +24,12 @@ final class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('template')
                 ->end()
+                ->scalarNode('root_script')
+                    ->defaultValue('https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.6/dist/flasher.min.js')
+                ->end()
                 ->arrayNode('root_scripts')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array(
-                        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.6/dist/flasher.min.js',
-                    ))
+                    ->defaultValue(array())
                 ->end()
                 ->arrayNode('template_factory')
                     ->addDefaultsIfNotSet()
