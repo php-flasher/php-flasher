@@ -63,17 +63,12 @@ final class SessionMiddleware
             return $response;
         }
 
-        $content = $response->getContent();
-
-        $htmlResponse = $this->renderer->render(array(), array(
-            'format' => 'html',
-            'content' => $content,
-        ));
-
+        $htmlResponse = $this->renderer->render(array(), 'html');
         if (empty($htmlResponse)) {
             return $response;
         }
 
+        $content = $response->getContent();
         $pos = strripos($content, '</body>');
         $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
         $response->setContent($content);
