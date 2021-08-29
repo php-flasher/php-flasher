@@ -11,7 +11,6 @@ use Flasher\Prime\Stamp\OrderableStampInterface;
 final class FilterBuilder
 {
     const ASC = 'ASC';
-
     const DESC = 'DESC';
 
     /**
@@ -37,7 +36,7 @@ final class FilterBuilder
     public function orderBy(array $orderings)
     {
         $this->orderings = array_map(static function ($ordering) {
-            return strtoupper($ordering) === self::ASC ? self::ASC : self::DESC;
+            return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
         }, $orderings);
 
         return $this;
@@ -82,7 +81,7 @@ final class FilterBuilder
         if (null !== $orderings) {
             usort($envelopes, static function (Envelope $a, Envelope $b) use ($orderings) {
                 foreach ($orderings as $field => $ordering) {
-                    if (self::ASC !== $ordering) {
+                    if (FilterBuilder::ASC !== $ordering) {
                         list($a, $b) = array($b, $a);
                     }
 

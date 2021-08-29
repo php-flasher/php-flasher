@@ -5,6 +5,7 @@ namespace Flasher\Prime\Filter;
 use Flasher\Prime\Filter\Specification\DelaySpecification;
 use Flasher\Prime\Filter\Specification\HopsSpecification;
 use Flasher\Prime\Filter\Specification\PrioritySpecification;
+use Flasher\Prime\Filter\Specification\StampsSpecification;
 
 final class CriteriaBuilder
 {
@@ -32,6 +33,7 @@ final class CriteriaBuilder
         $this->buildLife();
         $this->buildLimit();
         $this->buildOrder();
+        $this->buildStamps();
 
         return $this->filterBuilder;
     }
@@ -140,5 +142,18 @@ final class CriteriaBuilder
         }
 
         $this->filterBuilder->orderBy($orderings);
+    }
+
+    public function buildStamps()
+    {
+        if (!isset($this->criteria['stamps'])) {
+            return;
+        }
+
+        $strategy = isset($this->criteria['stamps_strategy'])
+            ? $this->criteria['stamps_strategy']
+            : StampsSpecification::STRATEGY_OR;
+
+        $this->filterBuilder->andWhere(new StampsSpecification($this->criteria['stamps'], $strategy));
     }
 }
