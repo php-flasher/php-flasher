@@ -3,9 +3,7 @@
 return array(
     'default' => 'template',
 
-    'root_scripts' => array(
-        'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.6/dist/flasher.min.js',
-    ),
+    'root_script' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.6/dist/flasher.min.js',
 
     'template_factory' => array(
         'default' => 'tailwindcss',
