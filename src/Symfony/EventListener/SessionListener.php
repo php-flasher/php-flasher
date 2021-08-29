@@ -67,16 +67,12 @@ final class SessionListener implements EventSubscriberInterface
             return;
         }
 
-        $content = $response->getContent();
-
-        $htmlResponse = $this->responseManager->render(array(), 'html', array(
-            'content' => $content,
-        ));
-
+        $htmlResponse = $this->responseManager->render(array(), 'html');
         if (empty($htmlResponse)) {
             return;
         }
 
+        $content = $response->getContent();
         $pos = strripos($content, '</html>');
         $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
         $response->setContent($content);
