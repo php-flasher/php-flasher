@@ -11,6 +11,7 @@ function remote()
 remote flasher git@github.com:php-flasher/flasher.git
 remote laravel git@github.com:php-flasher/flasher-laravel.git
 remote symfony git@github.com:php-flasher/flasher-symfony.git
+remote livewire git@github.com:php-flasher/flasher-livewire.git
 
 remote toastr git@github.com:php-flasher/flasher-toastr.git
 remote toastr-laravel git@github.com:php-flasher/flasher-toastr-laravel.git

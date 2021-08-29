@@ -22,6 +22,7 @@ git pull origin $CURRENT_BRANCH
 remote flasher git@github.com:php-flasher/flasher.git
 remote laravel git@github.com:php-flasher/flasher-laravel.git
 remote symfony git@github.com:php-flasher/flasher-symfony.git
+remote livewire git@github.com:php-flasher/flasher-livewire.git
 
 remote toastr git@github.com:php-flasher/flasher-toastr.git
 remote toastr-laravel git@github.com:php-flasher/flasher-toastr-laravel.git
@@ -46,6 +47,7 @@ remote noty-symfony git@github.com:php-flasher/flasher-noty-symfony.git
 split 'src/Prime' flasher
 split 'src/Laravel' laravel
 split 'src/Symfony' symfony
+split 'src/Livewire' livewire
 
 split 'src/Toastr/Prime' toastr
 split 'src/Toastr/Laravel' toastr-laravel
