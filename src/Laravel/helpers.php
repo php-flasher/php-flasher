@@ -4,16 +4,18 @@ if (!function_exists('flasher')) {
     /**
      * @param string $message
      * @param string $type
-     * @param string $title
      *
      * @return \Flasher\Prime\Flasher
      */
-    function flasher($message = null, $type = 'success', $title = '', array $options = array(), array $stamps = array())
+    function flasher($message = null, $type = 'success', array $options = array(), array $stamps = array())
     {
+        /** @var \Flasher\Prime\FlasherInterface $flasher */
+        $flasher = app('flasher');
+
         if (null === $message && 0 === func_num_args()) {
-            return app('flasher.factory');
+            return $flasher;
         }
 
-        return app('flasher.factory')->render($type, $message, $title, $options, $stamps);
+        return $flasher->with($stamps)->addFlash($type, $message, $options);
     }
 }
