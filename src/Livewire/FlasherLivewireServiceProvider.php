@@ -17,8 +17,8 @@ final class FlasherLivewireServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        NotificationBuilder::macro('livewire', function () {
-            return $this->withStamp(new LivewireStamp());
+        NotificationBuilder::macro('livewire', function (array $context = []) {
+            return $this->withStamp(new LivewireStamp($context));
         });
 
         Livewire::listen('component.dehydrate', function ($component, $response) {
@@ -27,6 +27,7 @@ final class FlasherLivewireServiceProvider extends ServiceProvider
             ), 'array');
 
             if (count($data['envelopes']) > 0) {
+                $data['context']['livewire'] = $response->fingerprint;
                 $response->effects['dispatches'][] = [
                     'event' => 'flasher:render',
                     'data' => $data,
