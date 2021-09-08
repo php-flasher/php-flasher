@@ -4,7 +4,7 @@ namespace Flasher\Prime\Stamp;
 
 use Flasher\Prime\Envelope;
 
-final class UuidStamp implements StampInterface
+final class UuidStamp implements StampInterface, PresentableStampInterface
 {
     /**
      * @var string
@@ -55,5 +55,12 @@ final class UuidStamp implements StampInterface
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'uuid' => $this->getUuid(),
+        );
     }
 }
