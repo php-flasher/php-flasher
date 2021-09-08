@@ -55,21 +55,21 @@ final class Configuration implements ConfigurationInterface
                                 'tailwindcss' => array(
                                     'view' => '@FlasherSymfony/tailwindcss.html.twig',
                                     'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                                     ),
                                 ),
                                 'tailwindcss_bg' => array(
                                     'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
                                     'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                                     ),
                                 ),
                                 'bootstrap' => array(
                                     'view' => '@FlasherSymfony/bootstrap.html.twig',
                                     'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css',
+                                        'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.1/css/bootstrap.min.css',
                                     ),
                                 ),
                             ))

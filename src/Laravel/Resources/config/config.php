@@ -11,21 +11,21 @@ return array(
             'tailwindcss' => array(
                 'view' => 'flasher::tailwindcss',
                 'styles' => array(
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                 ),
             ),
             'tailwindcss_bg' => array(
                 'view' => 'flasher::tailwindcss_bg',
                 'styles' => array(
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/base.min.css',
-                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/utilities.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                 ),
             ),
             'bootstrap' => array(
                 'view' => 'flasher::bootstrap',
                 'styles' => array(
-                    'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css',
                 ),
             ),
         ),
