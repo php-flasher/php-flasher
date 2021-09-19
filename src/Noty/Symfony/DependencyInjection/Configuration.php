@@ -23,7 +23,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('scripts')
                     ->prototype('scalar')->end()
                     ->defaultValue(array(
-                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@0.1.3/dist/flasher-noty.min.js',
+                        'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@0.1.8/dist/flasher-noty.min.js',
                     ))
                 ->end()
                 ->arrayNode('styles')
