@@ -14,30 +14,28 @@ class ConfigurationTest extends TestCase
 
         $expected = array(
             'default' => 'template',
-            'root_scripts' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.1.3/dist/flasher.min.js',
-            ),
+            'root_script' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.2.2/dist/flasher.min.js',
             'template_factory' => array(
                 'default' => 'tailwindcss',
                 'templates' => array(
                     'tailwindcss' => array(
                         'view' => '@FlasherSymfony/tailwindcss.html.twig',
                         'styles' => array(
-                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                         ),
                     ),
                     'tailwindcss_bg' => array(
                         'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
                         'styles' => array(
-                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/base.min.css',
-                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/utilities.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                         ),
                     ),
                     'bootstrap' => array(
                         'view' => '@FlasherSymfony/bootstrap.html.twig',
                         'styles' => array(
-                            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.1/css/bootstrap.min.css',
                         ),
                     ),
                 ),
