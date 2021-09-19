@@ -3,10 +3,9 @@
 namespace Flasher\Symfony\Twig;
 
 use Flasher\Prime\Response\ResponseManagerInterface;
-use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-final class FlasherTwigExtension extends AbstractExtension
+final class FlasherTwigExtension extends \Flasher\Symfony\Bridge\Twig\FlasherTwigExtension
 {
     /**
      * @var ResponseManagerInterface
@@ -18,7 +17,7 @@ final class FlasherTwigExtension extends AbstractExtension
         $this->responseManager = $responseManager;
     }
 
-    public function getFunctions()
+    public function getFlasherFunctions(): array
     {
         $options = array(
             'is_safe' => array('html'),
@@ -32,7 +31,7 @@ final class FlasherTwigExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function flasherRender(array $criteria = array())
+    public function flasherRender(array $criteria = array()): string
     {
         return $this->responseManager->render($criteria);
     }

@@ -3,11 +3,11 @@
 namespace Flasher\SweetAlert\Symfony;
 
 use Flasher\SweetAlert\Symfony\DependencyInjection\FlasherSweetAlertExtension;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Flasher\Symfony\Bridge\FlasherBundle;
 
-class FlasherSweetAlertSymfonyBundle extends Bundle
+class FlasherSweetAlertSymfonyBundle extends FlasherBundle
 {
-    public function getContainerExtension()
+    protected function getFlasherContainerExtension()
     {
         return new FlasherSweetAlertExtension();
     }

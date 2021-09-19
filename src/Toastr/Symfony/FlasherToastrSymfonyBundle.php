@@ -2,12 +2,12 @@
 
 namespace Flasher\Toastr\Symfony;
 
+use Flasher\Symfony\Bridge\FlasherBundle;
 use Flasher\Toastr\Symfony\DependencyInjection\FlasherToastrExtension;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class FlasherToastrSymfonyBundle extends Bundle
+class FlasherToastrSymfonyBundle extends FlasherBundle
 {
-    public function getContainerExtension()
+    protected function getFlasherContainerExtension()
     {
         return new FlasherToastrExtension();
     }

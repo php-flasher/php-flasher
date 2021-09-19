@@ -3,11 +3,11 @@
 namespace Flasher\Pnotify\Symfony;
 
 use Flasher\Pnotify\Symfony\DependencyInjection\FlasherPnotifyExtension;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Flasher\Symfony\Bridge\FlasherBundle;
 
-class FlasherPnotifySymfonyBundle extends Bundle
+class FlasherPnotifySymfonyBundle extends FlasherBundle
 {
-    public function getContainerExtension()
+    protected function getFlasherContainerExtension()
     {
         return new FlasherPnotifyExtension();
     }

@@ -19,10 +19,14 @@ services:
         tags:
             - { name: 'flasher.factory', alias: 'template' }
 
-    flasher.storage:
-        class: Flasher\Symfony\Storage\Storage
+    flasher.storage_factory:
+        class: Flasher\Symfony\Storage\StorageFactory
         arguments:
             - '@request_stack'
+
+    flasher.storage:
+        class: Flasher\Prime\Storage\StorageInterface
+        factory: ['@flasher.storage_factory', '__invoke']
 
     flasher.storage_manager:
         class: Flasher\Prime\Storage\StorageManager
@@ -93,7 +97,7 @@ services:
             - '@flasher'
             - '@flasher.response_manager'
         tags:
-            - { name: 'kernel.event_subscriber' }
+            - { name: 'kernel.event_listener', event: 'kernel.response' }
 
     flasher.template_engine:
         class: Flasher\Symfony\Template\TwigEngine
