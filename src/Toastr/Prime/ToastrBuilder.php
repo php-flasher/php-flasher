@@ -4,6 +4,9 @@ namespace Flasher\Toastr\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @method self livewire(array $context = array())
+ */
 final class ToastrBuilder extends NotificationBuilder
 {
     /**
