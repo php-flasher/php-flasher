@@ -5,10 +5,9 @@ namespace Flasher\Symfony\EventListener;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Response\ResponseManagerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-final class SessionListener implements EventSubscriberInterface
+final class SessionListener
 {
     /**
      * @var ConfigInterface
@@ -39,9 +38,9 @@ final class SessionListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!$event->isMasterRequest() || $request->isXmlHttpRequest() || true !== $this->config->get(
-            'auto_create_from_session'
-        )) {
+        if (!$this->isMainRequest($event)
+            || $request->isXmlHttpRequest()
+            || true !== $this->config->get('auto_create_from_session')) {
             return;
         }
 
@@ -74,15 +73,8 @@ final class SessionListener implements EventSubscriberInterface
 
         $content = $response->getContent();
         $pos = strripos($content, '</html>');
-        $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
+        $content = substr($content, 0, $pos).$htmlResponse.substr($content, $pos);
         $response->setContent($content);
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'kernel.response' => 'onKernelResponse',
-        );
     }
 
     /**
@@ -103,5 +95,14 @@ final class SessionListener implements EventSubscriberInterface
         }
 
         return $mapping;
+    }
+
+    private function isMainRequest(ResponseEvent $event)
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

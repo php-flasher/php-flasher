@@ -3,11 +3,11 @@
 namespace Flasher\Notyf\Symfony;
 
 use Flasher\Notyf\Symfony\DependencyInjection\FlasherNotyfExtension;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Flasher\Symfony\Bridge\FlasherBundle;
 
-class FlasherNotyfSymfonyBundle extends Bundle
+class FlasherNotyfSymfonyBundle extends FlasherBundle
 {
-    public function getContainerExtension()
+    protected function getFlasherContainerExtension()
     {
         return new FlasherNotyfExtension();
     }
