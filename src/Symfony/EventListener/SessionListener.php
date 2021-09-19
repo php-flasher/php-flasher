@@ -5,6 +5,8 @@ namespace Flasher\Symfony\EventListener;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Response\ResponseManagerInterface;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final class SessionListener
@@ -34,7 +36,10 @@ final class SessionListener
         $this->responseManager = $responseManager;
     }
 
-    public function onKernelResponse(ResponseEvent $event)
+    /**
+     * @param ResponseEvent|FilterResponseEvent $event
+     */
+    public function onKernelResponse($event)
     {
         $request = $event->getRequest();
 
@@ -97,12 +102,19 @@ final class SessionListener
         return $mapping;
     }
 
-    private function isMainRequest(ResponseEvent $event)
+    /**
+     * @param ResponseEvent|FilterResponseEvent $event
+     */
+    private function isMainRequest($event)
     {
         if (method_exists($event, 'isMasterRequest')) {
             return $event->isMasterRequest();
         }
 
-        return $event->isMainRequest();
+        if (method_exists($event, 'isMainRequest')) {
+            return $event->isMainRequest();
+        }
+
+        return 1 === $event->getRequestType();
     }
 }

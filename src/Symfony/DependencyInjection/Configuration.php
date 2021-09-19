@@ -2,11 +2,15 @@
 
 namespace Flasher\Symfony\DependencyInjection;
 
+use Flasher\Symfony\Bridge\Bridge;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @return TreeBuilder
+     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('flasher');
@@ -53,21 +57,21 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                             ->defaultValue(array(
                                 'tailwindcss' => array(
-                                    'view' => '@FlasherSymfony/tailwindcss.html.twig',
+                                    'view' => $this->getTemplate('tailwindcss.html.twig'),
                                     'styles' => array(
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                                     ),
                                 ),
                                 'tailwindcss_bg' => array(
-                                    'view' => '@FlasherSymfony/tailwindcss_bg.html.twig',
+                                    'view' => $this->getTemplate('tailwindcss_bg.html.twig'),
                                     'styles' => array(
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
                                         'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
                                     ),
                                 ),
                                 'bootstrap' => array(
-                                    'view' => '@FlasherSymfony/bootstrap.html.twig',
+                                    'view' => $this->getTemplate('bootstrap.html.twig'),
                                     'styles' => array(
                                         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.1/css/bootstrap.min.css',
                                     ),
@@ -92,5 +96,17 @@ final class Configuration implements ConfigurationInterface
         ;
 
         return $treeBuilder;
+    }
+
+    /**
+     * @param $template string
+     *
+     * @return string
+     */
+    private function getTemplate($template)
+    {
+        return Bridge::versionCompare('2.2', '<')
+            ? 'FlasherSymfonyBundle::' . $template
+            : '@FlasherSymfony/' . $template;
     }
 }
