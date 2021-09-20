@@ -17,7 +17,7 @@ final class FlasherTwigExtension extends \Flasher\Symfony\Bridge\Twig\FlasherTwi
         $this->responseManager = $responseManager;
     }
 
-    public function getFlasherFunctions(): array
+    public function getFlasherFunctions()
     {
         $options = array(
             'is_safe' => array('html'),
@@ -31,7 +31,7 @@ final class FlasherTwigExtension extends \Flasher\Symfony\Bridge\Twig\FlasherTwi
     /**
      * @return string
      */
-    public function flasherRender(array $criteria = array()): string
+    public function flasherRender(array $criteria = array())
     {
         return $this->responseManager->render($criteria);
     }

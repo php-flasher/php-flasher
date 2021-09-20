@@ -6,12 +6,13 @@ use Flasher\Prime\Storage\ArrayStorage;
 use Flasher\Prime\Storage\StorageInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class StorageFactory
 {
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct($requestStack = null)
     {
         $this->requestStack = $requestStack;
     }
@@ -21,12 +22,20 @@ final class StorageFactory
      */
     public function __invoke()
     {
-        $request = $this->requestStack->getCurrentRequest();
+        if ($this->requestStack instanceof SessionInterface) {
+            return new Storage($this->requestStack);
+        }
 
-        if (!$request instanceof Request || false === $request->hasSession()) {
+        if (!$this->requestStack instanceof RequestStack) {
             return new ArrayStorage();
         }
 
-        return new Storage($request->getSession());
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($request instanceof Request && $request->hasSession()) {
+            return new Storage($request->getSession());
+        }
+
+        return new ArrayStorage();
     }
 }
