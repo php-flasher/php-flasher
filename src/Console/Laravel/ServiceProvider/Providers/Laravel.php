@@ -43,22 +43,22 @@ class Laravel implements ServiceProviderInterface
 
     public function registerServices()
     {
-        // $this->app->singleton('flasher.console.notify_send', function (Container $app) {
-        //     $options = $app['config']->get('flasher_console.notify_send', array());
-        //
-        //     $options['icons'] = array_replace($app['config']->get('flasher_console.icons', array()), $options['icons']);
-        //     $options['title'] = $app['config']->get('flasher_console.title', null);
-        //     $options['mute'] = $app['config']->get('flasher_console.mute', true);
-        //
-        //     return NotifySendNotifier($options);
-        // });
+        $this->app->singleton('flasher.console.notify_send', function (Container $app) {
+            $options = $app['config']->get('flasher_console.notify_send', array());
+
+            $options['icons'] = array_replace_recursive($app['config']->get('flasher_console.icons', array()), $options['icons']);
+            $options['title'] = $app['config']->get('flasher_console.title', null);
+            $options['mute'] = $app['config']->get('flasher_console.mute', true);
+
+            return new NotifySendNotifier($options);
+        });
 
 
 
         $this->app->singleton('flasher.console', function (Container $app) {
             $console = new FlasherConsole();
 
-            // $console->addNotifier($app['flasher.console.notify_send']);
+            $console->addNotifier($app['flasher.console.notify_send']);
 
             return $console;
         });

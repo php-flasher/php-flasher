@@ -17,26 +17,25 @@ final class FlasherConsoleExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, $this->getConfigFileLocator());
-        $loader->load('config.yaml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('config.php');
 
-        $this->configureNotifySend($config, $container);
+        $this->registerFlasherConsoleConfigration($config, $container);
+        $this->registerNotifySendConfigration($config, $container);
+    }
 
+    private function registerFlasherConsoleConfigration(array $config, ContainerBuilder $container)
+    {
         $container
             ->findDefinition('flasher.console')
             ->replaceArgument(2, $config['filter_criteria']);
     }
 
-    protected function getConfigFileLocator()
-    {
-        return new FileLocator(__DIR__ . '/../Resources/config');
-    }
-
-    private function configureNotifySend(array $config, ContainerBuilder $container)
+    private function registerNotifySendConfigration(array $config, ContainerBuilder $container)
     {
         $notifySendConfig = $config['notify_send'];
 
-        $notifySendConfig['icons'] = array_replace($config['icons'], $notifySendConfig['icons']);
+        $notifySendConfig['icons'] = array_replace_recursive($config['icons'], $notifySendConfig['icons']);
 
         $notifySendConfig['title'] = $config['title'];
         $notifySendConfig['mute'] = $config['mute'];
