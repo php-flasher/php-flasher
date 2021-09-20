@@ -1,8 +1,0 @@
-services:
-    flasher.notyf:
-        parent: 'flasher.notification_factory'
-        class: Flasher\Notyf\Prime\NotyfFactory
-        tags:
-            - { name: 'flasher.factory', alias: 'notyf' }
-
-    Flasher\Notyf\Prime\NotyfFactory: '@flasher.notyf'

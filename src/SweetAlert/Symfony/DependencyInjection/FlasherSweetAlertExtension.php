@@ -2,17 +2,21 @@
 
 namespace Flasher\SweetAlert\Symfony\DependencyInjection;
 
-use Flasher\Symfony\DependencyInjection\Extension;
+use Flasher\Symfony\DependencyInjection\FlasherExtensionInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class FlasherSweetAlertExtension extends Extension
+final class FlasherSweetAlertExtension extends Extension implements FlasherExtensionInterface
 {
-    protected function getConfigFileLocator()
+    public function load(array $configs, ContainerBuilder $container)
     {
-        return new FileLocator(__DIR__ . '/../Resources/config');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('config.php');
     }
 
-    protected function getConfigClass()
+    public function getConfigurationClass()
     {
         return new Configuration();
     }

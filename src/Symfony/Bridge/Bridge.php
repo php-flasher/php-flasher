@@ -21,4 +21,12 @@ final class Bridge
     {
         return version_compare(Kernel::VERSION, $version, $operator);
     }
+
+    /**
+     * @return bool
+     */
+    public static function canLoadAliases()
+    {
+        return self::versionCompare('3.0', '>=');
+    }
 }

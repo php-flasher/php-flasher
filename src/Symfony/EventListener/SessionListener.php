@@ -55,6 +55,10 @@ final class SessionListener
 
         $readyToRender = false;
 
+        if (!$request->hasSession()) {
+            return;
+        }
+
         foreach ($request->getSession()->getFlashBag()->all() as $type => $messages) {
             if (!isset($mapping[$type])) {
                 continue;

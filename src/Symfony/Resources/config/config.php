@@ -15,14 +15,11 @@ $container
     ->register('flasher.storage_factory', 'Flasher\Symfony\Storage\StorageFactory')
     ->addArgument('requestStack', null);
 
-if (Bridge::versionCompare('2.6', '<')) {
-    $container
-        ->register('flasher.storage', 'Flasher\Prime\Storage\ArrayStorage')
-        ->setFactoryService('flasher.storage_factory');
+$definition = $container->register('flasher.storage', 'Flasher\Prime\Storage\StorageInterface');
+if (method_exists($definition, 'setFactory')) {
+    $definition->setFactory(array(new Reference('flasher.storage_factory'), '__invoke'));
 } else {
-    $container
-        ->register('flasher.storage', 'Flasher\Prime\Storage\StorageInterface')
-        ->setFactory(new Reference('flasher.storage_factory'));
+    $definition->setFactoryService('flasher.storage_factory');
 }
 
 $container
@@ -89,38 +86,22 @@ $container
     ->register('flasher.template_engine', 'Flasher\Symfony\Template\TwigEngine')
     ->addArgument(new Reference('twig'));
 
-if (Bridge::versionCompare('2.2', '>')) {
+if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Prime\Config\Config', 'flasher.config');
-
-    $container->setAlias('Flasher\Prime\Flasher', 'flasher');
-
-    $container->setAlias('Flasher\Prime\EventDispatcher\EventDispatcher', 'flasher.event_dispatcher');
-
-    $container->setAlias('Flasher\Symfony\Storage\Storage', 'flasher.storage');
-
-    $container->setAlias('Flasher\Prime\Storage\StorageManager', 'flasher.storage_manager');
-
-    $container->setAlias('Flasher\Prime\Filter\Filter', 'flasher.filter');
-
-    $container->setAlias('Flasher\Prime\Factory\NotificationFactory', 'flasher.notification_factory');
-
-    $container->setAlias('Flasher\Symfony\Template\TwigEngine', 'flasher.template_engine');
-
     $container->setAlias('Flasher\Prime\Config\ConfigInterface', 'flasher.config');
-
-    $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');
-
-    $container->setAlias('Flasher\Prime\Storage\StorageManagerInterface', 'flasher.storage_manager');
-
-    $container->setAlias('Flasher\Prime\Filter\FilterInterface', 'flasher.filter');
-
+    $container->setAlias('Flasher\Prime\EventDispatcher\EventDispatcher', 'flasher.event_dispatcher');
     $container->setAlias('Flasher\Prime\EventDispatcher\EventDispatcherInterface', 'flasher.event_dispatcher');
-
-    $container->setAlias('Flasher\Prime\Storage\StorageInterface', 'flasher.storage');
-
+    $container->setAlias('Flasher\Prime\Factory\NotificationFactory', 'flasher.notification_factory');
     $container->setAlias('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.notification_factory');
-
-    $container->setAlias('Flasher\Prime\Template\EngineInterface', 'flasher.template_engine');
-
+    $container->setAlias('Flasher\Prime\Filter\Filter', 'flasher.filter');
+    $container->setAlias('Flasher\Prime\Filter\FilterInterface', 'flasher.filter');
+    $container->setAlias('Flasher\Prime\Flasher', 'flasher');
+    $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');
     $container->setAlias('Flasher\Prime\Response\ResponseManagerInterface', 'flasher.response_manager');
+    $container->setAlias('Flasher\Prime\Storage\StorageInterface', 'flasher.storage');
+    $container->setAlias('Flasher\Prime\Storage\StorageManager', 'flasher.storage_manager');
+    $container->setAlias('Flasher\Prime\Storage\StorageManagerInterface', 'flasher.storage_manager');
+    $container->setAlias('Flasher\Prime\Template\EngineInterface', 'flasher.template_engine');
+    $container->setAlias('Flasher\Symfony\Storage\Storage', 'flasher.storage');
+    $container->setAlias('Flasher\Symfony\Template\TwigEngine', 'flasher.template_engine');
 }

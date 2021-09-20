@@ -5,7 +5,6 @@ namespace Flasher\Symfony\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class FlasherExtension extends Extension
@@ -57,8 +56,6 @@ final class FlasherExtension extends Extension
 
         if ($container->has('session')) {
             $storageFactory->replaceArgument(0, $container->getDefinition('session'));
-
-            return;
         }
     }
 }

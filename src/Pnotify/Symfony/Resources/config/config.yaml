@@ -1,8 +1,0 @@
-services:
-    flasher.pnotify:
-        parent: 'flasher.notification_factory'
-        class: Flasher\Pnotify\Prime\PnotifyFactory
-        tags:
-            - { name: 'flasher.factory', alias: 'pnotify' }
-
-    Flasher\Pnotify\Prime\PnotifyFactory: '@flasher.pnotify'

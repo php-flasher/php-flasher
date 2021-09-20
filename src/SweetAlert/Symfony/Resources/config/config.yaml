@@ -1,8 +1,0 @@
-services:
-    flasher.sweet_alert:
-        parent: 'flasher.notification_factory'
-        class: Flasher\SweetAlert\Prime\SweetAlertFactory
-        tags:
-            - { name: 'flasher.factory', alias: 'sweet_alert' }
-
-    Flasher\SweetAlert\Prime\SweetAlertFactory: '@flasher.sweet_alert'

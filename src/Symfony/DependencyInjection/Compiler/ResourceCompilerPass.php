@@ -1,29 +1,26 @@
 <?php
 
-namespace Flasher\Symfony\DependencyInjection;
+namespace Flasher\Symfony\DependencyInjection\Compiler;
 
+use Flasher\Symfony\DependencyInjection\FlasherExtensionInterface;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\FileLocatorInterface;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension as SymfonyExtension;
 
-abstract class Extension extends SymfonyExtension implements CompilerPassInterface
+class ResourceCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @throws \Exception
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    private $extension;
+
+    public function __construct(FlasherExtensionInterface $extension)
     {
-        $loader = new Loader\YamlFileLoader($container, $this->getConfigFileLocator());
-        $loader->load('config.yaml');
+        $this->extension = $extension;
     }
 
     public function process(ContainerBuilder $container)
     {
-        $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration($this->getConfigClass(), $configs);
+        $configs = $container->getExtensionConfig($this->extension->getAlias());
+        $config = $this->processConfiguration($this->extension->getConfigurationClass(), $configs);
 
         $responseManager = $container->getDefinition('flasher.resource_manager');
         $responseManager->addMethodCall('addScripts', array($this->getHandlerAlias(), $this->getScripts($config)));
@@ -31,22 +28,19 @@ abstract class Extension extends SymfonyExtension implements CompilerPassInterfa
         $responseManager->addMethodCall('addOptions', array($this->getHandlerAlias(), $this->getOptions($config)));
     }
 
-    /**
-     * @return FileLocatorInterface
-     */
-    protected abstract function getConfigFileLocator();
+    protected function processConfiguration(ConfigurationInterface $configuration, array $configs)
+    {
+        $processor = new Processor();
 
-    /**
-     * @return ConfigurationInterface
-     */
-    protected abstract function getConfigClass();
+        return $processor->processConfiguration($configuration, $configs);
+    }
 
     /**
      * @return string
      */
     protected function getHandlerAlias()
     {
-        return str_replace('flasher_', '', $this->getAlias());
+        return str_replace('flasher_', '', $this->extension->getAlias());
     }
 
     /**
