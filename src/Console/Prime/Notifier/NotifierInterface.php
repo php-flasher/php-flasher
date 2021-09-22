@@ -9,7 +9,7 @@ interface NotifierInterface
     /**
      * @param Envelope[] $envelopes
      */
-    public function render(array $envelopes, $firstTime = true);
+    public function render(array $envelopes);
 
     /**
      * @return bool

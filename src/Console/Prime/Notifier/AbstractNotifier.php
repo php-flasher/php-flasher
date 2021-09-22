@@ -2,6 +2,8 @@
 
 namespace Flasher\Console\Prime\Notifier;
 
+use Flasher\Console\Prime\System\Program;
+use Flasher\Prime\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 
 abstract class AbstractNotifier implements NotifierInterface
@@ -12,6 +14,15 @@ abstract class AbstractNotifier implements NotifierInterface
     {
         $this->configureOptions($options);
     }
+
+    public function render(array $envelopes)
+    {
+        foreach ($envelopes as $envelope) {
+            $this->renderEnvelope($envelope);
+        }
+    }
+
+    abstract public function renderEnvelope(Envelope $envelope);
 
     public function isSupported()
     {
@@ -26,6 +37,26 @@ abstract class AbstractNotifier implements NotifierInterface
     public function getBinary()
     {
         return $this->options['binary'];
+    }
+
+    public function getBinaryPaths()
+    {
+        return $this->options['binary_paths'];
+    }
+
+    public function getProgram()
+    {
+        if (Program::exist($this->getBinary())) {
+            return $this->getBinary();
+        }
+
+        foreach ((array) $this->getBinaryPaths() as $path) {
+            if (file_exists($path)) {
+                return $path;
+            }
+        }
+
+        return null;
     }
 
     public function getTitle()
@@ -76,6 +107,7 @@ abstract class AbstractNotifier implements NotifierInterface
             'enabled' => true,
             'priority' => 0,
             'binary' => null,
+            'binary_paths' => array(),
             'title' => 'PHPFlasher',
             'icons' => array(
                 NotificationInterface::TYPE_SUCCESS => __DIR__ . '/../Resources/icons/success.png',
