@@ -31,7 +31,11 @@ class Command
 
     public function run()
     {
-        exec($this->command . ' ' . $this->formatOptions() . ' ' . $this->formatArguments(), $this->output, $this->exitCode);
+        $command = $this->command . ' ' . $this->formatOptions() . ' ' . $this->formatArguments();
+
+        // dd($command);
+
+        exec($command, $this->output, $this->exitCode);
     }
 
     private function formatArguments()
@@ -46,7 +50,7 @@ class Command
         foreach ($this->options as $name => $value) {
             $line .= $name;
             if ($value) {
-                $line .= '='.$value.' ';
+                $line .= ' '.$value.' ';
             }
         }
 

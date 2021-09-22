@@ -16,7 +16,6 @@ final class NotifuNotifier extends AbstractNotifier
             ->addOption('/m', $envelope->getMessage())
             ->addOption('/p', $this->getTitle())
             ->addOption('/i', $this->getIcon($envelope->getType()))
-            ->addArgument(5)
         ;
 
         $cmd->run();
