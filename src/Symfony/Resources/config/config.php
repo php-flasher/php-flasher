@@ -8,10 +8,6 @@ $container
     ->addArgument(array());
 
 $container
-    ->register('flasher', 'Flasher\Prime\Flasher')
-    ->addArgument(new Reference('flasher.config'));
-
-$container
     ->register('flasher.storage_factory', 'Flasher\Symfony\Storage\StorageFactory')
     ->addArgument('requestStack', null);
 
@@ -85,6 +81,11 @@ $container
 $container
     ->register('flasher.template_engine', 'Flasher\Symfony\Template\TwigEngine')
     ->addArgument(new Reference('twig'));
+
+$container
+    ->register('flasher', 'Flasher\Prime\Flasher')
+    ->addArgument(new Reference('flasher.config'))
+    ->addArgument(new Reference('flasher.response_manager'));
 
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Prime\Config\Config', 'flasher.config');

@@ -10,3 +10,7 @@ expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::position(), 0, 't
 expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::toast(), 1, 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', 'bottom-end');
 expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::grow(), 0, 'row', 'column', 'fullscreen', false);
 expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::customClass(), 0, 'container', 'popup', 'header', 'title', 'closeButton', 'icon', 'image', 'content', 'input', 'inputLabel', 'validationMessage', 'actions', 'confirmButton', 'denyButton', 'cancelButton', 'loader', 'footer');
+
+override(\Flasher\Prime\FlasherInterface::create(), map([
+    'sweet_alert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class
+]));

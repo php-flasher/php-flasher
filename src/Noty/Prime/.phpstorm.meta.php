@@ -10,3 +10,7 @@ expectedArguments(\Flasher\Noty\Prime\NotyBuilder::animation(), 0, 'open', 'clos
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::sounds(), 0, 'sources', 'volume', 'conditions');
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::docTitle(), 0, 'conditions');
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::queue(), 0, 'global');
+
+override(\Flasher\Prime\FlasherInterface::create(), map([
+    'noty' => \Flasher\Noty\Prime\NotyFactory::class
+]));
