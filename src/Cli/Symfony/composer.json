@@ -1,0 +1,56 @@
+{
+    "name": "php-flasher/flasher-cli-symfony",
+    "type": "symfony-bundle",
+    "description": "PHP Flasher Symfony adapter for Console",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "console ",
+        "bundle",
+        "flex"
+    ],
+    "homepage": "https://php-flasher.github.io/",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher-symfony": "^0.5",
+        "php-flasher/flasher-cli": "^0.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Console\\Symfony\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Console\\Symfony\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
