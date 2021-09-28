@@ -31,7 +31,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'flasher.console',
+            'flasher.cli',
         );
     }
 

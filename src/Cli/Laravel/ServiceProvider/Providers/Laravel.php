@@ -30,45 +30,45 @@ class Laravel implements ServiceProviderInterface
     public function boot(FlasherCliServiceProvider $provider)
     {
         $provider->publishes(array(
-            flasher_path(__DIR__ . '/../../Resources/config/config.php') => config_path('flasher_console.php'),
+            flasher_path(__DIR__ . '/../../Resources/config/config.php') => config_path('flasher_cli.php'),
         ), 'flasher-config');
     }
 
     public function register(FlasherCliServiceProvider $provider)
     {
-        $provider->mergeConfigFrom(flasher_path(__DIR__ . '/../../Resources/config/config.php'), 'flasher_console');
+        $provider->mergeConfigFrom(flasher_path(__DIR__ . '/../../Resources/config/config.php'), 'flasher_cli');
 
         $this->registerServices();
     }
 
     public function registerServices()
     {
-        $this->app->singleton('flasher.console.notify_send', function (Container $app) {
-            $options = $app['config']->get('flasher_console.notify_send', array());
+        $this->app->singleton('flasher.cli.notify_send', function (Container $app) {
+            $options = $app['config']->get('flasher_cli.notify_send', array());
 
-            $options['icons'] = array_replace_recursive($app['config']->get('flasher_console.icons', array()), $options['icons']);
-            $options['title'] = $app['config']->get('flasher_console.title', null);
-            $options['mute'] = $app['config']->get('flasher_console.mute', true);
+            $options['icons'] = array_replace_recursive($app['config']->get('flasher_cli.icons', array()), $options['icons']);
+            $options['title'] = $app['config']->get('flasher_cli.title', null);
+            $options['mute'] = $app['config']->get('flasher_cli.mute', true);
 
             return new NotifySendNotifier($options);
         });
 
 
 
-        $this->app->singleton('flasher.console', function (Container $app) {
-            $console = new FlasherCli();
+        $this->app->singleton('flasher.cli', function (Container $app) {
+            $cli = new FlasherCli();
 
-            $console->addNotifier($app['flasher.console.notify_send']);
+            $cli->addNotifier($app['flasher.cli.notify_send']);
 
-            return $console;
+            return $cli;
         });
 
         $this->app->extend('flasher.event_dispatcher', function (EventDispatcher $eventDispatcher, Container $app) {
-            $eventDispatcher->addSubscriber(new RenderListener($app['flasher.console']));
+            $eventDispatcher->addSubscriber(new RenderListener($app['flasher.cli']));
 
             return $eventDispatcher;
         });
 
-        $this->app->alias('flasher.console', 'Flasher\Console\Prime\FlasherCli');
+        $this->app->alias('flasher.cli', 'Flasher\Cli\Prime\FlasherCli');
     }
 }

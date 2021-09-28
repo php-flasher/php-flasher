@@ -68,6 +68,34 @@ final class Envelope implements NotificationInterface
     }
 
     /**
+     * @param array|StampInterface $stamps
+     *
+     * @return Envelope A new Envelope instance without any stamps of the given class
+     */
+    public function without($stamps)
+    {
+        $stamps = is_array($stamps) ? $stamps : func_get_args();
+
+        foreach ($stamps as $stamp) {
+            $this->withoutStamp($stamp);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string|StampInterface $type
+     */
+    public function withoutStamp($type)
+    {
+        $type = $type instanceof StampInterface ? get_class($type) : $type;
+
+        unset($this->stamps[$type]);
+
+        return $this;
+    }
+
+    /**
      * @param string $stampFqcn
      *
      * @return StampInterface|null

@@ -29,39 +29,6 @@ final class FilterBuilder
     private $maxResults;
 
     /**
-     * @param array<string, string> $orderings
-     *
-     * @return self
-     */
-    public function orderBy(array $orderings)
-    {
-        $this->orderings = array_map(static function ($ordering) {
-            return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
-        }, $orderings);
-
-        return $this;
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    public function getOrderings()
-    {
-        return $this->orderings;
-    }
-
-    /**
-     * @return $this
-     */
-    public function withCriteria(array $criteria)
-    {
-        $criteriaBuilder = new CriteriaBuilder($this, $criteria);
-        $criteriaBuilder->build();
-
-        return $this;
-    }
-
-    /**
      * @param Envelope[] $envelopes
      *
      * @return array
@@ -110,6 +77,39 @@ final class FilterBuilder
         }
 
         return $envelopes;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withCriteria(array $criteria)
+    {
+        $criteriaBuilder = new CriteriaBuilder($this, $criteria);
+        $criteriaBuilder->build();
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, string> $orderings
+     *
+     * @return self
+     */
+    public function orderBy(array $orderings)
+    {
+        $this->orderings = array_map(static function ($ordering) {
+            return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
+        }, $orderings);
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getOrderings()
+    {
+        return $this->orderings;
     }
 
     /**

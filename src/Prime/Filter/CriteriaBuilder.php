@@ -2,6 +2,7 @@
 
 namespace Flasher\Prime\Filter;
 
+use Flasher\Prime\Filter\Specification\CallbackSpecification;
 use Flasher\Prime\Filter\Specification\DelaySpecification;
 use Flasher\Prime\Filter\Specification\HopsSpecification;
 use Flasher\Prime\Filter\Specification\PrioritySpecification;
@@ -34,6 +35,7 @@ final class CriteriaBuilder
         $this->buildLimit();
         $this->buildOrder();
         $this->buildStamps();
+        $this->buildFilter();
 
         return $this->filterBuilder;
     }
@@ -155,5 +157,16 @@ final class CriteriaBuilder
             : StampsSpecification::STRATEGY_OR;
 
         $this->filterBuilder->andWhere(new StampsSpecification($this->criteria['stamps'], $strategy));
+    }
+
+    public function buildFilter()
+    {
+        if (!isset($this->criteria['filter'])) {
+            return;
+        }
+
+        foreach ((array) $this->criteria['filter'] as $callback) {
+            $this->filterBuilder->andWhere(new CallbackSpecification($this->filterBuilder, $callback));
+        }
     }
 }

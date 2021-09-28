@@ -34,7 +34,7 @@
 
 # Why use PHP Flasher ?
 
-The PHP Flasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __console.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
+The PHP Flasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __toastr.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
 and its highly extendable so you can add your custom notifications.
 
 This library is designed, so you can take full control when creating you notifications :

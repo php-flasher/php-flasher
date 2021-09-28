@@ -17,31 +17,44 @@ final class FlasherCliExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        dd($config);
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('config.php');
 
-        // $this->registerFlasherCliConfigration($config, $container);
-        // $this->registerNotifySendConfigration($config, $container);
+        $container
+            ->findDefinition('flasher.event_listener.cli_stamps_listener')
+            ->replaceArgument(0, $config['render_all'])
+            ->replaceArgument(1, $config['render_immediately']);
+
+        $this->registerNotifiersConfiguration($container, $config);
     }
 
-    private function registerFlasherCliConfigration(array $config, ContainerBuilder $container)
+    private function registerNotifiersConfiguration(ContainerBuilder $container, array $config)
     {
-        $container
-            ->findDefinition('flasher.console')
-            ->replaceArgument(2, $config['filter_criteria']);
+        $this->registerNotifier($container, $config, 'growl_notify');
+        $this->registerNotifier($container, $config, 'kdialog_notifier');
+        $this->registerNotifier($container, $config, 'notifu_notifier');
+        $this->registerNotifier($container, $config, 'notify_send');
+        $this->registerNotifier($container, $config, 'snore_toast_notifier');
+        $this->registerNotifier($container, $config, 'terminal_notifier_notifier');
+        $this->registerNotifier($container, $config, 'toaster_send');
     }
 
-    private function registerNotifySendConfigration(array $config, ContainerBuilder $container)
+    private function registerNotifier(ContainerBuilder $container, array $config, $notifier)
     {
-        $notifySendConfig = $config['notify_send'];
-
-        $notifySendConfig['icons'] = array_replace_recursive($config['icons'], $notifySendConfig['icons']);
-
-        $notifySendConfig['title'] = $config['title'];
-        $notifySendConfig['mute'] = $config['mute'];
-
         $container
-            ->findDefinition('flasher.console.notify_send')
-            ->replaceArgument(0, $notifySendConfig);
+            ->findDefinition("flasher.cli.$notifier")
+            ->replaceArgument(0, $this->createConfigFor($config, $notifier));
+    }
+
+    private function createConfigFor(array $config, $notifier)
+    {
+        $options = $config[$notifier];
+
+        $options['title'] = $config['title'];
+        $options['mute'] = $config['mute'];
+        $options['icons'] = array_replace_recursive($config['icons'], $options['icons']);
+
+        return $options;
     }
 }

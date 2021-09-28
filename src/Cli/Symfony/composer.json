@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-cli-symfony",
     "type": "symfony-bundle",
-    "description": "PHP Flasher Symfony adapter for Console",
+    "description": "PHP Flasher Symfony adapter for Cli Console Terminal",
     "keywords": [
         "yoeunes",
         "notify",
@@ -13,7 +13,9 @@
         "messages",
         "alerts",
         "pnotify",
-        "console ",
+        "console",
+        "cli",
+        "terminal",
         "bundle",
         "flex"
     ],
@@ -37,7 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Console\\Symfony\\": ""
+            "Flasher\\Cli\\Symfony\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -45,7 +47,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Console\\Symfony\\Tests\\": "Tests/"
+            "Flasher\\Cli\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {

@@ -16,7 +16,7 @@ final class Laravel4 extends Laravel
     {
         $provider->package(
             'php-flasher/flasher-cli-laravel',
-            'flasher_console',
+            'flasher_cli',
             flasher_path(__DIR__ . '/../../Resources')
         );
     }

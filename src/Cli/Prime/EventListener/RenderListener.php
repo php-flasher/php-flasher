@@ -2,11 +2,13 @@
 
 namespace Flasher\Cli\Prime\EventListener;
 
-use Flasher\Prime\EventDispatcher\Event\PersistEvent;
+use Flasher\Cli\Prime\Stamp\DesktopStamp;
+use Flasher\Prime\Envelope;
+use Flasher\Prime\EventDispatcher\Event\PostPersistEvent;
 use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 use Flasher\Prime\FlasherInterface;
 
-class RenderListener implements EventSubscriberInterface
+final class RenderListener implements EventSubscriberInterface
 {
     private $flasher;
 
@@ -16,22 +18,28 @@ class RenderListener implements EventSubscriberInterface
     }
 
     /**
-     * @param PersistEvent $event
+     * @param PostPersistEvent $event
      */
     public function __invoke($event)
     {
-        return;
         if (PHP_SAPI !== 'cli') {
             return;
         }
 
-        $envelopes = $event->getEnvelopes();
+        $callback = function(Envelope $envelope) {
+            $stamp = $envelope->get('Flasher\Cli\Prime\Stamp\DesktopStamp');
+            if (!$stamp instanceof DesktopStamp) {
+                return false;
+            }
 
-        $this->FlasherCli->render($envelopes);
+            return $stamp->isRenderImmediately();
+        };
+
+        $this->flasher->render(array('filter' => $callback), 'cli');
     }
 
     public static function getSubscribedEvents()
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PersistEvent';
+        return 'Flasher\Prime\EventDispatcher\Event\PostPersistEvent';
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-cli",
-    "description": "PHP Flasher adapter for Console",
+    "description": "PHP Flasher adapter for Cli Console Terminal",
     "type": "library",
     "keywords": [
         "notify",
@@ -12,7 +12,9 @@
         "messages",
         "alerts",
         "pnotify",
-        "console "
+        "console",
+        "Cli",
+        "Terminal"
     ],
     "homepage": "https://php-flasher.github.io/",
     "authors": [
@@ -33,7 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Flasher\\Console\\Prime\\": ""
+            "Flasher\\Cli\\Prime\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -41,7 +43,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Console\\Prime\\Tests\\": "Tests/"
+            "Flasher\\Cli\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {
