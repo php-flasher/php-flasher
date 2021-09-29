@@ -18,4 +18,17 @@ final class CliNotificationBuilder extends NotificationBuilder
 
         return $this;
     }
+
+    /**
+     * @param string $icon
+     *
+     * @return self
+     */
+    public function icon($icon)
+    {
+        $notification = $this->envelope->getNotification();
+        $notification->setIcon($icon);
+
+        return $this;
+    }
 }

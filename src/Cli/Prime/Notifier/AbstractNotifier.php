@@ -2,6 +2,7 @@
 
 namespace Flasher\Cli\Prime\Notifier;
 
+use Flasher\Cli\Prime\CliNotification;
 use Flasher\Cli\Prime\System\Program;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
@@ -76,12 +77,19 @@ abstract class AbstractNotifier implements NotifierInterface
     }
 
     /**
-     * @param string $type
+     * @param Envelope $envelope
      *
      * @return string
      */
-    public function getIcon($type)
+    public function getIcon(Envelope $envelope)
     {
+        $notification = $envelope->getNotification();
+        if ($notification instanceof CliNotification && $notification->getIcon()) {
+            return $notification->getIcon();
+        }
+
+        $type = $envelope->getType();
+
         if (isset($this->options['icons'][$type]) && file_exists($this->options['icons'][$type])) {
             return $this->options['icons'][$type];
         }

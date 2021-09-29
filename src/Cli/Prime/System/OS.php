@@ -50,4 +50,13 @@ class OS
     {
         return false !== strpos(self::getName(), 'Darwin');
     }
+
+    public static function getMacOSVersion()
+    {
+        $cmd = new Command('sw_vers');
+        $cmd->addArgument('-productVersion');
+        $cmd->run();
+
+        return trim($cmd->getOutput());
+    }
 }

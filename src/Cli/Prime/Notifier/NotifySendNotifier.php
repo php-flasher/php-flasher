@@ -15,7 +15,7 @@ final class NotifySendNotifier extends AbstractNotifier
         $cmd
             ->addOption('--urgency', 'normal')
             ->addOption('--app-name', 'notify')
-            ->addOption('--icon', $this->getIcon($envelope->getType()))
+            ->addOption('--icon', $this->getIcon($envelope))
             ->addOption('--expire-time', $this->getExpireTime())
             ->addArgument($this->getTitle($envelope))
             ->addArgument($envelope->getMessage())

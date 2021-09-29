@@ -15,7 +15,7 @@ final class ToasterNotifier extends AbstractNotifier
         $cmd
             ->addOption('-m', $envelope->getMessage())
             ->addOption('-t', $this->getTitle($envelope))
-            ->addOption('-p', $this->getIcon($envelope->getType()))
+            ->addOption('-p', $this->getIcon($envelope))
         ;
 
         $cmd->run();
@@ -23,7 +23,11 @@ final class ToasterNotifier extends AbstractNotifier
 
     public function isSupported()
     {
-        return $this->isEnabled() && OS::isWindows() && $this->getProgram();
+        if (!$this->getProgram() || !$this->isEnabled()) {
+            return false;
+        }
+
+        return OS::isWindowsEightOrHigher() || OS::isWindowsSubsystemForLinux();
     }
 
     public function configureOptions(array $options)

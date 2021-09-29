@@ -15,7 +15,7 @@ final class NotifuNotifier extends AbstractNotifier
         $cmd
             ->addOption('/m', $envelope->getMessage())
             ->addOption('/p', $this->getTitle($envelope))
-            ->addOption('/i', $this->getIcon($envelope->getType()))
+            ->addOption('/i', $this->getIcon($envelope))
         ;
 
         $cmd->run();
@@ -23,7 +23,7 @@ final class NotifuNotifier extends AbstractNotifier
 
     public function isSupported()
     {
-        return $this->isEnabled() && OS::isWindows() && $this->getProgram();
+        return $this->isEnabled() && OS::isWindowsSeven() && $this->getProgram();
     }
 
     public function configureOptions(array $options)

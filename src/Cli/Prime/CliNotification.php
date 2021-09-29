@@ -11,6 +11,9 @@ final class CliNotification extends Notification
      */
     private $title;
 
+    /** @var string */
+    private $icon;
+
     /**
      * @return string
      */
@@ -27,10 +30,27 @@ final class CliNotification extends Notification
         $this->title = $title;
     }
 
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
     public function toArray()
     {
         return array_merge(parent::toArray(), array(
             'title' => $this->getTitle(),
+            'icon' => $this->getIcon(),
         ));
     }
 }

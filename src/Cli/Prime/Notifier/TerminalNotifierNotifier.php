@@ -15,8 +15,16 @@ final class TerminalNotifierNotifier extends AbstractNotifier
         $cmd
             ->addOption('-message', $envelope->getMessage())
             ->addOption('-title', $this->getTitle($envelope))
-            ->addOption('-appIcon', $this->getIcon($envelope->getType()))
         ;
+
+        if (version_compare(OS::getMacOSVersion(), '10.9.0', '>=')) {
+            $cmd->addOption('-appIcon', $this->getIcon($envelope));
+        }
+
+        $url = $envelope->getOption('url');
+        if ($url) {
+            $cmd->addOption('-open', $url);
+        }
 
         $cmd->run();
     }
