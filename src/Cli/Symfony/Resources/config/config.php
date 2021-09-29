@@ -14,6 +14,7 @@ if (class_exists('Symfony\Component\DependencyInjection\ChildDefinition')) {
 $definition
     ->setClass('Flasher\Cli\Prime\CliNotificationFactory')
     ->addArgument(new Reference('flasher.response_manager'))
+    ->addArgument(array())
     ->addTag('flasher.factory', array('alias' => 'cli'));
 
 $container->setDefinition('flasher.cli', $definition);
@@ -30,7 +31,7 @@ $container
 
 $container
     ->register('flasher.event_listener.cli_render_listener', 'Flasher\Cli\Prime\EventListener\RenderListener')
-    ->addArgument(new Reference('flasher'))
+    ->addArgument(new Reference('flasher.cli'))
     ->addTag('flasher.event_subscriber', array('priority' => -256));
 
 $container

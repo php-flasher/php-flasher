@@ -28,6 +28,13 @@ final class FilterBuilder
      */
     private $maxResults;
 
+    private static $stampsMap = array(
+        'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
+        'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
+        'delay' => 'Flasher\Prime\Stamp\DelayStamp',
+        'hops' => 'Flasher\Prime\Stamp\HopsStamp',
+    );
+
     /**
      * @param Envelope[] $envelopes
      *
@@ -50,6 +57,10 @@ final class FilterBuilder
                 foreach ($orderings as $field => $ordering) {
                     if (FilterBuilder::ASC !== $ordering) {
                         list($a, $b) = array($b, $a);
+                    }
+
+                    if (isset(FilterBuilder::$stampsMap[$field])) {
+                        return FilterBuilder::$stampsMap[$field];
                     }
 
                     $stampA = $a->get($field);

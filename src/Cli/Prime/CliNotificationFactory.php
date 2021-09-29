@@ -9,17 +9,26 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 final class CliNotificationFactory extends NotificationFactory implements CliFlasherInterface
 {
     private $responseManager;
+    private $filterCriteria;
 
-    public function __construct(StorageManagerInterface $storageManager, ResponseManagerInterface $responseManager)
-    {
+    public function __construct(
+        StorageManagerInterface $storageManager,
+        ResponseManagerInterface $responseManager,
+        array $filterCriteria = array()
+    ) {
         parent::__construct($storageManager);
 
         $this->responseManager = $responseManager;
+        $this->filterCriteria = $filterCriteria;
     }
 
-    public function render(array $criteria = array(), $presenter = 'html', array $context = array())
+    public function render(array $criteria = array(), $merge = true)
     {
-        return $this->responseManager->render($criteria, $presenter, $context);
+        if ($merge) {
+            $criteria = $this->filterCriteria + $criteria;
+        }
+
+        return $this->responseManager->render($criteria, 'cli');
     }
 
     public function createNotificationBuilder()

@@ -2,17 +2,17 @@
 
 namespace Flasher\Cli\Prime\EventListener;
 
+use Flasher\Cli\Prime\CliFlasherInterface;
 use Flasher\Cli\Prime\Stamp\DesktopStamp;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\PostPersistEvent;
 use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
-use Flasher\Prime\FlasherInterface;
 
 final class RenderListener implements EventSubscriberInterface
 {
     private $flasher;
 
-    public function __construct(FlasherInterface $flasher)
+    public function __construct(CliFlasherInterface $flasher)
     {
         $this->flasher = $flasher;
     }
@@ -35,7 +35,7 @@ final class RenderListener implements EventSubscriberInterface
             return $stamp->isRenderImmediately();
         };
 
-        $this->flasher->render(array('filter' => $callback), 'cli');
+        $this->flasher->render(array('filter' => $callback));
     }
 
     public static function getSubscribedEvents()

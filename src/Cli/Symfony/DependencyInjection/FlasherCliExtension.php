@@ -25,6 +25,10 @@ final class FlasherCliExtension extends Extension
             ->replaceArgument(0, $config['render_all'])
             ->replaceArgument(1, $config['render_immediately']);
 
+        $container
+            ->findDefinition('flasher.cli')
+            ->replaceArgument(2, $config['filter_criteria']);
+
         $this->registerNotifiersConfiguration($container, $config);
     }
 
