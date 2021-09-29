@@ -4,9 +4,6 @@ namespace Flasher\SweetAlert\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
-/**
- * @method self livewire(array $context = array())
- */
 final class SweetAlertBuilder extends NotificationBuilder
 {
     public function type($type, $message = null, array $options = array())

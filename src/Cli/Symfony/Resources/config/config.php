@@ -13,6 +13,7 @@ if (class_exists('Symfony\Component\DependencyInjection\ChildDefinition')) {
 
 $definition
     ->setClass('Flasher\Cli\Prime\CliNotificationFactory')
+    ->addArgument(new Reference('flasher.response_manager'))
     ->addTag('flasher.factory', array('alias' => 'cli'));
 
 $container->setDefinition('flasher.cli', $definition);
@@ -69,4 +70,5 @@ $container
 
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Cli\Prime\CliNotificationFactory', 'flasher.cli');
+    $container->setAlias('Flasher\Cli\Prime\CliFlasherInterface', 'Flasher\Cli\Prime\CliNotificationFactory');
 }
