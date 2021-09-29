@@ -8,17 +8,23 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @return TreeBuilder
+     */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('flasher_cli');
-        $rootNode = $this->getRootNode($treeBuilder, 'flasher_cli');
+        $name = 'flasher_cli';
+        $treeBuilder = new TreeBuilder($name);
+        $rootNode = $this->getRootNode($treeBuilder, $name);
 
         $rootNode
             ->children()
                 ->booleanNode('render_all')
+                    ->isRequired()
                     ->defaultValue(false)
                 ->end()
                 ->booleanNode('render_immediately')
+                    ->isRequired()
                     ->defaultValue(true)
                 ->end()
                 ->scalarNode('title')
@@ -35,6 +41,10 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
+                ->arrayNode('sounds')
+                    ->prototype('variable')->end()
+                    ->defaultValue(array())
+                ->end()
                 ->append($this->addNotifiersConfig())
             ->end()
         ;
@@ -44,11 +54,12 @@ final class Configuration implements ConfigurationInterface
 
     private function addNotifiersConfig()
     {
-        $treeBuilder = new TreeBuilder('notifiers');
-        $rootNode = $this->getRootNode($treeBuilder, 'notifiers');
+        $name = 'notifiers';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
+            ->fixXmlConfig('notifier')
             ->children()
                 ->append($this->addGrowlNotifyNotifier())
                 ->append($this->addKDialogNotifier())
@@ -67,15 +78,20 @@ final class Configuration implements ConfigurationInterface
      */
     private function addGrowlNotifyNotifier()
     {
-        $treeBuilder = new TreeBuilder('growl_notify');
-        $rootNode = $this->getRootNode($treeBuilder, 'growl_notify');
+        $name = 'growl_notify';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.growl_notify')->end()
-                ->scalarNode('binary')->defaultValue('notify-send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(0)
+                ->end()
+                ->scalarNode('binary')->defaultValue('growlnotify')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
@@ -86,7 +102,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
@@ -104,15 +120,20 @@ final class Configuration implements ConfigurationInterface
      */
     private function addKDialogNotifier()
     {
-        $treeBuilder = new TreeBuilder('kdialog_notifier');
-        $rootNode = $this->getRootNode($treeBuilder, 'kdialog_notifier');
+        $name = 'kdialog_notifier';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.kdialog_notifier')->end()
-                ->scalarNode('binary')->defaultValue('notify-send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(0)
+                ->end()
+                ->scalarNode('binary')->defaultValue('kdialog')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
@@ -123,11 +144,11 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
             ->end()
@@ -141,15 +162,20 @@ final class Configuration implements ConfigurationInterface
      */
     private function addNotifuNotifier()
     {
-        $treeBuilder = new TreeBuilder('notifu_notifier');
-        $rootNode = $this->getRootNode($treeBuilder, 'notifu_notifier');
+        $name = 'notifu_notifier';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.notifu_notifier')->end()
-                ->scalarNode('binary')->defaultValue('notify-send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(0)
+                ->end()
+                ->scalarNode('binary')->defaultValue('notifu')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
@@ -160,11 +186,11 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
             ->end()
@@ -178,14 +204,19 @@ final class Configuration implements ConfigurationInterface
      */
     private function addNotifySendNotifier()
     {
-        $treeBuilder = new TreeBuilder('notify_send');
-        $rootNode = $this->getRootNode($treeBuilder, 'notify_send');
+        $name = 'notify_send';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.notify_send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(1)
+                ->end()
                 ->scalarNode('binary')->defaultValue('notify-send')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
@@ -197,11 +228,11 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
             ->end()
@@ -215,15 +246,20 @@ final class Configuration implements ConfigurationInterface
      */
     private function addSnoreToastNotifier()
     {
-        $treeBuilder = new TreeBuilder('snore_toast_notifier');
-        $rootNode = $this->getRootNode($treeBuilder, 'snore_toast_notifier');
+        $name = 'snore_toast_notifier';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.snore_toast_notifier')->end()
-                ->scalarNode('binary')->defaultValue('notify-send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(0)
+                ->end()
+                ->scalarNode('binary')->defaultValue('snoretoast')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
@@ -234,11 +270,11 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
             ->end()
@@ -252,15 +288,20 @@ final class Configuration implements ConfigurationInterface
      */
     private function addTerminalNotifierNotifier()
     {
-        $treeBuilder = new TreeBuilder('terminal_notifier_notifier');
-        $rootNode = $this->getRootNode($treeBuilder, 'terminal_notifier_notifier');
+        $name = 'terminal_notifier_notifier';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.terminal_notifier_notifier')->end()
-                ->scalarNode('binary')->defaultValue('notify-send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(0)
+                ->end()
+                ->scalarNode('binary')->defaultValue('terminal-notifier')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
@@ -271,11 +312,11 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
             ->end()
@@ -289,15 +330,20 @@ final class Configuration implements ConfigurationInterface
      */
     private function addToasterNotifier()
     {
-        $treeBuilder = new TreeBuilder('toaster_send');
-        $rootNode = $this->getRootNode($treeBuilder, 'toaster_send');
+        $name = 'toaster';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')->defaultValue(true)->end()
-                ->scalarNode('service')->defaultValue('flasher.cli.toaster_send')->end()
-                ->scalarNode('binary')->defaultValue('notify-send')->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(0)
+                ->end()
+                ->scalarNode('binary')->defaultValue('toast')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
@@ -308,11 +354,11 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->defaultValue(null)->end()
                 ->booleanNode('mute')->defaultValue(true)->end()
                 ->arrayNode('icons')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
                 ->arrayNode('sounds')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue(array())
                 ->end()
             ->end()

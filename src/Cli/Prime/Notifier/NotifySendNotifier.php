@@ -39,6 +39,7 @@ final class NotifySendNotifier extends AbstractNotifier
         $default = array(
             'binary' => 'notify-send',
             'expire_time' => 0,
+            'priority' => 1,
         );
 
         $options = array_replace($default, $options);

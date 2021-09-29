@@ -17,7 +17,6 @@ final class FlasherCliExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        dd($config);
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('config.php');
 
@@ -37,7 +36,7 @@ final class FlasherCliExtension extends Extension
         $this->registerNotifier($container, $config, 'notify_send');
         $this->registerNotifier($container, $config, 'snore_toast_notifier');
         $this->registerNotifier($container, $config, 'terminal_notifier_notifier');
-        $this->registerNotifier($container, $config, 'toaster_send');
+        $this->registerNotifier($container, $config, 'toaster');
     }
 
     private function registerNotifier(ContainerBuilder $container, array $config, $notifier)
@@ -49,11 +48,12 @@ final class FlasherCliExtension extends Extension
 
     private function createConfigFor(array $config, $notifier)
     {
-        $options = $config[$notifier];
+        $options = $config['notifiers'][$notifier];
 
         $options['title'] = $config['title'];
         $options['mute'] = $config['mute'];
         $options['icons'] = array_replace_recursive($config['icons'], $options['icons']);
+        $options['sounds'] = array_replace_recursive($config['sounds'], $options['sounds']);
 
         return $options;
     }

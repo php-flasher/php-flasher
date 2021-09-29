@@ -63,7 +63,7 @@ $container
     ->addTag('flasher.cli_notifier');
 
 $container
-    ->register('flasher.cli.toaster_send', 'Flasher\Cli\Prime\Notifier\ToasterNotifier')
+    ->register('flasher.cli.toaster', 'Flasher\Cli\Prime\Notifier\ToasterNotifier')
     ->addArgument(array())
     ->addTag('flasher.cli_notifier');
 
