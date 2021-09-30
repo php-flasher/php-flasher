@@ -20,11 +20,9 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('render_all')
-                    ->isRequired()
-                    ->defaultValue(false)
+                    ->defaultValue(true)
                 ->end()
                 ->booleanNode('render_immediately')
-                    ->isRequired()
                     ->defaultValue(true)
                 ->end()
                 ->scalarNode('title')

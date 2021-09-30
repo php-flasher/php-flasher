@@ -39,7 +39,7 @@ final class SnoreToastNotifier extends AbstractNotifier
             ),
         );
 
-        $options = array_replace($default, $options);
+        $options = array_replace_recursive($default, $options);
 
         parent::configureOptions($options);
     }

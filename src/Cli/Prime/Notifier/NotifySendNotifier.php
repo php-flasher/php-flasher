@@ -42,7 +42,7 @@ final class NotifySendNotifier extends AbstractNotifier
             'priority' => 1,
         );
 
-        $options = array_replace($default, $options);
+        $options = array_replace_recursive($default, $options);
 
         parent::configureOptions($options);
     }

@@ -32,7 +32,7 @@ final class KDialogNotifier extends AbstractNotifier
             'binary' => 'kdialog',
         );
 
-        $options = array_replace($default, $options);
+        $options = array_replace_recursive($default, $options);
 
         parent::configureOptions($options);
     }

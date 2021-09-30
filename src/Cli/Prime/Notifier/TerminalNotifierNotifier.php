@@ -40,7 +40,7 @@ final class TerminalNotifierNotifier extends AbstractNotifier
             'binary' => 'terminal-notifier',
         );
 
-        $options = array_replace($default, $options);
+        $options = array_replace_recursive($default, $options);
 
         parent::configureOptions($options);
     }
