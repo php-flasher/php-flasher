@@ -45,10 +45,9 @@ class Laravel implements ServiceProviderInterface
         $this->app['flasher.response_manager']->addPresenter('cli', $this->app['flasher.presenter.cli']);
         $this->app['flasher.event_dispatcher']->addSubscriber(new RenderListener($this->app['flasher.cli']));
         $this->app['flasher.event_dispatcher']->addSubscriber(new StampsListener(
-            $this->app['config']->get('flasher_cli.render_all', false),
-            $this->app['config']->get('flasher_cli.render_immediately', true)
+            $this->app['flasher.config']->getFrom('flasher_cli', 'render_all', false),
+            $this->app['flasher.config']->getFrom('flasher_cli', 'render_immediately', true)
         ));
-
     }
 
     public function register(FlasherCliServiceProvider $provider)
@@ -64,7 +63,7 @@ class Laravel implements ServiceProviderInterface
             return new CliNotificationFactory(
                 $app['flasher.storage_manager'],
                 $app['flasher.response_manager'],
-                $app['config']->get('flasher_cli.filter_criteria', array())
+                $app['flasher.config']->getFrom('flasher_cli', 'filter_criteria', array())
             );
         });
 
@@ -96,6 +95,10 @@ class Laravel implements ServiceProviderInterface
             return new ToasterNotifier(Laravel::createConfigFor($app, 'toaster'));
         });
 
+        $this->app->singleton('flasher.cli.zenity', function (Container $app) {
+            return new ToasterNotifier(Laravel::createConfigFor($app, 'zenity'));
+        });
+
         $this->app->singleton('flasher.presenter.cli', function (Container $app) {
             $presenter = new CliPresenter();
 
@@ -106,6 +109,7 @@ class Laravel implements ServiceProviderInterface
             $presenter->addNotifier($app['flasher.cli.snore_toast_notifier']);
             $presenter->addNotifier($app['flasher.cli.terminal_notifier_notifier']);
             $presenter->addNotifier($app['flasher.cli.toaster']);
+            $presenter->addNotifier($app['flasher.cli.zenity']);
 
             return $presenter;
         });
@@ -116,12 +120,12 @@ class Laravel implements ServiceProviderInterface
 
     private static function createConfigFor(Container $app, $notifier)
     {
-        $options = $app['config']->get('flasher_cli.notifiers.'.$notifier);
+        $options = $app['flasher.config']->getFrom('flasher_cli', 'notifiers.'.$notifier);
 
-        $options['title'] = $app['config']->get('flasher_cli.title');
-        $options['mute'] = $app['config']->get('flasher_cli.mute');
-        $options['icons'] = array_replace_recursive($app['config']->get('flasher_cli.icons'), $options['icons']);
-        $options['sounds'] = array_replace_recursive($app['config']->get('flasher_cli.sounds'), $options['sounds']);
+        $options['title'] = $app['flasher.config']->getFrom('flasher_cli', 'title');
+        $options['mute'] = $app['flasher.config']->getFrom('flasher_cli', 'mute');
+        $options['icons'] = array_replace_recursive($app['flasher.config']->getFrom('flasher_cli', 'icons'), $options['icons']);
+        $options['sounds'] = array_replace_recursive($app['flasher.config']->getFrom('flasher_cli', 'sounds'), $options['sounds']);
 
         return $options;
     }

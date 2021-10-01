@@ -6,19 +6,16 @@ use Flasher\Cli\Prime\System\Command;
 use Flasher\Cli\Prime\System\OS;
 use Flasher\Prime\Envelope;
 
-final class NotifySendNotifier extends AbstractNotifier
+final class ZenityNotifier extends AbstractNotifier
 {
     public function renderEnvelope(Envelope $envelope)
     {
         $cmd = new Command($this->getProgram());
 
         $cmd
-            ->addOption('--urgency', 'normal')
-            ->addOption('--app-name', 'notify')
-            ->addOption('--icon', $this->getIcon($envelope))
-            ->addOption('--expire-time', $this->getExpireTime())
-            ->addArgument($this->getTitle($envelope))
-            ->addArgument($envelope->getMessage())
+            ->addArgument('--notification')
+            ->addOption('--text', $this->getTitle($envelope) . '\n\n' . $envelope->getMessage())
+            ->addOption('--window-icon', $this->getIcon($envelope))
         ;
 
         $cmd->run();
@@ -29,17 +26,12 @@ final class NotifySendNotifier extends AbstractNotifier
         return $this->isEnabled() && OS::isUnix() && $this->getProgram();
     }
 
-    public function getExpireTime()
-    {
-        return (int) $this->options['expire_time'];
-    }
-
     public function configureOptions(array $options)
     {
         $default = array(
-            'binary' => 'notify-send',
+            'binary' => 'zenity',
             'expire_time' => 0,
-            'priority' => 2,
+            'priority' => 1,
         );
 
         $options = array_replace_recursive($default, $options);

@@ -69,6 +69,11 @@ $container
     ->addArgument(array())
     ->addTag('flasher.cli_notifier');
 
+$container
+    ->register('flasher.cli.zenity', 'Flasher\Cli\Prime\Notifier\ZenityNotifier')
+    ->addArgument(array())
+    ->addTag('flasher.cli_notifier');
+
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Cli\Prime\CliNotificationFactory', 'flasher.cli');
     $container->setAlias('Flasher\Cli\Prime\CliFlasherInterface', 'Flasher\Cli\Prime\CliNotificationFactory');

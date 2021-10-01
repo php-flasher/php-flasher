@@ -66,6 +66,7 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->addSnoreToastNotifier())
                 ->append($this->addTerminalNotifierNotifier())
                 ->append($this->addToasterNotifier())
+                ->append($this->addZenityNotifier())
             ->end();
 
         return $rootNode;
@@ -213,7 +214,7 @@ final class Configuration implements ConfigurationInterface
                     ->beforeNormalization()
                         ->always(function ($v) { return (int) $v; })
                     ->end()
-                    ->defaultValue(1)
+                    ->defaultValue(2)
                 ->end()
                 ->scalarNode('binary')->defaultValue('notify-send')->end()
                 ->arrayNode('binary_paths')
@@ -342,6 +343,48 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(0)
                 ->end()
                 ->scalarNode('binary')->defaultValue('toast')->end()
+                ->arrayNode('binary_paths')
+                    ->beforeNormalization()
+                    ->ifString()
+                        ->then(function($v) { return array($v); })
+                    ->end()
+                    ->prototype('scalar')->end()
+                ->end()
+                ->scalarNode('title')->defaultValue(null)->end()
+                ->booleanNode('mute')->defaultValue(true)->end()
+                ->arrayNode('icons')
+                    ->prototype('variable')->end()
+                    ->defaultValue(array())
+                ->end()
+                ->arrayNode('sounds')
+                    ->prototype('variable')->end()
+                    ->defaultValue(array())
+                ->end()
+            ->end()
+        ;
+
+        return $rootNode;
+    }
+
+        /**
+     * @return ArrayNodeDefinition
+     */
+    private function addZenityNotifier()
+    {
+        $name = 'zenity';
+        $rootNode = $this->getRootNode(new TreeBuilder($name), $name);
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('enabled')->defaultValue(true)->end()
+                ->scalarNode('priority')
+                    ->beforeNormalization()
+                        ->always(function ($v) { return (int) $v; })
+                    ->end()
+                    ->defaultValue(1)
+                ->end()
+                ->scalarNode('binary')->defaultValue('zenity')->end()
                 ->arrayNode('binary_paths')
                     ->beforeNormalization()
                     ->ifString()
