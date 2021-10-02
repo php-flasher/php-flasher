@@ -42,6 +42,9 @@
         },
         "exclude-from-classmap": [
             "/Tests/"
+        ],
+        "files": [
+          "helpers.php"
         ]
     },
     "autoload-dev": {
