@@ -19,6 +19,8 @@ final class Laravel4 extends Laravel
             'flasher_cli',
             flasher_path(__DIR__ . '/../../Resources')
         );
+
+        $this->afterBoot();
     }
 
     public function register(FlasherCliServiceProvider $provider)

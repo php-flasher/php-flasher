@@ -42,8 +42,15 @@ class Laravel implements ServiceProviderInterface
             flasher_path(__DIR__.'/../../Resources/config/config.php') => config_path('flasher_cli.php'),
         ), 'flasher-config');
 
+        $this->afterBoot();
+    }
+
+    public function afterBoot()
+    {
         $this->app['flasher.response_manager']->addPresenter('cli', $this->app['flasher.presenter.cli']);
+
         $this->app['flasher.event_dispatcher']->addSubscriber(new RenderListener($this->app['flasher.cli']));
+
         $this->app['flasher.event_dispatcher']->addSubscriber(new StampsListener(
             $this->app['flasher.config']->getFrom('flasher_cli', 'render_all', false),
             $this->app['flasher.config']->getFrom('flasher_cli', 'render_immediately', true)
