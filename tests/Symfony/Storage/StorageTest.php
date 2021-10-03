@@ -127,7 +127,7 @@ class StorageTest extends TestCase
     {
         $session = class_exists('Symfony\Component\HttpFoundation\Session\Session')
             ? new Session(new MockArraySessionStorage())
-            : new Symfony\Component\HttpFoundation\Session(new ArraySessionStorage());
+            : new \Symfony\Component\HttpFoundation\Session(new ArraySessionStorage());
 
         return new Storage($session);
     }
