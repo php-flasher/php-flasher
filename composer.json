@@ -13,8 +13,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ext-json": "*",
-        "symfony/symfony": "~2.0.0"
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
