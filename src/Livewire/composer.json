@@ -37,14 +37,6 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Livewire\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\Livewire\\Tests\\": "Tests/"
         }
     },
     "extra": {

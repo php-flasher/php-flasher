@@ -26,8 +26,14 @@
             "src/Noty/Laravel/Resources/functions/noty.php",
             "src/Notyf/Laravel/Resources/functions/notyf.php",
             "src/Pnotify/Laravel/Resources/functions/pnotify.php",
-            "src/SweetAlert/Laravel/Resources/functions/sweetAlert.php"
+            "src/SweetAlert/Laravel/Resources/functions/sweetAlert.php",
+            "src/Cli/Laravel/Resources/functions/cli.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Tests\\": "tests/"
+        }
     },
     "minimum-stability": "dev"
 }
