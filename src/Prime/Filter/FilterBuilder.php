@@ -45,7 +45,7 @@ final class FilterBuilder
         $specification = $this->getSpecification();
 
         if (null !== $specification) {
-            $envelopes = array_filter($envelopes, static function (Envelope $envelope) use ($specification) {
+            $envelopes = array_filter($envelopes, function (Envelope $envelope) use ($specification) {
                 return $specification->isSatisfiedBy($envelope);
             });
         }
@@ -53,7 +53,7 @@ final class FilterBuilder
         $orderings = $this->getOrderings();
 
         if (null !== $orderings) {
-            usort($envelopes, static function (Envelope $a, Envelope $b) use ($orderings) {
+            usort($envelopes, function (Envelope $a, Envelope $b) use ($orderings) {
                 foreach ($orderings as $field => $ordering) {
                     if (FilterBuilder::ASC !== $ordering) {
                         list($a, $b) = array($b, $a);
