@@ -10,18 +10,19 @@ use Flasher\Symfony\Storage\Storage;
 use Flasher\Tests\Prime\TestCase;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpFoundation\SessionStorage\ArraySessionStorage;
 
 class StorageTest extends TestCase
 {
     public function testInitialState()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $this->assertEquals(array(), $storage->all());
     }
 
     public function testAddEnvelope()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $envelope = new Envelope(new Notification());
         $storage->add($envelope);
 
@@ -30,7 +31,7 @@ class StorageTest extends TestCase
 
     public function testAddMultipleEnvelopes()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $envelopes = array(
             new Envelope(new Notification()),
             new Envelope(new Notification()),
@@ -42,7 +43,7 @@ class StorageTest extends TestCase
 
     public function testUpdateEnvelopes()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -67,7 +68,7 @@ class StorageTest extends TestCase
 
     public function testRemoveEnvelopes()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -86,7 +87,7 @@ class StorageTest extends TestCase
 
     public function testRemoveMultipleEnvelopes()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -105,7 +106,7 @@ class StorageTest extends TestCase
 
     public function testClearAllEnvelopes()
     {
-        $storage = new Storage(new Session(new MockArraySessionStorage()));
+        $storage = $this->getStorage();
         $envelopes = array(
             new Envelope(new Notification(), array(
                 new UuidStamp(),
@@ -120,5 +121,14 @@ class StorageTest extends TestCase
 
         $storage->clear();
         $this->assertEquals(array(), $storage->all());
+    }
+
+    private function getStorage()
+    {
+        $session = class_exists('Symfony\Component\HttpFoundation\Session\Session')
+            ? new Session(new MockArraySessionStorage())
+            : new Symfony\Component\HttpFoundation\Session(new ArraySessionStorage());
+
+        return new Storage($session);
     }
 }
