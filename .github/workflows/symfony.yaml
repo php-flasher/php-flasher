@@ -156,7 +156,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" symfony/twig-bundle --no-interaction --no-update
+                    composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" twig/twig --no-interaction --no-update
                     composer config extra.symfony.require "${{ matrix.symfony }}"
                     composer update --prefer-dist --no-interaction --no-suggest
 
