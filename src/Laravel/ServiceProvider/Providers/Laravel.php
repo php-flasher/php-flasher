@@ -71,7 +71,7 @@ class Laravel implements ServiceProviderInterface
     protected function registerCommonServices()
     {
         $this->app->singleton('flasher', function (Application $app) {
-            $flasher = new Flasher($app['flasher.config']);
+            $flasher = new Flasher($app['flasher.config'], $app['flasher.response_manager']);
             $flasher->addFactory('template', $app['flasher.template']);
 
             return $flasher;

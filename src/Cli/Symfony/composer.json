@@ -34,20 +34,9 @@
         "php-flasher/flasher-symfony": "^0.5",
         "php-flasher/flasher-cli": "^0.5"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
-    },
     "autoload": {
         "psr-4": {
             "Flasher\\Cli\\Symfony\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\Cli\\Symfony\\Tests\\": "Tests/"
         }
     },
     "config": {

@@ -32,24 +32,13 @@
     "require": {
         "php": ">=5.3"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
-    },
     "autoload": {
         "psr-4": {
             "Flasher\\Prime\\": ""
         },
         "files": [
             "helpers.php"
-        ],
-        "exclude-from-classmap": [
-            "/Tests/"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\Prime\\Tests\\": "Tests/"
-        }
     },
     "config": {
         "sort-packages": true

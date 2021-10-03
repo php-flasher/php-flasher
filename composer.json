@@ -13,7 +13,17 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ext-json": "*"
+        "ext-json": "*",
+        "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0|^9.0",
+        "symfony/config": "^2.0|^3.0|^4.0|^5.0|^6.0",
+        "symfony/dependency-injection": "^2.0|^3.0|^4.0|^5.0|^6.0",
+        "symfony/http-kernel": "^2.0|^3.0|^4.0|^5.0|^6.0",
+        "symfony/twig-bundle": "^2.0|^3.0|^4.0|^5.0|^6.0",
+        "symfony/console": "^2.0|^3.0|^4.0|^5.0|^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0",
+        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0"
     },
     "autoload": {
         "psr-4": {
@@ -26,8 +36,14 @@
             "src/Noty/Laravel/Resources/functions/noty.php",
             "src/Notyf/Laravel/Resources/functions/notyf.php",
             "src/Pnotify/Laravel/Resources/functions/pnotify.php",
-            "src/SweetAlert/Laravel/Resources/functions/sweetAlert.php"
+            "src/SweetAlert/Laravel/Resources/functions/sweetAlert.php",
+            "src/Cli/Laravel/Resources/functions/cli.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flasher\\Tests\\": "tests/"
+        }
     },
     "minimum-stability": "dev"
 }
