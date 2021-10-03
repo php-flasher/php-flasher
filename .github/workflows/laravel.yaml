@@ -113,7 +113,7 @@ jobs:
                     ini-values: memory_limit=-1
                     coverage: none
 
-            -   name: Install dependencies
+            -   name: Install dependenciesEventDispatcher
                 run: |
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" monolog/monolog --no-interaction --no-update
                     composer update --prefer-dist --no-interaction --no-suggest
