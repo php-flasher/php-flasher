@@ -13,3 +13,7 @@ expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::mobile(), 0,  'swipe_di
 expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::animate(), 0,  'animate', 'in_class', 'out_class');
 expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::confirm(), 0,  'confirm', 'prompt', 'prompt_class', 'prompt_default', 'prompt_multi_line', 'align', 'buttons');
 expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::history(), 0,  'history', 'menu', 'fixed', 'maxonscreen', 'labels');
+
+override(\Flasher\Prime\FlasherInterface::create(), map([
+    'pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class
+]));

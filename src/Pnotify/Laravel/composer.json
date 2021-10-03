@@ -32,25 +32,13 @@
         "php-flasher/flasher-laravel": "^0.5",
         "php-flasher/flasher-pnotify": "^0.5"
     },
-    "require-dev": {
-        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "6.*"
-    },
     "autoload": {
         "psr-4": {
             "Flasher\\Pnotify\\Laravel\\": ""
         },
         "files": [
             "Resources/functions/pnotify.php"
-        ],
-        "exclude-from-classmap": [
-            "/Tests/"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\Pnotify\\Laravel\\Tests\\": "Tests/"
-        }
     },
     "extra": {
         "laravel": {

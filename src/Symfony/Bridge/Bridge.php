@@ -11,7 +11,7 @@ final class Bridge
      */
     public static function isLegacy()
     {
-        return Kernel::MAJOR_VERSION < 6;
+        return self::versionCompare('6.0.0', '<');
     }
 
     /**

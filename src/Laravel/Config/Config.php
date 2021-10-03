@@ -19,6 +19,11 @@ final class Config implements ConfigInterface
 
     public function get($key, $default = null)
     {
-        return $this->config->get('flasher' . $this->separator . $key, $default);
+        return $this->getFrom('flasher', $key, $default);
+    }
+
+    public function getFrom($namespace, $key, $default = null)
+    {
+        return $this->config->get($namespace . $this->separator . $key, $default);
     }
 }

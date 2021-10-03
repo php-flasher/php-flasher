@@ -28,38 +28,12 @@ final class FilterBuilder
      */
     private $maxResults;
 
-    /**
-     * @param array<string, string> $orderings
-     *
-     * @return self
-     */
-    public function orderBy(array $orderings)
-    {
-        $this->orderings = array_map(static function ($ordering) {
-            return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
-        }, $orderings);
-
-        return $this;
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    public function getOrderings()
-    {
-        return $this->orderings;
-    }
-
-    /**
-     * @return $this
-     */
-    public function withCriteria(array $criteria)
-    {
-        $criteriaBuilder = new CriteriaBuilder($this, $criteria);
-        $criteriaBuilder->build();
-
-        return $this;
-    }
+    private static $stampsMap = array(
+        'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
+        'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
+        'delay' => 'Flasher\Prime\Stamp\DelayStamp',
+        'hops' => 'Flasher\Prime\Stamp\HopsStamp',
+    );
 
     /**
      * @param Envelope[] $envelopes
@@ -71,7 +45,7 @@ final class FilterBuilder
         $specification = $this->getSpecification();
 
         if (null !== $specification) {
-            $envelopes = array_filter($envelopes, static function (Envelope $envelope) use ($specification) {
+            $envelopes = array_filter($envelopes, function (Envelope $envelope) use ($specification) {
                 return $specification->isSatisfiedBy($envelope);
             });
         }
@@ -79,11 +53,15 @@ final class FilterBuilder
         $orderings = $this->getOrderings();
 
         if (null !== $orderings) {
-            usort($envelopes, static function (Envelope $a, Envelope $b) use ($orderings) {
+            usort($envelopes, function (Envelope $a, Envelope $b) use ($orderings) {
                 foreach ($orderings as $field => $ordering) {
                     if (FilterBuilder::ASC !== $ordering) {
                         list($a, $b) = array($b, $a);
                     }
+
+                    // if (isset(FilterBuilder::$stampsMap[$field])) {
+                    //     return FilterBuilder::$stampsMap[$field];
+                    // }
 
                     $stampA = $a->get($field);
                     $stampB = $b->get($field);
@@ -110,6 +88,39 @@ final class FilterBuilder
         }
 
         return $envelopes;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withCriteria(array $criteria)
+    {
+        $criteriaBuilder = new CriteriaBuilder($this, $criteria);
+        $criteriaBuilder->build();
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, string> $orderings
+     *
+     * @return self
+     */
+    public function orderBy(array $orderings)
+    {
+        $this->orderings = array_map(function ($ordering) {
+            return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
+        }, $orderings);
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getOrderings()
+    {
+        return $this->orderings;
     }
 
     /**

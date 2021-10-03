@@ -41,7 +41,7 @@ final class ResponseManager implements ResponseManagerInterface
         $this->resourceManager = $resourceManager;
     }
 
-    public function render(array $criteria = array(), $format = 'html', array $context = array())
+    public function render(array $criteria = array(), $presenter = 'html', array $context = array())
     {
         $envelopes = $this->getEnvelopes($criteria);
 
@@ -49,7 +49,7 @@ final class ResponseManager implements ResponseManagerInterface
 
         $response = $this->filterResponse($envelopes, $context);
 
-        $presenter = $this->createPresenter($format);
+        $presenter = $this->createPresenter($presenter);
 
         return $presenter->render($response);
     }

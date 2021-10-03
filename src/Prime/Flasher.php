@@ -4,6 +4,7 @@ namespace Flasher\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
+use Flasher\Prime\Response\ResponseManagerInterface;
 
 final class Flasher implements FlasherInterface
 {
@@ -19,9 +20,13 @@ final class Flasher implements FlasherInterface
      */
     private $config;
 
-    public function __construct(ConfigInterface $config)
+    /** @var ResponseManagerInterface */
+    private $responseManager;
+
+    public function __construct(ConfigInterface $config, ResponseManagerInterface $responseManager)
     {
         $this->config = $config;
+        $this->responseManager = $responseManager;
     }
 
     /**
@@ -52,6 +57,11 @@ final class Flasher implements FlasherInterface
         $this->factories[$alias] = $factory;
 
         return $this;
+    }
+
+    public function render(array $criteria = array(), $presenter = 'html', array $context = array())
+    {
+        return $this->responseManager->render($criteria, $presenter, $context);
     }
 
     /**

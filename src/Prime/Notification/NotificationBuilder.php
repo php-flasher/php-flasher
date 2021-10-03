@@ -10,9 +10,6 @@ use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
-/**
- * @method self livewire(array $context = array())
- */
 class NotificationBuilder implements NotificationBuilderInterface
 {
     /**

@@ -5,6 +5,10 @@ namespace Flasher\Prime\Notification;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\StampInterface;
 
+/**
+ * @method $this livewire(array $context = array())
+ * @method $this desktop(bool $renderImmediately = true)
+ */
 interface NotificationBuilderInterface
 {
     /**

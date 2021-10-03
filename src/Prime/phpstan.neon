@@ -1,9 +1,0 @@
-parameters:
-    checkMissingIterableValueType: false
-    excludes_analyse:
-        - Tests/
-    ignoreErrors:
-        - '#Call to an undefined method Flasher\\Prime\\Stamp\\StampInterface::#'
-        - '#Array \(array<Flasher\\Prime\\Envelope>\) does not accept array.#'
-        - '#Else branch is unreachable because ternary operator condition is always true.#'
-        - '#has no return typehint specified.#'

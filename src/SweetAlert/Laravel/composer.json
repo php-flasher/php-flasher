@@ -33,25 +33,13 @@
         "php-flasher/flasher-laravel": "^0.5",
         "php-flasher/flasher-sweet-alert": "^0.5"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0",
-        "orchestra/testbench": "^2.0|^3.0|^4.0|^5.0|^6.0"
-    },
     "autoload": {
         "psr-4": {
             "Flasher\\SweetAlert\\Laravel\\": ""
         },
         "files": [
             "Resources/functions/sweetAlert.php"
-        ],
-        "exclude-from-classmap": [
-            "/Tests/"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\SweetAlert\\Laravel\\Tests\\": "Tests/"
-        }
     },
     "extra": {
         "laravel": {

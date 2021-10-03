@@ -4,9 +4,6 @@ namespace Flasher\Notyf\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
-/**
- * @method self livewire(array $context = array())
- */
 final class NotyfBuilder extends NotificationBuilder
 {
     /**

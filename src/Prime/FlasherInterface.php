@@ -29,4 +29,11 @@ interface FlasherInterface
      * @return $this
      */
     public function addFactory($alias, NotificationFactoryInterface $factory);
+
+    /**
+     * @param string $presenter
+     *
+     * @return mixed
+     */
+    public function render(array $criteria = array(), $presenter = 'html', array $context = array());
 }

@@ -1,0 +1,55 @@
+{
+    "name": "php-flasher/flasher-cli-laravel",
+    "description": "PHP Flasher Laravel adapter for Cli",
+    "type": "library",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "cli ",
+        "bundle",
+        "flex"
+    ],
+    "homepage": "https://php-flasher.github.io/",
+    "authors": [
+        {
+            "name": "Younes Khoubza",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3",
+        "php-flasher/flasher-laravel": "^0.5",
+        "php-flasher/flasher-cli": "^0.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Cli\\Laravel\\": ""
+        },
+        "files": [
+          "Resources/functions/cli.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Flasher\\Cli\\Laravel\\FlasherCliServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

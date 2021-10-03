@@ -98,7 +98,7 @@ final class EventDispatcher implements EventDispatcherInterface
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 break;
             }
-            $listener($event, $this);
+            call_user_func($listener, $event, $this);
         }
     }
 }

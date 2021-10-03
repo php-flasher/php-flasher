@@ -28,20 +28,9 @@
         "php": ">=5.3",
         "php-flasher/flasher": "^0.5"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
-    },
     "autoload": {
         "psr-4": {
             "Flasher\\Toastr\\Prime\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\Toastr\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {

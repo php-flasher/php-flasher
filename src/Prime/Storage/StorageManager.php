@@ -3,6 +3,9 @@
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
+use Flasher\Prime\EventDispatcher\Event\PostPersistEvent;
+use Flasher\Prime\EventDispatcher\Event\PostRemoveEvent;
+use Flasher\Prime\EventDispatcher\Event\PostUpdateEvent;
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
@@ -38,6 +41,9 @@ final class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
 
         $this->storage->add($event->getEnvelopes());
+
+        $event = new PostPersistEvent($event->getEnvelopes());
+        $this->eventDispatcher->dispatch($event);
     }
 
     public function update($envelopes)
@@ -48,6 +54,9 @@ final class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
 
         $this->storage->update($event->getEnvelopes());
+
+        $event = new PostUpdateEvent($event->getEnvelopes());
+        $this->eventDispatcher->dispatch($event);
     }
 
     public function remove($envelopes)
@@ -59,6 +68,9 @@ final class StorageManager implements StorageManagerInterface
 
         $this->storage->update($event->getEnvelopesToKeep());
         $this->storage->remove($event->getEnvelopesToRemove());
+
+        $event = new PostRemoveEvent($event->getEnvelopesToRemove(), $event->getEnvelopesToKeep());
+        $this->eventDispatcher->dispatch($event);
     }
 
     public function clear()

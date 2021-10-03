@@ -4,9 +4,6 @@ namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
-/**
- * @method self livewire(array $context = array())
- */
 final class PnotifyBuilder extends NotificationBuilder
 {
     public function warning($message = null, array $options = array())
