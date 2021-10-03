@@ -108,7 +108,7 @@ final class FilterBuilder
      */
     public function orderBy(array $orderings)
     {
-        $this->orderings = array_map(static function ($ordering) {
+        $this->orderings = array_map(function ($ordering) {
             return strtoupper($ordering) === FilterBuilder::ASC ? FilterBuilder::ASC : FilterBuilder::DESC;
         }, $orderings);
 
