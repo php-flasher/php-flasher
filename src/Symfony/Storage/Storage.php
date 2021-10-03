@@ -5,18 +5,21 @@ namespace Flasher\Symfony\Storage;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session;
 
 final class Storage implements StorageInterface
 {
     const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @var SessionInterface
+     * @var SessionInterface|Session
      */
     private $session;
 
-    public function __construct(SessionInterface $session)
+    /**
+     * @param SessionInterface $session
+     */
+    public function __construct($session)
     {
         $this->session = $session;
     }
