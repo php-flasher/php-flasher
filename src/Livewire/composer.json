@@ -32,7 +32,7 @@
     "require": {
         "php": ">=7.2.5",
         "livewire/livewire": "^2.0",
-        "php-flasher/flasher-laravel": "^0.6.2"
+        "php-flasher/flasher-laravel": "^0.6.3"
     },
     "autoload": {
         "psr-4": {

@@ -21,6 +21,10 @@ final class CliPresenter implements PresenterInterface
 
     public function render(Response $response)
     {
+        if (0 === count($response->getEnvelopes())) {
+            return;
+        }
+
         $notifier = $this->createNotifier();
 
         $notifier->render($response->getEnvelopes());
