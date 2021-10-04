@@ -11,7 +11,7 @@ final class Bridge
      */
     public static function isLegacy()
     {
-        return self::versionCompare('6.0.0', '<');
+        return self::versionCompare('6', '<');
     }
 
     /**
