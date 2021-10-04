@@ -30,8 +30,8 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^0.5",
-        "php-flasher/flasher-sweet-alert": "^0.5"
+        "php-flasher/flasher-laravel": "^0.6.1",
+        "php-flasher/flasher-sweet-alert": "^0.6.1"
     },
     "autoload": {
         "psr-4": {

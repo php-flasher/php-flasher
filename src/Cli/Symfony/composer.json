@@ -31,8 +31,8 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "^0.5",
-        "php-flasher/flasher-cli": "^0.5"
+        "php-flasher/flasher-symfony": "^0.6.1",
+        "php-flasher/flasher-cli": "^0.6.1"
     },
     "autoload": {
         "psr-4": {
