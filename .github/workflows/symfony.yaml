@@ -160,7 +160,7 @@ jobs:
                     composer config extra.symfony.require "${{ matrix.symfony }}"
 
             -   name: Execute tests
-                run: vendor/phpunit/phpunit/phpunit --configuration=phpunit-symfony.xml
+                run: vendor/bin/phpunit --configuration=phpunit-symfony.xml
 
             -   name: Install Flasher Depencies
                 run: |
