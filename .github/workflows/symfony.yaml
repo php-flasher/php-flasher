@@ -170,27 +170,21 @@ jobs:
                     composer require "php-flasher/flasher-symfony"
 
                     composer require "php-flasher/flasher-cli"
-                    composer require "php-flasher/flasher-cli-laravel"
                     composer require "php-flasher/flasher-cli-symfony"
 
                     composer require "php-flasher/flasher-toastr"
-                    composer require "php-flasher/flasher-toastr-laravel"
                     composer require "php-flasher/flasher-toastr-symfony"
 
                     composer require "php-flasher/flasher-noty"
-                    composer require "php-flasher/flasher-noty-laravel"
                     composer require "php-flasher/flasher-noty-symfony"
 
                     composer require "php-flasher/flasher-notyf"
-                    composer require "php-flasher/flasher-notyf-laravel"
                     composer require "php-flasher/flasher-notyf-symfony"
 
                     composer require "php-flasher/flasher-sweet-alert"
-                    composer require "php-flasher/flasher-sweet-alert-laravel"
                     composer require "php-flasher/flasher-sweet-alert-symfony"
 
                     composer require "php-flasher/flasher-pnotify"
-                    composer require "php-flasher/flasher-pnotify-laravel"
                     composer require "php-flasher/flasher-pnotify-symfony"
 
                     composer update --prefer-dist --no-interaction --no-suggest
