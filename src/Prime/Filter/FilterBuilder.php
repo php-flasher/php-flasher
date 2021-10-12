@@ -59,9 +59,9 @@ final class FilterBuilder
                         list($a, $b) = array($b, $a);
                     }
 
-                    // if (isset(FilterBuilder::$stampsMap[$field])) {
-                    //     return FilterBuilder::$stampsMap[$field];
-                    // }
+                    if (isset(FilterBuilder::$stampsMap[$field])) {
+                        return FilterBuilder::$stampsMap[$field];
+                    }
 
                     $stampA = $a->get($field);
                     $stampB = $b->get($field);
