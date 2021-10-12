@@ -158,7 +158,6 @@ jobs:
                 run: |
                     composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" twig/twig --no-interaction --no-update
                     composer config extra.symfony.require "${{ matrix.symfony }}"
-                    composer update --prefer-dist --no-interaction --no-suggest
 
             -   name: Execute tests
                 run: vendor/bin/phpunit --configuration=phpunit-symfony.xml
@@ -186,5 +185,3 @@ jobs:
 
                     composer require "php-flasher/flasher-pnotify"
                     composer require "php-flasher/flasher-pnotify-symfony"
-
-                    composer update --prefer-dist --no-interaction --no-suggest
