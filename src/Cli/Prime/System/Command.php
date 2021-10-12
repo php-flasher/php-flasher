@@ -7,8 +7,6 @@ class Command
     private $command;
     private $options = array();
     private $arguments = array();
-    private $output;
-    private $exitCode;
 
     public function __construct($command)
     {
@@ -31,11 +29,15 @@ class Command
 
     public function run()
     {
-        $command = $this->command . ' ' . $this->formatOptions() . ' ' . $this->formatArguments();
+        $command = $this->command.' '.$this->formatOptions().' '.$this->formatArguments();
 
-        // dd($command);
+        if (OS::isWindows()) {
+            pclose(popen("start /B ".$command, "r"));
 
-        exec($command, $this->output, $this->exitCode);
+            return;
+        }
+
+        exec($command);
     }
 
     private function formatArguments()
@@ -55,20 +57,5 @@ class Command
         }
 
         return $line;
-    }
-
-    public function getOutput()
-    {
-        return $this->output;
-    }
-
-    public function getExitCode()
-    {
-        return $this->exitCode;
-    }
-
-    public function isSuccessful()
-    {
-        return 0 === $this->getExitCode();
     }
 }

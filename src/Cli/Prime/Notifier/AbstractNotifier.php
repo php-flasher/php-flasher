@@ -3,6 +3,7 @@
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\CliNotification;
+use Flasher\Cli\Prime\System\Path;
 use Flasher\Cli\Prime\System\Program;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
@@ -51,7 +52,9 @@ abstract class AbstractNotifier implements NotifierInterface
             return $this->getBinary();
         }
 
-        foreach ((array) $this->getBinaryPaths() as $path) {
+        foreach ((array)$this->getBinaryPaths() as $path) {
+            $path = Path::realpath($path);
+
             if (file_exists($path)) {
                 return $path;
             }
@@ -85,16 +88,16 @@ abstract class AbstractNotifier implements NotifierInterface
     {
         $notification = $envelope->getNotification();
         if ($notification instanceof CliNotification && $notification->getIcon()) {
-            return $notification->getIcon();
+            return Path::realpath($notification->getIcon());
         }
 
         $type = $envelope->getType();
 
         if (isset($this->options['icons'][$type]) && file_exists($this->options['icons'][$type])) {
-            return $this->options['icons'][$type];
+            return Path::realpath($this->options['icons'][$type]);
         }
 
-        return __DIR__ . '/../Resources/icons/info.png';
+        return Path::realpath(__DIR__.'/../Resources/icons/info.png');
     }
 
     public function playSound($type = null)
@@ -103,16 +106,16 @@ abstract class AbstractNotifier implements NotifierInterface
             return;
         }
 
-        \exec('paplay ' . $this->getSound($type));
+        \exec('paplay '.$this->getSound($type));
     }
 
     public function getSound($type)
     {
         if (isset($this->options['sounds'][$type]) && file_exists($this->options['sounds'][$type])) {
-            return $this->options['sounds'][$type];
+            return Path::realpath($this->options['sounds'][$type]);
         }
 
-        return __DIR__ . '/../Resources/sounds/info.wav';
+        return Path::realpath(__DIR__.'/../Resources/sounds/info.wav');
     }
 
     public function configureOptions(array $options)
@@ -124,17 +127,17 @@ abstract class AbstractNotifier implements NotifierInterface
             'binary_paths' => array(),
             'title' => 'PHPFlasher',
             'icons' => array(
-                NotificationInterface::TYPE_SUCCESS => __DIR__ . '/../Resources/icons/success.png',
-                NotificationInterface::TYPE_ERROR => __DIR__ . '/../Resources/icons/error.png',
-                NotificationInterface::TYPE_INFO => __DIR__ . '/../Resources/icons/info.png',
-                NotificationInterface::TYPE_WARNING => __DIR__ . '/../Resources/icons/warning.png',
+                NotificationInterface::TYPE_SUCCESS => Path::realpath(__DIR__.'/../Resources/icons/success.png'),
+                NotificationInterface::TYPE_ERROR => Path::realpath(__DIR__.'/../Resources/icons/error.png'),
+                NotificationInterface::TYPE_INFO => Path::realpath(__DIR__.'/../Resources/icons/info.png'),
+                NotificationInterface::TYPE_WARNING => Path::realpath(__DIR__.'/../Resources/icons/warning.png'),
             ),
             'mute' => false,
             'sounds' => array(
-                NotificationInterface::TYPE_SUCCESS => __DIR__ . '/../Resources/sounds/success.wav',
-                NotificationInterface::TYPE_ERROR => __DIR__ . '/../Resources/sounds/error.wav',
-                NotificationInterface::TYPE_INFO => __DIR__ . '/../Resources/sounds/info.wav',
-                NotificationInterface::TYPE_WARNING => __DIR__ . '/../Resources/sounds/warning.wav',
+                NotificationInterface::TYPE_SUCCESS => Path::realpath(__DIR__.'/../Resources/sounds/success.wav'),
+                NotificationInterface::TYPE_ERROR => Path::realpath(__DIR__.'/../Resources/sounds/error.wav'),
+                NotificationInterface::TYPE_INFO => Path::realpath(__DIR__.'/../Resources/sounds/info.wav'),
+                NotificationInterface::TYPE_WARNING => Path::realpath(__DIR__.'/../Resources/sounds/warning.wav'),
             ),
         );
 

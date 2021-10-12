@@ -14,9 +14,8 @@ final class ZenityNotifier extends AbstractNotifier
 
         $cmd
             ->addArgument('--notification')
-            ->addOption('--text', $this->getTitle($envelope) . '\n\n' . $envelope->getMessage())
-            ->addOption('--window-icon', $this->getIcon($envelope))
-        ;
+            ->addOption('--text', $this->getTitle($envelope).'\n\n'.$envelope->getMessage())
+            ->addOption('--window-icon', $this->getIcon($envelope));
 
         $cmd->run();
     }

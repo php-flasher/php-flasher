@@ -28,6 +28,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
+        "ext-mbstring": "*",
         "php-flasher/flasher": "^0.6.3"
     },
     "autoload": {

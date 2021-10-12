@@ -7,7 +7,7 @@ class Program
     public static function exist($program)
     {
         if (OS::isWindows()) {
-            $output = shell_exec("where $program");
+            $output = shell_exec("where $program 2>null");
 
             return !empty($output);
         }

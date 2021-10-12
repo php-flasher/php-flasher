@@ -15,8 +15,7 @@ final class GrowlNotifyNotifier extends AbstractNotifier
         $cmd
             ->addOption('--message', $envelope->getMessage())
             ->addOption('--title', $this->getTitle($envelope))
-            ->addOption('--image', $this->getIcon($envelope))
-        ;
+            ->addOption('--image', $this->getIcon($envelope));
 
         $cmd->run();
     }

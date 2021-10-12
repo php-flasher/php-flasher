@@ -53,10 +53,8 @@ class OS
 
     public static function getMacOSVersion()
     {
-        $cmd = new Command('sw_vers');
-        $cmd->addArgument('-productVersion');
-        $cmd->run();
+        exec('sw_vers -productVersion', $output);
 
-        return trim($cmd->getOutput());
+        return trim($output);
     }
 }

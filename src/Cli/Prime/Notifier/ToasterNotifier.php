@@ -4,6 +4,7 @@ namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\System\Command;
 use Flasher\Cli\Prime\System\OS;
+use Flasher\Cli\Prime\System\Path;
 use Flasher\Prime\Envelope;
 
 final class ToasterNotifier extends AbstractNotifier
@@ -13,10 +14,10 @@ final class ToasterNotifier extends AbstractNotifier
         $cmd = new Command($this->getProgram());
 
         $cmd
-            ->addOption('-m', $envelope->getMessage())
             ->addOption('-t', $this->getTitle($envelope))
+            ->addOption('-m', $envelope->getMessage())
             ->addOption('-p', $this->getIcon($envelope))
-        ;
+            ->addArgument('-w');;
 
         $cmd->run();
     }
@@ -35,7 +36,7 @@ final class ToasterNotifier extends AbstractNotifier
         $default = array(
             'binary' => 'toast',
             'binary_paths' => array(
-                __DIR__ . '/../Resources/bin/toaster/toast.exe',
+                Path::realpath(__DIR__.'/../Resources/bin/toaster/toast.exe'),
             ),
         );
 

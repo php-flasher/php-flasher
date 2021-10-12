@@ -4,6 +4,7 @@ namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\System\Command;
 use Flasher\Cli\Prime\System\OS;
+use Flasher\Cli\Prime\System\Path;
 use Flasher\Prime\Envelope;
 
 final class NotifuNotifier extends AbstractNotifier
@@ -15,8 +16,7 @@ final class NotifuNotifier extends AbstractNotifier
         $cmd
             ->addOption('/m', $envelope->getMessage())
             ->addOption('/p', $this->getTitle($envelope))
-            ->addOption('/i', $this->getIcon($envelope))
-        ;
+            ->addOption('/i', $this->getIcon($envelope));
 
         $cmd->run();
     }
@@ -31,7 +31,7 @@ final class NotifuNotifier extends AbstractNotifier
         $default = array(
             'binary' => 'notifu',
             'binary_paths' => array(
-                __DIR__ . '/../Resources/bin/notifu/notifu.exe',
+                Path::realpath(__DIR__.'/../Resources/bin/notifu/notifu.exe'),
             ),
         );
 

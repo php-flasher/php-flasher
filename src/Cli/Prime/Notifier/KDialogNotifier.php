@@ -15,8 +15,7 @@ final class KDialogNotifier extends AbstractNotifier
         $cmd
             ->addOption('--passivepopup', $envelope->getMessage())
             ->addOption('--title', $this->getTitle($envelope))
-            ->addArgument(5)
-        ;
+            ->addArgument(5);
 
         $cmd->run();
     }

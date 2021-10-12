@@ -4,6 +4,7 @@ namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\System\Command;
 use Flasher\Cli\Prime\System\OS;
+use Flasher\Cli\Prime\System\Path;
 use Flasher\Prime\Envelope;
 
 final class SnoreToastNotifier extends AbstractNotifier
@@ -15,8 +16,7 @@ final class SnoreToastNotifier extends AbstractNotifier
         $cmd
             ->addOption('-m', $envelope->getMessage())
             ->addOption('-t', $this->getTitle($envelope))
-            ->addOption('-p', $this->getIcon($envelope))
-        ;
+            ->addOption('-p', $this->getIcon($envelope));
 
         $cmd->run();
     }
@@ -35,7 +35,7 @@ final class SnoreToastNotifier extends AbstractNotifier
         $default = array(
             'binary' => 'snoretoast',
             'binary_paths' => array(
-                __DIR__ . '/../Resources/bin/snoreToast/snoretoast-x86.exe',
+                Path::realpath(__DIR__.'/../Resources/bin/snoreToast/snoretoast-x86.exe'),
             ),
         );
 

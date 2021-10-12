@@ -18,8 +18,7 @@ final class NotifySendNotifier extends AbstractNotifier
             ->addOption('--icon', $this->getIcon($envelope))
             ->addOption('--expire-time', $this->getExpireTime())
             ->addArgument($this->getTitle($envelope))
-            ->addArgument($envelope->getMessage())
-        ;
+            ->addArgument($envelope->getMessage());
 
         $cmd->run();
     }
@@ -31,14 +30,14 @@ final class NotifySendNotifier extends AbstractNotifier
 
     public function getExpireTime()
     {
-        return (int) $this->options['expire_time'];
+        return (int)$this->options['expire_time'];
     }
 
     public function configureOptions(array $options)
     {
         $default = array(
             'binary' => 'notify-send',
-            'expire_time' => 0,
+            'expire_time' => 1,
             'priority' => 2,
         );
 

@@ -39,13 +39,13 @@ JAVASCRIPT;
 
         tag.setAttribute('src', '${rootScript}');
         tag.setAttribute('type', 'text/javascript');
-        tag.onload = flasherRender
+        tag.onload = flasherRender;
 
         document.body.appendChild(tag);
     } else {
         document.addEventListener('DOMContentLoaded', function() {
-          flasherRender()
-        })
+          flasherRender();
+        });
     }
 </script>
 JAVASCRIPT;
