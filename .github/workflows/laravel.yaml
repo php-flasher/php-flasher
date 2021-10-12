@@ -123,32 +123,32 @@ jobs:
 
             -   name: Install Flasher Depencies
                 run: |
-                    composer require "php-flaser/flasher"
-                    composer require "php-flaser/flasher-laravel"
-                    composer require "php-flaser/flasher-symfony"
+                    composer require "php-flasher/flasher"
+                    composer require "php-flasher/flasher-laravel"
+                    composer require "php-flasher/flasher-symfony"
 
-                    composer require "php-flaser/flasher-cli"
-                    composer require "php-flaser/flasher-cli-laravel"
-                    composer require "php-flaser/flasher-cli-symfony"
+                    composer require "php-flasher/flasher-cli"
+                    composer require "php-flasher/flasher-cli-laravel"
+                    composer require "php-flasher/flasher-cli-symfony"
 
-                    composer require "php-flaser/flasher-toastr"
-                    composer require "php-flaser/flasher-toastr-laravel"
-                    composer require "php-flaser/flasher-toastr-symfony"
+                    composer require "php-flasher/flasher-toastr"
+                    composer require "php-flasher/flasher-toastr-laravel"
+                    composer require "php-flasher/flasher-toastr-symfony"
 
-                    composer require "php-flaser/flasher-noty"
-                    composer require "php-flaser/flasher-noty-laravel"
-                    composer require "php-flaser/flasher-noty-symfony"
+                    composer require "php-flasher/flasher-noty"
+                    composer require "php-flasher/flasher-noty-laravel"
+                    composer require "php-flasher/flasher-noty-symfony"
 
-                    composer require "php-flaser/flasher-notyf"
-                    composer require "php-flaser/flasher-notyf-laravel"
-                    composer require "php-flaser/flasher-notyf-symfony"
+                    composer require "php-flasher/flasher-notyf"
+                    composer require "php-flasher/flasher-notyf-laravel"
+                    composer require "php-flasher/flasher-notyf-symfony"
 
-                    composer require "php-flaser/flasher-sweet-alert"
-                    composer require "php-flaser/flasher-sweet-alert-laravel"
-                    composer require "php-flaser/flasher-sweet-alert-symfony"
+                    composer require "php-flasher/flasher-sweet-alert"
+                    composer require "php-flasher/flasher-sweet-alert-laravel"
+                    composer require "php-flasher/flasher-sweet-alert-symfony"
 
-                    composer require "php-flaser/flasher-pnotify"
-                    composer require "php-flaser/flasher-pnotify-laravel"
-                    composer require "php-flaser/flasher-pnotify-symfony"
+                    composer require "php-flasher/flasher-pnotify"
+                    composer require "php-flasher/flasher-pnotify-laravel"
+                    composer require "php-flasher/flasher-pnotify-symfony"
 
                     composer update --prefer-dist --no-interaction --no-suggest
