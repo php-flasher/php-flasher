@@ -55,6 +55,8 @@ class OS
     {
         exec('sw_vers -productVersion', $output);
 
-        return trim($output);
+        $output = (array) $output;
+
+        return trim(reset($output));
     }
 }

@@ -74,6 +74,11 @@ $container
     ->addArgument(array())
     ->addTag('flasher.cli_notifier');
 
+$container
+    ->register('flasher.cli.apple_script', 'Flasher\Cli\Prime\Notifier\AppleScriptNotifier')
+    ->addArgument(array())
+    ->addTag('flasher.cli_notifier');
+
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Cli\Prime\CliNotificationFactory', 'flasher.cli');
     $container->setAlias('Flasher\Cli\Prime\CliFlasherInterface', 'Flasher\Cli\Prime\CliNotificationFactory');

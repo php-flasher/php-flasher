@@ -41,6 +41,7 @@ final class FlasherCliExtension extends Extension
         $this->registerNotifier($container, $config, 'snore_toast_notifier');
         $this->registerNotifier($container, $config, 'terminal_notifier_notifier');
         $this->registerNotifier($container, $config, 'toaster');
+        $this->registerNotifier($container, $config, 'apple_script');
     }
 
     private function registerNotifier(ContainerBuilder $container, array $config, $notifier)

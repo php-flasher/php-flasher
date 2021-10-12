@@ -6,6 +6,7 @@ use Flasher\Cli\Laravel\FlasherCliServiceProvider;
 use Flasher\Cli\Prime\CliNotificationFactory;
 use Flasher\Cli\Prime\EventListener\RenderListener;
 use Flasher\Cli\Prime\EventListener\StampsListener;
+use Flasher\Cli\Prime\Notifier\AppleScriptNotifier;
 use Flasher\Cli\Prime\Notifier\GrowlNotifyNotifier;
 use Flasher\Cli\Prime\Notifier\KDialogNotifier;
 use Flasher\Cli\Prime\Notifier\NotifuNotifier;
@@ -106,6 +107,10 @@ class Laravel implements ServiceProviderInterface
             return new ToasterNotifier(Laravel::createConfigFor($app, 'zenity'));
         });
 
+        $this->app->singleton('flasher.cli.apple_script', function (Container $app) {
+            return new AppleScriptNotifier(Laravel::createConfigFor($app, 'apple_script'));
+        });
+
         $this->app->singleton('flasher.presenter.cli', function (Container $app) {
             $presenter = new CliPresenter();
 
@@ -117,6 +122,7 @@ class Laravel implements ServiceProviderInterface
             $presenter->addNotifier($app['flasher.cli.terminal_notifier_notifier']);
             $presenter->addNotifier($app['flasher.cli.toaster']);
             $presenter->addNotifier($app['flasher.cli.zenity']);
+            $presenter->addNotifier($app['flasher.cli.apple_script']);
 
             return $presenter;
         });

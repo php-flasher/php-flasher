@@ -96,5 +96,15 @@ return array(
             'icons' => array(),
             'sounds' => array(),
         ),
+        'apple_script' => array(
+            'enabled' => true,
+            'priority' => 1,
+            'binary' => 'osascript',
+            'binary_paths' => array(),
+            'title' => null,
+            'mute' => true,
+            'icons' => array(),
+            'sounds' => array(),
+        ),
     ),
 );
