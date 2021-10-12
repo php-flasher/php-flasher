@@ -118,7 +118,7 @@ jobs:
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
 
             -   name: Execute tests
-                run: vendor/bin/phpunit --configuration=phpunit-laravel.xml
+                run: vendor/phpunit/phpunit/phpunit --configuration=phpunit-laravel.xml
 
             -   name: Install Flasher Depencies
                 run: |
