@@ -168,24 +168,24 @@ jobs:
 
             -   name: Install Flasher Depencies
                 run: |
-                    composer require "php-flasher/flasher:^0.6" -W
-                    composer require "php-flasher/flasher-laravel:^0.6" -W
-                    composer require "php-flasher/flasher-symfony:^0.6" -W
+                    composer require "php-flasher/flasher:^0.6"
+                    composer require "php-flasher/flasher-laravel:^0.6"
+                    composer require "php-flasher/flasher-symfony:^0.6"
 
-                    composer require "php-flasher/flasher-cli:^0.6" -W
-                    composer require "php-flasher/flasher-cli-symfony:^0.6" -W
+                    composer require "php-flasher/flasher-cli:^0.6"
+                    composer require "php-flasher/flasher-cli-symfony:^0.6"
 
-                    composer require "php-flasher/flasher-toastr:^0.6" -W
-                    composer require "php-flasher/flasher-toastr-symfony:^0.6" -W
+                    composer require "php-flasher/flasher-toastr:^0.6"
+                    composer require "php-flasher/flasher-toastr-symfony:^0.6"
 
-                    composer require "php-flasher/flasher-noty:^0.6" -W
-                    composer require "php-flasher/flasher-noty-symfony:^0.6" -W
+                    composer require "php-flasher/flasher-noty:^0.6"
+                    composer require "php-flasher/flasher-noty-symfony:^0.6"
 
-                    composer require "php-flasher/flasher-notyf:^0.6" -W
-                    composer require "php-flasher/flasher-notyf-symfony:^0.6" -W
+                    composer require "php-flasher/flasher-notyf:^0.6"
+                    composer require "php-flasher/flasher-notyf-symfony:^0.6"
 
-                    composer require "php-flasher/flasher-sweet-alert:^0.6" -W
-                    composer require "php-flasher/flasher-sweet-alert-symfony:^0.6" -W
+                    composer require "php-flasher/flasher-sweet-alert:^0.6"
+                    composer require "php-flasher/flasher-sweet-alert-symfony:^0.6"
 
-                    composer require "php-flasher/flasher-pnotify:^0.6" -W
-                    composer require "php-flasher/flasher-pnotify-symfony:^0.6" -W
+                    composer require "php-flasher/flasher-pnotify:^0.6"
+                    composer require "php-flasher/flasher-pnotify-symfony:^0.6"
