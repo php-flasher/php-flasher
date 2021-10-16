@@ -8,7 +8,7 @@ on:
 
 jobs:
     test:
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: true
             matrix:
@@ -37,7 +37,10 @@ jobs:
                     - 2.2.*
                     - 2.1.*
                     - 2.0.*
-
+                os:
+                    - ubuntu-latest
+                    - macos-latest
+                    - windows-latest
                 include:
                     -   symfony: 5.4.*
                         php: 7.2
@@ -135,7 +138,7 @@ jobs:
                         php: 5.3
                         phpunit: 4.8.36
 
-        name: S${{ matrix.symfony }} - P${{ matrix.php }}
+        name: ${{ matrix.os }} - S${{ matrix.symfony }} - P${{ matrix.php }}
 
         steps:
             -   name: Checkout code
