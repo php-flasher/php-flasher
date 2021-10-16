@@ -39,8 +39,8 @@ jobs:
                     - 2.0.*
                 os:
                     - ubuntu-latest
-                    - macos-latest
-                    - windows-latest
+                    # - macos-latest
+                    # - windows-latest
                 include:
                     -   symfony: 5.4.*
                         php: 7.2

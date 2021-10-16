@@ -30,8 +30,8 @@ jobs:
                     - 4.0.*
                 os:
                     - ubuntu-latest
-                    - macos-latest
-                    - windows-latest
+                    # - macos-latest
+                    # - windows-latest
                 include:
                     -   laravel: 8.*
                         testbench: 6.*
