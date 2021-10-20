@@ -18,7 +18,7 @@ final class FlasherCliExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('config.php');
+        $loader->load('services.php');
 
         $container
             ->findDefinition('flasher.event_listener.cli_stamps_listener')

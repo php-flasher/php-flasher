@@ -13,7 +13,7 @@ final class FlasherSweetAlertExtension extends Extension implements FlasherExten
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('config.php');
+        $loader->load('services.php');
     }
 
     public function getConfigurationClass()

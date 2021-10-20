@@ -12,14 +12,15 @@ final class FlasherExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('config.php');
+        $loader->load('services.php');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->registerFlasherConfigration($config, $container);
         $this->registerResourceManagerConfiguration($config, $container);
-        $this->registerSessionConfiguration($config, $container);
+        $this->registerSessionConfiguration($container);
+        $this->registerServicesForAutoConfiguration($container);
     }
 
     public function registerFlasherConfigration(array $config, ContainerBuilder $container)
@@ -44,7 +45,7 @@ final class FlasherExtension extends Extension
         }
     }
 
-    public function registerSessionConfiguration(array $config, ContainerBuilder $container)
+    public function registerSessionConfiguration(ContainerBuilder $container)
     {
         $storageFactory = $container->getDefinition('flasher.storage_factory');
 
@@ -57,5 +58,17 @@ final class FlasherExtension extends Extension
         if ($container->has('session')) {
             $storageFactory->replaceArgument(0, $container->getDefinition('session'));
         }
+    }
+
+    public function registerServicesForAutoConfiguration(ContainerBuilder $container)
+    {
+        if (!method_exists($container, 'registerForAutoconfiguration')) {
+            return;
+        }
+
+        $container
+            ->registerForAutoconfiguration('Flasher\Prime\EventDispatcher\EventDispatcherInterface')
+            ->addTag('flasher.event_subscriber')
+        ;
     }
 }
