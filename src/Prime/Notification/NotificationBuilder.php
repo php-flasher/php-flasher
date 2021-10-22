@@ -26,7 +26,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     protected static $macros = array();
 
     /**
-     * @param string                  $handler
+     * @param string $handler
      */
     public function __construct(StorageManagerInterface $storageManager, NotificationInterface $notification, $handler)
     {
@@ -75,6 +75,13 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->addFlash(NotificationInterface::TYPE_INFO, $message, $options);
     }
 
+    /**
+     * @param  NotificationInterface|string $type
+     * @param  string|null  $message
+     * @param array $options
+     *
+     * @return Envelope
+     */
     public function addFlash($type, $message = null, array $options = array())
     {
         if ($type instanceof NotificationInterface) {
@@ -87,6 +94,11 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->flash();
     }
 
+    /**
+     * @param StampInterface[] $stamps
+     *
+     * @return Envelope
+     */
     public function flash(array $stamps = array())
     {
         if (!empty($stamps)) {
@@ -98,6 +110,13 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->getEnvelope();
     }
 
+    /**
+     * @param string $type
+     * @param string|null $message
+     * @param array $options
+     *
+     * @return self
+     */
     public function type($type, $message = null, array $options = array())
     {
         $this->envelope->setType($type);
@@ -113,6 +132,11 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
+    /**
+     * @param string $message
+     *
+     * @return self
+     */
     public function message($message)
     {
         $this->envelope->setMessage(addslashes($message));
@@ -120,6 +144,12 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
+    /**
+     * @param array $options
+     * @param bool $merge
+     *
+     * @return self
+     */
     public function options(array $options, $merge = true)
     {
         if (true === $merge) {

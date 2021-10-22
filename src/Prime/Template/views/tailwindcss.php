@@ -2,7 +2,6 @@
 
 switch ($envelope->getType()) {
     case 'success':
-        $title = 'Success';
         $textColor = 'text-green-600';
         $backgroundColor = 'bg-green-600';
         $progressBackgroundColor = 'bg-green-100';
@@ -10,7 +9,6 @@ switch ($envelope->getType()) {
         $icon = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="check w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
         break;
     case 'error':
-        $title = 'Error';
         $textColor = 'text-red-600';
         $backgroundColor = 'bg-red-600';
         $progressBackgroundColor = 'bg-red-100';
@@ -18,7 +16,6 @@ switch ($envelope->getType()) {
         $icon = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="x w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
         break;
     case 'warning':
-        $title = 'Warning';
         $textColor = 'text-yellow-600';
         $backgroundColor = 'bg-yellow-600';
         $progressBackgroundColor = 'bg-yellow-100';
@@ -27,7 +24,6 @@ switch ($envelope->getType()) {
         break;
     case 'info':
     default:
-        $title = 'Info';
         $textColor = 'text-blue-600';
         $backgroundColor = 'bg-blue-600';
         $progressBackgroundColor = 'bg-blue-100';
@@ -43,7 +39,7 @@ switch ($envelope->getType()) {
         </div>
         <div class="ml-4 w-0 flex-1">
             <p class="text-base leading-5 font-medium capitalize <?= $textColor ?>">
-                <?= $title ?>
+                <?= $envelope->getTitle() ?>
             </p>
             <p class="mt-1 text-sm leading-5 text-gray-500">
                 <?= $envelope->getMessage() ?>

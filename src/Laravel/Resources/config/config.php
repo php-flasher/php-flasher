@@ -25,7 +25,7 @@ return array(
             'bootstrap' => array(
                 'view' => 'flasher::bootstrap',
                 'styles' => array(
-                    'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css',
+                    'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css',
                 ),
             ),
         ),

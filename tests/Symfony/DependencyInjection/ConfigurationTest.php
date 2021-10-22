@@ -36,7 +36,7 @@ class ConfigurationTest extends TestCase
                     'bootstrap' => array(
                         'view' => Configuration::getTemplate('bootstrap.html.twig'),
                         'styles' => array(
-                            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.1/css/bootstrap.min.css',
+                            'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css',
                         ),
                     ),
                 ),
