@@ -29,6 +29,9 @@
         </symbol>
     </svg>
     <div class="alert {{ alert_class }} alert-dismissible fade in show d-flex align-items-center" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid {{ progress_bg_color }}">
+        <h2>
+            {{ envlope.title }}
+        </h2>
         {{ icon | raw }}
         {{ envelope.message }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>

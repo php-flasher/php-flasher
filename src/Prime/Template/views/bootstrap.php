@@ -37,6 +37,9 @@ switch ($envelope->getType()) {
         </symbol>
     </svg>
     <div class="alert <?= $alertClass ?> alert-dismissible fade in show d-flex align-items-center" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid <?= $progressBackgroundColor ?>">
+        <h2>
+            <?= $envelope->getTitle() ?: '' ?>
+        </h2>
         <?= $icon ?>
         <?= $envelope->getMessage() ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
