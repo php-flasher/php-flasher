@@ -18,6 +18,10 @@ class Notification implements NotificationInterface
      * @var array<string, mixed>
      */
     protected $options = array();
+    /**
+     * @var string
+     */
+    protected $title;
 
     public function getType()
     {
@@ -37,6 +41,22 @@ class Notification implements NotificationInterface
     public function setMessage($message)
     {
         $this->message = $message;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     public function getOptions()
@@ -74,6 +94,7 @@ class Notification implements NotificationInterface
             'type' => $this->getType(),
             'message' => $this->getMessage(),
             'options' => $this->getOptions(),
+            'title' => $this->getTitle(),
         );
     }
 }

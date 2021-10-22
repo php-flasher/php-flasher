@@ -26,7 +26,9 @@ class NotificationBuilder implements NotificationBuilderInterface
     protected static $macros = array();
 
     /**
-     * @param string                  $handler
+     * @param  \Flasher\Prime\Storage\StorageManagerInterface  $storageManager
+     * @param  \Flasher\Prime\Notification\NotificationInterface  $notification
+     * @param $handler
      */
     public function __construct(StorageManagerInterface $storageManager, NotificationInterface $notification, $handler)
     {
@@ -36,9 +38,9 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param string $message
-     *
-     * @return Envelope
+     * @param  string  $message
+     * @param  array  $options
+     * @return \Flasher\Prime\Envelope
      */
     public function addSuccess($message, array $options = array())
     {
@@ -46,9 +48,9 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param string $message
-     *
-     * @return Envelope
+     * @param  string  $message
+     * @param  array  $options
+     * @return \Flasher\Prime\Envelope
      */
     public function addError($message, array $options = array())
     {
@@ -56,9 +58,9 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param string $message
-     *
-     * @return Envelope
+     * @param  string  $message
+     * @param  array  $options
+     * @return \Flasher\Prime\Envelope
      */
     public function addWarning($message, array $options = array())
     {
@@ -66,15 +68,21 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param string $message
-     *
-     * @return Envelope
+     * @param  string  $message
+     * @param  array  $options
+     * @return \Flasher\Prime\Envelope
      */
     public function addInfo($message, array $options = array())
     {
         return $this->addFlash(NotificationInterface::TYPE_INFO, $message, $options);
     }
 
+    /**
+     * @param  \Flasher\Prime\Notification\NotificationInterface|string  $type
+     * @param  string|null  $message
+     * @param  array  $options
+     * @return \Flasher\Prime\Envelope
+     */
     public function addFlash($type, $message = null, array $options = array())
     {
         if ($type instanceof NotificationInterface) {
@@ -87,6 +95,10 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->flash();
     }
 
+    /**
+     * @param  array  $stamps
+     * @return \Flasher\Prime\Envelope
+     */
     public function flash(array $stamps = array())
     {
         if (!empty($stamps)) {
@@ -98,6 +110,12 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this->getEnvelope();
     }
 
+    /**
+     * @param  string  $type
+     * @param  string|null  $message
+     * @param  array  $options
+     * @return \Flasher\Prime\Notification\NotificationBuilderInterface
+     */
     public function type($type, $message = null, array $options = array())
     {
         $this->envelope->setType($type);
@@ -113,9 +131,26 @@ class NotificationBuilder implements NotificationBuilderInterface
         return $this;
     }
 
+    /**
+     * @param  string  $message
+     * @return \Flasher\Prime\Notification\NotificationBuilderInterface
+     */
     public function message($message)
     {
         $this->envelope->setMessage(addslashes($message));
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return \Flasher\Prime\Notification\NotificationBuilderInterface
+     */
+    public function title($title)
+    {
+        $notification = $this->envelope->getNotification();
+        $notification->setTitle(addslashes($title));
 
         return $this;
     }

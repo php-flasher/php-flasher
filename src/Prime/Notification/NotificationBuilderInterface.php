@@ -63,6 +63,13 @@ interface NotificationBuilderInterface
     public function message($message);
 
     /**
+     * @param string $title
+     *
+     * @return self
+     */
+    public function title($title);
+
+    /**
      * @param array<string, mixed> $options
      * @param bool                 $merge
      *
@@ -80,6 +87,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param  array  $options
      *
      * @return self
      */
@@ -87,6 +95,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param  array  $options
      *
      * @return self
      */
@@ -94,6 +103,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param  array  $options
      *
      * @return self
      */
@@ -101,6 +111,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param  array  $options
      *
      * @return self
      */
