@@ -188,4 +188,16 @@ final class Envelope implements NotificationInterface
 
         return $array;
     }
+
+    /**
+     * Dynamically call methods on the notification
+     *
+     * @param string $method
+     *
+     * @return mixed
+     */
+    public function __call($method, array $parameters)
+    {
+        return call_user_func_array(array($this->getNotification(), $method), $parameters);
+    }
 }

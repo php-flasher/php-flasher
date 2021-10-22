@@ -11,6 +11,7 @@ use Flasher\Prime\EventDispatcher\EventListener\FilterListener;
 use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 use Flasher\Prime\Factory\NotificationFactory;
+use Flasher\Prime\Factory\TemplateFactory;
 use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Response\Presenter\ArrayPresenter;
@@ -135,8 +136,8 @@ class Laravel implements ServiceProviderInterface
             return $eventDispatcher;
         });
 
-        $this->app->singleton('flasher.notification_factory', function (Application $app) {
-            return new NotificationFactory($app['flasher.storage_manager']);
+        $this->app->singleton('flasher.template', function (Application $app) {
+            return new TemplateFactory($app['flasher.storage_manager']);
         });
 
         $this->app->alias('flasher.config', 'Flasher\Laravel\Config\Config');
@@ -147,8 +148,10 @@ class Laravel implements ServiceProviderInterface
         $this->app->alias('flasher.storage_manager', 'Flasher\Laravel\Storage\StorageManager');
         $this->app->alias('flasher.filter', 'Flasher\Prime\Filter\Filter');
         $this->app->alias('flasher.template_engine', 'Flasher\Laravel\Template\BladeEngine');
-        $this->app->alias('flasher.notification_factory', 'Flasher\Prime\Factory\NotificationFactory');
-        $this->app->alias('Flasher\Prime\Factory\NotificationFactory', 'flasher.template');
+        $this->app->alias('flasher.template', 'Flasher\Prime\Factory\TemplateFactory');
+
+        $this->app->alias('flasher.template', 'flasher.notification_factory');
+        $this->app->alias('flasher.template', 'Flasher\Prime\Factory\NotificationFactory');
 
         $this->app->bind('Flasher\Prime\Config\ConfigInterface', 'flasher.config');
         $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
@@ -158,7 +161,7 @@ class Laravel implements ServiceProviderInterface
         $this->app->bind('Flasher\Prime\EventDispatcher\EventDispatcherInterface', 'flasher.event_dispatcher');
         $this->app->bind('Flasher\Prime\Storage\StorageInterface', 'flasher.storage');
         $this->app->bind('Flasher\Prime\Template\EngineInterface', 'flasher.template_engine');
-        $this->app->bind('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.notification_factory');
+        $this->app->bind('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.template');
     }
 
     protected function registerBladeDirectives()

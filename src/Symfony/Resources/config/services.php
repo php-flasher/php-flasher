@@ -27,7 +27,7 @@ $container
     ->addArgument(new Reference('flasher.event_dispatcher'));
 
 $container
-    ->register('flasher.notification_factory', 'Flasher\Prime\Factory\NotificationFactory')
+    ->register('flasher.template', 'Flasher\Prime\Factory\TemplateFactory')
     ->addArgument( new Reference('flasher.storage_manager'))
     ->addTag('flasher.factory', array('alias' => 'template'));
 
@@ -92,8 +92,10 @@ if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Prime\Config\ConfigInterface', 'flasher.config');
     $container->setAlias('Flasher\Prime\EventDispatcher\EventDispatcher', 'flasher.event_dispatcher');
     $container->setAlias('Flasher\Prime\EventDispatcher\EventDispatcherInterface', 'flasher.event_dispatcher');
-    $container->setAlias('Flasher\Prime\Factory\NotificationFactory', 'flasher.notification_factory');
-    $container->setAlias('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.notification_factory');
+    $container->setAlias('Flasher\Prime\Factory\TemplateFactory', 'flasher.template');
+    $container->setAlias('Flasher\Prime\Factory\NotificationFactory', 'flasher.template');
+    $container->setAlias('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.template');
+    $container->setAlias('flasher.notification_factory', 'flasher.template');
     $container->setAlias('Flasher\Prime\Filter\Filter', 'flasher.filter');
     $container->setAlias('Flasher\Prime\Filter\FilterInterface', 'flasher.filter');
     $container->setAlias('Flasher\Prime\Flasher', 'flasher');

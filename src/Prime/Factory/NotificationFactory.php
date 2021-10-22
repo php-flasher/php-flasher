@@ -2,8 +2,8 @@
 
 namespace Flasher\Prime\Factory;
 
-use Flasher\Prime\Notification\Notification;
-use Flasher\Prime\Notification\NotificationBuilder;
+use Flasher\Prime\Notification\Template;
+use Flasher\Prime\Notification\TemplateBuilder;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 class NotificationFactory implements NotificationFactoryInterface
@@ -32,7 +32,9 @@ class NotificationFactory implements NotificationFactoryInterface
 
     public function createNotificationBuilder()
     {
-        return new NotificationBuilder($this->getStorageManager(), new Notification(), 'template');
+        @trigger_error('deprecated use TemplateFactory instead, it will be removed in v1.0.0', \E_USER_DEPRECATED);
+
+        return new TemplateBuilder($this->getStorageManager(), new Template(), 'template');
     }
 
     /**
