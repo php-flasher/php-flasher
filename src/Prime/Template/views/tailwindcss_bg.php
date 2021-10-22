@@ -43,7 +43,7 @@
         </div>
         <div class="ml-4 w-0 flex-1">
             <p class="text-base leading-5 font-medium capitalize <?= $textColor ?>">
-                <?= $title ?>
+                <?= $envelope->getTitle() ?: $title ?>
             </p>
             <p class="mt-1 text-sm leading-5 text-gray-500">
                 <?= $envelope->getMessage() ?>

@@ -1,22 +1,26 @@
 <?php
 switch ($envelope->getType()) {
     case 'success':
+        $title = 'Success';
         $alertClass = 'alert-success';
         $progressBackgroundColor = '#155724';
         $icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>';
         break;
     case 'error':
+        $title = 'Error';
         $alertClass = 'alert-danger';
         $progressBackgroundColor = '#721c24';
         $icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>';
         break;
     case 'warning':
+        $title = 'Warning';
         $alertClass = 'alert-warning';
         $progressBackgroundColor = '#856404';
         $icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>';
         break;
     case 'info':
     default:
+        $title = 'Info';
         $alertClass = 'alert-info';
         $progressBackgroundColor = '#0c5460';
         $icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>';
@@ -38,7 +42,7 @@ switch ($envelope->getType()) {
     </svg>
     <div class="alert <?= $alertClass ?> text-break alert-dismissible fade in show align-items-center" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid <?= $progressBackgroundColor ?>">
         <?= $icon ?>
-        <strong><?= $envelope->getTitle() ?></strong> <?= $envelope->getMessage() ?>
+        <strong><?= $envelope->getTitle() ?: $title ?></strong> <?= $envelope->getMessage() ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
     </div>
     <div class="d-flex" style="height: .125rem;margin-top: -1rem;">

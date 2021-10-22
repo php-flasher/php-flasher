@@ -1,16 +1,20 @@
 {% if 'success' == envelope.type %}
+    {% set title = 'Success' %}
     {% set alert_class = 'alert-success' %}
     {% set progress_bg_color = '#155724' %}
     {% set icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>' %}
 {% elseif 'error' == envelope.type %}
+    {% set title = 'Error' %}
     {% set alert_class = 'alert-danger' %}
     {% set progress_bg_color = '#721c24' %}
     {% set icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' %}
 {% elseif 'warning' == envelope.type %}
+    {% set title = 'Warning' %}
     {% set alert_class = 'alert-warning' %}
     {% set progress_bg_color = '#856404' %}
     {% set icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>' %}
 {% else %}
+    {% set title = 'Info' %}
     {% set alert_class = 'alert-info' %}
     {% set progress_bg_color = '#0c5460' %}
     {% set icon = '<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>' %}
@@ -30,7 +34,7 @@
     </svg>
     <div class="alert {{ alert_class }} text-break alert-dismissible fade in show align-items-center" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid {{ progress_bg_color }}">
         {{ icon | raw }}
-        <strong>{{ envelope.notification.title | trans }}</strong> {{ envelope.message | trans }}
+        <strong>{{ envelope.notification.title ?? title | trans }}</strong> {{ envelope.message | trans }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
     </div>
     <div class="d-flex" style="height: .125rem;margin-top: -1rem;">
