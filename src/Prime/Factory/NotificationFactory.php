@@ -6,7 +6,7 @@ use Flasher\Prime\Notification\Template;
 use Flasher\Prime\Notification\TemplateBuilder;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
-/* abstract */ class NotificationFactory implements NotificationFactoryInterface
+class NotificationFactory implements NotificationFactoryInterface
 {
     /**
      * @var StorageManagerInterface
