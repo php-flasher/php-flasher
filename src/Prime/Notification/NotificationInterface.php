@@ -33,6 +33,16 @@ interface NotificationInterface
     public function setMessage($message);
 
     /**
+     * @param string $title
+     */
+    public function setTitle($title);
+
+    /**
+     * @return string
+     */
+    public function getTitle();
+
+    /**
      * @return array<string, mixed>
      */
     public function getOptions();

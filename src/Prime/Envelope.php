@@ -149,6 +149,16 @@ final class Envelope implements NotificationInterface
         $this->notification->setMessage($message);
     }
 
+    public function setTitle($title)
+    {
+        return $this->notification->setTitle($title);
+    }
+
+    public function getTitle()
+    {
+        return $this->notification->getTitle();
+    }
+
     public function getOptions()
     {
         return $this->notification->getOptions();
