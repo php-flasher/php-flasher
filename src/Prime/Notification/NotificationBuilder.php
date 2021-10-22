@@ -150,7 +150,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function title($title)
     {
         $notification = $this->envelope->getNotification();
-        $notification->setTitle(addslashes($title));
+        $notification->setTitle($title);
 
         return $this;
     }

@@ -6,6 +6,18 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class ToastrBuilder extends NotificationBuilder
 {
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function title($title)
+    {
+        $notification = $this->envelope->getNotification();
+        $notification->setTitle(addslashes($title));
+
+        return $this;
+    }
 
     /**
      * Enable a close button
