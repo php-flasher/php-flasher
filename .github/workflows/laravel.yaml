@@ -138,23 +138,23 @@ jobs:
 
             -   name: Install Flasher Depencies
                 run: |
-                    composer require "php-flasher/flasher:^0.7"
-                    composer require "php-flasher/flasher-laravel:^0.7"
+                    composer require "php-flasher/flasher:^0.8"
+                    composer require "php-flasher/flasher-laravel:^0.8"
 
-                    composer require "php-flasher/flasher-cli:^0.7"
-                    composer require "php-flasher/flasher-cli-laravel:^0.7"
+                    composer require "php-flasher/flasher-cli:^0.8"
+                    composer require "php-flasher/flasher-cli-laravel:^0.8"
 
-                    composer require "php-flasher/flasher-toastr:^0.7"
-                    composer require "php-flasher/flasher-toastr-laravel:^0.7"
+                    composer require "php-flasher/flasher-toastr:^0.8"
+                    composer require "php-flasher/flasher-toastr-laravel:^0.8"
 
-                    composer require "php-flasher/flasher-noty:^0.7"
-                    composer require "php-flasher/flasher-noty-laravel:^0.7"
+                    composer require "php-flasher/flasher-noty:^0.8"
+                    composer require "php-flasher/flasher-noty-laravel:^0.8"
 
-                    composer require "php-flasher/flasher-notyf:^0.7"
-                    composer require "php-flasher/flasher-notyf-laravel:^0.7"
+                    composer require "php-flasher/flasher-notyf:^0.8"
+                    composer require "php-flasher/flasher-notyf-laravel:^0.8"
 
-                    composer require "php-flasher/flasher-sweet-alert:^0.7"
-                    composer require "php-flasher/flasher-sweet-alert-laravel:^0.7"
+                    composer require "php-flasher/flasher-sweet-alert:^0.8"
+                    composer require "php-flasher/flasher-sweet-alert-laravel:^0.8"
 
-                    composer require "php-flasher/flasher-pnotify:^0.7"
-                    composer require "php-flasher/flasher-pnotify-laravel:^0.7"
+                    composer require "php-flasher/flasher-pnotify:^0.8"
+                    composer require "php-flasher/flasher-pnotify-laravel:^0.8"
