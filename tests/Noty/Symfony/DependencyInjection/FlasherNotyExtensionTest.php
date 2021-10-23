@@ -25,15 +25,15 @@ class FlasherNotyExtensionTest extends TestCase
         $flasher = $container->getDefinition('flasher');
         $calls = $flasher->getMethodCalls();
 
-        $this->assertCount(2, $calls);
+        $this->assertCount(5, $calls);
 
         $this->assertEquals('addFactory', $calls[0][0]);
         $this->assertEquals('template', $calls[0][1][0]);
         $this->assertEquals('flasher.template', (string) $calls[0][1][1]);
 
-        $this->assertEquals('addFactory', $calls[1][0]);
-        $this->assertEquals('noty', $calls[1][1][0]);
-        $this->assertEquals('flasher.noty', (string) $calls[1][1][1]);
+        $this->assertEquals('addFactory', $calls[4][0]);
+        $this->assertEquals('noty', $calls[4][1][0]);
+        $this->assertEquals('flasher.noty', (string) $calls[4][1][1]);
     }
 
     private function getRawContainer()
