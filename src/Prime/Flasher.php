@@ -52,6 +52,11 @@ final class Flasher implements FlasherInterface
         return $this->factories[$alias];
     }
 
+    public function using($alias)
+    {
+        return $this->create($alias);
+    }
+
     public function addFactory($alias, NotificationFactoryInterface $factory)
     {
         $this->factories[$alias] = $factory;

@@ -17,3 +17,7 @@ expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::history(), 0,  'history
 override(\Flasher\Prime\FlasherInterface::create(), map([
     'pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class
 ]));
+
+override(\Flasher\Prime\FlasherInterface::using(), map([
+    'pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class
+]));

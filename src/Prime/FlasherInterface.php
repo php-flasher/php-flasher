@@ -22,6 +22,17 @@ interface FlasherInterface
     public function create($alias = null);
 
     /**
+     * Get a driver instance.
+     *
+     * @param string|null $alias
+     *
+     * @return NotificationFactoryInterface
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function using($alias);
+
+    /**
      * Register a custom driver creator.
      *
      * @param string           $alias
