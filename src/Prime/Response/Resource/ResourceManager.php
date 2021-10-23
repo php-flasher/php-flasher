@@ -116,7 +116,7 @@ final class ResourceManager implements ResourceManagerInterface
 
         $envelope->withStamp(new TemplateStamp($compiled));
 
-        return 'template_' . $view;
+        return 'template.' . $view;
     }
 
     private function getTemplateAdapter($handler)
