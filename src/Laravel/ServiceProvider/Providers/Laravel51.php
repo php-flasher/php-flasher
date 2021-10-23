@@ -19,5 +19,6 @@ final class Laravel51 extends Laravel
         ));
 
         $this->registerBladeDirectives();
+        $this->bootServices($this->app);
     }
 }

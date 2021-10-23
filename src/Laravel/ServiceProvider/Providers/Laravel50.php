@@ -21,6 +21,7 @@ final class Laravel50 extends Laravel
         ));
 
         $this->registerBladeDirectives();
+        $this->bootServices($this->app);
     }
 
     protected function registerBladeDirectives()

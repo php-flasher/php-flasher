@@ -48,6 +48,7 @@ final class ResourceManager implements ResourceManagerInterface
             $rootScripts = $this->config->get('root_scripts', array());
             $rootScript = reset($rootScripts);
         }
+
         $response->setRootScript($rootScript);
 
         $handlers = array();
@@ -55,8 +56,8 @@ final class ResourceManager implements ResourceManagerInterface
         foreach ($response->getEnvelopes() as $envelope) {
             $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
 
-            if ('template' === $handler) {
-                $handler = $this->handleTemplateStamp($envelope);
+            if (0 === strpos($handler, 'template')) {
+                $handler = $this->handleTemplateStamp($handler, $envelope);
             }
 
             if (in_array($handler, $handlers, true)) {
@@ -104,9 +105,9 @@ final class ResourceManager implements ResourceManagerInterface
         return $this->config;
     }
 
-    private function handleTemplateStamp(Envelope $envelope)
+    private function handleTemplateStamp($handler, Envelope $envelope)
     {
-        $view = $this->config->get('template_factory.default');
+        $view = $this->getTemplateAdapter($handler);
         $template = $this->config->get('template_factory.templates.' . $view . '.view');
 
         $compiled = $this->templateEngine->render($template, array(
@@ -116,5 +117,14 @@ final class ResourceManager implements ResourceManagerInterface
         $envelope->withStamp(new TemplateStamp($compiled));
 
         return 'template_' . $view;
+    }
+
+    private function getTemplateAdapter($handler)
+    {
+        if (0 === strpos($handler, 'template.')) {
+            return substr($handler, strlen('template.'));
+        }
+
+        return $this->config->get('template_factory.default');
     }
 }

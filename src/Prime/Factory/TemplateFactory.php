@@ -10,12 +10,24 @@ use Flasher\Prime\Notification\TemplateBuilder;
  */
 final class TemplateFactory extends NotificationFactory
 {
+    private $handler = 'template';
+
     public function createNotificationBuilder()
     {
         return new TemplateBuilder(
             $this->getStorageManager(),
             new Template(),
-            'template'
+            $this->getHandler()
         );
+    }
+
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    public function setHandler($handler)
+    {
+        $this->handler = $handler;
     }
 }

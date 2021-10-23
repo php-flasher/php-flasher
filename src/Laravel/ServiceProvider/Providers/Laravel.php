@@ -56,6 +56,28 @@ class Laravel implements ServiceProviderInterface
         ), 'flasher-views');
 
         $this->registerBladeDirectives();
+        $this->bootServices($this->app);
+    }
+
+    protected function bootServices(Application $app)
+    {
+        $templates = $app['flasher.config']->get('template_factory.templates', array());
+        foreach ($templates as $template => $options) {
+            $app->bind('flasher.template.'.$template, function (Application $app) use ($template) {
+                $factory = new TemplateFactory($app['flasher.storage_manager']);
+                $factory->setHandler('template.' . $template);
+
+                return $factory;
+            });
+        }
+
+        $app->extend('flasher', function (Flasher $flasher, Application $app) use ($templates) {
+            foreach ($templates as $template => $options) {
+                $flasher->addFactory('template.' . $template, $app['flasher.template.' . $template]);
+            }
+
+            return $flasher;
+        });
     }
 
     public function register(FlasherServiceProvider $provider)

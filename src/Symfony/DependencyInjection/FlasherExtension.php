@@ -5,6 +5,7 @@ namespace Flasher\Symfony\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class FlasherExtension extends Extension
@@ -17,16 +18,28 @@ final class FlasherExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $this->registerFlasherConfigration($config, $container);
+        $this->registerFlasherConfiguration($config, $container);
+        $this->registerTemplateFactoriesConfigurations($config, $container);
         $this->registerResourceManagerConfiguration($config, $container);
         $this->registerSessionConfiguration($container);
         $this->registerServicesForAutoConfiguration($container);
     }
 
-    public function registerFlasherConfigration(array $config, ContainerBuilder $container)
+    public function registerFlasherConfiguration(array $config, ContainerBuilder $container)
     {
         $configuration = $container->getDefinition('flasher.config');
         $configuration->replaceArgument(0, $config);
+    }
+
+    public function registerTemplateFactoriesConfigurations(array $config, ContainerBuilder $container)
+    {
+        foreach ($config['template_factory']['templates'] as $template => $options) {
+            $container
+                ->register('flasher.template.'.$template, 'Flasher\Prime\Factory\TemplateFactory')
+                ->addArgument(new Reference('flasher.storage_manager'))
+                ->addMethodCall('setHandler', array('template.'.$template))
+                ->addTag('flasher.factory', array('alias' => 'template.'.$template));
+        }
     }
 
     public function registerResourceManagerConfiguration(array $config, ContainerBuilder $container)
