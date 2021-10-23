@@ -20,6 +20,7 @@ final class Laravel4 extends Laravel
         $provider->package('php-flasher/flasher-laravel', 'flasher', flasher_path(__DIR__ . '/../../Resources'));
 
         $this->registerBladeDirectives();
+        $this->bootServices($this->app);
     }
 
     public function register(FlasherServiceProvider $provider)

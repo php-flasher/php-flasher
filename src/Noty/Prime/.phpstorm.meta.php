@@ -14,3 +14,7 @@ expectedArguments(\Flasher\Noty\Prime\NotyBuilder::queue(), 0, 'global');
 override(\Flasher\Prime\FlasherInterface::create(), map([
     'noty' => \Flasher\Noty\Prime\NotyFactory::class
 ]));
+
+override(\Flasher\Prime\FlasherInterface::using(), map([
+    'noty' => \Flasher\Noty\Prime\NotyFactory::class
+]));

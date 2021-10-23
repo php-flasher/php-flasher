@@ -29,7 +29,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue('template')
                 ->end()
                 ->scalarNode('root_script')
-                    ->defaultValue('https://cdn.jsdelivr.net/npm/@flasher/flasher@0.3.0/dist/flasher.min.js')
+                    ->defaultValue('https://cdn.jsdelivr.net/npm/@flasher/flasher@0.4.0/dist/flasher.min.js')
                 ->end()
                 ->arrayNode('root_scripts')
                     ->prototype('scalar')->end()

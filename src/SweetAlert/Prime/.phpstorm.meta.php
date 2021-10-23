@@ -14,3 +14,7 @@ expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::customClass(), 0,
 override(\Flasher\Prime\FlasherInterface::create(), map([
     'sweet_alert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class
 ]));
+
+override(\Flasher\Prime\FlasherInterface::using(), map([
+    'sweet_alert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class
+]));

@@ -22,7 +22,7 @@ class FactoryCompilerPassTest extends TestCase
         $manager = $container->getDefinition('flasher');
         $calls = $manager->getMethodCalls();
 
-        $this->assertCount(2, $calls);
+        $this->assertCount(5, $calls);
         $this->assertEquals('addFactory', $calls[0][0]);
         $this->assertEquals('test_flasher', $calls[0][1][0]);
     }
