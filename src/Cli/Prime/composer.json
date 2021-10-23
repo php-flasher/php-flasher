@@ -29,7 +29,7 @@
     "require": {
         "php": ">=5.3",
         "ext-mbstring": "*",
-        "php-flasher/flasher": "^0.8"
+        "php-flasher/flasher": "^0.9"
     },
     "autoload": {
         "psr-4": {
