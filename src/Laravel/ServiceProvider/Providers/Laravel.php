@@ -106,13 +106,13 @@ class Laravel implements ServiceProviderInterface
             $templates = $app['flasher.config']->get('template_factory.templates', array());
             foreach ($templates as $template => $factory) {
                 if (isset($factory['scripts'])) {
-                    $resourceManager->addScripts('template_' . $template, $factory['scripts']);
+                    $resourceManager->addScripts('template.' . $template, $factory['scripts']);
                 }
                 if (isset($factory['styles'])) {
-                    $resourceManager->addStyles('template_' . $template, $factory['styles']);
+                    $resourceManager->addStyles('template.' . $template, $factory['styles']);
                 }
                 if (isset($factory['options'])) {
-                    $resourceManager->addOptions('template_' . $template, $factory['options']);
+                    $resourceManager->addOptions('template.' . $template, $factory['options']);
                 }
             }
 

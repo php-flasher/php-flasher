@@ -47,13 +47,13 @@ final class FlasherExtension extends Extension
         $responseManager = $container->getDefinition('flasher.resource_manager');
         foreach ($config['template_factory']['templates'] as $template => $factory) {
             if (isset($factory['scripts'])) {
-                $responseManager->addMethodCall('addScripts', array('template_' . $template, $factory['scripts']));
+                $responseManager->addMethodCall('addScripts', array('template.' . $template, $factory['scripts']));
             }
             if (isset($factory['styles'])) {
-                $responseManager->addMethodCall('addStyles', array('template_' . $template, $factory['styles']));
+                $responseManager->addMethodCall('addStyles', array('template.' . $template, $factory['styles']));
             }
             if (isset($factory['options'])) {
-                $responseManager->addMethodCall('addOptions', array('template_' . $template, $factory['options']));
+                $responseManager->addMethodCall('addOptions', array('template.' . $template, $factory['options']));
             }
         }
     }
