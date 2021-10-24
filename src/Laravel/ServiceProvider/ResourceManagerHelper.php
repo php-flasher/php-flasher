@@ -8,7 +8,9 @@ final class ResourceManagerHelper
 {
     /**
      * @param string $alias
-     * @param array $config
+     * @param array<string, mixed> $config
+     *
+     * @return void
      */
     public static function process(ResourceManager $responseManager, $alias, $config = null)
     {
@@ -22,9 +24,9 @@ final class ResourceManagerHelper
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return string[]
      */
     private static function getScripts($config)
     {
@@ -32,9 +34,9 @@ final class ResourceManagerHelper
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return string[]
      */
     private static function getStyles($config)
     {
@@ -42,9 +44,9 @@ final class ResourceManagerHelper
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return array<string, mixed>
      */
     private static function getOptions($config)
     {

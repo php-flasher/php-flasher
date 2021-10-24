@@ -5,7 +5,6 @@ namespace Flasher\Laravel\Storage;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageInterface;
-use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
 
 final class Storage implements StorageInterface
@@ -13,12 +12,12 @@ final class Storage implements StorageInterface
     const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @var SessionManager|Store
+     * @var Store
      */
     private $session;
 
     /**
-     * @param SessionManager|Store $session
+     * @param Store $session
      */
     public function __construct($session)
     {
@@ -44,7 +43,13 @@ final class Storage implements StorageInterface
 
         $store = $this->all();
         foreach ($store as $index => $envelope) {
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+            $uuidStamp = $envelope->get('Flasher\Prime\Stamp\UuidStamp');
+
+            if (!$uuidStamp instanceof UuidStamp) {
+                continue;
+            }
+
+            $uuid = $uuidStamp->getUuid();
 
             if (!isset($map[$uuid])) {
                 continue;
@@ -63,7 +68,13 @@ final class Storage implements StorageInterface
         $map = UuidStamp::indexByUuid($envelopes);
 
         $store = array_filter($this->all(), function (Envelope $envelope) use ($map) {
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+            $uuidStamp = $envelope->get('Flasher\Prime\Stamp\UuidStamp');
+
+            if (!$uuidStamp instanceof UuidStamp) {
+                return false;
+            }
+
+            $uuid = $uuidStamp->getUuid();
 
             return !isset($map[$uuid]);
         });

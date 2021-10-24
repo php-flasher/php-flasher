@@ -4,8 +4,8 @@ namespace Flasher\Laravel\Observer;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Translation\Translator;
 
 final class FlasherModelObserver
 {
@@ -33,6 +33,8 @@ final class FlasherModelObserver
 
     /**
      * Handle the Model "created" event.
+     *
+     * @return void
      */
     public function created(Model $model)
     {
@@ -41,6 +43,8 @@ final class FlasherModelObserver
 
     /**
      * Handle the Model "updated" event.
+     *
+     * @return void
      */
     public function updated(Model $model)
     {
@@ -49,6 +53,8 @@ final class FlasherModelObserver
 
     /**
      * Handle the Model "deleted" event.
+     *
+     * @return void
      */
     public function deleted(Model $model)
     {
@@ -57,6 +63,8 @@ final class FlasherModelObserver
 
     /**
      * Handle the Model "restored" event.
+     *
+     * @return void
      */
     public function restored(Model $model)
     {
@@ -65,6 +73,8 @@ final class FlasherModelObserver
 
     /**
      * Handle the Model "force deleted" event.
+     *
+     * @return void
      */
     public function forceDeleted(Model $model)
     {
@@ -73,15 +83,17 @@ final class FlasherModelObserver
 
     /**
      * @param string $method
+     *
+     * @return void
      */
     private function addFlash($method, Model $model)
     {
-        $exludes = $this->config->get('observer_events.exclude', array());
-        if (in_array($method, $exludes, true)) {
+        $excludes = $this->config->get('observer_events.exclude', array());
+        if (in_array($method, $excludes, true)) {
             return;
         }
 
-        if (isset($exludes[$method]) && in_array(get_class($model), $exludes[$method], true)) {
+        if (isset($excludes[$method]) && in_array(get_class($model), $excludes[$method], true)) {
             return;
         }
 
@@ -89,7 +101,14 @@ final class FlasherModelObserver
             $message = $this->translator->get(sprintf('flasher::messages.flashable.%s.%s', get_class($model), $method));
         } else {
             $message = $this->translator->get(sprintf('flasher::messages.flashable.default.%s', $method));
-            $message = str_replace('{{ model }}', substr(strrchr(get_class($model), '\\'), 1), $message);
+            $replace = strrchr(get_class($model), '\\');
+            if (false !== $replace) {
+                $message = str_replace('{{ model }}', substr($replace, 1), $message);
+            }
+        }
+
+        if (is_array($message)) {
+            return;
         }
 
         $this->flasher->addSuccess($message);

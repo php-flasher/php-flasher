@@ -24,6 +24,9 @@ final class Laravel50 extends Laravel
         $this->bootServices($this->app);
     }
 
+    /**
+     * @return void
+     */
     protected function registerBladeDirectives()
     {
         $startsWith = function ($haystack, $needle) {
@@ -35,6 +38,10 @@ final class Laravel50 extends Laravel
         };
 
         Blade::extend(function ($view, BladeCompiler $compiler) use ($startsWith, $endsWith) {
+            if (!method_exists($compiler, 'createPlainMatcher')) {
+                return '';
+            }
+
             $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
             $matches = array();
 

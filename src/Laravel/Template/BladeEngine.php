@@ -3,16 +3,17 @@
 namespace Flasher\Laravel\Template;
 
 use Flasher\Prime\Template\EngineInterface;
+use Illuminate\View\Factory;
 
 final class BladeEngine implements EngineInterface
 {
     /**
-     * @var
+     * @var Factory
      */
     private $engine;
 
     /**
-     * @param  $engine
+     * @param Factory $engine
      */
     public function __construct($engine)
     {
@@ -21,6 +22,8 @@ final class BladeEngine implements EngineInterface
 
     public function render($name, array $context = array())
     {
-        return (string) $this->engine->make($name, $context);
+        $view = $this->engine->make($name, $context);
+
+        return $view->render();
     }
 }

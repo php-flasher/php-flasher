@@ -1,15 +1,19 @@
 <?php
 
+use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Stamp\StampInterface;
+
 if (!function_exists('flash')) {
     /**
      * @param string $message
      * @param string $type
+     * @param array<string, mixed> $options
+     * @param StampInterface[] $stamps
      *
-     * @return \Flasher\Prime\Flasher
+     * @return FlasherInterface
      */
     function flash($message = null, $type = 'success', array $options = array(), array $stamps = array())
     {
-        /** @var \Flasher\Prime\FlasherInterface $flasher */
         $flasher = app('flasher');
 
         if (null === $message && 0 === func_num_args()) {
@@ -24,8 +28,10 @@ if (!function_exists('flasher')) {
     /**
      * @param string $message
      * @param string $type
+     * @param array<string, mixed> $options
+     * @param StampInterface[] $stamps
      *
-     * @return \Flasher\Prime\Flasher
+     * @return FlasherInterface
      */
     function flasher($message = null, $type = 'success', array $options = array(), array $stamps = array())
     {

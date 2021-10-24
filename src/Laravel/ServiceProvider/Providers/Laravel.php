@@ -10,7 +10,6 @@ use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\FilterListener;
 use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
-use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Factory\TemplateFactory;
 use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Flasher;
@@ -59,7 +58,10 @@ class Laravel implements ServiceProviderInterface
         $this->bootServices($this->app);
     }
 
-    protected function bootServices(Application $app)
+    /**
+     * @return void
+     */
+    protected function bootServices(Container $app)
     {
         $templates = $app['flasher.config']->get('template_factory.templates', array());
         foreach ($templates as $template => $options) {
@@ -91,6 +93,9 @@ class Laravel implements ServiceProviderInterface
         $this->registerCommonServices();
     }
 
+    /**
+     * @return void
+     */
     protected function registerCommonServices()
     {
         $this->app->singleton('flasher', function (Application $app) {
@@ -186,6 +191,9 @@ class Laravel implements ServiceProviderInterface
         $this->app->bind('Flasher\Prime\Factory\NotificationFactoryInterface', 'flasher.template');
     }
 
+    /**
+     * @return void
+     */
     protected function registerBladeDirectives()
     {
         $startsWith = function ($haystack, $needle) {
