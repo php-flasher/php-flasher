@@ -7,7 +7,7 @@ use Flasher\Symfony\Bridge\FlasherBundle;
 use Flasher\Symfony\DependencyInjection\Compiler\ResourceCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class FlasherSweetAlertSymfonyBundle extends FlasherBundle
+class FlasherSweetAlertSymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     protected function flasherBuild(ContainerBuilder $container)
     {
