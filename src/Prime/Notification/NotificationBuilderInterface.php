@@ -8,6 +8,7 @@ use Flasher\Prime\Stamp\StampInterface;
 /**
  * @method $this livewire(array $context = array())
  * @method $this desktop(bool $renderImmediately = true)
+ * @method $this title(string $title)
  */
 interface NotificationBuilderInterface
 {
