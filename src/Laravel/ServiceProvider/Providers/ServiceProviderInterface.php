@@ -11,7 +11,13 @@ interface ServiceProviderInterface
      */
     public function shouldBeUsed();
 
+    /**
+     * @return void
+     */
     public function boot(FlasherServiceProvider $provider);
 
+    /**
+     * @return void
+     */
     public function register(FlasherServiceProvider $provider);
 }

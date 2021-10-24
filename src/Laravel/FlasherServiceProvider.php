@@ -3,16 +3,21 @@
 namespace Flasher\Laravel;
 
 use Flasher\Laravel\ServiceProvider\ServiceProviderManager;
+use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 
 final class FlasherServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application events.
+     *
+     * @return void
      */
     public function boot()
     {
-        $manager = new ServiceProviderManager($this);
+        /** @var Container $app */
+        $app = $this->app;
+        $manager = new ServiceProviderManager($this, $app);
         $manager->boot();
     }
 
@@ -21,7 +26,9 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $manager = new ServiceProviderManager($this);
+        /** @var Container $app */
+        $app = $this->app;
+        $manager = new ServiceProviderManager($this, $app);
         $manager->register();
     }
 
@@ -38,11 +45,14 @@ final class FlasherServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return \Illuminate\Container\Container
+     * @return Container
      */
     public function getApplication()
     {
-        return $this->app;
+        /** @var Container $app */
+        $app = $this->app;
+
+        return $app;
     }
 
     public function mergeConfigFrom($path, $key)
@@ -50,6 +60,9 @@ final class FlasherServiceProvider extends ServiceProvider
         parent::mergeConfigFrom($path, $key);
     }
 
+    /**
+     * @param string[] $paths
+     */
     public function publishes(array $paths, $groups = null)
     {
         parent::publishes($paths, $groups);
@@ -60,6 +73,9 @@ final class FlasherServiceProvider extends ServiceProvider
         parent::loadTranslationsFrom($path, $namespace);
     }
 
+    /**
+     * @param string $path
+     */
     public function loadViewsFrom($path, $namespace)
     {
         parent::loadViewsFrom($path, $namespace);

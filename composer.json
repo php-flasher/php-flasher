@@ -14,7 +14,8 @@
     "require": {
         "php": ">=5.3",
         "ext-json": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "illuminate/support": "^8"
     },
     "autoload": {
         "psr-4": {

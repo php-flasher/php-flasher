@@ -69,7 +69,11 @@ final class SessionMiddleware
         }
 
         $content = $response->getContent();
-        $pos = strripos($content, '</body>');
+        if (false === $content) {
+            return $response;
+        }
+
+        $pos = (int) strripos($content, '</body>');
         $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
         $response->setContent($content);
 
@@ -77,7 +81,7 @@ final class SessionMiddleware
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     private function typesMapping()
     {
@@ -93,6 +97,6 @@ final class SessionMiddleware
             }
         }
 
-        return $mapping;
+        return $mapping; // @phpstan-ignore-line
     }
 }

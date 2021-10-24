@@ -1,6 +1,7 @@
 parameters:
     paths:
         - src/Prime
+        - src/Laravel
     level: 8
     excludes_analyse:
         - vendor/*
