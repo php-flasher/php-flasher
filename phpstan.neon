@@ -1,0 +1,6 @@
+parameters:
+    paths:
+        - src/Prime
+    level: 8
+    excludes_analyse:
+        - vendor/*

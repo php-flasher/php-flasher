@@ -22,7 +22,7 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     protected $storageManager;
 
-    /** @var array<string, object | callable>  */
+    /** @var array<string, callable>  */
     protected static $macros = array();
 
     /**
@@ -76,9 +76,9 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param  NotificationInterface|string $type
-     * @param  string|null  $message
-     * @param array $options
+     * @param NotificationInterface|string $type
+     * @param string|null  $message
+     * @param array<string, mixed> $options
      *
      * @return Envelope
      */
@@ -113,7 +113,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * @param string $type
      * @param string|null $message
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return self
      */
@@ -145,7 +145,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param bool $merge
      *
      * @return self
@@ -252,7 +252,9 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $name
-     * @param object|callable $macro
+     * @param callable $macro
+     *
+     * @return void
      */
     public static function macro($name, $macro)
     {
@@ -262,6 +264,8 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * @param object $mixin
      * @param bool $replace
+     *
+     * @return void
      */
     public static function mixin($mixin, $replace = true)
     {
@@ -280,6 +284,8 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $name
+     *
+     * @return bool
      */
     public static function hasMacro($name)
     {
@@ -288,7 +294,9 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $method
-     * @param array $parameters
+     * @param mixed[] $parameters
+     *
+     * @return mixed
      */
     public static function __callStatic($method, $parameters)
     {
@@ -301,7 +309,10 @@ class NotificationBuilder implements NotificationBuilderInterface
         $macro = static::$macros[$method];
 
         if ($macro instanceof \Closure) {
-            return call_user_func_array(\Closure::bind($macro, null, get_called_class()), $parameters);
+            /** @var callable $callback */
+            $callback = \Closure::bind($macro, null, get_called_class());
+
+            return call_user_func_array($callback, $parameters);
         }
 
         return call_user_func_array($macro, $parameters);
@@ -309,7 +320,9 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     /**
      * @param string $method
-     * @param array $parameters
+     * @param mixed[] $parameters
+     *
+     * @return mixed
      */
     public function __call($method, $parameters)
     {
@@ -322,7 +335,10 @@ class NotificationBuilder implements NotificationBuilderInterface
         $macro = static::$macros[$method];
 
         if ($macro instanceof \Closure) {
-            return call_user_func_array($macro->bindTo($this, get_called_class()), $parameters);
+            /** @var callable $callback */
+            $callback = $macro->bindTo($this, get_called_class());
+
+            return call_user_func_array($callback, $parameters);
         }
 
         return call_user_func_array($macro, $parameters);

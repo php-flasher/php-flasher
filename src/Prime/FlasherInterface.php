@@ -42,7 +42,9 @@ interface FlasherInterface
     public function addFactory($alias, NotificationFactoryInterface $factory);
 
     /**
+     * @param array<string, mixed> $criteria
      * @param string $presenter
+     * @param array<string, mixed> $context
      *
      * @return mixed
      */

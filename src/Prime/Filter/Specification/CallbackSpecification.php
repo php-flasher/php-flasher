@@ -7,7 +7,10 @@ use Flasher\Prime\Filter\FilterBuilder;
 
 final class CallbackSpecification implements SpecificationInterface
 {
+    /** @var FilterBuilder $filterBuilder */
     private $filterBuilder;
+
+    /** @var callable $callback */
     private $callback;
 
     /**

@@ -6,6 +6,7 @@ interface EngineInterface
 {
     /**
      * @param string $name
+     * @param array<string, mixed> $context
      *
      * @return string
      */

@@ -18,6 +18,7 @@ final class PostRemoveEvent
 
     /**
      * @param Envelope[] $envelopesToRemove
+     * @param Envelope[] $envelopesToKeep
      */
     public function __construct(array $envelopesToRemove, array $envelopesToKeep)
     {

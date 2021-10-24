@@ -17,6 +17,9 @@ final class FilterListener implements EventSubscriberInterface
         $this->filter = $filter;
     }
 
+    /**
+     * @return void
+     */
     public function __invoke(FilterEvent $event)
     {
         $criteria = $event->getCriteria();
@@ -28,6 +31,9 @@ final class FilterListener implements EventSubscriberInterface
         $event->setEnvelopes($envelopes);
     }
 
+    /**
+     * @return string
+     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\FilterEvent';

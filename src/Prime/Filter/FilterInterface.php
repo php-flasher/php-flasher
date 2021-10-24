@@ -8,8 +8,9 @@ interface FilterInterface
 {
     /**
      * @param Envelope[] $envelopes
+     * @param array<string, mixed> $criteria
      *
-     * @return array
+     * @return Envelope[]
      */
     public function filter(array $envelopes, array $criteria);
 }

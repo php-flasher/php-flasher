@@ -34,6 +34,8 @@ final class RemoveEvent
 
     /**
      * @param Envelope[] $envelopesToRemove
+     *
+     * @return void
      */
     public function setEnvelopesToRemove($envelopesToRemove)
     {
@@ -50,6 +52,8 @@ final class RemoveEvent
 
     /**
      * @param Envelope[] $envelopesToKeep
+     *
+     * @return void
      */
     public function setEnvelopesToKeep($envelopesToKeep)
     {

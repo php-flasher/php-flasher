@@ -20,6 +20,11 @@ final class Engine implements EngineInterface
 
         include $name;
 
-        return ltrim(ob_get_clean());
+        $output = ob_get_clean();
+        if (false === $output) {
+            return '';
+        }
+
+        return ltrim($output);
     }
 }

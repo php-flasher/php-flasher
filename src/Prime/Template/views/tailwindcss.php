@@ -1,6 +1,18 @@
 <?php
 
-switch ($envelope->getType()) {
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Template;
+
+if (!isset($envelope) || !$envelope instanceof Envelope) {
+    return;
+}
+
+$notification = $envelope->getNotification();
+if (!$notification instanceof Template) {
+    return;
+}
+
+switch ($notification->getType()) {
     case 'success':
         $title = 'Success';
         $textColor = 'text-green-600';
@@ -43,7 +55,7 @@ switch ($envelope->getType()) {
         </div>
         <div class="ml-4 w-0 flex-1">
             <p class="text-base leading-5 font-medium capitalize <?= $textColor ?>">
-                <?= $envelope->getTitle() ?: $title ?>
+                <?= $notification->getTitle() ?: $title ?>
             </p>
             <p class="mt-1 text-sm leading-5 text-gray-500">
                 <?= $envelope->getMessage() ?>

@@ -19,6 +19,8 @@ interface NotificationInterface
 
     /**
      * @param string $type
+     *
+     * @return void
      */
     public function setType($type);
 
@@ -29,6 +31,8 @@ interface NotificationInterface
 
     /**
      * @param string $message
+     *
+     * @return void
      */
     public function setMessage($message);
 
@@ -39,6 +43,8 @@ interface NotificationInterface
 
     /**
      * @param array<string, mixed> $options
+     *
+     * @return void
      */
     public function setOptions(array $options);
 
@@ -60,11 +66,13 @@ interface NotificationInterface
 
     /**
      * @param string $name
+     *
+     * @return void
      */
     public function unsetOption($name);
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray();
 }

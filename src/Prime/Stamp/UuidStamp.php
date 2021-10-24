@@ -30,19 +30,24 @@ final class UuidStamp implements StampInterface, PresentableStampInterface
     }
 
     /**
-     * @param Envelope|Envelope[] $envelopes
+     * @param Envelope[]|Envelope ...$envelopes
      *
      * @return array<string, Envelope>
      */
     public static function indexByUuid($envelopes)
     {
+        /** @var Envelope[] $envelopes */
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
         $map = array();
 
         foreach ($envelopes as $envelope) {
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+            $uuidStamp = $envelope->get('Flasher\Prime\Stamp\UuidStamp');
+            if (!$uuidStamp instanceof UuidStamp) {
+                continue;
+            }
 
+            $uuid = $uuidStamp->getUuid();
             $map[$uuid] = $envelope;
         }
 

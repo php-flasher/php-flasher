@@ -11,7 +11,9 @@ final class Flasher implements FlasherInterface
     /**
      * The array of created notification "factories".
      *
-     * @var array<string, object>
+     * @template T or NotificationFactoryInterface
+     *
+     * @var array<string, T>
      */
     private $factories = array();
 
@@ -33,12 +35,16 @@ final class Flasher implements FlasherInterface
      * Dynamically call the default factory instance.
      *
      * @param string $method
+     * @param mixed[] $parameters
      *
      * @return mixed
      */
     public function __call($method, array $parameters)
     {
-        return call_user_func_array(array($this->create(), $method), $parameters);
+        /** @var callable $callback */
+        $callback = array($this->create(), $method);
+
+        return call_user_func_array($callback, $parameters);
     }
 
     public function create($alias = null)

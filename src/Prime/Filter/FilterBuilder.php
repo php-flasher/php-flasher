@@ -7,6 +7,7 @@ use Flasher\Prime\Filter\Specification\AndSpecification;
 use Flasher\Prime\Filter\Specification\OrSpecification;
 use Flasher\Prime\Filter\Specification\SpecificationInterface;
 use Flasher\Prime\Stamp\OrderableStampInterface;
+use Flasher\Prime\Stamp\StampInterface;
 
 final class FilterBuilder
 {
@@ -28,6 +29,7 @@ final class FilterBuilder
      */
     private $maxResults;
 
+    /** @var array<string, string> */
     private static $stampsMap = array(
         'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
         'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
@@ -38,7 +40,7 @@ final class FilterBuilder
     /**
      * @param Envelope[] $envelopes
      *
-     * @return array
+     * @return Envelope[]
      */
     public function filter(array $envelopes)
     {
@@ -54,6 +56,10 @@ final class FilterBuilder
 
         if (null !== $orderings) {
             usort($envelopes, function (Envelope $a, Envelope $b) use ($orderings) {
+                /**
+                 * @var class-string<StampInterface> $field
+                 * @var string $ordering
+                 */
                 foreach ($orderings as $field => $ordering) {
                     if (FilterBuilder::ASC !== $ordering) {
                         list($a, $b) = array($b, $a);
@@ -91,7 +97,9 @@ final class FilterBuilder
     }
 
     /**
-     * @return $this
+     * @param array<string, mixed> $criteria
+     *
+     * @return self
      */
     public function withCriteria(array $criteria)
     {
@@ -142,7 +150,7 @@ final class FilterBuilder
     /**
      * @param int $maxResults
      *
-     * @return $this
+     * @return self
      */
     public function setMaxResults($maxResults)
     {
@@ -152,7 +160,7 @@ final class FilterBuilder
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function andWhere(SpecificationInterface $specification)
     {
@@ -166,7 +174,7 @@ final class FilterBuilder
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function where(SpecificationInterface $specification)
     {
@@ -176,7 +184,7 @@ final class FilterBuilder
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function orWhere(SpecificationInterface $specification)
     {

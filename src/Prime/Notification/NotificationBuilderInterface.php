@@ -13,6 +13,7 @@ interface NotificationBuilderInterface
 {
     /**
      * @param string $message
+     * @param array<string, mixed> $options
      *
      * @return Envelope
      */
@@ -20,6 +21,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string $message
+     * @param array<string, mixed> $options
      *
      * @return Envelope
      */
@@ -27,6 +29,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string $message
+     * @param array<string, mixed> $options
      *
      * @return Envelope
      */
@@ -34,6 +37,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string $message
+     * @param array<string, mixed> $options
      *
      * @return Envelope
      */
@@ -42,6 +46,7 @@ interface NotificationBuilderInterface
     /**
      * @param string|NotificationInterface $type
      * @param string $message
+     * @param array<string, mixed> $options
      *
      * @return Envelope|mixed
      */
@@ -50,6 +55,7 @@ interface NotificationBuilderInterface
     /**
      * @param string      $type
      * @param string|null $message
+     * @param array<string, mixed> $options
      *
      * @return self
      */
@@ -80,6 +86,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param array<string, mixed> $options
      *
      * @return self
      */
@@ -87,6 +94,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param array<string, mixed> $options
      *
      * @return self
      */
@@ -94,6 +102,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param array<string, mixed> $options
      *
      * @return self
      */
@@ -101,6 +110,7 @@ interface NotificationBuilderInterface
 
     /**
      * @param string|null $message
+     * @param array<string, mixed> $options
      *
      * @return self
      */

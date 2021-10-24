@@ -1,5 +1,18 @@
 <?php
-switch ($envelope->getType()) {
+
+use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Template;
+
+if (!isset($envelope) || !$envelope instanceof Envelope) {
+    return;
+}
+
+$notification = $envelope->getNotification();
+if (!$notification instanceof Template) {
+    return;
+}
+
+switch ($notification->getType()) {
     case 'success':
         $title = 'Success';
         $alertClass = 'alert-success';
@@ -42,7 +55,7 @@ switch ($envelope->getType()) {
     </svg>
     <div class="alert <?= $alertClass ?> text-break alert-dismissible fade in show align-items-center" role="alert" style="border-top-left-radius: 0;border-bottom-left-radius: 0;border: unset;border-left: 6px solid <?= $progressBackgroundColor ?>">
         <?= $icon ?>
-        <strong><?= $envelope->getTitle() ?: $title ?></strong> <?= $envelope->getMessage() ?>
+        <strong><?= $notification->getTitle() ?: $title ?></strong> <?= $envelope->getMessage() ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
     </div>
     <div class="d-flex" style="height: .125rem;margin-top: -1rem;">
