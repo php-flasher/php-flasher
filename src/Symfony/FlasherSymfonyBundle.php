@@ -9,7 +9,7 @@ use Flasher\Symfony\DependencyInjection\Compiler\PresenterCompilerPass;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class FlasherSymfonyBundle extends FlasherBundle
+class FlasherSymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     protected function flasherBuild(ContainerBuilder $container)
     {
