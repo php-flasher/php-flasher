@@ -4,8 +4,12 @@ namespace Flasher\Prime;
 
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
 use Flasher\Prime\Response\ResponseManagerInterface;
 
+/**
+ * @mixin NotificationBuilderInterface
+ */
 final class Flasher implements FlasherInterface
 {
     /**
