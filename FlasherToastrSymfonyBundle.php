@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Flasher\Symfony\Bridge\FlasherBundle;
 use Flasher\Toastr\Symfony\DependencyInjection\FlasherToastrExtension;
 
-class FlasherToastrSymfonyBundle extends FlasherBundle
+class FlasherToastrSymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     protected function flasherBuild(ContainerBuilder $container)
     {
