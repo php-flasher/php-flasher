@@ -22,12 +22,16 @@ class NotificationFactory implements NotificationFactoryInterface
      * Dynamically call the default driver instance.
      *
      * @param string $method
+     * @param mixed[] $parameters
      *
      * @return mixed
      */
     public function __call($method, array $parameters)
     {
-        return call_user_func_array(array($this->createNotificationBuilder(), $method), $parameters);
+        /** @var callable $callback */
+        $callback = array($this->createNotificationBuilder(), $method);
+
+        return call_user_func_array($callback, $parameters);
     }
 
     public function createNotificationBuilder()

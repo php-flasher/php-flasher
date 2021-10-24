@@ -12,6 +12,11 @@ final class TemplateBuilder extends NotificationBuilder
     public function title($title)
     {
         $notification = $this->envelope->getNotification();
+
+        if (!$notification instanceof Template) {
+            return $this;
+        }
+
         $notification->setTitle($title);
 
         return $this;

@@ -12,12 +12,13 @@ final class FilterEvent
     private $envelopes;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $criteria;
 
     /**
-     * @param Envelope[]   $envelopes
+     * @param Envelope[] $envelopes
+     * @param array<string, mixed> $criteria
      */
     public function __construct(array $envelopes, array $criteria)
     {
@@ -35,6 +36,8 @@ final class FilterEvent
 
     /**
      * @param Envelope[] $envelopes
+     *
+     * @return void
      */
     public function setEnvelopes(array $envelopes)
     {
@@ -42,13 +45,18 @@ final class FilterEvent
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getCriteria()
     {
         return $this->criteria;
     }
 
+    /**
+     * @param array<string, mixed> $criteria
+     *
+     * @return void
+     */
     public function setCriteria(array $criteria)
     {
         $this->criteria = $criteria;

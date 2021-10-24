@@ -16,16 +16,22 @@ final class CriteriaBuilder
     private $filterBuilder;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $criteria;
 
+    /**
+     * @param array<string, mixed> $criteria
+     */
     public function __construct(FilterBuilder $filterBuilder, array $criteria)
     {
         $this->filterBuilder = $filterBuilder;
         $this->criteria = $criteria;
     }
 
+    /**
+     * @return FilterBuilder
+     */
     public function build()
     {
         $this->buildPriority();
@@ -40,6 +46,9 @@ final class CriteriaBuilder
         return $this->filterBuilder;
     }
 
+    /**
+     * @return void
+     */
     public function buildPriority()
     {
         if (!isset($this->criteria['priority'])) {
@@ -60,6 +69,9 @@ final class CriteriaBuilder
         $this->filterBuilder->andWhere(new PrioritySpecification($min, $max));
     }
 
+    /**
+     * @return void
+     */
     public function buildHops()
     {
         if (!isset($this->criteria['hops'])) {
@@ -80,6 +92,9 @@ final class CriteriaBuilder
         $this->filterBuilder->andWhere(new HopsSpecification($min, $max));
     }
 
+    /**
+     * @return void
+     */
     public function buildDelay()
     {
         if (!isset($this->criteria['delay'])) {
@@ -100,6 +115,9 @@ final class CriteriaBuilder
         $this->filterBuilder->andWhere(new DelaySpecification($min, $max));
     }
 
+    /**
+     * @return void
+     */
     public function buildLife()
     {
         if (!isset($this->criteria['life'])) {
@@ -120,6 +138,9 @@ final class CriteriaBuilder
         $this->filterBuilder->andWhere(new HopsSpecification($min, $max));
     }
 
+    /**
+     * @return void
+     */
     public function buildLimit()
     {
         if (!isset($this->criteria['limit'])) {
@@ -129,6 +150,9 @@ final class CriteriaBuilder
         $this->filterBuilder->setMaxResults($this->criteria['limit']);
     }
 
+    /**
+     * @return void
+     */
     public function buildOrder()
     {
         if (!isset($this->criteria['order_by'])) {
@@ -146,6 +170,9 @@ final class CriteriaBuilder
         $this->filterBuilder->orderBy($orderings);
     }
 
+    /**
+     * @return void
+     */
     public function buildStamps()
     {
         if (!isset($this->criteria['stamps'])) {
@@ -159,6 +186,9 @@ final class CriteriaBuilder
         $this->filterBuilder->andWhere(new StampsSpecification($this->criteria['stamps'], $strategy));
     }
 
+    /**
+     * @return void
+     */
     public function buildFilter()
     {
         if (!isset($this->criteria['filter'])) {

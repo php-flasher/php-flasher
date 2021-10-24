@@ -29,6 +29,8 @@ final class PersistEvent
 
     /**
      * @param Envelope[] $envelopes
+     *
+     * @return void
      */
     public function setEnvelopes(array $envelopes)
     {

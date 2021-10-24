@@ -15,6 +15,8 @@ final class StampsListener implements EventSubscriberInterface
 {
     /**
      * @param PersistEvent|UpdateEvent $event
+     *
+     * @return void
      */
     public function __invoke($event)
     {
@@ -23,6 +25,9 @@ final class StampsListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -31,6 +36,9 @@ final class StampsListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @return void
+     */
     private function attachStamps(Envelope $envelope)
     {
         if (null === $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp')) {

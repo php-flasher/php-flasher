@@ -5,6 +5,7 @@ namespace Flasher\Prime\Response\Resource;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Response\Response;
+use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\TemplateStamp;
 use Flasher\Prime\Template\EngineInterface;
 
@@ -54,7 +55,12 @@ final class ResourceManager implements ResourceManagerInterface
         $handlers = array();
 
         foreach ($response->getEnvelopes() as $envelope) {
-            $handler = $envelope->get('Flasher\Prime\Stamp\HandlerStamp')->getHandler();
+            $handlerStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
+            if (!$handlerStamp instanceof HandlerStamp) {
+                continue;
+            }
+
+            $handler = $handlerStamp->getHandler();
 
             if (0 === strpos($handler, 'template')) {
                 $handler = $this->handleTemplateStamp($handler, $envelope);
@@ -105,6 +111,11 @@ final class ResourceManager implements ResourceManagerInterface
         return $this->config;
     }
 
+    /**
+     * @param string $handler
+     *
+     * @return string
+     */
     private function handleTemplateStamp($handler, Envelope $envelope)
     {
         $view = $this->getTemplateAdapter($handler);
@@ -119,6 +130,11 @@ final class ResourceManager implements ResourceManagerInterface
         return 'template.' . $view;
     }
 
+    /**
+     * @param string $handler
+     *
+     * @return string
+     */
     private function getTemplateAdapter($handler)
     {
         if (0 === strpos($handler, 'template.')) {

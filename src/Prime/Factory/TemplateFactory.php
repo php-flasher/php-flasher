@@ -10,6 +10,7 @@ use Flasher\Prime\Notification\TemplateBuilder;
  */
 final class TemplateFactory extends NotificationFactory
 {
+    /** @var string  */
     private $handler = 'template';
 
     public function createNotificationBuilder()
@@ -21,11 +22,19 @@ final class TemplateFactory extends NotificationFactory
         );
     }
 
+    /**
+     * @return string
+     */
     public function getHandler()
     {
         return $this->handler;
     }
 
+    /**
+     * @param string $handler
+     *
+     * @return void
+     */
     public function setHandler($handler)
     {
         $this->handler = $handler;

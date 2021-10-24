@@ -29,6 +29,8 @@ final class ResponseEvent
 
     /**
      * @param Envelope[] $envelopes
+     *
+     * @return void
      */
     public function setEnvelopes(array $envelopes)
     {

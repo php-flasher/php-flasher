@@ -29,8 +29,12 @@ final class ArrayStorage implements StorageInterface
         $map = UuidStamp::indexByUuid($envelopes);
 
         foreach ($this->envelopes as $index => $envelope) {
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+            $uuidStamp = $envelope->get('Flasher\Prime\Stamp\UuidStamp');
+            if (!$uuidStamp instanceof UuidStamp) {
+                continue;
+            }
 
+            $uuid = $uuidStamp->getUuid();
             if (!isset($map[$uuid])) {
                 continue;
             }
@@ -45,7 +49,12 @@ final class ArrayStorage implements StorageInterface
         $map = UuidStamp::indexByUuid($envelopes);
 
         $this->envelopes = array_filter($this->envelopes, function (Envelope $envelope) use ($map) {
-            $uuid = $envelope->get('Flasher\Prime\Stamp\UuidStamp')->getUuid();
+            $uuidStamp = $envelope->get('Flasher\Prime\Stamp\UuidStamp');
+            if (!$uuidStamp instanceof UuidStamp) {
+                return false;
+            }
+
+            $uuid = $uuidStamp->getUuid();
 
             return !isset($map[$uuid]);
         });

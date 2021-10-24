@@ -8,12 +8,12 @@ use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 final class EventDispatcher implements EventDispatcherInterface
 {
     /**
-     * @var array
+     * @var array<string, EventSubscriberInterface[]|mixed[]>
      */
     private $listeners = array();
 
     /**
-     * @var array
+     * @var array<string, EventSubscriberInterface[]>
      */
     private $sorted = array();
 
@@ -29,7 +29,7 @@ final class EventDispatcher implements EventDispatcherInterface
     /**
      * @param string $eventName
      *
-     * @return array
+     * @return EventSubscriberInterface[]
      */
     public function getListeners($eventName)
     {
@@ -44,6 +44,11 @@ final class EventDispatcher implements EventDispatcherInterface
         return $this->sorted[$eventName];
     }
 
+    /**
+     * @param string $eventName
+     * @param EventSubscriberInterface|callable|mixed[] $listener
+     * @param int $priority
+     */
     public function addListener($eventName, $listener, $priority = 0)
     {
         $this->listeners[$eventName][$priority][] = $listener;
@@ -75,6 +80,8 @@ final class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
+     *
+     * @return void
      */
     private function sortListeners($eventName)
     {
@@ -89,8 +96,10 @@ final class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * @param callable[]     $listeners
+     * @param mixed[]|callable[] $listeners
      * @param object $event
+     *
+     * @return void
      */
     private function callListeners(array $listeners, $event)
     {

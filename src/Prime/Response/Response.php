@@ -30,10 +30,14 @@ final class Response
     private $options = array();
 
     /**
-     * @var array
+     * @var mixed[]
      */
     private $context;
 
+    /**
+     * @param Envelope[] $envelopes
+     * @param mixed[] $context
+     */
     public function __construct(array $envelopes, array $context)
     {
         $this->envelopes = $envelopes;
@@ -42,6 +46,8 @@ final class Response
 
     /**
      * @param string[] $scripts
+     *
+     * @return void
      */
     public function addScripts(array $scripts)
     {
@@ -50,6 +56,8 @@ final class Response
 
     /**
      * @param string[] $styles
+     *
+     * @return void
      */
     public function addStyles(array $styles)
     {
@@ -58,6 +66,9 @@ final class Response
 
     /**
      * @param string $alias
+     * @param mixed[] $options
+     *
+     * @return void
      */
     public function addOptions($alias, array $options)
     {
@@ -82,6 +93,8 @@ final class Response
 
     /**
      * @param string $rootScript
+     *
+     * @return void
      */
     public function setRootScript($rootScript)
     {
@@ -113,7 +126,7 @@ final class Response
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getContext()
     {
@@ -121,7 +134,7 @@ final class Response
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {

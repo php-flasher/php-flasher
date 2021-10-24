@@ -55,7 +55,7 @@ final class ResponseManager implements ResponseManagerInterface
     }
 
     /**
-     * @param $alias
+     * @param string $alias
      *
      * @return PresenterInterface
      */
@@ -70,6 +70,8 @@ final class ResponseManager implements ResponseManagerInterface
 
     /**
      * @param string $alias
+     *
+     * @return void
      */
     public function addPresenter($alias, PresenterInterface $presenter)
     {
@@ -78,7 +80,7 @@ final class ResponseManager implements ResponseManagerInterface
 
     /**
      * @param Envelope[] $envelopes
-     * @param array $context
+     * @param mixed[] $context
      *
      * @return Response
      */
@@ -90,6 +92,8 @@ final class ResponseManager implements ResponseManagerInterface
     }
 
     /**
+     * @param mixed[] $criteria
+     *
      * @return Envelope[]
      */
     private function getEnvelopes(array $criteria)

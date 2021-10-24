@@ -17,8 +17,13 @@ interface EventDispatcherInterface
      * @param string   $eventName
      * @param callable $listener
      * @param int      $priority
+     *
+     * @return void
      */
     public function addListener($eventName, $listener, $priority = 0);
 
+    /**
+     * @return void
+     */
     public function addSubscriber(EventSubscriberInterface $subscriber);
 }
