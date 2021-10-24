@@ -31,6 +31,10 @@ $mapping = [
     'flasher.sweet_alert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template_engine' => \Flasher\Laravel\Template\BladeEngine::class,
     'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+
+    'flasher.template.tailwindcss' => \Flasher\Prime\Factory\TemplateFactory::class,
+    'flasher.template.tailwindcss_bg' => \Flasher\Prime\Factory\TemplateFactory::class,
+    'flasher.template.boostrap' => \Flasher\Prime\Factory\TemplateFactory::class,
 ];
 
 override(new \Illuminate\Contracts\Container\Container, map($mapping));
