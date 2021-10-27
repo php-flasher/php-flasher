@@ -14,7 +14,7 @@ class ConfigurationTest extends TestCase
 
         $expected = array(
             'default' => 'template',
-            'root_script' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.5.0/dist/flasher.min.js',
+            'root_script' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.6.1/dist/flasher.min.js',
             'root_scripts' => array(),
             'template_factory' => array(
                 'default' => 'tailwindcss',
