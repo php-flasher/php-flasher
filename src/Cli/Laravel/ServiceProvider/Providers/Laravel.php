@@ -15,7 +15,9 @@ use Flasher\Cli\Prime\Notifier\SnoreToastNotifier;
 use Flasher\Cli\Prime\Notifier\TerminalNotifierNotifier;
 use Flasher\Cli\Prime\Notifier\ToasterNotifier;
 use Flasher\Cli\Prime\Presenter\CliPresenter;
+use Flasher\Cli\Prime\Stamp\DesktopStamp;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Response\ResponseManager;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
@@ -56,6 +58,10 @@ class Laravel implements ServiceProviderInterface
             $this->app['flasher.config']->getFrom('flasher_cli', 'render_all', false),
             $this->app['flasher.config']->getFrom('flasher_cli', 'render_immediately', true)
         ));
+
+        NotificationBuilder::macro('desktop', function ($renderImmediately = true) {
+            return $this->withStamp(new DesktopStamp($renderImmediately));
+        });
     }
 
     public function register(FlasherCliServiceProvider $provider)
