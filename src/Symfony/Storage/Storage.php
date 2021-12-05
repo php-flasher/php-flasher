@@ -5,35 +5,37 @@ namespace Flasher\Symfony\Storage;
 use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageInterface;
-use Symfony\Component\HttpFoundation\Session;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session as LegacySession;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class Storage implements StorageInterface
 {
     const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @var SessionInterface|Session
+     * @var SessionInterface|RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
-     * @param SessionInterface $session
+     * @param SessionInterface|RequestStack $session
      */
-    public function __construct($session)
+    public function __construct($requestStack)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     public function all()
     {
-        return $this->session->get(self::ENVELOPES_NAMESPACE, array());
+        return $this->session()->get(self::ENVELOPES_NAMESPACE, array());
     }
 
     public function add($envelopes)
     {
         $envelopes = is_array($envelopes) ? $envelopes : func_get_args();
 
-        $this->session->set(self::ENVELOPES_NAMESPACE, array_merge($this->all(), $envelopes));
+        $this->session()->set(self::ENVELOPES_NAMESPACE, array_merge($this->all(), $envelopes));
     }
 
     public function update($envelopes)
@@ -52,7 +54,7 @@ final class Storage implements StorageInterface
             $store[$index] = $map[$uuid];
         }
 
-        $this->session->set(self::ENVELOPES_NAMESPACE, $store);
+        $this->session()->set(self::ENVELOPES_NAMESPACE, $store);
     }
 
     public function remove($envelopes)
@@ -66,11 +68,29 @@ final class Storage implements StorageInterface
             return !isset($map[$uuid]);
         });
 
-        $this->session->set(self::ENVELOPES_NAMESPACE, $store);
+        $this->session()->set(self::ENVELOPES_NAMESPACE, $store);
     }
 
     public function clear()
     {
-        $this->session->set(self::ENVELOPES_NAMESPACE, array());
+        $this->session()->set(self::ENVELOPES_NAMESPACE, array());
+    }
+
+    /**
+     * @return SessionInterface
+     */
+    private function session()
+    {
+        if ($this->requestStack instanceof SessionInterface || $this->requestStack instanceof LegacySession) {
+            return $this->requestStack;
+        }
+
+        if (method_exists($this->requestStack, 'getSession')) {
+            return $this->requestStack->getSession();
+        }
+
+        $request = $this->requestStack->getCurrentRequest();
+
+        return $request->getSession();
     }
 }

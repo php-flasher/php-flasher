@@ -8,15 +8,8 @@ $container
     ->addArgument(array());
 
 $container
-    ->register('flasher.storage_factory', 'Flasher\Symfony\Storage\StorageFactory')
-    ->addArgument('requestStack', null);
-
-$definition = $container->register('flasher.storage', 'Flasher\Prime\Storage\StorageInterface');
-if (method_exists($definition, 'setFactory')) {
-    $definition->setFactory(array(new Reference('flasher.storage_factory'), '__invoke'));
-} else {
-    $definition->setFactoryService('flasher.storage_factory');
-}
+    ->register('flasher.storage', 'Flasher\Symfony\Storage\Storage')
+    ->addArgument(null);
 
 $container
     ->register('flasher.event_dispatcher', 'Flasher\Prime\EventDispatcher\EventDispatcher');

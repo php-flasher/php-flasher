@@ -21,7 +21,6 @@ final class FlasherExtension extends Extension
         $this->registerFlasherConfiguration($config, $container);
         $this->registerTemplateFactoriesConfigurations($config, $container);
         $this->registerResourceManagerConfiguration($config, $container);
-        $this->registerSessionConfiguration($container);
         $this->registerServicesForAutoConfiguration($container);
     }
 
@@ -55,21 +54,6 @@ final class FlasherExtension extends Extension
             if (isset($factory['options'])) {
                 $responseManager->addMethodCall('addOptions', array('template.' . $template, $factory['options']));
             }
-        }
-    }
-
-    public function registerSessionConfiguration(ContainerBuilder $container)
-    {
-        $storageFactory = $container->getDefinition('flasher.storage_factory');
-
-        if ($container->has('request_stack')) {
-            $storageFactory->replaceArgument(0, $container->getDefinition('request_stack'));
-
-            return;
-        }
-
-        if ($container->has('session')) {
-            $storageFactory->replaceArgument(0, $container->getDefinition('session'));
         }
     }
 
