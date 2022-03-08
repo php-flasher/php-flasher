@@ -139,7 +139,7 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function message($message)
     {
-        $this->envelope->setMessage(addslashes($message));
+        $this->envelope->setMessage($message);
 
         return $this;
     }

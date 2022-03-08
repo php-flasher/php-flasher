@@ -34,7 +34,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function title($title)
     {
-        $this->option('title', addslashes($title));
+        $this->option('title', $title);
 
         return $this;
     }
@@ -48,7 +48,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function titleText($titleText)
     {
-        $this->option('titleText', addslashes($titleText));
+        $this->option('titleText', $titleText);
 
         return $this;
     }
@@ -79,7 +79,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function text($text)
     {
-        $this->option('text', addslashes($text));
+        $this->option('text', $text);
 
         return $this;
     }
