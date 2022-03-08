@@ -20,7 +20,7 @@ final class PnotifyBuilder extends NotificationBuilder
      */
     public function title($title)
     {
-        $this->option('title', addslashes($title));
+        $this->option('title', $title);
 
         return $this;
     }
@@ -48,7 +48,7 @@ final class PnotifyBuilder extends NotificationBuilder
      */
     public function text($text)
     {
-        $this->option('text', addslashes($text));
+        $this->option('text', $text);
 
         return $this;
     }
