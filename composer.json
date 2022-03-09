@@ -1,6 +1,6 @@
 {
-    "description": "All flasher components in one place for easy maintenance with splitsh",
     "name": "php-flasher/php-flasher",
+    "description": "All flasher components in one place for easy maintenance with splitsh",
     "type": "project",
     "license": "MIT",
     "authors": [

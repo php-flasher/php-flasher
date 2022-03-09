@@ -1,0 +1,18 @@
+{
+    "name": "php-flasher/livewire-pack",
+    "description": "A pack for Livewire",
+    "type": "flasher-pack",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KHOUBZA Younes",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php-flasher/laravel-pack": "*",
+        "php-flasher/flasher-livewire": "*"
+    }
+}

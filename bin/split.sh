@@ -48,6 +48,11 @@ remote cli git@github.com:php-flasher/flasher-cli.git
 remote cli-laravel git@github.com:php-flasher/flasher-cli-laravel.git
 remote cli-symfony git@github.com:php-flasher/flasher-cli-symfony.git
 
+remote laravel-pack git@github.com:php-flasher/laravel-pack.git
+remote livewire-pack git@github.com:php-flasher/livewire-pack.git
+remote php-pack git@github.com:php-flasher/php-pack.git
+remote symfony-pack git@github.com:php-flasher/symfony-pack.git
+
 split 'src/Prime' flasher
 split 'src/Laravel' laravel
 split 'src/Symfony' symfony
@@ -73,6 +78,7 @@ split 'src/Noty/Prime' noty
 split 'src/Noty/Laravel' noty-laravel
 split 'src/Noty/Symfony' noty-symfony
 
-split 'src/Cli/Prime' cli
-split 'src/Cli/Laravel' cli-laravel
-split 'src/Cli/Symfony' cli-symfony
+split 'packs/laravel-pack' laravel-pack
+split 'packs/livewire-pack' livewire-pack
+split 'packs/php-pack' php-pack
+split 'packs/symfony-pack' symfony-pack
