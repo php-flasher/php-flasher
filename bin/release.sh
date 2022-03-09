@@ -58,7 +58,8 @@ for REMOTE in flasher flasher-laravel flasher-symfony flasher-livewire \
               flasher-sweet-alert flasher-sweet-alert-laravel flasher-sweet-alert-symfony \
               flasher-pnotify flasher-pnotify-laravel flasher-pnotify-symfony \
               flasher-noty flasher-noty-laravel flasher-noty-symfony \
-              flasher-cli flasher-cli-laravel flasher-cli-symfony
+              flasher-cli flasher-cli-laravel flasher-cli-symfony \
+              laravel-pack livewire-pack php-pack symfony-pack
 do
     echo ""
     echo ""

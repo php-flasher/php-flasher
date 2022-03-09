@@ -1,0 +1,22 @@
+{
+    "name": "php-flasher/symfony-pack",
+    "description": "A pack for the Symfony framework",
+    "type": "flasher-pack",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KHOUBZA Younes",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php-flasher/flasher-cli-symfony": "*",
+        "php-flasher/flasher-noty-symfony": "*",
+        "php-flasher/flasher-notyf-symfony": "*",
+        "php-flasher/flasher-pnotify-symfony": "*",
+        "php-flasher/flasher-sweet-alert-symfony": "*",
+        "php-flasher/flasher-toastr-symfony": "*"
+    }
+}

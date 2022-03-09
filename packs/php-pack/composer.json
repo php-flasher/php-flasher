@@ -1,0 +1,22 @@
+{
+    "name": "php-flasher/php-pack",
+    "description": "A pack for PHP",
+    "type": "flasher-pack",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KHOUBZA Younes",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php-flasher/flasher-cli": "*",
+        "php-flasher/flasher-noty": "*",
+        "php-flasher/flasher-notyf": "*",
+        "php-flasher/flasher-pnotify": "*",
+        "php-flasher/flasher-sweet-alert": "*",
+        "php-flasher/flasher-toastr": "*"
+    }
+}

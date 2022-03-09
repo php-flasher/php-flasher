@@ -1,0 +1,22 @@
+{
+    "name": "php-flasher/laravel-pack",
+    "description": "A pack for the Laravel framework",
+    "type": "flasher-pack",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KHOUBZA Younes",
+            "email": "younes.khoubza@gmail.com",
+            "homepage": "https://github.com/yoeunes",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php-flasher/flasher-cli-laravel": "*",
+        "php-flasher/flasher-noty-laravel": "*",
+        "php-flasher/flasher-notyf-laravel": "*",
+        "php-flasher/flasher-pnotify-laravel": "*",
+        "php-flasher/flasher-sweet-alert-laravel": "*",
+        "php-flasher/flasher-toastr-laravel": "*"
+    }
+}
