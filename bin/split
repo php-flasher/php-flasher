@@ -75,6 +75,10 @@ split 'src/Noty/Prime' noty
 split 'src/Noty/Laravel' noty-laravel
 split 'src/Noty/Symfony' noty-symfony
 
+split 'src/Cli/Prime' cli
+split 'src/Cli/Laravel' cli-laravel
+split 'src/Cli/Symfony' cli-symfony
+
 split 'packs/laravel-pack' laravel-pack
 split 'packs/php-pack' php-pack
 split 'packs/symfony-pack' symfony-pack
