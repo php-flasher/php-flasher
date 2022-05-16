@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Filter\Specification;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Stamp\HopsStamp;
 
 final class HopsSpecification implements SpecificationInterface
 {
@@ -26,11 +32,14 @@ final class HopsSpecification implements SpecificationInterface
         $this->maxAmount = $maxAmount;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
 
-        if (null === $stamp) {
+        if (!$stamp instanceof HopsStamp) {
             return false;
         }
 

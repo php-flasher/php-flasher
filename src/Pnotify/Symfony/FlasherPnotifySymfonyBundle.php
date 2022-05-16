@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Pnotify\Symfony;
 
-use Flasher\Pnotify\Symfony\DependencyInjection\FlasherPnotifyExtension;
-use Flasher\Symfony\Bridge\FlasherBundle;
-use Flasher\Symfony\DependencyInjection\Compiler\ResourceCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Flasher\Pnotify\Prime\PnotifyPlugin;
+use Flasher\Symfony\Support\Bundle;
 
-class FlasherPnotifySymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+class FlasherPnotifySymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
-    protected function flasherBuild(ContainerBuilder $container)
+    /**
+     * {@inheritDoc}
+     */
+    protected function createPlugin()
     {
-        $container->addCompilerPass(new ResourceCompilerPass($this->getFlasherContainerExtension()));
-    }
-
-    protected function getFlasherContainerExtension()
-    {
-        return new FlasherPnotifyExtension();
+        return new PnotifyPlugin();
     }
 }

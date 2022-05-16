@@ -1,103 +1,77 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
 use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
+use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
     /**
-     * @var array<string, EventSubscriberInterface[]|mixed[]>
+     * @var array<string, EventSubscriberInterface[]>
      */
     private $listeners = array();
 
-    /**
-     * @var array<string, EventSubscriberInterface[]>
-     */
-    private $sorted = array();
+    public function __construct()
+    {
+        $this->addSubscriber(new RemoveListener());
+        $this->addSubscriber(new StampsListener());
+    }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dispatch($event)
     {
-        $listeners = $this->getListeners(get_class($event));
+        $listeners = $this->getListeners(\get_class($event));
 
-        $this->callListeners($listeners, $event);
+        $this->callListeners($listeners, $event); // @phpstan-ignore-line
 
         return $event;
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function addListener($eventName, $listener)
+    {
+        $this->listeners[$eventName][] = $listener; // @phpstan-ignore-line
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addSubscriber(EventSubscriberInterface $subscriber)
+    {
+        foreach ((array) $subscriber->getSubscribedEvents() as $eventName) {
+            $this->addListener($eventName, array($subscriber, '__invoke')); // @phpstan-ignore-line
+        }
+    }
+
+    /**
      * @param string $eventName
      *
-     * @return EventSubscriberInterface[]
+     * @return array<int, EventSubscriberInterface[]>
      */
     public function getListeners($eventName)
     {
-        if (empty($this->listeners[$eventName])) {
-            return array();
+        if (\array_key_exists($eventName, $this->listeners)) {
+            return $this->listeners[$eventName]; // @phpstan-ignore-line
         }
 
-        if (!isset($this->sorted[$eventName])) {
-            $this->sortListeners($eventName);
-        }
-
-        return $this->sorted[$eventName];
+        return array();
     }
 
     /**
-     * @param string $eventName
-     * @param EventSubscriberInterface|callable|mixed[] $listener
-     * @param int $priority
-     */
-    public function addListener($eventName, $listener, $priority = 0)
-    {
-        $this->listeners[$eventName][$priority][] = $listener;
-    }
-
-    public function addSubscriber(EventSubscriberInterface $subscriber)
-    {
-        foreach ((array) $subscriber->getSubscribedEvents()  as $eventName => $params) {
-            if (is_int($eventName)) {
-                $eventName = $params;
-                $params = '__invoke';
-            }
-
-            if (is_string($params)) {
-                $this->addListener($eventName, array($subscriber, $params));
-            } elseif (is_string($params[0])) {
-                $this->addListener($eventName, array($subscriber, $params[0]), isset($params[1]) ? $params[1] : 0);
-            } else {
-                foreach ($params as $listener) {
-                    $this->addListener(
-                        $eventName,
-                        array($subscriber, $listener[0]),
-                        isset($listener[1]) ? $listener[1] : 0
-                    );
-                }
-            }
-        }
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @return void
-     */
-    private function sortListeners($eventName)
-    {
-        krsort($this->listeners[$eventName]);
-        $this->sorted[$eventName] = array();
-
-        foreach ($this->listeners[$eventName] as $listeners) {
-            foreach ($listeners as $k => $listener) {
-                $this->sorted[$eventName][] = $listener;
-            }
-        }
-    }
-
-    /**
-     * @param mixed[]|callable[] $listeners
-     * @param object $event
+     * @param callable[] $listeners
+     * @param object     $event
      *
      * @return void
      */
@@ -107,7 +81,7 @@ final class EventDispatcher implements EventDispatcherInterface
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 break;
             }
-            call_user_func($listener, $event, $this);
+            \call_user_func($listener, $event);
         }
     }
 }

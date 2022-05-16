@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\Bridge\Typed;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -9,7 +14,25 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 abstract class FlasherBundle extends Bundle
 {
     /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $this->flasherBuild($container);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContainerExtension(): ?ExtensionInterface
+    {
+        return $this->getFlasherContainerExtension();
+    }
+
+    /**
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function flasherBuild(ContainerBuilder $container)
     {
@@ -19,14 +42,4 @@ abstract class FlasherBundle extends Bundle
      * @return ?ExtensionInterface
      */
     abstract protected function getFlasherContainerExtension();
-
-    public function build(ContainerBuilder $container)
-    {
-        $this->flasherBuild($container);
-    }
-
-    public function getContainerExtension(): ?ExtensionInterface
-    {
-        return $this->getFlasherContainerExtension();
-    }
 }

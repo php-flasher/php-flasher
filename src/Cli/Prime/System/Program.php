@@ -1,18 +1,32 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Cli\Prime\System;
 
-class Program
+final class Program
 {
+    /**
+     * @param string|null $program
+     *
+     * @return bool
+     */
     public static function exist($program)
     {
+        if (null === $program) {
+            return false;
+        }
+
         if (OS::isWindows()) {
-            $output = shell_exec("where $program 2>null");
+            $output = shell_exec("where {$program} 2>null");
 
             return !empty($output);
         }
 
-        $output = shell_exec("command -v $program");
+        $output = shell_exec("command -v {$program}");
 
         return !empty($output);
     }

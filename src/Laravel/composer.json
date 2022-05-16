@@ -2,28 +2,13 @@
     "name": "php-flasher/flasher-laravel",
     "description": "Laravel package integrating PHP Flasher into Laravel applications",
     "type": "library",
-    "keywords": [
-        "yoeunes",
-        "notify",
-        "flasher",
-        "php",
-        "laravel",
-        "symfony",
-        "Lumen",
-        "notifications",
-        "messages",
-        "alerts",
-        "pnotify",
-        "toastr ",
-        "bundle",
-        "flex"
-    ],
-    "homepage": "https://php-flasher.github.io/",
+    "keywords": ["yoeunes", "notify", "flasher", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
+    "homepage": "https://php-flasher.io",
     "authors": [
         {
-            "name": "Younes Khoubza",
+            "name": "Younes KHOUBZA",
             "email": "younes.khoubza@gmail.com",
-            "homepage": "https://github.com/yoeunes",
+            "homepage": "https://www.linkedin.com/in/younes-khoubza",
             "role": "Developer"
         }
     ],
@@ -31,14 +16,14 @@
     "require": {
         "php": ">=5.3",
         "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0|^9.0",
-        "php-flasher/flasher": "^0.9"
+        "php-flasher/flasher": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Flasher\\Laravel\\": ""
         },
         "files": [
-          "helpers.php"
+            "flasher.php"
         ]
     },
     "extra": {
@@ -54,6 +39,6 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

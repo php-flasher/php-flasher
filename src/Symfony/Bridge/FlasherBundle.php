@@ -1,13 +1,34 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\Bridge;
 
-if (Bridge::isLegacy()) {
-    class_alias('Flasher\Symfony\Bridge\Legacy\FlasherBundle', 'Flasher\Symfony\Bridge\FlasherBundle');
-} else {
-    class_alias('Flasher\Symfony\Bridge\Typed\FlasherBundle', 'Flasher\Symfony\Bridge\FlasherBundle');
-}
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-if (false) {
-    abstract class FlasherBundle {}
+$class = Bridge::isLegacy()
+    ? 'Flasher\Symfony\Bridge\Legacy\FlasherBundle'
+    : 'Flasher\Symfony\Bridge\Typed\FlasherBundle';
+
+class_alias($class, 'Flasher\Symfony\Bridge\FlasherBundle');
+
+if (false) { /** @phpstan-ignore-line */
+    abstract class FlasherBundle
+    {
+        /**
+         * @return void
+         *
+         * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+         */
+        abstract protected function flasherBuild(ContainerBuilder $container);
+
+        /**
+         * @return ?ExtensionInterface
+         */
+        abstract protected function getFlasherContainerExtension();
+    }
 }

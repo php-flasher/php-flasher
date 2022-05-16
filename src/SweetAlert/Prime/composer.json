@@ -1,52 +1,30 @@
 {
-    "name": "php-flasher/flasher-sweet-alert",
+    "name": "php-flasher/flasher-sweetalert",
     "description": "PHP Flasher adapter for Sweet Alert 2",
     "type": "library",
-    "keywords": [
-        "notify",
-        "php",
-        "laravel",
-        "symfony",
-        "Lumen",
-        "notifications",
-        "messages",
-        "alerts",
-        "pnotify",
-        "sweetAlert"
-    ],
-    "homepage": "https://php-flasher.github.io/",
+    "keywords": ["notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "sweetAlert"],
+    "homepage": "https://php-flasher.io",
     "authors": [
         {
-            "name": "Younes Khoubza",
+            "name": "Younes KHOUBZA",
             "email": "younes.khoubza@gmail.com",
-            "homepage": "https://github.com/yoeunes",
+            "homepage": "https://www.linkedin.com/in/younes-khoubza",
             "role": "Developer"
         }
     ],
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher": "^0.9"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
+        "php-flasher/flasher": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Flasher\\SweetAlert\\Prime\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flasher\\SweetAlert\\Prime\\Tests\\": "Tests/"
         }
     },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

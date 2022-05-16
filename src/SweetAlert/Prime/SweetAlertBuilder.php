@@ -1,9 +1,21 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\SweetAlert\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ */
 final class SweetAlertBuilder extends NotificationBuilder
 {
     public function type($type, $message = null, array $options = array())
@@ -14,9 +26,10 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Display a question typed alert message
+     * Display a question typed alert message.
      *
-     * @param string $message
+     * @param string               $message
+     * @param array<string, mixed> $options
      *
      * @return SweetAlertBuilder
      */
@@ -30,7 +43,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $title
      *
-     * @return $this
+     * @return static
      */
     public function title($title)
     {
@@ -44,7 +57,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $titleText
      *
-     * @return $this
+     * @return static
      */
     public function titleText($titleText)
     {
@@ -61,7 +74,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $html
      *
-     * @return $this
+     * @return static
      */
     public function html($html)
     {
@@ -75,7 +88,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $text
      *
-     * @return $this
+     * @return static
      */
     public function text($text)
     {
@@ -98,7 +111,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $icon
      *
-     * @return $this
+     * @return static
      */
     public function icon($icon)
     {
@@ -112,7 +125,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $iconColor
      *
-     * @return $this
+     * @return static
      */
     public function iconColor($iconColor)
     {
@@ -126,7 +139,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $iconHtml
      *
-     * @return $this
+     * @return static
      */
     public function iconHtml($iconHtml)
     {
@@ -136,17 +149,17 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * CSS classes for animations when showing a popup (fade in)
+     * CSS classes for animations when showing a popup (fade in).
      *
      * @param string $showClass
      * @param string $value
      *
-     * @return $this
+     * @return static
      */
     public function showClass($showClass, $value)
     {
         $option = $this->getEnvelope()->getOption('showClass', array());
-        $option[$showClass] = $value;
+        $option[$showClass] = $value; // @phpstan-ignore-line
 
         $this->option('showClass', $option);
 
@@ -154,17 +167,17 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * CSS classes for animations when hiding a popup (fade out)
+     * CSS classes for animations when hiding a popup (fade out).
      *
      * @param string $hideClass
      * @param string $value
      *
-     * @return $this
+     * @return static
      */
     public function hideClass($hideClass, $value)
     {
         $option = $this->getEnvelope()->getOption('hideClass', array());
-        $option[$hideClass] = $value;
+        $option[$hideClass] = $value; // @phpstan-ignore-line
 
         $this->option('hideClass', $option);
 
@@ -176,7 +189,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $footer
      *
-     * @return $this
+     * @return static
      */
     public function footer($footer)
     {
@@ -189,9 +202,9 @@ final class SweetAlertBuilder extends NotificationBuilder
      * Whether or not SweetAlert2 should show a full screen click-to-dismiss backdrop. Can be either a boolean or a
      * string which will be assigned to the CSS background property.
      *
-     * @param string|bool $backdrop
+     * @param bool|string $backdrop
      *
-     * @return $this
+     * @return static
      */
     public function backdrop($backdrop = true)
     {
@@ -208,7 +221,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string $position
      * @param bool   $showConfirmButton
      *
-     * @return $this
+     * @return static
      */
     public function toast($toast = true, $position = 'top-end', $showConfirmButton = false)
     {
@@ -228,7 +241,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $target
      *
-     * @return $this
+     * @return static
      */
     public function target($target)
     {
@@ -243,7 +256,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $input
      *
-     * @return $this
+     * @return static
      */
     public function input($input)
     {
@@ -257,7 +270,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $width
      *
-     * @return $this
+     * @return static
      */
     public function width($width)
     {
@@ -271,7 +284,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $padding
      *
-     * @return $this
+     * @return static
      */
     public function padding($padding)
     {
@@ -285,7 +298,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $background
      *
-     * @return $this
+     * @return static
      */
     public function background($background)
     {
@@ -300,7 +313,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $position
      *
-     * @return $this
+     * @return static
      */
     public function position($position)
     {
@@ -315,7 +328,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool|string $grow
      *
-     * @return $this
+     * @return static
      */
     public function grow($grow)
     {
@@ -325,17 +338,17 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * A custom CSS class for the popup
+     * A custom CSS class for the popup.
      *
      * @param string $customClass
      * @param string $value
      *
-     * @return $this
+     * @return static
      */
     public function customClass($customClass, $value)
     {
         $option = $this->getEnvelope()->getOption('customClass', array());
-        $option[$customClass] = $value;
+        $option[$customClass] = $value; // @phpstan-ignore-line
 
         $this->option('customClass', $option);
 
@@ -347,7 +360,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param int $timer
      *
-     * @return $this
+     * @return static
      */
     public function timer($timer)
     {
@@ -362,7 +375,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $timerProgressBar
      *
-     * @return $this
+     * @return static
      */
     public function timerProgressBar($timerProgressBar = true)
     {
@@ -377,7 +390,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $heightAuto
      *
-     * @return $this
+     * @return static
      */
     public function heightAuto($heightAuto = true)
     {
@@ -392,7 +405,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool|string $allowOutsideClick
      *
-     * @return $this
+     * @return static
      */
     public function allowOutsideClick($allowOutsideClick = true)
     {
@@ -407,7 +420,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool|string $allowEscapeKey
      *
-     * @return $this
+     * @return static
      */
     public function allowEscapeKey($allowEscapeKey = true)
     {
@@ -422,7 +435,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool|string $allowEnterKey
      *
-     * @return $this
+     * @return static
      */
     public function allowEnterKey($allowEnterKey = true)
     {
@@ -434,13 +447,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     /**
      * If set to false, SweetAlert2 will allow keydown events propagation to the document.
      *
-     * @param bool $stopKeydownPropagation
+     * @param bool $stop
      *
-     * @return $this
+     * @return static
      */
-    public function stopKeydownPropagation($stopKeydownPropagation = true)
+    public function stopKeydownPropagation($stop = true)
     {
-        $this->option('stopKeydownPropagation', $stopKeydownPropagation);
+        $this->option('stopKeydownPropagation', $stop);
 
         return $this;
     }
@@ -450,13 +463,13 @@ final class SweetAlertBuilder extends NotificationBuilder
      * false which means when a user hits Esc, both SweetAlert2 and Bootstrap modals will be closed. Set
      * keydownListenerCapture to true to fix that behavior.
      *
-     * @param bool $keydownListenerCapture
+     * @param bool $capture
      *
-     * @return $this
+     * @return static
      */
-    public function keydownListenerCapture($keydownListenerCapture = true)
+    public function keydownListenerCapture($capture = true)
     {
-        $this->option('keydownListenerCapture', $keydownListenerCapture);
+        $this->option('keydownListenerCapture', $capture);
 
         return $this;
     }
@@ -469,7 +482,9 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string $confirmButtonColor
      * @param string $confirmButtonAriaLabel
      *
-     * @return $this
+     * @return static
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     public function showConfirmButton(
         $showConfirmButton = true,
@@ -497,12 +512,12 @@ final class SweetAlertBuilder extends NotificationBuilder
     /**
      * If set to true, a "Deny"-button will be shown. It can be useful when you want a popup with 3 buttons.
      *
-     * @param bool $showDenyButton
+     * @param bool   $showDenyButton
      * @param string $denyButtonText
      * @param string $denyButtonColor
      * @param string $denyButtonAriaLabel
      *
-     * @return $this
+     * @return static
      */
     public function showDenyButton(
         $showDenyButton = true,
@@ -530,12 +545,14 @@ final class SweetAlertBuilder extends NotificationBuilder
     /**
      * If set to true, a "Cancel"-button will be shown, which the user can click on to dismiss the modal.
      *
-     * @param bool $showCancelButton
+     * @param bool   $showCancelButton
      * @param string $cancelButtonText
      * @param string $cancelButtonColor
      * @param string $cancelButtonAriaLabel
      *
-     * @return $this
+     * @return static
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     public function showCancelButton(
         $showCancelButton = true,
@@ -567,7 +584,9 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string $confirmButtonColor
      * @param string $confirmButtonAriaLabel
      *
-     * @return $this
+     * @return static
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     public function confirmButtonText($confirmButtonText, $confirmButtonColor = null, $confirmButtonAriaLabel = null)
     {
@@ -591,7 +610,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string $denyButtonColor
      * @param string $denyButtonAriaLabel
      *
-     * @return $this
+     * @return static
      */
     public function denyButtonText($denyButtonText, $denyButtonColor = null, $denyButtonAriaLabel = null)
     {
@@ -615,7 +634,9 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string $cancelButtonColor
      * @param string $cancelButtonAriaLabel
      *
-     * @return $this
+     * @return static
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     public function cancelButtonText($cancelButtonText, $cancelButtonColor = null, $cancelButtonAriaLabel = null)
     {
@@ -633,11 +654,11 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Use this to change the background color of the "Confirm"-button. The default color is #3085d6
+     * Use this to change the background color of the "Confirm"-button. The default color is #3085d6.
      *
      * @param string $confirmButtonColor
      *
-     * @return $this
+     * @return static
      */
     public function confirmButtonColor($confirmButtonColor)
     {
@@ -647,11 +668,11 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Use this to change the background color of the "Deny"-button. The default color is #dd6b55
+     * Use this to change the background color of the "Deny"-button. The default color is #dd6b55.
      *
      * @param string $denyButtonColor
      *
-     * @return $this
+     * @return static
      */
     public function denyButtonColor($denyButtonColor)
     {
@@ -661,11 +682,11 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Use this to change the background color of the "Cancel"-button. The default color is #aaa
+     * Use this to change the background color of the "Cancel"-button. The default color is #aaa.
      *
      * @param string $cancelButtonColor
      *
-     * @return $this
+     * @return static
      */
     public function cancelButtonColor($cancelButtonColor)
     {
@@ -677,13 +698,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     /**
      * Use this to change the aria-label for the "Confirm"-button.
      *
-     * @param string $confirmButtonAriaLabel
+     * @param string $label
      *
-     * @return $this
+     * @return static
      */
-    public function confirmButtonAriaLabel($confirmButtonAriaLabel)
+    public function confirmButtonAriaLabel($label)
     {
-        $this->option('confirmButtonAriaLabel', $confirmButtonAriaLabel);
+        $this->option('confirmButtonAriaLabel', $label);
 
         return $this;
     }
@@ -693,7 +714,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $denyButtonAriaLabel
      *
-     * @return $this
+     * @return static
      */
     public function denyButtonAriaLabel($denyButtonAriaLabel)
     {
@@ -705,13 +726,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     /**
      * Use this to change the aria-label for the "Cancel"-button.
      *
-     * @param string $cancelButtonAriaLabel
+     * @param string $label
      *
-     * @return $this
+     * @return static
      */
-    public function cancelButtonAriaLabel($cancelButtonAriaLabel)
+    public function cancelButtonAriaLabel($label)
     {
-        $this->option('cancelButtonAriaLabel', $cancelButtonAriaLabel);
+        $this->option('cancelButtonAriaLabel', $label);
 
         return $this;
     }
@@ -722,7 +743,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $buttonsStyling
      *
-     * @return $this
+     * @return static
      */
     public function buttonsStyling($buttonsStyling = true)
     {
@@ -736,7 +757,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $reverseButtons
      *
-     * @return $this
+     * @return static
      */
     public function reverseButtons($reverseButtons = true)
     {
@@ -750,7 +771,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $focusConfirm
      *
-     * @return $this
+     * @return static
      */
     public function focusConfirm($focusConfirm = true)
     {
@@ -764,7 +785,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $focusDeny
      *
-     * @return $this
+     * @return static
      */
     public function focusDeny($focusDeny = true)
     {
@@ -778,7 +799,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $focusCancel
      *
-     * @return $this
+     * @return static
      */
     public function focusCancel($focusCancel = true)
     {
@@ -792,7 +813,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $showCloseButton
      *
-     * @return $this
+     * @return static
      */
     public function showCloseButton($showCloseButton = true)
     {
@@ -806,7 +827,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $closeButtonHtml
      *
-     * @return $this
+     * @return static
      */
     public function closeButtonHtml($closeButtonHtml)
     {
@@ -820,7 +841,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $closeButtonAriaLabel
      *
-     * @return $this
+     * @return static
      */
     public function closeButtonAriaLabel($closeButtonAriaLabel)
     {
@@ -834,7 +855,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $loaderHtml
      *
-     * @return $this
+     * @return static
      */
     public function loaderHtml($loaderHtml)
     {
@@ -849,7 +870,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $showLoaderOnConfirm
      *
-     * @return $this
+     * @return static
      */
     public function showLoaderOnConfirm($showLoaderOnConfirm = true)
     {
@@ -859,11 +880,11 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Set to false to disable body padding adjustment when the page scrollbar gets hidden while the popup is shown
+     * Set to false to disable body padding adjustment when the page scrollbar gets hidden while the popup is shown.
      *
      * @param bool $scrollbarPadding
      *
-     * @return $this
+     * @return static
      */
     public function scrollbarPadding($scrollbarPadding = true)
     {
@@ -877,11 +898,11 @@ final class SweetAlertBuilder extends NotificationBuilder
      * Returned (or resolved) value can be:
      *  - false to prevent a popup from closing
      *  - anything else to pass that value as the result.value of Swal.fire()
-     *  - undefined to keep the default result.value
+     *  - undefined to keep the default result.value.
      *
      * @param bool|string $preConfirm
      *
-     * @return $this
+     * @return static
      */
     public function preConfirm($preConfirm)
     {
@@ -895,11 +916,11 @@ final class SweetAlertBuilder extends NotificationBuilder
      * Returned (or resolved) value can be:
      *  - false to prevent a popup from closing
      *  - anything else to pass that value as the result.value of Swal.fire()
-     *  - undefined to keep the default result.value
+     *  - undefined to keep the default result.value.
      *
      * @param string $preDeny
      *
-     * @return $this
+     * @return static
      */
     public function preDeny($preDeny)
     {
@@ -912,13 +933,13 @@ final class SweetAlertBuilder extends NotificationBuilder
      * If you want to return the input value as result.value when denying the popup, set to true. Otherwise, the denying
      * will set result.value to false.
      *
-     * @param bool $returnInputValueOnDeny
+     * @param bool $inputValue
      *
-     * @return $this
+     * @return static
      */
-    public function returnInputValueOnDeny($returnInputValueOnDeny = true)
+    public function returnInputValueOnDeny($inputValue = true)
     {
-        $this->option('returnInputValueOnDeny', $returnInputValueOnDeny);
+        $this->option('returnInputValueOnDeny', $inputValue);
 
         return $this;
     }
@@ -929,9 +950,9 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string $imageUrl
      * @param int    $imageWidth
      * @param int    $imageHeight
-     * @param string   $imageAlt
+     * @param string $imageAlt
      *
-     * @return $this
+     * @return static
      */
     public function imageUrl($imageUrl, $imageWidth = null, $imageHeight = null, $imageAlt = null)
     {
@@ -957,7 +978,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param int $imageWidth
      *
-     * @return $this
+     * @return static
      */
     public function imageWidth($imageWidth)
     {
@@ -971,7 +992,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param int $imageHeight
      *
-     * @return $this
+     * @return static
      */
     public function imageHeight($imageHeight)
     {
@@ -985,7 +1006,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $imageAlt
      *
-     * @return $this
+     * @return static
      */
     public function imageAlt($imageAlt)
     {
@@ -1002,7 +1023,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param int    $imageHeight
      * @param string $imageAlt
      *
-     * @return $this
+     * @return static
      */
     public function image($title, $text, $imageUrl, $imageWidth = 400, $imageHeight = 200, $imageAlt = null)
     {
@@ -1022,7 +1043,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Shortcut to add and flush an image
+     * Shortcut to add and flush an image.
      *
      * @param string $title
      * @param string $text
@@ -1031,7 +1052,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param int    $imageHeight
      * @param string $imageAlt
      *
-     * @return \Flasher\Prime\Envelope
+     * @return \Flasher\Prime\Notification\Envelope
      */
     public function addImage($title, $text, $imageUrl, $imageWidth = 400, $imageHeight = 200, $imageAlt = null)
     {
@@ -1045,7 +1066,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $inputLabel
      *
-     * @return $this
+     * @return static
      */
     public function inputLabel($inputLabel)
     {
@@ -1059,7 +1080,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $inputPlaceholder
      *
-     * @return $this
+     * @return static
      */
     public function inputPlaceholder($inputPlaceholder)
     {
@@ -1076,7 +1097,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $inputValue
      *
-     * @return $this
+     * @return static
      */
     public function inputValue($inputValue)
     {
@@ -1093,7 +1114,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $inputOptions
      *
-     * @return $this
+     * @return static
      */
     public function inputOptions($inputOptions)
     {
@@ -1108,7 +1129,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param bool $inputAutoTrim
      *
-     * @return $this
+     * @return static
      */
     public function inputAutoTrim($inputAutoTrim = true)
     {
@@ -1123,7 +1144,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $inputAttributes
      *
-     * @return $this
+     * @return static
      */
     public function inputAttributes($inputAttributes)
     {
@@ -1136,11 +1157,11 @@ final class SweetAlertBuilder extends NotificationBuilder
      * Validator for input field, may be async (Promise-returning) or sync.
      * Returned (or resolved) value can be:
      *  - a falsy value (undefined, null, false) for indicating success
-     *  - a string value (error message) for indicating failure
+     *  - a string value (error message) for indicating failure.
      *
      * @param string $inputValidator
      *
-     * @return $this
+     * @return static
      */
     public function inputValidator($inputValidator)
     {
@@ -1154,7 +1175,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string $validationMessage
      *
-     * @return $this
+     * @return static
      */
     public function validationMessage($validationMessage)
     {

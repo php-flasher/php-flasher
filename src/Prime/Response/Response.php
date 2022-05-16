@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Response;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 
 final class Response
 {
@@ -11,7 +16,9 @@ final class Response
      */
     private $envelopes;
 
-    /** @var string */
+    /**
+     * @var string|null
+     */
     private $rootScript;
 
     /**
@@ -25,18 +32,18 @@ final class Response
     private $styles = array();
 
     /**
-     * @var array<string, array>
+     * @var array<string, array<string, mixed>>
      */
     private $options = array();
 
     /**
-     * @var mixed[]
+     * @var array<string, mixed>
      */
     private $context;
 
     /**
-     * @param Envelope[] $envelopes
-     * @param mixed[] $context
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $context
      */
     public function __construct(array $envelopes, array $context)
     {
@@ -65,8 +72,8 @@ final class Response
     }
 
     /**
-     * @param string $alias
-     * @param mixed[] $options
+     * @param string               $alias
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -84,7 +91,7 @@ final class Response
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRootScript()
     {
@@ -92,7 +99,7 @@ final class Response
     }
 
     /**
-     * @param string $rootScript
+     * @param string|null $rootScript
      *
      * @return void
      */
@@ -118,7 +125,7 @@ final class Response
     }
 
     /**
-     * @return array[]
+     * @return array<string, array<string, mixed>>
      */
     public function getOptions()
     {
@@ -126,7 +133,7 @@ final class Response
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function getContext()
     {
@@ -134,20 +141,27 @@ final class Response
     }
 
     /**
+     * @param mixed $filter
+     *
      * @return array<string, mixed>
      */
-    public function toArray()
+    public function toArray($filter = false)
     {
-        return array(
-            'envelopes' => array_map(
-                function (Envelope $envelope) {
-                    return $envelope->toArray();
-                },
-                $this->getEnvelopes()
-            ),
+        $envelopes = array_map(function (Envelope $envelope) {
+            return $envelope->toArray();
+        }, $this->getEnvelopes());
+
+        $response = array(
+            'envelopes' => $envelopes,
             'scripts' => $this->getScripts(),
             'styles' => $this->getStyles(),
             'options' => $this->getOptions(),
         );
+
+        if (false === $filter) {
+            return $response;
+        }
+
+        return array_filter($response);
     }
 }

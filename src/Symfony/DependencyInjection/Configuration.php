@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\DependencyInjection;
 
-use Flasher\Symfony\Bridge\Bridge;
+use Flasher\Prime\Plugin\FlasherPlugin;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -13,100 +19,68 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('flasher');
+        $plugin = new FlasherPlugin();
 
-        if (\method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('flasher');
-        }
+        $treeBuilder = new TreeBuilder($plugin->getName());
+
+        $rootNode = method_exists($treeBuilder, 'getRootNode')
+            ? $treeBuilder->getRootNode()
+            : $treeBuilder->root($plugin->getName()); // @phpstan-ignore-line
 
         $rootNode
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()
-                    ->defaultValue('template')
+                    ->defaultValue($plugin->getDefault())
                 ->end()
                 ->scalarNode('root_script')
-                    ->defaultValue('https://cdn.jsdelivr.net/npm/@flasher/flasher@0.7.1/dist/flasher.min.js')
+                    ->defaultValue($plugin->getRootScript())
                 ->end()
-                ->arrayNode('root_scripts')
-                    ->prototype('scalar')->end()
-                    ->defaultValue(array())
-                ->end()
-                ->arrayNode('template_factory')
-                    ->addDefaultsIfNotSet()
+                ->arrayNode('themes')
+                    ->ignoreExtraKeys()
+                    ->prototype('variable')->end()
                     ->children()
-                        ->scalarNode('default')
+                        ->scalarNode('view')
                             ->isRequired()
                             ->cannotBeEmpty()
-                            ->defaultValue('tailwindcss')
                         ->end()
-                        ->arrayNode('templates')
-                            ->ignoreExtraKeys()
-                            ->prototype('variable')->end()
-                            ->children()
-                                ->scalarNode('view')
-                                    ->isRequired()
-                                    ->cannotBeEmpty()
-                                ->end()
-                                ->arrayNode('styles')->end()
-                                ->arrayNode('scripts')->end()
-                                ->arrayNode('options')->end()
-                            ->end()
-                            ->defaultValue(array(
-                                'tailwindcss' => array(
-                                    'view' => Configuration::getTemplate('tailwindcss.html.twig'),
-                                    'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
-                                    ),
-                                ),
-                                'tailwindcss_bg' => array(
-                                    'view' => Configuration::getTemplate('tailwindcss_bg.html.twig'),
-                                    'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
-                                        'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
-                                    ),
-                                ),
-                                'bootstrap' => array(
-                                    'view' => Configuration::getTemplate('bootstrap.html.twig'),
-                                    'styles' => array(
-                                        'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css',
-                                    ),
-                                ),
-                            ))
-                        ->end()
+                        ->arrayNode('styles')->end()
+                        ->arrayNode('scripts')->end()
+                        ->arrayNode('options')->end()
                     ->end()
-                ->end()
-                ->booleanNode('auto_create_from_session')
-                    ->defaultValue(true)
-                ->end()
-                ->arrayNode('types_mapping')
-                    ->prototype('variable')->end()
-                    ->defaultValue(array(
-                        'success' => array('success'),
-                        'error' => array('error', 'danger'),
-                        'warning' => array('warning', 'alarm'),
-                        'info' => array('info', 'notice', 'alert'),
-                    ))
                 ->end()
             ->end()
         ;
+
+        $this->addFlashBagSection($rootNode, $plugin);
 
         return $treeBuilder;
     }
 
     /**
-     * @param $template string
-     *
-     * @return string
+     * @return void
      */
-    public static function getTemplate($template)
+    private function addFlashBagSection(ArrayNodeDefinition $rootNode, FlasherPlugin $plugin)
     {
-        return Bridge::versionCompare('2.2', '<')
-            ? 'FlasherSymfonyBundle::' . $template
-            : '@FlasherSymfony/' . $template;
+        $rootNode
+            ->children()
+                ->arrayNode('flash_bag')
+                    ->canBeUnset()
+                    ->addDefaultsIfNotSet()
+                    ->beforeNormalization()
+                        ->always(function ($v) use ($plugin) {
+                            return $plugin->normalizeFlashBagConfig($v);
+                        })
+                    ->end()
+                    ->children()
+                        ->booleanNode('enabled')->defaultTrue()->end()
+                        ->arrayNode('mapping')
+                            ->prototype('variable')->end()
+                            ->defaultValue($plugin->getFlashBagMapping())
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

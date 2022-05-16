@@ -1,44 +1,29 @@
 {
-    "name": "php-flasher/flasher-sweet-alert-laravel",
+    "name": "php-flasher/flasher-sweetalert-laravel",
     "description": "PHP Flasher Laravel adapter for Sweet Alert 2",
     "type": "library",
-    "keywords": [
-        "yoeunes",
-        "notify",
-        "php",
-        "laravel",
-        "symfony",
-        "Lumen",
-        "notifications",
-        "messages",
-        "alerts",
-        "pnotify",
-        "toastr ",
-        "bundle",
-        "flex",
-        "sweet alert"
-    ],
-    "homepage": "https://php-flasher.github.io/",
+    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex", "sweet alert"],
+    "homepage": "https://php-flasher.io",
     "authors": [
         {
-            "name": "Younes Khoubza",
+            "name": "Younes KHOUBZA",
             "email": "younes.khoubza@gmail.com",
-            "homepage": "https://github.com/yoeunes",
+            "homepage": "https://www.linkedin.com/in/younes-khoubza",
             "role": "Developer"
         }
     ],
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^0.9",
-        "php-flasher/flasher-sweet-alert": "^0.9"
+        "php-flasher/flasher-laravel": "^1.0",
+        "php-flasher/flasher-sweetalert": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Flasher\\SweetAlert\\Laravel\\": ""
         },
         "files": [
-            "Resources/functions/sweetAlert.php"
+            "sweetalert.php"
         ]
     },
     "extra": {
@@ -54,6 +39,6 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

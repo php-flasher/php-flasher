@@ -1,29 +1,29 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\EventDispatcher\Event;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Filter\Filter;
+use Flasher\Prime\Notification\Envelope;
 
 final class FilterEvent
 {
     /**
-     * @var Envelope[]
+     * @var Filter
      */
-    private $envelopes;
+    private $filter;
 
     /**
-     * @var array<string, mixed>
-     */
-    private $criteria;
-
-    /**
-     * @param Envelope[] $envelopes
+     * @param Envelope[]           $envelopes
      * @param array<string, mixed> $criteria
      */
     public function __construct(array $envelopes, array $criteria)
     {
-        $this->envelopes = $envelopes;
-        $this->criteria = $criteria;
+        $this->filter = new Filter($envelopes, $criteria);
     }
 
     /**
@@ -31,34 +31,22 @@ final class FilterEvent
      */
     public function getEnvelopes()
     {
-        return $this->envelopes;
+        return $this->filter->getResult();
     }
 
     /**
-     * @param Envelope[] $envelopes
-     *
+     * @return Filter
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
      * @return void
      */
-    public function setEnvelopes(array $envelopes)
+    public function setFilter(Filter $filter)
     {
-        $this->envelopes = $envelopes;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function getCriteria()
-    {
-        return $this->criteria;
-    }
-
-    /**
-     * @param array<string, mixed> $criteria
-     *
-     * @return void
-     */
-    public function setCriteria(array $criteria)
-    {
-        $this->criteria = $criteria;
+        $this->filter = $filter;
     }
 }

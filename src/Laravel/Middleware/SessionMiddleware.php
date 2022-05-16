@@ -1,36 +1,37 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Laravel\Middleware;
 
 use Closure;
-use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Response\ResponseManagerInterface;
+use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 final class SessionMiddleware
 {
     /**
-     * @var ConfigInterface
-     */
-    private $config;
-
-    /**
      * @var FlasherInterface
      */
     private $flasher;
 
     /**
-     * @var ResponseManagerInterface
+     * @var array<string, string>
      */
-    private $renderer;
+    private $mapping;
 
-    public function __construct(ConfigInterface $config, FlasherInterface $flasher, ResponseManagerInterface $renderer)
+    /**
+     * @param array<string, string[]> $mapping
+     */
+    public function __construct(FlasherInterface $flasher, array $mapping = array())
     {
-        $this->config = $config;
         $this->flasher = $flasher;
-        $this->renderer = $renderer;
+        $this->mapping = $this->flatMapping($mapping);
     }
 
     /**
@@ -43,19 +44,26 @@ final class SessionMiddleware
         /** @var Response $response */
         $response = $next($request);
 
-        if ($request->isXmlHttpRequest() || true !== $this->config->get('auto_create_from_session')) {
+        if ($request->isXmlHttpRequest() || !$request->hasSession()) {
+            return $response;
+        }
+
+        $content = $response->getContent() ?: '';
+        $insertPlaceHolder = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER;
+        $insertPosition = strripos($content, $insertPlaceHolder);
+        if (false === $insertPosition) {
             return $response;
         }
 
         $readyToRender = false;
-
-        foreach ($this->typesMapping() as $alias => $type) {
+        foreach ($this->mapping as $alias => $type) {
             if (false === $request->session()->has($alias)) {
                 continue;
             }
 
-            $this->flasher->addFlash($type, $request->session()->get($alias));
-
+            /** @var string $message */
+            $message = $request->session()->get($alias);
+            $this->flasher->addFlash((string) $type, $message);
             $readyToRender = true;
         }
 
@@ -63,40 +71,32 @@ final class SessionMiddleware
             return $response;
         }
 
-        $htmlResponse = $this->renderer->render(array(), 'html');
+        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => true));
         if (empty($htmlResponse)) {
             return $response;
         }
 
-        $content = $response->getContent();
-        if (false === $content) {
-            return $response;
-        }
-
-        $pos = (int) strripos($content, '</body>');
-        $content = substr($content, 0, $pos) . $htmlResponse . substr($content, $pos);
+        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
         $response->setContent($content);
 
         return $response;
     }
 
     /**
-     * @return array<string, mixed>
+     * @param array<string, string[]> $mapping
+     *
+     * @return array<string, string>
      */
-    private function typesMapping()
+    private function flatMapping(array $mapping)
     {
-        $mapping = array();
+        $flatMapping = array();
 
-        foreach ($this->config->get('types_mapping', array()) as $type => $aliases) {
-            if (is_int($type) && is_string($aliases)) {
-                $type = $aliases;
-            }
-
-            foreach ((array) $aliases as $alias) {
-                $mapping[$alias] = $type;
+        foreach ($mapping as $type => $aliases) {
+            foreach ($aliases as $alias) {
+                $flatMapping[$alias] = $type;
             }
         }
 
-        return $mapping; // @phpstan-ignore-line
+        return $flatMapping;
     }
 }

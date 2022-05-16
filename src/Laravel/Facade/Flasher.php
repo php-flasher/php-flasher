@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Laravel\Facade;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
@@ -13,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotificationBuilder addError(string $message, array $options = array())
  * @method static NotificationBuilder addWarning(string $message, array $options = array())
  * @method static NotificationBuilder addInfo(string $message, array $options = array())
- * @method static NotificationBuilder addFlash(string|NotificationInterface $type, string $message = null, array $options = array())
+ * @method static NotificationBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
  * @method static NotificationBuilder flash(StampInterface[] $stamps = array())
  * @method static NotificationBuilder type(string $type, string $message = null, array $options = array())
  * @method static NotificationBuilder message(string $message)

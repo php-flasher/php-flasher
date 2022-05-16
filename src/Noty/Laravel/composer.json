@@ -2,48 +2,34 @@
     "name": "php-flasher/flasher-noty-laravel",
     "type": "library",
     "description": "PHP Flasher Laravel adapter for Noty",
-    "keywords": [
-        "yoeunes",
-        "notify",
-        "php",
-        "laravel",
-        "symfony",
-        "Lumen",
-        "notifications",
-        "messages",
-        "alerts",
-        "pnotify",
-        "noty ",
-        "bundle",
-        "flex"
-    ],
-    "homepage": "https://php-flasher.github.io/",
+    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "noty ", "bundle", "flex"],
+    "homepage": "https://php-flasher.io",
     "authors": [
         {
-            "name": "Younes Khoubza",
+            "name": "Younes KHOUBZA",
             "email": "younes.khoubza@gmail.com",
-            "homepage": "https://github.com/yoeunes",
+            "homepage": "https://www.linkedin.com/in/younes-khoubza",
             "role": "Developer"
         }
     ],
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^0.9",
-        "php-flasher/flasher-noty": "^0.9"
+        "php-flasher/flasher-laravel": "^1.0",
+        "php-flasher/flasher-noty": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Flasher\\Noty\\Laravel\\": ""
         },
         "files": [
-            "Resources/functions/noty.php"
+            "noty.php"
         ]
     },
     "extra": {
         "laravel": {
             "providers": [
-              "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider"
+                "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider"
             ],
             "aliases": {
                 "Noty": "Flasher\\Laravel\\Facade\\Flasher"
@@ -53,6 +39,6 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

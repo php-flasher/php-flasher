@@ -1,55 +1,106 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Cli\Laravel;
 
-use Flasher\Cli\Laravel\ServiceProvider\ServiceProviderManager;
+use Flasher\Cli\Prime\CliFactory;
+use Flasher\Cli\Prime\EventListener\RenderListener;
+use Flasher\Cli\Prime\Notify;
+use Flasher\Cli\Prime\Presenter\CliPresenter;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Response\ResponseManagerInterface;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 
 final class FlasherCliServiceProvider extends ServiceProvider
 {
+    /**
+     * @return void
+     */
     public function boot()
     {
-        $manager = new ServiceProviderManager($this);
-        $manager->boot();
+        $this->processConfiguration();
+        $this->registerRenderListener();
+        $this->registerPresenter();
     }
 
     /**
-     * Register the service provider.
+     * {@inheritdoc}
      */
     public function register()
     {
-        $manager = new ServiceProviderManager($this);
-        $manager->register();
+        $this->registerNotifierFactory();
+        $this->registerNotifier();
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return string[]
+     * @return void
      */
-    public function provides()
+    private function processConfiguration()
     {
-        return array(
-            'flasher.cli',
-        );
+        $name = 'flasher_cli';
+        $config = $this->app['config']; // @phpstan-ignore-line
+
+        $config->set($name, $config->get($name, array()));
     }
 
     /**
-     * @return Container
+     * @return void
      */
-    public function getApplication()
+    private function registerNotifierFactory()
     {
-        return $this->app;
+        $this->app->singleton('flasher.cli', function (Container $app) {
+            return new CliFactory($app['flasher.storage_manager']); // @phpstan-ignore-line
+        });
+
+        $this->app->alias('flasher.cli', 'Flasher\Cli\Prime\CliFactory');
     }
 
-    public function mergeConfigFrom($path, $key)
+    /**
+     * @return void
+     */
+    private function registerNotifier()
     {
-        parent::mergeConfigFrom($path, $key);
+        $this->app->singleton('flasher.notify', function (Container $app) {
+            /** @phpstan-ignore-next-line */
+            $title = $app['config']->get('flasher_cli.title', null);
+            $icons = $app['config']->get('flasher_cli.icons', array()); // @phpstan-ignore-line
+
+            return new Notify($title, $icons);
+        });
+
+        $this->app->alias('flasher.notify', 'Flasher\Cli\Prime\Notify');
+        $this->app->alias('flasher.notify', 'Flasher\Cli\Prime\NotifyInterface');
     }
 
-    public function publishes(array $paths, $groups = null)
+    /**
+     * @return void
+     */
+    private function registerRenderListener()
     {
-        parent::publishes($paths, $groups);
+        /** @var FlasherInterface $flasher */
+        $flasher = $this->app['flasher'];
+        $this->app->extend('flasher.event_dispatcher', function (EventDispatcherInterface $dispatcher) use ($flasher) {
+            $dispatcher->addSubscriber(new RenderListener($flasher));
+
+            return $dispatcher;
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerPresenter()
+    {
+        $this->app->extend('flasher.response_manager', function (ResponseManagerInterface $manager, Container $app) {
+            $manager->addPresenter(CliPresenter::NAME, new CliPresenter($app['flasher.notify'])); // @phpstan-ignore-line
+
+            return $manager;
+        });
     }
 }

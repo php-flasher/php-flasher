@@ -1,55 +1,53 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\SweetAlert\Laravel;
 
-use Flasher\SweetAlert\Laravel\ServiceProvider\ServiceProviderManager;
-use Illuminate\Container\Container;
-use Illuminate\Support\ServiceProvider;
+use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\SweetAlert\Prime\SweetAlertPlugin;
+use Livewire\LivewireManager;
 
 final class FlasherSweetAlertServiceProvider extends ServiceProvider
 {
-    public function boot()
+    /**
+     * {@inheritDoc}
+     */
+    protected function createPlugin()
     {
-        $manager = new ServiceProviderManager($this);
-        $manager->boot();
+        return new SweetAlertPlugin();
     }
 
     /**
-     * Register the service provider.
+     * {@inheritDoc}
      */
-    public function register()
+    protected function afterBoot()
     {
-        $manager = new ServiceProviderManager($this);
-        $manager->register();
+        $this->registerLivewireListener();
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return string[]
+     * @return void
      */
-    public function provides()
+    private function registerLivewireListener()
     {
-        return array(
-            'flasher.sweet_alert',
-        );
-    }
+        if (!$this->app->bound('livewire')) {
+            return;
+        }
 
-    /**
-     * @return Container
-     */
-    public function getApplication()
-    {
-        return $this->app;
-    }
+        $livewire = $this->app->make('livewire');
+        if (!$livewire instanceof LivewireManager) {
+            return;
+        }
 
-    public function mergeConfigFrom($path, $key)
-    {
-        parent::mergeConfigFrom($path, $key);
-    }
+        $this->app->extend('flasher.event_dispatcher', function (EventDispatcherInterface $dispatcher) {
+            $dispatcher->addSubscriber(new LivewireListener());
 
-    public function publishes(array $paths, $groups = null)
-    {
-        parent::publishes($paths, $groups);
+            return $dispatcher;
+        });
     }
 }

@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
@@ -15,9 +20,9 @@ interface FlasherInterface
      *
      * @param string|null $alias
      *
-     * @return NotificationFactoryInterface
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return NotificationFactoryInterface
      */
     public function create($alias = null);
 
@@ -26,24 +31,25 @@ interface FlasherInterface
      *
      * @param string|null $alias
      *
-     * @return NotificationFactoryInterface
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return NotificationFactoryInterface
      */
     public function using($alias);
 
     /**
      * Register a custom driver creator.
      *
-     * @param string           $alias
+     * @param string                                $alias
+     * @param callable|NotificationFactoryInterface $factory
      *
-     * @return $this
+     * @return static
      */
-    public function addFactory($alias, NotificationFactoryInterface $factory);
+    public function addFactory($alias, $factory);
 
     /**
      * @param array<string, mixed> $criteria
-     * @param string $presenter
+     * @param string               $presenter
      * @param array<string, mixed> $context
      *
      * @return mixed

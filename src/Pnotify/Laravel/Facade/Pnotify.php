@@ -1,9 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Pnotify\Laravel\Facade;
 
 use Flasher\Pnotify\Prime\PnotifyBuilder;
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Illuminate\Support\Facades\Facade;
@@ -13,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static PnotifyBuilder addError(string $message, array $options = array())
  * @method static PnotifyBuilder addWarning(string $message, array $options = array())
  * @method static PnotifyBuilder addInfo(string $message, array $options = array())
- * @method static PnotifyBuilder addFlash(string|NotificationInterface $type, string $message = null, array $options = array())
+ * @method static PnotifyBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
  * @method static PnotifyBuilder flash(StampInterface[] $stamps = array())
  * @method static PnotifyBuilder type(string $type, string $message = null, array $options = array())
  * @method static PnotifyBuilder message(string $message)
@@ -32,7 +37,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static PnotifyBuilder withStamp(StampInterface $stamp)
  * @method static PnotifyBuilder handler(string $handler)
  * @method static Envelope getEnvelope()
- *
  * @method static PnotifyBuilder title(bool|string $title)
  * @method static PnotifyBuilder titleEscape(bool $titleEscape = true)
  * @method static PnotifyBuilder text(string $text)

@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Config;
 
 interface ConfigInterface
@@ -8,7 +13,7 @@ interface ConfigInterface
      * Returns an attribute.
      *
      * @param string $key
-     * @param mixed  $default The default value if not found.
+     * @param mixed  $default the default value if not found
      *
      * @return mixed
      */

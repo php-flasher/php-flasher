@@ -1,10 +1,15 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
-use Flasher\Prime\Envelope;
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
@@ -26,7 +31,7 @@ final class StampsListener implements EventSubscriberInterface
     }
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -46,7 +51,7 @@ final class StampsListener implements EventSubscriberInterface
         }
 
         if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
-            $envelope->withStamp(new UuidStamp());
+            $envelope->withStamp(new UuidStamp(spl_object_hash($envelope)));
         }
 
         if (null === $envelope->get('Flasher\Prime\Stamp\DelayStamp')) {

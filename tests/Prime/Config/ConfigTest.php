@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Tests\Prime\Config;
 
 use Flasher\Prime\Config\Config;
@@ -33,7 +38,7 @@ final class ConfigTest extends TestCase
         );
         $this->assertEquals(array('styles.css'), $config->get('drivers.toastr.styles'));
         $this->assertEquals(array(), $config->get('drivers.toastr.options'));
-        $this->assertEquals(null, $config->get('drivers.not_exists.options'));
+        $this->assertNull($config->get('drivers.not_exists.options'));
         $this->assertEquals('now_it_exists', $config->get('drivers.not_exists.options', 'now_it_exists'));
     }
 }

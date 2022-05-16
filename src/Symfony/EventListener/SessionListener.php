@@ -1,122 +1,118 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\EventListener;
 
-use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Response\ResponseManagerInterface;
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Flasher\Prime\Response\Presenter\HtmlPresenter;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final class SessionListener
 {
-    /**
-     * @var ConfigInterface
-     */
-    private $config;
-
     /**
      * @var FlasherInterface
      */
     private $flasher;
 
     /**
-     * @var ResponseManagerInterface
+     * @var array<string, string>
      */
-    private $responseManager;
+    private $mapping;
 
-    public function __construct(
-        ConfigInterface $config,
-        FlasherInterface $flasher,
-        ResponseManagerInterface $responseManager
-    ) {
-        $this->config = $config;
+    /**
+     * @param array<string, string[]> $mapping
+     */
+    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    {
         $this->flasher = $flasher;
-        $this->responseManager = $responseManager;
+        $this->mapping = $this->flatMapping($mapping);
     }
 
     /**
-     * @param ResponseEvent|FilterResponseEvent $event
+     * @param ResponseEvent $event
+     *
+     * @return void
      */
     public function onKernelResponse($event)
     {
         $request = $event->getRequest();
 
-        if (!$this->isMainRequest($event)
-            || $request->isXmlHttpRequest()
-            || true !== $this->config->get('auto_create_from_session')) {
+        if (!$this->isMainRequest($event) || $request->isXmlHttpRequest() || !$request->hasSession()) {
             return;
         }
 
         $response = $event->getResponse();
-
-        $mapping = $this->typesMapping();
-
-        $readyToRender = false;
-
-        if (!$request->hasSession()) {
+        $content = $response->getContent() ?: '';
+        $insertPlaceHolder = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER;
+        $insertPosition = strripos($content, $insertPlaceHolder);
+        if (false === $insertPosition) {
             return;
         }
 
-        foreach ($request->getSession()->getFlashBag()->all() as $type => $messages) {
-            if (!isset($mapping[$type])) {
+        $readyToRender = false;
+
+        /** @var Session $session */
+        $session = $request->getSession();
+        foreach ($session->getFlashBag()->all() as $type => $messages) {
+            if (!isset($this->mapping[$type])) {
                 continue;
             }
 
             foreach ($messages as $message) {
-                $this->flasher->addFlash($mapping[$type], $message);
+                $this->flasher->addFlash($this->mapping[$type], $message);
+                $readyToRender = true;
             }
-
-            $readyToRender = true;
         }
 
         if (false === $readyToRender) {
             return;
         }
 
-        $htmlResponse = $this->responseManager->render(array(), 'html');
+        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => true));
         if (empty($htmlResponse)) {
             return;
         }
 
-        $content = $response->getContent();
-        $pos = strripos($content, '</html>');
-        $content = substr($content, 0, $pos).$htmlResponse.substr($content, $pos);
+        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
         $response->setContent($content);
     }
 
     /**
-     * @return array
+     * @param array<string, string[]> $mapping
+     *
+     * @return array<string, string>
      */
-    private function typesMapping()
+    private function flatMapping(array $mapping)
     {
-        $mapping = array();
+        $flatMapping = array();
 
-        foreach ($this->config->get('types_mapping', array()) as $type => $aliases) {
-            if (is_int($type) && is_string($aliases)) {
-                $type = $aliases;
-            }
-
-            foreach ((array) $aliases as $alias) {
-                $mapping[$alias] = $type;
+        foreach ($mapping as $type => $aliases) {
+            foreach ($aliases as $alias) {
+                $flatMapping[$alias] = $type;
             }
         }
 
-        return $mapping;
+        return $flatMapping;
     }
 
     /**
-     * @param ResponseEvent|FilterResponseEvent $event
+     * @param ResponseEvent $event
+     *
+     * @return bool
      */
     private function isMainRequest($event)
     {
-        if (method_exists($event, 'isMasterRequest')) {
-            return $event->isMasterRequest();
-        }
-
         if (method_exists($event, 'isMainRequest')) {
             return $event->isMainRequest();
+        }
+
+        if (method_exists($event, 'isMasterRequest')) { // @phpstan-ignore-line
+            return $event->isMasterRequest();
         }
 
         return 1 === $event->getRequestType();

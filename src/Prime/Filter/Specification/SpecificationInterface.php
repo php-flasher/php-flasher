@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Filter\Specification;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 
 interface SpecificationInterface
 {

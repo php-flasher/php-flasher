@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Noty\Symfony;
 
-use Flasher\Noty\Symfony\DependencyInjection\FlasherNotyExtension;
-use Flasher\Symfony\Bridge\FlasherBundle;
-use Flasher\Symfony\DependencyInjection\Compiler\ResourceCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Flasher\Noty\Prime\NotyPlugin;
+use Flasher\Symfony\Support\Bundle;
 
-class FlasherNotySymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+class FlasherNotySymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
-    protected function flasherBuild(ContainerBuilder $container)
+    /**
+     * {@inheritDoc}
+     */
+    protected function createPlugin()
     {
-        $container->addCompilerPass(new ResourceCompilerPass($this->getFlasherContainerExtension()));
-    }
-
-    protected function getFlasherContainerExtension()
-    {
-        return new FlasherNotyExtension();
+        return new NotyPlugin();
     }
 }

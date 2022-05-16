@@ -5,9 +5,9 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "KHOUBZA Younes",
+            "name": "Younes KHOUBZA",
             "email": "younes.khoubza@gmail.com",
-            "homepage": "https://github.com/yoeunes",
+            "homepage": "https://www.linkedin.com/in/younes-khoubza",
             "role": "Developer"
         }
     ],
@@ -16,7 +16,7 @@
         "php-flasher/flasher-noty-laravel": "*",
         "php-flasher/flasher-notyf-laravel": "*",
         "php-flasher/flasher-pnotify-laravel": "*",
-        "php-flasher/flasher-sweet-alert-laravel": "*",
+        "php-flasher/flasher-sweetalert-laravel": "*",
         "php-flasher/flasher-toastr-laravel": "*"
     }
 }

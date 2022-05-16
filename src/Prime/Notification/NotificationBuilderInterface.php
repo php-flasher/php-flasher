@@ -1,19 +1,18 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Notification;
 
-use Flasher\Prime\Envelope;
 use Flasher\Prime\Stamp\StampInterface;
 
-/**
- * @method $this livewire(array $context = array())
- * @method $this desktop(bool $renderImmediately = true)
- * @method $this title(string $title)
- */
 interface NotificationBuilderInterface
 {
     /**
-     * @param string $message
+     * @param string               $message
      * @param array<string, mixed> $options
      *
      * @return Envelope
@@ -21,7 +20,7 @@ interface NotificationBuilderInterface
     public function addSuccess($message, array $options = array());
 
     /**
-     * @param string $message
+     * @param string               $message
      * @param array<string, mixed> $options
      *
      * @return Envelope
@@ -29,7 +28,7 @@ interface NotificationBuilderInterface
     public function addError($message, array $options = array());
 
     /**
-     * @param string $message
+     * @param string               $message
      * @param array<string, mixed> $options
      *
      * @return Envelope
@@ -37,7 +36,7 @@ interface NotificationBuilderInterface
     public function addWarning($message, array $options = array());
 
     /**
-     * @param string $message
+     * @param string               $message
      * @param array<string, mixed> $options
      *
      * @return Envelope
@@ -45,35 +44,42 @@ interface NotificationBuilderInterface
     public function addInfo($message, array $options = array());
 
     /**
-     * @param string|NotificationInterface $type
-     * @param string $message
-     * @param array<string, mixed> $options
+     * @param NotificationInterface|string $type
+     * @param string|null                  $message
+     * @param array<string, mixed>         $options
      *
-     * @return Envelope|mixed
+     * @return Envelope
      */
     public function addFlash($type, $message, array $options = array());
 
     /**
-     * @param string      $type
-     * @param string|null $message
+     * @param string               $type
+     * @param string|null          $message
      * @param array<string, mixed> $options
      *
-     * @return self
+     * @return static
      */
     public function type($type, $message = null, array $options = array());
 
     /**
      * @param string $message
      *
-     * @return self
+     * @return static
      */
     public function message($message);
+
+    /**
+     * @param string $title
+     *
+     * @return static
+     */
+    public function title($title);
 
     /**
      * @param array<string, mixed> $options
      * @param bool                 $merge
      *
-     * @return self
+     * @return static
      */
     public function options(array $options, $merge = true);
 
@@ -81,89 +87,96 @@ interface NotificationBuilderInterface
      * @param string $name
      * @param mixed  $value
      *
-     * @return self
+     * @return static
      */
     public function option($name, $value);
 
     /**
-     * @param string|null $message
+     * @param string|null          $message
      * @param array<string, mixed> $options
      *
-     * @return self
+     * @return static
      */
     public function success($message = null, array $options = array());
 
     /**
-     * @param string|null $message
+     * @param string|null          $message
      * @param array<string, mixed> $options
      *
-     * @return self
+     * @return static
      */
     public function error($message = null, array $options = array());
 
     /**
-     * @param string|null $message
+     * @param string|null          $message
      * @param array<string, mixed> $options
      *
-     * @return self
+     * @return static
      */
     public function info($message = null, array $options = array());
 
     /**
-     * @param string|null $message
+     * @param string|null          $message
      * @param array<string, mixed> $options
      *
-     * @return self
+     * @return static
      */
     public function warning($message = null, array $options = array());
 
     /**
      * @param int $priority
      *
-     * @return self
+     * @return static
      */
     public function priority($priority);
 
     /**
-     * @return self
+     * @return static
      */
     public function keep();
 
     /**
      * @param int $amount
      *
-     * @return self
+     * @return static
      */
     public function hops($amount);
 
     /**
      * @param string $handler
      *
-     * @return self
+     * @return static
      */
     public function handler($handler);
 
     /**
-     * @return self
+     * @param mixed[] $context
+     *
+     * @return static
+     */
+    public function context(array $context);
+
+    /**
+     * @return static
      */
     public function withStamp(StampInterface $stamp);
 
     /**
-     * @param StampInterface[] $stamps
+     * @param StampInterface|StampInterface[] $stamps
      *
-     * @return self
+     * @return static
      */
-    public function with(array $stamps = array());
+    public function with($stamps = array());
 
     /**
-     * @return self
+     * @return static
      */
     public function now();
 
     /**
      * @param int $delay
      *
-     * @return self
+     * @return static
      */
     public function delay($delay);
 

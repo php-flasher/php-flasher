@@ -1,83 +1,239 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Laravel;
 
-use Flasher\Laravel\ServiceProvider\ServiceProviderManager;
-use Illuminate\Container\Container;
-use Illuminate\Support\ServiceProvider;
+use Flasher\Laravel\Middleware\SessionMiddleware;
+use Flasher\Laravel\Storage\SessionBag;
+use Flasher\Laravel\Support\Laravel;
+use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Template\BladeTemplateEngine;
+use Flasher\Prime\Config\Config;
+use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\Flasher;
+use Flasher\Prime\Plugin\FlasherPlugin;
+use Flasher\Prime\Response\Resource\ResourceManager;
+use Flasher\Prime\Response\ResponseManager;
+use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\StorageManager;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\View\Compilers\BladeCompiler;
+use Livewire\Component;
+use Livewire\LivewireManager;
+use Livewire\Response;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 final class FlasherServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap the application events.
-     *
+     * {@inheritdoc}
+     */
+    public function afterBoot()
+    {
+        $this->registerBladeDirectives();
+        $this->registerLivewire();
+    }
+
+    /**
+     * @{@inheritdoc}
+     */
+    protected function createPlugin()
+    {
+        return new FlasherPlugin();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function afterRegister()
+    {
+        $this->registerConfig();
+        $this->registerFlasher();
+        $this->registerResourceManager();
+        $this->registerResponseManager();
+        $this->registerStorageManager();
+        $this->registerEventDispatcher();
+        $this->registerSessionMiddleware();
+    }
+
+    /**
      * @return void
      */
-    public function boot()
+    private function registerConfig()
     {
-        /** @var Container $app */
-        $app = $this->app;
-        $manager = new ServiceProviderManager($this, $app);
-        $manager->boot();
+        $this->app->singleton('flasher.config', function (Application $app) {
+            return new Config($app['config']->get('flasher')); // @phpstan-ignore-line
+        });
     }
 
     /**
-     * Register the service provider.
+     * @return void
      */
-    public function register()
+    private function registerFlasher()
     {
-        /** @var Container $app */
-        $app = $this->app;
-        $manager = new ServiceProviderManager($this, $app);
-        $manager->register();
+        $this->app->singleton('flasher', function (Application $app) {
+            return new Flasher($app['flasher.config']->get('default'), $app['flasher.response_manager'], $app['flasher.storage_manager']); // @phpstan-ignore-line
+        });
+        $this->app->alias('flasher', 'Flasher\Prime\Flasher');
+        $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
     }
 
     /**
-     * Get the services provided by the provider.
+     * @return void
+     */
+    private function registerResourceManager()
+    {
+        $this->app->singleton('flasher.resource_manager', function (Application $app) {
+            return new ResourceManager($app['flasher.config'], new BladeTemplateEngine($app['view'])); // @phpstan-ignore-line
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerResponseManager()
+    {
+        $this->app->singleton('flasher.response_manager', function (Application $app) {
+            return new ResponseManager($app['flasher.resource_manager'], $app['flasher.storage_manager'], $app['flasher.event_dispatcher']); // @phpstan-ignore-line
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerStorageManager()
+    {
+        $this->app->singleton('flasher.storage_manager', function (Application $app) {
+            return new StorageManager(new StorageBag(new SessionBag($app['session'])), $app['flasher.event_dispatcher']); // @phpstan-ignore-line
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerEventDispatcher()
+    {
+        $this->app->singleton('flasher.event_dispatcher', function () {
+            return new EventDispatcher();
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerSessionMiddleware()
+    {
+        $config = $this->app['flasher.config'];
+        if (true !== $config->get('flash_bag.enabled', false)) {
+            return;
+        }
+
+        $mapping = $config->get('flash_bag.mapping', array());
+        $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) use ($mapping) {
+            return new SessionMiddleware($app['flasher'], $mapping); // @phpstan-ignore-line
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerLivewire()
+    {
+        if (!$this->app->bound('livewire')) {
+            return;
+        }
+
+        $livewire = $this->app->make('livewire');
+        if (!$livewire instanceof LivewireManager) {
+            return;
+        }
+
+        $livewire->listen('component.dehydrate', function (Component $component, Response $response) {
+            $data = app('flasher')->render(array(), 'array'); // @phpstan-ignore-line
+
+            if (\count($data['envelopes']) > 0) {
+                $data['context']['livewire'] = array(
+                    'id' => $component->id,
+                    'name' => $response->fingerprint['name'],
+                );
+
+                $response->effects['dispatches'][] = array(
+                    'event' => 'flasher:render',
+                    'data' => $data,
+                );
+            }
+        });
+    }
+
+    /**
+     * @return void
      *
-     * @return string[]
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function provides()
+    private function registerBladeDirectives()
     {
-        return array(
-            'flasher',
-        );
-    }
+        $startsWith = function ($haystack, $needle) {
+            return 0 === substr_compare($haystack, $needle, 0, \strlen($needle));
+        };
 
-    /**
-     * @return Container
-     */
-    public function getApplication()
-    {
-        /** @var Container $app */
-        $app = $this->app;
+        $endsWith = function ($haystack, $needle) {
+            return 0 === substr_compare($haystack, $needle, -\strlen($needle));
+        };
 
-        return $app;
-    }
+        if (Laravel::isVersion('5.1', '>=')) {
+            Blade::directive('flasher_render', function ($criteria = array()) use ($startsWith, $endsWith) {
+                if (!empty($criteria) && $startsWith($criteria, '(') && $endsWith($criteria, ')')) {
+                    $criteria = substr($criteria, 1, -1);
+                }
 
-    public function mergeConfigFrom($path, $key)
-    {
-        parent::mergeConfigFrom($path, $key);
-    }
+                return "<?php echo app('flasher')->render({$criteria}); ?>";
+            });
 
-    /**
-     * @param string[] $paths
-     */
-    public function publishes(array $paths, $groups = null)
-    {
-        parent::publishes($paths, $groups);
-    }
+            return;
+        }
 
-    public function loadTranslationsFrom($path, $namespace)
-    {
-        parent::loadTranslationsFrom($path, $namespace);
-    }
+        if (Laravel::isVersion('5.0', '>=')) {
+            Blade::extend(function ($view, BladeCompiler $compiler) use ($startsWith, $endsWith) {
+                if (!method_exists($compiler, 'createPlainMatcher')) {
+                    return '';
+                }
 
-    /**
-     * @param string $path
-     */
-    public function loadViewsFrom($path, $namespace)
-    {
-        parent::loadViewsFrom($path, $namespace);
+                $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
+                $matches = array();
+
+                preg_match($pattern, $view, $matches);
+
+                $value = $matches[2];
+
+                if (!empty($value) && $startsWith($value, '(') && $endsWith($value, ')')) {
+                    $value = substr($value, 1, -1);
+                }
+
+                return str_replace(
+                    '%criteria%',
+                    $value,
+                    $matches[1]."<?php echo app('flasher')->render(%criteria%); ?>"
+                );
+            });
+
+            return;
+        }
+
+        Blade::extend(function ($view, BladeCompiler $compiler) {
+            if (!method_exists($compiler, 'createMatcher')) {
+                return '';
+            }
+
+            $pattern = $compiler->createMatcher('flasher_render');
+
+            return preg_replace($pattern, '$1<?php echo app(\'flasher\')->render$2; ?>', $view);
+        });
     }
 }

@@ -1,38 +1,47 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\Twig;
 
-use Flasher\Prime\Response\ResponseManagerInterface;
+use Flasher\Prime\FlasherInterface;
+use Flasher\Symfony\Bridge\Twig\FlasherTwigExtension as BaseFlasherTwigExtension;
 use Twig\TwigFunction;
 
-final class FlasherTwigExtension extends \Flasher\Symfony\Bridge\Twig\FlasherTwigExtension
+final class FlasherTwigExtension extends BaseFlasherTwigExtension
 {
     /**
-     * @var ResponseManagerInterface
+     * @var FlasherInterface
      */
-    private $responseManager;
+    private $flasher;
 
-    public function __construct(ResponseManagerInterface $responseManager)
+    public function __construct(FlasherInterface $flasher)
     {
-        $this->responseManager = $responseManager;
+        $this->flasher = $flasher;
     }
 
+    /**
+     * @return TwigFunction[]
+     */
     public function getFlasherFunctions()
     {
-        $options = array(
-            'is_safe' => array('html'),
-        );
+        $options = array('is_safe' => array('html'));
 
         return array(
-            new TwigFunction('flasher_render', array($this, 'flasherRender'), $options),
+            new TwigFunction('flasher_render', array($this, 'render'), $options),
         );
     }
 
     /**
+     * @param array<string, mixed> $criteria
+     *
      * @return string
      */
-    public function flasherRender(array $criteria = array())
+    public function render(array $criteria = array())
     {
-        return $this->responseManager->render($criteria);
+        return $this->flasher->render($criteria, 'html'); // @phpstan-ignore-line
     }
 }

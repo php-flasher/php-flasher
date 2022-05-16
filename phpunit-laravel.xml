@@ -1,36 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         verbose="true"
-         stopOnFailure="true">
-    <coverage>
-        <include>
-            <directory suffix=".php">src/</directory>
-        </include>
-    </coverage>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    verbose="true"
+    cacheResult="false"
+    stopOnFailure="true"
+>
     <testsuites>
-        <testsuite name="flasher prime">
-            <directory>tests/Prime</directory>
-        </testsuite>
         <testsuite name="flasher">
+            <directory>tests/Prime</directory>
             <directory>tests/Laravel</directory>
-        </testsuite>
-        <testsuite name="flasher toastr">
-            <directory>tests/Toastr/Laravel</directory>
-        </testsuite>
-        <testsuite name="flasher notyf">
-            <directory>tests/Notyf/Laravel</directory>
-        </testsuite>
-        <testsuite name="flasher sweet alert">
-            <directory>tests/SweetAlert/Laravel</directory>
-        </testsuite>
-        <testsuite name="flasher pnotify">
-            <directory>tests/Pnotify/Laravel</directory>
-        </testsuite>
-        <testsuite name="flasher noty">
-            <directory>tests/Noty/Laravel</directory>
         </testsuite>
     </testsuites>
 </phpunit>

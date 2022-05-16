@@ -1,16 +1,18 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Notification;
 
 interface NotificationInterface
 {
-    const TYPE_SUCCESS = 'success';
-
-    const TYPE_ERROR = 'error';
-
-    const TYPE_INFO = 'info';
-
-    const TYPE_WARNING = 'warning';
+    const SUCCESS = 'success';
+    const ERROR = 'error';
+    const INFO = 'info';
+    const WARNING = 'warning';
 
     /**
      * @return string
@@ -20,21 +22,33 @@ interface NotificationInterface
     /**
      * @param string $type
      *
-     * @return void
+     * @return static
      */
     public function setType($type);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getMessage();
 
     /**
-     * @param string $message
+     * @param string|null $message
      *
-     * @return void
+     * @return static
      */
     public function setMessage($message);
+
+    /**
+     * @return string|null
+     */
+    public function getTitle();
+
+    /**
+     * @param string|null $title
+     *
+     * @return static
+     */
+    public function setTitle($title);
 
     /**
      * @return array<string, mixed>
@@ -44,7 +58,7 @@ interface NotificationInterface
     /**
      * @param array<string, mixed> $options
      *
-     * @return void
+     * @return static
      */
     public function setOptions(array $options);
 
@@ -60,14 +74,14 @@ interface NotificationInterface
      * @param string $name
      * @param mixed  $value
      *
-     * @return mixed
+     * @return static
      */
     public function setOption($name, $value);
 
     /**
      * @param string $name
      *
-     * @return void
+     * @return static
      */
     public function unsetOption($name);
 

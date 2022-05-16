@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Tests\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
@@ -9,7 +14,7 @@ use Flasher\Tests\Prime\TestCase;
 
 class EventDispatcherTest extends TestCase
 {
-    /* Some pseudo events */
+    // Some pseudo events
     const preFoo = 'pre.foo';
 
     const postFoo = 'post.foo';
@@ -33,30 +38,6 @@ class EventDispatcherTest extends TestCase
         $dispatcher->addListener('post.foo', array($listener, 'postFoo'));
         $this->assertCount(1, $dispatcher->getListeners(self::preFoo));
         $this->assertCount(1, $dispatcher->getListeners(self::postFoo));
-    }
-
-    public function testGetListenersSortsByPriority()
-    {
-        $dispatcher = new EventDispatcher();
-
-        $listener1 = new TestEventListener();
-        $listener2 = new TestEventListener();
-        $listener3 = new TestEventListener();
-        $listener1->name = '1';
-        $listener2->name = '2';
-        $listener3->name = '3';
-
-        $dispatcher->addListener('pre.foo', array($listener1, 'preFoo'), -10);
-        $dispatcher->addListener('pre.foo', array($listener2, 'preFoo'), 10);
-        $dispatcher->addListener('pre.foo', array($listener3, 'preFoo'));
-
-        $expected = array(
-            array($listener2, 'preFoo'),
-            array($listener3, 'preFoo'),
-            array($listener1, 'preFoo'),
-        );
-
-        $this->assertEquals($expected, $dispatcher->getListeners('pre.foo'));
     }
 
     public function testDispatch()
@@ -109,29 +90,6 @@ class EventDispatcherTest extends TestCase
         $dispatcher->dispatch($event);
         $this->assertTrue($listener->postFooInvoked);
         $this->assertFalse($otherListener->postFooInvoked);
-    }
-
-    public function testDispatchByPriority()
-    {
-        $dispatcher = new EventDispatcher();
-
-        $event = new Event();
-
-        $invoked = array();
-        $listener1 = function () use (&$invoked) {
-            $invoked[] = '1';
-        };
-        $listener2 = function () use (&$invoked) {
-            $invoked[] = '2';
-        };
-        $listener3 = function () use (&$invoked) {
-            $invoked[] = '3';
-        };
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', $listener1, -10);
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', $listener2);
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', $listener3, 10);
-        $dispatcher->dispatch($event);
-        $this->assertEquals(array('3', '2', '1'), $invoked);
     }
 }
 
