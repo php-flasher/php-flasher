@@ -1,13 +1,19 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Response\Resource;
 
+use Flasher\Prime\Config\Config;
 use Flasher\Prime\Config\ConfigInterface;
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\HandlerStamp;
-use Flasher\Prime\Stamp\TemplateStamp;
-use Flasher\Prime\Template\EngineInterface;
+use Flasher\Prime\Stamp\ViewStamp;
+use Flasher\Prime\Template\TemplateEngineInterface;
 
 final class ResourceManager implements ResourceManagerInterface
 {
@@ -17,7 +23,7 @@ final class ResourceManager implements ResourceManagerInterface
     private $config;
 
     /**
-     * @var EngineInterface
+     * @var TemplateEngineInterface|null
      */
     private $templateEngine;
 
@@ -32,75 +38,61 @@ final class ResourceManager implements ResourceManagerInterface
     private $styles = array();
 
     /**
-     * @var array<string, array>
+     * @var array<string, array<string, mixed>>
      */
     private $options = array();
 
-    public function __construct(ConfigInterface $config, EngineInterface $templateEngine)
+    public function __construct(ConfigInterface $config = null, TemplateEngineInterface $templateEngine = null)
     {
-        $this->config = $config;
+        $this->config = $config ?: new Config();
         $this->templateEngine = $templateEngine;
     }
 
-    public function filterResponse(Response $response)
+    /**
+     * {@inheritdoc}
+     */
+    public function buildResponse(Response $response)
     {
+        /** @var string $rootScript */
         $rootScript = $this->config->get('root_script');
-        if (null === $rootScript) {
-            $rootScripts = $this->config->get('root_scripts', array());
-            $rootScript = reset($rootScripts);
-        }
-
         $response->setRootScript($rootScript);
 
         $handlers = array();
-
         foreach ($response->getEnvelopes() as $envelope) {
-            $handlerStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
-            if (!$handlerStamp instanceof HandlerStamp) {
+            $handler = $this->resolveHandler($envelope);
+            if (null === $handler || \in_array($handler, $handlers, true)) {
                 continue;
             }
-
-            $handler = $handlerStamp->getHandler();
-
-            if (0 === strpos($handler, 'template')) {
-                $handler = $this->handleTemplateStamp($handler, $envelope);
-            }
-
-            if (in_array($handler, $handlers, true)) {
-                continue;
-            }
-
             $handlers[] = $handler;
 
-            if (isset($this->scripts[$handler])) {
-                $response->addScripts($this->scripts[$handler]);
-            }
-
-            if (isset($this->styles[$handler])) {
-                $response->addStyles($this->styles[$handler]);
-            }
-
-            if (isset($this->options[$handler])) {
-                $response->addOptions($handler, $this->options[$handler]);
-            }
+            $this->populateResponse($response, $handler);
         }
 
         return $response;
     }
 
-    public function addScripts($alias, array $scripts)
+    /**
+     * {@inheritdoc}
+     */
+    public function addScripts($handler, array $scripts)
     {
-        $this->scripts[$alias] = $scripts;
+        $this->scripts[$handler] = $scripts;
     }
 
-    public function addStyles($alias, array $styles)
+    /**
+     * {@inheritdoc}
+     */
+    public function addStyles($handler, array $styles)
     {
-        $this->styles[$alias] = $styles;
+        $this->styles[$handler] = $styles;
     }
 
-    public function addOptions($alias, array $options)
+    /**
+     * {@inheritdoc}
+     */
+    public function addOptions($handler, array $options)
     {
-        $this->options[$alias] = $options;
+        $this->options[$handler] = $options;
     }
 
     /**
@@ -112,35 +104,76 @@ final class ResourceManager implements ResourceManagerInterface
     }
 
     /**
-     * @param string $handler
-     *
-     * @return string
+     * @return string|null
      */
-    private function handleTemplateStamp($handler, Envelope $envelope)
+    private function resolveHandler(Envelope $envelope)
     {
-        $view = $this->getTemplateAdapter($handler);
-        $template = $this->config->get('template_factory.templates.' . $view . '.view');
+        $handlerStamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
+        if (!$handlerStamp instanceof HandlerStamp) {
+            return null;
+        }
 
-        $compiled = $this->templateEngine->render($template, array(
-            'envelope' => $envelope,
-        ));
+        $handler = $handlerStamp->getHandler();
+        if ('flasher' !== $handler && 0 !== strpos($handler, 'theme.')) {
+            return $handler;
+        }
 
-        $envelope->withStamp(new TemplateStamp($compiled));
+        $theme = $this->getTheme($handler);
+        if (null === $theme) {
+            return $handler;
+        }
 
-        return 'template.' . $view;
+        if (!isset($this->options[$handler])) {
+            /** @var array<string, mixed> $options */
+            $options = $this->config->get('themes.'.$theme.'.options', array());
+            $this->addOptions($handler, $options);
+        }
+
+        /** @var string|null $view */
+        $view = $this->config->get('themes.'.$theme.'.view');
+        if (null === $view || null === $this->templateEngine) {
+            return 'theme.'.$theme;
+        }
+
+        $compiled = $this->templateEngine->render($view, array('envelope' => $envelope));
+        $envelope->withStamp(new ViewStamp($compiled));
+
+        return 'theme.'.$theme;
     }
 
     /**
      * @param string $handler
      *
-     * @return string
+     * @return string|null
      */
-    private function getTemplateAdapter($handler)
+    private function getTheme($handler)
     {
-        if (0 === strpos($handler, 'template.')) {
-            return substr($handler, strlen('template.'));
+        if (0 === strpos($handler, 'theme.')) {
+            return substr($handler, \strlen('theme.'));
         }
 
-        return $this->config->get('template_factory.default');
+        $template = key((array) $this->config->get('themes'));
+
+        return \is_string($template) ? $template : null;
+    }
+
+    /**
+     * @param string $handler
+     *
+     * @return void
+     */
+    private function populateResponse(Response $response, $handler)
+    {
+        if (isset($this->scripts[$handler])) {
+            $response->addScripts($this->scripts[$handler]);
+        }
+
+        if (isset($this->styles[$handler])) {
+            $response->addStyles($this->styles[$handler]);
+        }
+
+        if (isset($this->options[$handler])) {
+            $response->addOptions($handler, $this->options[$handler]);
+        }
     }
 }

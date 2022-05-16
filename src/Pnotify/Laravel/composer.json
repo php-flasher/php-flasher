@@ -2,42 +2,28 @@
     "name": "php-flasher/flasher-pnotify-laravel",
     "description": "PHP Flasher Laravel adapter for Pnotify",
     "type": "library",
-    "keywords": [
-        "yoeunes",
-        "notify",
-        "php",
-        "laravel",
-        "symfony",
-        "Lumen",
-        "notifications",
-        "messages",
-        "alerts",
-        "pnotify",
-        "toastr ",
-        "bundle",
-        "flex"
-    ],
-    "homepage": "https://php-flasher.github.io/",
+    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
+    "homepage": "https://php-flasher.io",
     "authors": [
         {
-            "name": "Younes Khoubza",
+            "name": "Younes KHOUBZA",
             "email": "younes.khoubza@gmail.com",
-            "homepage": "https://github.com/yoeunes",
+            "homepage": "https://www.linkedin.com/in/younes-khoubza",
             "role": "Developer"
         }
     ],
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^0.9",
-        "php-flasher/flasher-pnotify": "^0.9"
+        "php-flasher/flasher-laravel": "^1.0",
+        "php-flasher/flasher-pnotify": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Flasher\\Pnotify\\Laravel\\": ""
         },
         "files": [
-            "Resources/functions/pnotify.php"
+            "pnotify.php"
         ]
     },
     "extra": {
@@ -53,6 +39,6 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

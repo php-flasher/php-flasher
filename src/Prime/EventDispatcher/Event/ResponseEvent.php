@@ -1,39 +1,57 @@
 <?php
 
-namespace Flasher\Prime\EventDispatcher\Event;
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
 
-use Flasher\Prime\Envelope;
+namespace Flasher\Prime\EventDispatcher\Event;
 
 final class ResponseEvent
 {
     /**
-     * @var Envelope[]
+     * @var mixed
      */
-    private $envelopes;
+    private $response;
 
     /**
-     * @param Envelope[] $envelopes
+     * @var string
      */
-    public function __construct(array $envelopes)
+    private $presenter;
+
+    /**
+     * @param mixed  $response
+     * @param string $presenter
+     */
+    public function __construct($response, $presenter)
     {
-        $this->envelopes = $envelopes;
+        $this->response = $response;
+        $this->presenter = $presenter;
     }
 
     /**
-     * @return Envelope[]
+     * @return mixed
      */
-    public function getEnvelopes()
+    public function getResponse()
     {
-        return $this->envelopes;
+        return $this->response;
     }
 
     /**
-     * @param Envelope[] $envelopes
+     * @param mixed $response
      *
      * @return void
      */
-    public function setEnvelopes(array $envelopes)
+    public function setResponse($response)
     {
-        $this->envelopes = $envelopes;
+        $this->response = $response;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPresenter()
+    {
+        return $this->presenter;
     }
 }

@@ -24,12 +24,6 @@
     <a href="https://packagist.org/packages/php-flasher/flasher">
         <img src="https://img.shields.io/packagist/php-v/php-flasher/flasher.svg?style=flat-square">
     </a>
-    <a href="https://opencollective.com/php-flasher">
-        <img src="https://opencollective.com/php-flasher/tiers/backer/badge.svg?label=backer&color=brightgreen" />
-    </a>
-    <a href="https://opencollective.com/php-flasher">
-        <img src="https://opencollective.com/php-flasher/tiers/sponsor/badge.svg?label=sponsor&color=brightgreen" />
-    </a>
 </p>
 
 # Why use PHP Flasher ?
@@ -53,21 +47,7 @@ This library is designed, so you can take full control when creating you notific
 
 ## Official Documentation
 
-Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.github.io/).
-
-## Backers && Sponsors
-
-Support this project by becoming a sponsor. Your name will show up in the Contribute page of all PHP Flasher installations as well as here with a link to your website!
-
-Thank you to all our backers and sponsors! 🙏
-
-<a href="https://opencollective.com/php-flasher#backers" target="_blank">
-  <img src="https://opencollective.com/php-flasher/backers.svg?width=890" title="Backers" alt="Backers">
-</a>
-
-<a href="https://opencollective.com/php-flasher#sponsors" target="_blank">
-  <img src="https://opencollective.com/php-flasher/sponsors.svg?width=890" title="Sponsors" alt="Sponsors">
-</a>
+Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.io).
 
 ### Contact
 

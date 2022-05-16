@@ -1,191 +1,59 @@
-name: Running tests
+name: tests
 
 on:
     push:
-    pull_request:
-    schedule:
-        -   cron: '* * * * *'
 
 jobs:
     test:
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: true
             matrix:
-                symfony:
-                    - 5.4.*
-                    - 5.3.*
-                    - 5.2.*
-                    - 5.1.*
-                    - 5.0.*
-                    - 4.4.*
-                    - 4.3.*
-                    - 4.2.*
-                    - 4.1.*
-                    - 4.0.*
-                    - 3.4.*
-                    - 3.3.*
-                    - 3.2.*
-                    - 3.1.*
-                    - 3.0.*
-                    - 2.8.*
-                    - 2.7.*
-                    - 2.6.*
-                    - 2.5.*
-                    - 2.4.*
-                    - 2.3.*
-                    - 2.2.*
-                    - 2.1.*
-                    - 2.0.*
-                os:
-                    - ubuntu-latest
-                    # - macos-latest
-                    # - windows-latest
+                symfony: [ 6.0.*, 5.4.*, 5.3.*, 5.2.*, 5.1.*, 5.0.*, 4.4.*, 4.3.*, 4.2.*, 4.1.*, 4.0.*, 3.4.*, 3.3.*, 3.2.*, 3.1.*, 3.0.*, 2.8.*, 2.7.*, 2.6.*, 2.5.*, 2.4.*, 2.3.*, 2.2.*, 2.1.*, 2.0.* ]
                 include:
-                    -   symfony: 5.4.*
-                        php: 7.2
-                        phpunit: 8.3.*
+                    - { symfony: 6.0.*, php: 8.0, phpunit: 9.5.*  }
+                    - { symfony: 5.4.*, php: 7.2, phpunit: 8.3.*  }
+                    - { symfony: 5.3.*, php: 7.2, phpunit: 8.3.*  }
+                    - { symfony: 5.2.*, php: 7.2, phpunit: 8.3.*  }
+                    - { symfony: 5.1.*, php: 7.2, phpunit: 8.3.*  }
+                    - { symfony: 5.0.*, php: 7.2, phpunit: 8.3.*  }
+                    - { symfony: 4.4.*, php: 7.1, phpunit: 7.0.*  }
+                    - { symfony: 4.3.*, php: 7.1, phpunit: 7.0.*  }
+                    - { symfony: 4.2.*, php: 7.1, phpunit: 7.0.*  }
+                    - { symfony: 4.1.*, php: 7.1, phpunit: 7.0.*  }
+                    - { symfony: 4.0.*, php: 7.1, phpunit: 7.0.*  }
+                    - { symfony: 3.4.*, php: 5.5, phpunit: 4.8.36 }
+                    - { symfony: 3.3.*, php: 5.5, phpunit: 4.8.36 }
+                    - { symfony: 3.2.*, php: 5.5, phpunit: 4.8.36 }
+                    - { symfony: 3.1.*, php: 5.5, phpunit: 4.8.36 }
+                    - { symfony: 3.0.*, php: 5.5, phpunit: 4.8.36 }
+                    - { symfony: 2.8.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.7.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.6.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.5.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.4.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.3.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.2.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.1.*, php: 5.3, phpunit: 4.8.36 }
+                    - { symfony: 2.0.*, php: 5.3, phpunit: 4.8.36 }
 
-                    -   symfony: 5.3.*
-                        php: 7.2
-                        phpunit: 8.3.*
-
-                    -   symfony: 5.2.*
-                        php: 7.2
-                        phpunit: 8.3.*
-
-                    -   symfony: 5.1.*
-                        php: 7.2
-                        phpunit: 8.3.*
-
-                    -   symfony: 5.0.*
-                        php: 7.2
-                        phpunit: 8.3.*
-
-                    -   symfony: 4.4.*
-                        php: 7.1
-                        phpunit: 7.0.*
-
-                    -   symfony: 4.3.*
-                        php: 7.1
-                        phpunit: 7.0.*
-
-                    -   symfony: 4.2.*
-                        php: 7.1
-                        phpunit: 7.0.*
-
-                    -   symfony: 4.1.*
-                        php: 7.1
-                        phpunit: 7.0.*
-
-                    -   symfony: 4.0.*
-                        php: 7.1
-                        phpunit: 7.0.*
-
-                    -   symfony: 3.4.*
-                        php: 5.5
-                        phpunit: 4.8.36
-
-                    -   symfony: 3.3.*
-                        php: 5.5
-                        phpunit: 4.8.36
-
-                    -   symfony: 3.2.*
-                        php: 5.5
-                        phpunit: 4.8.36
-
-                    -   symfony: 3.1.*
-                        php: 5.5
-                        phpunit: 4.8.36
-
-                    -   symfony: 3.0.*
-                        php: 5.5
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.8.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.7.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.6.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.5.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.4.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.3.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.2.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.1.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-                    -   symfony: 2.0.*
-                        php: 5.3
-                        phpunit: 4.8.36
-
-        name: ${{ matrix.os }} - S${{ matrix.symfony }} - P${{ matrix.php }}
+        name: symfony[${{ matrix.symfony }}] php[${{ matrix.php }}]
 
         steps:
             -   name: Checkout code
-                uses: actions/checkout@v1
-
-            -   name: Cache dependencies
-                uses: actions/cache@v1
-                with:
-                    path: ~/.composer/cache/files
-                    key: dependencies-symfony-${{ matrix.symfony }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+                uses: actions/checkout@v2
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                     coverage: none
 
             -   name: Install dependencies
                 run: |
-                    composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" twig/twig --no-interaction --no-update
+                    composer remove friendsofphp/php-cs-fixer laravel/laravel livewire/livewire phpstan/phpstan symfony/symfony orchestra/testbench phpunit/phpunit --dev
                     composer config extra.symfony.require "${{ matrix.symfony }}"
-                    composer update --prefer-dist --no-interaction --no-suggest
+                    composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" --no-interaction
 
             -   name: Execute tests
                 run: vendor/bin/phpunit --configuration=phpunit-symfony.xml
-
-            -   name: Install Flasher Depencies
-                run: |
-                    composer require "php-flasher/flasher:^0.9"
-                    composer require "php-flasher/flasher-laravel:^0.9"
-                    composer require "php-flasher/flasher-symfony:^0.9"
-
-                    composer require "php-flasher/flasher-cli:^0.9"
-                    composer require "php-flasher/flasher-cli-symfony:^0.9"
-
-                    composer require "php-flasher/flasher-toastr:^0.9"
-                    composer require "php-flasher/flasher-toastr-symfony:^0.9"
-
-                    composer require "php-flasher/flasher-noty:^0.9"
-                    composer require "php-flasher/flasher-noty-symfony:^0.9"
-
-                    composer require "php-flasher/flasher-notyf:^0.9"
-                    composer require "php-flasher/flasher-notyf-symfony:^0.9"
-
-                    composer require "php-flasher/flasher-sweet-alert:^0.9"
-                    composer require "php-flasher/flasher-sweet-alert-symfony:^0.9"
-
-                    composer require "php-flasher/flasher-pnotify:^0.9"
-                    composer require "php-flasher/flasher-pnotify-symfony:^0.9"

@@ -1,29 +1,41 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Filter\Specification;
 
-use Flasher\Prime\Envelope;
-use Flasher\Prime\Filter\FilterBuilder;
+use Flasher\Prime\Filter\Filter;
+use Flasher\Prime\Notification\Envelope;
 
 final class CallbackSpecification implements SpecificationInterface
 {
-    /** @var FilterBuilder $filterBuilder */
-    private $filterBuilder;
+    /**
+     * @var Filter
+     */
+    private $filter;
 
-    /** @var callable $callback */
+    /**
+     * @var callable
+     */
     private $callback;
 
     /**
      * @param callable $callback
      */
-    public function __construct(FilterBuilder $filterBuilder, $callback)
+    public function __construct(Filter $filterBuilder, $callback)
     {
-        $this->filterBuilder = $filterBuilder;
+        $this->filter = $filterBuilder;
         $this->callback = $callback;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy(Envelope $envelope)
     {
-        return call_user_func($this->callback, $envelope, $this->filterBuilder);
+        return (bool) \call_user_func($this->callback, $envelope, $this->filter);
     }
 }

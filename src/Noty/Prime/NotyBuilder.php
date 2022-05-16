@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Noty\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 final class NotyBuilder extends NotificationBuilder
 {
     /**
@@ -11,7 +20,7 @@ final class NotyBuilder extends NotificationBuilder
      *
      * @param string $text
      *
-     * @return NotyBuilder
+     * @return static
      */
     public function text($text)
     {
@@ -19,9 +28,10 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param string  $message
+     * @param string               $message
+     * @param array<string, mixed> $options
      *
-     * @return NotyBuilder
+     * @return static
      */
     public function alert($message = null, array $options = array())
     {
@@ -30,11 +40,11 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * top, topLeft, topCenter, topRight, center, centerLeft, centerRight, bottom, bottomLeft, bottomCenter, bottomRight
-     * - ClassName generator uses this value → noty_layout__${layout}
+     * - ClassName generator uses this value → noty_layout__${layout}.
      *
      * @param string $layout
      *
-     * @return $this
+     * @return static
      */
     public function layout($layout)
     {
@@ -44,11 +54,11 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * relax, mint, metroui - ClassName generator uses this value → noty_theme__${theme}
+     * relax, mint, metroui - ClassName generator uses this value → noty_theme__${theme}.
      *
      * @param string $theme
      *
-     * @return $this
+     * @return static
      */
     public function theme($theme)
     {
@@ -60,9 +70,9 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * false, 1000, 3000, 3500, etc. Delay for closing event in milliseconds (ms). Set 'false' for sticky notifications.
      *
-     * @param int|bool $timeout
+     * @param bool|int $timeout
      *
-     * @return $this
+     * @return static
      */
     public function timeout($timeout)
     {
@@ -76,7 +86,7 @@ final class NotyBuilder extends NotificationBuilder
      *
      * @param bool $progressBar
      *
-     * @return $this
+     * @return static
      */
     public function progressBar($progressBar = false)
     {
@@ -86,11 +96,11 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * click, button
+     * click, button.
      *
-     * @param string|array $closeWith
+     * @param array<string>|string $closeWith
      *
-     * @return $this
+     * @return static
      */
     public function closeWith($closeWith)
     {
@@ -106,37 +116,37 @@ final class NotyBuilder extends NotificationBuilder
      * @param string $animation
      * @param string $effect
      *
-     * @return $this
+     * @return static
      */
     public function animation($animation, $effect)
     {
-        $this->option('animation.' . $animation, $effect);
+        $this->option('animation.'.$animation, $effect);
 
         return $this;
     }
 
     /**
      * @param string $option
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function sounds($option, $value)
     {
-        $this->option('sounds.' . $option, $value);
+        $this->option('sounds.'.$option, $value);
 
         return $this;
     }
 
     /**
      * @param string $option
-     * @param mixed $docTitle
+     * @param mixed  $docTitle
      *
-     * @return $this
+     * @return static
      */
     public function docTitle($option, $docTitle)
     {
-        $this->option('docTitle' . $option, $docTitle);
+        $this->option('docTitle'.$option, $docTitle);
 
         return $this;
     }
@@ -144,7 +154,7 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * @param bool $modal
      *
-     * @return $this
+     * @return static
      */
     public function modal($modal = true)
     {
@@ -158,7 +168,10 @@ final class NotyBuilder extends NotificationBuilder
      *
      * @param bool|string $id
      *
-     * @return $this
+     * @return static
+     *
+     * @SuppressWarnings(PHPMD.ShortMethodName)
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     public function id($id)
     {
@@ -172,7 +185,7 @@ final class NotyBuilder extends NotificationBuilder
      *
      * @param bool $force
      *
-     * @return $this
+     * @return static
      */
     public function force($force = true)
     {
@@ -184,7 +197,7 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * @param string $queue
      *
-     * @return $this
+     * @return static
      */
     public function queue($queue)
     {
@@ -197,9 +210,9 @@ final class NotyBuilder extends NotificationBuilder
      * If true closes all visible notifications and shows itself. If string(queueName) closes all visible notification
      * on this queue and shows itself.
      *
-     * @param string|bool $killer
+     * @param bool|string $killer
      *
-     * @return $this
+     * @return static
      */
     public function killer($killer)
     {
@@ -211,9 +224,9 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Custom container selector string. Like '.my-custom-container'. Layout parameter will be ignored.
      *
-     * @param string|bool $container
+     * @param bool|string $container
      *
-     * @return $this
+     * @return static
      */
     public function container($container)
     {
@@ -225,9 +238,9 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * An array of Noty.button, for creating confirmation dialogs.
      *
-     * @param array $buttons
+     * @param array<string> $buttons
      *
-     * @return $this
+     * @return static
      */
     public function buttons($buttons)
     {
@@ -241,7 +254,7 @@ final class NotyBuilder extends NotificationBuilder
      *
      * @param bool $visibilityControl
      *
-     * @return $this
+     * @return static
      */
     public function visibilityControl($visibilityControl)
     {

@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Toastr\Laravel\Facade;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Toastr\Prime\ToastrBuilder;
@@ -13,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static ToastrBuilder addError(string $message, array $options = array())
  * @method static ToastrBuilder addWarning(string $message, array $options = array())
  * @method static ToastrBuilder addInfo(string $message, array $options = array())
- * @method static ToastrBuilder addFlash(string|NotificationInterface $type, string $message = null, array $options = array())
+ * @method static ToastrBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
  * @method static ToastrBuilder flash(StampInterface[] $stamps = array())
  * @method static ToastrBuilder type(string $type, string $message = null, array $options = array())
  * @method static ToastrBuilder message(string $message)
@@ -32,7 +37,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static ToastrBuilder withStamp(StampInterface $stamp)
  * @method static ToastrBuilder handler(string $handler)
  * @method static Envelope getEnvelope()
- *
  * @method static ToastrBuilder title(string $title)
  * @method static ToastrBuilder closeButton(bool $closeButton = true)
  * @method static ToastrBuilder closeClass(string $closeClass)

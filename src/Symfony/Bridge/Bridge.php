@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\Bridge;
 
 use Symfony\Component\HttpKernel\Kernel;
@@ -15,6 +20,9 @@ final class Bridge
     }
 
     /**
+     * @param string $version
+     * @param string $operator
+     *
      * @return bool
      */
     public static function versionCompare($version, $operator = '=')

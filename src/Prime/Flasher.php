@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime;
 
-use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
+use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Response\ResponseManagerInterface;
+use Flasher\Prime\Storage\StorageManagerInterface;
 
 /**
  * @mixin NotificationBuilderInterface
@@ -13,32 +20,42 @@ use Flasher\Prime\Response\ResponseManagerInterface;
 final class Flasher implements FlasherInterface
 {
     /**
-     * The array of created notification "factories".
-     *
-     * @template T or NotificationFactoryInterface
-     *
-     * @var array<string, T>
+     * @var array<string, callable|NotificationFactoryInterface>
      */
     private $factories = array();
 
     /**
-     * @var ConfigInterface
+     * @var string|null
      */
-    private $config;
+    private $defaultHandler;
 
-    /** @var ResponseManagerInterface */
+    /**
+     * @var ResponseManagerInterface
+     */
     private $responseManager;
 
-    public function __construct(ConfigInterface $config, ResponseManagerInterface $responseManager)
-    {
-        $this->config = $config;
-        $this->responseManager = $responseManager;
+    /**
+     * @var StorageManagerInterface|null
+     */
+    private $storageManager;
+
+    /**
+     * @param string $defaultHandler
+     */
+    public function __construct(
+        $defaultHandler,
+        ResponseManagerInterface $responseManager = null,
+        StorageManagerInterface $storageManager = null
+    ) {
+        $this->defaultHandler = $defaultHandler ?: 'flasher';
+        $this->responseManager = $responseManager ?: new ResponseManager();
+        $this->storageManager = $storageManager;
     }
 
     /**
      * Dynamically call the default factory instance.
      *
-     * @param string $method
+     * @param string  $method
      * @param mixed[] $parameters
      *
      * @return mixed
@@ -48,42 +65,52 @@ final class Flasher implements FlasherInterface
         /** @var callable $callback */
         $callback = array($this->create(), $method);
 
-        return call_user_func_array($callback, $parameters);
+        return \call_user_func_array($callback, $parameters);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function create($alias = null)
     {
-        $alias = $alias ?: $this->getDefaultFactory();
+        $alias = trim($alias ?: $this->defaultHandler ?: '');
 
-        if (!isset($this->factories[$alias])) {
-            throw new \InvalidArgumentException(sprintf('Factory [%s] not supported.', $alias));
+        if (empty($alias)) {
+            throw new \InvalidArgumentException('Unable to resolve empty factory.');
         }
 
-        return $this->factories[$alias];
+        if (!isset($this->factories[$alias])) {
+            $this->addFactory($alias, new NotificationFactory($this->storageManager, $alias));
+        }
+
+        $factory = $this->factories[$alias];
+
+        return \is_callable($factory) ? $factory() : $factory;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function using($alias)
     {
         return $this->create($alias);
     }
 
-    public function addFactory($alias, NotificationFactoryInterface $factory)
-    {
-        $this->factories[$alias] = $factory;
-
-        return $this;
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function render(array $criteria = array(), $presenter = 'html', array $context = array())
     {
         return $this->responseManager->render($criteria, $presenter, $context);
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
-    private function getDefaultFactory()
+    public function addFactory($alias, $factory)
     {
-        return $this->config->get('default');
+        $this->factories[$alias] = $factory;
+
+        return $this;
     }
 }

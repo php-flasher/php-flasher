@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
@@ -16,11 +21,10 @@ interface EventDispatcherInterface
     /**
      * @param string   $eventName
      * @param callable $listener
-     * @param int      $priority
      *
      * @return void
      */
-    public function addListener($eventName, $listener, $priority = 0);
+    public function addListener($eventName, $listener);
 
     /**
      * @return void

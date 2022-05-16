@@ -1,15 +1,27 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Symfony\Bridge\Twig;
 
 use Flasher\Symfony\Bridge\Bridge;
+use Twig\TwigFunction;
 
-if (Bridge::isLegacy()) {
-    class_alias('Flasher\Symfony\Bridge\Legacy\Twig\FlasherTwigExtension', 'Flasher\Symfony\Bridge\Twig\FlasherTwigExtension');
-} else {
-    class_alias('Flasher\Symfony\Bridge\Typed\Twig\FlasherTwigExtension', 'Flasher\Symfony\Bridge\Twig\FlasherTwigExtension');
-}
+$class = Bridge::isLegacy()
+    ? 'Flasher\Symfony\Bridge\Legacy\Twig\FlasherTwigExtension'
+    : 'Flasher\Symfony\Bridge\Typed\Twig\FlasherTwigExtension';
 
-if (false) {
-    abstract class FlasherTwigExtension {}
+class_alias($class, 'Flasher\Symfony\Bridge\Twig\FlasherTwigExtension');
+
+if (false) { /** @phpstan-ignore-line */
+    abstract class FlasherTwigExtension
+    {
+        /**
+         * @return TwigFunction[]
+         */
+        abstract protected function getFlasherFunctions();
+    }
 }

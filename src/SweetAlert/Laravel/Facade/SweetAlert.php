@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\SweetAlert\Laravel\Facade;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\SweetAlert\Prime\SweetAlertBuilder;
@@ -13,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static SweetAlertBuilder addError(string $message, array $options = array())
  * @method static SweetAlertBuilder addWarning(string $message, array $options = array())
  * @method static SweetAlertBuilder addInfo(string $message, array $options = array())
- * @method static SweetAlertBuilder addFlash(string|NotificationInterface $type, string $message = null, array $options = array())
+ * @method static SweetAlertBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
  * @method static SweetAlertBuilder flash(StampInterface[] $stamps = array())
  * @method static SweetAlertBuilder type(string $type, string $message = null, array $options = array())
  * @method static SweetAlertBuilder message(string $message)
@@ -32,7 +37,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static SweetAlertBuilder withStamp(StampInterface $stamp)
  * @method static SweetAlertBuilder handler(string $handler)
  * @method static Envelope getEnvelope()
- *
  * @method static SweetAlertBuilder question(string $message = null, array $options = array())
  * @method static SweetAlertBuilder title(string $title)
  * @method static SweetAlertBuilder titleText(string $titleText)
@@ -107,6 +111,6 @@ class SweetAlert extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'flasher.sweet_alert';
+        return 'flasher.sweetalert';
     }
 }

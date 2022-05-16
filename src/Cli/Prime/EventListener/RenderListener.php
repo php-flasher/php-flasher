@@ -1,43 +1,44 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Cli\Prime\EventListener;
 
-use Flasher\Cli\Prime\CliFlasherInterface;
-use Flasher\Cli\Prime\Stamp\DesktopStamp;
-use Flasher\Prime\Envelope;
+use Flasher\Cli\Prime\Presenter\CliPresenter;
 use Flasher\Prime\EventDispatcher\Event\PostPersistEvent;
 use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
+use Flasher\Prime\FlasherInterface;
 
 final class RenderListener implements EventSubscriberInterface
 {
+    /**
+     * @var FlasherInterface
+     */
     private $flasher;
 
-    public function __construct(CliFlasherInterface $flasher)
+    public function __construct(FlasherInterface $flasher)
     {
         $this->flasher = $flasher;
     }
 
     /**
-     * @param PostPersistEvent $event
+     * @return void
      */
-    public function __invoke($event)
+    public function __invoke(PostPersistEvent $event)
     {
-        if (PHP_SAPI !== 'cli') {
+        if ('cli' !== \PHP_SAPI) {
             return;
         }
 
-        $callback = function(Envelope $envelope) {
-            $stamp = $envelope->get('Flasher\Cli\Prime\Stamp\DesktopStamp');
-            if (!$stamp instanceof DesktopStamp) {
-                return false;
-            }
-
-            return $stamp->isRenderImmediately();
-        };
-
-        $this->flasher->render(array('filter' => $callback));
+        $this->flasher->render(array(), CliPresenter::NAME);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\PostPersistEvent';

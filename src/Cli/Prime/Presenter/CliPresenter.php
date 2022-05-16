@@ -1,73 +1,44 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Cli\Prime\Presenter;
 
-use Flasher\Cli\Prime\Notifier\NotifierInterface;
-use Flasher\Cli\Prime\Notifier\NullNotifier;
+use Flasher\Cli\Prime\Notification;
+use Flasher\Cli\Prime\Notify;
+use Flasher\Cli\Prime\NotifyInterface;
 use Flasher\Prime\Response\Presenter\PresenterInterface;
 use Flasher\Prime\Response\Response;
 
 final class CliPresenter implements PresenterInterface
 {
-    /**
-     * @var NotifierInterface[]
-     */
-    private $notifiers = array();
+    const NAME = 'cli';
 
     /**
-     * @var NotifierInterface[]
+     * @var NotifyInterface
      */
-    private $sorted = array();
+    private $notifier;
 
+    public function __construct(NotifyInterface $notifier = null)
+    {
+        $this->notifier = $notifier ?: new Notify();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function render(Response $response)
     {
-        if (0 === count($response->getEnvelopes())) {
+        if ('cli' !== \PHP_SAPI || array() === $response->getEnvelopes()) {
             return;
         }
 
-        $notifier = $this->createNotifier();
-
-        $notifier->render($response->getEnvelopes());
-    }
-
-    public function addNotifier(NotifierInterface $notifier)
-    {
-        $this->notifiers[] = $notifier;
-    }
-
-    public function getSortedNotifiers()
-    {
-        if (0 !== count($this->sorted)) {
-            return $this->sorted;
+        foreach ($response->getEnvelopes() as $envelope) {
+            $notification = Notification::fromEnvelope($envelope);
+            $this->notifier->send($notification);
         }
-
-        $this->sorted = $this->notifiers;
-
-        usort($this->sorted, static function (NotifierInterface $a, NotifierInterface $b) {
-            $priorityA = $a->getPriority();
-            $priorityB = $b->getPriority();
-
-            if ($priorityA == $priorityB) {
-                return 0;
-            }
-
-            return $priorityA < $priorityB ? 1 : -1;
-        });
-
-        return $this->sorted;
-    }
-
-    /**
-     * @return NotifierInterface
-     */
-    private function createNotifier()
-    {
-        foreach ($this->getSortedNotifiers() as $notifier) {
-            if ($notifier->isSupported()) {
-                return $notifier;
-            }
-        }
-
-        return new NullNotifier();
     }
 }

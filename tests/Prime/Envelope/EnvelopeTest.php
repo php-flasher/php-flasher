@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Tests\Prime\Envelope;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
 use PHPUnit\Framework\TestCase;
 
 final class EnvelopeTest extends TestCase
@@ -16,7 +21,7 @@ final class EnvelopeTest extends TestCase
 
         $this->assertEquals($notification, $envelope->getNotification());
         $this->assertEquals(array(
-            get_class($stamp) => $stamp,
+            \get_class($stamp) => $stamp,
         ), $envelope->all());
     }
 
@@ -31,8 +36,8 @@ final class EnvelopeTest extends TestCase
 
         $this->assertEquals($notification, $envelope->getNotification());
         $this->assertEquals(array(
-            get_class($stamp1) => $stamp1,
-            get_class($stamp2) => $stamp2,
+            \get_class($stamp1) => $stamp1,
+            \get_class($stamp2) => $stamp2,
         ), $envelope->all());
     }
 
@@ -45,7 +50,7 @@ final class EnvelopeTest extends TestCase
 
         $this->assertEquals($notification, $envelope->getNotification());
         $this->assertEquals(array(
-            get_class($stamp) => $stamp,
+            \get_class($stamp) => $stamp,
         ), $envelope->all());
     }
 
@@ -63,7 +68,7 @@ final class EnvelopeTest extends TestCase
 
         $this->assertEquals($notification, $envelope->getNotification());
         $this->assertEquals(array(
-            get_class($stamps[0]) => $stamps[3],
+            \get_class($stamps[0]) => $stamps[3],
         ), $envelope->all());
     }
 
@@ -80,10 +85,10 @@ final class EnvelopeTest extends TestCase
 
         $this->assertEquals($notification, $envelope->getNotification());
 
-        $last = $envelope->get(get_class($stamps[0]));
+        $last = $envelope->get(\get_class($stamps[0]));
 
         $this->assertEquals($stamps[2], $last);
-        $this->assertEquals($last, $envelope->get(get_class($stamps[0])));
+        $this->assertEquals($last, $envelope->get(\get_class($stamps[0])));
 
         $this->assertNull($envelope->get('NotFoundStamp'));
     }

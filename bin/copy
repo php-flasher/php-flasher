@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+$shared = realpath(__DIR__.'/../.shared');
+
+$resources = array(
+    $shared,
+   //  __DIR__.'/../.github/ISSUE_TEMPLATE/',
+    __DIR__.'/../.github/FUNDING.yml',
+    __DIR__.'/../README.md',
+    __DIR__.'/../LICENSE',
+);
+
+$dirs = array(__DIR__.'/../packs', __DIR__.'/../src');
+
+$packages = array();
+foreach ($dirs as $dir) {
+    $packages = array_merge($packages, glob($dir.'/*/composer.json'));
+    $packages = array_merge($packages, glob($dir.'/*/*/composer.json'));
+}
+
+foreach ($packages as $package) {
+    $package = realpath(dirname($package));
+    foreach ($resources as $resource) {
+        $resource = realpath($resource);
+        $dest = $package.str_replace(realpath(__DIR__.'/../'), '', $resource);
+
+        if (!is_dir($resource) && file_exists($resource)) {
+            copy($resource, $dest);
+            continue;
+        }
+
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($resource, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($files as $file) {
+            $target = $resource === $shared
+                ? $package.str_replace($resource, '', $file->getPathname())
+                : $dest .'/'. $file->getFilename();
+
+            if ($file->isDir()) {
+                system('rm -rf -- ' . escapeshellarg($dest));
+                @mkdir(dirname($target), 0777, true);
+                continue;
+            }
+
+            @mkdir(dirname($target), 0777, true);
+            @copy($file->getPathname(), $target);
+        }
+    }
+}

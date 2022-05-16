@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Cli\Symfony\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -8,16 +13,19 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class NotifierCompilerPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('flasher.presenter.cli')) {
+        if (!$container->has('flasher.cli_notifier')) {
             return;
         }
 
-        $presenter = $container->findDefinition('flasher.presenter.cli');
+        $notifier = $container->findDefinition('flasher.cli_notifier');
 
         foreach ($container->findTaggedServiceIds('flasher.cli_notifier') as $id => $tags) {
-            $presenter->addMethodCall('addNotifier', array(new Reference($id)));
+            $notifier->addMethodCall('addNotifier', array(new Reference($id)));
         }
     }
 }

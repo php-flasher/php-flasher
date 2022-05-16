@@ -2,7 +2,9 @@
 
 namespace PHPSTORM_META;
 
-registerArgumentsSet('notificationTypes', NotificationInterface::TYPE_SUCCESS, NotificationInterface::TYPE_ERROR, NotificationInterface::TYPE_WARNING, NotificationInterface::TYPE_INFO);
+use Flasher\Prime\Notification\NotificationInterface;
+
+registerArgumentsSet('notificationTypes', NotificationInterface::SUCCESS, NotificationInterface::ERROR, NotificationInterface::WARNING, NotificationInterface::INFO);
 
 override(Envelope::get(0), type(0));
 
@@ -14,16 +16,12 @@ expectedReturnValues(\Flasher\Prime\Notification\NotificationInterface::getType(
 
 override(\Flasher\Prime\FlasherInterface::create(), map([
     '' => '@',
-    'template' => \Flasher\Prime\Factory\TemplateFactory::class,
-    'template.tailwindcss' => \Flasher\Prime\Factory\TemplateFactory::class,
-    'template.tailwindcss_bg' => \Flasher\Prime\Factory\TemplateFactory::class,
-    'template.bootstrap' => \Flasher\Prime\Factory\TemplateFactory::class,
+    'flasher' => \Flasher\Prime\Factory\FlasherFactory::class,
+    'theme.*' => \Flasher\Prime\Factory\FlasherFactory::class,
 ]));
 
 override(\Flasher\Prime\FlasherInterface::using(), map([
     '' => '@',
-    'template' => \Flasher\Prime\Factory\TemplateFactory::class,
-    'template.tailwindcss' => \Flasher\Prime\Factory\TemplateFactory::class,
-    'template.tailwindcss_bg' => \Flasher\Prime\Factory\TemplateFactory::class,
-    'template.bootstrap' => \Flasher\Prime\Factory\TemplateFactory::class,
+    'flasher' => \Flasher\Prime\Factory\FlasherFactory::class,
+    'theme.*' => \Flasher\Prime\Factory\FlasherFactory::class,
 ]));

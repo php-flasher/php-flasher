@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Filter\Specification;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Stamp\DelayStamp;
 
 final class DelaySpecification implements SpecificationInterface
 {
@@ -26,11 +32,14 @@ final class DelaySpecification implements SpecificationInterface
         $this->maxDelay = $maxDelay;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\DelayStamp');
 
-        if (null === $stamp) {
+        if (!$stamp instanceof DelayStamp) {
             return false;
         }
 

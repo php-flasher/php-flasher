@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Filter\Specification;
 
-use Flasher\Prime\Envelope;
+use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Stamp\PriorityStamp;
 
 final class PrioritySpecification implements SpecificationInterface
 {
@@ -26,11 +32,14 @@ final class PrioritySpecification implements SpecificationInterface
         $this->maxPriority = $maxPriority;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $stamp = $envelope->get('Flasher\Prime\Stamp\PriorityStamp');
 
-        if (null === $stamp) {
+        if (!$stamp instanceof PriorityStamp) {
             return false;
         }
 

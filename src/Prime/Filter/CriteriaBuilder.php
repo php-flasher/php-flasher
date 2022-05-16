@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Filter;
 
 use Flasher\Prime\Filter\Specification\CallbackSpecification;
@@ -7,13 +12,24 @@ use Flasher\Prime\Filter\Specification\DelaySpecification;
 use Flasher\Prime\Filter\Specification\HopsSpecification;
 use Flasher\Prime\Filter\Specification\PrioritySpecification;
 use Flasher\Prime\Filter\Specification\StampsSpecification;
+use Flasher\Prime\Stamp\StampInterface;
 
 final class CriteriaBuilder
 {
     /**
-     * @var FilterBuilder
+     * @var array<string, class-string<StampInterface>>
      */
-    private $filterBuilder;
+    public $aliases = array(
+        'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
+        'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
+        'delay' => 'Flasher\Prime\Stamp\DelayStamp',
+        'hops' => 'Flasher\Prime\Stamp\HopsStamp',
+    );
+
+    /**
+     * @var Filter
+     */
+    private $filter;
 
     /**
      * @var array<string, mixed>
@@ -23,14 +39,14 @@ final class CriteriaBuilder
     /**
      * @param array<string, mixed> $criteria
      */
-    public function __construct(FilterBuilder $filterBuilder, array $criteria)
+    public function __construct(Filter $filter, array $criteria)
     {
-        $this->filterBuilder = $filterBuilder;
+        $this->filter = $filter;
         $this->criteria = $criteria;
     }
 
     /**
-     * @return FilterBuilder
+     * @return void
      */
     public function build()
     {
@@ -38,12 +54,10 @@ final class CriteriaBuilder
         $this->buildHops();
         $this->buildDelay();
         $this->buildLife();
-        $this->buildLimit();
         $this->buildOrder();
+        $this->buildLimit();
         $this->buildStamps();
-        $this->buildFilter();
-
-        return $this->filterBuilder;
+        $this->buildCallback();
     }
 
     /**
@@ -55,18 +69,9 @@ final class CriteriaBuilder
             return;
         }
 
-        $priority = $this->criteria['priority'];
+        $criteria = $this->extractMinMax($this->criteria['priority']);
 
-        if (!is_array($priority)) {
-            $priority = array(
-                'min' => $priority,
-            );
-        }
-
-        $min = isset($priority['min']) ? $priority['min'] : null;
-        $max = isset($priority['max']) ? $priority['max'] : null;
-
-        $this->filterBuilder->andWhere(new PrioritySpecification($min, $max));
+        $this->filter->addSpecification(new PrioritySpecification($criteria['min'], $criteria['max']));
     }
 
     /**
@@ -78,18 +83,9 @@ final class CriteriaBuilder
             return;
         }
 
-        $hops = $this->criteria['hops'];
+        $criteria = $this->extractMinMax($this->criteria['hops']);
 
-        if (!is_array($hops)) {
-            $hops = array(
-                'min' => $hops,
-            );
-        }
-
-        $min = isset($hops['min']) ? $hops['min'] : null;
-        $max = isset($hops['max']) ? $hops['max'] : null;
-
-        $this->filterBuilder->andWhere(new HopsSpecification($min, $max));
+        $this->filter->addSpecification(new HopsSpecification($criteria['min'], $criteria['max']));
     }
 
     /**
@@ -101,18 +97,9 @@ final class CriteriaBuilder
             return;
         }
 
-        $delay = $this->criteria['delay'];
+        $criteria = $this->extractMinMax($this->criteria['delay']);
 
-        if (!is_array($delay)) {
-            $delay = array(
-                'min' => $delay,
-            );
-        }
-
-        $min = isset($delay['min']) ? $delay['min'] : null;
-        $max = isset($delay['max']) ? $delay['max'] : null;
-
-        $this->filterBuilder->andWhere(new DelaySpecification($min, $max));
+        $this->filter->addSpecification(new DelaySpecification($criteria['min'], $criteria['max']));
     }
 
     /**
@@ -124,30 +111,9 @@ final class CriteriaBuilder
             return;
         }
 
-        $life = $this->criteria['life'];
+        $criteria = $this->extractMinMax($this->criteria['life']);
 
-        if (!is_array($life)) {
-            $life = array(
-                'min' => $life,
-            );
-        }
-
-        $min = isset($life['min']) ? $life['min'] : null;
-        $max = isset($life['max']) ? $life['max'] : null;
-
-        $this->filterBuilder->andWhere(new HopsSpecification($min, $max));
-    }
-
-    /**
-     * @return void
-     */
-    public function buildLimit()
-    {
-        if (!isset($this->criteria['limit'])) {
-            return;
-        }
-
-        $this->filterBuilder->setMaxResults($this->criteria['limit']);
+        $this->filter->addSpecification(new HopsSpecification($criteria['min'], $criteria['max']));
     }
 
     /**
@@ -159,15 +125,42 @@ final class CriteriaBuilder
             return;
         }
 
-        $orderings = $this->criteria['order_by'];
+        $orderings = array();
 
-        if (!is_array($orderings)) {
-            $orderings = array(
-                $orderings => FilterBuilder::ASC,
-            );
+        /**
+         * @var int|string $field
+         * @var string     $direction
+         */
+        foreach ((array) $this->criteria['order_by'] as $field => $direction) {
+            if (\is_int($field)) {
+                $field = $direction;
+                $direction = Filter::ASC;
+            }
+
+            $direction = Filter::ASC === strtoupper($direction) ? Filter::ASC : Filter::DESC;
+
+            if (\array_key_exists($field, $this->aliases)) {
+                $field = $this->aliases[$field];
+            }
+
+            $orderings[$field] = $direction;
         }
 
-        $this->filterBuilder->orderBy($orderings);
+        $this->filter->orderBy($orderings);
+    }
+
+    /**
+     * @return void
+     */
+    public function buildLimit()
+    {
+        if (!isset($this->criteria['limit'])) {
+            return;
+        }
+
+        /** @var int $limit */
+        $limit = $this->criteria['limit'];
+        $this->filter->setMaxResults((int) $limit);
     }
 
     /**
@@ -179,24 +172,56 @@ final class CriteriaBuilder
             return;
         }
 
+        /** @var string $strategy */
         $strategy = isset($this->criteria['stamps_strategy'])
             ? $this->criteria['stamps_strategy']
             : StampsSpecification::STRATEGY_OR;
 
-        $this->filterBuilder->andWhere(new StampsSpecification($this->criteria['stamps'], $strategy));
+        /** @var array<string, class-string<StampInterface>> $stamps */
+        $stamps = (array) $this->criteria['stamps'];
+
+        /**
+         * @var string                       $key
+         * @var class-string<StampInterface> $value
+         */
+        foreach ($stamps as $key => $value) {
+            if (\array_key_exists($value, $this->aliases)) {
+                $stamps[$key] = $this->aliases[$value];
+            }
+        }
+
+        $this->filter->addSpecification(new StampsSpecification($stamps, $strategy));
     }
 
     /**
      * @return void
      */
-    public function buildFilter()
+    public function buildCallback()
     {
         if (!isset($this->criteria['filter'])) {
             return;
         }
 
+        /** @var callable $callback */
         foreach ((array) $this->criteria['filter'] as $callback) {
-            $this->filterBuilder->andWhere(new CallbackSpecification($this->filterBuilder, $callback));
+            $this->filter->addSpecification(new CallbackSpecification($this->filter, $callback));
         }
+    }
+
+    /**
+     * @param mixed $criteria
+     *
+     * @return array{min: int, max: int}
+     */
+    private function extractMinMax($criteria)
+    {
+        if (!\is_array($criteria)) {
+            $criteria = array('min' => $criteria);
+        }
+
+        $min = isset($criteria['min']) ? $criteria['min'] : null;
+        $max = isset($criteria['max']) ? $criteria['max'] : null;
+
+        return array('min' => $min, 'max' => $max);
     }
 }

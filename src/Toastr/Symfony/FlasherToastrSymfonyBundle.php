@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Toastr\Symfony;
 
-use Flasher\Symfony\DependencyInjection\Compiler\ResourceCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Flasher\Symfony\Bridge\FlasherBundle;
-use Flasher\Toastr\Symfony\DependencyInjection\FlasherToastrExtension;
+use Flasher\Symfony\Support\Bundle;
+use Flasher\Toastr\Prime\ToastrPlugin;
 
-class FlasherToastrSymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+final class FlasherToastrSymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
-    protected function flasherBuild(ContainerBuilder $container)
+    /**
+     * {@inheritdoc}
+     */
+    protected function createPlugin()
     {
-        $container->addCompilerPass(new ResourceCompilerPass($this->getFlasherContainerExtension()));
-    }
-
-    protected function getFlasherContainerExtension()
-    {
-        return new FlasherToastrExtension();
+        return new ToastrPlugin();
     }
 }

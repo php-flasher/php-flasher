@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
@@ -16,7 +21,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool|string $title
      *
-     * @return $this
+     * @return static
      */
     public function title($title)
     {
@@ -26,11 +31,11 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Whether to escape the content of the title. (Not allow HTML.)
+     * Whether to escape the content of the title. (Not allow HTML.).
      *
      * @param bool $titleEscape
      *
-     * @return $this
+     * @return static
      */
     public function titleEscape($titleEscape = true)
     {
@@ -44,7 +49,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param string $text
      *
-     * @return $this
+     * @return static
      */
     public function text($text)
     {
@@ -61,11 +66,11 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Whether to escape the content of the text. (Not allow HTML.)
+     * Whether to escape the content of the text. (Not allow HTML.).
      *
      * @param bool $textEscape
      *
-     * @return $this
+     * @return static
      */
     public function textEscape($textEscape = true)
     {
@@ -76,11 +81,11 @@ final class PnotifyBuilder extends NotificationBuilder
 
     /**
      * What styling classes to use. (Can be either "brighttheme", "bootstrap3", "fontawesome", or a custom style object.
-     * See the source in the end of pnotify.js for the properties in a style object.)
+     * See the source in the end of pnotify.js for the properties in a style object.).
      *
      * @param string $styling
      *
-     * @return $this
+     * @return static
      */
     public function styling($styling)
     {
@@ -90,11 +95,11 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Additional classes to be added to the notice. (For custom styling.)
+     * Additional classes to be added to the notice. (For custom styling.).
      *
      * @param string $addClass
      *
-     * @return $this
+     * @return static
      */
     public function addClass($addClass)
     {
@@ -108,7 +113,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param string $cornerClass
      *
-     * @return $this
+     * @return static
      */
     public function cornerClass($cornerClass)
     {
@@ -122,7 +127,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $autoDisplay
      *
-     * @return $this
+     * @return static
      */
     public function autoDisplay($autoDisplay = true)
     {
@@ -136,7 +141,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param int $width
      *
-     * @return $this
+     * @return static
      */
     public function width($width)
     {
@@ -150,7 +155,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param int $minHeight
      *
-     * @return $this
+     * @return static
      */
     public function minHeight($minHeight)
     {
@@ -165,7 +170,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $icon
      *
-     * @return $this
+     * @return static
      */
     public function icon($icon = true)
     {
@@ -180,7 +185,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param string $animation
      *
-     * @return $this
+     * @return static
      */
     public function animation($animation)
     {
@@ -194,7 +199,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param string $animateSpeed
      *
-     * @return $this
+     * @return static
      */
     public function animateSpeed($animateSpeed)
     {
@@ -208,7 +213,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $shadow
      *
-     * @return $this
+     * @return static
      */
     public function shadow($shadow = true)
     {
@@ -222,7 +227,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $hide
      *
-     * @return $this
+     * @return static
      */
     public function hide($hide = true)
     {
@@ -236,7 +241,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param int $timer
      *
-     * @return $this
+     * @return static
      */
     public function timer($timer)
     {
@@ -250,7 +255,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $mouseReset
      *
-     * @return $this
+     * @return static
      */
     public function mouseReset($mouseReset = true)
     {
@@ -264,7 +269,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $remove
      *
-     * @return $this
+     * @return static
      */
     public function remove($remove = true)
     {
@@ -278,7 +283,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $insertBrs
      *
-     * @return $this
+     * @return static
      */
     public function insertBrs($insertBrs = true)
     {
@@ -292,7 +297,7 @@ final class PnotifyBuilder extends NotificationBuilder
      *
      * @param bool $destroy
      *
-     * @return $this
+     * @return static
      */
     public function destroy($destroy = true)
     {
@@ -302,17 +307,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Desktop Module
+     * Desktop Module.
      *
      * @param string $desktop
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function desktop($desktop, $value)
     {
         $option = $this->getEnvelope()->getOption('desktop', array());
-        $option[$desktop] = $value;
+        $option[$desktop] = $value; // @phpstan-ignore-line
 
         $this->option('desktop', $option);
 
@@ -320,17 +325,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Buttons Module
+     * Buttons Module.
      *
      * @param string $buttons
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function buttons($buttons, $value)
     {
         $option = $this->getEnvelope()->getOption('buttons', array());
-        $option[$buttons] = $value;
+        $option[$buttons] = $value; // @phpstan-ignore-line
 
         $this->option('buttons', $option);
 
@@ -338,17 +343,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * NonBlock Module
+     * NonBlock Module.
      *
      * @param string $nonblock
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function nonblock($nonblock, $value)
     {
         $option = $this->getEnvelope()->getOption('nonblock', array());
-        $option[$nonblock] = $value;
+        $option[$nonblock] = $value; // @phpstan-ignore-line
 
         $this->option('nonblock', $option);
 
@@ -356,17 +361,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Mobile Module
+     * Mobile Module.
      *
      * @param string $mobile
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function mobile($mobile, $value)
     {
         $option = $this->getEnvelope()->getOption('mobile', array());
-        $option[$mobile] = $value;
+        $option[$mobile] = $value; // @phpstan-ignore-line
 
         $this->option('mobile', $option);
 
@@ -374,17 +379,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Animate Module
+     * Animate Module.
      *
      * @param string $animate
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function animate($animate, $value)
     {
         $option = $this->getEnvelope()->getOption('animate', array());
-        $option[$animate] = $value;
+        $option[$animate] = $value; // @phpstan-ignore-line
 
         $this->option('animate', $option);
 
@@ -392,17 +397,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * Confirm Module
+     * Confirm Module.
      *
      * @param string $confirm
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function confirm($confirm, $value)
     {
         $option = $this->getEnvelope()->getOption('confirm', array());
-        $option[$confirm] = $value;
+        $option[$confirm] = $value; // @phpstan-ignore-line
 
         $this->option('confirm', $option);
 
@@ -410,17 +415,17 @@ final class PnotifyBuilder extends NotificationBuilder
     }
 
     /**
-     * History Module
+     * History Module.
      *
      * @param string $history
-     * @param mixed $value
+     * @param mixed  $value
      *
-     * @return $this
+     * @return static
      */
     public function history($history, $value)
     {
         $option = $this->getEnvelope()->getOption('history', array());
-        $option[$history] = $value;
+        $option[$history] = $value; // @phpstan-ignore-line
 
         $this->option('history', $option);
 

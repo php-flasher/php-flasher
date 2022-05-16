@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Notyf\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
@@ -11,7 +16,7 @@ final class NotyfBuilder extends NotificationBuilder
      *
      * @param int $duration
      *
-     * @return $this
+     * @return static
      */
     public function duration($duration)
     {
@@ -21,11 +26,11 @@ final class NotyfBuilder extends NotificationBuilder
     }
 
     /**
-     * Whether to show the notification with a ripple effect
+     * Whether to show the notification with a ripple effect.
      *
      * @param bool $ripple
      *
-     * @return $this
+     * @return static
      */
     public function ripple($ripple)
     {
@@ -35,17 +40,17 @@ final class NotyfBuilder extends NotificationBuilder
     }
 
     /**
-     * Viewport location where notifications are rendered
+     * Viewport location where notifications are rendered.
      *
      * @param string $position
      * @param string $value
      *
-     * @return $this
+     * @return static
      */
     public function position($position, $value)
     {
         $option = $this->getEnvelope()->getOption('position', array());
-        $option[$position] = $value;
+        $option[$position] = $value; // @phpstan-ignore-line
 
         $this->option('position', $option);
 
@@ -53,11 +58,11 @@ final class NotyfBuilder extends NotificationBuilder
     }
 
     /**
-     * Whether to allow users to dismiss the notification with a button
+     * Whether to allow users to dismiss the notification with a button.
      *
      * @param bool $dismissible
      *
-     * @return $this
+     * @return static
      */
     public function dismissible($dismissible)
     {
