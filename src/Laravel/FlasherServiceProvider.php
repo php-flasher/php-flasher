@@ -66,6 +66,53 @@ final class FlasherServiceProvider extends ServiceProvider
     /**
      * @return void
      */
+    protected function processConfiguration()
+    {
+        if (null === $this->plugin) {
+            return;
+        }
+
+        $name = $this->plugin->getName();
+
+        /** @phpstan-ignore-next-line */
+        $laravelConfig = $this->app['config'];
+
+        $deprecatedKeys = array();
+        $config = $laravelConfig->get($name, array());
+
+        if (isset($config['template_factory']['default'])) {
+            $deprecatedKeys[] = 'template_factory.default';
+        }
+
+        if (isset($config['template_factory']['templates'])) {
+            $deprecatedKeys[] = 'template_factory.templates';
+            $config['themes'] = $config['template_factory']['templates'];
+        }
+
+        if (isset($config['auto_create_from_session'])) {
+            $deprecatedKeys[] = 'auto_create_from_session';
+            $config['flash_bag']['enabled'] = $config['auto_create_from_session'];
+        }
+
+        if (isset($config['types_mapping'])) {
+            $deprecatedKeys[] = 'types_mapping';
+            $config['flash_bag']['mapping'] = $config['types_mapping'];
+        }
+
+        if (isset($config['observer_events'])) {
+            $deprecatedKeys[] = 'observer_events';
+        }
+
+        if (array() !== $deprecatedKeys) {
+            @trigger_error(sprintf('Since php-flasher/flasher-laravel v1.0: The following configuration keys are deprecated and will be removed in v2.0: %s. Please use the new configuration structure.', implode(', ', $deprecatedKeys)), \E_USER_DEPRECATED);
+        }
+
+        $laravelConfig->set($name, $this->plugin->processConfiguration($config));
+    }
+
+    /**
+     * @return void
+     */
     private function registerConfig()
     {
         $this->app->singleton('flasher.config', function (Application $app) {
@@ -130,7 +177,7 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerSessionMiddleware()
     {
-        $config = $this->app['flasher.config'];
+        $config = $this->app['flasher.config']; // @phpstan-ignore-line
         if (true !== $config->get('flash_bag.enabled', false)) {
             return;
         }
@@ -194,6 +241,12 @@ final class FlasherServiceProvider extends ServiceProvider
                 }
 
                 return "<?php echo app('flasher')->render({$criteria}); ?>";
+            });
+
+            Blade::directive('flasher_livewire_render', function () {
+                @trigger_error('Since php-flasher/flasher-laravel v1.0: Using @flasher_livewire_render is deprecated and will be removed in v2.0. Use flasher_render instead.', \E_USER_DEPRECATED);
+
+                return '';
             });
 
             return;

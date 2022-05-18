@@ -75,6 +75,11 @@ final class Flasher implements FlasherInterface
     {
         $alias = trim($alias ?: $this->defaultHandler ?: '');
 
+        if (0 === strpos($alias, 'template.')) {
+            $alias = 'theme.'.substr($alias, \strlen('template.'));
+            @trigger_error('Since php-flasher/flasher v1.0, the "template." prefix is deprecated and will be removed in v2.0. Use "theme." instead.', \E_USER_DEPRECATED);
+        }
+
         if (empty($alias)) {
             throw new \InvalidArgumentException('Unable to resolve empty factory.');
         }

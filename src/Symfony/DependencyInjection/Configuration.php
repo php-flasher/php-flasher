@@ -62,7 +62,7 @@ final class Configuration implements ConfigurationInterface
      */
     private function addFlashBagSection(ArrayNodeDefinition $rootNode, FlasherPlugin $plugin)
     {
-        $rootNode
+        $rootNode // @phpstan-ignore-line
             ->children()
                 ->arrayNode('flash_bag')
                     ->canBeUnset()

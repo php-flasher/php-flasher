@@ -191,4 +191,14 @@ interface NotificationBuilderInterface
      * @return Envelope
      */
     public function getEnvelope();
+
+    /**
+     * @deprecated Since php-flasher/flasher v1.0: Using livewire() method is deprecated and will be removed in v2.0. please use the builder methods directly.
+     * @see https://php-flasher.io/docs/framework/livewire/
+     *
+     * @param array<string, mixed> $context
+     *
+     * @return static
+     */
+    public function livewire(array $context = array());
 }

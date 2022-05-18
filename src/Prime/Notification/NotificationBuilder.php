@@ -394,4 +394,14 @@ class NotificationBuilder implements NotificationBuilderInterface
     {
         return isset(static::$macros[$name]);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function livewire(array $context = array())
+    {
+        @trigger_error(sprintf('Since php-flasher/flasher v1.0: Using %s method is deprecated and will be removed in v2.0. please use the builder methods directly.', __METHOD__), \E_USER_DEPRECATED);
+
+        return $this;
+    }
 }
