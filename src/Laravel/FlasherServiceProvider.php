@@ -202,7 +202,11 @@ final class FlasherServiceProvider extends ServiceProvider
             return;
         }
 
-        $livewire->listen('component.dehydrate', function (Component $component, Response $response) {
+        $livewire->listen('component.dehydrate.subsequent', function (Component $component, Response $response) {
+            if (isset($response->effects['redirect'])) {
+                return;
+            }
+
             $data = app('flasher')->render(array(), 'array'); // @phpstan-ignore-line
 
             if (\count($data['envelopes']) > 0) {
