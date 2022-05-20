@@ -80,7 +80,7 @@ final class HtmlPresenter implements PresenterInterface
         render(event.detail);
     });
 
-    if (!rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
+    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
         render(options);
     } else {
         var tag = document.createElement('script');
