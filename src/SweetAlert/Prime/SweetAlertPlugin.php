@@ -23,7 +23,7 @@ class SweetAlertPlugin extends Plugin
     {
         return array(
             'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.0.7/dist/flasher-sweetalert.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.0.8/dist/flasher-sweetalert.min.js',
         );
     }
 }

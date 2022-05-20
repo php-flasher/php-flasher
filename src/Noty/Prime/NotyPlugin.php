@@ -17,7 +17,7 @@ class NotyPlugin extends Plugin
     public function getScripts()
     {
         return array(
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.0.7/dist/flasher-noty.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.0.8/dist/flasher-noty.min.js',
         );
     }
 }
