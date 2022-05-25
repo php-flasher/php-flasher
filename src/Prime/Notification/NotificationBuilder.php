@@ -153,6 +153,10 @@ class NotificationBuilder implements NotificationBuilderInterface
             $this->with($stamps);
         }
 
+        if (null === $this->envelope->getTitle()) {
+            $this->title($this->envelope->getType());
+        }
+
         $this->storageManager->add($this->getEnvelope());
 
         return $this->getEnvelope();
