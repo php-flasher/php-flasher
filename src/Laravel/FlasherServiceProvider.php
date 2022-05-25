@@ -203,7 +203,9 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerTranslations()
     {
-        $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
+        /** @var \Illuminate\Translation\Translator $translator */
+        $translator = $this->app['translator'];
+        $translator->addNamespace('flasher', __DIR__.'/Translation/lang');
     }
 
     /**
