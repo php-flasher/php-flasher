@@ -41,6 +41,7 @@ final class FlasherServiceProvider extends ServiceProvider
     {
         $this->registerBladeDirectives();
         $this->registerLivewire();
+        $this->registerTranslations();
     }
 
     /**
@@ -195,6 +196,14 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) use ($mapping) {
             return new SessionMiddleware($app['flasher'], $mapping); // @phpstan-ignore-line
         });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
     }
 
     /**
