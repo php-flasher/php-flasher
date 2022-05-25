@@ -12,8 +12,10 @@ use Flasher\Laravel\Storage\SessionBag;
 use Flasher\Laravel\Support\Laravel;
 use Flasher\Laravel\Support\ServiceProvider;
 use Flasher\Laravel\Template\BladeTemplateEngine;
+use Flasher\Laravel\Translation\Translator;
 use Flasher\Prime\Config\Config;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Response\Resource\ResourceManager;
@@ -167,8 +169,15 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerEventDispatcher()
     {
-        $this->app->singleton('flasher.event_dispatcher', function () {
-            return new EventDispatcher();
+        $this->app->singleton('flasher.event_dispatcher', function (Application $app) {
+            $eventDispatcher = new EventDispatcher();
+
+            $eventDispatcher->addSubscriber(new TranslationListener(
+                new Translator($app['translator']), // @phpstan-ignore-line
+                $app['flasher.config']->get('translate_by_default') // @phpstan-ignore-line
+            ));
+
+            return $eventDispatcher;
         });
     }
 
