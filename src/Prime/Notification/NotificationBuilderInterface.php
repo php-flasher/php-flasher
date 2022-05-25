@@ -181,6 +181,13 @@ interface NotificationBuilderInterface
     public function delay($delay);
 
     /**
+     * @param string|null $locale
+     *
+     * @return static
+     */
+    public function translate($locale = null);
+
+    /**
      * @param StampInterface[] $stamps
      *
      * @return Envelope

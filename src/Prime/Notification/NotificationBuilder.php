@@ -13,6 +13,7 @@ use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 /**
@@ -300,6 +301,16 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function now()
     {
         return $this->delay(0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function translate($locale = null)
+    {
+        $this->envelope->withStamp(new TranslationStamp($locale));
+
+        return $this;
     }
 
     /**
