@@ -17,6 +17,7 @@
         "ext-mbstring": "*"
     },
     "require-dev": {
+        "ext-intl": "*",
         "friendsofphp/php-cs-fixer": "^3.8",
         "laravel/laravel": "^9.1",
         "livewire/livewire": "^2.10",
