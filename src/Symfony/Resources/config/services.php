@@ -53,7 +53,8 @@ $container->register('flasher.resource_manager', 'Flasher\Prime\Response\Resourc
 $container->register('flasher.response_manager', 'Flasher\Prime\Response\ResponseManager')
     ->setPublic(false)
     ->addArgument(new Reference('flasher.resource_manager'))
-    ->addArgument(new Reference('flasher.storage_manager'));
+    ->addArgument(new Reference('flasher.storage_manager'))
+    ->addArgument(new Reference('flasher.event_dispatcher'));
 
 $container->register('flasher', 'Flasher\Prime\Flasher')
     ->setPublic(true)
