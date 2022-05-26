@@ -56,4 +56,4 @@ jobs:
                     composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" --no-interaction
 
             -   name: Execute tests
-                run: vendor/bin/phpunit --configuration=phpunit-symfony.xml
+                run: vendor/bin/phpunit --testdox --configuration=phpunit-symfony.xml

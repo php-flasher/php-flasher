@@ -196,7 +196,7 @@ final class Envelope implements NotificationInterface
      */
     public function setTitle($title)
     {
-        return $this->notification->setMessage($title); // @phpstan-ignore-line
+        return $this->notification->setTitle($title); // @phpstan-ignore-line
     }
 
     /**

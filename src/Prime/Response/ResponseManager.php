@@ -7,6 +7,7 @@
 
 namespace Flasher\Prime\Response;
 
+use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
 use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
@@ -60,7 +61,10 @@ final class ResponseManager implements ResponseManagerInterface
         $envelopes = $this->storageManager->filter($criteria);
         $this->storageManager->remove($envelopes);
 
-        $response = $this->createResponse($envelopes, $context);
+        $event = new PresentationEvent($envelopes, $context);
+        $this->eventDispatcher->dispatch($event);
+
+        $response = $this->createResponse($event->getEnvelopes(), $context);
         $response = $this->createPresenter($presenter)->render($response);
 
         $event = new ResponseEvent($response, $presenter);

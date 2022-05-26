@@ -49,6 +49,7 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('options')->end()
                     ->end()
                 ->end()
+                ->booleanNode('translate_by_default')->defaultTrue()->end()
             ->end()
         ;
 

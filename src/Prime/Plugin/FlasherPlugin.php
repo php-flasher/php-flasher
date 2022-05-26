@@ -66,6 +66,7 @@ class FlasherPlugin extends Plugin
         return array_merge(array(
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
+            'translate_by_default' => false,
             'flash_bag' => array(
                 'enabled' => true,
                 'mapping' => $this->getFlashBagMapping(),
