@@ -8,6 +8,7 @@
 namespace Flasher\Symfony\Translation;
 
 use Flasher\Prime\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
 final class Translator implements TranslatorInterface
@@ -27,7 +28,19 @@ final class Translator implements TranslatorInterface
      */
     public function translate($id, $locale = null)
     {
-        return $this->translator->trans($id, array(), 'flasher', $locale);
+        if (!$this->translator instanceof TranslatorBagInterface) {
+            return $this->translator->trans($id, array(), 'flasher', $locale);
+        }
+
+        $catalogue = $this->translator->getCatalogue($locale);
+
+        foreach (array('flasher', 'messages') as $domain) {
+            if ($catalogue->has($id, $domain)) {
+                return $catalogue->get($id, $domain);
+            }
+        }
+
+        return $id;
     }
 
     /**
