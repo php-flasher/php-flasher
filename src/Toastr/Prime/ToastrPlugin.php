@@ -18,7 +18,7 @@ class ToastrPlugin extends Plugin
     {
         return array(
             'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.0.10/dist/flasher-toastr.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.0.16/dist/flasher-toastr.min.js',
         );
     }
 }

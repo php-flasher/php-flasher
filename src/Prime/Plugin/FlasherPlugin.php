@@ -38,7 +38,7 @@ class FlasherPlugin extends Plugin
      */
     public function getRootScript()
     {
-        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.0.10/dist/flasher.min.js';
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.0.16/dist/flasher.min.js';
     }
 
     /**
