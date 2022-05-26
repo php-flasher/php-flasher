@@ -42,6 +42,9 @@ final class FlasherExtension extends Extension
 
         $flasher = $container->getDefinition('flasher');
         $flasher->replaceArgument(0, $configs['default']); // @phpstan-ignore-line
+
+        $translationListener = $container->getDefinition('flasher.translation_listener');
+        $translationListener->replaceArgument(1, $configs['translate_by_default']); // @phpstan-ignore-line
     }
 
     /**

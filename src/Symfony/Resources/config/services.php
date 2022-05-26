@@ -66,6 +66,16 @@ $container->register('flasher.notification_factory', 'Flasher\Prime\Factory\Noti
     ->setPublic(false)
     ->addArgument(new Reference('flasher.storage_manager'));
 
+$container->register('flasher.translator', 'Flasher\Symfony\Translation\Translator')
+    ->setPublic(false)
+    ->addArgument(new Reference('translator'));
+
+$container->register('flasher.translation_listener', 'Flasher\Prime\EventDispatcher\EventListener\TranslationListener')
+    ->setPublic(false)
+    ->addArgument(new Reference('flasher.translator'))
+    ->addArgument(true)
+    ->addTag('flasher.event_subscriber');
+
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Prime\Flasher', 'flasher');
     $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');
