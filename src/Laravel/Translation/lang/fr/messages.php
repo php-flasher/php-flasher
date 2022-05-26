@@ -5,9 +5,6 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
-return array(
-    'success' => 'Succès',
-    'error' => 'Erreur',
-    'warning' => 'Avertissement',
-    'info' => 'Information',
-);
+use Flasher\Prime\Translation\Messages;
+
+return Messages::FR;
