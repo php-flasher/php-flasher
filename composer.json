@@ -13,18 +13,8 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.8",
-        "laravel/laravel": "^9.1",
-        "livewire/livewire": "^2.10",
-        "orchestra/testbench": "^7.5",
-        "phpstan/phpstan": "^1.6",
-        "phpunit/phpunit": "^9.5",
-        "symfony/symfony": "^6.1"
     },
     "autoload": {
         "files": [
@@ -114,5 +104,14 @@
         "sort-packages": true
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "laravel/framework": "^9.14",
+        "livewire/livewire": "^2.10",
+        "orchestra/testbench": "^7.5",
+        "phpstan/phpstan": "^1.7",
+        "phpunit/phpunit": "^9.5",
+        "symfony/symfony": "^6.1"
+    }
 }
