@@ -12,10 +12,27 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
+/**
+ * @phpstan-type ConfigType array{
+ *   default: string,
+ *   root_script: string,
+ *   themes: array<string, array{
+ *      view: string,
+ *      styles: string[],
+ *      scripts: string[],
+ *      options: array<string, mixed>,
+ *   }>,
+ *   translate_by_default: bool,
+ *   flash_bag?: array{
+ *      enabled: bool,
+ *      mapping: array<string, string>,
+ *   },
+ * }
+ */
 final class FlasherExtension extends Extension
 {
     /**
-     * @param array<int, array<string, mixed>> $configs
+     * @phpstan-param ConfigType[] $configs
      *
      * @return void
      */
@@ -24,44 +41,59 @@ final class FlasherExtension extends Extension
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
-        $configs = $this->processConfiguration(new Configuration(), $configs);
+        /** @var ConfigType $config */
+        $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $this->registerFlasherConfiguration($configs, $container);
-        $this->registerSessionListener($configs, $container, $loader);
+        $this->registerFlasherConfiguration($config, $container);
+        $this->registerSessionListener($config, $container, $loader);
+        $this->registerTranslationListener($config, $container, $loader);
     }
 
     /**
-     * @param array<int, array<string, mixed>> $configs
+     * @phpstan-param ConfigType $config
      *
      * @return void
      */
-    private function registerFlasherConfiguration(array $configs, ContainerBuilder $container)
+    private function registerFlasherConfiguration(array $config, ContainerBuilder $container)
     {
-        $config = $container->getDefinition('flasher.config');
-        $config->replaceArgument(0, $configs);
+        $flasherConfig = $container->getDefinition('flasher.config');
+        $flasherConfig->replaceArgument(0, $config);
 
         $flasher = $container->getDefinition('flasher');
-        // @phpstan-ignore-next-line
-        $flasher->replaceArgument(0, $configs['default']);
-
-        $translationListener = $container->getDefinition('flasher.translation_listener');
-        $translationListener->replaceArgument(1, $configs['translate_by_default']); // @phpstan-ignore-line
+        $flasher->replaceArgument(0, $config['default']);
     }
 
     /**
-     * @param array{flash_bag?: array{enabled: bool, mapping: array<string, string[]>}} $configs
+     * @phpstan-param ConfigType $config
      *
      * @return void
      */
-    private function registerSessionListener(array $configs, ContainerBuilder $container, Loader\PhpFileLoader $loader)
+    private function registerSessionListener(array $config, ContainerBuilder $container, Loader\PhpFileLoader $loader)
     {
-        if (!isset($configs['flash_bag']['enabled']) || true !== $configs['flash_bag']['enabled']) {
+        if (!isset($config['flash_bag']['enabled']) || true !== $config['flash_bag']['enabled']) {
             return;
         }
 
         $loader->load('session_listener.php');
 
         $listener = $container->getDefinition('flasher.session_listener');
-        $listener->replaceArgument(1, $configs['flash_bag']['mapping']);
+        $listener->replaceArgument(1, $config['flash_bag']['mapping']);
+    }
+
+    /**
+     * @phpstan-param ConfigType $config
+     *
+     * @return void
+     */
+    private function registerTranslationListener(array $config, ContainerBuilder $container, Loader\PhpFileLoader $loader)
+    {
+        if (!$container->hasDefinition('translator')) {
+            return;
+        }
+
+        $loader->load('translator.php');
+
+        $translationListener = $container->getDefinition('flasher.translation_listener');
+        $translationListener->replaceArgument(1, $config['translate_by_default']);
     }
 }

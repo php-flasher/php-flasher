@@ -24,7 +24,7 @@
         "orchestra/testbench": "^7.5",
         "phpstan/phpstan": "^1.6",
         "phpunit/phpunit": "^9.5",
-        "symfony/symfony": "^6.0"
+        "symfony/symfony": "^6.1"
     },
     "autoload": {
         "files": [
