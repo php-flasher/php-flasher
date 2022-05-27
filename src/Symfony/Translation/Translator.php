@@ -18,7 +18,10 @@ final class Translator implements TranslatorInterface
      */
     private $translator;
 
-    public function __construct(SymfonyTranslatorInterface $translator)
+    /**
+     * @param SymfonyTranslatorInterface $translator
+     */
+    public function __construct($translator)
     {
         $this->translator = $translator;
     }

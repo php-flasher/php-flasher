@@ -42,8 +42,8 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer remove friendsofphp/php-cs-fixer laravel/laravel livewire/livewire phpstan/phpstan symfony/symfony orchestra/testbench phpunit/phpunit --dev
+                    composer remove friendsofphp/php-cs-fixer laravel/framework livewire/livewire phpstan/phpstan symfony/symfony orchestra/testbench phpunit/phpunit --dev
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction
 
             -   name: Execute tests
-                run: vendor/bin/phpunit --testdox --configuration=phpunit-laravel.xml
+                run: vendor/bin/phpunit --configuration=phpunit-laravel.xml
