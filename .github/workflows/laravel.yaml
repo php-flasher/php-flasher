@@ -4,7 +4,7 @@ on:
     push:
 
 jobs:
-    test:
+    laravel-test:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: true

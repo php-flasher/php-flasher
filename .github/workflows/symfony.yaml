@@ -4,7 +4,7 @@ on:
     push:
 
 jobs:
-    test:
+    symfony-test:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: true
