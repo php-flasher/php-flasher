@@ -7,7 +7,7 @@
 
 namespace Flasher\Prime\Stamp;
 
-class PresetStamp implements StampInterface
+final class PresetStamp implements StampInterface
 {
     /**
      * @var string

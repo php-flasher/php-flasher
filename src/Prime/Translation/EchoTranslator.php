@@ -1,11 +1,16 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Prime\Translation;
 
 final class EchoTranslator implements TranslatorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function translate($id, $locale = null)
     {
@@ -13,7 +18,7 @@ final class EchoTranslator implements TranslatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getLocale()
     {
