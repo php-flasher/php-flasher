@@ -7,6 +7,7 @@
 
 namespace Flasher\Symfony\DependencyInjection;
 
+use Flasher\Prime\Config\Config;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,21 +15,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * @phpstan-type ConfigType array{
- *   default: string,
- *   root_script: string,
- *   themes: array<string, array{
- *      view: string,
- *      styles: string[],
- *      scripts: string[],
- *      options: array<string, mixed>,
- *   }>,
- *   translate_by_default: bool,
- *   flash_bag?: array{
- *      enabled: bool,
- *      mapping: array<string, string>,
- *   },
- * }
+ * @phpstan-import-type ConfigType from Config
  */
 final class FlasherExtension extends Extension implements CompilerPassInterface
 {
