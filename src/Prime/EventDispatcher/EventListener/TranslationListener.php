@@ -9,6 +9,7 @@ namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
 use Flasher\Prime\Stamp\TranslationStamp;
+use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Prime\Translation\Language;
 use Flasher\Prime\Translation\TranslatorInterface;
 
@@ -27,9 +28,9 @@ final class TranslationListener implements EventSubscriberInterface
     /**
      * @param bool $translateByDefault
      */
-    public function __construct(TranslatorInterface $translator, $translateByDefault = true)
+    public function __construct(TranslatorInterface $translator = null, $translateByDefault = true)
     {
-        $this->translator = $translator;
+        $this->translator = $translator ?: new EchoTranslator();
         $this->translateByDefault = $translateByDefault;
     }
 

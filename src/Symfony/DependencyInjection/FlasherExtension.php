@@ -8,6 +8,7 @@
 namespace Flasher\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -29,7 +30,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *   },
  * }
  */
-final class FlasherExtension extends Extension
+final class FlasherExtension extends Extension implements CompilerPassInterface
 {
     /**
      * @phpstan-param ConfigType[] $configs
@@ -46,7 +47,24 @@ final class FlasherExtension extends Extension
 
         $this->registerFlasherConfiguration($config, $container);
         $this->registerSessionListener($config, $container, $loader);
-        $this->registerTranslationListener($config, $container, $loader);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function process(ContainerBuilder $container)
+    {
+        $config = $container->getDefinition('flasher.config')->getArgument(0);
+
+        $translationListener = $container->getDefinition('flasher.translation_listener');
+        $translationListener->replaceArgument(1, $config['translate_by_default']);
+
+        if ($container->has('translator')) {
+            return;
+        }
+
+        $container->removeDefinition('flasher.translator');
+        $translationListener->replaceArgument(0, null);
     }
 
     /**
@@ -78,22 +96,5 @@ final class FlasherExtension extends Extension
 
         $listener = $container->getDefinition('flasher.session_listener');
         $listener->replaceArgument(1, $config['flash_bag']['mapping']);
-    }
-
-    /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
-     */
-    private function registerTranslationListener(array $config, ContainerBuilder $container, Loader\PhpFileLoader $loader)
-    {
-        if (!$container->hasDefinition('translator')) {
-            return;
-        }
-
-        $loader->load('translator.php');
-
-        $translationListener = $container->getDefinition('flasher.translation_listener');
-        $translationListener->replaceArgument(1, $config['translate_by_default']);
     }
 }
