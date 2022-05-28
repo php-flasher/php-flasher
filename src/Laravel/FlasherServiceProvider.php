@@ -15,6 +15,7 @@ use Flasher\Laravel\Template\BladeTemplateEngine;
 use Flasher\Laravel\Translation\Translator;
 use Flasher\Prime\Config\Config;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\Plugin\FlasherPlugin;
@@ -176,6 +177,10 @@ final class FlasherServiceProvider extends ServiceProvider
             $eventDispatcher->addSubscriber(new TranslationListener(
                 new Translator($app['translator']), // @phpstan-ignore-line
                 $app['flasher.config']->get('translate_by_default') // @phpstan-ignore-line
+            ));
+
+            $eventDispatcher->addSubscriber(new PresetListener(
+                $app['flasher.config']->get('presets', array()) // @phpstan-ignore-line
             ));
 
             return $eventDispatcher;
