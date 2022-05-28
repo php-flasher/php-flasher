@@ -57,7 +57,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $config = $container->getDefinition('flasher.config')->getArgument(0);
 
         $translationListener = $container->getDefinition('flasher.translation_listener');
-        $translationListener->replaceArgument(1, $config['translate_by_default']);
+        $translationListener->replaceArgument(1, $config['auto_translate']);
 
         if ($container->has('translator')) {
             return;

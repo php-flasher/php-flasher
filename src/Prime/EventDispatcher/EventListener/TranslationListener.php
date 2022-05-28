@@ -23,15 +23,15 @@ final class TranslationListener implements EventSubscriberInterface
     /**
      * @var bool
      */
-    private $translateByDefault;
+    private $autoTranslate;
 
     /**
-     * @param bool $translateByDefault
+     * @param bool $autoTranslate
      */
-    public function __construct(TranslatorInterface $translator = null, $translateByDefault = true)
+    public function __construct(TranslatorInterface $translator = null, $autoTranslate = true)
     {
         $this->translator = $translator ?: new EchoTranslator();
-        $this->translateByDefault = $translateByDefault;
+        $this->autoTranslate = $autoTranslate;
     }
 
     /**
@@ -41,7 +41,7 @@ final class TranslationListener implements EventSubscriberInterface
     {
         foreach ($event->getEnvelopes() as $envelope) {
             $stamp = $envelope->get('Flasher\Prime\Stamp\TranslationStamp');
-            if (!$stamp instanceof TranslationStamp && !$this->translateByDefault) {
+            if (!$stamp instanceof TranslationStamp && !$this->autoTranslate) {
                 continue;
             }
 

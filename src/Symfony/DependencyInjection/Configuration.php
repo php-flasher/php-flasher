@@ -41,6 +41,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('root_script')
                     ->defaultValue($plugin->getRootScript())
                 ->end()
+                ->booleanNode('auto_translate')->defaultTrue()->end()
                 ->arrayNode('themes')
                     ->ignoreExtraKeys()
                     ->prototype('variable')->end()
@@ -54,7 +55,6 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('options')->end()
                     ->end()
                 ->end()
-                ->booleanNode('translate_by_default')->defaultTrue()->end()
             ->end()
         ;
 

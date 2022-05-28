@@ -129,7 +129,7 @@ final class FlasherServiceProvider extends ServiceProvider
 
             $eventDispatcher->addSubscriber(new TranslationListener(
                 new Translator($app['translator']), // @phpstan-ignore-line
-                $app['flasher.config']->get('translate_by_default') // @phpstan-ignore-line
+                $app['flasher.config']->get('auto_translate') // @phpstan-ignore-line
             ));
 
             $eventDispatcher->addSubscriber(new PresetListener(
