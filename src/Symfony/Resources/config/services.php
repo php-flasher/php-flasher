@@ -76,6 +76,11 @@ $container->register('flasher.translation_listener', 'Flasher\Prime\EventDispatc
     ->addArgument(true)
     ->addTag('flasher.event_subscriber');
 
+$container->register('flasher.preset_listener', 'Flasher\Prime\EventDispatcher\EventListener\PresetListener')
+    ->setPublic(false)
+    ->addArgument(array())
+    ->addTag('flasher.event_subscriber');
+
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Prime\Flasher', 'flasher');
     $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');

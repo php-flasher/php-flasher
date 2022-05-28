@@ -79,6 +79,9 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
 
         $flasher = $container->getDefinition('flasher');
         $flasher->replaceArgument(0, $config['default']);
+
+        $presetListener = $container->getDefinition('flasher.preset_listener');
+        $presetListener->replaceArgument(0, $config['presets']);
     }
 
     /**
