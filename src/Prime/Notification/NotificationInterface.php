@@ -15,7 +15,7 @@ interface NotificationInterface
     const WARNING = 'warning';
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getType();
 

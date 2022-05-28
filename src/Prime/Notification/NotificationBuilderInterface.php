@@ -12,54 +12,60 @@ use Flasher\Prime\Stamp\StampInterface;
 interface NotificationBuilderInterface
 {
     /**
-     * @param string               $message
-     * @param array<string, mixed> $options
+     * @param string                           $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return Envelope
      */
-    public function addSuccess($message, array $options = array());
+    public function addSuccess($message, $title = null, array $options = array());
 
     /**
-     * @param string               $message
-     * @param array<string, mixed> $options
+     * @param string                           $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return Envelope
      */
-    public function addError($message, array $options = array());
+    public function addError($message, $title = null, array $options = array());
 
     /**
-     * @param string               $message
-     * @param array<string, mixed> $options
+     * @param string                           $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return Envelope
      */
-    public function addWarning($message, array $options = array());
+    public function addWarning($message, $title = null, array $options = array());
 
     /**
-     * @param string               $message
-     * @param array<string, mixed> $options
+     * @param string                           $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return Envelope
      */
-    public function addInfo($message, array $options = array());
+    public function addInfo($message, $title = null, array $options = array());
 
     /**
-     * @param NotificationInterface|string $type
-     * @param string|null                  $message
-     * @param array<string, mixed>         $options
+     * @param NotificationInterface|string     $type
+     * @param string|null                      $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return Envelope
      */
-    public function addFlash($type, $message, array $options = array());
+    public function addFlash($type, $message, $title = null, array $options = array());
 
     /**
-     * @param string               $type
-     * @param string|null          $message
-     * @param array<string, mixed> $options
+     * @param string                           $type
+     * @param string|null                      $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return static
      */
-    public function type($type, $message = null, array $options = array());
+    public function type($type, $message = null, $title = null, array $options = array());
 
     /**
      * @param string $message
@@ -92,36 +98,40 @@ interface NotificationBuilderInterface
     public function option($name, $value);
 
     /**
-     * @param string|null          $message
-     * @param array<string, mixed> $options
+     * @param string|null                      $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return static
      */
-    public function success($message = null, array $options = array());
+    public function success($message = null, $title = null, array $options = array());
 
     /**
-     * @param string|null          $message
-     * @param array<string, mixed> $options
+     * @param string|null                      $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return static
      */
-    public function error($message = null, array $options = array());
+    public function error($message = null, $title = null, array $options = array());
 
     /**
-     * @param string|null          $message
-     * @param array<string, mixed> $options
+     * @param string|null                      $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return static
      */
-    public function info($message = null, array $options = array());
+    public function info($message = null, $title = null, array $options = array());
 
     /**
-     * @param string|null          $message
-     * @param array<string, mixed> $options
+     * @param string|null                      $message
+     * @param array<string, mixed>|string|null $title
+     * @param array<string, mixed>             $options
      *
      * @return static
      */
-    public function warning($message = null, array $options = array());
+    public function warning($message = null, $title = null, array $options = array());
 
     /**
      * @param int $priority
