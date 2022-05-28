@@ -18,11 +18,14 @@ use Flasher\Prime\Notification\NotificationBuilder;
  */
 final class SweetAlertBuilder extends NotificationBuilder
 {
-    public function type($type, $message = null, array $options = array())
+    /**
+     * {@inheritdoc}
+     */
+    public function type($type, $message = null, $title = null, array $options = array())
     {
         $this->icon($type);
 
-        return parent::type($type, $message, $options);
+        return parent::type($type, $message, $title, $options);
     }
 
     /**

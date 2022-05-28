@@ -11,6 +11,7 @@ use Flasher\Prime\Stamp\ContextStamp;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Stamp\TranslationStamp;
@@ -100,46 +101,46 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function addSuccess($message, array $options = array())
+    public function addSuccess($message, $title = null, array $options = array())
     {
-        return $this->addFlash(NotificationInterface::SUCCESS, $message, $options);
+        return $this->addFlash(NotificationInterface::SUCCESS, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addError($message, array $options = array())
+    public function addError($message, $title = null, array $options = array())
     {
-        return $this->addFlash(NotificationInterface::ERROR, $message, $options);
+        return $this->addFlash(NotificationInterface::ERROR, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addWarning($message, array $options = array())
+    public function addWarning($message, $title = null, array $options = array())
     {
-        return $this->addFlash(NotificationInterface::WARNING, $message, $options);
+        return $this->addFlash(NotificationInterface::WARNING, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addInfo($message, array $options = array())
+    public function addInfo($message, $title = null, array $options = array())
     {
-        return $this->addFlash(NotificationInterface::INFO, $message, $options);
+        return $this->addFlash(NotificationInterface::INFO, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addFlash($type, $message = null, array $options = array())
+    public function addFlash($type, $message = null, $title = null, array $options = array())
     {
         if ($type instanceof NotificationInterface) {
             $this->envelope = Envelope::wrap($type);
             $type = $this->envelope->getType();
         }
 
-        $this->type($type, $message, $options);
+        $this->type($type, $message, $title, $options);
 
         return $this->flash();
     }
@@ -165,12 +166,22 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function type($type, $message = null, array $options = array())
+    public function type($type, $message = null, $title = null, array $options = array())
     {
         $this->envelope->setType($type);
 
         if (null !== $message) {
             $this->message($message);
+        }
+
+        if (\is_array($title)) {
+            $options = $title;
+            $title = null;
+            @trigger_error('Since php-flasher/flasher v1.0: Passing an array for the "title" parameter is deprecated and will be removed in v2.0. You should pass a string instead.', \E_USER_DEPRECATED);
+        }
+
+        if (null !== $title) {
+            $this->title($title);
         }
 
         if (array() !== $options) {
@@ -227,33 +238,33 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function success($message = null, array $options = array())
+    public function success($message = null, $title = null, array $options = array())
     {
-        return $this->type(NotificationInterface::SUCCESS, $message, $options);
+        return $this->type(NotificationInterface::SUCCESS, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function error($message = null, array $options = array())
+    public function error($message = null, $title = null, array $options = array())
     {
-        return $this->type(NotificationInterface::ERROR, $message, $options);
+        return $this->type(NotificationInterface::ERROR, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function info($message = null, array $options = array())
+    public function info($message = null, $title = null, array $options = array())
     {
-        return $this->type(NotificationInterface::INFO, $message, $options);
+        return $this->type(NotificationInterface::INFO, $message, $title, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function warning($message = null, array $options = array())
+    public function warning($message = null, $title = null, array $options = array())
     {
-        return $this->type(NotificationInterface::WARNING, $message, $options);
+        return $this->type(NotificationInterface::WARNING, $message, $title, $options);
     }
 
     /**

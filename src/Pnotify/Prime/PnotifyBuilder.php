@@ -11,9 +11,9 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class PnotifyBuilder extends NotificationBuilder
 {
-    public function warning($message = null, array $options = array())
+    public function warning($message = null, $title = null, array $options = array())
     {
-        return $this->type('notice', $message, $options);
+        return $this->type('notice', $message, $title, $options);
     }
 
     /**
