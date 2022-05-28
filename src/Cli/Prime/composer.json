@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.3",
         "ext-mbstring": "*",
-        "php-flasher/flasher": "^1.0"
+        "php-flasher/flasher": "^1.1"
     },
     "autoload": {
         "psr-4": {
