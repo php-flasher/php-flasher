@@ -331,6 +331,20 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function preset($preset, $flash = true)
+    {
+        $this->envelope->withStamp(new PresetStamp($preset));
+
+        if (false === $flash) {
+            return $this;
+        }
+
+        return $this->flash();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function with($stamps = array())
     {
         $this->envelope->with($stamps);

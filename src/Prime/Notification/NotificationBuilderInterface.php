@@ -198,6 +198,14 @@ interface NotificationBuilderInterface
     public function translate($locale = null);
 
     /**
+     * @param string $preset
+     * @param bool   $flash
+     *
+     * @phpstan-return ($flash is true ? Envelope : static)
+     */
+    public function preset($preset, $flash = true);
+
+    /**
      * @param StampInterface[] $stamps
      *
      * @return Envelope
