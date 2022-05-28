@@ -28,6 +28,11 @@ final class Configuration implements ConfigurationInterface
             : $treeBuilder->root($plugin->getName()); // @phpstan-ignore-line
 
         $rootNode
+             ->beforeNormalization()
+                ->always(function ($v) use ($plugin) {
+                    return $plugin->normalizeConfig($v);
+                })
+            ->end()
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()

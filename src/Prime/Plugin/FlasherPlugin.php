@@ -7,6 +7,11 @@
 
 namespace Flasher\Prime\Plugin;
 
+use Flasher\Prime\Config\Config;
+
+/**
+ * @phpstan-import-type ConfigType from Config
+ */
 class FlasherPlugin extends Plugin
 {
     /**
@@ -59,14 +64,12 @@ class FlasherPlugin extends Plugin
      */
     public function processConfiguration(array $options = array())
     {
-        if (\array_key_exists('flash_bag', $options)) {
-            $options['flash_bag'] = $this->normalizeFlashBagConfig($options['flash_bag']);
-        }
+        $options = $this->normalizeConfig($options);
 
         return array_merge(array(
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
-            'translate_by_default' => false,
+            'auto_translate' => false,
             'flash_bag' => array(
                 'enabled' => true,
                 'mapping' => $this->getFlashBagMapping(),
@@ -75,11 +78,65 @@ class FlasherPlugin extends Plugin
     }
 
     /**
+     * @param array<string, mixed> $config
+     *
+     * @phpstan-return ConfigType
+     */
+    public function normalizeConfig(array $config)
+    {
+        $deprecatedKeys = array();
+
+        if (isset($config['template_factory']['default'])) {
+            $deprecatedKeys[] = 'template_factory.default';
+            unset($config['template_factory']['default']);
+        }
+
+        if (isset($config['template_factory']['templates'])) {
+            $deprecatedKeys[] = 'template_factory.templates';
+            $config['themes'] = $config['template_factory']['templates'];
+            unset($config['template_factory']['templates']);
+        }
+
+        if (isset($config['auto_create_from_session'])) {
+            $deprecatedKeys[] = 'auto_create_from_session';
+            $config['flash_bag']['enabled'] = $config['auto_create_from_session'];
+            unset($config['auto_create_from_session']);
+        }
+
+        if (isset($config['types_mapping'])) {
+            $deprecatedKeys[] = 'types_mapping';
+            $config['flash_bag']['mapping'] = $config['types_mapping'];
+            unset($config['types_mapping']);
+        }
+
+        if (isset($config['observer_events'])) {
+            $deprecatedKeys[] = 'observer_events';
+            unset($config['observer_events']);
+        }
+
+        if (isset($config['translate_by_default'])) {
+            $deprecatedKeys[] = 'translate_by_default';
+            $config['auto_translate'] = $config['translate_by_default'];
+            unset($config['translate_by_default']);
+        }
+
+        if (array() !== $deprecatedKeys) {
+            @trigger_error(sprintf('Since php-flasher/flasher-laravel v1.0: The following configuration keys are deprecated and will be removed in v2.0: %s. Please use the new configuration structure.', implode(', ', $deprecatedKeys)), \E_USER_DEPRECATED);
+        }
+
+        if (\array_key_exists('flash_bag', $config)) {
+            $config['flash_bag'] = $this->normalizeFlashBagConfig($config['flash_bag']);
+        }
+
+        return $config;
+    }
+
+    /**
      * @param mixed $config
      *
      * @return array<string, mixed>
      */
-    public function normalizeFlashBagConfig($config)
+    private function normalizeFlashBagConfig($config)
     {
         if (null === $config || false === $config) {
             return array('enabled' => false);
