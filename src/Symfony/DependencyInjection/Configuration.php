@@ -28,6 +28,11 @@ final class Configuration implements ConfigurationInterface
             : $treeBuilder->root($plugin->getName()); // @phpstan-ignore-line
 
         $rootNode
+             ->beforeNormalization()
+                ->always(function ($v) use ($plugin) {
+                    return $plugin->normalizeConfig($v);
+                })
+            ->end()
             ->children()
                 ->scalarNode('default')
                     ->cannotBeEmpty()
@@ -36,6 +41,24 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('root_script')
                     ->defaultValue($plugin->getRootScript())
                 ->end()
+                ->booleanNode('auto_translate')->defaultTrue()->end()
+            ->end()
+        ;
+
+        $this->addThemesSection($rootNode);
+        $this->addFlashBagSection($rootNode, $plugin);
+        $this->addPresetsSection($rootNode);
+
+        return $treeBuilder;
+    }
+
+    /**
+     * @return void
+     */
+    private function addThemesSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode // @phpstan-ignore-line
+            ->children()
                 ->arrayNode('themes')
                     ->ignoreExtraKeys()
                     ->prototype('variable')->end()
@@ -49,13 +72,8 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('options')->end()
                     ->end()
                 ->end()
-                ->booleanNode('translate_by_default')->defaultTrue()->end()
             ->end()
         ;
-
-        $this->addFlashBagSection($rootNode, $plugin);
-
-        return $treeBuilder;
     }
 
     /**
@@ -68,16 +86,34 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('flash_bag')
                     ->canBeUnset()
                     ->addDefaultsIfNotSet()
-                    ->beforeNormalization()
-                        ->always(function ($v) use ($plugin) {
-                            return $plugin->normalizeFlashBagConfig($v);
-                        })
-                    ->end()
                     ->children()
                         ->booleanNode('enabled')->defaultTrue()->end()
                         ->arrayNode('mapping')
                             ->prototype('variable')->end()
                             ->defaultValue($plugin->getFlashBagMapping())
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * @return void
+     */
+    private function addPresetsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode // @phpstan-ignore-line
+            ->children()
+                ->arrayNode('presets')
+                    ->prototype('array')
+                    ->children()
+                        ->scalarNode('type')->end()
+                        ->scalarNode('title')->end()
+                        ->scalarNode('message')->end()
+                        ->arrayNode('options')
+                            ->useAttributeAsKey('name')
+                            ->prototype('variable')->end()
                         ->end()
                     ->end()
                 ->end()

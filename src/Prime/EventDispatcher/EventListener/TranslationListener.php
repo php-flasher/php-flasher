@@ -9,6 +9,7 @@ namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
 use Flasher\Prime\Stamp\TranslationStamp;
+use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Prime\Translation\Language;
 use Flasher\Prime\Translation\TranslatorInterface;
 
@@ -22,15 +23,15 @@ final class TranslationListener implements EventSubscriberInterface
     /**
      * @var bool
      */
-    private $translateByDefault;
+    private $autoTranslate;
 
     /**
-     * @param bool $translateByDefault
+     * @param bool $autoTranslate
      */
-    public function __construct(TranslatorInterface $translator, $translateByDefault = true)
+    public function __construct(TranslatorInterface $translator = null, $autoTranslate = true)
     {
-        $this->translator = $translator;
-        $this->translateByDefault = $translateByDefault;
+        $this->translator = $translator ?: new EchoTranslator();
+        $this->autoTranslate = $autoTranslate;
     }
 
     /**
@@ -40,7 +41,7 @@ final class TranslationListener implements EventSubscriberInterface
     {
         foreach ($event->getEnvelopes() as $envelope) {
             $stamp = $envelope->get('Flasher\Prime\Stamp\TranslationStamp');
-            if (!$stamp instanceof TranslationStamp && !$this->translateByDefault) {
+            if (!$stamp instanceof TranslationStamp && !$this->autoTranslate) {
                 continue;
             }
 
@@ -48,7 +49,7 @@ final class TranslationListener implements EventSubscriberInterface
                 ? $stamp->getLocale()
                 : $this->translator->getLocale();
 
-            $title = $envelope->getTitle();
+            $title = $envelope->getTitle() ?: $envelope->getType();
             if (null !== $title) {
                 $title = $this->translator->translate($title, $locale);
                 $envelope->setTitle($title);
