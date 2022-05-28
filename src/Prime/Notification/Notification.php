@@ -15,9 +15,9 @@ class Notification implements NotificationInterface
     protected $message;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $type = self::INFO;
+    protected $type;
 
     /**
      * @var array<string, mixed>

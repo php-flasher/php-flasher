@@ -48,7 +48,7 @@ final class TranslationListener implements EventSubscriberInterface
                 ? $stamp->getLocale()
                 : $this->translator->getLocale();
 
-            $title = $envelope->getTitle();
+            $title = $envelope->getTitle() ?: $envelope->getType();
             if (null !== $title) {
                 $title = $this->translator->translate($title, $locale);
                 $envelope->setTitle($title);
