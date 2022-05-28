@@ -8,6 +8,7 @@
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
+use Flasher\Prime\Exception\PresetNotFoundException;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PresetStamp;
 
@@ -21,7 +22,7 @@ use Flasher\Prime\Stamp\PresetStamp;
  *    }
  * }
  */
-class PresetListener implements EventSubscriberInterface
+final class PresetListener implements EventSubscriberInterface
 {
     /**
      * @phpstan-var PresetType[]
@@ -65,7 +66,7 @@ class PresetListener implements EventSubscriberInterface
         }
 
         if (!isset($this->presets[$preset->getPreset()])) {
-            return;
+            throw new PresetNotFoundException($preset->getPreset(), array_keys($this->presets));
         }
 
         $preset = $this->presets[$preset->getPreset()];
