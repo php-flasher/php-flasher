@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of the PHPFlasher package.
+ * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
+ */
+
 namespace Flasher\Laravel\Middleware;
 
 use Illuminate\Http\Request;
@@ -23,7 +28,7 @@ final class HttpKernelSessionMiddleware implements HttpKernelInterface
         $response = $this->app->handle($request, $type, $catch);
 
         $request = Request::createFromBase($request);
-        $next = function() use ($response) {
+        $next = function () use ($response) {
             return $response;
         };
 

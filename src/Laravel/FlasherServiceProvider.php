@@ -297,7 +297,7 @@ final class FlasherServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return void|mixed
+     * @return mixed|void
      */
     private function appendSessionMiddlewareToWebGroup()
     {
@@ -307,7 +307,7 @@ final class FlasherServiceProvider extends ServiceProvider
             return $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
         }
 
-        if(!$this->app->bound('Illuminate\Contracts\Http\Kernel')) {
+        if (!$this->app->bound('Illuminate\Contracts\Http\Kernel')) {
             return;
         }
 
