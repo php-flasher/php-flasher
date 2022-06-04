@@ -284,6 +284,10 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerBladeComponent()
     {
+        if (Laravel::isVersion('7.0', '<=')) {
+            return;
+        }
+
         if (!$this->app->bound('blade.compiler')) {
             return;
         }
