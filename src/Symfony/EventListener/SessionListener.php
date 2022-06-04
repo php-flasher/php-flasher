@@ -8,7 +8,6 @@
 namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -46,16 +45,6 @@ final class SessionListener
             return;
         }
 
-        $response = $event->getResponse();
-        $content = $response->getContent() ?: '';
-        $insertPlaceHolder = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER;
-        $insertPosition = strripos($content, $insertPlaceHolder);
-        if (false === $insertPosition) {
-            return;
-        }
-
-        $readyToRender = false;
-
         /** @var Session $session */
         $session = $request->getSession();
         foreach ($session->getFlashBag()->all() as $type => $messages) {
@@ -65,21 +54,8 @@ final class SessionListener
 
             foreach ($messages as $message) {
                 $this->flasher->addFlash($this->mapping[$type], $message);
-                $readyToRender = true;
             }
         }
-
-        if (false === $readyToRender) {
-            return;
-        }
-
-        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => true));
-        if (empty($htmlResponse)) {
-            return;
-        }
-
-        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
-        $response->setContent($content);
     }
 
     /**
