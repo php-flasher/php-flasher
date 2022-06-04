@@ -12,6 +12,7 @@ use Flasher\Prime\Response\Response;
 final class HtmlPresenter implements PresenterInterface
 {
     const FLASHER_FLASH_BAG_PLACE_HOLDER = 'FLASHER_FLASH_BAG_PLACE_HOLDER';
+    const BODY_END_PLACE_HOLDER = '</body>';
 
     /**
      * {@inheritdoc}
