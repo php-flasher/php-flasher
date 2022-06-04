@@ -7,6 +7,7 @@
 
 namespace Flasher\Laravel;
 
+use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
 use Flasher\Laravel\Support\Laravel;
@@ -156,6 +157,10 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) use ($mapping) {
             return new SessionMiddleware($app['flasher'], $mapping); // @phpstan-ignore-line
         });
+
+        if (method_exists($this->app, 'middleware')) {
+            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
+        }
     }
 
     /**
