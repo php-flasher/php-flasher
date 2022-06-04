@@ -148,13 +148,15 @@ final class ResourceManager implements ResourceManagerInterface
      */
     private function getTheme($handler)
     {
+        if ('flasher' === $handler) {
+            return 'flasher';
+        }
+
         if (0 === strpos($handler, 'theme.')) {
             return substr($handler, \strlen('theme.'));
         }
 
-        $template = key((array) $this->config->get('themes'));
-
-        return \is_string($template) ? $template : null;
+        return null;
     }
 
     /**
