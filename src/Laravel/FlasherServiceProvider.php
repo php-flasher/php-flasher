@@ -40,7 +40,7 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     public function afterBoot()
     {
-        $this->registerBladeDirectives();
+        $this->registerBladeDirective();
         $this->registerBladeComponent();
         $this->registerLivewire();
         $this->registerTranslations();
@@ -207,7 +207,7 @@ final class FlasherServiceProvider extends ServiceProvider
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function registerBladeDirectives()
+    private function registerBladeDirective()
     {
         $startsWith = function ($haystack, $needle) {
             return 0 === substr_compare($haystack, $needle, 0, \strlen($needle));
