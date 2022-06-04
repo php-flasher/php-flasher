@@ -41,6 +41,7 @@ final class FlasherServiceProvider extends ServiceProvider
     public function afterBoot()
     {
         $this->registerBladeDirectives();
+        $this->registerBladeComponent();
         $this->registerLivewire();
         $this->registerTranslations();
     }
@@ -271,4 +272,22 @@ final class FlasherServiceProvider extends ServiceProvider
             return preg_replace($pattern, '$1<?php echo app(\'flasher\')->render$2; ?>', $view);
         });
     }
+
+    /**
+     * @return void
+     */
+    private function registerBladeComponent()
+    {
+        if (!$this->app->bound('blade.compiler')) {
+            return;
+        }
+
+        $compiler = $this->app->make('blade.compiler');
+        if (!method_exists($compiler, 'component')) {
+            return;
+        }
+
+        Blade::component('flasher', 'Flasher\Laravel\Component\FlasherComponent');
+    }
+
 }
