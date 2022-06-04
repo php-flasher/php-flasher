@@ -44,6 +44,7 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->registerBladeComponent();
         $this->registerLivewire();
         $this->registerTranslations();
+        $this->appendSessionMiddlewareToWebGroup();
     }
 
     /**
@@ -290,4 +291,30 @@ final class FlasherServiceProvider extends ServiceProvider
         Blade::component('flasher', 'Flasher\Laravel\Component\FlasherComponent');
     }
 
+    /**
+     * @return void|mixed
+     */
+    private function appendSessionMiddlewareToWebGroup()
+    {
+        /** @var \Illuminate\Routing\Router $router */
+        $router = $this->app['router'];
+        if (method_exists($router, 'pushMiddlewareToGroup')) {
+            return $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+        }
+
+        if(!$this->app->bound('Illuminate\Contracts\Http\Kernel')) {
+            return;
+        }
+
+        /** @var \Illuminate\Foundation\Http\Kernel $kernel */
+        $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
+
+        if (method_exists($kernel, 'appendMiddlewareToGroup')) {
+            return $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+        }
+
+        if (method_exists($kernel, 'pushMiddleware')) {
+            return $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
+        }
+    }
 }
