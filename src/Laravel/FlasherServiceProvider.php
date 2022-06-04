@@ -7,6 +7,7 @@
 
 namespace Flasher\Laravel;
 
+use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
 use Flasher\Laravel\Support\Laravel;
@@ -40,9 +41,11 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     public function afterBoot()
     {
-        $this->registerBladeDirectives();
+        $this->registerBladeDirective();
+        $this->registerBladeComponent();
         $this->registerLivewire();
         $this->registerTranslations();
+        $this->appendSessionMiddlewareToWebGroup();
     }
 
     /**
@@ -154,6 +157,10 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) use ($mapping) {
             return new SessionMiddleware($app['flasher'], $mapping); // @phpstan-ignore-line
         });
+
+        if (method_exists($this->app, 'middleware')) {
+            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
+        }
     }
 
     /**
@@ -206,7 +213,7 @@ final class FlasherServiceProvider extends ServiceProvider
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function registerBladeDirectives()
+    private function registerBladeDirective()
     {
         $startsWith = function ($haystack, $needle) {
             return 0 === substr_compare($haystack, $needle, 0, \strlen($needle));
@@ -270,5 +277,53 @@ final class FlasherServiceProvider extends ServiceProvider
 
             return preg_replace($pattern, '$1<?php echo app(\'flasher\')->render$2; ?>', $view);
         });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerBladeComponent()
+    {
+        if (Laravel::isVersion('7.0', '<=')) {
+            return;
+        }
+
+        if (!$this->app->bound('blade.compiler')) {
+            return;
+        }
+
+        $compiler = $this->app->make('blade.compiler');
+        if (!method_exists($compiler, 'component')) {
+            return;
+        }
+
+        Blade::component('flasher', 'Flasher\Laravel\Component\FlasherComponent');
+    }
+
+    /**
+     * @return mixed|void
+     */
+    private function appendSessionMiddlewareToWebGroup()
+    {
+        /** @var \Illuminate\Routing\Router $router */
+        $router = $this->app['router'];
+        if (method_exists($router, 'pushMiddlewareToGroup')) {
+            return $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+        }
+
+        if (!$this->app->bound('Illuminate\Contracts\Http\Kernel')) {
+            return;
+        }
+
+        /** @var \Illuminate\Foundation\Http\Kernel $kernel */
+        $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
+
+        if (method_exists($kernel, 'appendMiddlewareToGroup')) {
+            return $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+        }
+
+        if (method_exists($kernel, 'pushMiddleware')) {
+            return $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
+        }
     }
 }
