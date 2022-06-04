@@ -9,7 +9,6 @@ namespace Flasher\Laravel\Middleware;
 
 use Closure;
 use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -35,9 +34,7 @@ final class SessionMiddleware
     }
 
     /**
-     * Run the request filter.
-     *
-     * @return mixed
+     * @return Response
      */
     public function handle(Request $request, Closure $next)
     {
@@ -48,14 +45,6 @@ final class SessionMiddleware
             return $response;
         }
 
-        $content = $response->getContent() ?: '';
-        $insertPlaceHolder = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER;
-        $insertPosition = strripos($content, $insertPlaceHolder);
-        if (false === $insertPosition) {
-            return $response;
-        }
-
-        $readyToRender = false;
         foreach ($this->mapping as $alias => $type) {
             if (false === $request->session()->has($alias)) {
                 continue;
@@ -63,21 +52,8 @@ final class SessionMiddleware
 
             /** @var string $message */
             $message = $request->session()->get($alias);
-            $this->flasher->addFlash((string) $type, $message);
-            $readyToRender = true;
+            $this->flasher->addFlash($type, $message);
         }
-
-        if (false === $readyToRender) {
-            return $response;
-        }
-
-        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => true));
-        if (empty($htmlResponse)) {
-            return $response;
-        }
-
-        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
-        $response->setContent($content);
 
         return $response;
     }

@@ -7,6 +7,7 @@
 
 namespace Flasher\Laravel;
 
+use Flasher\Laravel\Middleware\HttpKernelFlasherMiddleware;
 use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
@@ -160,6 +161,7 @@ final class FlasherServiceProvider extends ServiceProvider
 
         if (method_exists($this->app, 'middleware')) {
             $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
+            $this->app->middleware(new HttpKernelFlasherMiddleware($this->app));
         }
     }
 
@@ -301,14 +303,17 @@ final class FlasherServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return mixed|void
+     * @return void
      */
     private function appendSessionMiddlewareToWebGroup()
     {
         /** @var \Illuminate\Routing\Router $router */
         $router = $this->app['router'];
         if (method_exists($router, 'pushMiddlewareToGroup')) {
-            return $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+            $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+            $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\FlasherMiddleware');
+
+            return;
         }
 
         if (!$this->app->bound('Illuminate\Contracts\Http\Kernel')) {
@@ -319,11 +324,17 @@ final class FlasherServiceProvider extends ServiceProvider
         $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
 
         if (method_exists($kernel, 'appendMiddlewareToGroup')) {
-            return $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+            $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+            $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\FlasherMiddleware');
+
+            return;
         }
 
         if (method_exists($kernel, 'pushMiddleware')) {
-            return $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
+            $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
+            $kernel->pushMiddleware('Flasher\Laravel\Middleware\FlasherMiddleware');
+
+            return;
         }
     }
 }

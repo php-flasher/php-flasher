@@ -8,28 +8,19 @@
 namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\FlasherInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-final class SessionListener
+final class FlasherListener
 {
     /**
      * @var FlasherInterface
      */
     private $flasher;
 
-    /**
-     * @var array<string, string>
-     */
-    private $mapping;
-
-    /**
-     * @param array<string, string[]> $mapping
-     */
-    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    public function __construct(FlasherInterface $flasher)
     {
         $this->flasher = $flasher;
-        $this->mapping = $this->flatMapping($mapping);
     }
 
     /**
@@ -45,35 +36,34 @@ final class SessionListener
             return;
         }
 
-        /** @var Session $session */
-        $session = $request->getSession();
-        foreach ($session->getFlashBag()->all() as $type => $messages) {
-            if (!isset($this->mapping[$type])) {
-                continue;
-            }
+        $response = $event->getResponse();
+        $content = $response->getContent() ?: '';
 
-            foreach ($messages as $message) {
-                $this->flasher->addFlash($this->mapping[$type], $message);
-            }
-        }
-    }
+        $placeHolders = array(
+            HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
+            HtmlPresenter::BODY_END_PLACE_HOLDER,
+        );
 
-    /**
-     * @param array<string, string[]> $mapping
-     *
-     * @return array<string, string>
-     */
-    private function flatMapping(array $mapping)
-    {
-        $flatMapping = array();
-
-        foreach ($mapping as $type => $aliases) {
-            foreach ($aliases as $alias) {
-                $flatMapping[$alias] = $type;
+        foreach ($placeHolders as $insertPlaceHolder) {
+            $insertPosition = strripos($content, $insertPlaceHolder);
+            if (false !== $insertPosition) {
+                break;
             }
         }
 
-        return $flatMapping;
+        if (false === $insertPosition) {
+            return;
+        }
+
+        $alreadyRendered = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER === $insertPlaceHolder;
+        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => $alreadyRendered));
+
+        if (empty($htmlResponse)) {
+            return;
+        }
+
+        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
+        $response->setContent($content);
     }
 
     /**
