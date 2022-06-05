@@ -53,6 +53,8 @@ final class SessionMiddleware
             /** @var string $message */
             $message = $request->session()->get($alias);
             $this->flasher->addFlash($type, $message);
+
+            $request->session()->forget($alias);
         }
 
         return $response;
