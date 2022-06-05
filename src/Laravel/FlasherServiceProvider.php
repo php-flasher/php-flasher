@@ -160,8 +160,8 @@ final class FlasherServiceProvider extends ServiceProvider
         });
 
         if (method_exists($this->app, 'middleware')) {
-            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
             $this->app->middleware(new HttpKernelFlasherMiddleware($this->app));
+            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
         }
     }
 
@@ -310,8 +310,8 @@ final class FlasherServiceProvider extends ServiceProvider
         /** @var \Illuminate\Routing\Router $router */
         $router = $this->app['router'];
         if (method_exists($router, 'pushMiddlewareToGroup')) {
-            $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
             $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\FlasherMiddleware');
+            $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
 
             return;
         }
@@ -324,15 +324,15 @@ final class FlasherServiceProvider extends ServiceProvider
         $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
 
         if (method_exists($kernel, 'appendMiddlewareToGroup')) {
-            $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
             $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\FlasherMiddleware');
+            $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
 
             return;
         }
 
         if (method_exists($kernel, 'pushMiddleware')) {
-            $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
             $kernel->pushMiddleware('Flasher\Laravel\Middleware\FlasherMiddleware');
+            $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
 
             return;
         }

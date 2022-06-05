@@ -8,7 +8,7 @@
 namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\FlasherInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final class SessionListener
@@ -45,15 +45,18 @@ final class SessionListener
             return;
         }
 
-        /** @var Session $session */
-        $session = $request->getSession();
-        foreach ($session->getFlashBag()->all() as $type => $messages) {
-            if (!isset($this->mapping[$type])) {
+        /** @var FlashBagInterface $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+        foreach ($this->mapping as $alias => $type) {
+            if (false === $flashBag->has($alias)) {
                 continue;
             }
 
+            /** @var string[] $messages */
+            $messages = $flashBag->get($alias);
+
             foreach ($messages as $message) {
-                $this->flasher->addFlash($this->mapping[$type], $message);
+                $this->flasher->addFlash($type, $message);
             }
         }
     }
