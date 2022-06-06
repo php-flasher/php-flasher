@@ -75,24 +75,6 @@ class FlasherPlugin extends Plugin
                 'enabled' => true,
                 'mapping' => $this->getFlashBagMapping(),
             ),
-            'presets' => array(
-                'created' => array(
-                    'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was created',
-                ),
-                'updated' => array(
-                    'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was updated',
-                ),
-                'saved' => array(
-                    'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was saved',
-                ),
-                'deleted' => array(
-                    'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was deleted',
-                ),
-            ),
         ), $options);
     }
 
@@ -146,6 +128,25 @@ class FlasherPlugin extends Plugin
         if (\array_key_exists('flash_bag', $config)) {
             $config['flash_bag'] = $this->normalizeFlashBagConfig($config['flash_bag']);
         }
+
+        $config['presets'] = array_merge(array(
+            'created' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was created',
+            ),
+            'updated' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was updated',
+            ),
+            'saved' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was saved',
+            ),
+            'deleted' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was deleted',
+            ),
+        ), isset($config['presets']) ? $config['presets'] : array());
 
         return $config;
     }
