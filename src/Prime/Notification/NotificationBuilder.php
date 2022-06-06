@@ -437,6 +437,14 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function deleted($resource = null)
+    {
+        return $this->operation('deleted', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function with($stamps = array())
     {
         $this->envelope->with($stamps);
