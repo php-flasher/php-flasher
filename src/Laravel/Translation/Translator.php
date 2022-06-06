@@ -34,7 +34,9 @@ final class Translator implements TranslatorInterface
 
         $translation = $this->translator->has('flasher::messages.'.$id, $locale)
             ? $this->translator->get('flasher::messages.'.$id, $parameters, $locale)
-            : $this->translator->get('messages.'.$id, $parameters, $locale);
+            : ($this->translator->has('messages.'.$id, $parameters, $locale)
+                ? $this->translator->get('messages.'.$id, $parameters, $locale)
+                : $this->translator->get($id, $parameters, $locale));
 
         if (!\is_string($translation)) {
             return $id;
