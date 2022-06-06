@@ -15,11 +15,18 @@ final class PresetStamp implements StampInterface
     private $preset;
 
     /**
-     * @param string $preset
+     * @var array<string, mixed>
      */
-    public function __construct($preset)
+    private $parameters;
+
+    /**
+     * @param string               $preset
+     * @param array<string, mixed> $parameters
+     */
+    public function __construct($preset, array $parameters = array())
     {
         $this->preset = $preset;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -28,5 +35,13 @@ final class PresetStamp implements StampInterface
     public function getPreset()
     {
         return $this->preset;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
     }
 }
