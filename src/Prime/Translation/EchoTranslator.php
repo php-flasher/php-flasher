@@ -12,7 +12,7 @@ final class EchoTranslator implements TranslatorInterface
     /**
      * {@inheritDoc}
      */
-    public function translate($id, $locale = null)
+    public function translate($id, $parameters = array(), $locale = null)
     {
         return $id;
     }
