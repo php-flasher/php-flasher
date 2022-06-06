@@ -7,6 +7,7 @@
 
 namespace Flasher\Laravel\Translation;
 
+use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\TranslatorInterface;
 use Illuminate\Translation\Translator as LaravelTranslator;
 
@@ -25,11 +26,15 @@ final class Translator implements TranslatorInterface
     /**
      * {@inheritdoc}
      */
-    public function translate($id, $locale = null)
+    public function translate($id, $parameters = array(), $locale = null)
     {
+        $order = TranslationStamp::parametersOrder($parameters, $locale);
+        $parameters = $order['parameters'];
+        $locale = $order['locale'];
+
         $translation = $this->translator->has('flasher::messages.'.$id, $locale)
-            ? $this->translator->get('flasher::messages.'.$id, array(), $locale)
-            : $this->translator->get($id, array(), $locale);
+            ? $this->translator->get('flasher::messages.'.$id, $parameters, $locale)
+            : $this->translator->get($id, $parameters, $locale);
 
         if (!\is_string($translation)) {
             return $id;
