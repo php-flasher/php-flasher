@@ -221,6 +221,14 @@ interface NotificationBuilderInterface
     public function preset($preset, $parameters = array());
 
     /**
+     * @param string             $operation
+     * @param object|string|null $resource
+     *
+     * @return static
+     */
+    public function operation($operation, $resource = null);
+
+    /**
      * @param StampInterface[] $stamps
      *
      * @return Envelope
