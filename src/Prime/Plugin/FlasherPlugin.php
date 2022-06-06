@@ -78,19 +78,19 @@ class FlasherPlugin extends Plugin
             'presets' => array(
                 'created' => array(
                     'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was created!',
+                    'message' => 'The resource was created',
                 ),
                 'updated' => array(
                     'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was updated!',
+                    'message' => 'The resource was updated',
                 ),
                 'saved' => array(
                     'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was saved!',
+                    'message' => 'The resource was saved',
                 ),
                 'deleted' => array(
                     'type' => NotificationInterface::SUCCESS,
-                    'message' => 'The resource was deleted!',
+                    'message' => 'The resource was deleted',
                 ),
             ),
         ), $options);
