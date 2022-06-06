@@ -40,7 +40,7 @@ final class Messages
         'info' => 'Information',
 
         'The resource was created!' => 'La ressource :resource a été ajoutée !',
-        'The resource was updated!' => 'La ressource :resource a été enregistrée !',
+        'The resource was updated!' => 'La ressource :resource a été mise à jour !',
         'The resource was saved!' => 'La ressource :resource a été enregistrée !',
         'The resource was deleted!' => 'La ressource :resource a été supprimée !',
     );
