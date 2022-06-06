@@ -15,6 +15,7 @@ use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Stamp\TranslationStamp;
+use Flasher\Prime\Stamp\WhenStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 
 /**
@@ -261,6 +262,16 @@ class NotificationBuilder implements NotificationBuilderInterface
     public function warning($message = null, $title = null, array $options = array())
     {
         return $this->type(NotificationInterface::WARNING, $message, $title, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function when($condition)
+    {
+        $this->envelope->withStamp(new WhenStamp($condition));
+
+        return $this;
     }
 
     /**
