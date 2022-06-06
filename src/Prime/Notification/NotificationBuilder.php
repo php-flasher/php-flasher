@@ -270,6 +270,11 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function when($condition)
     {
+        $stamp = $this->envelope->get('Flasher\Prime\Stamp\WhenStamp');
+        if ($stamp instanceof WhenStamp) {
+            $condition = $stamp->getCondition() && $condition;
+        }
+
         $this->envelope->withStamp(new WhenStamp($condition));
 
         return $this;
@@ -280,6 +285,11 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function unless($condition)
     {
+        $stamp = $this->envelope->get('Flasher\Prime\Stamp\UnlessStamp');
+        if ($stamp instanceof UnlessStamp) {
+            $condition = $stamp->getCondition() || $condition;
+        }
+
         $this->envelope->withStamp(new UnlessStamp($condition));
 
         return $this;
