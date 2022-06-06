@@ -19,6 +19,8 @@ final class Messages
         'The resource was updated' => 'تم تعديل :resource',
         'The resource was saved' => 'تم حفظ :resource',
         'The resource was deleted' => 'تم حذف :resource',
+
+        'resource' => 'الملف',
     );
 
     public static $en = array(
@@ -31,6 +33,8 @@ final class Messages
         'The resource was updated' => 'The :resource was updated',
         'The resource was saved' => 'The :resource was saved',
         'The resource was deleted' => 'The :resource was deleted',
+
+        'resource' => 'resource',
     );
 
     public static $fr = array(
@@ -43,5 +47,7 @@ final class Messages
         'The resource was updated' => 'La ressource :resource a été mise à jour',
         'The resource was saved' => 'La ressource :resource a été enregistrée',
         'The resource was deleted' => 'La ressource :resource a été supprimée',
+
+        'resource' => '',
     );
 }
