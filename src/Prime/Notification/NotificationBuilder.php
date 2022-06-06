@@ -274,7 +274,7 @@ class NotificationBuilder implements NotificationBuilderInterface
             $condition = \call_user_func($condition, $this->envelope);
         }
 
-        if (!is_bool($condition)) {
+        if (!\is_bool($condition)) {
             throw new \InvalidArgumentException('The condition must be a boolean or a closure that returns a boolean.');
         }
 
@@ -297,7 +297,7 @@ class NotificationBuilder implements NotificationBuilderInterface
             $condition = \call_user_func($condition, $this->envelope);
         }
 
-        if (!is_bool($condition)) {
+        if (!\is_bool($condition)) {
             throw new \InvalidArgumentException('The condition must be a boolean or a closure that returns a boolean.');
         }
 
