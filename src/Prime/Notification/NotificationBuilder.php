@@ -18,6 +18,7 @@ use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
+use Flasher\Prime\Translation\ResourceInterface;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -455,6 +456,17 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function operation($operation, $resource = null)
     {
+        if ($resource instanceof ResourceInterface) {
+            $type = $resource->getResourceType();
+            $name = $resource->getResourceName();
+
+            $resource = sprintf(
+                '%s %s',
+                $type,
+                empty($name) ? '' : sprintf('"%s"', $name)
+            );
+        }
+
         $parameters = array(
             'resource' => $resource ?: 'resource',
         );

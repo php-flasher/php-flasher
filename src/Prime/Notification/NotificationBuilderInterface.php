@@ -8,6 +8,7 @@
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Translation\ResourceInterface;
 
 interface NotificationBuilderInterface
 {
@@ -221,36 +222,36 @@ interface NotificationBuilderInterface
     public function addPreset($preset, $parameters = array());
 
     /**
-     * @param string             $operation
-     * @param object|string|null $resource
+     * @param string                        $operation
+     * @param ResourceInterface|string|null $resource
      *
      * @return Envelope
      */
     public function addOperation($operation, $resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return Envelope
      */
     public function addCreated($resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return Envelope
      */
     public function addUpdated($resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return Envelope
      */
     public function addSaved($resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return Envelope
      */
@@ -265,36 +266,36 @@ interface NotificationBuilderInterface
     public function preset($preset, $parameters = array());
 
     /**
-     * @param string             $operation
-     * @param object|string|null $resource
+     * @param string                        $operation
+     * @param ResourceInterface|string|null $resource
      *
      * @return static
      */
     public function operation($operation, $resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return static
      */
     public function created($resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return static
      */
     public function updated($resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return static
      */
     public function saved($resource = null);
 
     /**
-     * @param object|string|null $resource
+     * @param ResourceInterface|string|null $resource
      *
      * @return static
      */
