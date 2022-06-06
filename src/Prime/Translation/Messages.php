@@ -14,6 +14,11 @@ final class Messages
         'error' => 'خطأ',
         'warning' => 'تحذير',
         'info' => 'معلومة',
+
+        'The resource was created!' => ':resource تم إنشاؤه',
+        'The resource was updated!' => 'تم تعديل :resource',
+        'The resource was saved!' => 'تم حفظ :resource',
+        'The resource was deleted!' => 'تم حذف :resource',
     );
 
     public static $en = array(
