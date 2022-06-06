@@ -15,7 +15,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher": "^1.4"
+        "php-flasher/flasher": "^1.5"
     },
     "autoload": {
         "psr-4": {
