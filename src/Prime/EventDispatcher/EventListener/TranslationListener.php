@@ -8,6 +8,7 @@
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
+use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Prime\Translation\Language;
@@ -52,6 +53,13 @@ final class TranslationListener implements EventSubscriberInterface
             $parameters = $stamp instanceof TranslationStamp && $stamp->getParameters()
                 ? $stamp->getParameters()
                 : array();
+
+            $preset = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+            if ($preset instanceof PresetStamp) {
+                foreach ($preset->getParameters() as $key => $value) {
+                    $parameters[$key] = $this->translator->translate($value, $parameters, $locale);
+                }
+            }
 
             $title = $envelope->getTitle() ?: $envelope->getType();
             if (null !== $title) {

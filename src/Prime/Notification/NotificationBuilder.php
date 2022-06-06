@@ -18,6 +18,7 @@ use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
+use Flasher\Prime\Translation\ResourceInterface;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -379,15 +380,130 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function preset($preset, $flash = true)
+    public function addPreset($preset, $parameters = array())
     {
-        $this->envelope->withStamp(new PresetStamp($preset));
+        $this->preset($preset, $parameters);
+
+        return $this->flash();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addOperation($operation, $resource = null)
+    {
+        $this->operation($operation, $resource);
+
+        return $this->flash();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addCreated($resource = null)
+    {
+        return $this->addOperation('created', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addUpdated($resource = null)
+    {
+        return $this->addOperation('updated', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addSaved($resource = null)
+    {
+        return $this->addOperation('saved', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addDeleted($resource = null)
+    {
+        return $this->addOperation('deleted', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preset($preset, $parameters = array())
+    {
+        $flash = false;
+
+        if (\is_bool($parameters)) {
+            $flash = $parameters;
+            $parameters = array();
+            @trigger_error('Since php-flasher/flasher v1.5: automatically flashing a preset is deprecated and will be removed in v2.0. You should use addPreset() or chain the preset call with flash() instead.', \E_USER_DEPRECATED);
+        }
+
+        $this->envelope->withStamp(new PresetStamp($preset, $parameters));
 
         if (false === $flash) {
             return $this;
         }
 
         return $this->flash();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function operation($operation, $resource = null)
+    {
+        if ($resource instanceof ResourceInterface) {
+            $type = $resource->getResourceType();
+            $name = $resource->getResourceName();
+
+            $resource = sprintf(
+                '%s %s',
+                $type,
+                empty($name) ? '' : sprintf('"%s"', $name)
+            );
+        }
+
+        $parameters = array(
+            'resource' => $resource ?: 'resource',
+        );
+
+        return $this->preset($operation, $parameters);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function created($resource = null)
+    {
+        return $this->operation('created', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updated($resource = null)
+    {
+        return $this->operation('updated', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function saved($resource = null)
+    {
+        return $this->operation('saved', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleted($resource = null)
+    {
+        return $this->operation('deleted', $resource);
     }
 
     /**

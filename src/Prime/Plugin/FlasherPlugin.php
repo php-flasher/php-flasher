@@ -8,6 +8,7 @@
 namespace Flasher\Prime\Plugin;
 
 use Flasher\Prime\Config\Config;
+use Flasher\Prime\Notification\NotificationInterface;
 
 /**
  * @phpstan-import-type ConfigType from Config
@@ -127,6 +128,25 @@ class FlasherPlugin extends Plugin
         if (\array_key_exists('flash_bag', $config)) {
             $config['flash_bag'] = $this->normalizeFlashBagConfig($config['flash_bag']);
         }
+
+        $config['presets'] = array_merge(array(
+            'created' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was created',
+            ),
+            'updated' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was updated',
+            ),
+            'saved' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was saved',
+            ),
+            'deleted' => array(
+                'type' => NotificationInterface::SUCCESS,
+                'message' => 'The resource was deleted',
+            ),
+        ), isset($config['presets']) ? $config['presets'] : array());
 
         return $config;
     }

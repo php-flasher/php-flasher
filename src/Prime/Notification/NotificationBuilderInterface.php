@@ -8,6 +8,7 @@
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Translation\ResourceInterface;
 
 interface NotificationBuilderInterface
 {
@@ -213,12 +214,92 @@ interface NotificationBuilderInterface
     public function translate($parameters = array(), $locale = null);
 
     /**
-     * @param string $preset
-     * @param bool   $flash
+     * @param string               $preset
+     * @param array<string, mixed> $parameters
      *
-     * @phpstan-return ($flash is true ? Envelope : static)
+     * @return Envelope
      */
-    public function preset($preset, $flash = true);
+    public function addPreset($preset, $parameters = array());
+
+    /**
+     * @param string                        $operation
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addOperation($operation, $resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addCreated($resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addUpdated($resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addSaved($resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addDeleted($resource = null);
+
+    /**
+     * @param string               $preset
+     * @param array<string, mixed> $parameters
+     *
+     * @return static
+     */
+    public function preset($preset, $parameters = array());
+
+    /**
+     * @param string                        $operation
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return static
+     */
+    public function operation($operation, $resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return static
+     */
+    public function created($resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return static
+     */
+    public function updated($resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return static
+     */
+    public function saved($resource = null);
+
+    /**
+     * @param ResourceInterface|string|null $resource
+     *
+     * @return static
+     */
+    public function deleted($resource = null);
 
     /**
      * @param StampInterface[] $stamps
