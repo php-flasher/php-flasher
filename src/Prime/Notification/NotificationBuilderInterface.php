@@ -205,11 +205,12 @@ interface NotificationBuilderInterface
     public function delay($delay);
 
     /**
-     * @param string|null $locale
+     * @param array<string, mixed> $parameters
+     * @param string|null          $locale
      *
      * @return static
      */
-    public function translate($locale = null);
+    public function translate($parameters = array(), $locale = null);
 
     /**
      * @param string $preset
