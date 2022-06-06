@@ -33,5 +33,10 @@ final class Messages
         'error' => 'Erreur',
         'warning' => 'Avertissement',
         'info' => 'Information',
+
+        'The resource was created!' => 'La ressource :resource a été ajoutée !',
+        'The resource was updated!' => 'La ressource :resource a été enregistrée !',
+        'The resource was saved!' => 'La ressource :resource a été enregistrée !',
+        'The resource was deleted!' => 'La ressource :resource a été supprimée !',
     );
 }
