@@ -141,6 +141,13 @@ interface NotificationBuilderInterface
     public function when($condition);
 
     /**
+     * @param bool $condition
+     *
+     * @return static
+     */
+    public function unless($condition);
+
+    /**
      * @param int $priority
      *
      * @return static
