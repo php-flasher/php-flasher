@@ -134,7 +134,7 @@ interface NotificationBuilderInterface
     public function warning($message = null, $title = null, array $options = array());
 
     /**
-     * @param bool $condition
+     * @param bool|\Closure $condition
      *
      * @return static
      */

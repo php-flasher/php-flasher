@@ -270,6 +270,14 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function when($condition)
     {
+        if ($condition instanceof \Closure) {
+            $condition = \call_user_func($condition, $this->envelope);
+        }
+
+        if (!is_bool($condition)) {
+            throw new \InvalidArgumentException('The condition must be a boolean or a closure that returns a boolean.');
+        }
+
         $stamp = $this->envelope->get('Flasher\Prime\Stamp\WhenStamp');
         if ($stamp instanceof WhenStamp) {
             $condition = $stamp->getCondition() && $condition;
