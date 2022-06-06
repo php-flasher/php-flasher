@@ -141,7 +141,7 @@ interface NotificationBuilderInterface
     public function when($condition);
 
     /**
-     * @param bool $condition
+     * @param bool|\Closure $condition
      *
      * @return static
      */
