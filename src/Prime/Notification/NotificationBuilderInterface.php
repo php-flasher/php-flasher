@@ -213,12 +213,12 @@ interface NotificationBuilderInterface
     public function translate($parameters = array(), $locale = null);
 
     /**
-     * @param string $preset
-     * @param bool   $flash
+     * @param string               $preset
+     * @param array<string, mixed> $parameters
      *
-     * @phpstan-return ($flash is true ? Envelope : static)
+     * @return static
      */
-    public function preset($preset, $flash = true);
+    public function preset($preset, $parameters = array());
 
     /**
      * @param StampInterface[] $stamps

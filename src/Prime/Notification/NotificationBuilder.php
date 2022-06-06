@@ -379,9 +379,17 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function preset($preset, $flash = true)
+    public function preset($preset, $parameters = array())
     {
-        $this->envelope->withStamp(new PresetStamp($preset));
+        $flash = false;
+
+        if (\is_bool($parameters)) {
+            $flash = $parameters;
+            $parameters = array();
+            @trigger_error('Since php-flasher/flasher v1.5: automatically flashing a preset is deprecated and will be removed in v2.0. You should chain the preset call with flash() instead.', \E_USER_DEPRECATED);
+        }
+
+        $this->envelope->withStamp(new PresetStamp($preset, $parameters));
 
         if (false === $flash) {
             return $this;
