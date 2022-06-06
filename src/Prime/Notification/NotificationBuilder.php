@@ -393,6 +393,11 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function handler($handler)
     {
+        $handler = $this->envelope->get('Flasher\Prime\Stamp\HandlerStamp');
+        if ($handler instanceof HandlerStamp) {
+            throw new \LogicException('You cannot change the handler of a notification once it has been set.');
+        }
+
         $this->envelope->withStamp(new HandlerStamp($handler));
 
         return $this;
