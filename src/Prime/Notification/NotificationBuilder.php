@@ -425,7 +425,7 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function addDeleted($resource = null)
     {
-        return $this->addOperation('delete', $resource);
+        return $this->addOperation('deleted', $resource);
     }
 
     /**
