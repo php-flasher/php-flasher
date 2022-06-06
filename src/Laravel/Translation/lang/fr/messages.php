@@ -7,4 +7,4 @@
 
 use Flasher\Prime\Translation\Messages;
 
-return Messages::FR;
+return Messages::$fr;

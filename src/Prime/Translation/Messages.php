@@ -9,21 +9,21 @@ namespace Flasher\Prime\Translation;
 
 final class Messages
 {
-    const AR = array(
+    public static $ar = array(
         'success' => 'نجاح',
         'error' => 'خطأ',
         'warning' => 'تحذير',
         'info' => 'معلومة',
     );
 
-    const EN = array(
+    public static $en = array(
         'success' => 'Success',
         'error' => 'Error',
         'warning' => 'Warning',
         'info' => 'Info',
     );
 
-    const FR = array(
+    public static $fr = array(
         'success' => 'Succès',
         'error' => 'Erreur',
         'warning' => 'Avertissement',
