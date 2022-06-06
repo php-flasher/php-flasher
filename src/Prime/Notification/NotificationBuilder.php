@@ -379,6 +379,58 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function addPreset($preset, $parameters = array())
+    {
+        $this->preset($preset, $parameters);
+
+        return $this->flash();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addOperation($operation, $resource = null)
+    {
+        $this->operation($operation, $resource);
+
+        return $this->flash();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addCreated($resource = null)
+    {
+        return $this->addOperation('created', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addUpdated($resource = null)
+    {
+        return $this->addOperation('updated', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addSaved($resource = null)
+    {
+        return $this->addOperation('saved', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addDeleted($resource = null)
+    {
+        return $this->addOperation('delete', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function preset($preset, $parameters = array())
     {
         $flash = false;
@@ -386,7 +438,7 @@ class NotificationBuilder implements NotificationBuilderInterface
         if (\is_bool($parameters)) {
             $flash = $parameters;
             $parameters = array();
-            @trigger_error('Since php-flasher/flasher v1.5: automatically flashing a preset is deprecated and will be removed in v2.0. You should chain the preset call with flash() instead.', \E_USER_DEPRECATED);
+            @trigger_error('Since php-flasher/flasher v1.5: automatically flashing a preset is deprecated and will be removed in v2.0. You should use addPreset() or chain the preset call with flash() instead.', \E_USER_DEPRECATED);
         }
 
         $this->envelope->withStamp(new PresetStamp($preset, $parameters));

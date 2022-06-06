@@ -216,6 +216,50 @@ interface NotificationBuilderInterface
      * @param string               $preset
      * @param array<string, mixed> $parameters
      *
+     * @return Envelope
+     */
+    public function addPreset($preset, $parameters = array());
+
+    /**
+     * @param string             $operation
+     * @param object|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addOperation($operation, $resource = null);
+
+    /**
+     * @param object|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addCreated($resource = null);
+
+    /**
+     * @param object|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addUpdated($resource = null);
+
+    /**
+     * @param object|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addSaved($resource = null);
+
+    /**
+     * @param object|string|null $resource
+     *
+     * @return Envelope
+     */
+    public function addDeleted($resource = null);
+
+    /**
+     * @param string               $preset
+     * @param array<string, mixed> $parameters
+     *
      * @return static
      */
     public function preset($preset, $parameters = array());
