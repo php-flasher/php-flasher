@@ -8,6 +8,7 @@
 namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
+use Flasher\Prime\EventDispatcher\EventListener\AddToStorageListener;
 use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
 use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
@@ -23,6 +24,7 @@ final class EventDispatcher implements EventDispatcherInterface
     {
         $this->addSubscriber(new RemoveListener());
         $this->addSubscriber(new StampsListener());
+        $this->addSubscriber(new AddToStorageListener());
     }
 
     /**
