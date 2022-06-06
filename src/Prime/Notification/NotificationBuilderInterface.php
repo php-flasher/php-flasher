@@ -236,6 +236,13 @@ interface NotificationBuilderInterface
     public function created($resource = null);
 
     /**
+     * @param object|string|null $resource
+     *
+     * @return static
+     */
+    public function updated($resource = null);
+
+    /**
      * @param StampInterface[] $stamps
      *
      * @return Envelope

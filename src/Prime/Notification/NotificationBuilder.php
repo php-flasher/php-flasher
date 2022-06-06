@@ -421,6 +421,14 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function updated($resource = null)
+    {
+        return $this->operation('updated', $resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function with($stamps = array())
     {
         $this->envelope->with($stamps);
