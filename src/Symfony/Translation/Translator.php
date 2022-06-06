@@ -33,7 +33,7 @@ final class Translator implements TranslatorInterface
     public function translate($id, $parameters = array(), $locale = null)
     {
         $order = TranslationStamp::parametersOrder($parameters, $locale);
-        $parameters = $order['parameters'];
+        $parameters = $this->addPrefixedParams($order['parameters']);
         $locale = $order['locale'];
 
         if (!$this->translator instanceof TranslatorBagInterface) {
@@ -57,5 +57,21 @@ final class Translator implements TranslatorInterface
     public function getLocale()
     {
         return $this->translator->getLocale();
+    }
+
+    /**
+     * @param array<string, mixed> $parameters
+     *
+     * @return array<string, mixed>
+     */
+    private function addPrefixedParams(array $parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            if (0 !== strpos($key, ':')) {
+                $parameters[':'.$key] = $value;
+            }
+        }
+
+        return $parameters;
     }
 }
