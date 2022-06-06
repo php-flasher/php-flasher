@@ -7,6 +7,7 @@
 
 namespace Flasher\Symfony\Translation;
 
+use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
@@ -29,17 +30,21 @@ final class Translator implements TranslatorInterface
     /**
      * {@inheritdoc}
      */
-    public function translate($id, $locale = null)
+    public function translate($id, $parameters = array(), $locale = null)
     {
+        $order = TranslationStamp::parametersOrder($parameters, $locale);
+        $parameters = $order['parameters'];
+        $locale = $order['locale'];
+
         if (!$this->translator instanceof TranslatorBagInterface) {
-            return $this->translator->trans($id, array(), 'flasher', $locale);
+            return $this->translator->trans($id, $parameters, 'flasher', $locale);
         }
 
         $catalogue = $this->translator->getCatalogue($locale);
 
         foreach (array('flasher', 'messages') as $domain) {
             if ($catalogue->has($id, $domain)) {
-                return $catalogue->get($id, $domain);
+                return $this->translator->trans($id, $parameters, $domain, $locale);
             }
         }
 

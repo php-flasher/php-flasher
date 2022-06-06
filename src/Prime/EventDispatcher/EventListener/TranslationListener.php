@@ -49,15 +49,19 @@ final class TranslationListener implements EventSubscriberInterface
                 ? $stamp->getLocale()
                 : $this->translator->getLocale();
 
+            $parameters = $stamp instanceof TranslationStamp && $stamp->getParameters()
+                ? $stamp->getParameters()
+                : array();
+
             $title = $envelope->getTitle() ?: $envelope->getType();
             if (null !== $title) {
-                $title = $this->translator->translate($title, $locale);
+                $title = $this->translator->translate($title, $parameters, $locale);
                 $envelope->setTitle($title);
             }
 
             $message = $envelope->getMessage();
             if (null !== $message) {
-                $message = $this->translator->translate($message, $locale);
+                $message = $this->translator->translate($message, $parameters, $locale);
                 $envelope->setMessage($message);
             }
 

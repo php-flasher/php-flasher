@@ -349,9 +349,13 @@ class NotificationBuilder implements NotificationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function translate($locale = null)
+    public function translate($parameters = array(), $locale = null)
     {
-        $this->envelope->withStamp(new TranslationStamp($locale));
+        $order = TranslationStamp::parametersOrder($parameters, $locale);
+        $parameters = $order['parameters'];
+        $locale = $order['locale'];
+
+        $this->envelope->withStamp(new TranslationStamp($parameters, $locale));
 
         return $this;
     }
