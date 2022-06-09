@@ -32,7 +32,7 @@ final class FlasherMiddleware
         /** @var Response $response */
         $response = $next($request);
 
-        if ($request->isXmlHttpRequest() || !$request->hasSession()) {
+        if ($response->isRedirection() || $request->isXmlHttpRequest() || !$request->hasSession()) {
             return $response;
         }
 
