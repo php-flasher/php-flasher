@@ -37,6 +37,10 @@ final class FlasherListener
         }
 
         $response = $event->getResponse();
+        if ($response->isRedirection()) {
+            return;
+        }
+
         $content = $response->getContent() ?: '';
 
         $placeHolders = array(
