@@ -12,6 +12,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -33,7 +34,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $this->registerFlasherConfiguration($config, $container);
-        $this->registerSessionListener($config, $container, $loader);
+        $this->registerListeners($config, $container);
     }
 
     /**
@@ -71,20 +72,71 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $presetListener->replaceArgument(0, $config['presets']);
     }
 
-    /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
-     */
-    private function registerSessionListener(array $config, ContainerBuilder $container, Loader\PhpFileLoader $loader)
+    private function registerListeners(array $config, ContainerBuilder $container)
     {
-        if (!isset($config['flash_bag']['enabled']) || true !== $config['flash_bag']['enabled']) {
+        $autoRender = $config['auto_render'];
+        $autoFlash = $config['flash_bag']['enabled'];
+
+        if (true !== $autoFlash && true !== $autoRender) {
             return;
         }
 
-        $loader->load('session_listener.php');
+        $this->registerResponseExtension($container);
 
-        $listener = $container->getDefinition('flasher.session_listener');
-        $listener->replaceArgument(1, $config['flash_bag']['mapping']);
+        $mapping = $config['flash_bag']['mapping'];
+        $this->registerRequestExtension($container, $mapping, $autoRender);
+
+        if (true === $autoFlash) {
+            $this->registerSessionListener($container);
+        }
+
+        if (true === $autoRender) {
+            $this->registerFlasherListener($container);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function registerResponseExtension(ContainerBuilder $container)
+    {
+        $container->register('flasher.response_extension', 'Flasher\Prime\Http\ResponseExtension')
+            ->setPublic(false)
+            ->addArgument(new Reference('flasher'));
+    }
+
+    /**
+     * @param mixed $autoRender
+     *
+     * @return void
+     */
+    private function registerRequestExtension(ContainerBuilder $container, array $mapping, $autoRender)
+    {
+        $responseExtension = true === $autoRender ? null : new Reference('flasher.response_extension');
+
+        $container->register('flasher.request_extension', 'Flasher\Prime\Http\RequestExtension')
+            ->setPublic(false)
+            ->addArgument(new Reference('flasher'))
+            ->addArgument($mapping)
+            ->addArgument($responseExtension);
+    }
+
+    /**
+     * @return void
+     */
+    private function registerSessionListener(ContainerBuilder $container)
+    {
+        $container->register('flasher.session_listener', 'Flasher\Symfony\EventListener\SessionListener')
+            ->setPublic(false)
+            ->addArgument(new Reference('flasher.request_extension'))
+            ->addTag('kernel.event_listener', array('event' => 'kernel.response'));
+    }
+
+    private function registerFlasherListener(ContainerBuilder $container)
+    {
+        $container->register('flasher.flasher_listener', 'Flasher\Symfony\EventListener\FlasherListener')
+            ->setPublic(false)
+            ->addArgument(new Reference('flasher.response_extension'))
+            ->addTag('kernel.event_listener', array('event' => 'kernel.response', 'priority' => -256));
     }
 }

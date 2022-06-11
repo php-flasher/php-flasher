@@ -81,11 +81,6 @@ $container->register('flasher.preset_listener', 'Flasher\Prime\EventDispatcher\E
     ->addArgument(array())
     ->addTag('flasher.event_subscriber');
 
-$container->register('flasher.flasher_listener', 'Flasher\Symfony\EventListener\FlasherListener')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher'))
-    ->addTag('kernel.event_listener', array('event' => 'kernel.response', 'priority' => -256));
-
 if (Bridge::canLoadAliases()) {
     $container->setAlias('Flasher\Prime\Flasher', 'flasher');
     $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');
