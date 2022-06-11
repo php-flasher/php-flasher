@@ -7,6 +7,7 @@
 
 namespace Flasher\Laravel;
 
+use Flasher\Laravel\Middleware\FlasherMiddleware;
 use Flasher\Laravel\Middleware\HttpKernelFlasherMiddleware;
 use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
@@ -16,10 +17,13 @@ use Flasher\Laravel\Support\ServiceProvider;
 use Flasher\Laravel\Template\BladeTemplateEngine;
 use Flasher\Laravel\Translation\Translator;
 use Flasher\Prime\Config\Config;
+use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Flasher;
+use Flasher\Prime\Http\RequestExtension;
+use Flasher\Prime\Http\ResponseExtension;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
@@ -46,7 +50,7 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->registerBladeComponent();
         $this->registerLivewire();
         $this->registerTranslations();
-        $this->appendSessionMiddlewareToWebGroup();
+        $this->registerMiddlewares();
     }
 
     /**
@@ -68,7 +72,6 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->registerResponseManager();
         $this->registerStorageManager();
         $this->registerEventDispatcher();
-        $this->registerSessionMiddleware();
     }
 
     /**
@@ -142,27 +145,6 @@ final class FlasherServiceProvider extends ServiceProvider
 
             return $eventDispatcher;
         });
-    }
-
-    /**
-     * @return void
-     */
-    private function registerSessionMiddleware()
-    {
-        $config = $this->app['flasher.config']; // @phpstan-ignore-line
-        if (true !== $config->get('flash_bag.enabled', false)) {
-            return;
-        }
-
-        $mapping = $config->get('flash_bag.mapping', array());
-        $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) use ($mapping) {
-            return new SessionMiddleware($app['flasher'], $mapping); // @phpstan-ignore-line
-        });
-
-        if (method_exists($this->app, 'middleware')) {
-            $this->app->middleware(new HttpKernelFlasherMiddleware($this->app));
-            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
-        }
     }
 
     /**
@@ -305,13 +287,102 @@ final class FlasherServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    private function appendSessionMiddlewareToWebGroup()
+    private function registerMiddlewares()
     {
+        /** @var ConfigInterface $config */
+        $config = $this->app['flasher.config'];
+        $autoRender = $config->get('auto_render', true);
+        $autoFlash = $config->get('flash_bag.enabled', true);
+
+        if (true !== $autoFlash && true !== $autoRender) {
+            return;
+        }
+
+        $this->registerResponseExtension();
+        $this->registerRequestExtension();
+
+        if (true === $autoFlash) {
+            $this->registerSessionMiddleware();
+        }
+
+        if (true === $autoRender) {
+            $this->registerFlasherMiddleware();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function registerResponseExtension()
+    {
+        $this->app->singleton('flasher.response_extension', function (Application $app) {
+            return new ResponseExtension($app['flasher']);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerRequestExtension()
+    {
+        $this->app->singleton('flasher.request_extension', function (Application $app) {
+            /** @var ConfigInterface $config */
+            $config = $app['flasher.config'];
+            $mapping = $config->get('flash_bag.mapping', array());
+            $autoRender = $config->get('auto_render', true);
+            $responseExtension = true === $autoRender ? null : $app['flasher.response_extension'];
+
+            return new RequestExtension($app['flasher'], $mapping, $responseExtension);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerFlasherMiddleware()
+    {
+        $this->app->singleton('Flasher\Laravel\Middleware\FlasherMiddleware', function (Application $app) {
+            return new FlasherMiddleware($app['flasher.response_extension']);
+        });
+
+        $this->appendMiddlewareToWebGroup('Flasher\Laravel\Middleware\FlasherMiddleware');
+
+        if (method_exists($this->app, 'middleware')) {
+            $this->app->middleware(new HttpKernelFlasherMiddleware($this->app));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function registerSessionMiddleware()
+    {
+        $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) {
+            return new SessionMiddleware($app['flasher.request_extension']);
+        });
+
+        $this->appendMiddlewareToWebGroup('Flasher\Laravel\Middleware\SessionMiddleware');
+
+        if (method_exists($this->app, 'middleware')) {
+            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
+        }
+    }
+
+    /**
+     * @param string $middleware
+     *
+     * @return void
+     */
+    private function appendMiddlewareToWebGroup($middleware)
+    {
+        if (!$this->app->bound($middleware)) {
+            return;
+        }
+
         /** @var \Illuminate\Routing\Router $router */
         $router = $this->app['router'];
         if (method_exists($router, 'pushMiddlewareToGroup')) {
-            $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\FlasherMiddleware');
-            $router->pushMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+            $router->pushMiddlewareToGroup('web', $middleware);
 
             return;
         }
@@ -324,17 +395,13 @@ final class FlasherServiceProvider extends ServiceProvider
         $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
 
         if (method_exists($kernel, 'appendMiddlewareToGroup')) {
-            $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\FlasherMiddleware');
-            $kernel->appendMiddlewareToGroup('web', 'Flasher\Laravel\Middleware\SessionMiddleware');
+            $kernel->appendMiddlewareToGroup('web', $middleware);
 
             return;
         }
 
         if (method_exists($kernel, 'pushMiddleware')) {
-            $kernel->pushMiddleware('Flasher\Laravel\Middleware\FlasherMiddleware');
-            $kernel->pushMiddleware('Flasher\Laravel\Middleware\SessionMiddleware');
-
-            return;
+            $kernel->pushMiddleware($middleware);
         }
     }
 }

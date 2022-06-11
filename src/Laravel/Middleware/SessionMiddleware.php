@@ -8,73 +8,34 @@
 namespace Flasher\Laravel\Middleware;
 
 use Closure;
-use Flasher\Prime\FlasherInterface;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Flasher\Laravel\Http\Request;
+use Flasher\Laravel\Http\Response;
+use Flasher\Prime\Http\RequestExtension;
+use Illuminate\Http\Request as LaravelRequest;
+use Illuminate\Http\Response as LaravelResponse;
 
 final class SessionMiddleware
 {
     /**
-     * @var FlasherInterface
+     * @var RequestExtension
      */
-    private $flasher;
+    private $requestExtension;
 
-    /**
-     * @var array<string, string>
-     */
-    private $mapping;
-
-    /**
-     * @param array<string, string[]> $mapping
-     */
-    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    public function __construct(RequestExtension $requestExtension)
     {
-        $this->flasher = $flasher;
-        $this->mapping = $this->flatMapping($mapping);
+        $this->requestExtension = $requestExtension;
     }
 
     /**
-     * @return Response
+     * @return LaravelResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(LaravelRequest $request, Closure $next)
     {
-        /** @var Response $response */
+        /** @var LaravelResponse $response */
         $response = $next($request);
 
-        if ($request->isXmlHttpRequest() || !$request->hasSession()) {
-            return $response;
-        }
-
-        foreach ($this->mapping as $alias => $type) {
-            if (false === $request->session()->has($alias)) {
-                continue;
-            }
-
-            /** @var string $message */
-            $message = $request->session()->get($alias);
-            $this->flasher->addFlash($type, $message);
-
-            $request->session()->forget($alias);
-        }
+        $this->requestExtension->flash(new Request($request), new Response($response));
 
         return $response;
-    }
-
-    /**
-     * @param array<string, string[]> $mapping
-     *
-     * @return array<string, string>
-     */
-    private function flatMapping(array $mapping)
-    {
-        $flatMapping = array();
-
-        foreach ($mapping as $type => $aliases) {
-            foreach ($aliases as $alias) {
-                $flatMapping[$alias] = $type;
-            }
-        }
-
-        return $flatMapping;
     }
 }
