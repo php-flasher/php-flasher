@@ -42,6 +42,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue($plugin->getRootScript())
                 ->end()
                 ->booleanNode('auto_translate')->defaultTrue()->end()
+                ->booleanNode('auto_render')->defaultTrue()->end()
             ->end()
         ;
 
