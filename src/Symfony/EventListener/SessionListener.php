@@ -7,29 +7,21 @@
 
 namespace Flasher\Symfony\EventListener;
 
-use Flasher\Prime\FlasherInterface;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Flasher\Prime\Http\RequestExtension;
+use Flasher\Symfony\Http\Request;
+use Flasher\Symfony\Http\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final class SessionListener
 {
     /**
-     * @var FlasherInterface
+     * @var RequestExtension
      */
-    private $flasher;
+    private $requestExtension;
 
-    /**
-     * @var array<string, string>
-     */
-    private $mapping;
-
-    /**
-     * @param array<string, string[]> $mapping
-     */
-    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    public function __construct(RequestExtension $requestExtension)
     {
-        $this->flasher = $flasher;
-        $this->mapping = $this->flatMapping($mapping);
+        $this->requestExtension = $requestExtension;
     }
 
     /**
@@ -39,61 +31,9 @@ final class SessionListener
      */
     public function onKernelResponse($event)
     {
-        $request = $event->getRequest();
+        $request = new Request($event->getRequest());
+        $response = new Response($event->getResponse());
 
-        if (!$this->isMainRequest($event) || $request->isXmlHttpRequest() || !$request->hasSession()) {
-            return;
-        }
-
-        /** @var FlashBagInterface $flashBag */
-        $flashBag = $request->getSession()->getFlashBag();
-        foreach ($this->mapping as $alias => $type) {
-            if (false === $flashBag->has($alias)) {
-                continue;
-            }
-
-            /** @var string[] $messages */
-            $messages = $flashBag->get($alias);
-
-            foreach ($messages as $message) {
-                $this->flasher->addFlash($type, $message);
-            }
-        }
-    }
-
-    /**
-     * @param array<string, string[]> $mapping
-     *
-     * @return array<string, string>
-     */
-    private function flatMapping(array $mapping)
-    {
-        $flatMapping = array();
-
-        foreach ($mapping as $type => $aliases) {
-            foreach ($aliases as $alias) {
-                $flatMapping[$alias] = $type;
-            }
-        }
-
-        return $flatMapping;
-    }
-
-    /**
-     * @param ResponseEvent $event
-     *
-     * @return bool
-     */
-    private function isMainRequest($event)
-    {
-        if (method_exists($event, 'isMainRequest')) {
-            return $event->isMainRequest();
-        }
-
-        if (method_exists($event, 'isMasterRequest')) { // @phpstan-ignore-line
-            return $event->isMasterRequest();
-        }
-
-        return 1 === $event->getRequestType();
+        $this->requestExtension->flash($request, $response);
     }
 }
