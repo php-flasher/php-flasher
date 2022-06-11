@@ -7,62 +7,34 @@
 
 namespace Flasher\Laravel\Middleware;
 
-use Flasher\Prime\FlasherInterface;
-use Flasher\Prime\Response\Presenter\HtmlPresenter;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Closure;
+use Flasher\Laravel\Http\Request;
+use Flasher\Laravel\Http\Response;
+use Flasher\Prime\Http\ResponseExtension;
+use Illuminate\Http\Request as LaravelRequest;
+use Illuminate\Http\Response as LaravelResponse;
 
 final class FlasherMiddleware
 {
     /**
-     * @var FlasherInterface
+     * @var ResponseExtension
      */
-    private $flasher;
+    private $responseExtension;
 
-    public function __construct(FlasherInterface $flasher)
+    public function __construct(ResponseExtension $responseExtension)
     {
-        $this->flasher = $flasher;
+        $this->responseExtension = $responseExtension;
     }
 
     /**
-     * @return Response
+     * @return LaravelResponse
      */
-    public function handle(Request $request, \Closure $next)
+    public function handle(LaravelRequest $request, Closure $next)
     {
-        /** @var Response $response */
+        /** @var LaravelResponse $response */
         $response = $next($request);
 
-        if ($response->isRedirection() || $request->isXmlHttpRequest() || !$request->hasSession()) {
-            return $response;
-        }
-
-        $content = $response->getContent() ?: '';
-
-        $placeHolders = array(
-            HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
-            HtmlPresenter::BODY_END_PLACE_HOLDER,
-        );
-
-        foreach ($placeHolders as $insertPlaceHolder) {
-            $insertPosition = strripos($content, $insertPlaceHolder);
-            if (false !== $insertPosition) {
-                break;
-            }
-        }
-
-        if (false === $insertPosition) {
-            return $response;
-        }
-
-        $alreadyRendered = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER === $insertPlaceHolder;
-        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => $alreadyRendered));
-
-        if (empty($htmlResponse)) {
-            return $response;
-        }
-
-        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
-        $response->setContent($content);
+        $this->responseExtension->render(new Request($request), new Response($response));
 
         return $response;
     }
