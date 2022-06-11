@@ -71,6 +71,7 @@ class FlasherPlugin extends Plugin
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
             'auto_translate' => true,
+            'auto_render' => true,
             'flash_bag' => array(
                 'enabled' => true,
                 'mapping' => $this->getFlashBagMapping(),
