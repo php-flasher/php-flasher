@@ -126,7 +126,7 @@ final class ResourceManager implements ResourceManagerInterface
         if (!isset($this->options[$handler])) {
             /** @var array<string, mixed> $options */
             $options = $this->config->get('themes.'.$theme.'.options', array());
-            $this->addOptions($handler, $options);
+            $this->addOptions('theme.'.$theme, $options);
         }
 
         /** @var string|null $view */
