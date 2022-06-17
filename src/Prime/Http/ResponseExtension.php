@@ -44,6 +44,7 @@ final class ResponseExtension
 
         $placeHolders = array(
             HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
+            HtmlPresenter::HEAD_END_PLACE_HOLDER,
             HtmlPresenter::BODY_END_PLACE_HOLDER,
         );
 
