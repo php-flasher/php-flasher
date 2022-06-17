@@ -22,6 +22,16 @@ interface ResponseInterface
     /**
      * @return string
      */
+    public function isHtml();
+
+    /**
+     * @return bool
+     */
+    public function isAttachment();
+
+    /**
+     * @return string
+     */
     public function getContent();
 
     /**
