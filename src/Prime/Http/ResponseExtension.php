@@ -28,8 +28,11 @@ final class ResponseExtension
     public function render(RequestInterface $request, ResponseInterface $response)
     {
         if ($request->isXmlHttpRequest()
+            || !$request->isHtmlRequestFormat()
             || !$request->hasSession()
             || $response->isRedirection()
+            || !$response->isHtml()
+            || $response->isAttachment()
             || $response->isJson()) {
             return $response;
         }
@@ -41,6 +44,7 @@ final class ResponseExtension
 
         $placeHolders = array(
             HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
+            HtmlPresenter::HEAD_END_PLACE_HOLDER,
             HtmlPresenter::BODY_END_PLACE_HOLDER,
         );
 
@@ -61,6 +65,8 @@ final class ResponseExtension
         if (empty($htmlResponse)) {
             return $response;
         }
+
+        $htmlResponse = "\n".str_replace("\n", '', $htmlResponse)."\n";
 
         $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
         $response->setContent($content);

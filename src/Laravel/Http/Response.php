@@ -45,6 +45,26 @@ final class Response implements ResponseInterface
     /**
      * {@inheritDoc}
      */
+    public function isHtml()
+    {
+        $contentType = $this->response->headers->get('Content-Type');
+
+        return false !== stripos($contentType, 'html');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isAttachment()
+    {
+        $contentDisposition = $this->response->headers->get('Content-Disposition', '');
+
+        return false !== stripos($contentDisposition, 'attachment;');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getContent()
     {
         return $this->response->getContent();

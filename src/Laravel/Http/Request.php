@@ -33,6 +33,14 @@ final class Request implements RequestInterface
     /**
      * {@inheritDoc}
      */
+    public function isHtmlRequestFormat()
+    {
+        return 'html' === $this->request->getRequestFormat();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function hasSession()
     {
         return $this->request->hasSession();

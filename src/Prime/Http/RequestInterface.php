@@ -17,6 +17,11 @@ interface RequestInterface
     /**
      * @return bool
      */
+    public function isHtmlRequestFormat();
+
+    /**
+     * @return bool
+     */
     public function hasSession();
 
     /**
