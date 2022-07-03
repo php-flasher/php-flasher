@@ -19,6 +19,7 @@ namespace Flasher\Prime\Config;
  *   }>,
  *   auto_render: bool,
  *   auto_translate: bool,
+ *   search_criteria: array<string, mixed>,
  *   flash_bag: array{
  *      enabled: bool,
  *      mapping: array<string, string[]>,

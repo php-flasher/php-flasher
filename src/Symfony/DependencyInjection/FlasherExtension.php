@@ -35,6 +35,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
 
         $this->registerFlasherConfiguration($config, $container);
         $this->registerListeners($config, $container);
+        $this->registerStorageManager($config, $container);
     }
 
     /**
@@ -143,5 +144,17 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
             ->setPublic(false)
             ->addArgument(new Reference('flasher.response_extension'))
             ->addTag('kernel.event_listener', array('event' => 'kernel.response', 'priority' => -256));
+    }
+
+    /**
+     * @phpstan-param ConfigType $config
+     *
+     * @return void
+     */
+    private function registerStorageManager(array $config, ContainerBuilder $container)
+    {
+        $criteria = $config['search_criteria'];
+        $storageManager = $container->getDefinition('flasher.storage_manager');
+        $storageManager->replaceArgument(2, $criteria);
     }
 }

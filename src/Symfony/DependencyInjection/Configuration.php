@@ -43,6 +43,9 @@ final class Configuration implements ConfigurationInterface
                 ->end()
                 ->booleanNode('auto_translate')->defaultTrue()->end()
                 ->booleanNode('auto_render')->defaultTrue()->end()
+                ->arrayNode('search_criteria')
+                    ->prototype('scalar')->end()
+                ->end()
             ->end()
         ;
 
