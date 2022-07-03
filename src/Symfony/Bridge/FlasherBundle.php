@@ -24,7 +24,6 @@ if (false) { /** @phpstan-ignore-line */
          */
         protected function flasherBuild(ContainerBuilder $container)
         {
-
         }
 
         /**

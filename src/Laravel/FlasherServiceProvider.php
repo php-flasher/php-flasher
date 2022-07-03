@@ -143,7 +143,9 @@ final class FlasherServiceProvider extends ServiceProvider
             $eventDispatcher = $app->make('flasher.event_dispatcher');
             $session = $app->make('session');
 
-            $storageBag = new StorageBag(new SessionBag($session)); // @phpstan-ignore-line
+            /** @phpstan-ignore-next-line */
+            $storageBag = new StorageBag(new SessionBag($session));
+
             $criteria = $config->get('filter_criteria', array()); // @phpstan-ignore-line
 
             return new StorageManager($storageBag, $eventDispatcher, $criteria); // @phpstan-ignore-line
@@ -159,8 +161,12 @@ final class FlasherServiceProvider extends ServiceProvider
             $eventDispatcher = new EventDispatcher();
             $config = $app->make('flasher.config');
 
-            $translator = new Translator($app->make('translator')); // @phpstan-ignore-line
-            $autoTranslate = $config->get('auto_translate', true); // @phpstan-ignore-line
+            /** @phpstan-ignore-next-line */
+            $translator = new Translator($app->make('translator'));
+
+            /** @phpstan-ignore-next-line */
+            $autoTranslate = $config->get('auto_translate', true);
+
             $translatorListener = new TranslationListener($translator, $autoTranslate);
             $eventDispatcher->addSubscriber($translatorListener);
 

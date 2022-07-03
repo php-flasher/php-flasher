@@ -9,7 +9,6 @@ namespace Flasher\Symfony\Http;
 
 use Flasher\Prime\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class Request implements RequestInterface
