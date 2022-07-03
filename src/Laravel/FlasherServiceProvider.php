@@ -12,6 +12,7 @@ use Flasher\Laravel\Middleware\HttpKernelFlasherMiddleware;
 use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
+use Flasher\Laravel\Support\Laravel;
 use Flasher\Laravel\Support\ServiceProvider;
 use Flasher\Laravel\Template\BladeTemplateEngine;
 use Flasher\Laravel\Translation\Translator;
@@ -249,7 +250,7 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerBladeComponent()
     {
-        if (!method_exists('Illuminate\View\Compilers\BladeCompiler', 'component')) {
+        if (Laravel::isVersion('7.0', '<=')) {
             return;
         }
 
