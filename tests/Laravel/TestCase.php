@@ -7,6 +7,7 @@
 
 namespace Flasher\Tests\Laravel;
 
+use Flasher\Laravel\Support\Laravel;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
@@ -63,9 +64,9 @@ class TestCase extends Orchestra
     }
 
     /**
-     * @param $app
+     * @param Application|null $app
      *
-     * @return array
+     * @return string[]
      */
     protected function getPackageProviders($app = null)
     {
@@ -84,14 +85,9 @@ class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        $separator = $this->isLaravel4() ? '::config' : '';
+        $separator = Laravel::isVersion('4') ? '::config' : '';
 
-        $app['config']->set('session.driver', 'array');
-        $app['config']->set('session'.$separator.'.driver', 'array');
-    }
-
-    private function isLaravel4()
-    {
-        return 0 === strpos(Application::VERSION, '4.');
+        $app->make('config')->set('session.driver', 'array');
+        $app->make('config')->set('session'.$separator.'.driver', 'array');
     }
 }

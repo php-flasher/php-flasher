@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 final class PriorityStampTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
@@ -26,6 +29,9 @@ final class PriorityStampTest extends TestCase
         $this->assertEquals(5, $stamp->getPriority());
     }
 
+    /**
+     * @return void
+     */
     public function testCompare()
     {
         $stamp1 = new PriorityStamp(1);

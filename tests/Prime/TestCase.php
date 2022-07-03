@@ -11,13 +11,20 @@ use ReflectionClass;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @param class-string<\Throwable> $exceptionName
+     * @param string                   $exceptionMessage
+     * @param int                      $exceptionCode
+     *
+     * @return void
+     */
     public function setExpectedException($exceptionName, $exceptionMessage = '', $exceptionCode = null)
     {
         if (method_exists($this, 'expectException')) {
             $this->expectException($exceptionName);
             $this->expectExceptionMessage($exceptionMessage);
         } else {
-            parent::setExpectedException($exceptionName, $exceptionMessage, $exceptionCode);
+            parent::setExpectedException($exceptionName, $exceptionMessage, $exceptionCode); // @phpstan-ignore-line
         }
     }
 

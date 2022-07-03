@@ -7,8 +7,13 @@
 
 namespace Flasher\Tests\Laravel;
 
-class ServiceProviderTest extends TestCase
+use Flasher\Prime\FlasherInterface;
+
+final class ServiceProviderTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testContainerContainServices()
     {
         $this->assertTrue($this->app->bound('flasher'));
@@ -25,8 +30,12 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf('Flasher\Toastr\Prime\ToastrFactory', $this->app->make('flasher.toastr'));
     }
 
+    /**
+     * @return void
+     */
     public function testFlasherCanCreateServicesFromAlias()
     {
+        /** @var FlasherInterface $flasher */
         $flasher = $this->app->make('flasher');
 
         $adapter = $flasher->create('noty');

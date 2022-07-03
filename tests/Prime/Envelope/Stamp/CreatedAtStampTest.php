@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 final class CreatedAtStampTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
@@ -25,6 +28,9 @@ final class CreatedAtStampTest extends TestCase
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
     }
 
+    /**
+     * @return void
+     */
     public function testCompare()
     {
         $createdAt1 = new CreatedAtStamp(new \DateTime('+2 h'));
