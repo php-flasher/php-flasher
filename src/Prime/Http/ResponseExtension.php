@@ -27,13 +27,7 @@ final class ResponseExtension
      */
     public function render(RequestInterface $request, ResponseInterface $response)
     {
-        if ($request->isXmlHttpRequest()
-            || !$request->isHtmlRequestFormat()
-            || !$request->hasSession()
-            || $response->isRedirection()
-            || !$response->isHtml()
-            || $response->isAttachment()
-            || $response->isJson()) {
+        if (!$this->isRenderable($request, $response)) {
             return $response;
         }
 
@@ -72,5 +66,19 @@ final class ResponseExtension
         $response->setContent($content);
 
         return $response;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isRenderable(RequestInterface $request, ResponseInterface $response)
+    {
+        return !$request->isXmlHttpRequest()
+            && $request->isHtmlRequestFormat()
+            && $request->hasSession()
+            && !$response->isRedirection()
+            && $response->isHtml()
+            && !$response->isAttachment()
+            && !$response->isJson();
     }
 }

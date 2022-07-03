@@ -20,7 +20,7 @@ interface ResponseInterface
     public function isJson();
 
     /**
-     * @return string
+     * @return bool
      */
     public function isHtml();
 
