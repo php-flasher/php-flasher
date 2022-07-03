@@ -22,21 +22,12 @@ final class RequestExtension
     private $mapping;
 
     /**
-     * @var ResponseExtension|null
-     */
-    private $responseExtension;
-
-    /**
      * @param array<string, string[]> $mapping
      */
-    public function __construct(
-        FlasherInterface $flasher,
-        array $mapping = array(),
-        ResponseExtension $responseExtension = null
-    ) {
+    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    {
         $this->flasher = $flasher;
         $this->mapping = $this->flatMapping($mapping);
-        $this->responseExtension = $responseExtension;
     }
 
     /**
@@ -62,11 +53,7 @@ final class RequestExtension
             $request->forgetType($alias);
         }
 
-        if (null === $this->responseExtension) {
-            return $response;
-        }
-
-        return $this->responseExtension->render($request, $response);
+        return $response;
     }
 
     /**
