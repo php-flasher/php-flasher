@@ -38,7 +38,6 @@ $container->register('flasher.storage_manager', 'Flasher\Prime\Storage\StorageMa
 
 $container->register('flasher.twig.extension', 'Flasher\Symfony\Twig\FlasherTwigExtension')
     ->setPublic(false)
-    ->addArgument(new Reference('flasher'))
     ->addTag('twig.extension', array());
 
 $container->register('flasher.template_engine', 'Flasher\Symfony\Template\TwigTemplateEngine')
