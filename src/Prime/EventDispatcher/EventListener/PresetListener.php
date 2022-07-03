@@ -30,7 +30,7 @@ final class PresetListener implements EventSubscriberInterface
     private $presets = array();
 
     /**
-     * @phpstan-type PresetType[]
+     * @phpstan-param PresetType[] $presets
      */
     public function __construct(array $presets)
     {
@@ -39,6 +39,8 @@ final class PresetListener implements EventSubscriberInterface
 
     /**
      * @return void
+     *
+     * @throws PresetNotFoundException
      */
     public function __invoke(PersistEvent $event)
     {
@@ -57,24 +59,26 @@ final class PresetListener implements EventSubscriberInterface
 
     /**
      * @return void
+     *
+     * @throws PresetNotFoundException
      */
     private function attachPresets(Envelope $envelope)
     {
-        $preset = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
-        if (!$preset instanceof PresetStamp) {
+        $presetStamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        if (!$presetStamp instanceof PresetStamp) {
             return;
         }
 
-        if (!isset($this->presets[$preset->getPreset()])) {
-            throw new PresetNotFoundException($preset->getPreset(), array_keys($this->presets));
+        if (!isset($this->presets[$presetStamp->getPreset()])) {
+            throw new PresetNotFoundException($presetStamp->getPreset(), array_keys($this->presets));
         }
 
-        $preset = $this->presets[$preset->getPreset()];
+        $preset = $this->presets[$presetStamp->getPreset()];
         $preset = array_merge(array(
             'type' => 'info',
             'title' => null,
             'message' => null,
-            'options' => array(),
+            'options' => array()
         ), $preset);
 
         if (null === $envelope->getType()) {

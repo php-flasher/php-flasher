@@ -57,7 +57,7 @@ final class TranslationListener implements EventSubscriberInterface
             $preset = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
             if ($preset instanceof PresetStamp) {
                 foreach ($preset->getParameters() as $key => $value) {
-                    $parameters[$key] = $this->translator->translate($value, $parameters, $locale);
+                    $parameters[$key] = $this->translator->translate($value, $parameters, $locale); // @phpstan-ignore-line
                 }
             }
 

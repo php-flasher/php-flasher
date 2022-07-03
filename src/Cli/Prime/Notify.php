@@ -219,7 +219,7 @@ final class Notify extends BaseNotifier
         }
 
         if (null === $notification->getIcon() && isset($this->icons[$notification->getType()])) {
-            $notification->setIcon($this->icons[$notification->getType()]); // @phpstan-ignore-line
+            $notification->setIcon($this->icons[$notification->getType()]);
         }
 
         if (null === $notification->getIcon()) {

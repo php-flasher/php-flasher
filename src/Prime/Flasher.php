@@ -20,11 +20,6 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 final class Flasher implements FlasherInterface
 {
     /**
-     * @var array<string, callable|NotificationFactoryInterface>
-     */
-    private $factories = array();
-
-    /**
      * @var string|null
      */
     private $defaultHandler;
@@ -40,13 +35,15 @@ final class Flasher implements FlasherInterface
     private $storageManager;
 
     /**
+     * @var array<string, callable|NotificationFactoryInterface>
+     */
+    private $factories = array();
+
+    /**
      * @param string $defaultHandler
      */
-    public function __construct(
-        $defaultHandler,
-        ResponseManagerInterface $responseManager = null,
-        StorageManagerInterface $storageManager = null
-    ) {
+    public function __construct($defaultHandler, ResponseManagerInterface $responseManager = null, StorageManagerInterface $storageManager = null)
+    {
         $this->defaultHandler = $defaultHandler ?: 'flasher';
         $this->responseManager = $responseManager ?: new ResponseManager();
         $this->storageManager = $storageManager;

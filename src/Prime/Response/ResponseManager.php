@@ -59,6 +59,7 @@ final class ResponseManager implements ResponseManagerInterface
     public function render(array $criteria = array(), $presenter = 'html', array $context = array())
     {
         $envelopes = $this->storageManager->filter($criteria);
+
         $this->storageManager->remove($envelopes);
 
         $event = new PresentationEvent($envelopes, $context);

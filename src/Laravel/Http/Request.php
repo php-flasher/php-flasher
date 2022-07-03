@@ -63,7 +63,7 @@ final class Request implements RequestInterface
     {
         $session = $this->request->session();
 
-        return $session->get($type);
+        return $session->get($type); // @phpstan-ignore-line
     }
 
     /**

@@ -21,14 +21,18 @@ if (false) { /** @phpstan-ignore-line */
     {
         /**
          * @return void
-         *
-         * @SuppressWarnings(PHPMD.UnusedFormalParameter)
          */
-        abstract protected function flasherBuild(ContainerBuilder $container);
+        protected function flasherBuild(ContainerBuilder $container)
+        {
+
+        }
 
         /**
          * @return ?ExtensionInterface
          */
-        abstract protected function getFlasherContainerExtension();
+        protected function getFlasherContainerExtension()
+        {
+            return null;
+        }
     }
 }

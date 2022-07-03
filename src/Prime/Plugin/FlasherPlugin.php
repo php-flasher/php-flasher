@@ -7,13 +7,13 @@
 
 namespace Flasher\Prime\Plugin;
 
-use Flasher\Prime\Config\Config;
+use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Notification\NotificationInterface;
 
 /**
- * @phpstan-import-type ConfigType from Config
+ * @phpstan-import-type ConfigType from ConfigInterface
  */
-class FlasherPlugin extends Plugin
+final class FlasherPlugin extends Plugin
 {
     /**
      * {@inheritdoc}
@@ -65,7 +65,7 @@ class FlasherPlugin extends Plugin
      */
     public function processConfiguration(array $options = array())
     {
-        $options = $this->normalizeConfig($options);
+        $options = $this->normalizeConfig($options); // @phpstan-ignore-line
 
         return array_merge(array(
             'default' => $this->getDefault(),
@@ -76,11 +76,25 @@ class FlasherPlugin extends Plugin
                 'enabled' => true,
                 'mapping' => $this->getFlashBagMapping(),
             ),
+            'filter_criteria' => array(),
         ), $options);
     }
 
     /**
-     * @param array<string, mixed> $config
+     * @param array{
+     *    template_factory?: array{default: string, templates: array<string, string>},
+     *    auto_create_from_session?: bool,
+     *    auto_render?: bool,
+     *    types_mapping?: array<string, string>,
+     *    observer_events?: array<string, string>,
+     *    translate_by_default?: bool,
+     *        presets?: array<string, array{
+     *        type: string,
+     *        title: string,
+     *        message: string,
+     *        options: array<string, mixed>,
+     *    }>,
+     * } $config
      *
      * @phpstan-return ConfigType
      */
@@ -149,7 +163,7 @@ class FlasherPlugin extends Plugin
             ),
         ), isset($config['presets']) ? $config['presets'] : array());
 
-        return $config;
+        return $config; // @phpstan-ignore-line
     }
 
     /**

@@ -33,7 +33,7 @@ final class HttpKernelSessionMiddleware implements HttpKernelInterface
         };
 
         /** @var SessionMiddleware $sessionMiddleware */
-        $sessionMiddleware = $this->app['Flasher\Laravel\Middleware\SessionMiddleware'];
+        $sessionMiddleware = $this->app->make('Flasher\Laravel\Middleware\SessionMiddleware');
 
         return $sessionMiddleware->handle($request, $next);
     }

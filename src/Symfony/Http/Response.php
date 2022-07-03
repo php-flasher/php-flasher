@@ -46,6 +46,10 @@ final class Response implements ResponseInterface
     {
         $contentType = $this->response->headers->get('Content-Type');
 
+        if (!is_string($contentType)) {
+            return false;
+        }
+
         return false !== stripos($contentType, 'html');
     }
 
@@ -56,6 +60,10 @@ final class Response implements ResponseInterface
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
+        if (!is_string($contentDisposition)) {
+            return false;
+        }
+
         return false !== stripos($contentDisposition, 'attachment;');
     }
 
@@ -64,7 +72,9 @@ final class Response implements ResponseInterface
      */
     public function getContent()
     {
-        return $this->response->getContent();
+        $content = $this->response->getContent();
+
+        return is_string($content) ? $content : '';
     }
 
     /**

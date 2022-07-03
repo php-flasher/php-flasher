@@ -49,7 +49,7 @@ final class Response implements ResponseInterface
     {
         $contentType = $this->response->headers->get('Content-Type');
 
-        return false !== stripos($contentType, 'html');
+        return false !== stripos($contentType, 'html'); // @phpstan-ignore-line
     }
 
     /**
@@ -59,7 +59,7 @@ final class Response implements ResponseInterface
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
-        return false !== stripos($contentDisposition, 'attachment;');
+        return false !== stripos($contentDisposition, 'attachment;'); // @phpstan-ignore-line
     }
 
     /**
@@ -67,7 +67,7 @@ final class Response implements ResponseInterface
      */
     public function getContent()
     {
-        return $this->response->getContent();
+        return $this->response->getContent(); // @phpstan-ignore-line
     }
 
     /**

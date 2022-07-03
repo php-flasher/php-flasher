@@ -143,7 +143,7 @@ class NotificationBuilder implements NotificationBuilderInterface
             $type = $this->envelope->getType();
         }
 
-        $this->type($type, $message, $title, $options);
+        $this->type($type, $message, $title, $options); // @phpstan-ignore-line
 
         return $this->flash();
     }
@@ -436,7 +436,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     {
         $flash = false;
 
-        if (\is_bool($parameters)) {
+        if (\is_bool($parameters)) { // @phpstan-ignore-line
             $flash = $parameters;
             $parameters = array();
             @trigger_error('Since php-flasher/flasher v1.5: automatically flashing a preset is deprecated and will be removed in v2.0. You should use addPreset() or chain the preset call with flash() instead.', \E_USER_DEPRECATED);
@@ -448,7 +448,7 @@ class NotificationBuilder implements NotificationBuilderInterface
             return $this;
         }
 
-        return $this->flash();
+        return $this->flash(); // @phpstan-ignore-line
     }
 
     /**

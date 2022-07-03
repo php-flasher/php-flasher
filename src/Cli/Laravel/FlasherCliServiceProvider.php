@@ -44,9 +44,9 @@ final class FlasherCliServiceProvider extends ServiceProvider
     private function processConfiguration()
     {
         $name = 'flasher_cli';
-        $config = $this->app['config']; // @phpstan-ignore-line
+        $config = $this->app->make('config');
 
-        $config->set($name, $config->get($name, array()));
+        $config->set($name, $config->get($name, array())); // @phpstan-ignore-line
     }
 
     /**
@@ -55,7 +55,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
     private function registerNotifierFactory()
     {
         $this->app->singleton('flasher.cli', function (Container $app) {
-            return new CliFactory($app['flasher.storage_manager']); // @phpstan-ignore-line
+            return new CliFactory($app->make('flasher.storage_manager')); // @phpstan-ignore-line
         });
 
         $this->app->alias('flasher.cli', 'Flasher\Cli\Prime\CliFactory');
@@ -68,8 +68,8 @@ final class FlasherCliServiceProvider extends ServiceProvider
     {
         $this->app->singleton('flasher.notify', function (Container $app) {
             /** @phpstan-ignore-next-line */
-            $title = $app['config']->get('flasher_cli.title', null);
-            $icons = $app['config']->get('flasher_cli.icons', array()); // @phpstan-ignore-line
+            $title = $app->make('config')->get('flasher_cli.title', null);
+            $icons = $app->make('config')->get('flasher_cli.icons', array()); // @phpstan-ignore-line
 
             return new Notify($title, $icons);
         });
@@ -84,7 +84,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
     private function registerRenderListener()
     {
         /** @var FlasherInterface $flasher */
-        $flasher = $this->app['flasher'];
+        $flasher = $this->app->make('flasher');
         $this->app->extend('flasher.event_dispatcher', function (EventDispatcherInterface $dispatcher) use ($flasher) {
             $dispatcher->addSubscriber(new RenderListener($flasher));
 
@@ -98,7 +98,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
     private function registerPresenter()
     {
         $this->app->extend('flasher.response_manager', function (ResponseManagerInterface $manager, Container $app) {
-            $manager->addPresenter(CliPresenter::NAME, new CliPresenter($app['flasher.notify'])); // @phpstan-ignore-line
+            $manager->addPresenter(CliPresenter::NAME, new CliPresenter($app->make('flasher.notify'))); // @phpstan-ignore-line
 
             return $manager;
         });
