@@ -29,10 +29,19 @@ final class StorageManager implements StorageManagerInterface
      */
     private $eventDispatcher;
 
-    public function __construct(StorageInterface $storage = null, EventDispatcherInterface $eventDispatcher = null)
+    /**
+     * @var mixed[]
+     */
+    private $criteria = array();
+
+    /**
+     * @param mixed[] $criteria
+     */
+    public function __construct(StorageInterface $storage = null, EventDispatcherInterface $eventDispatcher = null, array $criteria = array())
     {
         $this->storage = $storage ?: new StorageBag();
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
+        $this->criteria = $criteria;
     }
 
     /**
@@ -48,6 +57,8 @@ final class StorageManager implements StorageManagerInterface
      */
     public function filter(array $criteria = array())
     {
+        $criteria = array_merge($this->criteria, $criteria);
+
         $criteria['delay'] = 0;
         // @phpstan-ignore-next-line
         $criteria['hops']['min'] = 1;
