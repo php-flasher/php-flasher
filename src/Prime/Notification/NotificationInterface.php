@@ -20,7 +20,7 @@ interface NotificationInterface
     public function getType();
 
     /**
-     * @param string $type
+     * @param string|null $type
      *
      * @return static
      */

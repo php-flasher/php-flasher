@@ -12,32 +12,54 @@ use PHPUnit\Framework\TestCase;
 
 final class ConfigTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testGet()
     {
-        $config = new Config(
-            array(
-                'default' => 'default_flasher',
-                'drivers' => array(
-                    'toastr' => array(
-                        'scripts' => array('script.js'),
-                        'styles' => array('styles.css'),
-                        'options' => array(),
-                    ),
+        /** @phpstan-ignore-next-line */
+        $config = new Config(array(
+            'default' => 'flasher',
+            'root_script' => 'flasher.min.js',
+            'themes' => array(
+                'flasher' => array(
+                    'scripts' => array('script.js'),
+                    'styles' => array('styles.css'),
+                    'options' => array(),
                 ),
-            )
-        );
-
-        $this->assertEquals('default_flasher', $config->get('default'));
-        $this->assertEquals(
-            array(
-                'scripts' => array('script.js'),
-                'styles' => array('styles.css'),
-                'options' => array(),
             ),
-            $config->get('drivers.toastr')
-        );
-        $this->assertEquals(array('styles.css'), $config->get('drivers.toastr.styles'));
-        $this->assertEquals(array(), $config->get('drivers.toastr.options'));
+            'auto_translate' => true,
+            'flash_bag' => array(
+                'enabled' => true,
+                'mapping' => array(
+                    'success' => array('success'),
+                    'error' => array('error'),
+                ),
+            ),
+            'presets' => array(
+                'success' => array(
+                    'type' => 'success',
+                    'title' => 'Success',
+                    'message' => 'Success message',
+                    'options' => array(),
+                ),
+                'error' => array(
+                    'type' => 'error',
+                    'title' => 'Error',
+                    'message' => 'Error message',
+                    'options' => array(),
+                ),
+            ),
+        ));
+
+        $this->assertEquals('flasher', $config->get('default'));
+        $this->assertEquals(array(
+            'scripts' => array('script.js'),
+            'styles' => array('styles.css'),
+            'options' => array(),
+        ), $config->get('themes.flasher'));
+        $this->assertEquals(array('styles.css'), $config->get('themes.flasher.styles'));
+        $this->assertEquals(array(), $config->get('themes.flasher.options'));
         $this->assertNull($config->get('drivers.not_exists.options'));
         $this->assertEquals('now_it_exists', $config->get('drivers.not_exists.options', 'now_it_exists'));
     }

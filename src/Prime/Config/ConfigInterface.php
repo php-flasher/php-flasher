@@ -7,6 +7,31 @@
 
 namespace Flasher\Prime\Config;
 
+/**
+ * @phpstan-type ConfigType array{
+ *   default: string,
+ *   root_script: string,
+ *   themes: array<string, array{
+ *      view: string,
+ *      styles: string[],
+ *      scripts: string[],
+ *      options: array<string, mixed>,
+ *   }>,
+ *   auto_render: bool,
+ *   auto_translate: bool,
+ *   search_criteria: array<string, mixed>,
+ *   flash_bag: array{
+ *      enabled: bool,
+ *      mapping: array<string, string[]>,
+ *   },
+ *   presets: array<string, array{
+ *      type: string,
+ *      title: string,
+ *      message: string,
+ *      options: array<string, mixed>,
+ *   }>,
+ * }
+ */
 interface ConfigInterface
 {
     /**

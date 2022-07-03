@@ -9,7 +9,7 @@ namespace Flasher\Symfony\Http;
 
 use Flasher\Prime\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class Request implements RequestInterface
 {
@@ -52,8 +52,9 @@ final class Request implements RequestInterface
      */
     public function hasType($type)
     {
-        /** @var FlashBagInterface $flashBag */
-        $flashBag = $this->request->getSession()->getFlashBag();
+        /** @var Session $session */
+        $session = $this->request->getSession();
+        $flashBag = $session->getFlashBag();
 
         return $flashBag->has($type);
     }
@@ -63,8 +64,9 @@ final class Request implements RequestInterface
      */
     public function getType($type)
     {
-        /** @var FlashBagInterface $flashBag */
-        $flashBag = $this->request->getSession()->getFlashBag();
+        /** @var Session $session */
+        $session = $this->request->getSession();
+        $flashBag = $session->getFlashBag();
 
         return $flashBag->get($type);
     }

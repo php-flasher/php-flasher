@@ -7,45 +7,17 @@
 
 namespace Flasher\Laravel\Component;
 
-use Flasher\Prime\FlasherInterface;
 use Illuminate\View\Component;
 
 class FlasherComponent extends Component
 {
     /**
-     * @var array<string, mixed>
-     */
-    public $criteria;
-
-    /**
-     * @var array<string, mixed>
-     */
-    public $context;
-
-    /**
-     * @var FlasherInterface
-     */
-    private $flasher;
-
-    /**
-     * @param array<string, mixed> $criteria
-     * @param array<string, mixed> $context
-     */
-    public function __construct(FlasherInterface $flasher, $criteria = null, $context = null)
-    {
-        $this->flasher = $flasher;
-        $this->criteria = $criteria;
-        $this->context = $context;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function render()
     {
-        $criteria = json_decode($this->criteria, true) ?: array();
-        $context = json_decode($this->context, true) ?: array();
+        @trigger_error('Since php-flasher/flasher-laravel v1.6.0: Using flasher blade component is deprecated and will be removed in v2.0. PHPFlasher will render notification automatically', \E_USER_DEPRECATED);
 
-        return $this->flasher->render($criteria, 'html', $context);
+        return '';
     }
 }

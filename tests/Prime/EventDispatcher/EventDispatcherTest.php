@@ -23,12 +23,18 @@ class EventDispatcherTest extends TestCase
 
     const postBar = 'post.bar';
 
+    /**
+     * @return void
+     */
     public function testInitialState()
     {
         $dispatcher = new EventDispatcher();
         $this->assertEquals(array(), $dispatcher->getListeners('fake_event'));
     }
 
+    /**
+     * @return void
+     */
     public function testAddListener()
     {
         $dispatcher = new EventDispatcher();
@@ -40,6 +46,9 @@ class EventDispatcherTest extends TestCase
         $this->assertCount(1, $dispatcher->getListeners(self::postFoo));
     }
 
+    /**
+     * @return void
+     */
     public function testDispatch()
     {
         $dispatcher = new EventDispatcher();
@@ -58,6 +67,9 @@ class EventDispatcherTest extends TestCase
         $this->assertEquals($event, $return);
     }
 
+    /**
+     * @return void
+     */
     public function testDispatchForClosure()
     {
         $dispatcher = new EventDispatcher();
@@ -74,6 +86,9 @@ class EventDispatcherTest extends TestCase
         $this->assertEquals(1, $invoked);
     }
 
+    /**
+     * @return void
+     */
     public function testStopEventPropagation()
     {
         $dispatcher = new EventDispatcher();

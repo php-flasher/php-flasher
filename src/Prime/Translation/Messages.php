@@ -9,6 +9,9 @@ namespace Flasher\Prime\Translation;
 
 final class Messages
 {
+    /**
+     * @var array<string, string>
+     */
     public static $ar = array(
         'success' => 'نجاح',
         'error' => 'خطأ',
@@ -23,6 +26,9 @@ final class Messages
         'resource' => 'الملف',
     );
 
+    /**
+     * @var array<string, string>
+     */
     public static $en = array(
         'success' => 'Success',
         'error' => 'Error',
@@ -37,6 +43,9 @@ final class Messages
         'resource' => 'resource',
     );
 
+    /**
+     * @var array<string, string>
+     */
     public static $fr = array(
         'success' => 'Succès',
         'error' => 'Erreur',

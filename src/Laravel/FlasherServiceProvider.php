@@ -22,16 +22,20 @@ use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Flasher;
+use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Http\RequestExtension;
 use Flasher\Prime\Http\ResponseExtension;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Storage\StorageBag;
 use Flasher\Prime\Storage\StorageManager;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Http\Kernel;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
 use Livewire\LivewireManager;
 use Livewire\Response;
@@ -80,7 +84,10 @@ final class FlasherServiceProvider extends ServiceProvider
     private function registerConfig()
     {
         $this->app->singleton('flasher.config', function (Application $app) {
-            return new Config($app['config']->get('flasher')); // @phpstan-ignore-line
+            /** @var Repository $config */
+            $config = $app->make('config');
+
+            return new Config($config->get('flasher', array())); // @phpstan-ignore-line
         });
     }
 
@@ -90,7 +97,11 @@ final class FlasherServiceProvider extends ServiceProvider
     private function registerFlasher()
     {
         $this->app->singleton('flasher', function (Application $app) {
-            return new Flasher($app['flasher.config']->get('default'), $app['flasher.response_manager'], $app['flasher.storage_manager']); // @phpstan-ignore-line
+            $config = $app->make('flasher.config');
+            $responseManager = $app->make('flasher.response_manager');
+            $storageManager = $app->make('flasher.storage_manager');
+
+            return new Flasher($config->get('default'), $responseManager, $storageManager); // @phpstan-ignore-line
         });
         $this->app->alias('flasher', 'Flasher\Prime\Flasher');
         $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
@@ -102,7 +113,10 @@ final class FlasherServiceProvider extends ServiceProvider
     private function registerResourceManager()
     {
         $this->app->singleton('flasher.resource_manager', function (Application $app) {
-            return new ResourceManager($app['flasher.config'], new BladeTemplateEngine($app['view'])); // @phpstan-ignore-line
+            $config = $app->make('flasher.config');
+            $view = $app->make('view');
+
+            return new ResourceManager($config, new BladeTemplateEngine($view)); // @phpstan-ignore-line
         });
     }
 
@@ -112,7 +126,11 @@ final class FlasherServiceProvider extends ServiceProvider
     private function registerResponseManager()
     {
         $this->app->singleton('flasher.response_manager', function (Application $app) {
-            return new ResponseManager($app['flasher.resource_manager'], $app['flasher.storage_manager'], $app['flasher.event_dispatcher']); // @phpstan-ignore-line
+            $resourceManager = $app->make('flasher.resource_manager');
+            $storageManager = $app->make('flasher.storage_manager');
+            $eventDispatcher = $app->make('flasher.event_dispatcher');
+
+            return new ResponseManager($resourceManager, $storageManager, $eventDispatcher); // @phpstan-ignore-line
         });
     }
 
@@ -122,7 +140,16 @@ final class FlasherServiceProvider extends ServiceProvider
     private function registerStorageManager()
     {
         $this->app->singleton('flasher.storage_manager', function (Application $app) {
-            return new StorageManager(new StorageBag(new SessionBag($app['session'])), $app['flasher.event_dispatcher']); // @phpstan-ignore-line
+            $config = $app->make('flasher.config');
+            $eventDispatcher = $app->make('flasher.event_dispatcher');
+            $session = $app->make('session');
+
+            /** @phpstan-ignore-next-line */
+            $storageBag = new StorageBag(new SessionBag($session));
+
+            $criteria = $config->get('filter_criteria', array()); // @phpstan-ignore-line
+
+            return new StorageManager($storageBag, $eventDispatcher, $criteria); // @phpstan-ignore-line
         });
     }
 
@@ -133,15 +160,19 @@ final class FlasherServiceProvider extends ServiceProvider
     {
         $this->app->singleton('flasher.event_dispatcher', function (Application $app) {
             $eventDispatcher = new EventDispatcher();
+            $config = $app->make('flasher.config');
 
-            $eventDispatcher->addSubscriber(new TranslationListener(
-                new Translator($app['translator']), // @phpstan-ignore-line
-                $app['flasher.config']->get('auto_translate') // @phpstan-ignore-line
-            ));
+            /** @phpstan-ignore-next-line */
+            $translator = new Translator($app->make('translator'));
 
-            $eventDispatcher->addSubscriber(new PresetListener(
-                $app['flasher.config']->get('presets', array()) // @phpstan-ignore-line
-            ));
+            /** @phpstan-ignore-next-line */
+            $autoTranslate = $config->get('auto_translate', true);
+
+            $translatorListener = new TranslationListener($translator, $autoTranslate);
+            $eventDispatcher->addSubscriber($translatorListener);
+
+            $presetListener = new PresetListener($config->get('presets', array())); // @phpstan-ignore-line
+            $eventDispatcher->addSubscriber($presetListener);
 
             return $eventDispatcher;
         });
@@ -153,7 +184,7 @@ final class FlasherServiceProvider extends ServiceProvider
     private function registerTranslations()
     {
         /** @var \Illuminate\Translation\Translator $translator */
-        $translator = $this->app['translator'];
+        $translator = $this->app->make('translator');
         $translator->addNamespace('flasher', __DIR__.'/Translation/lang');
     }
 
@@ -176,7 +207,11 @@ final class FlasherServiceProvider extends ServiceProvider
                 return;
             }
 
-            $data = app('flasher')->render(array(), 'array'); // @phpstan-ignore-line
+            /** @var FlasherInterface $flasher */
+            $flasher = app('flasher');
+
+            /** @var array{envelopes: Envelope[]} $data */
+            $data = $flasher->render(array(), 'array');
 
             if (\count($data['envelopes']) > 0) {
                 $data['context']['livewire'] = array(
@@ -194,72 +229,19 @@ final class FlasherServiceProvider extends ServiceProvider
 
     /**
      * @return void
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function registerBladeDirective()
     {
-        $startsWith = function ($haystack, $needle) {
-            return 0 === substr_compare($haystack, $needle, 0, \strlen($needle));
-        };
+        Blade::extend(function ($view) {
+            $pattern = '/(?<!\w)(\s*)@flasher_(livewire_)?render(\(.*?\))?/';
 
-        $endsWith = function ($haystack, $needle) {
-            return 0 === substr_compare($haystack, $needle, -\strlen($needle));
-        };
-
-        if (Laravel::isVersion('5.1', '>=')) {
-            Blade::directive('flasher_render', function ($criteria = array()) use ($startsWith, $endsWith) {
-                if (!empty($criteria) && $startsWith($criteria, '(') && $endsWith($criteria, ')')) {
-                    $criteria = substr($criteria, 1, -1);
-                }
-
-                return "<?php echo app('flasher')->render({$criteria}); ?>";
-            });
-
-            Blade::directive('flasher_livewire_render', function () {
-                @trigger_error('Since php-flasher/flasher-laravel v1.0: Using @flasher_livewire_render is deprecated and will be removed in v2.0. Use flasher_render instead.', \E_USER_DEPRECATED);
-
-                return '';
-            });
-
-            return;
-        }
-
-        if (Laravel::isVersion('5.0', '>=')) {
-            Blade::extend(function ($view, BladeCompiler $compiler) use ($startsWith, $endsWith) {
-                if (!method_exists($compiler, 'createPlainMatcher')) {
-                    return '';
-                }
-
-                $pattern = $compiler->createPlainMatcher('flasher_render(.*)');
-                $matches = array();
-
-                preg_match($pattern, $view, $matches);
-
-                $value = $matches[2];
-
-                if (!empty($value) && $startsWith($value, '(') && $endsWith($value, ')')) {
-                    $value = substr($value, 1, -1);
-                }
-
-                return str_replace(
-                    '%criteria%',
-                    $value,
-                    $matches[1]."<?php echo app('flasher')->render(%criteria%); ?>"
-                );
-            });
-
-            return;
-        }
-
-        Blade::extend(function ($view, BladeCompiler $compiler) {
-            if (!method_exists($compiler, 'createMatcher')) {
-                return '';
+            if (!preg_match($pattern, $view)) {
+                return $view;
             }
 
-            $pattern = $compiler->createMatcher('flasher_render');
+            @trigger_error('Since php-flasher/flasher-laravel v1.6.0: Using @flasher_render or @flasher_livewire_render is deprecated and will be removed in v2.0. PHPFlasher will render notification automatically', \E_USER_DEPRECATED);
 
-            return preg_replace($pattern, '$1<?php echo app(\'flasher\')->render$2; ?>', $view);
+            return preg_replace($pattern, '', $view);
         });
     }
 
@@ -272,15 +254,6 @@ final class FlasherServiceProvider extends ServiceProvider
             return;
         }
 
-        if (!$this->app->bound('blade.compiler')) {
-            return;
-        }
-
-        $compiler = $this->app->make('blade.compiler');
-        if (!method_exists($compiler, 'component')) {
-            return;
-        }
-
         Blade::component('flasher', 'Flasher\Laravel\Component\FlasherComponent');
     }
 
@@ -289,51 +262,8 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerMiddlewares()
     {
-        /** @var ConfigInterface $config */
-        $config = $this->app['flasher.config'];
-        $autoRender = $config->get('auto_render', true);
-        $autoFlash = $config->get('flash_bag.enabled', true);
-
-        if (true !== $autoFlash && true !== $autoRender) {
-            return;
-        }
-
-        $this->registerResponseExtension();
-        $this->registerRequestExtension();
-
-        if (true === $autoFlash) {
-            $this->registerSessionMiddleware();
-        }
-
-        if (true === $autoRender) {
-            $this->registerFlasherMiddleware();
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function registerResponseExtension()
-    {
-        $this->app->singleton('flasher.response_extension', function (Application $app) {
-            return new ResponseExtension($app['flasher']);
-        });
-    }
-
-    /**
-     * @return void
-     */
-    private function registerRequestExtension()
-    {
-        $this->app->singleton('flasher.request_extension', function (Application $app) {
-            /** @var ConfigInterface $config */
-            $config = $app['flasher.config'];
-            $mapping = $config->get('flash_bag.mapping', array());
-            $autoRender = $config->get('auto_render', true);
-            $responseExtension = true === $autoRender ? null : $app['flasher.response_extension'];
-
-            return new RequestExtension($app['flasher'], $mapping, $responseExtension);
-        });
+        $this->registerSessionMiddleware();
+        $this->registerFlasherMiddleware();
     }
 
     /**
@@ -341,14 +271,24 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerFlasherMiddleware()
     {
+        /** @var ConfigInterface $config */
+        $config = $this->app->make('flasher.config');
+
+        if (!$config->get('auto_render', true)) {
+            return;
+        }
+
         $this->app->singleton('Flasher\Laravel\Middleware\FlasherMiddleware', function (Application $app) {
-            return new FlasherMiddleware($app['flasher.response_extension']);
+            /** @var FlasherInterface $flasher */
+            $flasher = $app->make('flasher');
+
+            return new FlasherMiddleware(new ResponseExtension($flasher));
         });
 
         $this->appendMiddlewareToWebGroup('Flasher\Laravel\Middleware\FlasherMiddleware');
 
         if (method_exists($this->app, 'middleware')) {
-            $this->app->middleware(new HttpKernelFlasherMiddleware($this->app));
+            $this->app->middleware(new HttpKernelFlasherMiddleware($this->app)); // @phpstan-ignore-line
         }
     }
 
@@ -357,14 +297,26 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerSessionMiddleware()
     {
+        /** @var ConfigInterface $config */
+        $config = $this->app->make('flasher.config');
+
+        if (!$config->get('flash_bag.enabled', true)) {
+            return;
+        }
+
         $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) {
-            return new SessionMiddleware($app['flasher.request_extension']);
+            /** @var ConfigInterface $config */
+            $config = $app->make('flasher.config');
+            $mapping = $config->get('flash_bag.mapping', array());
+            $flasher = $app->make('flasher');
+
+            return new SessionMiddleware(new RequestExtension($flasher, $mapping)); // @phpstan-ignore-line
         });
 
         $this->appendMiddlewareToWebGroup('Flasher\Laravel\Middleware\SessionMiddleware');
 
         if (method_exists($this->app, 'middleware')) {
-            $this->app->middleware(new HttpKernelSessionMiddleware($this->app));
+            $this->app->middleware(new HttpKernelSessionMiddleware($this->app)); // @phpstan-ignore-line
         }
     }
 
@@ -379,8 +331,8 @@ final class FlasherServiceProvider extends ServiceProvider
             return;
         }
 
-        /** @var \Illuminate\Routing\Router $router */
-        $router = $this->app['router'];
+        /** @var Router $router */
+        $router = $this->app->make('router');
         if (method_exists($router, 'pushMiddlewareToGroup')) {
             $router->pushMiddlewareToGroup('web', $middleware);
 
@@ -391,8 +343,8 @@ final class FlasherServiceProvider extends ServiceProvider
             return;
         }
 
-        /** @var \Illuminate\Foundation\Http\Kernel $kernel */
-        $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
+        /** @var Kernel $kernel */
+        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
 
         if (method_exists($kernel, 'appendMiddlewareToGroup')) {
             $kernel->appendMiddlewareToGroup('web', $middleware);

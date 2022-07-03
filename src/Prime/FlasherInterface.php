@@ -53,6 +53,7 @@ interface FlasherInterface
      * @param array<string, mixed> $context
      *
      * @return mixed
+     * @phpstan-return ($presenter is 'html' ? string : mixed)
      */
     public function render(array $criteria = array(), $presenter = 'html', array $context = array());
 }

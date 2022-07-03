@@ -13,6 +13,9 @@ use PHPUnit\Framework\TestCase;
 
 final class HandlerStampTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();

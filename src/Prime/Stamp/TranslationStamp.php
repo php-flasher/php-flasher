@@ -64,9 +64,6 @@ final class TranslationStamp implements StampInterface
             @trigger_error('Since php-flasher/flasher v1.4, passing the locale as first parameter is deprecated and will be removed in v2.0. Use the second parameter instead.', \E_USER_DEPRECATED);
         }
 
-        return array(
-            'parameters' => $parameters,
-            'locale' => $locale,
-        );
+        return array('parameters' => $parameters, 'locale' => $locale); // @phpstan-ignore-line
     }
 }

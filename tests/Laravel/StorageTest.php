@@ -16,12 +16,18 @@ use Flasher\Prime\Storage\StorageBag;
 
 final class StorageTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testInitialState()
     {
         $storage = $this->getStorage();
         $this->assertEquals(array(), $storage->all());
     }
 
+    /**
+     * @return void
+     */
     public function testAddEnvelope()
     {
         $storage = $this->getStorage();
@@ -31,6 +37,9 @@ final class StorageTest extends TestCase
         $this->assertEquals(UuidStamp::indexByUuid($envelope), $storage->all());
     }
 
+    /**
+     * @return void
+     */
     public function testAddMultipleEnvelopes()
     {
         $storage = $this->getStorage();
@@ -43,6 +52,9 @@ final class StorageTest extends TestCase
         $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateEnvelopes()
     {
         $storage = $this->getStorage();
@@ -68,6 +80,9 @@ final class StorageTest extends TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveEnvelopes()
     {
         $storage = $this->getStorage();
@@ -87,6 +102,9 @@ final class StorageTest extends TestCase
         $this->assertEquals(UuidStamp::indexByUuid($envelopes[0]), $storage->all());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveMultipleEnvelopes()
     {
         $storage = $this->getStorage();
@@ -106,6 +124,9 @@ final class StorageTest extends TestCase
         $this->assertEquals(array(), $storage->all());
     }
 
+    /**
+     * @return void
+     */
     public function testClearAllEnvelopes()
     {
         $storage = $this->getStorage();
@@ -125,8 +146,14 @@ final class StorageTest extends TestCase
         $this->assertEquals(array(), $storage->all());
     }
 
+    /**
+     * @return StorageBag
+     */
     private function getStorage()
     {
-        return new StorageBag(new SessionBag($this->app->make('session')));
+        /** @var \Illuminate\Session\Store $session */
+        $session = $this->app->make('session');
+
+        return new StorageBag(new SessionBag($session));
     }
 }

@@ -8,37 +8,17 @@
 namespace Flasher\Prime\Config;
 
 /**
- * @phpstan-type ConfigType array{
- *   default: string,
- *   root_script: string,
- *   themes: array<string, array{
- *      view: string,
- *      styles: string[],
- *      scripts: string[],
- *      options: array<string, mixed>,
- *   }>,
- *   auto_translate: bool,
- *   flash_bag?: array{
- *      enabled: bool,
- *      mapping: array<string, string>,
- *   },
- *   presets: array<string, array{
- *      type: string,
- *      title: string,
- *      message: string,
- *      options: array<string, mixed>,
- *   }>,
- * }
+ * @phpstan-import-type ConfigType from ConfigInterface
  */
 final class Config implements ConfigInterface
 {
     /**
-     * @phpstan-var ConfigType
+     * @phpstan-var array{}|ConfigType
      */
     private $config;
 
     /**
-     * @phpstan-param ConfigType $config
+     * @phpstan-param array{}|ConfigType $config
      */
     public function __construct(array $config = array())
     {
@@ -57,7 +37,7 @@ final class Config implements ConfigInterface
                 return $default;
             }
 
-            $data = $data[$segment]; // @phpstan-ignore-line
+            $data = $data[$segment];
         }
 
         return $data;

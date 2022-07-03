@@ -25,6 +25,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherExtensionTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testContainerContainFlasherServices()
     {
         $container = $this->getContainer();
@@ -37,6 +40,9 @@ class FlasherExtensionTest extends TestCase
         $this->assertTrue($container->has('flasher.toastr'));
     }
 
+    /**
+     * @return ContainerBuilder
+     */
     private function getContainer()
     {
         $container = new ContainerBuilder();
@@ -64,7 +70,7 @@ class FlasherExtensionTest extends TestCase
         );
 
         foreach ($bundles as $bundle) {
-            $bundle->build($container);
+            $bundle->build($container); // @phpstan-ignore-line
         }
 
         $container->getCompilerPassConfig()->setOptimizationPasses(array());

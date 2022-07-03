@@ -12,6 +12,9 @@ use Flasher\Tests\Prime\TestCase;
 
 class TranslatorTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testInitialState()
     {
         $translator = $this->getTranslator();
