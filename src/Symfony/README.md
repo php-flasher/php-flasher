@@ -1,55 +1,111 @@
-<p align="center"><img width="600" alt="flasher" src="https://user-images.githubusercontent.com/10859693/102468596-03317180-4052-11eb-9df3-44dc6235b238.png"></p>
-
-<h1 align="center">A powerful and flexible flash notifications system for PHP, Laravel, Symfony</h1>
-
 <p align="center">
-    :eyes: PHP Flasher helps you to add flash notifications to your PHP projects. 
-    This library was developed with the idea that you should be able to add flash notification to your application with ease and with few lines of code. 
-    No application-wide rewrites and no big investments upfront.
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-logo-dark.svg">
+      <img  width="600" src="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-logo.svg" alt="PHPFlasher Logo">
+    </picture>
 </p>
 
-<p align="center">
-    <a href="https://github.com/php-flasher/flasher">
-        <img src="https://img.shields.io/badge/source-php--flasher/flasher-blue.svg?style=flat-square">
-    </a>
-    <a href="https://github.com/php-flasher/flasher/releases">
-        <img src="https://img.shields.io/github/tag/php-flasher/flasher.svg">
-    </a>
-    <a href="https://github.com/php-flasher/flasher/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg">
-    </a>
-    <a href="https://packagist.org/packages/php-flasher/flasher">
-        <img src="https://img.shields.io/packagist/dt/php-flasher/flasher.svg">
-    </a>
-    <a href="https://packagist.org/packages/php-flasher/flasher">
-        <img src="https://img.shields.io/packagist/php-v/php-flasher/flasher.svg?style=flat-square">
-    </a>
-</p>
-
-# Why use PHP Flasher ?
-
-The PHP Flasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __toastr.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
-and its highly extendable so you can add your custom notifications.
-
-This library is designed, so you can take full control when creating you notifications :
-
-> * Display multiple notifications
-> * Sort and filter notifications
-> * Render notification from JSON object
-> * Limit the number of displayed notifications
-> * Show notifications from different libraries at the same time
-> * Framework angostic with integration for : Symfony and Laravel
-> * Support templates
-> * Easy migration from similar libraries.
-> * Very flexible so you can add you own adapters
-> * ...and more
-
+<p align="center">Flexible flash notifications system for Symfony</p>
 
 ## Official Documentation
 
 Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.io).
 
-### Contact
+## Introduction
+
+PHPFlasher offers a solid integration with the Symfony framework, with supports from Symfony 2.0 to 6.
+
+## Install
+
+You can install the PHPFlasher Symfony bundle using composer.
+This is the base package for all Symfony adapters (toastr, sweetalert, notyf ..etc).
+
+```shell
+composer require php-flasher/flasher-symfony
+```
+
+If you are using  Symfony version 4+ the bundle will be registered automatically in `config/bundles.php`, otherwise enable the bundle in the kernel:
+
+```php
+public function registerBundles()
+{
+    $bundles = [
+        // ...
+        new Flasher\Symfony\FlasherSymfonyBundle(),
+        // ...
+    ];
+}
+```
+
+## Usage
+
+The usage of this bundle is very simple and straightforward. it only required **one** step to use it and does not
+require anything to be included in your views: 
+
+Use `FlasherInterface` service inside your controller to set a toast notification for `info`, `success`, `warning` or `error`
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Flasher\Prime\FlasherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+
+class BookController extends AbstractController
+{
+    public function save(FlasherInterface $flasher): Response
+    {
+        // ...
+
+        $flasher->addSuccess('Book saved successfully');
+
+        return $this->render('book/index.html.twig');
+    }
+}
+```
+
+Basic api methods: 
+
+- `flash()->addSuccess('Data has been saved successfully!')`
+- `flash()->addError('Oops! An error has occurred.')`
+- `flash()->addWarning('Are you sure you want to delete this item?')`
+- `flash()->addInfo('Welcome to the site!')`
+
+
+By default `PHPFlasher` show its default notification style.
+To use another adapter, use the `create()` method or its Factory service :
+
+```php
+class PostController
+{
+   public function create(FlasherInterface $flasher): Response
+   {
+      $flasher
+         ->error('An error has occurred, please try again later.')
+         ->priority(3)
+         ->flash();
+   }
+
+   public function edit(FlasherInterface $flasher): Response
+   {
+      $toastr = $flasher->create('toastr'); // You need to require php-flasher/flasher-toastr-symfony
+      $toastr->addSuccess('This notification will be rendered using the toastr adapter');
+   }
+
+   public function update(ToastrFactory $toastr): Response
+   {
+      $toastr
+         ->title('Oops...')
+         ->warning('Something went wrong!')
+         ->timeOut(3000)
+         ->progressBar()
+         ->flash();
+   }
+}
+```
+## Contact
 
 PHP Flasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. You can reach out with questions, bug reports, or feature requests 
 on any of the following:
@@ -64,4 +120,4 @@ on any of the following:
 
 PHP Flasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-khoubza/">Younes KHOUBZA</a> <b> </p>
+<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-khoubza/">Younes KHOUBZA</a> </b> </p>
