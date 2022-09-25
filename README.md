@@ -1,4 +1,4 @@
-<p align="center"><img width="600" alt="flasher" src="https://user-images.githubusercontent.com/10859693/102468596-03317180-4052-11eb-9df3-44dc6235b238.png"></p>
+<p align="center"><img width="600" alt="flasher" src="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-logo-dark.svg"></p>
 
 <h1 align="center">A powerful and flexible flash notifications system for PHP, Laravel, Symfony</h1>
 
