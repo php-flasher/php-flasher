@@ -1,12 +1,23 @@
-<p align="center"><img width="600" alt="flasher" src="https://user-images.githubusercontent.com/10859693/102468596-03317180-4052-11eb-9df3-44dc6235b238.png"></p>
-
-<h1 align="center">A powerful and flexible flash notifications system for PHP, Laravel, Symfony</h1>
-
 <p align="center">
-    :eyes: PHP Flasher helps you to add flash notifications to your PHP projects. 
-    This library was developed with the idea that you should be able to add flash notification to your application with ease and with few lines of code. 
-    No application-wide rewrites and no big investments upfront.
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-logo-dark.svg">
+      <img  width="600" src="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-logo.svg" alt="PHPFlasher Logo">
+    </picture>
 </p>
+
+<p align="center">Flexible flash notifications system for Laravel</p>
+
+
+Flash messages are a great way to add some simple notifications to users of your website or application about important events that may have happened.
+
+PHPFlasher gives a straightforward way to give feedback messages in the current or the next page to users with a flashing system.
+
+The flashing system basically makes it possible to record a message and store it within the session so that it can be retrieved when needed.
+
+
+## Official Documentation
+
+Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.io).
 
 <p align="center">
     <a href="https://github.com/php-flasher/flasher">
