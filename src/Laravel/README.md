@@ -109,10 +109,10 @@ class PostController extends Controller
 
 Basic api methods: 
 
-- `flash()->addSuccess('Data has been saved successfully!')`
-- `flash()->addError('Oops! An error has occurred.')`
-- `flash()->addWarning('Are you sure you want to delete this item?')`
-- `flash()->addInfo('Welcome to the site!')`
+- `flash()->addSuccess('Data has been saved successfully!');`
+- `flash()->addError('Oops! An error has occurred.');`
+- `flash()->addWarning('Are you sure you want to delete this item?');`
+- `flash()->addInfo('Welcome to the site!');`
 
 ## Contact
 
