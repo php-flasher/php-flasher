@@ -24,24 +24,6 @@ This is the base package for all Laravel adapters (toastr, sweetalert, notyf ..e
 composer require php-flasher/flasher-laravel
 ```
 
-Then add the service provider to `config/app.php`.
-
-> in Laravel version 5.5 and beyond this step can be skipped if package auto-discovery is enabled.
-
-```php
-'providers' => [
-    ...
-    Flasher\Laravel\FlasherServiceProvider::class,
-    ...
-];
-```
-
-Optionally include the Facade in `config/app.php`.
-
-```php
-'Flasher' => Flasher\Laravel\Facade\Flasher::class,
-```
-
 ## Usage
 
 The usage of this package is very simple and straightforward. it only required **one** step to use it and does not
@@ -113,6 +95,26 @@ Basic api methods:
 - `flash()->addError('Oops! An error has occurred.');`
 - `flash()->addWarning('Are you sure you want to delete this item?');`
 - `flash()->addInfo('Welcome to the site!');`
+
+## Laravel service provider if Laravel version < 5.5
+
+> in Laravel version 5.5 and beyond this step can be skipped if package auto-discovery is enabled.
+
+Add the service provider to `config/app.php`.
+
+```php
+'providers' => [
+    ...
+    Flasher\Laravel\FlasherServiceProvider::class,
+    ...
+];
+```
+
+Optionally include the Facade in `config/app.php`.
+
+```php
+'Flasher' => Flasher\Laravel\Facade\Flasher::class,
+```
 
 ## Contact
 
