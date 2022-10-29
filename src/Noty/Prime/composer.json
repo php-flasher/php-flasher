@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-noty",
-    "description": "PHP Flasher adapter for Noty",
+    "description": "PHPFlasher adapter for Noty",
     "type": "library",
     "keywords": ["notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "noty "],
     "homepage": "https://php-flasher.io",

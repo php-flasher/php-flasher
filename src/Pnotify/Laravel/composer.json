@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-pnotify-laravel",
-    "description": "PHP Flasher Laravel adapter for Pnotify",
+    "description": "PHPFlasher Laravel adapter for Pnotify",
     "type": "library",
     "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
     "homepage": "https://php-flasher.io",

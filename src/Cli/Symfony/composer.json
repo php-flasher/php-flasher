@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-cli-symfony",
     "type": "symfony-bundle",
-    "description": "PHP Flasher Symfony adapter for Cli Console Terminal",
+    "description": "PHPFlasher Symfony adapter for Cli Console Terminal",
     "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "console", "cli", "terminal", "bundle", "flex"],
     "homepage": "https://php-flasher.io",
     "authors": [

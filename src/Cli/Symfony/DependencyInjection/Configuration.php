@@ -28,7 +28,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('title')
-                    ->defaultValue('PHP Flasher')
+                    ->defaultValue('PHPFlasher')
                 ->end()
                 ->arrayNode('icons')
                     ->prototype('variable')->end()

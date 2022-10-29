@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-sweetalert-laravel",
-    "description": "PHP Flasher Laravel adapter for Sweet Alert 2",
+    "description": "PHPFlasher Laravel adapter for Sweet Alert 2",
     "type": "library",
     "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex", "sweet alert"],
     "homepage": "https://php-flasher.io",

@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-notyf",
-    "description": "PHP Flasher adapter for Notyf",
+    "description": "PHPFlasher adapter for Notyf",
     "type": "library",
     "keywords": ["notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "Sweet Alert", "notyf"],
     "homepage": "https://php-flasher.io",

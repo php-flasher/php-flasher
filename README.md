@@ -5,8 +5,7 @@
     </picture>
 </p>
 
-<p align="center">Flexible flash notifications system for Laravel</p>
-
+<p align="center">Flexible flash notifications system for PHP</p>
 
 Flash messages are a great way to add some simple notifications to users of your website or application about important events that may have happened.
 
@@ -17,7 +16,7 @@ The flashing system basically makes it possible to record a message and store it
 
 ## Official Documentation
 
-Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.io).
+Documentation for PHPFlasher can be found on the [PHPFlasher website](https://php-flasher.io).
 
 <p align="center">
     <a href="https://github.com/php-flasher/flasher">
@@ -37,9 +36,9 @@ Documentation for PHP Flasher can be found on the [PHP Flasher website](https://
     </a>
 </p>
 
-# Why use PHP Flasher ?
+# Why use PHPFlasher ?
 
-The PHP Flasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __toastr.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
+The PHPFlasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __toastr.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
 and its highly extendable so you can add your custom notifications.
 
 This library is designed, so you can take full control when creating you notifications :
@@ -58,11 +57,11 @@ This library is designed, so you can take full control when creating you notific
 
 ## Official Documentation
 
-Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.io).
+Documentation for PHPFlasher can be found on the [PHPFlasher website](https://php-flasher.io).
 
 ### Contact
 
-PHP Flasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. You can reach out with questions, bug reports, or feature requests 
+PHPFlasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. You can reach out with questions, bug reports, or feature requests 
 on any of the following:
 
 - [Github Issues](https://github.com/php-flasher/flasher/issues) 
@@ -73,6 +72,6 @@ on any of the following:
 
 ## License
 
-PHP Flasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 <p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-khoubza/">Younes KHOUBZA</a> <b> </p>

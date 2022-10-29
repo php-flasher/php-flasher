@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-symfony",
     "type": "symfony-bundle",
-    "description": "Symfony bundle integrating PHP Flasher into Symfony applications",
+    "description": "Symfony bundle integrating PHPFlasher into Symfony applications",
     "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
     "homepage": "https://php-flasher.io",
     "authors": [

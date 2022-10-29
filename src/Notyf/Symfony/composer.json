@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-notyf-symfony",
     "type": "symfony-bundle",
-    "description": "PHP Flasher Symfony adapter for Notyf",
+    "description": "PHPFlasher Symfony adapter for Notyf",
     "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "notyf ", "toastr", "bundle", "flex", "notyf"],
     "homepage": "https://php-flasher.io",
     "authors": [
