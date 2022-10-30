@@ -13,12 +13,12 @@ Documentation for PHPFlasher can be found on the [PHPFlasher website](https://ph
 
 ## Introduction
 
-PHPFlasher offers a solid integration with the Laravel framework, with supports from Laravel 4.0 to 9.
+PHPFlasher offers a solid integration with the Laravel framework to display flash toast messages, with supports for Laravel 4.0 to 9.
 
 ## Install
 
 You can install the PHPFlasher Laravel package using composer.
-This is the base package for all Laravel adapters (toastr, sweetalert, notyf ..etc).
+This is the base package for all Laravel adapters ([__toastr.js__](https://php-flasher.io/docs/adapter/toastr/), [__sweetalert 2__](https://php-flasher.io/docs/adapter/sweetalert/), [__pnotify__](https://php-flasher.io/docs/adapter/pnotify/), [__noty__](https://php-flasher.io/docs/adapter/noty/) and [__notyf__](https://php-flasher.io/docs/adapter/notyf/)).
 
 ```shell
 composer require php-flasher/flasher-laravel
@@ -26,10 +26,10 @@ composer require php-flasher/flasher-laravel
 
 ## Usage
 
-The usage of this package is very simple and straightforward. it only required **one** step to use it and does not
-require anything to be included in your views: 
+The usage of this package is very simple and straight forward. it only required **one** step to use it and does not
+require anything to be included in your views:
 
-Use `flash()` helper function inside your controller to set a toast notification for `info`, `success`, `warning` or `error`
+Use `flash()` helper function anywhere from you application to dispatch you notifications :  `info`, `success`, `warning` or `error`
 
 ```php
 <?php
@@ -59,7 +59,7 @@ class PostController extends Controller
 }
 ```
 
-If you prefer to use depencny injection, you can use the `FlasherInterface` instead:
+If you prefer to use dependency injection, you can use the `FlasherInterface` instead:
 
 ```php
 <?php
@@ -115,6 +115,8 @@ Optionally include the Facade in `config/app.php`.
 ```php
 'Flasher' => Flasher\Laravel\Facade\Flasher::class,
 ```
+
+For more details please visit PHPFlasher [Documentation](https://php-flasher.io).
 
 ## Contact
 
