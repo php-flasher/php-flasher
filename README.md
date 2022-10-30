@@ -38,20 +38,19 @@ Documentation for PHPFlasher can be found on the [PHPFlasher website](https://ph
 
 # Why use PHPFlasher ?
 
-The PHPFlasher project supports many notification libraries : __tailwindcss__, __bootstrap__, __toastr.js__, __sweet alert 2__, __pnotify__, __noty__, and __notyf__
+The PHPFlasher project supports many notification libraries : [__toastr.js__](https://php-flasher.io/docs/adapter/toastr/), [__sweetalert 2__](https://php-flasher.io/docs/adapter/sweetalert/), [__pnotify__](https://php-flasher.io/docs/adapter/pnotify/), [__noty__](https://php-flasher.io/docs/adapter/noty/) and [__notyf__](https://php-flasher.io/docs/adapter/notyf/)
 and its highly extendable so you can add your custom notifications.
 
 This library is designed, so you can take full control when creating you notifications :
 
-> * Display multiple notifications
-> * Sort and filter notifications
-> * Render notification from JSON object
-> * Limit the number of displayed notifications
-> * Show notifications from different libraries at the same time
-> * Framework angostic with integration for : Symfony and Laravel
-> * Support templates
-> * Easy migration from similar libraries.
-> * Very flexible so you can add you own adapters
+> * Show various notifications simultaneously
+> * Render notification easily from javascript with small footprint
+> * LTR and Dark-mode support
+> * Limit the amount of displayed notifications
+> * Show Desktop notifications for Linux, macOS and Windows
+> * Framework-agnostic with implementations for: Symfony and Laravel
+> * Autocomplete for PHPSTORM
+> *  You can always create an adapter yourself
 > * ...and more
 
 
