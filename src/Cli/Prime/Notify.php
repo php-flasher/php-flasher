@@ -47,7 +47,7 @@ final class Notify extends BaseNotifier
      * @param string|null                                                                     $title
      * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
      */
-    public function __construct($title = 'PHP Flasher', $icons = array())
+    public function __construct($title = 'PHPFlasher', $icons = array())
     {
         $this->title = $title;
         $this->icons = $this->configureIcons($icons);

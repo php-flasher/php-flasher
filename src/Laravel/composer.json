@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-laravel",
-    "description": "Laravel package integrating PHP Flasher into Laravel applications",
+    "description": "Laravel package integrating PHPFlasher into Laravel applications",
     "type": "library",
     "keywords": ["yoeunes", "notify", "flasher", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
     "homepage": "https://php-flasher.io",

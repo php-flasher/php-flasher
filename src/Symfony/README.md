@@ -9,7 +9,7 @@
 
 ## Official Documentation
 
-Documentation for PHP Flasher can be found on the [PHP Flasher website](https://php-flasher.io).
+Documentation for PHPFlasher can be found on the [PHPFlasher website](https://php-flasher.io).
 
 ## Introduction
 
@@ -107,7 +107,7 @@ class PostController
 ```
 ## Contact
 
-PHP Flasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. You can reach out with questions, bug reports, or feature requests 
+PHPFlasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. You can reach out with questions, bug reports, or feature requests 
 on any of the following:
 
 - [Github Issues](https://github.com/php-flasher/flasher/issues) 
@@ -118,6 +118,6 @@ on any of the following:
 
 ## License
 
-PHP Flasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 <p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-khoubza/">Younes KHOUBZA</a> </b> </p>

@@ -47,7 +47,7 @@ then
     VERSION="v$VERSION"
 fi
 
-# Tag PHP Flasher
+# Tag PHPFlasher
 git tag "$VERSION"
 git push origin --tags --force
 

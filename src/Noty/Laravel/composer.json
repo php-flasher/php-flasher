@@ -1,7 +1,7 @@
 {
     "name": "php-flasher/flasher-noty-laravel",
     "type": "library",
-    "description": "PHP Flasher Laravel adapter for Noty",
+    "description": "PHPFlasher Laravel adapter for Noty",
     "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "noty ", "bundle", "flex"],
     "homepage": "https://php-flasher.io",
     "authors": [

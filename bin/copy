@@ -5,7 +5,6 @@ $shared = realpath(__DIR__.'/../.shared');
 
 $resources = array(
     $shared,
-
    //  __DIR__.'/../.github/ISSUE_TEMPLATE/',
     __DIR__.'/../.github/FUNDING.yml',
     // __DIR__.'/../README.md',
