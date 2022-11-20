@@ -17,8 +17,7 @@ class PnotifyPlugin extends Plugin
     public function getScripts()
     {
         return array(
-            'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.1.1/dist/flasher-pnotify.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.2.3/dist/flasher-pnotify.min.js',
         );
     }
 }

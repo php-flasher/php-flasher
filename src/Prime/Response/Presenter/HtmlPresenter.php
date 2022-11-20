@@ -31,7 +31,7 @@ final class HtmlPresenter implements PresenterInterface
         $placeHolder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
 
         return <<<JAVASCRIPT
-<script type="text/javascript">
+<script type="text/javascript" class="flasher-js">
 (function() {
     var rootScript = '{$rootScript}';
     var {$placeHolder} = {};
@@ -63,7 +63,9 @@ final class HtmlPresenter implements PresenterInterface
             return;
         }
 
-        window.flasher.render(options);
+        requestAnimationFrame(function () {
+            window.flasher.render(options);
+        });
     }
 
     function render(options) {
@@ -78,9 +80,11 @@ final class HtmlPresenter implements PresenterInterface
         });
     }
 
-    document.addEventListener('flasher:render', function (event) {
-        render(event.detail);
-    });
+    if (1 === document.querySelectorAll('script.flasher-js').length) {
+        document.addEventListener('flasher:render', function (event) {
+            render(event.detail);
+        });
+    }
 
     if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
         render(options);

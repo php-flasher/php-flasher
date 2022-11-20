@@ -17,8 +17,8 @@ class ToastrPlugin extends Plugin
     public function getScripts()
     {
         return array(
-            'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.1.1/dist/flasher-toastr.min.js',
+            'https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.2.3/dist/flasher-toastr.min.js',
         );
     }
 }
