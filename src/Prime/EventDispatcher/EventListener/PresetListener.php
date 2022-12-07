@@ -38,9 +38,9 @@ final class PresetListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws PresetNotFoundException
-     *
      * @return void
+     *
+     * @throws PresetNotFoundException
      */
     public function __invoke(PersistEvent $event)
     {
@@ -58,9 +58,9 @@ final class PresetListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws PresetNotFoundException
-     *
      * @return void
+     *
+     * @throws PresetNotFoundException
      */
     private function attachPresets(Envelope $envelope)
     {

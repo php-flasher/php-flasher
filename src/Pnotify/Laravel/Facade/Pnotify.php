@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static PnotifyBuilder with(StampInterface[] $stamps = array())
  * @method static PnotifyBuilder withStamp(StampInterface $stamp)
  * @method static PnotifyBuilder handler(string $handler)
- * @method static Envelope getEnvelope()
+ * @method static Envelope       getEnvelope()
  * @method static PnotifyBuilder title(bool|string $title)
  * @method static PnotifyBuilder titleEscape(bool $titleEscape = true)
  * @method static PnotifyBuilder text(string $text)

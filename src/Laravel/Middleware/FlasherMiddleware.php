@@ -7,7 +7,6 @@
 
 namespace Flasher\Laravel\Middleware;
 
-use Closure;
 use Flasher\Laravel\Http\Request;
 use Flasher\Laravel\Http\Response;
 use Flasher\Prime\Http\ResponseExtension;
@@ -29,7 +28,7 @@ final class FlasherMiddleware
     /**
      * @return LaravelResponse
      */
-    public function handle(LaravelRequest $request, Closure $next)
+    public function handle(LaravelRequest $request, \Closure $next)
     {
         /** @var LaravelResponse $response */
         $response = $next($request);

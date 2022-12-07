@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotificationBuilder with(StampInterface[] $stamps = array())
  * @method static NotificationBuilder withStamp(StampInterface $stamp)
  * @method static NotificationBuilder handler(string $handler)
- * @method static Envelope getEnvelope()
+ * @method static Envelope            getEnvelope()
  */
 class Flasher extends Facade
 {

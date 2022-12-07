@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotyBuilder with(StampInterface[] $stamps = array())
  * @method static NotyBuilder withStamp(StampInterface $stamp)
  * @method static NotyBuilder handler(string $handler)
- * @method static Envelope getEnvelope()
+ * @method static Envelope    getEnvelope()
  * @method static NotyBuilder text(string $text)
  * @method static NotyBuilder alert(string $message = null, array $options = array())
  * @method static NotyBuilder layout(string $layout)

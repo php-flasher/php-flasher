@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static ToastrBuilder with(StampInterface[] $stamps = array())
  * @method static ToastrBuilder withStamp(StampInterface $stamp)
  * @method static ToastrBuilder handler(string $handler)
- * @method static Envelope getEnvelope()
+ * @method static Envelope      getEnvelope()
  * @method static ToastrBuilder title(string $title)
  * @method static ToastrBuilder closeButton(bool $closeButton = true)
  * @method static ToastrBuilder closeClass(string $closeClass)
