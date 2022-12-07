@@ -7,14 +7,10 @@
 
 namespace Flasher\Prime\Stamp;
 
-use DateTime;
-use DateTimeZone;
-use Exception;
-
 final class CreatedAtStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
 {
     /**
-     * @var DateTime
+     * @var \DateTime
      */
     private $createdAt;
 
@@ -26,16 +22,16 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface, P
     /**
      * @param string|null $format
      *
-     * @throws Exception
+     * @throws \Exception
      */
-    public function __construct(DateTime $createdAt = null, $format = null)
+    public function __construct(\DateTime $createdAt = null, $format = null)
     {
-        $this->createdAt = $createdAt ?: new DateTime('now', new DateTimeZone('Africa/Casablanca'));
+        $this->createdAt = $createdAt ?: new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
         $this->format = $format ?: 'Y-m-d H:i:s';
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {

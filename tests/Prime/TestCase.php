@@ -7,8 +7,6 @@
 
 namespace Flasher\Tests\Prime;
 
-use ReflectionClass;
-
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -35,13 +33,13 @@ class TestCase extends \PHPUnit\Framework\TestCase
      * @param string      $methodName method name to call
      * @param array|mixed $parameters array of parameters to pass into method
      *
-     * @throws \ReflectionException
-     *
      * @return mixed method return
+     *
+     * @throws \ReflectionException
      */
     protected function callMethod(&$object, $methodName, $parameters = array())
     {
-        $reflection = new ReflectionClass(\get_class($object));
+        $reflection = new \ReflectionClass(\get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 

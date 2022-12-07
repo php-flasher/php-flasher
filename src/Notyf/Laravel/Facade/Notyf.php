@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotyfBuilder with(StampInterface[] $stamps = array())
  * @method static NotyfBuilder withStamp(StampInterface $stamp)
  * @method static NotyfBuilder handler(string $handler)
- * @method static Envelope getEnvelope()
+ * @method static Envelope     getEnvelope()
  * @method static NotyfBuilder duration(int $duration)
  * @method static NotyfBuilder ripple(bool $ripple)
  * @method static NotyfBuilder position(string $position, string $value)

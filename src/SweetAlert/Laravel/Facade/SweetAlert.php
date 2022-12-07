@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static SweetAlertBuilder with(StampInterface[] $stamps = array())
  * @method static SweetAlertBuilder withStamp(StampInterface $stamp)
  * @method static SweetAlertBuilder handler(string $handler)
- * @method static Envelope getEnvelope()
+ * @method static Envelope          getEnvelope()
  * @method static SweetAlertBuilder question(string $message = null, array $options = array())
  * @method static SweetAlertBuilder title(string $title)
  * @method static SweetAlertBuilder titleText(string $titleText)

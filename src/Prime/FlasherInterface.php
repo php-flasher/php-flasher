@@ -20,9 +20,9 @@ interface FlasherInterface
      *
      * @param string|null $alias
      *
-     * @throws \InvalidArgumentException
-     *
      * @return NotificationFactoryInterface
+     *
+     * @throws \InvalidArgumentException
      */
     public function create($alias = null);
 
@@ -31,9 +31,9 @@ interface FlasherInterface
      *
      * @param string|null $alias
      *
-     * @throws \InvalidArgumentException
-     *
      * @return NotificationFactoryInterface
+     *
+     * @throws \InvalidArgumentException
      */
     public function using($alias);
 
@@ -53,6 +53,7 @@ interface FlasherInterface
      * @param array<string, mixed> $context
      *
      * @return mixed
+     *
      * @phpstan-return ($presenter is 'html' ? string : mixed)
      */
     public function render(array $criteria = array(), $presenter = 'html', array $context = array());
