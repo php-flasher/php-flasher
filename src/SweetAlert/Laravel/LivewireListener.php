@@ -26,7 +26,7 @@ final class LivewireListener implements EventSubscriberInterface
             return;
         }
 
-        if (false === strripos($response, '<script type="text/javascript">')) {
+        if (false === strripos($response, '<script type="text/javascript" class="flasher-js">')) {
             return;
         }
 
