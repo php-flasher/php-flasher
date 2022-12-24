@@ -17,8 +17,14 @@ class ToastrPlugin extends Plugin
     public function getScripts()
     {
         return array(
-            'https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js',
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.2.3/dist/flasher-toastr.min.js',
+            'cdn' => array(
+                'https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.2.3/dist/flasher-toastr.min.js',
+            ),
+            'local' => array(
+                '/vendor/flasher/jquery.min.js',
+                '/vendor/flasher/flasher-toastr.min.js',
+            ),
         );
     }
 }

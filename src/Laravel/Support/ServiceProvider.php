@@ -37,6 +37,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
+        $this->registerPublishing();
         $this->registerFactory();
         $this->afterBoot();
     }
@@ -44,7 +45,107 @@ abstract class ServiceProvider extends BaseServiceProvider
     /**
      * @return PluginInterface
      */
-    abstract protected function createPlugin();
+    abstract public function createPlugin();
+
+    /**
+     * @return void
+     */
+    protected function registerPublishing()
+    {
+        if (!in_array(\PHP_SAPI, array('cli', 'phpdbg'))) {
+            return;
+        }
+
+        if (Laravel::isVersion('4')) {
+            return;
+        }
+
+        $this->publishConfiguration();
+        $this->publishAssets();
+    }
+
+    /**
+     * @return void
+     */
+    protected function publishConfiguration()
+    {
+        if (null === $this->plugin) {
+            return;
+        }
+
+        $file = $this->getConfigurationFile();
+        if (!file_exists($file)) {
+            return;
+        }
+
+        $paths = array($file => config_path($this->plugin->getName().'.php'));
+
+        $this->publishes($paths);
+
+        $groups = array(
+            'flasher-config',
+            str_replace('_', '-', $this->plugin->getName()).'-config',
+        );
+
+        foreach ($groups as $group) {
+            if (!array_key_exists($group, static::$publishGroups)) {
+                static::$publishGroups[$group] = array();
+            }
+
+            static::$publishGroups[$group] = array_merge(static::$publishGroups[$group], $paths);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function publishAssets()
+    {
+        if (null === $this->plugin) {
+            return;
+        }
+
+        $dir = $this->plugin->getAssetsDir();
+
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        $paths = array($dir => public_path('vendor/flasher/'));
+
+        $this->publishes($paths);
+
+        $groups = array(
+            'flasher-assets',
+            str_replace('_', '-', $this->plugin->getName()).'-assets',
+        );
+
+        foreach ($groups as $group) {
+            if (!array_key_exists($group, static::$publishGroups)) {
+                static::$publishGroups[$group] = array();
+            }
+
+            static::$publishGroups[$group] = array_merge(static::$publishGroups[$group], $paths);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getConfigurationFile()
+    {
+        return rtrim($this->getResourcesDir(), '/').'/config.php';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourcesDir()
+    {
+        $r = new \ReflectionClass($this);
+
+        return pathinfo($r->getFileName() ?: '', PATHINFO_DIRNAME).'/Resources/';
+    }
 
     /**
      * @return void

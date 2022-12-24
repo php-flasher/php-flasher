@@ -32,12 +32,12 @@ interface PluginInterface
     public function getFactory();
 
     /**
-     * @return string[]
+     * @return string[]|array{cdn: string[], local: string[]}
      */
     public function getScripts();
 
     /**
-     * @return string[]
+     * @return string[]|array{cdn: string[], local: string[]}
      */
     public function getStyles();
 
@@ -45,6 +45,16 @@ interface PluginInterface
      * @return array<string, mixed>
      */
     public function getOptions();
+
+    /**
+     * @return string
+     */
+    public function getAssetsDir();
+
+    /**
+     * @return string
+     */
+    public function getResourcesDir();
 
     /**
      * @param array<string, mixed> $options

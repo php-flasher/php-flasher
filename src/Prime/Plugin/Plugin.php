@@ -73,6 +73,24 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
+     * @return string
+     */
+    public function getAssetsDir()
+    {
+        return realpath(rtrim($this->getResourcesDir(), '/').'/assets/') ?: '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourcesDir()
+    {
+        $r = new \ReflectionClass($this);
+
+        return realpath(pathinfo($r->getFileName() ?: '', PATHINFO_DIRNAME).'/Resources/') ?: '';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function processConfiguration(array $options = array())

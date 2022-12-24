@@ -17,7 +17,6 @@
         "ext-mbstring": "*"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.29",
         "friendsofphp/php-cs-fixer": "^3.13",
         "laravel/framework": "^9.42",
         "livewire/livewire": "^2.10",
@@ -48,9 +47,6 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "ergebnis/composer-normalize": true
-        },
         "sort-packages": true
     },
     "extra": {

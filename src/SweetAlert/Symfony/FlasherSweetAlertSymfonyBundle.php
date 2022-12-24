@@ -15,7 +15,7 @@ class FlasherSweetAlertSymfonyBundle extends Bundle // Symfony\Component\HttpKer
     /**
      * {@inheritDoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new SweetAlertPlugin();
     }

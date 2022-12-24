@@ -15,7 +15,7 @@ final class FlasherToastrServiceProvider extends ServiceProvider
     /**
      * {@inheritdoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new ToastrPlugin();
     }

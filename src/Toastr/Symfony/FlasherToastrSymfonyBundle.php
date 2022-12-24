@@ -15,7 +15,7 @@ final class FlasherToastrSymfonyBundle extends Bundle // Symfony\Component\HttpK
     /**
      * {@inheritdoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new ToastrPlugin();
     }

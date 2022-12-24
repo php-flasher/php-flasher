@@ -17,7 +17,7 @@ final class FlasherSweetAlertServiceProvider extends ServiceProvider
     /**
      * {@inheritDoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new SweetAlertPlugin();
     }
