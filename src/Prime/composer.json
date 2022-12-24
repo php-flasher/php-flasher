@@ -1,9 +1,25 @@
 {
     "name": "php-flasher/flasher",
     "description": "A powerful and flexible flash notification system for PHP",
+    "license": "MIT",
     "type": "library",
-    "keywords": ["flasher", "toastr", "notify", "notyf", "noty", "pnotify", "sweet alert", "flash", "notifications", "php", "laravel", "symfony", "Lumen", "messages", "alerts"],
-    "homepage": "https://php-flasher.io",
+    "keywords": [
+        "flasher",
+        "toastr",
+        "notify",
+        "notyf",
+        "noty",
+        "pnotify",
+        "sweet alert",
+        "flash",
+        "notifications",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "messages",
+        "alerts"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,10 +28,12 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Prime\\": ""
@@ -23,7 +41,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

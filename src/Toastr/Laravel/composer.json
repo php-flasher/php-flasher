@@ -1,9 +1,23 @@
 {
     "name": "php-flasher/flasher-toastr-laravel",
     "description": "PHPFlasher Laravel adapter for Toastr",
+    "license": "MIT",
     "type": "library",
-    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
-    "homepage": "https://php-flasher.io",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr ",
+        "bundle",
+        "flex"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,12 +26,14 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher-laravel": "^1.9",
         "php-flasher/flasher-toastr": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Toastr\\Laravel\\": ""
@@ -26,19 +42,17 @@
             "toastr.php"
         ]
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
-            ],
-            "aliases": {
-                "Toastr": "Flasher\\Toastr\\Laravel\\Facade\\Toastr"
-            }
-        }
-    },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Toastr": "Flasher\\Toastr\\Laravel\\Facade\\Toastr"
+            },
+            "providers": [
+                "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
+            ]
+        }
+    }
 }

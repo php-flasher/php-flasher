@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+composer normalize
+find src -name "composer.json" -exec composer normalize {} \;

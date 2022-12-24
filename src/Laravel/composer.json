@@ -1,9 +1,24 @@
 {
     "name": "php-flasher/flasher-laravel",
     "description": "Laravel package integrating PHPFlasher into Laravel applications",
+    "license": "MIT",
     "type": "library",
-    "keywords": ["yoeunes", "notify", "flasher", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
-    "homepage": "https://php-flasher.io",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "flasher",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr ",
+        "bundle",
+        "flex"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,12 +27,14 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
-        "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/support": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
         "php-flasher/flasher": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Laravel\\": ""
@@ -26,19 +43,17 @@
             "flasher.php"
         ]
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Flasher\\Laravel\\FlasherServiceProvider"
-            ],
-            "aliases": {
-                "Flasher": "Flasher\\Laravel\\Facade\\Flasher"
-            }
-        }
-    },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Flasher": "Flasher\\Laravel\\Facade\\Flasher"
+            },
+            "providers": [
+                "Flasher\\Laravel\\FlasherServiceProvider"
+            ]
+        }
+    }
 }

@@ -1,9 +1,23 @@
 {
     "name": "php-flasher/flasher-cli-laravel",
     "description": "PHPFlasher Laravel adapter for Cli",
+    "license": "MIT",
     "type": "library",
-    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "cli ", "bundle", "flex"],
-    "homepage": "https://php-flasher.io",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "cli ",
+        "bundle",
+        "flex"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,12 +26,14 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^1.9",
-        "php-flasher/flasher-cli": "^1.9"
+        "php-flasher/flasher-cli": "^1.9",
+        "php-flasher/flasher-laravel": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Cli\\Laravel\\": ""
@@ -26,16 +42,14 @@
             "notify.php"
         ]
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "Flasher\\Cli\\Laravel\\FlasherCliServiceProvider"
             ]
         }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

@@ -1,9 +1,25 @@
 {
     "name": "php-flasher/flasher-cli-symfony",
-    "type": "symfony-bundle",
     "description": "PHPFlasher Symfony adapter for Cli Console Terminal",
-    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "console", "cli", "terminal", "bundle", "flex"],
-    "homepage": "https://php-flasher.io",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "console",
+        "cli",
+        "terminal",
+        "bundle",
+        "flex"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,12 +28,14 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher-symfony": "^1.9",
-        "php-flasher/flasher-cli": "^1.9"
+        "php-flasher/flasher-cli": "^1.9",
+        "php-flasher/flasher-symfony": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Cli\\Symfony\\": ""
@@ -25,7 +43,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

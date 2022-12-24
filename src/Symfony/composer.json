@@ -1,9 +1,23 @@
 {
     "name": "php-flasher/flasher-symfony",
-    "type": "symfony-bundle",
     "description": "Symfony bundle integrating PHPFlasher into Symfony applications",
-    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "toastr ", "bundle", "flex"],
-    "homepage": "https://php-flasher.io",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "toastr ",
+        "bundle",
+        "flex"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,17 +26,19 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher": "^1.9",
-        "symfony/config": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "symfony/dependency-injection": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "symfony/http-kernel": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "symfony/twig-bundle": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "symfony/console": "^2.0|^3.0|^4.0|^5.0|^6.0",
-        "symfony/translation": "^2.0|^3.0|^4.0|^5.0|^6.0"
+        "symfony/config": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/console": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/dependency-injection": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/http-kernel": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/translation": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/twig-bundle": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Symfony\\": ""
@@ -30,7 +46,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

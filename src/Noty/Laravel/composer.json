@@ -1,9 +1,23 @@
 {
     "name": "php-flasher/flasher-noty-laravel",
-    "type": "library",
     "description": "PHPFlasher Laravel adapter for Noty",
-    "keywords": ["yoeunes", "notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "noty ", "bundle", "flex"],
-    "homepage": "https://php-flasher.io",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "yoeunes",
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "noty ",
+        "bundle",
+        "flex"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,12 +26,14 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher-laravel": "^1.9",
         "php-flasher/flasher-noty": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Noty\\Laravel\\": ""
@@ -26,19 +42,17 @@
             "noty.php"
         ]
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider"
-            ],
-            "aliases": {
-                "Noty": "Flasher\\Laravel\\Facade\\Flasher"
-            }
-        }
-    },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Noty": "Flasher\\Laravel\\Facade\\Flasher"
+            },
+            "providers": [
+                "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider"
+            ]
+        }
+    }
 }

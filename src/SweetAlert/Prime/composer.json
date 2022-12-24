@@ -1,9 +1,20 @@
 {
     "name": "php-flasher/flasher-sweetalert",
     "description": "PHPFlasher adapter for Sweet Alert 2",
+    "license": "MIT",
     "type": "library",
-    "keywords": ["notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "sweetAlert"],
-    "homepage": "https://php-flasher.io",
+    "keywords": [
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "sweetAlert"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,11 +23,13 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
         "php-flasher/flasher": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\SweetAlert\\Prime\\": ""
@@ -24,7 +37,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }
