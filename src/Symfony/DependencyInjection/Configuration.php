@@ -41,6 +41,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('root_script')
                     ->defaultValue($plugin->getRootScript())
                 ->end()
+                ->booleanNode('use_cdn')->defaultTrue()->end()
                 ->booleanNode('auto_translate')->defaultTrue()->end()
                 ->booleanNode('auto_render')->defaultTrue()->end()
                 ->arrayNode('search_criteria')

@@ -15,7 +15,7 @@ abstract class Bundle extends FlasherBundle
     /**
      * @return PluginInterface
      */
-    abstract protected function createPlugin();
+    abstract public function createPlugin();
 
     protected function getFlasherContainerExtension()
     {

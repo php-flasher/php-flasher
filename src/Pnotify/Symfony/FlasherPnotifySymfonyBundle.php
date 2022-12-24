@@ -15,7 +15,7 @@ class FlasherPnotifySymfonyBundle extends Bundle // Symfony\Component\HttpKernel
     /**
      * {@inheritDoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new PnotifyPlugin();
     }

@@ -17,7 +17,12 @@ class NotyfPlugin extends Plugin
     public function getScripts()
     {
         return array(
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.2.3/dist/flasher-notyf.min.js',
+            'cdn' => array(
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.2.3/dist/flasher-notyf.min.js',
+            ),
+            'local' => array(
+                '/vendor/flasher/flasher-notyf.min.js',
+            ),
         );
     }
 }

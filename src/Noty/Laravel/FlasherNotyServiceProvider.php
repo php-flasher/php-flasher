@@ -15,7 +15,7 @@ final class FlasherNotyServiceProvider extends ServiceProvider
     /**
      * {@inheritDoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new NotyPlugin();
     }

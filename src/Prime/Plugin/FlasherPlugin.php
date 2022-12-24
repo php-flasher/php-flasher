@@ -40,11 +40,32 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * @return string
+     * @return string|array{cdn: string, local: string}
      */
     public function getRootScript()
     {
-        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.3/dist/flasher.min.js';
+        return array(
+            'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.3/dist/flasher.min.js',
+            'local' => '/vendor/flasher/flasher.min.js',
+        );
+    }
+
+    public function getScripts()
+    {
+        $rootScript = $this->getRootScript();
+
+        return array(
+            'cdn' => is_string($rootScript) ? array($rootScript) : array($rootScript['cdn']),
+            'local' => is_string($rootScript) ? '' : array($rootScript['local']),
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourcesDir()
+    {
+        return realpath(__DIR__.'/../Resources') ?: '';
     }
 
     /**
@@ -70,6 +91,7 @@ final class FlasherPlugin extends Plugin
         return array_merge(array(
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
+            'use_cdn' => true,
             'auto_translate' => true,
             'auto_render' => true,
             'flash_bag' => array(

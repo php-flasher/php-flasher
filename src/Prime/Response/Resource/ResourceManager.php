@@ -49,12 +49,25 @@ final class ResourceManager implements ResourceManagerInterface
     }
 
     /**
+     * @param mixed $assets
+     *
+     * @return string[]
+     */
+    private function selectAssets($assets)
+    {
+        $use = $this->config->get('use_cdn', true) ? 'cdn' : 'local';
+
+        return is_array($assets) && array_key_exists($use, $assets) ? $assets[$use] : $assets;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildResponse(Response $response)
     {
         /** @var string $rootScript */
-        $rootScript = $this->config->get('root_script');
+        $rootScript = $this->selectAssets($this->config->get('root_script'));
+
         $response->setRootScript($rootScript);
 
         $handlers = array();
@@ -167,11 +180,11 @@ final class ResourceManager implements ResourceManagerInterface
     private function populateResponse(Response $response, $handler)
     {
         if (isset($this->scripts[$handler])) {
-            $response->addScripts($this->scripts[$handler]);
+            $response->addScripts($this->selectAssets($this->scripts[$handler]));
         }
 
         if (isset($this->styles[$handler])) {
-            $response->addStyles($this->styles[$handler]);
+            $response->addStyles($this->selectAssets($this->styles[$handler]));
         }
 
         if (isset($this->options[$handler])) {

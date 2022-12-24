@@ -50,6 +50,7 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     public function afterBoot()
     {
+        $this->registerCommands();
         $this->registerBladeDirective();
         $this->registerBladeComponent();
         $this->registerLivewire();
@@ -60,7 +61,7 @@ final class FlasherServiceProvider extends ServiceProvider
     /**
      * @{@inheritdoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new FlasherPlugin();
     }
@@ -76,6 +77,20 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->registerResponseManager();
         $this->registerStorageManager();
         $this->registerEventDispatcher();
+    }
+
+    /**
+     * @return void
+     */
+    private function registerCommands()
+    {
+        if (!in_array(\PHP_SAPI, array('cli', 'phpdbg'))) {
+            return;
+        }
+
+        $this->commands(array(
+            'Flasher\Laravel\Command\InstallCommand', // flasher:install
+        ));
     }
 
     /**

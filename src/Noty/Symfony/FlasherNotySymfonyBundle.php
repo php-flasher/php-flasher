@@ -15,7 +15,7 @@ class FlasherNotySymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bu
     /**
      * {@inheritDoc}
      */
-    protected function createPlugin()
+    public function createPlugin()
     {
         return new NotyPlugin();
     }

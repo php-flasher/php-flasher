@@ -1,9 +1,22 @@
 {
     "name": "php-flasher/flasher-cli",
     "description": "PHPFlasher adapter for Cli Console Terminal",
+    "license": "MIT",
     "type": "library",
-    "keywords": ["notify", "php", "laravel", "symfony", "Lumen", "notifications", "messages", "alerts", "pnotify", "console", "Cli", "Terminal"],
-    "homepage": "https://php-flasher.io",
+    "keywords": [
+        "notify",
+        "php",
+        "laravel",
+        "symfony",
+        "Lumen",
+        "notifications",
+        "messages",
+        "alerts",
+        "pnotify",
+        "console",
+        "Cli",
+        "Terminal"
+    ],
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -12,12 +25,14 @@
             "role": "Developer"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
         "ext-mbstring": "*",
-        "php-flasher/flasher": "^1.8"
+        "php-flasher/flasher": "^1.9"
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Cli\\Prime\\": ""
@@ -25,7 +40,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

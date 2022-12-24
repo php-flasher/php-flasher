@@ -7,14 +7,15 @@
 
 namespace Flasher\Symfony;
 
-use Flasher\Symfony\Bridge\FlasherBundle;
+use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Symfony\DependencyInjection\Compiler\EventSubscriberCompilerPass;
 use Flasher\Symfony\DependencyInjection\Compiler\FactoryCompilerPass;
 use Flasher\Symfony\DependencyInjection\Compiler\PresenterCompilerPass;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
+use Flasher\Symfony\Support\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class FlasherSymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+class FlasherSymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     /**
      * {@inheritdoc}
@@ -32,5 +33,13 @@ class FlasherSymfonyBundle extends FlasherBundle // Symfony\Component\HttpKernel
     protected function getFlasherContainerExtension()
     {
         return new FlasherExtension();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createPlugin()
+    {
+        return new FlasherPlugin();
     }
 }
