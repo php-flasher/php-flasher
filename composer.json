@@ -49,7 +49,8 @@
     },
     "config": {
         "allow-plugins": {
-            "ergebnis/composer-normalize": true
+            "ergebnis/composer-normalize": true,
+            "kylekatarnls/update-helper": true
         },
         "sort-packages": true
     },
