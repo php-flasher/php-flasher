@@ -43,6 +43,7 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
 
         $definition
             ->setClass($this->plugin->getFactory())
+            ->setPublic(true)
             ->addTag('flasher.factory', array('alias' => $this->plugin->getAlias()));
 
         $identifier = $this->plugin->getServiceID();

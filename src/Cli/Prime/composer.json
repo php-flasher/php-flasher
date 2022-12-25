@@ -36,7 +36,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Cli\\Prime\\": ""
-        }
+        },
+        "files": [
+            "notify.php"
+        ]
     },
     "config": {
         "sort-packages": true

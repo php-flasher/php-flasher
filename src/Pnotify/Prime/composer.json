@@ -34,7 +34,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Pnotify\\Prime\\": ""
-        }
+        },
+        "files": [
+            "pnotify.php"
+        ]
     },
     "config": {
         "sort-packages": true

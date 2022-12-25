@@ -5,6 +5,7 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
+use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\SweetAlert\Prime\SweetAlertFactory;
@@ -20,7 +21,7 @@ if (!function_exists('sweetalert')) {
     function sweetalert($message = null, $type = NotificationInterface::SUCCESS, array $options = array())
     {
         /** @var SweetAlertFactory $factory */
-        $factory = app('flasher.sweetalert');
+        $factory = FlasherContainer::create('flasher.sweetalert');
 
         if (0 === func_num_args()) {
             return $factory;

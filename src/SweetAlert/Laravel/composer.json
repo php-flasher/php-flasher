@@ -38,10 +38,7 @@
     "autoload": {
         "psr-4": {
             "Flasher\\SweetAlert\\Laravel\\": ""
-        },
-        "files": [
-            "sweetalert.php"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

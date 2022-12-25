@@ -33,7 +33,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\SweetAlert\\Prime\\": ""
-        }
+        },
+        "files": [
+            "sweetalert.php"
+        ]
     },
     "config": {
         "sort-packages": true

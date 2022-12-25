@@ -33,7 +33,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Toastr\\Prime\\": ""
-        }
+        },
+        "files": [
+            "toastr.php"
+        ]
     },
     "config": {
         "sort-packages": true

@@ -38,10 +38,7 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Notyf\\Laravel\\": ""
-        },
-        "files": [
-            "notyf.php"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

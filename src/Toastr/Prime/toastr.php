@@ -5,6 +5,7 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
+use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Toastr\Prime\ToastrFactory;
@@ -21,7 +22,7 @@ if (!function_exists('toastr')) {
     function toastr($message = null, $type = NotificationInterface::SUCCESS, $title = '', array $options = array())
     {
         /** @var ToastrFactory $factory */
-        $factory = app('flasher.toastr');
+        $factory = FlasherContainer::create('flasher.toastr');
 
         if (0 === func_num_args()) {
             return $factory;
