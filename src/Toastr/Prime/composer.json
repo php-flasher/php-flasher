@@ -26,7 +26,7 @@
     "homepage": "https://php-flasher.io",
     "require": {
         "php": ">=5.3",
-        "php-flasher/flasher": "^1.9"
+        "php-flasher/flasher": "^1.10"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
