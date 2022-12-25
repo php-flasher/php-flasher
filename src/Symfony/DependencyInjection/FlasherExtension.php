@@ -36,6 +36,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $this->registerFlasherConfiguration($config, $container);
         $this->registerListeners($config, $container);
         $this->registerStorageManager($config, $container);
+        $this->registerFlasherAutoConfiguration($container);
     }
 
     /**
@@ -156,5 +157,19 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $criteria = $config['search_criteria'];
         $storageManager = $container->getDefinition('flasher.storage_manager');
         $storageManager->replaceArgument(2, $criteria);
+    }
+
+    /**
+     * @return void
+     */
+    private function registerFlasherAutoConfiguration(ContainerBuilder $container)
+    {
+        if (!method_exists($container, 'registerForAutoconfiguration')) {
+            return;
+        }
+
+        $container
+            ->registerForAutoconfiguration('Flasher\Prime\Aware\FlasherAwareInterface')
+            ->addTag('flasher.flasher_aware');
     }
 }

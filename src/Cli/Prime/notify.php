@@ -5,6 +5,8 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
+use Flasher\Prime\Container\FlasherContainer;
+
 if (!function_exists('notify')) {
     /**
      * @param Flasher\Cli\Prime\Notification|string|null $notification
@@ -14,7 +16,7 @@ if (!function_exists('notify')) {
     function notify($notification = null)
     {
         /** @var Flasher\Cli\Prime\Notify $notifier */
-        $notifier = app('flasher.notify');
+        $notifier = FlasherContainer::create('flasher.notify');
 
         if (null === $notification || 0 === func_num_args()) {
             return $notifier;

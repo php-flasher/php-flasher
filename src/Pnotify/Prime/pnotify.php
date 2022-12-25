@@ -5,22 +5,23 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
-use Flasher\Notyf\Prime\NotyfFactory;
+use Flasher\Pnotify\Prime\PnotifyFactory;
+use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 
-if (!function_exists('notyf')) {
+if (!function_exists('pnotify')) {
     /**
      * @param string               $message
      * @param string               $type
      * @param array<string, mixed> $options
      *
-     * @return Envelope|NotyfFactory
+     * @return Envelope|PnotifyFactory
      */
-    function notyf($message = null, $type = NotificationInterface::SUCCESS, array $options = array())
+    function pnotify($message = null, $type = NotificationInterface::SUCCESS, array $options = array())
     {
-        /** @var NotyfFactory $factory */
-        $factory = app('flasher.notyf');
+        /** @var PnotifyFactory $factory */
+        $factory = FlasherContainer::create('flasher.pnotify');
 
         if (0 === func_num_args()) {
             return $factory;

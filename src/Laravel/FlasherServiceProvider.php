@@ -7,6 +7,7 @@
 
 namespace Flasher\Laravel;
 
+use Flasher\Laravel\Container\LaravelContainer;
 use Flasher\Laravel\Middleware\FlasherMiddleware;
 use Flasher\Laravel\Middleware\HttpKernelFlasherMiddleware;
 use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
@@ -18,6 +19,7 @@ use Flasher\Laravel\Template\BladeTemplateEngine;
 use Flasher\Laravel\Translation\Translator;
 use Flasher\Prime\Config\Config;
 use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
@@ -50,6 +52,8 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     public function afterBoot()
     {
+        FlasherContainer::init(new LaravelContainer($this->app));
+
         $this->registerCommands();
         $this->registerBladeDirective();
         $this->registerBladeComponent();

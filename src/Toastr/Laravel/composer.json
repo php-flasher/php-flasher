@@ -37,10 +37,7 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Toastr\\Laravel\\": ""
-        },
-        "files": [
-            "toastr.php"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

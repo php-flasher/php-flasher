@@ -33,13 +33,13 @@
             "Flasher\\": "src/"
         },
         "files": [
-            "src/Cli/Laravel/notify.php",
-            "src/Laravel/flasher.php",
-            "src/Noty/Laravel/noty.php",
-            "src/Notyf/Laravel/notyf.php",
-            "src/Pnotify/Laravel/pnotify.php",
-            "src/SweetAlert/Laravel/sweetalert.php",
-            "src/Toastr/Laravel/toastr.php"
+            "src/Cli/Prime/notify.php",
+            "src/Noty/Prime/noty.php",
+            "src/Notyf/Prime/notyf.php",
+            "src/Pnotify/Prime/pnotify.php",
+            "src/Prime/flasher.php",
+            "src/SweetAlert/Prime/sweetalert.php",
+            "src/Toastr/Prime/toastr.php"
         ]
     },
     "autoload-dev": {

@@ -33,7 +33,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Noty\\Prime\\": ""
-        }
+        },
+        "files": [
+            "noty.php"
+        ]
     },
     "config": {
         "sort-packages": true

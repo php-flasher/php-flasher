@@ -34,7 +34,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Notyf\\Prime\\": ""
-        }
+        },
+        "files": [
+            "notyf.php"
+        ]
     },
     "config": {
         "sort-packages": true

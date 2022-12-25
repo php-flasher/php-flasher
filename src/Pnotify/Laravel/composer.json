@@ -37,10 +37,7 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Pnotify\\Laravel\\": ""
-        },
-        "files": [
-            "pnotify.php"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

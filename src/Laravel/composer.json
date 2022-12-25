@@ -38,10 +38,7 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Laravel\\": ""
-        },
-        "files": [
-            "flasher.php"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

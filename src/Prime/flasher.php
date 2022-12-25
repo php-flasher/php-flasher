@@ -5,6 +5,7 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
+use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\StampInterface;
@@ -21,7 +22,7 @@ if (!function_exists('flash')) {
     function flash($message = null, $type = 'success', array $options = array(), array $stamps = array())
     {
         /** @var FlasherInterface $factory */
-        $factory = app('flasher');
+        $factory = FlasherContainer::create('flasher');
 
         if (0 === func_num_args()) {
             return $factory;

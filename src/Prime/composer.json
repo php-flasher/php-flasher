@@ -37,7 +37,10 @@
     "autoload": {
         "psr-4": {
             "Flasher\\Prime\\": ""
-        }
+        },
+        "files": [
+            "flasher.php"
+        ]
     },
     "config": {
         "sort-packages": true
