@@ -18,7 +18,7 @@ class PnotifyPlugin extends Plugin
     {
         return array(
             'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.2.3/dist/flasher-pnotify.min.js',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.2.4/dist/flasher-pnotify.min.js',
             ),
             'local' => array(
                 '/vendor/flasher/flasher-pnotify.min.js',

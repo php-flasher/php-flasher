@@ -8,7 +8,7 @@
 return array(
     'scripts' => array(
         'cdn' => array(
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.2.3/dist/flasher-noty.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.2.4/dist/flasher-noty.min.js',
         ),
         'local' => array(
             '/vendor/flasher/flasher-noty.min.js',
