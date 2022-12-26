@@ -35,7 +35,7 @@
             "Flasher\\Noty\\Prime\\": ""
         },
         "files": [
-            "noty.php"
+            "helpers.php"
         ]
     },
     "config": {

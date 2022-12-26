@@ -33,13 +33,13 @@
             "Flasher\\": "src/"
         },
         "files": [
-            "src/Cli/Prime/notify.php",
-            "src/Noty/Prime/noty.php",
-            "src/Notyf/Prime/notyf.php",
-            "src/Pnotify/Prime/pnotify.php",
-            "src/Prime/flasher.php",
-            "src/SweetAlert/Prime/sweetalert.php",
-            "src/Toastr/Prime/toastr.php"
+            "src/Cli/Prime/helpers.php",
+            "src/Noty/Prime/helpers.php",
+            "src/Notyf/Prime/helpers.php",
+            "src/Pnotify/Prime/helpers.php",
+            "src/Prime/helpers.php",
+            "src/SweetAlert/Prime/helpers.php",
+            "src/Toastr/Prime/helpers.php"
         ]
     },
     "autoload-dev": {

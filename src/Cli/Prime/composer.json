@@ -38,7 +38,7 @@
             "Flasher\\Cli\\Prime\\": ""
         },
         "files": [
-            "notify.php"
+            "helpers.php"
         ]
     },
     "config": {

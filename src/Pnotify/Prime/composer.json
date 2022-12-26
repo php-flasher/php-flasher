@@ -36,7 +36,7 @@
             "Flasher\\Pnotify\\Prime\\": ""
         },
         "files": [
-            "pnotify.php"
+            "helpers.php"
         ]
     },
     "config": {

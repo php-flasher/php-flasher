@@ -35,7 +35,7 @@
             "Flasher\\SweetAlert\\Prime\\": ""
         },
         "files": [
-            "sweetalert.php"
+            "helpers.php"
         ]
     },
     "config": {
