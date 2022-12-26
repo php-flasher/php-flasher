@@ -36,7 +36,7 @@
             "Flasher\\Notyf\\Prime\\": ""
         },
         "files": [
-            "notyf.php"
+            "helpers.php"
         ]
     },
     "config": {
