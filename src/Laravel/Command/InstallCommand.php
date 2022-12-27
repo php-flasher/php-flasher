@@ -48,6 +48,17 @@ class InstallCommand extends Command
         $publicDir = rtrim($publicDir, '/').'/vendor/flasher/';
 
         $output->writeln('');
+        $output->writeln('
+            ██████╗ ██╗  ██╗██████╗ ███████╗██╗      █████╗ ███████╗██╗  ██╗███████╗██████╗
+            ██╔══██╗██║  ██║██╔══██╗██╔════╝██║     ██╔══██╗██╔════╝██║  ██║██╔════╝██╔══██╗
+            ██████╔╝███████║██████╔╝█████╗  ██║     ███████║███████╗███████║█████╗  ██████╔╝
+            ██╔═══╝ ██╔══██║██╔═══╝ ██╔══╝  ██║     ██╔══██║╚════██║██╔══██║██╔══╝  ██╔══██╗
+            ██║     ██║  ██║██║     ██║     ███████╗██║  ██║███████║██║  ██║███████╗██║  ██║
+            ╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+        ');
+        $output->writeln('');
+
+        $output->writeln('');
         $output->writeln(sprintf('<bg=blue;options=bold> INFO </> Copying <fg=blue;options=bold>PHPFlasher</> assets into <fg=blue;options=bold>%s</>', $publicDir));
         $output->writeln('');
 
