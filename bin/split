@@ -14,7 +14,7 @@ function split()
 
 function remote()
 {
-    git remote add "$1" "$2" || true
+    git remote add "$1" "$2" || git remote set-url "$1" "$2" || true
 }
 
 git pull origin $CURRENT_BRANCH
