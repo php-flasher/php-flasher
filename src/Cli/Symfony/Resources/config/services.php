@@ -22,11 +22,13 @@ $definition = class_exists('Symfony\Component\DependencyInjection\ChildDefinitio
 
 $definition
     ->setClass('Flasher\Cli\Prime\CliFactory')
+    ->setPublic(true)
     ->addTag('flasher.factory', array('alias' => 'cli'));
 
 $container->setDefinition('flasher.cli', $definition);
 
 $container->register('flasher.notify', 'Flasher\Cli\Prime\Notify')
+    ->setPublic(true)
     ->addArgument(null)
     ->addArgument(array());
 
