@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-composer normalize
-find src -name "composer.json" -exec composer normalize {} \;
-
-composer validate
-find src -name "composer.json" -exec composer validate {} \;
-
-bin/assets
