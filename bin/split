@@ -1,83 +1,67 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
+# Set the "errexit" options
+set -o errexit
 
-CURRENT_BRANCH="main"
+# Define remotes
+REMOTES=(
+    'src/Prime:flasher'
+    'src/Laravel:flasher-laravel'
+    'src/Symfony:flasher-symfony'
 
-function split()
-{
-    SHA1=$(./bin/splitsh-lite --prefix="$1")
-    git push $2 "$SHA1:refs/heads/$CURRENT_BRANCH" -f
+    'src/Toastr/Prime:flasher-toastr'
+    'src/Toastr/Laravel:flasher-toastr-laravel'
+    'src/Toastr/Symfony:flasher-toastr-symfony'
+
+    'src/Notyf/Prime:flasher-notyf'
+    'src/Notyf/Laravel:flasher-notyf-laravel'
+    'src/Notyf/Symfony:flasher-notyf-symfony'
+
+    'src/SweetAlert/Prime:flasher-sweetalert'
+    'src/SweetAlert/Laravel:flasher-sweetalert-laravel'
+    'src/SweetAlert/Symfony:flasher-sweetalert-symfony'
+
+    'src/Pnotify/Prime:flasher-pnotify'
+    'src/Pnotify/Laravel:flasher-pnotify-laravel'
+    'src/Pnotify/Symfony:flasher-pnotify-symfony'
+
+    'src/Noty/Prime:flasher-noty'
+    'src/Noty/Laravel:flasher-noty-laravel'
+    'src/Noty/Symfony:flasher-noty-symfony'
+
+    'src/Cli/Prime:flasher-cli'
+    'src/Cli/Laravel:flasher-cli-laravel'
+    'src/Cli/Symfony:flasher-cli-symfony'
+
+    'packs/laravel-pack:laravel-pack'
+    'packs/php-pack:php-pack'
+    'packs/symfony-pack:symfony-pack'
+)
+
+# Define a function to split and push code to a remote repository
+function split() {
+    local prefix_and_remote="$1"
+    local prefix="${prefix_and_remote%:*}"
+    local remote="${prefix_and_remote#*:}"
+
+    # Add the remote repository
+    echo -e "\033[32mAdding remote repository 'git@github.com:php-flasher/$remote'\033[0m"
+
+    git remote remove "$remote"
+    git remote add "$remote" "git@github.com:php-flasher/$remote"
+
+    # Split the code using the splitsh-lite utility
+    SHA1=$(./bin/splitsh-lite --prefix="$prefix")
+
+    # Push the code to the specified remote repository
+    git push "$remote" "$SHA1:refs/heads/main" -f
 }
 
-function remote()
-{
-    git remote add "$1" "$2" || true
-}
+# Pull the latest code from the origin repository
+echo -e "\033[32mPulling the latest code from the origin repository...\033[0m"
+git fetch origin main
 
-git pull origin $CURRENT_BRANCH
-
-remote flasher git@github.com:php-flasher/flasher.git
-remote laravel git@github.com:php-flasher/flasher-laravel.git
-remote symfony git@github.com:php-flasher/flasher-symfony.git
-
-remote toastr git@github.com:php-flasher/flasher-toastr.git
-remote toastr-laravel git@github.com:php-flasher/flasher-toastr-laravel.git
-remote toastr-symfony git@github.com:php-flasher/flasher-toastr-symfony.git
-
-remote notyf git@github.com:php-flasher/flasher-notyf.git
-remote notyf-laravel git@github.com:php-flasher/flasher-notyf-laravel.git
-remote notyf-symfony git@github.com:php-flasher/flasher-notyf-symfony.git
-
-remote sweetalert git@github.com:php-flasher/flasher-sweetalert.git
-remote sweetalert-laravel git@github.com:php-flasher/flasher-sweetalert-laravel.git
-remote sweetalert-symfony git@github.com:php-flasher/flasher-sweetalert-symfony.git
-
-remote pnotify git@github.com:php-flasher/flasher-pnotify.git
-remote pnotify-laravel git@github.com:php-flasher/flasher-pnotify-laravel.git
-remote pnotify-symfony git@github.com:php-flasher/flasher-pnotify-symfony.git
-
-remote noty git@github.com:php-flasher/flasher-noty.git
-remote noty-laravel git@github.com:php-flasher/flasher-noty-laravel.git
-remote noty-symfony git@github.com:php-flasher/flasher-noty-symfony.git
-
-remote cli git@github.com:php-flasher/flasher-cli.git
-remote cli-laravel git@github.com:php-flasher/flasher-cli-laravel.git
-remote cli-symfony git@github.com:php-flasher/flasher-cli-symfony.git
-
-remote laravel-pack git@github.com:php-flasher/laravel-pack.git
-remote php-pack git@github.com:php-flasher/php-pack.git
-remote symfony-pack git@github.com:php-flasher/symfony-pack.git
-
-split 'src/Prime' flasher
-split 'src/Laravel' laravel
-split 'src/Symfony' symfony
-
-split 'src/Toastr/Prime' toastr
-split 'src/Toastr/Laravel' toastr-laravel
-split 'src/Toastr/Symfony' toastr-symfony
-
-split 'src/Notyf/Prime' notyf
-split 'src/Notyf/Laravel' notyf-laravel
-split 'src/Notyf/Symfony' notyf-symfony
-
-split 'src/SweetAlert/Prime' sweetalert
-split 'src/SweetAlert/Laravel' sweetalert-laravel
-split 'src/SweetAlert/Symfony' sweetalert-symfony
-
-split 'src/Pnotify/Prime' pnotify
-split 'src/Pnotify/Laravel' pnotify-laravel
-split 'src/Pnotify/Symfony' pnotify-symfony
-
-split 'src/Noty/Prime' noty
-split 'src/Noty/Laravel' noty-laravel
-split 'src/Noty/Symfony' noty-symfony
-
-split 'src/Cli/Prime' cli
-split 'src/Cli/Laravel' cli-laravel
-split 'src/Cli/Symfony' cli-symfony
-
-split 'packs/laravel-pack' laravel-pack
-split 'packs/php-pack' php-pack
-split 'packs/symfony-pack' symfony-pack
+# Iterate over the remotes and split and push the code
+for remote in "${REMOTES[@]}"; do
+    split "$remote"
+done
