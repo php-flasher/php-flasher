@@ -8,13 +8,20 @@
 return array(
     /*
     |--------------------------------------------------------------------------
-    | Default PHPFlasher driver
+    | Default PHPFlasher library
     |--------------------------------------------------------------------------
-    | This option controls the default driver that will be used by PHPFlasher.
+    | This option controls the default library that will be used by PHPFlasher
+    | to display notifications in your Laravel application. PHPFlasher supports
+    | several libraries, including "flasher", "toastr", "noty", "notyf",
+    | "sweetalert" and "pnotify".
     |
-    | Supported drivers: "flasher", "toastr", "noty", "sweetalert", "pnotify"
+    | The "flasher" library is used by default. If you want to use a different
+    | library, you will need to install it using composer. For example, to use
+    | the "toastr" library, run the following command:
+    |     composer require php-flasher/flasher-toastr-laravel
     |
-    | Only "flasher" is supported by default, but you can install other options using composer.
+    | Here is a list of the supported libraries and the corresponding composer
+    | commands to install them:
     |
     | "toastr"     : composer require php-flasher/flasher-toastr-laravel
     | "noty"       : composer require php-flasher/flasher-noty-laravel
@@ -28,10 +35,19 @@ return array(
     |--------------------------------------------------------------------------
     | Main PHPFlasher javascript file
     |--------------------------------------------------------------------------
-    | This is the main javascript file that will be included in the page ony
-    | when a notification is ready to be displayed, by defaut PHPFlasher
-    | use a CDN with the latest version of the library. but you
-    | could download it locally or install it with npm.
+    | This option specifies the location of the main javascript file that is
+    | required by PHPFlasher to display notifications in your Laravel application.
+    |
+    | By default, PHPFlasher uses a CDN to serve the latest version of the library.
+    | However, you can also choose to download the library locally or install it
+    | using npm.
+    |
+    | To use the local version of the library, run the following command:
+    |     php artisan vendor:publish --force --tag=flasher-assets
+    |
+    | This will copy the necessary assets to your application's public folder.
+    | You can then specify the local path to the javascript file in the 'local'
+    | field of this option.
     */
     'root_script' => array(
         'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.4/dist/flasher.min.js',
@@ -42,11 +58,16 @@ return array(
     |--------------------------------------------------------------------------
     | Whether to use CDN for PHPFlasher assets or not
     |--------------------------------------------------------------------------
-    | By default PHPFlasher use CDN for all assets, to use local version of
-    | the assets set use_cdn to false.
+    | This option controls whether PHPFlasher should use CDN links or local assets
+    | for its javascript and CSS files. By default, PHPFlasher uses CDN links
+    | to serve the latest version of the library. However, you can also choose
+    | to use local assets by setting this option to 'false'.
     |
-    | Don't forget to publish your assets with:
+    | If you decide to use local assets, don't forget to publish the necessary
+    | files to your application's public folder by running the following command:
     |     php artisan vendor:publish --force --tag=flasher-assets
+    |
+    | This will copy the necessary assets to your application's public folder.
     */
     'use_cdn' => true,
 
@@ -54,8 +75,15 @@ return array(
     |--------------------------------------------------------------------------
     | Translate PHPFlasher messages
     |--------------------------------------------------------------------------
-    | By default PHPFlasher messages are passed to Laravel translator service
-    | to disable this behavior, set this option to `false`.
+    | This option controls whether PHPFlasher should pass its messages to the Laravel's
+    | translation service for localization.
+    |
+    | By default, this option is set to 'true', which means that PHPFlasher will
+    | attempt to translate its messages using the translation service.
+    |
+    | If you don't want PHPFlasher to use the Laravel's translation service, you can
+    | set this option to 'false'. In this case, PHPFlasher will use the messages
+    | as-is, without attempting to translate them.
     */
     'auto_translate' => true,
 
@@ -63,8 +91,16 @@ return array(
     |--------------------------------------------------------------------------
     | Inject PHPFlasher in Response
     |--------------------------------------------------------------------------
-    | PHPFlasher scripts are added automatically before </body>, by listening
-    | to the Response after the App is done.
+    | This option controls whether PHPFlasher should automatically inject its
+    | javascript and CSS files into the HTML response of your Laravel application.
+    |
+    | By default, this option is set to 'true', which means that PHPFlasher will
+    | listen to the response of your application and automatically insert its
+    | scripts and stylesheets into the HTML before the closing `</body>` tag.
+    |
+    | If you don't want PHPFlasher to automatically inject its scripts and stylesheets
+    | into the response, you can set this option to 'false'. In this case, you will
+    | need to manually include the necessary files in your application's layout.
     */
     'auto_render' => true,
 
@@ -73,10 +109,15 @@ return array(
         |-----------------------------------------------------------------------
         | Enable flash bag
         |-----------------------------------------------------------------------
-        | This option allows you to automatically convert Laravel's flash
-        | messages to PHPFlasher notifications. This is useful when
-        | you want to migrate from a Legacy system or another
-        | library similar to PHPFlasher.
+        | This option controls whether PHPFlasher should automatically convert
+        | Laravel's flash messages to PHPFlasher notifications. This feature is
+        | useful when you want to migrate from a legacy system or another
+        | library that uses similar conventions for flash messages.
+        |
+        | When this option is set to 'true', PHPFlasher will check for flash
+        | messages in the session and convert them to notifications using the
+        | mapping specified in the 'mapping' option. When this option is set
+        | to 'false', PHPFlasher will ignore flash messages in the session.
         */
         'enabled' => true,
 
@@ -85,9 +126,14 @@ return array(
         | Flash bag type mapping
         |-----------------------------------------------------------------------
         | This option allows you to map or convert session keys to PHPFlasher
-        | notification types. on the right side are the PHPFlasher types
-        | On the left side are the Laravel session keys that you
-        | want to convert to PHPFlasher types.
+        | notification types. On the left side are the PHPFlasher types.
+        | On the right side are the Laravel session keys that you want to
+        | convert to PHPFlasher types.
+        |
+        | For example, if you want to convert Laravel's 'danger' flash
+        | messages to PHPFlasher's 'error' notifications, you can add
+        | the following entry to the mapping:
+        |     'error' => ['danger'],
         */
         'mapping' => array(
             'success' => array('success'),
@@ -102,10 +148,26 @@ return array(
     | Global Filter Criteria
     |-----------------------------------------------------------------------
     | This option allows you to filter the notifications that are displayed
-    | by default all notifications are displayed, but you can filter
-    | them, for example to only display errors.
+    | in your Laravel application. By default, all notifications are displayed,
+    | but you can use this option to limit the number of notifications or
+    | filter them by type.
+    |
+    | For example, to limit the number of notifications to 5, you can set
+    | the 'limit' field to 5:
+    |     'limit' => 5,
+    |
+    | To filter the notifications by type, you can specify an array of
+    | types that you want to display. For example, to only display
+    | error notifications, you can set the 'types' field to ['error']:
+    |     'types' => ['error'],
+    |
+    | You can also combine multiple criteria by specifying multiple fields.
+    | For example, to display up to 5 error notifications, you can set
+    | the 'limit' and 'types' fields like this:
+    |     'limit' => 5,
+    |     'types' => ['error'],
     */
     'filter_criteria' => array(
-        // 'limit' => 5, // Limit the number of notifications to display
+        'limit' => 5, // Limit the number of notifications to display
     ),
 );
