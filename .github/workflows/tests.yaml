@@ -54,7 +54,9 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer remove friendsofphp/php-cs-fixer laravel/framework livewire/livewire phpstan/phpstan symfony/symfony orchestra/testbench phpunit/phpunit ergebnis/composer-normalize --dev
+                    composer config --global allow-plugins true
+                    composer remove illuminate/support symfony/config symfony/console symfony/dependency-injection symfony/http-kernel symfony/translation symfony/twig-bundle --no-interaction --no-update
+                    composer remove ergebnis/composer-normalize friendsofphp/php-cs-fixer livewire/livewire phpstan/phpstan phpunit/phpunit symplify/monorepo-builder --no-interaction --no-update --dev
                     composer config extra.symfony.require "${{ matrix.symfony }}"
                     composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" --no-interaction --no-update
                     composer update --prefer-stable --prefer-dist
@@ -103,7 +105,8 @@ jobs:
             -   name: Install dependencies
                 run: |
                     composer config --global allow-plugins true
-                    composer remove friendsofphp/php-cs-fixer laravel/framework livewire/livewire phpstan/phpstan symfony/symfony orchestra/testbench phpunit/phpunit ergebnis/composer-normalize --dev
+                    composer remove illuminate/support symfony/config symfony/console symfony/dependency-injection symfony/http-kernel symfony/translation symfony/twig-bundle --no-interaction --no-update
+                    composer remove ergebnis/composer-normalize friendsofphp/php-cs-fixer livewire/livewire phpstan/phpstan phpunit/phpunit symplify/monorepo-builder --no-interaction --no-update --dev
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
                     composer update --prefer-stable --prefer-dist
 
