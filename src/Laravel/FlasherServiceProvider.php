@@ -52,7 +52,7 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     public function afterBoot()
     {
-        FlasherContainer::init(new LaravelContainer($this->app));
+        FlasherContainer::init(new LaravelContainer());
 
         $this->registerCommands();
         $this->registerBladeDirective();
