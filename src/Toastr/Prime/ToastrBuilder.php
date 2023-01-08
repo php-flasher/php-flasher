@@ -36,6 +36,8 @@ final class ToastrBuilder extends NotificationBuilder
      */
     public function closeClass($closeClass)
     {
+        $this->closeButton();
+
         $this->option('closeClass', $closeClass);
 
         return $this;
