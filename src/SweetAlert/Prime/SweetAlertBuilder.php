@@ -38,6 +38,8 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function question($message = null, array $options = array())
     {
+        $this->showCancelButton();
+
         return $this->type('question', $message, $options);
     }
 
@@ -948,6 +950,35 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
+     * @param bool $animation
+     *
+     * @return static
+     */
+    public function animation($animation = true)
+    {
+        $this->option('animation', $animation);
+
+        return $this;
+    }
+
+    /**
+     * @param bool $showConfirmBtn
+     * @param bool $showCloseBtn
+     *
+     * @return static
+     */
+    public function persistent($showConfirmBtn = true, $showCloseBtn = false)
+    {
+        $this->allowEscapeKey(false);
+        $this->allowOutsideClick(false);
+        $this->timer(0);
+        $this->showConfirmButton($showConfirmBtn);
+        $this->showCloseButton($showCloseBtn);
+
+        return $this;
+    }
+
+    /**
      * Add a customized icon for the popup. Should contain a string with the path or URL to the image.
      *
      * @param string $imageUrl
@@ -1035,6 +1066,7 @@ final class SweetAlertBuilder extends NotificationBuilder
         $this->imageUrl($imageUrl);
         $this->imageWidth($imageWidth);
         $this->imageHeight($imageHeight);
+        $this->animation(false);
 
         if (null !== $imageAlt) {
             $this->imageAlt($imageAlt);
