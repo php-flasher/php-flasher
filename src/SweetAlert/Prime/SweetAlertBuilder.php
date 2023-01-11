@@ -1093,7 +1093,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     {
         $this->image($title, $text, $imageUrl, $imageWidth, $imageHeight, $imageAlt);
 
-        return $this->flash();
+        return $this->push();
     }
 
     /**

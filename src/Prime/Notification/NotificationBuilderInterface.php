@@ -314,6 +314,15 @@ interface NotificationBuilderInterface
      *
      * @return Envelope
      */
+    public function push(array $stamps = array());
+
+    /**
+     * @deprecated Since php-flasher/flasher v1.12: Using "flash()" method is deprecated and will be removed in v2.0. please use the "push()" method instead.
+     *
+     * @param StampInterface[] $stamps
+     *
+     * @return Envelope
+     */
     public function flash(array $stamps = array());
 
     /**

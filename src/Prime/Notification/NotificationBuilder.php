@@ -145,13 +145,13 @@ class NotificationBuilder implements NotificationBuilderInterface
 
         $this->type($type, $message, $title, $options); // @phpstan-ignore-line
 
-        return $this->flash();
+        return $this->push();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function flash(array $stamps = array())
+    public function push(array $stamps = array())
     {
         if (array() !== $stamps) {
             $this->with($stamps);
@@ -160,6 +160,16 @@ class NotificationBuilder implements NotificationBuilderInterface
         $this->storageManager->add($this->getEnvelope());
 
         return $this->getEnvelope();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flash(array $stamps = array())
+    {
+        @trigger_error('Since php-flasher/flasher v1.12: Using "flash()" method is deprecated and will be removed in v2.0. please use the "push()" method instead.', \E_USER_DEPRECATED);
+
+        return $this->push($stamps);
     }
 
     /**
@@ -392,7 +402,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     {
         $this->preset($preset, $parameters);
 
-        return $this->flash();
+        return $this->push();
     }
 
     /**
@@ -402,7 +412,7 @@ class NotificationBuilder implements NotificationBuilderInterface
     {
         $this->operation($operation, $resource);
 
-        return $this->flash();
+        return $this->push();
     }
 
     /**
@@ -456,7 +466,7 @@ class NotificationBuilder implements NotificationBuilderInterface
             return $this;
         }
 
-        return $this->flash(); // @phpstan-ignore-line
+        return $this->push(); // @phpstan-ignore-line
     }
 
     /**
