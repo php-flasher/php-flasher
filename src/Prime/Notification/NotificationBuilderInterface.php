@@ -99,6 +99,8 @@ interface NotificationBuilderInterface
     public function option($name, $value);
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "success()" method will be an alias of "addSuccess()" method as it will immediately call the `->flash()` method. Use the "type('success')" method instead to avoid this breaking change.
+     *
      * @param string|null                      $message
      * @param array<string, mixed>|string|null $title
      * @param array<string, mixed>             $options
@@ -108,6 +110,8 @@ interface NotificationBuilderInterface
     public function success($message = null, $title = null, array $options = array());
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "error()" method will be an alias of "addError()" method as it will immediately call the `->flash()` method. Use the "type('error')" method instead to avoid this breaking change.
+     *
      * @param string|null                      $message
      * @param array<string, mixed>|string|null $title
      * @param array<string, mixed>             $options
@@ -117,6 +121,8 @@ interface NotificationBuilderInterface
     public function error($message = null, $title = null, array $options = array());
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "info()" method will be an alias of "addInfo()" method as it will immediately call the `->flash()` method. Use the "type('info')" method instead to avoid this breaking change.
+     *
      * @param string|null                      $message
      * @param array<string, mixed>|string|null $title
      * @param array<string, mixed>             $options
@@ -126,6 +132,8 @@ interface NotificationBuilderInterface
     public function info($message = null, $title = null, array $options = array());
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "warning()" method will be an alias of "addWarning()" method as it will immediately call the `->flash()` method. Use the "type('warning')" method instead to avoid this breaking change.
+     *
      * @param string|null                      $message
      * @param array<string, mixed>|string|null $title
      * @param array<string, mixed>             $options

@@ -239,6 +239,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function success($message = null, $title = null, array $options = array())
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "success()" method will be an alias of "addSuccess()" method as it will immediately call the `->flash()` method. Use the "type(\'success\')" method instead to avoid this breaking change.', \E_USER_DEPRECATED);
+
         return $this->type(NotificationInterface::SUCCESS, $message, $title, $options);
     }
 
@@ -247,6 +249,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function error($message = null, $title = null, array $options = array())
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "error()" method will be an alias of "addError()" method as it will immediately call the `->flash()` method. Use the "type(\'error\')" method instead to avoid this breaking change.', \E_USER_DEPRECATED);
+
         return $this->type(NotificationInterface::ERROR, $message, $title, $options);
     }
 
@@ -255,6 +259,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function info($message = null, $title = null, array $options = array())
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "info()" method will be an alias of "addInfo()" method as it will immediately call the `->flash()` method. Use the "type(\'info\')" method instead to avoid this breaking change.', \E_USER_DEPRECATED);
+
         return $this->type(NotificationInterface::INFO, $message, $title, $options);
     }
 
@@ -263,6 +269,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function warning($message = null, $title = null, array $options = array())
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "warning()" method will be an alias of "addWarning()" method as it will immediately call the `->flash()` method. Use the "type(\'warning\')" method instead to avoid this breaking change.', \E_USER_DEPRECATED);
+
         return $this->type(NotificationInterface::WARNING, $message, $title, $options);
     }
 
