@@ -266,6 +266,8 @@ interface NotificationBuilderInterface
     public function addDeleted($resource = null);
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "preset()" method will be an alias of "addPreset()" method as will immediately call the `->flash()` method. Use the "addPreset()" method instead to avoid this breaking change.
+     *
      * @param string               $preset
      * @param array<string, mixed> $parameters
      *
@@ -274,6 +276,8 @@ interface NotificationBuilderInterface
     public function preset($preset, $parameters = array());
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "operation()" method will be an alias of "addOperation()" method as will immediately call the `->flash()` method. Use the "addOperation()" method instead to avoid this breaking change.
+     *
      * @param string                        $operation
      * @param ResourceInterface|string|null $resource
      *
@@ -282,6 +286,8 @@ interface NotificationBuilderInterface
     public function operation($operation, $resource = null);
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "created()" method will be an alias of "addCreated()" method as will immediately call the `->flash()` method. Use the "addCreated()" method instead to avoid this breaking change.
+     *
      * @param ResourceInterface|string|null $resource
      *
      * @return static
@@ -289,6 +295,8 @@ interface NotificationBuilderInterface
     public function created($resource = null);
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "updated()" method will be an alias of "addUpdated()" method as will immediately call the `->flash()` method. Use the "addUpdated()" method instead to avoid this breaking change.
+     *
      * @param ResourceInterface|string|null $resource
      *
      * @return static
@@ -296,6 +304,8 @@ interface NotificationBuilderInterface
     public function updated($resource = null);
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "saved()" method will be an alias of "addSaved()" method as will immediately call the `->flash()` method. Use the "addSaved()" method instead to avoid this breaking change.
+     *
      * @param ResourceInterface|string|null $resource
      *
      * @return static
@@ -303,6 +313,8 @@ interface NotificationBuilderInterface
     public function saved($resource = null);
 
     /**
+     * @deprecated In php-flasher/flasher v2.0, the "deleted()" method will be an alias of "addDeleted()" method as will immediately call the `->flash()` method. Use the "addDeleted()" method instead to avoid this breaking change.
+     *
      * @param ResourceInterface|string|null $resource
      *
      * @return static

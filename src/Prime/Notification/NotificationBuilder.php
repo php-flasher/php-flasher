@@ -452,6 +452,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function preset($preset, $parameters = array())
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "preset()" method will be an alias of "addPreset()" method as will immediately call the `->flash()` method. Use the "addPreset()" method instead to avoid this breaking change.', \E_USER_WARNING);
+
         $flash = false;
 
         if (\is_bool($parameters)) { /** @phpstan-ignore-line */
@@ -474,6 +476,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function operation($operation, $resource = null)
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "operation()" method will be an alias of "addOperation()" method as will immediately call the `->flash()` method. Use the "addOperation()" method instead to avoid this breaking change.', \E_USER_WARNING);
+
         if ($resource instanceof ResourceInterface) {
             $type = $resource->getResourceType();
             $name = $resource->getResourceName();
@@ -497,6 +501,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function created($resource = null)
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "created()" method will be an alias of "addCreated()" method as will immediately call the `->flash()` method. Use the "addCreated()" method instead to avoid this breaking change.', \E_USER_WARNING);
+
         return $this->operation('created', $resource);
     }
 
@@ -505,6 +511,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function updated($resource = null)
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "updated()" method will be an alias of "addUpdated()" method as will immediately call the `->flash()` method. Use the "addUpdated()" method instead to avoid this breaking change.', \E_USER_WARNING);
+
         return $this->operation('updated', $resource);
     }
 
@@ -513,6 +521,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function saved($resource = null)
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "saved()" method will be an alias of "addSaved()" method as will immediately call the `->flash()` method. Use the "addSaved()" method instead to avoid this breaking change.', \E_USER_WARNING);
+
         return $this->operation('saved', $resource);
     }
 
@@ -521,6 +531,8 @@ class NotificationBuilder implements NotificationBuilderInterface
      */
     public function deleted($resource = null)
     {
+        @trigger_error('In php-flasher/flasher v2.0, the "deleted()" method will be an alias of "addDeleted()" method as will immediately call the `->flash()` method. Use the "addDeleted()" method instead to avoid this breaking change.', \E_USER_WARNING);
+
         return $this->operation('deleted', $resource);
     }
 
