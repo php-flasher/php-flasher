@@ -25,7 +25,7 @@ Documentation for PHPFlasher can be found on the [https://php-flasher.io](https:
 
 We are grateful for the support provided by our sponsors, who have made it possible for us to develop and improve the package. Special thanks to:
 
-* [Nashwan Abdullah](https://github.com/codenashwan) via PayPal
+* [Nashwan Abdullah](https://github.com/codenashwan) via PayPal, check out his youtube channel [Rstacode](https://www.youtube.com/rstacode)
 * [Salma Mourad](https://github.com/salmayno)
 * [Arvid de Jong](https://github.com/darviscommerce)
 
@@ -33,7 +33,7 @@ We are grateful for the support provided by our sponsors, who have made it possi
 
 We are grateful for the contributions of our contributors, who have been instrumental in helping us to develop and improve the package. Thank you to:
 
-* [Ash Allen](https://github.com/ash-jc-allen) for creating our logo
+* [Ash Allen](https://github.com/ash-jc-allen) for creating our logo, check out his **Battle Ready Laravel** book : [https://battle-ready-laravel.com](https://battle-ready-laravel.com)
 * [Tony Murray](https://github.com/murrant)
 * [Stéphane P](https://github.com/n3wborn)
 
