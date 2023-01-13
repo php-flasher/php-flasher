@@ -5,19 +5,16 @@ $shared = realpath(__DIR__.'/../.shared');
 
 $resources = array(
     $shared,
-   //  __DIR__.'/../.github/ISSUE_TEMPLATE/',
     __DIR__.'/../.github/FUNDING.yml',
-    // __DIR__.'/../README.md',
+    __DIR__.'/../README.md',
     __DIR__.'/../LICENSE',
 );
 
 $dirs = array(__DIR__.'/../packs', __DIR__.'/../src');
 
-$packages = array();
-foreach ($dirs as $dir) {
-    $packages = array_merge($packages, glob($dir.'/*/composer.json'));
-    $packages = array_merge($packages, glob($dir.'/*/*/composer.json'));
-}
+$packages = array_reduce($dirs, function ($files, $dir) {
+    return array_merge($files, glob("$dir/*/composer.json"), glob("$dir/*/*/composer.json"));
+}, array());
 
 foreach ($packages as $package) {
     $package = realpath(dirname($package));
