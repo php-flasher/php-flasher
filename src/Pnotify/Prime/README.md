@@ -33,7 +33,7 @@ We are grateful for the support provided by our sponsors, who have made it possi
 
 We are grateful for the contributions of our contributors, who have been instrumental in helping us to develop and improve the package. Thank you to:
 
-* [Ash Allen](https://github.com/ash-jc-allen) for creating our logo, check out his **Battle Ready Laravel** book : [https://battle-ready-laravel.com](https://battle-ready-laravel.com)
+* [Ash Allen](https://github.com/ash-jc-allen) for creating our logo, check out his **Battle Ready Laravel** book : [https://battle-ready-laravel.com](https://battle-ready-laravel.com) and blog : [https://ashallendesign.co.uk/blog](https://ashallendesign.co.uk/blog)
 * [Tony Murray](https://github.com/murrant)
 * [Stéphane P](https://github.com/n3wborn)
 * [Lucas Maciel](https://github.com/LucasStorm)
