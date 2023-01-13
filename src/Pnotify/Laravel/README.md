@@ -36,6 +36,7 @@ We are grateful for the contributions of our contributors, who have been instrum
 * [Ash Allen](https://github.com/ash-jc-allen) for creating our logo, check out his **Battle Ready Laravel** book : [https://battle-ready-laravel.com](https://battle-ready-laravel.com)
 * [Tony Murray](https://github.com/murrant)
 * [Stéphane P](https://github.com/n3wborn)
+* [Lucas Maciel](https://github.com/LucasStorm)
 
 ## Contact
 
