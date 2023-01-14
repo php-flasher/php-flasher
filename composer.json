@@ -1,8 +1,8 @@
 {
     "name": "php-flasher/php-pack",
     "description": "A pack for PHP",
-    "type": "flasher-pack",
     "license": "MIT",
+    "type": "flasher-pack",
     "keywords": [
         "php-flasher",
         "flash-messages",
@@ -41,5 +41,10 @@
         "php-flasher/flasher-pnotify": "*",
         "php-flasher/flasher-sweetalert": "*",
         "php-flasher/flasher-toastr": "*"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     }
 }
