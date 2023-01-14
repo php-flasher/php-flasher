@@ -2,26 +2,23 @@
 
 namespace PHPSTORM_META;
 
-use Flasher\Prime\Notification\NotificationInterface;
-
-registerArgumentsSet('notificationTypes', NotificationInterface::SUCCESS, NotificationInterface::ERROR, NotificationInterface::WARNING, NotificationInterface::INFO);
-
 override(Envelope::get(0), type(0));
 
-expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::type(), 0, argumentsSet('notificationTypes'));
-expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::addFlash(), 0, argumentsSet('notificationTypes'));
-expectedArguments(\Flasher\Prime\Notification\NotificationInterface::setType(), 0, argumentsSet('notificationTypes'));
-
-expectedReturnValues(\Flasher\Prime\Notification\NotificationInterface::getType(), argumentsSet('notificationTypes'));
-
 override(\Flasher\Prime\FlasherInterface::create(), map([
-    '' => '@',
-    'flasher' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'theme.*' => \Flasher\Prime\Factory\FlasherFactory::class,
+    'flasher' => \Flasher\Prime\Factory\NotificationFactory::class,
+    'theme.' => \Flasher\Prime\Factory\NotificationFactory::class,
 ]));
 
 override(\Flasher\Prime\FlasherInterface::using(), map([
-    '' => '@',
-    'flasher' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'theme.*' => \Flasher\Prime\Factory\FlasherFactory::class,
+    'flasher' => \Flasher\Prime\Factory\NotificationFactory::class,
+    'theme.' => \Flasher\Prime\Factory\NotificationFactory::class,
 ]));
+
+registerArgumentsSet('types', 'success', 'error', 'warning', 'info');
+expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::type(), 0, argumentsSet('types'));
+expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::addFlash(), 0, argumentsSet('types'));
+expectedArguments(\Flasher\Prime\Notification\NotificationInterface::setType(), 0, argumentsSet('types'));
+expectedReturnValues(\Flasher\Prime\Notification\NotificationInterface::getType(), argumentsSet('types'));
+
+
+expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::handler(), 0, 'flasher', 'toastr', 'noty', 'notyf', 'pnotify', 'sweetalert');

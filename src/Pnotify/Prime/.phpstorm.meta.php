@@ -2,6 +2,7 @@
 
 namespace PHPSTORM_META;
 
+expectedArguments(\pnotify(), 1, 'success', 'error', 'info', 'warning');
 expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::styling(), 0, 'brighttheme', 'bootstrap3', 'fontawesome');
 expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::type(), 0, 'notice', 'info', 'success', 'error');
 expectedArguments(\Flasher\Pnotify\Prime\PnotifyBuilder::animation(), 0, 'none', 'fade');

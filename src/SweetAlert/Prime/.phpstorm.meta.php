@@ -2,6 +2,7 @@
 
 namespace PHPSTORM_META;
 
+expectedArguments(\sweetalert(), 1, 'success', 'error', 'info', 'warning');
 expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::icon(), 0, 'warning', 'error', 'success', 'info', 'question');
 expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::showClass(), 0, 'popup', 'backdrop', 'icon');
 expectedArguments(\Flasher\SweetAlert\Prime\SweetAlertBuilder::hideClass(), 0, 'popup', 'backdrop', 'icon');
