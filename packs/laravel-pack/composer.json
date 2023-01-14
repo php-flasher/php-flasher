@@ -1,8 +1,8 @@
 {
     "name": "php-flasher/laravel-pack",
     "description": "A pack for the Laravel framework",
-    "type": "flasher-pack",
     "license": "MIT",
+    "type": "flasher-pack",
     "keywords": [
         "php-flasher",
         "flash-messages",
@@ -41,5 +41,10 @@
         "php-flasher/flasher-pnotify-laravel": "*",
         "php-flasher/flasher-sweetalert-laravel": "*",
         "php-flasher/flasher-toastr-laravel": "*"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     }
 }

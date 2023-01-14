@@ -1,6 +1,7 @@
 {
     "name": "php-flasher/symfony-pack",
     "description": "A pack for the Symfony framework",
+    "license": "MIT",
     "type": "flasher-pack",
     "keywords": [
         "php-flasher",
@@ -25,7 +26,6 @@
         "rtl",
         "dark-mode"
     ],
-    "license": "MIT",
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -41,5 +41,10 @@
         "php-flasher/flasher-pnotify-symfony": "*",
         "php-flasher/flasher-sweetalert-symfony": "*",
         "php-flasher/flasher-toastr-symfony": "*"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     }
 }

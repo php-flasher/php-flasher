@@ -8,6 +8,7 @@ lint:
 	find src -name "composer.json" -exec $(COMPOSER) normalize {} \;
 	$(COMPOSER)	validate --strict
 	find src -name "composer.json" -exec $(COMPOSER) validate --strict {} \;
+	find packs -name "composer.json" -exec $(COMPOSER) normalize {} \;
 
 ## Fix files with php-cs-fixer
 fix:
