@@ -2,6 +2,7 @@
 
 namespace PHPSTORM_META;
 
+expectedArguments(\noty(), 1, 'success', 'error', 'info', 'warning');
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::layout(), 0, 'top', 'topLeft', 'topCenter', 'topRight', 'center', 'centerLeft', 'centerRight', 'bottom', 'bottomLeft', 'bottomCenter', 'bottomRight');
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::theme(), 0, 'relax', 'mint', 'metroui');
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::timeout(), 0, false, 1000, 3000, 3500, 5000);
