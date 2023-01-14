@@ -1,6 +1,6 @@
 {
     "name": "php-flasher/flasher-sweetalert-laravel",
-    "description": "PHPFlasher Laravel adapter for Sweet Alert 2",
+    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
     "license": "MIT",
     "type": "library",
     "keywords": [
