@@ -91,6 +91,7 @@ final class FlasherPlugin extends Plugin
         return array_merge(array(
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
+            'options' => array(),
             'use_cdn' => true,
             'auto_translate' => true,
             'auto_render' => true,
@@ -104,7 +105,7 @@ final class FlasherPlugin extends Plugin
 
     /**
      * @param array{
-     *    template_factory?: array{default: string, templates: array<string, string>},
+     *    template_factory?: array{default: string, templates: array<string, array<string, string>>},
      *    auto_create_from_session?: bool,
      *    auto_render?: bool,
      *    types_mapping?: array<string, string>,
@@ -133,6 +134,12 @@ final class FlasherPlugin extends Plugin
             $deprecatedKeys[] = 'template_factory.templates';
             $config['themes'] = $config['template_factory']['templates'];
             unset($config['template_factory']['templates']);
+        }
+
+        if (isset($config['themes']['flasher']['options'])) {
+            $deprecatedKeys[] = 'themes.flasher.options';
+            $config['options'] = $config['themes']['flasher']['options'];
+            unset($config['themes']['flasher']['options']);
         }
 
         if (isset($config['auto_create_from_session'])) {

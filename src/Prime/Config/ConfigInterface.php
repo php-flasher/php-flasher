@@ -11,6 +11,7 @@ namespace Flasher\Prime\Config;
  * @phpstan-type ConfigType array{
  *   default: string,
  *   root_script: string,
+ *   options: array<string, string>,
  *   themes: array<string, array{
  *      view: string,
  *      styles: string[],
