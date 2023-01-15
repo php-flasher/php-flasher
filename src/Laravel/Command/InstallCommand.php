@@ -7,26 +7,17 @@
 
 namespace Flasher\Laravel\Command;
 
+use Flasher\Laravel\Support\ServiceProvider as FlasherServiceProvider;
+use Flasher\Prime\Plugin\PluginInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class InstallCommand extends Command
 {
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
     /**
      * @return void
      */
@@ -34,9 +25,8 @@ class InstallCommand extends Command
     {
         $this
             ->setName('flasher:install')
-            ->setDescription('Install all of the PHPFlasher resources.')
-            ->addArgument('target', InputArgument::OPTIONAL, 'The target directory')
-        ;
+            ->setDescription('Installs all <fg=blue;options=bold>PHPFlasher</> resources to the <comment>public</comment> and <comment>config</comment> directories.')
+            ->setHelp('The command copies <fg=blue;options=bold>PHPFlasher</> assets to <comment>public/vendor/flasher/</comment> directory and config files to the <comment>config/</comment> directory without overwriting any existing config files.');
     }
 
     /**
@@ -44,9 +34,6 @@ class InstallCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $publicDir = $this->getPublicDirectory($input);
-        $publicDir = rtrim($publicDir, '/').'/vendor/flasher/';
-
         $output->writeln('');
         $output->writeln('<fg=blue;options=bold>
             ██████╗ ██╗  ██╗██████╗ ███████╗██╗      █████╗ ███████╗██╗  ██╗███████╗██████╗
@@ -59,11 +46,10 @@ class InstallCommand extends Command
         $output->writeln('');
 
         $output->writeln('');
-        $output->writeln(sprintf('<bg=blue;options=bold> INFO </> Copying <fg=blue;options=bold>PHPFlasher</> assets into <fg=blue;options=bold>%s</>', $publicDir));
+        $output->writeln('<bg=blue;options=bold> INFO </> Copying <fg=blue;options=bold>PHPFlasher</> resources...');
         $output->writeln('');
 
-        $this->filesystem->cleanDirectory($publicDir);
-
+        $publicDir = App::publicPath().'/vendor/flasher/';
         $exitCode = 0;
 
         foreach (ServiceProvider::publishableProviders() as $provider) {
@@ -71,19 +57,14 @@ class InstallCommand extends Command
                 continue;
             }
 
-            /** @var \Flasher\Laravel\Support\ServiceProvider $provider */
+            /** @var FlasherServiceProvider $provider */
             $provider = App::getProvider($provider);
-
             $plugin = $provider->createPlugin();
-            $originDir = $plugin->getAssetsDir();
-
-            if (!is_dir($originDir)) {
-                continue;
-            }
+            $configFile = $provider->getConfigurationFile();
 
             try {
-                $this->filesystem->ensureDirectoryExists($originDir, 0777);
-                $this->filesystem->copyDirectory($originDir, $publicDir);
+                $this->publishAssets($plugin, $publicDir);
+                $this->publishConfig($plugin, $configFile);
 
                 $status = sprintf('<fg=green;options=bold>%s</>', '\\' === \DIRECTORY_SEPARATOR ? 'OK' : "\xE2\x9C\x94" /* HEAVY CHECK MARK (U+2714) */);
                 $output->writeln(sprintf(' %s <fg=blue;options=bold>%s</>', $status, $plugin->getAlias()));
@@ -96,43 +77,52 @@ class InstallCommand extends Command
 
         $output->writeln('');
 
+        if (0 === $exitCode) {
+            $output->writeln('<bg=green;options=bold> SUCCESS </> <fg=blue;options=bold>PHPFlasher</> resources have been successfully installed.');
+        } else {
+            $output->writeln('<bg=red;options=bold> ERROR </> An error occurred during the installation of <fg=blue;options=bold>PHPFlasher</> resources.');
+        }
+
+        $output->writeln('');
+
         return $exitCode;
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $publicDir
+     *
+     * @return void
      */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    private function publishAssets(PluginInterface $plugin, $publicDir)
     {
-        $this->filesystem = new Filesystem();
-        $this->projectDir = App::basePath();
+        $originDir = $plugin->getAssetsDir();
+
+        if (!is_dir($originDir)) {
+            return;
+        }
+
+        $filesystem = new Filesystem();
+        $filesystem->ensureDirectoryExists($originDir, 0777);
+        $filesystem->copyDirectory($originDir, $publicDir);
     }
 
     /**
-     * @return string
+     * @param string $configFile
+     *
+     * @return void
      */
-    private function getPublicDirectory(InputInterface $input)
+    private function publishConfig(PluginInterface $plugin, $configFile)
     {
-        $targetDir = $this->getTargetDirectory($input);
-        if (is_dir($targetDir)) {
-            return $targetDir;
+        if (!file_exists($configFile)) {
+            return;
         }
 
-        $publicDir = App::basePath().'/'.$targetDir;
-        if (is_dir($publicDir)) {
-            return $publicDir;
+        $target = App::configPath($plugin->getName().'.php');
+        if (file_exists($target)) {
+            return;
         }
 
-        throw new \InvalidArgumentException(sprintf('The target directory "%s" does not exist.', $publicDir));
-    }
-
-    /**
-     * @return string
-     */
-    private function getTargetDirectory(InputInterface $input)
-    {
-        $targetDir = rtrim($input->getArgument('target') ?: '', '/');
-
-        return $targetDir ?: App::publicPath();
+        $filesystem = new Filesystem();
+        $filesystem->copy($configFile, $target);
     }
 }

@@ -21,4 +21,19 @@ abstract class Bundle extends FlasherBundle
     {
         return new Extension($this->createPlugin());
     }
+
+    public function getConfigurationFile()
+    {
+        return rtrim($this->getResourcesDir(), '/').'/config/config.yaml';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourcesDir()
+    {
+        $r = new \ReflectionClass($this);
+
+        return pathinfo($r->getFileName() ?: '', PATHINFO_DIRNAME).'/Resources/';
+    }
 }

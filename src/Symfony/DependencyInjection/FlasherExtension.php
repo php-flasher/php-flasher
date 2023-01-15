@@ -154,7 +154,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
      */
     private function registerStorageManager(array $config, ContainerBuilder $container)
     {
-        $criteria = $config['search_criteria'];
+        $criteria = $config['filter_criteria'];
         $storageManager = $container->getDefinition('flasher.storage_manager');
         $storageManager->replaceArgument(2, $criteria);
     }

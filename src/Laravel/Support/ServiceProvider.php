@@ -132,7 +132,7 @@ abstract class ServiceProvider extends BaseServiceProvider
     /**
      * @return string
      */
-    protected function getConfigurationFile()
+    public function getConfigurationFile()
     {
         return rtrim($this->getResourcesDir(), '/').'/config.php';
     }

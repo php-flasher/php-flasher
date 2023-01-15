@@ -10,6 +10,7 @@ namespace Flasher\Symfony\Support;
 use Flasher\Prime\Plugin\PluginInterface;
 use Flasher\Symfony\Bridge\Bridge;
 use Flasher\Symfony\Bridge\DependencyInjection\FlasherExtension;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -60,6 +61,18 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
     public function getFlasherAlias()
     {
         return $this->plugin->getName();
+    }
+
+    /**
+     * Returns extension configuration.
+     *
+     * @param array<int, array<string, mixed>> $config
+     *
+     * @return ConfigurationInterface|null
+     */
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration($this->plugin);
     }
 
     /**
