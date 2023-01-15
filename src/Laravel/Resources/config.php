@@ -43,7 +43,7 @@ return array(
     | using npm.
     |
     | To use the local version of the library, run the following command:
-    |     php artisan vendor:publish --force --tag=flasher-assets
+    |     php artisan flasher:install
     |
     | This will copy the necessary assets to your application's public folder.
     | You can then specify the local path to the javascript file in the 'local'
@@ -65,7 +65,7 @@ return array(
     |
     | If you decide to use local assets, don't forget to publish the necessary
     | files to your application's public folder by running the following command:
-    |     php artisan vendor:publish --force --tag=flasher-assets
+    |     php artisan flasher:install
     |
     | This will copy the necessary assets to your application's public folder.
     */

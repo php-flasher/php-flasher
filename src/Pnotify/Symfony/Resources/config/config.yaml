@@ -1,0 +1,6 @@
+flasher_pnotify:
+    scripts:
+        cdn:
+            - 'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.2.4/dist/flasher-pnotify.min.js'
+        local:
+            - '/vendor/flasher/flasher-pnotify.min.js'

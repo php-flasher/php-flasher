@@ -1,0 +1,6 @@
+flasher_notyf:
+    scripts:
+        cdn:
+            - 'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.2.4/dist/flasher-notyf.min.js'
+        local:
+            - '/vendor/flasher/flasher-notyf.min.js'
