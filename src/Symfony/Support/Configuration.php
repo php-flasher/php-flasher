@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('scripts')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue($this->plugin->getScripts())
                 ->end()
                 ->arrayNode('styles')
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                     ->defaultValue($this->plugin->getStyles())
                 ->end()
                 ->arrayNode('options')
