@@ -23,6 +23,7 @@ final class ServiceProviderTest extends TestCase
         $this->assertTrue($this->app->bound('flasher.sweetalert'));
         $this->assertTrue($this->app->bound('flasher.toastr'));
 
+        $this->assertInstanceOf('Flasher\Prime\Flasher', $this->app->make('flasher'));
         $this->assertInstanceOf('Flasher\Noty\Prime\NotyFactory', $this->app->make('flasher.noty'));
         $this->assertInstanceOf('Flasher\Notyf\Prime\NotyfFactory', $this->app->make('flasher.notyf'));
         $this->assertInstanceOf('Flasher\Pnotify\Prime\PnotifyFactory', $this->app->make('flasher.pnotify'));

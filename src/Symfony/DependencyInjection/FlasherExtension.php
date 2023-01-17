@@ -44,6 +44,12 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        $this->registerFlasherTranslator($container);
+        $this->registerFlasherTemplateEngine($container);
+    }
+
+    private function registerFlasherTranslator(ContainerBuilder $container)
+    {
         $config = $container->getDefinition('flasher.config')->getArgument(0);
 
         $translationListener = $container->getDefinition('flasher.translation_listener');
@@ -55,6 +61,18 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
 
         $container->removeDefinition('flasher.translator');
         $translationListener->replaceArgument(0, null);
+    }
+
+    private function registerFlasherTemplateEngine(ContainerBuilder $container)
+    {
+        if ($container->has('twig')) {
+            return;
+        }
+
+        $container->removeDefinition('flasher.template_engine');
+
+        $listener = $container->getDefinition('flasher.resource_manager');
+        $listener->replaceArgument(1, null);
     }
 
     /**
@@ -125,7 +143,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         }
 
         $container->register('flasher.session_listener', 'Flasher\Symfony\EventListener\SessionListener')
-            ->setPublic(false)
+            ->setPublic(true)
             ->addArgument(new Reference('flasher.request_extension'))
             ->addTag('kernel.event_listener', array('event' => 'kernel.response'));
     }
@@ -142,7 +160,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         }
 
         $container->register('flasher.flasher_listener', 'Flasher\Symfony\EventListener\FlasherListener')
-            ->setPublic(false)
+            ->setPublic(true)
             ->addArgument(new Reference('flasher.response_extension'))
             ->addTag('kernel.event_listener', array('event' => 'kernel.response', 'priority' => -256));
     }

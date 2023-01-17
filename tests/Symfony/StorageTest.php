@@ -13,7 +13,6 @@ use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageBag;
 use Flasher\Symfony\Storage\SessionBag;
-use Flasher\Tests\Prime\TestCase;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\SessionStorage\ArraySessionStorage;

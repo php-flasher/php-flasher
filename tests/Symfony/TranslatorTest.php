@@ -8,7 +8,6 @@
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Symfony\Translation\Translator;
-use Flasher\Tests\Prime\TestCase;
 
 class TranslatorTest extends TestCase
 {
