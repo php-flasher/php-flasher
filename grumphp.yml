@@ -1,7 +1,10 @@
 grumphp:
+    ascii: ~
     tasks:
         composer: ~
         composer_normalize: ~
+        composer_script:
+            script: check-syntax
         phpcsfixer: ~
         jsonlint: ~
         yamllint: ~
