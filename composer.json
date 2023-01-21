@@ -45,11 +45,14 @@
         "illuminate/routing": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
         "illuminate/support": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
         "livewire/livewire": "^2.10",
+        "orchestra/testbench": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
+        "phpro/grumphp": "^1.15",
         "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
         "symfony/config": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/console": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/dependency-injection": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/framework-bundle": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/http-kernel": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/translation": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/twig-bundle": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
@@ -123,7 +126,8 @@
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
-            "kylekatarnls/update-helper": true
+            "kylekatarnls/update-helper": true,
+            "phpro/grumphp": true
         },
         "preferred-install": "dist",
         "sort-packages": true

@@ -5,7 +5,6 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
-
 return array(
     /*
     |---------------------------------------------------------------------------
