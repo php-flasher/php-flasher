@@ -10,4 +10,31 @@ grumphp:
         yamllint: ~
         # phpstan: ~
         phpunit: ~
-        git_commit_message: ~
+        # git_branch_name:
+        #     blacklist:
+        #         - main
+        git_commit_message:
+            allow_empty_message: false
+            enforce_capitalized_subject: false
+            type_scope_conventions:
+                types:
+                    - build
+                    - ci
+                    - chore
+                    - docs
+                    - feat
+                    - fix
+                    - perf
+                    - refactor
+                    - revert
+                    - style
+                    - test
+                scopes:
+                    - core
+                    - flasher
+                    - toastr
+                    - noty
+                    - notyf
+                    - pnotify
+                    - sweetalert
+                    - notify
