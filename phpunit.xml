@@ -10,13 +10,7 @@
 >
     <testsuites>
         <testsuite name="flasher">
-            <directory>tests</directory>
+            <directory>tests/Prime</directory>
         </testsuite>
     </testsuites>
-
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </coverage>
 </phpunit>

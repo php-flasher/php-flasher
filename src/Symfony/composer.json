@@ -41,9 +41,11 @@
         "symfony/config": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/console": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/dependency-injection": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
-        "symfony/http-kernel": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
-        "symfony/translation": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
-        "symfony/twig-bundle": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+        "symfony/http-kernel": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+    },
+    "suggest": {
+        "symfony/translation": "To translate flash messages, title and presets",
+        "symfony/twig-bundle": "To create custom themes using twig templates"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
