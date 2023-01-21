@@ -152,5 +152,11 @@
                 "Flasher\\SweetAlert\\Laravel\\FlasherSweetAlertServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "check-syntax": "test `find ./src -iname \"*.php\" | xargs -n1 -P6 php -l | grep -Fv \"No syntax errors\" | wc -l` -eq 0",
+        "normalize-composer": "find src -name \"composer.json\" -exec composer normalize {} \\;",
+        "normalize-packs": "find packs -name \"composer.json\" -exec composer normalize {} \\;",
+        "validate-composer": "find src -name \"composer.json\" -exec composer validate --strict {} \\;"
     }
 }
