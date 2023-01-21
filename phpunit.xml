@@ -9,8 +9,14 @@
     stopOnFailure="true"
 >
     <testsuites>
-        <testsuite name="flasher">
+        <testsuite name="Prime">
             <directory>tests/Prime</directory>
+        </testsuite>
+        <testsuite name="Laravel">
+            <directory>tests/Laravel</directory>
+        </testsuite>
+        <testsuite name="Symfony">
+            <directory>tests/Symfony</directory>
         </testsuite>
     </testsuites>
 </phpunit>
