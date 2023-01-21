@@ -16,6 +16,7 @@ grumphp:
         git_commit_message:
             allow_empty_message: false
             enforce_capitalized_subject: false
+            max_subject_width: 100
             type_scope_conventions:
                 types:
                     - build
