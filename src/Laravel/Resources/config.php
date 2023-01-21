@@ -5,11 +5,12 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
+
 return array(
     /*
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | Default PHPFlasher library
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | This option controls the default library that will be used by PHPFlasher
     | to display notifications in your Laravel application. PHPFlasher supports
     | several libraries, including "flasher", "toastr", "noty", "notyf",
@@ -32,9 +33,9 @@ return array(
     'default' => 'flasher',
 
     /*
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | Main PHPFlasher javascript file
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | This option specifies the location of the main javascript file that is
     | required by PHPFlasher to display notifications in your Laravel application.
     |
@@ -55,9 +56,9 @@ return array(
     ),
 
     /*
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | Whether to use CDN for PHPFlasher assets or not
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | This option controls whether PHPFlasher should use CDN links or local assets
     | for its javascript and CSS files. By default, PHPFlasher uses CDN links
     | to serve the latest version of the library. However, you can also choose
@@ -72,9 +73,9 @@ return array(
     'use_cdn' => true,
 
     /*
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | Translate PHPFlasher messages
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | This option controls whether PHPFlasher should pass its messages to the Laravel's
     | translation service for localization.
     |
@@ -88,9 +89,9 @@ return array(
     'auto_translate' => true,
 
     /*
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | Inject PHPFlasher in Response
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | This option controls whether PHPFlasher should automatically inject its
     | javascript and CSS files into the HTML response of your Laravel application.
     |
@@ -144,9 +145,9 @@ return array(
     ),
 
     /*
-    |-----------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | Global Filter Criteria
-    |-----------------------------------------------------------------------
+    |---------------------------------------------------------------------------
     | This option allows you to filter the notifications that are displayed
     | in your Laravel application. By default, all notifications are displayed,
     | but you can use this option to limit the number of notifications or
