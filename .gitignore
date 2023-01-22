@@ -7,3 +7,5 @@ composer.lock
 
 packs/**/composer.lock
 packs/**/vendor/
+
+node_modules/
