@@ -107,7 +107,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @return MockObject
      */
-    protected function getMock($className)
+    protected function mock($className)
     {
         return $this->getMockBuilder($className)->getMock();
     }

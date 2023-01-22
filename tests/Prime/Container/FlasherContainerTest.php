@@ -18,7 +18,7 @@ class FlasherContainerTest extends TestCase
     public function testInit()
     {
         $this->setProperty('Flasher\Prime\Container\FlasherContainer', 'instance', null);
-        $container = $this->getMock('Flasher\Prime\Container\ContainerInterface');
+        $container = $this->mock('Flasher\Prime\Container\ContainerInterface');
 
         FlasherContainer::init($container);
 
@@ -34,10 +34,10 @@ class FlasherContainerTest extends TestCase
     {
         $this->setProperty('Flasher\Prime\Container\FlasherContainer', 'instance', null);
 
-        $container = $this->getMock('Flasher\Prime\Container\ContainerInterface');
+        $container = $this->mock('Flasher\Prime\Container\ContainerInterface');
         $container
             ->method('get')
-            ->willreturn($this->getMock('Flasher\Prime\FlasherInterface'));
+            ->willreturn($this->mock('Flasher\Prime\FlasherInterface'));
 
         FlasherContainer::init($container);
 
