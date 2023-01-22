@@ -8,7 +8,7 @@
 namespace Flasher\Tests\Prime\Config;
 
 use Flasher\Prime\Config\Config;
-use PHPUnit\Framework\TestCase;
+use Flasher\Tests\Prime\TestCase;
 
 final class ConfigTest extends TestCase
 {
@@ -59,6 +59,7 @@ final class ConfigTest extends TestCase
             'options' => array(),
         ), $config->get('themes.flasher'));
         $this->assertEquals(array('styles.css'), $config->get('themes.flasher.styles'));
+        $this->assertEquals(array('script.js'), $config->get('themes.flasher.scripts'));
         $this->assertEquals(array(), $config->get('themes.flasher.options'));
         $this->assertNull($config->get('drivers.not_exists.options'));
         $this->assertEquals('now_it_exists', $config->get('drivers.not_exists.options', 'now_it_exists'));
