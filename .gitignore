@@ -9,3 +9,6 @@ packs/**/composer.lock
 packs/**/vendor/
 
 node_modules/
+coverage/
+.phpunit.cache/
+.run/

@@ -136,6 +136,8 @@ final class FlasherPlugin extends Plugin
             unset($config['template_factory']['templates']);
         }
 
+        unset($config['template_factory']);
+
         if (isset($config['themes']['flasher']['options'])) {
             $deprecatedKeys[] = 'themes.flasher.options';
             $config['options'] = $config['themes']['flasher']['options'];

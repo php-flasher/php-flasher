@@ -7,6 +7,8 @@
 
 namespace Flasher\Tests\Prime;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -27,24 +29,86 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Call protected/private method of a class.
+     * Call a protected or private method of a class using reflection.
      *
-     * @param object      $object     instantiated object that we will run method on
-     * @param string      $methodName method name to call
-     * @param array|mixed $parameters array of parameters to pass into method
+     * @param object|string $object     instantiated object or FQCN that we will run method
+     * @param string        $methodName method name to call
+     * @param array|mixed   $parameters array of parameters to pass into method
      *
      * @return mixed method return
      *
      * @throws \ReflectionException
      */
-    protected function callMethod(&$object, $methodName, $parameters = array())
+    protected function invokeMethod($object, $methodName, $parameters = array())
     {
-        $reflection = new \ReflectionClass(\get_class($object));
+        $class = is_string($object) ? $object : get_class($object);
+
+        $reflection = new \ReflectionClass($class);
+
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
+        $object = is_string($object) ? null : $object;
         $parameters = \is_array($parameters) ? $parameters : \array_slice(\func_get_args(), 2);
 
         return $method->invokeArgs($object, $parameters);
+    }
+
+    /**
+     * Get the value of a protected or private property of a class using reflection.
+     *
+     * @param object|string $object       instantiated object or FQCN that we will access property from
+     * @param string        $propertyName name of property to access
+     *
+     * @return mixed property value
+     *
+     * @throws \ReflectionException
+     */
+    protected function getProperty($object, $propertyName)
+    {
+        $class = is_string($object) ? $object : get_class($object);
+
+        $reflection = new \ReflectionClass($class);
+
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+
+        $object = is_string($object) ? null : $object;
+
+        return $property->getValue($object);
+    }
+
+    /**
+     * Set the value of a protected or private property of a class using reflection.
+     *
+     * @param object|string $object       instantiated object or FQCN that we will run method
+     * @param string        $propertyName name of property to set
+     * @param mixed         $value        value to set the property to
+     *
+     * @return void
+     *
+     * @throws \ReflectionException
+     */
+    protected function setProperty($object, $propertyName, $value)
+    {
+        $class = is_string($object) ? $object : get_class($object);
+
+        $reflection = new \ReflectionClass($class);
+
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+
+        $object = is_string($object) ? null : $object;
+        $property->setValue($object, $value);
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return MockObject
+     */
+    protected function mock($className)
+    {
+        return $this->getMockBuilder($className)->getMock();
     }
 }
