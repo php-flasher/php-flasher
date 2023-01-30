@@ -77,10 +77,6 @@ abstract class AbstractFlasherKernel extends Kernel
         return sys_get_temp_dir().'/logs'.spl_object_hash($this);
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
-    {
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -101,6 +97,10 @@ abstract class AbstractFlasherKernel extends Kernel
 
             $container->addObjectResource($that);
         });
+    }
+
+    protected function configureRoutes(RouteCollectionBuilder $routes)
+    {
     }
 }
 

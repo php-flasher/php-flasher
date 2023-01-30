@@ -48,6 +48,14 @@ abstract class ServiceProvider extends BaseServiceProvider
     abstract public function createPlugin();
 
     /**
+     * @return string
+     */
+    public function getConfigurationFile()
+    {
+        return rtrim($this->getResourcesDir(), '/').'/config.php';
+    }
+
+    /**
      * @return void
      */
     protected function registerPublishing()
@@ -127,14 +135,6 @@ abstract class ServiceProvider extends BaseServiceProvider
 
             static::$publishGroups[$group] = array_merge(static::$publishGroups[$group], $paths);
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getConfigurationFile()
-    {
-        return rtrim($this->getResourcesDir(), '/').'/config.php';
     }
 
     /**
