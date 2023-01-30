@@ -5,7 +5,7 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
-namespace Flasher\Tests\Prime\Envelope\Stamp;
+namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;

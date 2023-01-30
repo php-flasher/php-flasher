@@ -24,7 +24,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddSuccessMessage()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -41,7 +41,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddErrorMessage()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -58,7 +58,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddWarningMessage()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -75,7 +75,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddInfoMessage()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -92,7 +92,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddFlashMessage()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -109,7 +109,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testPushToStorage()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -359,7 +359,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddPreset()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -378,7 +378,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddOperation()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -397,7 +397,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddCreated()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -416,7 +416,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddUpdated()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -435,7 +435,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddSaved()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -454,7 +454,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testAddDeleted()
     {
-        $storageManager = $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -588,7 +588,7 @@ class NotificationBuilderTest extends TestCase
     {
         $builder = $this->getNotificationBuilder();
 
-        $stamp = $this->mock('Flasher\Prime\Stamp\StampInterface');
+        $stamp = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
         $builder->withStamp($stamp);
 
         $envelope = $builder->getEnvelope();
@@ -655,7 +655,7 @@ class NotificationBuilderTest extends TestCase
     private function getNotificationBuilder(StorageManagerInterface $storageManager = null)
     {
         /** @var StorageManagerInterface $storageManager */
-        $storageManager = $storageManager ?: $this->mock('Flasher\Prime\Storage\StorageManagerInterface');
+        $storageManager = $storageManager ?: $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
 
         return new NotificationBuilder($storageManager, new Notification());
     }

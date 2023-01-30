@@ -5,13 +5,13 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
-namespace Flasher\Tests\Prime\Envelope\Stamp;
+namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Stamp\HandlerStamp;
+use Flasher\Prime\Stamp\HopsStamp;
 use PHPUnit\Framework\TestCase;
 
-final class HandlerStampTest extends TestCase
+final class HopsStampTest extends TestCase
 {
     /**
      * @return void
@@ -19,12 +19,12 @@ final class HandlerStampTest extends TestCase
     public function testConstruct()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp = new HandlerStamp('toastr');
+        $stamp = new HopsStamp(5);
 
         $envelop = new Envelope($notification, array($stamp));
 
-        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\HandlerStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\HandlerStamp', $stamp);
-        $this->assertEquals('toastr', $stamp->getHandler());
+        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\HopsStamp'));
+        $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $stamp);
+        $this->assertEquals(5, $stamp->getAmount());
     }
 }

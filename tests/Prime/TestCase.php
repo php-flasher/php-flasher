@@ -7,8 +7,6 @@
 
 namespace Flasher\Tests\Prime;
 
-use PHPUnit\Framework\MockObject\MockObject;
-
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -100,15 +98,5 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         $object = is_string($object) ? null : $object;
         $property->setValue($object, $value);
-    }
-
-    /**
-     * @param string $className
-     *
-     * @return MockObject
-     */
-    protected function mock($className)
-    {
-        return $this->getMockBuilder($className)->getMock();
     }
 }
