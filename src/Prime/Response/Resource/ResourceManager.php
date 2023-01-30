@@ -49,18 +49,6 @@ final class ResourceManager implements ResourceManagerInterface
     }
 
     /**
-     * @param mixed $assets
-     *
-     * @return string[]|string
-     */
-    private function selectAssets($assets)
-    {
-        $use = $this->config->get('use_cdn', true) ? 'cdn' : 'local';
-
-        return is_array($assets) && array_key_exists($use, $assets) ? $assets[$use] : $assets;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildResponse(Response $response)
@@ -114,6 +102,18 @@ final class ResourceManager implements ResourceManagerInterface
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * @param mixed $assets
+     *
+     * @return string[]|string
+     */
+    private function selectAssets($assets)
+    {
+        $use = $this->config->get('use_cdn', true) ? 'cdn' : 'local';
+
+        return is_array($assets) && array_key_exists($use, $assets) ? $assets[$use] : $assets;
     }
 
     /**

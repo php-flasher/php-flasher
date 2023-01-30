@@ -15,6 +15,7 @@ $rules = array(
     'header_comment' => array('header' => $header),
     'array_syntax' => array('syntax' => 'long'),
     'visibility_required' => array('elements' => array('property', 'method')),
+    'ordered_class_elements' => true,
 );
 
 $finder = new PhpCsFixer\Finder();

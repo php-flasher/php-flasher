@@ -23,6 +23,22 @@ class FlasherSymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle
     /**
      * {@inheritdoc}
      */
+    public function boot()
+    {
+        FlasherContainer::init(new SymfonyContainer($this->container));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createPlugin()
+    {
+        return new FlasherPlugin();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function flasherBuild(ContainerBuilder $container)
     {
         $container->addCompilerPass(new FactoryCompilerPass());
@@ -34,24 +50,8 @@ class FlasherSymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle
     /**
      * {@inheritdoc}
      */
-    public function boot()
-    {
-        FlasherContainer::init(new SymfonyContainer($this->container));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function getFlasherContainerExtension()
     {
         return new FlasherExtension();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createPlugin()
-    {
-        return new FlasherPlugin();
     }
 }

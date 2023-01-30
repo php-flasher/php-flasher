@@ -17,14 +17,14 @@ abstract class Bundle extends FlasherBundle
      */
     abstract public function createPlugin();
 
-    protected function getFlasherContainerExtension()
-    {
-        return new Extension($this->createPlugin());
-    }
-
     public function getConfigurationFile()
     {
         return rtrim($this->getResourcesDir(), '/').'/config/config.yaml';
+    }
+
+    protected function getFlasherContainerExtension()
+    {
+        return new Extension($this->createPlugin());
     }
 
     /**
