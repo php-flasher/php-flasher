@@ -7,25 +7,26 @@
 
 namespace Flasher\Tests\Prime\Stamp;
 
-use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\HopsStamp;
-use PHPUnit\Framework\TestCase;
+use Flasher\Tests\Prime\TestCase;
 
 final class CreatedAtStampTest extends TestCase
 {
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testCreatedAtStamp()
     {
-        $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamp = new CreatedAtStamp();
+        $createdAt = new \DateTime('2023-01-30 23:33:51');
+        $stamp = new CreatedAtStamp($createdAt, 'Y-m-d H:i:s');
 
-        $envelop = new Envelope($notification, array($stamp));
-
-        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\CreatedAtStamp'));
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
+        $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
+        $this->assertInstanceOf('Flasher\Prime\Stamp\OrderableStampInterface', $stamp);
+        $this->assertInstanceOf('DateTime', $stamp->getCreatedAt());
+        $this->assertEquals('2023-01-30 23:33:51', $stamp->getCreatedAt()->format('Y-m-d H:i:s'));
+        $this->assertEquals(array('created_at' => '2023-01-30 23:33:51'), $stamp->toArray());
     }
 
     /**
@@ -33,10 +34,10 @@ final class CreatedAtStampTest extends TestCase
      */
     public function testCompare()
     {
-        $createdAt1 = new CreatedAtStamp(new \DateTime('+2 h'));
-        $createdAt2 = new CreatedAtStamp(new \DateTime('+1 h'));
+        $createdAt1 = new CreatedAtStamp(new \DateTime('2023-01-30 23:35:49'));
+        $createdAt2 = new CreatedAtStamp(new \DateTime('2023-01-30 23:36:06'));
 
-        $this->assertNotNull($createdAt1->compare($createdAt2));
+        $this->assertEquals(-17, $createdAt1->compare($createdAt2));
         $this->assertEquals(1, $createdAt1->compare(new HopsStamp(1)));
     }
 }

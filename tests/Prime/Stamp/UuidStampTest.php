@@ -7,24 +7,23 @@
 
 namespace Flasher\Tests\Prime\Stamp;
 
-use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\UuidStamp;
-use PHPUnit\Framework\TestCase;
+use Flasher\Tests\Prime\TestCase;
 
 final class UuidStampTest extends TestCase
 {
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testUuidStamp()
     {
-        $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $stamp = new UuidStamp();
 
-        $envelop = new Envelope($notification, array($stamp));
-
-        $this->assertEquals($stamp, $envelop->get('Flasher\Prime\Stamp\UuidStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\UuidStamp', $stamp);
+        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
         $this->assertNotEmpty($stamp->getUuid());
+
+        $stamp = new UuidStamp('aaaa-bbbb-cccc');
+        $this->assertEquals('aaaa-bbbb-cccc', $stamp->getUuid());
+        $this->assertEquals(array('uuid' => 'aaaa-bbbb-cccc'), $stamp->toArray());
     }
 }
