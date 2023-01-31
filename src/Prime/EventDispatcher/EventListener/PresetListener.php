@@ -13,24 +13,22 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PresetStamp;
 
 /**
- * @phpstan-type PresetType array{
- *    string: array{
- *      type: string,
- *      title: string,
- *      message: string,
- *      options: array<string, mixed>,
- *    }
- * }
+ * @phpstan-type PresetType array<string, array{
+ *     type: string,
+ *     title: string,
+ *     message: string,
+ *     options: array<string, mixed>,
+ * }>
  */
 final class PresetListener implements EventSubscriberInterface
 {
     /**
-     * @phpstan-var PresetType[]
+     * @phpstan-var PresetType
      */
     private $presets = array();
 
     /**
-     * @phpstan-param PresetType[] $presets
+     * @phpstan-param PresetType $presets
      */
     public function __construct(array $presets)
     {
