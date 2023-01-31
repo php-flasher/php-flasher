@@ -7,19 +7,19 @@
 
 namespace Flasher\Tests\Prime\Stamp;
 
-use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Tests\Prime\TestCase;
 
-final class HopsStampTest extends TestCase
+class DelayStampTest extends TestCase
 {
     /**
      * @return void
      */
-    public function testHopsStamp()
+    public function testDelayStamp()
     {
-        $stamp = new HopsStamp(5);
+        $stamp = new DelayStamp(2);
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertEquals(5, $stamp->getAmount());
+        $this->assertEquals(2, $stamp->getDelay());
     }
 }

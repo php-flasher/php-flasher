@@ -7,21 +7,21 @@
 
 namespace Flasher\Tests\Prime\Stamp;
 
-use Flasher\Prime\Stamp\HandlerStamp;
+use Flasher\Prime\Stamp\ContextStamp;
 use Flasher\Tests\Prime\TestCase;
 
-final class HandlerStampTest extends TestCase
+class ContextStampTest extends TestCase
 {
     /**
      * @return void
      */
-    public function testHandlerStamp()
+    public function testContextStamp()
     {
-        $stamp = new HandlerStamp('toastr');
+        $stamp = new ContextStamp(array('component' => 'livewire'));
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
-        $this->assertEquals('toastr', $stamp->getHandler());
-        $this->assertEquals(array('handler' => 'toastr'), $stamp->toArray());
+        $this->assertEquals(array('component' => 'livewire'), $stamp->getContext());
+        $this->assertEquals(array('context' => array('component' => 'livewire')), $stamp->toArray());
     }
 }
