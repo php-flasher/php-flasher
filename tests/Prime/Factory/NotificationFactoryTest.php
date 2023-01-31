@@ -33,4 +33,16 @@ class NotificationFactoryTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Storage\StorageManagerInterface', $manager);
     }
+
+    /**
+     * @return void
+     */
+    public function testDynamicCallToNotificationBuilder()
+    {
+        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager->expects($this->once())->method('add');
+
+        $factory = new NotificationFactory($storageManager);
+        $factory->addCreated();
+    }
 }
