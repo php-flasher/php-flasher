@@ -12,12 +12,12 @@ use Flasher\Prime\Notification\Envelope;
 interface BagInterface
 {
     /**
-     * @return array<string, Envelope>
+     * @return Envelope[]
      */
     public function get();
 
     /**
-     * @param array<string, Envelope> $envelopes
+     * @param Envelope[] $envelopes
      *
      * @return void
      */
