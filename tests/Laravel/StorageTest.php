@@ -34,7 +34,7 @@ final class StorageTest extends TestCase
         $envelope = new Envelope(new Notification());
         $storage->add($envelope);
 
-        $this->assertEquals(UuidStamp::indexByUuid($envelope), $storage->all());
+        $this->assertEquals(array($envelope), $storage->all());
     }
 
     /**
@@ -49,7 +49,7 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
     }
 
     /**
@@ -68,12 +68,12 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $envelopes[1]->withStamp(new PriorityStamp(1));
         $storage->update($envelopes[1]);
 
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
         $this->assertInstanceOf(
             'Flasher\Prime\Stamp\PriorityStamp',
             $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp')
@@ -96,10 +96,10 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes[1]);
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes[0]), $storage->all());
+        $this->assertEquals(array($envelopes[0]), $storage->all());
     }
 
     /**
@@ -118,7 +118,7 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes);
         $this->assertEquals(array(), $storage->all());
@@ -140,7 +140,7 @@ final class StorageTest extends TestCase
         );
 
         $storage->add($envelopes);
-        $this->assertEquals(UuidStamp::indexByUuid($envelopes), $storage->all());
+        $this->assertEquals($envelopes, $storage->all());
 
         $storage->clear();
         $this->assertEquals(array(), $storage->all());
