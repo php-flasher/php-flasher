@@ -56,7 +56,8 @@
         "symfony/http-kernel": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/translation": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
         "symfony/twig-bundle": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0",
-        "symplify/monorepo-builder": "^11.1"
+        "symplify/monorepo-builder": "^11.1",
+        "vimeo/psalm": "^5.6"
     },
     "replace": {
         "php-flasher/flasher": "self.version",
