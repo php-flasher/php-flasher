@@ -321,8 +321,27 @@ final class EnvelopeTest extends TestCase
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $notification->expects($this->once())->method('toArray')->willReturn($array);
 
+        $envelope = new Envelope($notification, new HandlerStamp('flasher'));
+
+        $this->assertEquals(array('notification' => $array, 'handler' => 'flasher'), $envelope->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallDynamicCallToNotification()
+    {
+        $notification = new DynamicNotification();
         $envelope = new Envelope($notification);
 
-        $this->assertEquals(array('notification' => $array), $envelope->toArray());
+        $this->assertEquals('foobar', $envelope->foo());
+    }
+}
+
+class DynamicNotification extends Notification
+{
+    public function foo()
+    {
+        return 'foobar';
     }
 }
