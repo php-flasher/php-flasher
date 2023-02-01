@@ -8,7 +8,7 @@
 namespace Flasher\Tests\Prime\Factory;
 
 use Flasher\Prime\Factory\NotificationFactory;
-use PHPUnit\Framework\TestCase;
+use Flasher\Tests\Prime\TestCase;
 
 class NotificationFactoryTest extends TestCase
 {
