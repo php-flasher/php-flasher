@@ -147,7 +147,7 @@ final class ResourceManager implements ResourceManagerInterface
             $options = $this->config->get('options', array());
 
             if (isset($this->options[$handler])) {
-                $options = array_merge($options, $this->options[$handler]);
+                $options = array_merge($this->options[$handler], $options);
             }
 
             $this->addOptions('theme.flasher', $options);
