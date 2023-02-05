@@ -110,4 +110,30 @@ JAVASCRIPT;
 
         $this->assertEquals($response, $presenter->render(new Response($envelopes, array())));
     }
+
+    /**
+     * @return void
+     */
+    public function testItRenderOnlyEnvelopesAsJsonObject()
+    {
+        $envelopes = array();
+
+        $notification = new Notification();
+        $notification->setMessage('success message');
+        $notification->setTitle('PHPFlasher');
+        $notification->setType('success');
+        $envelopes[] = new Envelope($notification);
+
+        $notification = new Notification();
+        $notification->setMessage('warning message');
+        $notification->setTitle('yoeunes/toastr');
+        $notification->setType('warning');
+        $envelopes[] = new Envelope($notification);
+
+        $response = '{"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]}},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]}}]}';
+
+        $presenter = new HtmlPresenter();
+
+        $this->assertEquals($response, $presenter->render(new Response($envelopes, array('envelopes_only' => true))));
+    }
 }
