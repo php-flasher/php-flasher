@@ -5,20 +5,22 @@
  * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
  */
 
-namespace Flasher\Tests\Prime\Response\Presenter;
+namespace Flasher\Tests\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Prime\Response\Presenter\HtmlPresenter;
-use Flasher\Prime\Response\Response;
+use Flasher\Prime\Response\ResponseManager;
+use Flasher\Prime\Stamp\CreatedAtStamp;
+use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Storage\StorageManager;
 use Flasher\Tests\Prime\TestCase;
 
-class HtmlPresenterTest extends TestCase
+class ResponseManagerTest extends TestCase
 {
     /**
      * @return void
      */
-    public function testArrayPresenter()
+    public function testRenderSavedNotifications()
     {
         $envelopes = array();
 
@@ -26,20 +28,31 @@ class HtmlPresenterTest extends TestCase
         $notification->setMessage('success message');
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
-        $envelopes[] = new Envelope($notification);
+        $envelopes[] = new Envelope($notification, array(
+            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
+            new UuidStamp('1111'),
+        ));
 
         $notification = new Notification();
         $notification->setMessage('warning message');
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
-        $envelopes[] = new Envelope($notification);
+        $envelopes[] = new Envelope($notification, array(
+            new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
+            new UuidStamp('2222'),
+        ));
+
+        $storageManager = new StorageManager();
+        $storageManager->add($envelopes);
+
+        $responseManager = new ResponseManager(null, $storageManager);
 
         $response = <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
 (function() {
     var rootScript = '';
     var FLASHER_FLASH_BAG_PLACE_HOLDER = {};
-    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]}},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]}}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
+    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]},"created_at":"2023-02-05 16:22:50","uuid":"1111","priority":0},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]},"created_at":"2023-02-06 16:22:50","uuid":"2222","priority":0}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
 
     function mergeOptions(first, second) {
         return {
@@ -106,34 +119,17 @@ class HtmlPresenterTest extends TestCase
 </script>
 JAVASCRIPT;
 
-        $presenter = new HtmlPresenter();
-
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array())));
+        $this->assertEquals($response, $responseManager->render());
     }
 
     /**
      * @return void
      */
-    public function testItRenderOnlyEnvelopesAsJsonObject()
+    public function testItThrowsExceptionIfPresenterNotFound()
     {
-        $envelopes = array();
+        $this->setExpectedException('\InvalidArgumentException', 'Presenter [xml] not supported.');
 
-        $notification = new Notification();
-        $notification->setMessage('success message');
-        $notification->setTitle('PHPFlasher');
-        $notification->setType('success');
-        $envelopes[] = new Envelope($notification);
-
-        $notification = new Notification();
-        $notification->setMessage('warning message');
-        $notification->setTitle('yoeunes/toastr');
-        $notification->setType('warning');
-        $envelopes[] = new Envelope($notification);
-
-        $response = '{"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]}},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]}}]}';
-
-        $presenter = new HtmlPresenter();
-
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array('envelopes_only' => true))));
+        $responseManager = new ResponseManager();
+        $responseManager->render(array(), 'xml');
     }
 }
