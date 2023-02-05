@@ -38,7 +38,7 @@ class ResponseManagerTest extends TestCase
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification, array(
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
+            new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
             new UuidStamp('2222'),
         ));
 
@@ -52,7 +52,7 @@ class ResponseManagerTest extends TestCase
 (function() {
     var rootScript = '';
     var FLASHER_FLASH_BAG_PLACE_HOLDER = {};
-    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]},"created_at":"2023-02-05 16:22:50","uuid":"1111","priority":0},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]},"created_at":"2023-02-05 16:22:50","uuid":"2222","priority":0}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
+    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]},"created_at":"2023-02-05 16:22:50","uuid":"1111","priority":0},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]},"created_at":"2023-02-06 16:22:50","uuid":"2222","priority":0}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
 
     function mergeOptions(first, second) {
         return {
