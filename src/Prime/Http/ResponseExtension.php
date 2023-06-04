@@ -75,7 +75,6 @@ final class ResponseExtension
     {
         return !$request->isXmlHttpRequest()
             && $request->isHtmlRequestFormat()
-            && $request->hasSession()
             && !$response->isRedirection()
             && $response->isHtml()
             && !$response->isAttachment()
