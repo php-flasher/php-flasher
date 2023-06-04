@@ -8,6 +8,7 @@
 namespace Flasher\Symfony\DependencyInjection;
 
 use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Symfony\Bridge\Bridge;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -36,6 +37,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $this->registerFlasherConfiguration($config, $container);
         $this->registerListeners($config, $container);
         $this->registerStorageManager($config, $container);
+        $this->registerHttpExtensions($config, $container);
         $this->registerFlasherAutoConfiguration($container);
     }
 
@@ -46,33 +48,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
     {
         $this->registerFlasherTranslator($container);
         $this->registerFlasherTemplateEngine($container);
-    }
-
-    private function registerFlasherTranslator(ContainerBuilder $container)
-    {
-        $config = $container->getDefinition('flasher.config')->getArgument(0);
-
-        $translationListener = $container->getDefinition('flasher.translation_listener');
-        $translationListener->replaceArgument(1, $config['auto_translate']); // @phpstan-ignore-line
-
-        if ($container->has('translator')) {
-            return;
-        }
-
-        $container->removeDefinition('flasher.translator');
-        $translationListener->replaceArgument(0, null);
-    }
-
-    private function registerFlasherTemplateEngine(ContainerBuilder $container)
-    {
-        if ($container->has('twig')) {
-            return;
-        }
-
-        $container->removeDefinition('flasher.template_engine');
-
-        $listener = $container->getDefinition('flasher.resource_manager');
-        $listener->replaceArgument(1, null);
+        $this->configureSessionServices($container);
     }
 
     /**
@@ -99,11 +75,6 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
      */
     private function registerListeners(array $config, ContainerBuilder $container)
     {
-        $this->registerResponseExtension($container);
-
-        $mapping = $config['flash_bag']['mapping'];
-        $this->registerRequestExtension($container, $mapping);
-
         $this->registerSessionListener($config, $container);
         $this->registerFlasherListener($config, $container);
     }
@@ -180,6 +151,17 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
     /**
      * @return void
      */
+    private function registerHttpExtensions(array $config, ContainerBuilder $container)
+    {
+        $mapping = $config['flash_bag']['mapping'];
+        $this->registerRequestExtension($container, $mapping);
+
+        $this->registerResponseExtension($container);
+    }
+
+    /**
+     * @return void
+     */
     private function registerFlasherAutoConfiguration(ContainerBuilder $container)
     {
         if (!method_exists($container, 'registerForAutoconfiguration')) {
@@ -189,5 +171,65 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $container
             ->registerForAutoconfiguration('Flasher\Prime\Aware\FlasherAwareInterface')
             ->addTag('flasher.flasher_aware');
+    }
+
+    /**
+     * @return void
+     */
+    private function registerFlasherTranslator(ContainerBuilder $container)
+    {
+        $config = $container->getDefinition('flasher.config')->getArgument(0);
+
+        $translationListener = $container->getDefinition('flasher.translation_listener');
+        $translationListener->replaceArgument(1, $config['auto_translate']); // @phpstan-ignore-line
+
+        if ($container->has('translator')) {
+            return;
+        }
+
+        $container->removeDefinition('flasher.translator');
+        $translationListener->replaceArgument(0, null);
+    }
+
+    /**
+     * @return void
+     */
+    private function registerFlasherTemplateEngine(ContainerBuilder $container)
+    {
+        if ($container->has('twig')) {
+            return;
+        }
+
+        $container->removeDefinition('flasher.template_engine');
+
+        $listener = $container->getDefinition('flasher.resource_manager');
+        $listener->replaceArgument(1, null);
+    }
+
+    /**
+     * @return void
+     */
+    private function configureSessionServices(ContainerBuilder $container)
+    {
+        if ($this->isSessionEnabled($container)) {
+            return;
+        }
+
+        $container->removeDefinition('flasher.storage_bag');
+        $container->removeDefinition('flasher.session_listener');
+
+        $container->register('flasher.storage_bag', 'Flasher\Prime\Storage\Bag\ArrayBag');
+    }
+
+    /**
+     * @return bool
+     */
+    private function isSessionEnabled(ContainerBuilder $container)
+    {
+        if (Bridge::versionCompare('5.3', '>=')) {
+            return $container->has('session.factory');
+        }
+
+        return $container->has('session');
     }
 }
