@@ -52,6 +52,15 @@ final class Request implements RequestInterface
      */
     public function hasType($type)
     {
+        if (!$this->hasSession()) {
+            return false;
+        }
+
+        $session = $this->request->getSession();
+        if (!$session->isStarted()) {
+            return false;
+        }
+
         /** @var Session $session */
         $session = $this->request->getSession();
         $flashBag = $session->getFlashBag();
