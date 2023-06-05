@@ -25,6 +25,16 @@ foreach ($plugins as $plugin) {
         $content = file_get_contents($script);
         file_put_contents($path, $content);
     }
+
+    $styles = $plugin->getStyles();
+
+    foreach ($styles['cdn'] as $index => $script) {
+        echo $script . PHP_EOL;
+
+        $path = $plugin->getAssetsDir() . '/'. pathinfo($script, PATHINFO_BASENAME);
+        $content = file_get_contents($script);
+        file_put_contents($path, $content);
+    }
 }
 
 echo 'DONE' . PHP_EOL;

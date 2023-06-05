@@ -18,10 +18,25 @@ class NotyPlugin extends Plugin
     {
         return array(
             'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.2.4/dist/flasher-noty.min.js',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.3.0/dist/flasher-noty.min.js',
             ),
             'local' => array(
                 '/vendor/flasher/flasher-noty.min.js',
+            ),
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStyles()
+    {
+        return array(
+            'cdn' => array(
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.3.0/dist/flasher-noty.min.css',
+            ),
+            'local' => array(
+                '/vendor/flasher/flasher-noty.min.css',
             ),
         );
     }

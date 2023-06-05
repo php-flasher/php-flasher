@@ -136,20 +136,50 @@ final class ResourceManager implements ResourceManagerInterface
             return $handler;
         }
 
-        if ('flasher' !== $theme && !isset($this->options[$handler])) {
-            /** @var array<string, mixed> $options */
+        if (!isset($this->scripts[$handler])) {
+            $scripts = $this->config->get('themes.'.$theme.'.scripts', array());
+            $this->addScripts('theme.'.$theme, (array) $scripts);
+        }
+
+        if (!isset($this->styles[$handler])) {
+            $styles = $this->config->get('themes.'.$theme.'.styles', array());
+            $this->addStyles('theme.'.$theme, (array) $styles);
+        }
+
+        if (!isset($this->options[$handler])) {
             $options = $this->config->get('themes.'.$theme.'.options', array());
             $this->addOptions('theme.'.$theme, $options);
         }
 
         if ('flasher' === $theme) {
-            /** @var array<string, mixed> $options */
-            $options = $this->config->get('options', array());
+            $scripts = $this->config->get('scripts', array());
 
-            if (isset($this->options[$handler])) {
-                $options = array_merge($this->options[$handler], $options);
+            if (isset($this->scripts['theme.flasher'])) {
+                $scripts = array_merge($this->scripts['theme.flasher'], $scripts);
             }
 
+            if (isset($this->scripts['flasher'])) {
+                $scripts = array_merge($this->scripts['flasher'], $scripts);
+            }
+
+            $this->addScripts('theme.flasher', (array) $scripts);
+
+            $styles = $this->config->get('styles', array());
+            if (isset($this->styles['theme.flasher'])) {
+                $styles = array_merge($this->styles['theme.flasher'], $styles);
+            }
+            if (isset($this->scripts['flasher'])) {
+                $styles = array_merge($this->styles['flasher'], $styles);
+            }
+            $this->addStyles('theme.flasher', (array) $styles);
+
+            $options = $this->config->get('options', array());
+            if (isset($this->options['theme.flasher'])) {
+                $options = array_merge($this->options['theme.flasher'], $options);
+            }
+            if (isset($this->options['flasher'])) {
+                $options = array_merge($this->options['flasher'], $options);
+            }
             $this->addOptions('theme.flasher', $options);
         }
 

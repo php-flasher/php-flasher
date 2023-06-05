@@ -211,6 +211,8 @@ abstract class ServiceProvider extends BaseServiceProvider
 
         $config = $this->app->make('config')->get($this->plugin->getName(), array()); // @phpstan-ignore-line
         $this->app->extend('flasher.resource_manager', function (ResourceManagerInterface $manager) use ($plugin, $config) {
+            $config = $plugin->normalizeConfig($config);
+
             $scripts = isset($config['scripts']) ? $config['scripts'] : array();
             $manager->addScripts($plugin->getAlias(), $scripts);
 
