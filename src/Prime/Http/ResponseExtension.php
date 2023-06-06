@@ -62,7 +62,7 @@ final class ResponseExtension
 
         $htmlResponse = "\n".str_replace("\n", '', $htmlResponse)."\n";
 
-        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
+        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition);
         $response->setContent($content);
 
         return $response;
