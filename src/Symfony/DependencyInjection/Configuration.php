@@ -47,6 +47,7 @@ final class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('styles')
                     ->prototype('variable')->end()
+                    ->defaultValue($plugin->getStyles())
                 ->end()
                 ->arrayNode('options')
                     ->prototype('scalar')->end()

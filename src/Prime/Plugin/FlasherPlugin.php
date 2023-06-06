@@ -45,7 +45,7 @@ final class FlasherPlugin extends Plugin
     public function getRootScript()
     {
         return array(
-            'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.js',
+            'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js',
             'local' => '/vendor/flasher/flasher.min.js',
         );
     }
@@ -67,7 +67,7 @@ final class FlasherPlugin extends Plugin
     {
         return array(
             'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.css',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css',
             ),
             'local' => array(
                 '/vendor/flasher/flasher.min.css',
@@ -106,6 +106,8 @@ final class FlasherPlugin extends Plugin
         return array_merge(array(
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
+            'scripts' => array(),
+            'styles' => $this->getStyles(),
             'options' => array(),
             'use_cdn' => true,
             'auto_translate' => true,

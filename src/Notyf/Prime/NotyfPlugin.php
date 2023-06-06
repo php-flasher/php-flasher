@@ -18,7 +18,7 @@ class NotyfPlugin extends Plugin
     {
         return array(
             'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.0/dist/flasher-notyf.min.js',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.1/dist/flasher-notyf.min.js',
             ),
             'local' => array(
                 '/vendor/flasher/flasher-notyf.min.js',
@@ -33,7 +33,7 @@ class NotyfPlugin extends Plugin
     {
         return array(
             'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.0/dist/flasher-notyf.min.css',
+                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.1/dist/flasher-notyf.min.css',
             ),
             'local' => array(
                 '/vendor/flasher/flasher-notyf.min.css',

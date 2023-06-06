@@ -8,7 +8,7 @@
 return array(
     'scripts' => array(
         'cdn' => array(
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.0/dist/flasher-sweetalert.min.js',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.js',
         ),
         'local' => array(
             '/vendor/flasher/flasher-sweetalert.min.js',
@@ -16,7 +16,7 @@ return array(
     ),
     'styles' => array(
         'cdn' => array(
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.0/dist/flasher-sweetalert.min.css',
+            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.css',
         ),
         'local' => array(
             '/vendor/flasher/flasher-sweetalert.min.css',
