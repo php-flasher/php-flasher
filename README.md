@@ -46,6 +46,7 @@ Shining stars of our community:
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://www.instagram.com/lucas.maciel_z"><img src="https://avatars.githubusercontent.com/u/80225404?v=4?s=100" width="100px;" alt="Lucas Maciel"/><br /><sub><b>Lucas Maciel</b></sub></a><br /><a href="#design-LucasStorm" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://siek.io/"><img src="https://avatars.githubusercontent.com/u/5730766?v=4?s=100" width="100px;" alt="Antoni Siek"/><br /><sub><b>Antoni Siek</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=ImJustToNy" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
