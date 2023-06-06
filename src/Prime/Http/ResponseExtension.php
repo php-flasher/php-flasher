@@ -61,8 +61,9 @@ final class ResponseExtension
         }
 
         $htmlResponse = "\n".str_replace("\n", '', $htmlResponse)."\n";
+        $offset = $alreadyRendered ? strlen(HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER) : 0;
 
-        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + \strlen($insertPlaceHolder));
+        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + $offset);
         $response->setContent($content);
 
         return $response;
