@@ -31,7 +31,13 @@ class Configuration implements ConfigurationInterface
             ? $treeBuilder->getRootNode()
             : $treeBuilder->root($this->plugin->getName()); // @phpstan-ignore-line
 
+        $plugin = $this->plugin;
         $rootNode
+            ->beforeNormalization()
+                ->always(function ($v) use ($plugin) {
+                    return $plugin->normalizeConfig($v);
+                })
+            ->end()
             ->children()
                 ->arrayNode('scripts')
                     ->prototype('variable')->end()

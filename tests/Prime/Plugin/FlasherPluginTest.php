@@ -46,7 +46,7 @@ class FlasherPluginTest extends TestCase
     {
         $plugin = new FlasherPlugin();
         $rootScript = array(
-            'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.4/dist/flasher.min.js',
+            'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.js',
             'local' => '/vendor/flasher/flasher.min.js',
         );
 
@@ -60,7 +60,7 @@ class FlasherPluginTest extends TestCase
     {
         $plugin = new FlasherPlugin();
         $scripts = array(
-            'cdn' => array('https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.4/dist/flasher.min.js'),
+            'cdn' => array('https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.js'),
             'local' => array('/vendor/flasher/flasher.min.js'),
         );
 
@@ -103,7 +103,7 @@ class FlasherPluginTest extends TestCase
         $config = array(
             'default' => 'flasher',
             'root_script' => array(
-                'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.4/dist/flasher.min.js',
+                'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.js',
                 'local' => '/vendor/flasher/flasher.min.js',
             ),
             'options' => array(),

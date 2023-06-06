@@ -32,12 +32,12 @@ interface PluginInterface
     public function getFactory();
 
     /**
-     * @return string[]|array{cdn: string[], local: string[]}
+     * @return string|string[]|array{cdn?: string|string[], local?: string|string[]}
      */
     public function getScripts();
 
     /**
-     * @return string[]|array{cdn: string[], local: string[]}
+     * @return string|string[]|array{cdn?: string|string[], local?: string|string[]}
      */
     public function getStyles();
 
@@ -55,6 +55,21 @@ interface PluginInterface
      * @return string
      */
     public function getResourcesDir();
+
+    /**
+     * @phpstan-param array{
+     *     scripts?: string|array,
+     *     styles?: string|array,
+     *     options?: array,
+     * } $config
+     *
+     * @phpstan-return array{
+     *  scripts?: array,
+     *  styles?: array,
+     *  options?: array,
+     * }
+     */
+    public function normalizeConfig(array $config);
 
     /**
      * @param array<string, mixed> $options

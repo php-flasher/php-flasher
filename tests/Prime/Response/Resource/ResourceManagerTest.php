@@ -66,8 +66,8 @@ class ResourceManagerTest extends TestCase
 
         $this->assertEquals($envelopes, $response->getEnvelopes());
         $this->assertEquals('root_script.min.js', $response->getRootScript());
-        $this->assertEquals(array('toastr.min.js', 'jquery.min.js'), $response->getScripts());
-        $this->assertEquals(array('toastr.min.css'), $response->getStyles());
+        $this->assertEquals(array('flasher.min.js', 'toastr.min.js', 'jquery.min.js'), $response->getScripts());
+        $this->assertEquals(array('flasher.min.css', 'toastr.min.css'), $response->getStyles());
         $this->assertEquals(array(
             'theme.flasher' => array('timeout' => 2500, 'position' => 'center'),
             'toastr' => array('sounds' => false),

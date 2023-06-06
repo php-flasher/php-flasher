@@ -50,8 +50,28 @@ return array(
     | field of this option.
     */
     'root_script' => array(
-        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.2.4/dist/flasher.min.js',
+        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.js',
         'local' => '/vendor/flasher/flasher.min.js',
+    ),
+
+    /*
+    |---------------------------------------------------------------------------
+    | PHPFlasher Stylesheet
+    |---------------------------------------------------------------------------
+    | This option specifies the location of the stylesheet file that is
+    | required by PHPFlasher to style the notifications in your Laravel application.
+    |
+    | By default, PHPFlasher uses a CDN to serve the latest version of the stylesheet.
+    | However, you can also choose to download the stylesheet locally or include it
+    | from your assets.
+    |
+    | To use the local version of the stylesheet, make sure you have the necessary
+    | assets in your application's public folder. Then specify the local path to
+    | the stylesheet file in the 'local' field of this option.
+    */
+    'styles' => array(
+        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.0/dist/flasher.min.css',
+        'local' => '/vendor/flasher/flasher.min.css',
     ),
 
     /*
