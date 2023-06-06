@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -23,22 +18,22 @@ class PresetListenerTest extends TestCase
     public function testPresetListener()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new PresetListener(array(
-            'entity_saved' => array(
+        $listener = new PresetListener([
+            'entity_saved' => [
                 'type' => 'success',
                 'title' => 'PHPFlasher',
                 'message' => 'success message',
-                'options' => array('timeout' => 2500),
-            ),
-        ));
+                'options' => ['timeout' => 2500],
+            ],
+        ]);
         $eventDispatcher->addSubscriber($listener);
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification(), new PresetStamp('entity_saved')),
             new Envelope(new Notification()),
-        );
+        ];
         $event = new PersistEvent($envelopes);
 
         $eventDispatcher->dispatch($event);
@@ -49,7 +44,7 @@ class PresetListenerTest extends TestCase
         $this->assertEquals('success', $envelopes[0]->getType());
         $this->assertEquals('PHPFlasher', $envelopes[0]->getTitle());
         $this->assertEquals('success message', $envelopes[0]->getMessage());
-        $this->assertEquals(array('timeout' => 2500), $envelopes[0]->getOptions());
+        $this->assertEquals(['timeout' => 2500], $envelopes[0]->getOptions());
     }
 
     /**
@@ -63,22 +58,22 @@ class PresetListenerTest extends TestCase
         );
 
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new PresetListener(array(
-            'entity_saved' => array(
+        $listener = new PresetListener([
+            'entity_saved' => [
                 'type' => 'success',
                 'title' => 'PHPFlasher',
                 'message' => 'success message',
-                'options' => array('timeout' => 2500),
-            ),
-        ));
+                'options' => ['timeout' => 2500],
+            ],
+        ]);
         $eventDispatcher->addSubscriber($listener);
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification(), new PresetStamp('entity_deleted')),
             new Envelope(new Notification()),
-        );
+        ];
         $event = new PersistEvent($envelopes);
 
         $eventDispatcher->dispatch($event);

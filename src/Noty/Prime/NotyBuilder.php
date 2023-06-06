@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Noty\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
@@ -33,7 +28,7 @@ final class NotyBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function alert($message = null, array $options = array())
+    public function alert($message = null, array $options = [])
     {
         return $this->type('alert', $message, $options);
     }
@@ -127,7 +122,6 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * @param string $option
-     * @param mixed  $value
      *
      * @return static
      */
@@ -140,7 +134,6 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * @param string $option
-     * @param mixed  $docTitle
      *
      * @return static
      */

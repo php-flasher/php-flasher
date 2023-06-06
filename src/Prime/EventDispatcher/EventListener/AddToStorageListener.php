@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -19,7 +14,7 @@ final class AddToStorageListener implements EventSubscriberInterface
      */
     public function __invoke(PersistEvent $event)
     {
-        $envelopesToKeep = array();
+        $envelopesToKeep = [];
 
         foreach ($event->getEnvelopes() as $envelope) {
             if ($this->shouldKeep($envelope)) {
@@ -30,9 +25,6 @@ final class AddToStorageListener implements EventSubscriberInterface
         $event->setEnvelopes($envelopesToKeep);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\PersistEvent';

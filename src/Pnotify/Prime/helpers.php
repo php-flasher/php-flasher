@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 use Flasher\Pnotify\Prime\PnotifyFactory;
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
@@ -18,7 +13,7 @@ if (!function_exists('pnotify')) {
      *
      * @return Envelope|PnotifyFactory
      */
-    function pnotify($message = null, $type = NotificationInterface::SUCCESS, array $options = array())
+    function pnotify($message = null, $type = NotificationInterface::SUCCESS, array $options = [])
     {
         /** @var PnotifyFactory $factory */
         $factory = FlasherContainer::create('flasher.pnotify');

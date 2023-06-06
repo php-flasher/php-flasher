@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Pnotify\Laravel\Facade;
 
 use Flasher\Pnotify\Prime\PnotifyBuilder;

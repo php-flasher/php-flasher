@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Response\Resource;
 
 use Flasher\Prime\Config\Config;
@@ -30,17 +25,17 @@ final class ResourceManager implements ResourceManagerInterface
     /**
      * @var array<string, string[]>
      */
-    private $scripts = array();
+    private $scripts = [];
 
     /**
      * @var array<string, string[]>
      */
-    private $styles = array();
+    private $styles = [];
 
     /**
      * @var array<string, array<string, mixed>>
      */
-    private $options = array();
+    private $options = [];
 
     public function __construct(ConfigInterface $config = null, TemplateEngineInterface $templateEngine = null)
     {
@@ -48,17 +43,14 @@ final class ResourceManager implements ResourceManagerInterface
         $this->templateEngine = $templateEngine;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildResponse(Response $response)
     {
         $rootScript = $this->selectAssets($this->config->get('root_script'));
-        $rootScript = is_string($rootScript) ? $rootScript : null;
+        $rootScript = \is_string($rootScript) ? $rootScript : null;
 
         $response->setRootScript($rootScript);
 
-        $handlers = array();
+        $handlers = [];
         foreach ($response->getEnvelopes() as $envelope) {
             $handler = $this->resolveHandler($envelope);
             if (null === $handler || \in_array($handler, $handlers, true)) {
@@ -72,25 +64,16 @@ final class ResourceManager implements ResourceManagerInterface
         return $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addScripts($handler, array $scripts)
     {
         $this->scripts[$handler] = $scripts;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addStyles($handler, array $styles)
     {
         $this->styles[$handler] = $styles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addOptions($handler, array $options)
     {
         $this->options[$handler] = $options;
@@ -105,15 +88,13 @@ final class ResourceManager implements ResourceManagerInterface
     }
 
     /**
-     * @param mixed $assets
-     *
      * @return string[]|string
      */
     private function selectAssets($assets)
     {
         $use = $this->config->get('use_cdn', true) ? 'cdn' : 'local';
 
-        return is_array($assets) && array_key_exists($use, $assets) ? $assets[$use] : $assets;
+        return \is_array($assets) && \array_key_exists($use, $assets) ? $assets[$use] : $assets;
     }
 
     /**
@@ -127,7 +108,7 @@ final class ResourceManager implements ResourceManagerInterface
         }
 
         $handler = $handlerStamp->getHandler();
-        if ('flasher' !== $handler && 0 !== strpos($handler, 'theme.')) {
+        if ('flasher' !== $handler && !str_starts_with($handler, 'theme.')) {
             return $handler;
         }
 
@@ -137,22 +118,22 @@ final class ResourceManager implements ResourceManagerInterface
         }
 
         if (!isset($this->scripts[$handler])) {
-            $scripts = $this->config->get('themes.'.$theme.'.scripts', array());
+            $scripts = $this->config->get('themes.'.$theme.'.scripts', []);
             $this->addScripts('theme.'.$theme, (array) $scripts);
         }
 
         if (!isset($this->styles[$handler])) {
-            $styles = $this->config->get('themes.'.$theme.'.styles', array());
+            $styles = $this->config->get('themes.'.$theme.'.styles', []);
             $this->addStyles('theme.'.$theme, (array) $styles);
         }
 
         if (!isset($this->options[$handler])) {
-            $options = $this->config->get('themes.'.$theme.'.options', array());
+            $options = $this->config->get('themes.'.$theme.'.options', []);
             $this->addOptions('theme.'.$theme, $options);
         }
 
         if ('flasher' === $theme) {
-            $scripts = $this->config->get('scripts', array());
+            $scripts = $this->config->get('scripts', []);
 
             if (isset($this->scripts['theme.flasher'])) {
                 $scripts = array_merge($this->scripts['theme.flasher'], $scripts);
@@ -164,7 +145,7 @@ final class ResourceManager implements ResourceManagerInterface
 
             $this->addScripts('theme.flasher', (array) $scripts);
 
-            $styles = $this->config->get('styles', array());
+            $styles = $this->config->get('styles', []);
             if (isset($this->styles['theme.flasher'])) {
                 $styles = array_merge($this->styles['theme.flasher'], $styles);
             }
@@ -173,7 +154,7 @@ final class ResourceManager implements ResourceManagerInterface
             }
             $this->addStyles('theme.flasher', (array) $styles);
 
-            $options = $this->config->get('options', array());
+            $options = $this->config->get('options', []);
             if (isset($this->options['theme.flasher'])) {
                 $options = array_merge($this->options['theme.flasher'], $options);
             }
@@ -189,7 +170,7 @@ final class ResourceManager implements ResourceManagerInterface
             return 'theme.'.$theme;
         }
 
-        $compiled = $this->templateEngine->render($view, array('envelope' => $envelope));
+        $compiled = $this->templateEngine->render($view, ['envelope' => $envelope]);
         $envelope->withStamp(new ViewStamp($compiled));
 
         return 'theme.'.$theme;
@@ -206,7 +187,7 @@ final class ResourceManager implements ResourceManagerInterface
             return 'flasher';
         }
 
-        if (0 === strpos($handler, 'theme.')) {
+        if (str_starts_with($handler, 'theme.')) {
             return substr($handler, \strlen('theme.'));
         }
 
@@ -222,14 +203,14 @@ final class ResourceManager implements ResourceManagerInterface
     {
         if (isset($this->scripts[$handler])) {
             $scripts = $this->selectAssets($this->scripts[$handler]);
-            $scripts = is_array($scripts) ? $scripts : array();
+            $scripts = \is_array($scripts) ? $scripts : [];
 
             $response->addScripts($scripts);
         }
 
         if (isset($this->styles[$handler])) {
             $styles = $this->selectAssets($this->styles[$handler]);
-            $styles = is_array($styles) ? $styles : array();
+            $styles = \is_array($styles) ? $styles : [];
 
             $response->addStyles($styles);
         }

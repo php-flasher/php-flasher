@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Prime\Notification\Envelope;
@@ -25,7 +20,7 @@ class StorageTest extends TestCase
     public function testInitialState()
     {
         $storage = $this->getStorage();
-        $this->assertEquals(array(), $storage->all());
+        $this->assertEquals([], $storage->all());
     }
 
     /**
@@ -40,7 +35,7 @@ class StorageTest extends TestCase
         $storage = $this->getStorage();
         $storage->add($envelope);
 
-        $this->assertEquals(array($envelope), $storage->all());
+        $this->assertEquals([$envelope], $storage->all());
     }
 
     /**
@@ -48,10 +43,10 @@ class StorageTest extends TestCase
      */
     public function testAddMultipleEnvelopes()
     {
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
         $storage = $this->getStorage();
         $storage->add($envelopes);
@@ -65,14 +60,14 @@ class StorageTest extends TestCase
     public function testUpdateEnvelopes()
     {
         $storage = $this->getStorage();
-        $envelopes = array(
-            new Envelope(new Notification(), array(
+        $envelopes = [
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-            new Envelope(new Notification(), array(
+            ]),
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-        );
+            ]),
+        ];
 
         $storage->add($envelopes);
         $this->assertEquals($envelopes, $storage->all());
@@ -93,20 +88,20 @@ class StorageTest extends TestCase
     public function testRemoveEnvelopes()
     {
         $storage = $this->getStorage();
-        $envelopes = array(
-            new Envelope(new Notification(), array(
+        $envelopes = [
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-            new Envelope(new Notification(), array(
+            ]),
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-        );
+            ]),
+        ];
 
         $storage->add($envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes[1]);
-        $this->assertEquals(array($envelopes[0]), $storage->all());
+        $this->assertEquals([$envelopes[0]], $storage->all());
     }
 
     /**
@@ -115,20 +110,20 @@ class StorageTest extends TestCase
     public function testRemoveMultipleEnvelopes()
     {
         $storage = $this->getStorage();
-        $envelopes = array(
-            new Envelope(new Notification(), array(
+        $envelopes = [
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-            new Envelope(new Notification(), array(
+            ]),
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-        );
+            ]),
+        ];
 
         $storage->add($envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes);
-        $this->assertEquals(array(), $storage->all());
+        $this->assertEquals([], $storage->all());
     }
 
     /**
@@ -137,20 +132,20 @@ class StorageTest extends TestCase
     public function testClearAllEnvelopes()
     {
         $storage = $this->getStorage();
-        $envelopes = array(
-            new Envelope(new Notification(), array(
+        $envelopes = [
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-            new Envelope(new Notification(), array(
+            ]),
+            new Envelope(new Notification(), [
                 new UuidStamp(),
-            )),
-        );
+            ]),
+        ];
 
         $storage->add($envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->clear();
-        $this->assertEquals(array(), $storage->all());
+        $this->assertEquals([], $storage->all());
     }
 
     /**

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Translation;
 
 interface TranslatorInterface
@@ -16,7 +11,7 @@ interface TranslatorInterface
      *
      * @return string
      */
-    public function translate($id, $parameters = array(), $locale = null);
+    public function translate($id, $parameters = [], $locale = null);
 
     /**
      * @return string

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\SweetAlert\Laravel;
 
 use Flasher\Laravel\Support\ServiceProvider;
@@ -14,17 +9,11 @@ use Livewire\LivewireManager;
 
 final class FlasherSweetAlertServiceProvider extends ServiceProvider
 {
-    /**
-     * {@inheritDoc}
-     */
     public function createPlugin()
     {
         return new SweetAlertPlugin();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function afterBoot()
     {
         $this->registerLivewireListener();

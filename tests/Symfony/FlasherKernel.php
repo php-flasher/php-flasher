@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Noty\Symfony\FlasherNotySymfonyBundle;
@@ -31,7 +26,7 @@ abstract class AbstractFlasherKernel extends Kernel
 
     public function doRegisterBundles()
     {
-        return array(
+        return [
             new FrameworkBundle(),
             new TwigBundle(),
             new FlasherSymfonyBundle(),
@@ -40,17 +35,17 @@ abstract class AbstractFlasherKernel extends Kernel
             new FlasherPnotifySymfonyBundle(),
             new FlasherSweetAlertSymfonyBundle(),
             new FlasherToastrSymfonyBundle(),
-        );
+        ];
     }
 
     public function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
-        $framework = array(
+        $framework = [
             'secret' => 'foo',
             'test' => true,
-            'session' => array('handler_id' => null, 'storage_factory_id' => 'session.storage.factory.mock_file'),
-            'router' => array('resource' => 'kernel:loadRoutes', 'type' => 'service'),
-        );
+            'session' => ['handler_id' => null, 'storage_factory_id' => 'session.storage.factory.mock_file'],
+            'router' => ['resource' => 'kernel:loadRoutes', 'type' => 'service'],
+        ];
 
         if (Bridge::versionCompare('6.0', '<')) {
             unset($framework['session']);
@@ -63,7 +58,7 @@ abstract class AbstractFlasherKernel extends Kernel
 
         $container->loadFromExtension('framework', $framework);
 
-        $twig = array('debug' => true, 'strict_variables' => true);
+        $twig = ['debug' => true, 'strict_variables' => true];
         $container->loadFromExtension('twig', $twig);
     }
 
@@ -77,15 +72,12 @@ abstract class AbstractFlasherKernel extends Kernel
         return sys_get_temp_dir().'/logs'.spl_object_hash($this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $that = $this;
         $loader->load(function (ContainerBuilder $container) use ($loader, $that) {
             if ($that instanceof EventSubscriberInterface) {
-                $class = get_class($that);
+                $class = $that::class;
                 $container->register('kernel', $class)
                     ->setSynthetic(true)
                     ->setPublic(true)

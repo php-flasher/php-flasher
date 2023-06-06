@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Container;
 
 /**
@@ -15,7 +10,7 @@ final class FlasherContainer
     /**
      * @var self|null
      */
-    private static $instance = null;
+    private static $instance;
 
     /**
      * @var ContainerInterface
@@ -29,8 +24,6 @@ final class FlasherContainer
 
     /**
      * @param string $id
-     *
-     * @return mixed
      *
      * @throws \LogicException
      */

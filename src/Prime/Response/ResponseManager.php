@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Response;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -53,10 +48,7 @@ final class ResponseManager implements ResponseManagerInterface
         $this->addPresenter('array', new ArrayPresenter());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function render(array $criteria = array(), $presenter = 'html', array $context = array())
+    public function render(array $criteria = [], $presenter = 'html', array $context = [])
     {
         $envelopes = $this->storageManager->filter($criteria);
 
@@ -74,9 +66,6 @@ final class ResponseManager implements ResponseManagerInterface
         return $event->getResponse();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addPresenter($alias, $presenter)
     {
         $this->presenters[$alias] = $presenter;

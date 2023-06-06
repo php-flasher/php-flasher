@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
@@ -14,12 +9,12 @@ final class RemoveEvent
     /**
      * @var Envelope[]
      */
-    private $envelopesToRemove = array();
+    private $envelopesToRemove = [];
 
     /**
      * @var Envelope[]
      */
-    private $envelopesToKeep = array();
+    private $envelopesToKeep = [];
 
     /**
      * @param Envelope[] $envelopesToRemove

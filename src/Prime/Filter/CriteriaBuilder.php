@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Filter;
 
 use Flasher\Prime\Filter\Specification\CallbackSpecification;
@@ -19,7 +14,7 @@ final class CriteriaBuilder
     /**
      * @var array<string, class-string<StampInterface>>
      */
-    public $aliases = array(
+    public $aliases = [
         'context' => 'Flasher\Prime\Stamp\ContextStamp',
         'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
         'delay' => 'Flasher\Prime\Stamp\DelayStamp',
@@ -32,7 +27,7 @@ final class CriteriaBuilder
         'uuid' => 'Flasher\Prime\Stamp\UuidStamp',
         'view' => 'Flasher\Prime\Stamp\ViewStamp',
         'when' => 'Flasher\Prime\Stamp\WhenStamp',
-    );
+    ];
 
     /**
      * @var Filter
@@ -133,7 +128,7 @@ final class CriteriaBuilder
             return;
         }
 
-        $orderings = array();
+        $orderings = [];
 
         /**
          * @var int|string $field
@@ -215,19 +210,17 @@ final class CriteriaBuilder
     }
 
     /**
-     * @param mixed $criteria
-     *
      * @return array{min: int, max: int}
      */
     private function extractMinMax($criteria)
     {
         if (!\is_array($criteria)) {
-            $criteria = array('min' => $criteria);
+            $criteria = ['min' => $criteria];
         }
 
         $min = isset($criteria['min']) ? $criteria['min'] : null;
         $max = isset($criteria['max']) ? $criteria['max'] : null;
 
-        return array('min' => $min, 'max' => $max);
+        return ['min' => $min, 'max' => $max];
     }
 }

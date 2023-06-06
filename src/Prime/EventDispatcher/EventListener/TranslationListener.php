@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -52,7 +47,7 @@ final class TranslationListener implements EventSubscriberInterface
 
             $parameters = $stamp instanceof TranslationStamp && $stamp->getParameters()
                 ? $stamp->getParameters()
-                : array();
+                : [];
 
             $preset = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
             if ($preset instanceof PresetStamp) {
@@ -79,9 +74,6 @@ final class TranslationListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\PresentationEvent';

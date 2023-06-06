@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
@@ -20,19 +15,19 @@ class FilterEventTest extends TestCase
      */
     public function testFilterEvent()
     {
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $event = new FilterEvent($envelopes, array('limit' => 2));
+        $event = new FilterEvent($envelopes, ['limit' => 2]);
 
         $this->assertInstanceOf('Flasher\Prime\Filter\Filter', $event->getFilter());
-        $this->assertEquals(array($envelopes[0], $envelopes[1]), $event->getEnvelopes());
+        $this->assertEquals([$envelopes[0], $envelopes[1]], $event->getEnvelopes());
 
-        $filter = new Filter($envelopes, array());
+        $filter = new Filter($envelopes, []);
         $event->setFilter($filter);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());

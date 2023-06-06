@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Plugin;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
@@ -45,10 +40,10 @@ class FlasherPluginTest extends TestCase
     public function testGetRootScript()
     {
         $plugin = new FlasherPlugin();
-        $rootScript = array(
+        $rootScript = [
             'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js',
             'local' => '/vendor/flasher/flasher.min.js',
-        );
+        ];
 
         $this->assertEquals($rootScript, $plugin->getRootScript());
     }
@@ -59,10 +54,10 @@ class FlasherPluginTest extends TestCase
     public function testGetScripts()
     {
         $plugin = new FlasherPlugin();
-        $scripts = array(
-            'cdn' => array('https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js'),
-            'local' => array('/vendor/flasher/flasher.min.js'),
-        );
+        $scripts = [
+            'cdn' => ['https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js'],
+            'local' => ['/vendor/flasher/flasher.min.js'],
+        ];
 
         $this->assertEquals($scripts, $plugin->getScripts());
     }
@@ -84,12 +79,12 @@ class FlasherPluginTest extends TestCase
     public function testGetFlashBagMapping()
     {
         $plugin = new FlasherPlugin();
-        $mapping = array(
-            'success' => array('success'),
-            'error' => array('error', 'danger'),
-            'warning' => array('warning', 'alarm'),
-            'info' => array('info', 'notice', 'alert'),
-        );
+        $mapping = [
+            'success' => ['success'],
+            'error' => ['error', 'danger'],
+            'warning' => ['warning', 'alarm'],
+            'info' => ['info', 'notice', 'alert'],
+        ];
 
         $this->assertEquals($mapping, $plugin->getFlashBagMapping());
     }
@@ -100,50 +95,50 @@ class FlasherPluginTest extends TestCase
     public function testProcessConfiguration()
     {
         $plugin = new FlasherPlugin();
-        $config = array(
+        $config = [
             'default' => 'flasher',
-            'root_script' => array(
+            'root_script' => [
                 'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js',
                 'local' => '/vendor/flasher/flasher.min.js',
-            ),
-            'scripts' => array(),
-            'styles' => array(
-                'cdn' => array('https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css'),
-                'local' => array('/vendor/flasher/flasher.min.css'),
-            ),
-            'options' => array(),
+            ],
+            'scripts' => [],
+            'styles' => [
+                'cdn' => ['https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css'],
+                'local' => ['/vendor/flasher/flasher.min.css'],
+            ],
+            'options' => [],
             'use_cdn' => true,
             'auto_translate' => true,
             'auto_render' => true,
-            'flash_bag' => array(
+            'flash_bag' => [
                 'enabled' => true,
-                'mapping' => array(
-                    'success' => array('success'),
-                    'error' => array('error', 'danger'),
-                    'warning' => array('warning', 'alarm'),
-                    'info' => array('info', 'notice', 'alert'),
-                ),
-            ),
-            'filter_criteria' => array(),
-            'presets' => array(
-                'created' => array(
+                'mapping' => [
+                    'success' => ['success'],
+                    'error' => ['error', 'danger'],
+                    'warning' => ['warning', 'alarm'],
+                    'info' => ['info', 'notice', 'alert'],
+                ],
+            ],
+            'filter_criteria' => [],
+            'presets' => [
+                'created' => [
                     'type' => 'success',
                     'message' => 'The resource was created',
-                ),
-                'updated' => array(
+                ],
+                'updated' => [
                     'type' => 'success',
                     'message' => 'The resource was updated',
-                ),
-                'saved' => array(
+                ],
+                'saved' => [
                     'type' => 'success',
                     'message' => 'The resource was saved',
-                ),
-                'deleted' => array(
+                ],
+                'deleted' => [
                     'type' => 'success',
                     'message' => 'The resource was deleted',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($config, $plugin->processConfiguration());
     }
@@ -155,54 +150,54 @@ class FlasherPluginTest extends TestCase
     {
         $plugin = new FlasherPlugin();
 
-        $inputConfig = array(
-            'template_factory' => array(
+        $inputConfig = [
+            'template_factory' => [
                 'default' => 'flasher',
-                'templates' => array(
-                    'flasher' => array(
-                        'options' => array(),
-                        'styles' => array(),
-                    ),
-                ),
-            ),
+                'templates' => [
+                    'flasher' => [
+                        'options' => [],
+                        'styles' => [],
+                    ],
+                ],
+            ],
             'auto_create_from_session' => true,
-            'types_mapping' => array(),
-            'observer_events' => array(),
+            'types_mapping' => [],
+            'observer_events' => [],
             'translate_by_default' => true,
-            'flash_bag' => array(),
-        );
+            'flash_bag' => [],
+        ];
 
-        $outputConfig = array(
-            'options' => array(),
-            'themes' => array(
-                'flasher' => array(
-                    'styles' => array(),
-                ),
-            ),
-            'flash_bag' => array(
+        $outputConfig = [
+            'options' => [],
+            'themes' => [
+                'flasher' => [
+                    'styles' => [],
+                ],
+            ],
+            'flash_bag' => [
                 'enabled' => true,
-                'mapping' => array(),
-            ),
+                'mapping' => [],
+            ],
             'auto_translate' => true,
-            'presets' => array(
-                'created' => array(
+            'presets' => [
+                'created' => [
                     'type' => 'success',
                     'message' => 'The resource was created',
-                ),
-                'updated' => array(
+                ],
+                'updated' => [
                     'type' => 'success',
                     'message' => 'The resource was updated',
-                ),
-                'saved' => array(
+                ],
+                'saved' => [
                     'type' => 'success',
                     'message' => 'The resource was saved',
-                ),
-                'deleted' => array(
+                ],
+                'deleted' => [
                     'type' => 'success',
                     'message' => 'The resource was deleted',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($outputConfig, $plugin->normalizeConfig($inputConfig));
     }

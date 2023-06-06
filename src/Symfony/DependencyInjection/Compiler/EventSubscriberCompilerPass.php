@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -28,7 +23,7 @@ final class EventSubscriberCompilerPass implements CompilerPassInterface
         $definition = $container->findDefinition('flasher.event_dispatcher');
 
         foreach ($container->findTaggedServiceIds('flasher.event_subscriber') as $id => $tags) {
-            $definition->addMethodCall('addSubscriber', array(new Reference($id)));
+            $definition->addMethodCall('addSubscriber', [new Reference($id)]);
         }
     }
 }

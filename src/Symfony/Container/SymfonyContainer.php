@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Container;
 
 use Flasher\Prime\Container\ContainerInterface;
@@ -20,9 +15,6 @@ final class SymfonyContainer implements ContainerInterface
         $this->container = $container;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function get($id)
     {
         return $this->container->get($id);

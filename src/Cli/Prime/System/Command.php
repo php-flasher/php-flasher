@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime\System;
 
 final class Command
@@ -17,12 +12,12 @@ final class Command
     /**
      * @var array<string, int|string|null>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * @var array<int|string|null>
      */
-    private $arguments = array();
+    private $arguments = [];
 
     /**
      * @param string|null $command

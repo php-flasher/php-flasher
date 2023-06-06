@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Notyf\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
@@ -49,7 +44,7 @@ final class NotyfBuilder extends NotificationBuilder
      */
     public function position($position, $value)
     {
-        $option = $this->getEnvelope()->getOption('position', array());
+        $option = $this->getEnvelope()->getOption('position', []);
         $option[$position] = $value; // @phpstan-ignore-line
 
         $this->option('position', $option);

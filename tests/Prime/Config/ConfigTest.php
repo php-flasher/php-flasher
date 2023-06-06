@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Config;
 
 use Flasher\Prime\Config\Config;
@@ -18,49 +13,49 @@ final class ConfigTest extends TestCase
     public function testGet()
     {
         /** @phpstan-ignore-next-line */
-        $config = new Config(array(
+        $config = new Config([
             'default' => 'flasher',
             'root_script' => 'flasher.min.js',
-            'themes' => array(
-                'flasher' => array(
-                    'scripts' => array('script.js'),
-                    'styles' => array('styles.css'),
-                    'options' => array(),
-                ),
-            ),
+            'themes' => [
+                'flasher' => [
+                    'scripts' => ['script.js'],
+                    'styles' => ['styles.css'],
+                    'options' => [],
+                ],
+            ],
             'auto_translate' => true,
-            'flash_bag' => array(
+            'flash_bag' => [
                 'enabled' => true,
-                'mapping' => array(
-                    'success' => array('success'),
-                    'error' => array('error'),
-                ),
-            ),
-            'presets' => array(
-                'success' => array(
+                'mapping' => [
+                    'success' => ['success'],
+                    'error' => ['error'],
+                ],
+            ],
+            'presets' => [
+                'success' => [
                     'type' => 'success',
                     'title' => 'Success',
                     'message' => 'Success message',
-                    'options' => array(),
-                ),
-                'error' => array(
+                    'options' => [],
+                ],
+                'error' => [
                     'type' => 'error',
                     'title' => 'Error',
                     'message' => 'Error message',
-                    'options' => array(),
-                ),
-            ),
-        ));
+                    'options' => [],
+                ],
+            ],
+        ]);
 
         $this->assertEquals('flasher', $config->get('default'));
-        $this->assertEquals(array(
-            'scripts' => array('script.js'),
-            'styles' => array('styles.css'),
-            'options' => array(),
-        ), $config->get('themes.flasher'));
-        $this->assertEquals(array('styles.css'), $config->get('themes.flasher.styles'));
-        $this->assertEquals(array('script.js'), $config->get('themes.flasher.scripts'));
-        $this->assertEquals(array(), $config->get('themes.flasher.options'));
+        $this->assertEquals([
+            'scripts' => ['script.js'],
+            'styles' => ['styles.css'],
+            'options' => [],
+        ], $config->get('themes.flasher'));
+        $this->assertEquals(['styles.css'], $config->get('themes.flasher.styles'));
+        $this->assertEquals(['script.js'], $config->get('themes.flasher.scripts'));
+        $this->assertEquals([], $config->get('themes.flasher.options'));
         $this->assertNull($config->get('drivers.not_exists.options'));
         $this->assertEquals('now_it_exists', $config->get('drivers.not_exists.options', 'now_it_exists'));
     }

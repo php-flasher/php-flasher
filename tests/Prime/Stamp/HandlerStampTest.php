@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\HandlerStamp;
@@ -22,6 +17,6 @@ final class HandlerStampTest extends TestCase
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
         $this->assertEquals('toastr', $stamp->getHandler());
-        $this->assertEquals(array('handler' => 'toastr'), $stamp->toArray());
+        $this->assertEquals(['handler' => 'toastr'], $stamp->toArray());
     }
 }

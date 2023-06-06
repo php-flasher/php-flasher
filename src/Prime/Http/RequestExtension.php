@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Http;
 
 use Flasher\Prime\FlasherInterface;
@@ -24,7 +19,7 @@ final class RequestExtension
     /**
      * @param array<string, string[]> $mapping
      */
-    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    public function __construct(FlasherInterface $flasher, array $mapping = [])
     {
         $this->flasher = $flasher;
         $this->mapping = $this->flatMapping($mapping);
@@ -63,7 +58,7 @@ final class RequestExtension
      */
     private function flatMapping(array $mapping)
     {
-        $flatMapping = array();
+        $flatMapping = [];
 
         foreach ($mapping as $type => $aliases) {
             foreach ($aliases as $alias) {

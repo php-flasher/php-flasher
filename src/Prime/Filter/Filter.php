@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Filter;
 
 use Flasher\Prime\Filter\Specification\AndSpecification;
@@ -15,8 +10,8 @@ use Flasher\Prime\Stamp\StampInterface;
 
 final class Filter
 {
-    const ASC = 'ASC';
-    const DESC = 'DESC';
+    public const ASC = 'ASC';
+    public const DESC = 'DESC';
 
     /**
      * @var Envelope[]
@@ -36,7 +31,7 @@ final class Filter
     /**
      * @var array<string, string>
      */
-    private $orderings = array();
+    private $orderings = [];
 
     /**
      * @var int|null
@@ -134,7 +129,7 @@ final class Filter
      */
     private function applyOrdering()
     {
-        if (array() === $this->orderings) {
+        if ([] === $this->orderings) {
             return;
         }
 
@@ -152,7 +147,7 @@ final class Filter
                     return 0;
                 }
 
-                if (Filter::ASC === $ordering) {
+                if (self::ASC === $ordering) {
                     return $stampA->compare($stampB);
                 }
 

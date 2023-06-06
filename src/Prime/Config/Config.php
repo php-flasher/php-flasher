@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Config;
 
 /**
@@ -20,14 +15,11 @@ final class Config implements ConfigInterface
     /**
      * @phpstan-param array{}|ConfigType $config
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get($key, $default = null)
     {
         $data = $this->config;

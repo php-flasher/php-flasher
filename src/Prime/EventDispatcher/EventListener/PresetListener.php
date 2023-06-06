@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -25,7 +20,7 @@ final class PresetListener implements EventSubscriberInterface
     /**
      * @phpstan-var PresetType
      */
-    private $presets = array();
+    private $presets = [];
 
     /**
      * @phpstan-param PresetType $presets
@@ -47,9 +42,6 @@ final class PresetListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\PersistEvent';
@@ -72,12 +64,12 @@ final class PresetListener implements EventSubscriberInterface
         }
 
         $preset = $this->presets[$presetStamp->getPreset()];
-        $preset = array_merge(array(
+        $preset = array_merge([
             'type' => 'info',
             'title' => null,
             'message' => null,
-            'options' => array(),
-        ), $preset);
+            'options' => [],
+        ], $preset);
 
         if (null === $envelope->getType()) {
             $envelope->setType($preset['type']);

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Envelope;
@@ -24,10 +19,10 @@ final class EnvelopeTest extends TestCase
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $stamp = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
 
-        $envelope = new Envelope($notification, array($stamp));
+        $envelope = new Envelope($notification, [$stamp]);
 
         $this->assertEquals($notification, $envelope->getNotification());
-        $this->assertEquals(array(\get_class($stamp) => $stamp), $envelope->all());
+        $this->assertEquals([$stamp::class => $stamp], $envelope->all());
     }
 
     /**
@@ -38,10 +33,10 @@ final class EnvelopeTest extends TestCase
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $stamp = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
 
-        $envelope = Envelope::wrap($notification, array($stamp));
+        $envelope = Envelope::wrap($notification, [$stamp]);
 
         $this->assertEquals($notification, $envelope->getNotification());
-        $this->assertEquals(array(\get_class($stamp) => $stamp), $envelope->all());
+        $this->assertEquals([$stamp::class => $stamp], $envelope->all());
     }
 
     /**
@@ -57,7 +52,7 @@ final class EnvelopeTest extends TestCase
         $envelope->with($stamp1, $stamp2);
 
         $this->assertEquals($notification, $envelope->getNotification());
-        $this->assertEquals(array(\get_class($stamp1) => $stamp1, \get_class($stamp2) => $stamp2), $envelope->all());
+        $this->assertEquals([$stamp1::class => $stamp1, $stamp2::class => $stamp2], $envelope->all());
     }
 
     /**
@@ -88,11 +83,11 @@ final class EnvelopeTest extends TestCase
         $envelope->with($stamp1, $stamp2, $stamp3);
 
         $this->assertEquals($notification, $envelope->getNotification());
-        $this->assertEquals(array(\get_class($stamp1) => $stamp1, \get_class($stamp2) => $stamp2, \get_class($stamp3) => $stamp3), $envelope->all());
+        $this->assertEquals([$stamp1::class => $stamp1, $stamp2::class => $stamp2, $stamp3::class => $stamp3], $envelope->all());
 
         $envelope->without($stamp1, $stamp3);
 
-        $this->assertEquals(array(\get_class($stamp2) => $stamp2), $envelope->all());
+        $this->assertEquals([$stamp2::class => $stamp2], $envelope->all());
     }
 
     /**
@@ -109,11 +104,11 @@ final class EnvelopeTest extends TestCase
         $envelope->with($stamp1, $stamp2, $stamp3);
 
         $this->assertEquals($notification, $envelope->getNotification());
-        $this->assertEquals(array(\get_class($stamp1) => $stamp1, \get_class($stamp2) => $stamp2, \get_class($stamp3) => $stamp3), $envelope->all());
+        $this->assertEquals([$stamp1::class => $stamp1, $stamp2::class => $stamp2, $stamp3::class => $stamp3], $envelope->all());
 
         $envelope->withoutStamp($stamp1);
 
-        $this->assertEquals(array(\get_class($stamp2) => $stamp2, \get_class($stamp3) => $stamp3), $envelope->all());
+        $this->assertEquals([$stamp2::class => $stamp2, $stamp3::class => $stamp3], $envelope->all());
     }
 
     /**
@@ -122,11 +117,11 @@ final class EnvelopeTest extends TestCase
     public function testGet()
     {
         $notification = $this->getMockBuilder('\Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamps = array(
+        $stamps = [
             new HopsStamp(2),
             new HandlerStamp('flasher'),
             new PresetStamp('entity_saved'),
-        );
+        ];
 
         $envelope = new Envelope($notification, $stamps);
 
@@ -146,16 +141,16 @@ final class EnvelopeTest extends TestCase
     public function testAll()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $stamps = array(
+        $stamps = [
             new HopsStamp(2),
             new HandlerStamp('flasher'),
             new PresetStamp('entity_saved'),
-        );
+        ];
 
         $envelope = new Envelope($notification, $stamps);
 
         $this->assertEquals($notification, $envelope->getNotification());
-        $this->assertEquals(array(\get_class($stamps[0]) => $stamps[0], \get_class($stamps[1]) => $stamps[1], \get_class($stamps[2]) => $stamps[2]), $envelope->all());
+        $this->assertEquals([\get_class($stamps[0]) => $stamps[0], \get_class($stamps[1]) => $stamps[1], \get_class($stamps[2]) => $stamps[2]], $envelope->all());
     }
 
     /**
@@ -251,11 +246,11 @@ final class EnvelopeTest extends TestCase
     public function testGetOptions()
     {
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
-        $notification->expects($this->once())->method('getOptions')->willReturn(array('timeout' => 2500));
+        $notification->expects($this->once())->method('getOptions')->willReturn(['timeout' => 2500]);
 
         $envelope = new Envelope($notification);
 
-        $this->assertEquals(array('timeout' => 2500), $envelope->getOptions());
+        $this->assertEquals(['timeout' => 2500], $envelope->getOptions());
     }
 
     /**
@@ -267,7 +262,7 @@ final class EnvelopeTest extends TestCase
         $notification->expects($this->once())->method('setOptions');
 
         $envelope = new Envelope($notification);
-        $envelope->setOptions(array('timeout' => 2500));
+        $envelope->setOptions(['timeout' => 2500]);
     }
 
     /**
@@ -312,18 +307,18 @@ final class EnvelopeTest extends TestCase
      */
     public function testToArray()
     {
-        $array = array(
+        $array = [
             'title' => 'PHPFlasher',
             'message' => 'success message',
-            'options' => array('timeout' => 2500),
-        );
+            'options' => ['timeout' => 2500],
+        ];
 
         $notification = $this->getMockBuilder('Flasher\Prime\Notification\NotificationInterface')->getMock();
         $notification->expects($this->once())->method('toArray')->willReturn($array);
 
         $envelope = new Envelope($notification, new HandlerStamp('flasher'));
 
-        $this->assertEquals(array('notification' => $array, 'handler' => 'flasher'), $envelope->toArray());
+        $this->assertEquals(['notification' => $array, 'handler' => 'flasher'], $envelope->toArray());
     }
 
     /**

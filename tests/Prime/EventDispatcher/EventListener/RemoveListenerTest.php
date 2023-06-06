@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
@@ -23,22 +18,22 @@ class RemoveListenerTest extends TestCase
     public function testRemoveListener()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new RemoveListener();
         $eventDispatcher->addSubscriber($listener);
 
-        $envelopes = array(
+        $envelopes = [
            new Envelope(new Notification()),
            new Envelope(new Notification(), new HopsStamp(2)),
            new Envelope(new Notification(), new HopsStamp(1)),
            new Envelope(new Notification(), new HopsStamp(3)),
-        );
+        ];
         $event = new RemoveEvent($envelopes);
 
         $eventDispatcher->dispatch($event);
 
-        $this->assertEquals(array($envelopes[0], $envelopes[2]), $event->getEnvelopesToRemove());
-        $this->assertEquals(array($envelopes[1], $envelopes[3]), $event->getEnvelopesToKeep());
+        $this->assertEquals([$envelopes[0], $envelopes[2]], $event->getEnvelopesToRemove());
+        $this->assertEquals([$envelopes[1], $envelopes[3]], $event->getEnvelopesToKeep());
     }
 }

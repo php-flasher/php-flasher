@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\DependencyInjection;
 
 use Flasher\Prime\Config\ConfigInterface;
@@ -116,7 +111,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $container->register('flasher.session_listener', 'Flasher\Symfony\EventListener\SessionListener')
             ->setPublic(true)
             ->addArgument(new Reference('flasher.request_extension'))
-            ->addTag('kernel.event_listener', array('event' => 'kernel.response'));
+            ->addTag('kernel.event_listener', ['event' => 'kernel.response']);
     }
 
     /**
@@ -133,7 +128,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $container->register('flasher.flasher_listener', 'Flasher\Symfony\EventListener\FlasherListener')
             ->setPublic(true)
             ->addArgument(new Reference('flasher.response_extension'))
-            ->addTag('kernel.event_listener', array('event' => 'kernel.response', 'priority' => -256));
+            ->addTag('kernel.event_listener', ['event' => 'kernel.response', 'priority' => -256]);
     }
 
     /**

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Laravel;
 
 use Flasher\Laravel\Container\LaravelContainer;
@@ -47,9 +42,6 @@ use Livewire\Response;
  */
 final class FlasherServiceProvider extends ServiceProvider
 {
-    /**
-     * {@inheritdoc}
-     */
     public function afterBoot()
     {
         FlasherContainer::init(new LaravelContainer());
@@ -70,9 +62,6 @@ final class FlasherServiceProvider extends ServiceProvider
         return new FlasherPlugin();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function afterRegister()
     {
         $this->registerConfig();
@@ -88,13 +77,13 @@ final class FlasherServiceProvider extends ServiceProvider
      */
     private function registerCommands()
     {
-        if (!in_array(\PHP_SAPI, array('cli', 'phpdbg'))) {
+        if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
             return;
         }
 
-        $this->commands(array(
+        $this->commands([
             'Flasher\Laravel\Command\InstallCommand', // flasher:install
-        ));
+        ]);
     }
 
     /**
@@ -106,7 +95,7 @@ final class FlasherServiceProvider extends ServiceProvider
             /** @var Repository $config */
             $config = $app->make('config');
 
-            return new Config($config->get('flasher', array())); // @phpstan-ignore-line
+            return new Config($config->get('flasher', [])); // @phpstan-ignore-line
         });
     }
 
@@ -166,7 +155,7 @@ final class FlasherServiceProvider extends ServiceProvider
             /** @phpstan-ignore-next-line */
             $storageBag = new StorageBag(new SessionBag($session));
 
-            $criteria = $config->get('filter_criteria', array()); // @phpstan-ignore-line
+            $criteria = $config->get('filter_criteria', []); // @phpstan-ignore-line
 
             return new StorageManager($storageBag, $eventDispatcher, $criteria); // @phpstan-ignore-line
         });
@@ -190,7 +179,7 @@ final class FlasherServiceProvider extends ServiceProvider
             $translatorListener = new TranslationListener($translator, $autoTranslate);
             $eventDispatcher->addSubscriber($translatorListener);
 
-            $presetListener = new PresetListener($config->get('presets', array())); // @phpstan-ignore-line
+            $presetListener = new PresetListener($config->get('presets', [])); // @phpstan-ignore-line
             $eventDispatcher->addSubscriber($presetListener);
 
             return $eventDispatcher;
@@ -230,18 +219,18 @@ final class FlasherServiceProvider extends ServiceProvider
             $flasher = app('flasher');
 
             /** @var array{envelopes: Envelope[]} $data */
-            $data = $flasher->render(array(), 'array');
+            $data = $flasher->render([], 'array');
 
             if (\count($data['envelopes']) > 0) {
-                $data['context']['livewire'] = array(
+                $data['context']['livewire'] = [
                     'id' => $component->id,
                     'name' => $response->fingerprint['name'],
-                );
+                ];
 
-                $response->effects['dispatches'][] = array(
+                $response->effects['dispatches'][] = [
                     'event' => 'flasher:render',
                     'data' => $data,
-                );
+                ];
             }
         });
     }
@@ -326,7 +315,7 @@ final class FlasherServiceProvider extends ServiceProvider
         $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) {
             /** @var ConfigInterface $config */
             $config = $app->make('flasher.config');
-            $mapping = $config->get('flash_bag.mapping', array());
+            $mapping = $config->get('flash_bag.mapping', []);
             $flasher = $app->make('flasher');
 
             return new SessionMiddleware(new RequestExtension($flasher, $mapping)); // @phpstan-ignore-line

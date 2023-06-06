@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Translation;
 
 final class Messages
@@ -12,7 +7,7 @@ final class Messages
     /**
      * @var array<string, string>
      */
-    public static $ar = array(
+    public static $ar = [
         'success' => 'نجاح',
         'error' => 'خطأ',
         'warning' => 'تحذير',
@@ -24,12 +19,12 @@ final class Messages
         'The resource was deleted' => 'تم حذف :resource',
 
         'resource' => 'الملف',
-    );
+    ];
 
     /**
      * @var array<string, string>
      */
-    public static $en = array(
+    public static $en = [
         'success' => 'Success',
         'error' => 'Error',
         'warning' => 'Warning',
@@ -41,12 +36,12 @@ final class Messages
         'The resource was deleted' => 'The :resource was deleted',
 
         'resource' => 'resource',
-    );
+    ];
 
     /**
      * @var array<string, string>
      */
-    public static $fr = array(
+    public static $fr = [
         'success' => 'Succès',
         'error' => 'Erreur',
         'warning' => 'Avertissement',
@@ -58,5 +53,5 @@ final class Messages
         'The resource was deleted' => 'La ressource :resource a été supprimée',
 
         'resource' => '',
-    );
+    ];
 }

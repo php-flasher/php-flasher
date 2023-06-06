@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime;
 
 use Flasher\Prime\Notification\Envelope;
@@ -30,7 +25,7 @@ final class Notification extends BaseNotification
      * @param string               $type
      * @param array<string, mixed> $options
      */
-    public function __construct($message = null, $title = null, $icon = null, $type = self::INFO, array $options = array())
+    public function __construct($message = null, $title = null, $icon = null, $type = self::INFO, array $options = [])
     {
         $this->message = $message;
         $this->title = $title;
@@ -46,7 +41,7 @@ final class Notification extends BaseNotification
      */
     public static function wrap($notification)
     {
-        if ($notification instanceof Notification) {
+        if ($notification instanceof self) {
             return $notification;
         }
 
@@ -62,7 +57,7 @@ final class Notification extends BaseNotification
      *
      * @return static
      */
-    public static function create($message, $title = null, $icon = null, $type = self::INFO, array $options = array())
+    public static function create($message, $title = null, $icon = null, $type = self::INFO, array $options = [])
     {
         return new self($message, $title, $icon, $type, $options);
     }
@@ -75,7 +70,7 @@ final class Notification extends BaseNotification
      *
      * @return static
      */
-    public static function error($message, $title = null, $icon = null, array $options = array())
+    public static function error($message, $title = null, $icon = null, array $options = [])
     {
         return self::create($message, $title, $icon, NotificationInterface::ERROR, $options);
     }
@@ -88,7 +83,7 @@ final class Notification extends BaseNotification
      *
      * @return static
      */
-    public static function info($message, $title = null, $icon = null, array $options = array())
+    public static function info($message, $title = null, $icon = null, array $options = [])
     {
         return self::create($message, $title, $icon, NotificationInterface::INFO, $options);
     }
@@ -101,7 +96,7 @@ final class Notification extends BaseNotification
      *
      * @return static
      */
-    public static function success($message, $title = null, $icon = null, array $options = array())
+    public static function success($message, $title = null, $icon = null, array $options = [])
     {
         return self::create($message, $title, $icon, NotificationInterface::SUCCESS, $options);
     }
@@ -114,14 +109,11 @@ final class Notification extends BaseNotification
      *
      * @return static
      */
-    public static function warning($message, $title = null, $icon = null, array $options = array())
+    public static function warning($message, $title = null, $icon = null, array $options = [])
     {
         return self::create($message, $title, $icon, NotificationInterface::WARNING, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMessage()
     {
         $message = parent::getMessage();
@@ -133,9 +125,6 @@ final class Notification extends BaseNotification
         return $message;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOption($name, $default = null)
     {
         $option = parent::getOption($name, $default);
@@ -193,15 +182,12 @@ final class Notification extends BaseNotification
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
-        return array_merge(parent::toArray(), array(
+        return array_merge(parent::toArray(), [
             'title' => $this->getTitle(),
             'icon' => $this->getIcon(),
-        ));
+        ]);
     }
 
     /**

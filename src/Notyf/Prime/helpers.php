@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 use Flasher\Notyf\Prime\NotyfFactory;
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
@@ -18,7 +13,7 @@ if (!function_exists('notyf')) {
      *
      * @return Envelope|NotyfFactory
      */
-    function notyf($message = null, $type = NotificationInterface::SUCCESS, array $options = array())
+    function notyf($message = null, $type = NotificationInterface::SUCCESS, array $options = [])
     {
         /** @var NotyfFactory $factory */
         $factory = FlasherContainer::create('flasher.notyf');

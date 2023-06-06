@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
@@ -18,7 +13,7 @@ if (!function_exists('sweetalert')) {
      *
      * @return Envelope|SweetAlertFactory
      */
-    function sweetalert($message = null, $type = NotificationInterface::SUCCESS, array $options = array())
+    function sweetalert($message = null, $type = NotificationInterface::SUCCESS, array $options = [])
     {
         /** @var SweetAlertFactory $factory */
         $factory = FlasherContainer::create('flasher.sweetalert');

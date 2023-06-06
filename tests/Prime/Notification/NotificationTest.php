@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Notification;
@@ -61,11 +56,11 @@ class NotificationTest extends TestCase
     {
         $notification = new Notification();
 
-        $this->assertEquals(array(), $notification->getOptions());
+        $this->assertEquals([], $notification->getOptions());
 
-        $notification->setOptions(array('timeout' => 2500));
+        $notification->setOptions(['timeout' => 2500]);
 
-        $this->assertEquals(array('timeout' => 2500), $notification->getOptions());
+        $this->assertEquals(['timeout' => 2500], $notification->getOptions());
     }
 
     /**
@@ -88,13 +83,13 @@ class NotificationTest extends TestCase
     public function testUnsetOption()
     {
         $notification = new Notification();
-        $notification->setOptions(array('timeout' => 2500, 'position' => 'center'));
+        $notification->setOptions(['timeout' => 2500, 'position' => 'center']);
 
-        $this->assertEquals(array('timeout' => 2500, 'position' => 'center'), $notification->getOptions());
+        $this->assertEquals(['timeout' => 2500, 'position' => 'center'], $notification->getOptions());
 
         $notification->unsetOption('timeout');
 
-        $this->assertEquals(array('position' => 'center'), $notification->getOptions());
+        $this->assertEquals(['position' => 'center'], $notification->getOptions());
     }
 
     /**
@@ -106,13 +101,13 @@ class NotificationTest extends TestCase
         $notification->setType('success');
         $notification->setTitle('PHPFlasher');
         $notification->setMessage('success message');
-        $notification->setOptions(array('timeout' => 2500, 'position' => 'center'));
+        $notification->setOptions(['timeout' => 2500, 'position' => 'center']);
 
-        $this->assertEquals(array(
+        $this->assertEquals([
             'type' => 'success',
             'title' => 'PHPFlasher',
             'message' => 'success message',
-            'options' => array('timeout' => 2500, 'position' => 'center'),
-        ), $notification->toArray());
+            'options' => ['timeout' => 2500, 'position' => 'center'],
+        ], $notification->toArray());
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime;
 
 interface NotifyInterface
@@ -34,7 +29,7 @@ interface NotifyInterface
      *
      * @return void
      */
-    public function type($type, $message, $title = null, $options = array());
+    public function type($type, $message, $title = null, $options = []);
 
     /**
      * @param string               $message
@@ -43,7 +38,7 @@ interface NotifyInterface
      *
      * @return void
      */
-    public function warning($message, $title = null, $options = array());
+    public function warning($message, $title = null, $options = []);
 
     /**
      * @param string               $message
@@ -52,7 +47,7 @@ interface NotifyInterface
      *
      * @return void
      */
-    public function info($message, $title = null, $options = array());
+    public function info($message, $title = null, $options = []);
 
     /**
      * @param string               $message
@@ -61,7 +56,7 @@ interface NotifyInterface
      *
      * @return void
      */
-    public function error($message, $title = null, $options = array());
+    public function error($message, $title = null, $options = []);
 
     /**
      * @param string               $message
@@ -70,5 +65,5 @@ interface NotifyInterface
      *
      * @return void
      */
-    public function success($message, $title = null, $options = array());
+    public function success($message, $title = null, $options = []);
 }

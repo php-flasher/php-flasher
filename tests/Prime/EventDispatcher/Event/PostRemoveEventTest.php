@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\PostRemoveEvent;
@@ -19,15 +14,15 @@ class PostRemoveEventTest extends TestCase
      */
     public function testPostRemoveEvent()
     {
-        $envelopesToRemove = array(
+        $envelopesToRemove = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $envelopesToKeep = array(
+        $envelopesToKeep = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
         $event = new PostRemoveEvent($envelopesToRemove, $envelopesToKeep);
 

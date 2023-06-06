@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -25,7 +20,7 @@ class TranslationListenerTest extends TestCase
     public function testTranslationListenerWithAutoTranslateEnabled()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new TranslationListener(new EchoTranslator(), true);
         $eventDispatcher->addSubscriber($listener);
@@ -34,19 +29,19 @@ class TranslationListenerTest extends TestCase
         $notification->setTitle('PHPFlasher');
         $notification->setMessage('success message');
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope($notification),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $envelopes[0]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[0]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[0]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[0]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $envelopes[1]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[1]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[1]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[1]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $event = new PresentationEvent($envelopes, array());
+        $event = new PresentationEvent($envelopes, []);
         $eventDispatcher->dispatch($event);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());
@@ -58,7 +53,7 @@ class TranslationListenerTest extends TestCase
     public function testTranslationListenerWithAutoTranslateDisabled()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new TranslationListener(new EchoTranslator(), false);
         $eventDispatcher->addSubscriber($listener);
@@ -67,19 +62,19 @@ class TranslationListenerTest extends TestCase
         $notification->setTitle('PHPFlasher');
         $notification->setMessage('success message');
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope($notification),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $envelopes[0]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[0]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[0]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[0]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $envelopes[1]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[1]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[1]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[1]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $event = new PresentationEvent($envelopes, array());
+        $event = new PresentationEvent($envelopes, []);
         $eventDispatcher->dispatch($event);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());

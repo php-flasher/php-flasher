@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Laravel\Translation;
 
 use Flasher\Prime\Stamp\TranslationStamp;
@@ -23,10 +18,7 @@ final class Translator implements TranslatorInterface
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function translate($id, $parameters = array(), $locale = null)
+    public function translate($id, $parameters = [], $locale = null)
     {
         $order = TranslationStamp::parametersOrder($parameters, $locale);
         $parameters = $order['parameters'];
@@ -45,9 +37,6 @@ final class Translator implements TranslatorInterface
         return $translation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocale()
     {
         return $this->translator->getLocale();

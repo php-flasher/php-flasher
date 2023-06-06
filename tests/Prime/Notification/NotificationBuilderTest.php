@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Notification;
@@ -161,11 +156,11 @@ class NotificationBuilderTest extends TestCase
     public function testNotificationOptions()
     {
         $builder = $this->getNotificationBuilder();
-        $builder->options(array('timeout' => 2000));
+        $builder->options(['timeout' => 2000]);
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(array('timeout' => 2000), $envelope->getOptions());
+        $this->assertEquals(['timeout' => 2000], $envelope->getOptions());
     }
 
     /**
@@ -245,7 +240,7 @@ class NotificationBuilderTest extends TestCase
         $stamp = $envelope->get('Flasher\Prime\Stamp\WhenStamp');
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\WhenStamp', $stamp);
-        $this->assertEquals(true, $stamp->getCondition());
+        $this->assertTrue($stamp->getCondition());
     }
 
     /**
@@ -260,7 +255,7 @@ class NotificationBuilderTest extends TestCase
         $stamp = $envelope->get('Flasher\Prime\Stamp\UnlessStamp');
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\UnlessStamp', $stamp);
-        $this->assertEquals(true, $stamp->getCondition());
+        $this->assertTrue($stamp->getCondition());
     }
 
     /**
@@ -344,14 +339,14 @@ class NotificationBuilderTest extends TestCase
     public function testTranslate()
     {
         $builder = $this->getNotificationBuilder();
-        $builder->translate(array('foo' => 'bar'), 'ar');
+        $builder->translate(['foo' => 'bar'], 'ar');
 
         $envelope = $builder->getEnvelope();
         $stamp = $envelope->get('Flasher\Prime\Stamp\TranslationStamp');
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\TranslationStamp', $stamp);
         $this->assertEquals('ar', $stamp->getLocale());
-        $this->assertEquals(array('foo' => 'bar'), $stamp->getParameters());
+        $this->assertEquals(['foo' => 'bar'], $stamp->getParameters());
     }
 
     /**
@@ -370,7 +365,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('entity_saved', $stamp->getPreset());
-        $this->assertEquals(array(), $stamp->getParameters());
+        $this->assertEquals([], $stamp->getParameters());
     }
 
     /**
@@ -389,7 +384,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('saved', $stamp->getPreset());
-        $this->assertEquals(array(), $stamp->getParameters());
+        $this->assertEquals([], $stamp->getParameters());
     }
 
     /**
@@ -408,7 +403,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('created', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -427,7 +422,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('updated', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -446,7 +441,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('saved', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -465,7 +460,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('deleted', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -481,7 +476,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('entity_saved', $stamp->getPreset());
-        $this->assertEquals(array(), $stamp->getParameters());
+        $this->assertEquals([], $stamp->getParameters());
     }
 
     /**
@@ -497,7 +492,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('someOperation', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -513,7 +508,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('created', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -529,7 +524,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('updated', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -544,7 +539,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('saved', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -559,7 +554,7 @@ class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
         $this->assertEquals('deleted', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     /**
@@ -569,10 +564,10 @@ class NotificationBuilderTest extends TestCase
     {
         $builder = $this->getNotificationBuilder();
 
-        $stamps = array(
+        $stamps = [
             new PriorityStamp(1),
             new HopsStamp(0),
-        );
+        ];
         $builder->with($stamps);
 
         $envelope = $builder->getEnvelope();
@@ -618,13 +613,13 @@ class NotificationBuilderTest extends TestCase
     public function testContext()
     {
         $builder = $this->getNotificationBuilder();
-        $builder->context(array('foo' => 'bar'));
+        $builder->context(['foo' => 'bar']);
 
         $envelope = $builder->getEnvelope();
         $stamp = $envelope->get('Flasher\Prime\Stamp\ContextStamp');
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\ContextStamp', $stamp);
-        $this->assertEquals(array('foo' => 'bar'), $stamp->getContext());
+        $this->assertEquals(['foo' => 'bar'], $stamp->getContext());
     }
 
     /**
@@ -632,7 +627,7 @@ class NotificationBuilderTest extends TestCase
      */
     public function testMacro()
     {
-        if (version_compare(PHP_VERSION, '5.4', '<')) {
+        if (version_compare(\PHP_VERSION, '5.4', '<')) {
             $this->markTestSkipped('Not working for PHP 5.3');
         }
 

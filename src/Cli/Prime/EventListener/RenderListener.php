@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime\EventListener;
 
 use Flasher\Cli\Prime\Presenter\CliPresenter;
@@ -33,12 +28,9 @@ final class RenderListener implements EventSubscriberInterface
             return;
         }
 
-        $this->flasher->render(array(), CliPresenter::NAME);
+        $this->flasher->render([], CliPresenter::NAME);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\PostPersistEvent';

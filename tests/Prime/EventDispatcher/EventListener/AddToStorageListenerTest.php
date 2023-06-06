@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -24,21 +19,21 @@ class AddToStorageListenerTest extends TestCase
     public function testAddToStorageListener()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new AddToStorageListener();
         $eventDispatcher->addSubscriber($listener);
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification(), new WhenStamp(false)),
             new Envelope(new Notification()),
             new Envelope(new Notification(), new UnlessStamp(true)),
             new Envelope(new Notification()),
-        );
+        ];
         $event = new PersistEvent($envelopes);
 
         $eventDispatcher->dispatch($event);
 
-        $this->assertEquals(array($envelopes[1], $envelopes[3]), $event->getEnvelopes());
+        $this->assertEquals([$envelopes[1], $envelopes[3]], $event->getEnvelopes());
     }
 }

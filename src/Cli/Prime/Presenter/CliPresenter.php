@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime\Presenter;
 
 use Flasher\Cli\Prime\Notification;
@@ -15,7 +10,7 @@ use Flasher\Prime\Response\Response;
 
 final class CliPresenter implements PresenterInterface
 {
-    const NAME = 'cli';
+    public const NAME = 'cli';
 
     /**
      * @var NotifyInterface
@@ -27,12 +22,9 @@ final class CliPresenter implements PresenterInterface
         $this->notifier = $notifier ?: new Notify();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(Response $response)
     {
-        if ('cli' !== \PHP_SAPI || array() === $response->getEnvelopes()) {
+        if ('cli' !== \PHP_SAPI || [] === $response->getEnvelopes()) {
             return;
         }
 

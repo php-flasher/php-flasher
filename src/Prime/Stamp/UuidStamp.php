@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Stamp;
 
 use Flasher\Prime\Notification\Envelope;
@@ -43,12 +38,12 @@ final class UuidStamp implements StampInterface, PresentableStampInterface
     {
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
 
-        $map = array();
+        $map = [];
 
         foreach ($envelopes as $envelope) {
             $uuidStamp = $envelope->get('Flasher\Prime\Stamp\UuidStamp');
-            if (!$uuidStamp instanceof UuidStamp) {
-                $uuidStamp = new UuidStamp(spl_object_hash($envelope));
+            if (!$uuidStamp instanceof self) {
+                $uuidStamp = new self(spl_object_hash($envelope));
                 $envelope->withStamp($uuidStamp);
             }
 
@@ -67,11 +62,8 @@ final class UuidStamp implements StampInterface, PresentableStampInterface
         return $this->uuid;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
-        return array('uuid' => $this->getUuid());
+        return ['uuid' => $this->getUuid()];
     }
 }

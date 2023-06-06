@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony;
 
 use Flasher\Prime\Container\FlasherContainer;
@@ -20,25 +15,16 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FlasherSymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function boot()
     {
         FlasherContainer::init(new SymfonyContainer($this->container));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function createPlugin()
     {
         return new FlasherPlugin();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function flasherBuild(ContainerBuilder $container)
     {
         $container->addCompilerPass(new FactoryCompilerPass());
@@ -47,9 +33,6 @@ class FlasherSymfonyBundle extends Bundle // Symfony\Component\HttpKernel\Bundle
         $container->addCompilerPass(new FlasherAwareCompilerPass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFlasherContainerExtension()
     {
         return new FlasherExtension();

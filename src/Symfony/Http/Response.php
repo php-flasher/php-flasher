@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Http;
 
 use Flasher\Prime\Http\ResponseInterface;
@@ -23,25 +18,16 @@ final class Response implements ResponseInterface
         $this->response = $response;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isRedirection()
     {
         return $this->response->isRedirection();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isJson()
     {
         return $this->response instanceof JsonResponse;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isHtml()
     {
         $contentType = $this->response->headers->get('Content-Type');
@@ -53,9 +39,6 @@ final class Response implements ResponseInterface
         return false !== stripos($contentType, 'html');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isAttachment()
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
@@ -67,9 +50,6 @@ final class Response implements ResponseInterface
         return false !== stripos($contentDisposition, 'attachment;');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getContent()
     {
         $content = $this->response->getContent();
@@ -77,9 +57,6 @@ final class Response implements ResponseInterface
         return \is_string($content) ? $content : '';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setContent($content)
     {
         $this->response->setContent($content);

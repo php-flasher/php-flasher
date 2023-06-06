@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Response\Presenter;
 
 use Flasher\Prime\Notification\Envelope;
@@ -20,7 +15,7 @@ class HtmlPresenterTest extends TestCase
      */
     public function testArrayPresenter()
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -108,7 +103,7 @@ JAVASCRIPT;
 
         $presenter = new HtmlPresenter();
 
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array())));
+        $this->assertEquals($response, $presenter->render(new Response($envelopes, [])));
     }
 
     /**
@@ -116,7 +111,7 @@ JAVASCRIPT;
      */
     public function testItRenderOnlyEnvelopesAsJsonObject()
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -134,6 +129,6 @@ JAVASCRIPT;
 
         $presenter = new HtmlPresenter();
 
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array('envelopes_only' => true))));
+        $this->assertEquals($response, $presenter->render(new Response($envelopes, ['envelopes_only' => true])));
     }
 }

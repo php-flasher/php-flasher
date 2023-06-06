@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime;
 
 class TestCase extends \PHPUnit\Framework\TestCase
@@ -37,16 +32,16 @@ class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @throws \ReflectionException
      */
-    protected function invokeMethod($object, $methodName, $parameters = array())
+    protected function invokeMethod($object, $methodName, $parameters = [])
     {
-        $class = is_string($object) ? $object : get_class($object);
+        $class = \is_string($object) ? $object : $object::class;
 
         $reflection = new \ReflectionClass($class);
 
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
-        $object = is_string($object) ? null : $object;
+        $object = \is_string($object) ? null : $object;
         $parameters = \is_array($parameters) ? $parameters : \array_slice(\func_get_args(), 2);
 
         return $method->invokeArgs($object, $parameters);
@@ -64,14 +59,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function getProperty($object, $propertyName)
     {
-        $class = is_string($object) ? $object : get_class($object);
+        $class = \is_string($object) ? $object : $object::class;
 
         $reflection = new \ReflectionClass($class);
 
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 
-        $object = is_string($object) ? null : $object;
+        $object = \is_string($object) ? null : $object;
 
         return $property->getValue($object);
     }
@@ -89,14 +84,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function setProperty($object, $propertyName, $value)
     {
-        $class = is_string($object) ? $object : get_class($object);
+        $class = \is_string($object) ? $object : $object::class;
 
         $reflection = new \ReflectionClass($class);
 
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 
-        $object = is_string($object) ? null : $object;
+        $object = \is_string($object) ? null : $object;
         $property->setValue($object, $value);
     }
 }

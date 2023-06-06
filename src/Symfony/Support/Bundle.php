@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Support;
 
 use Flasher\Prime\Plugin\PluginInterface;
@@ -34,6 +29,6 @@ abstract class Bundle extends FlasherBundle
     {
         $r = new \ReflectionClass($this);
 
-        return pathinfo($r->getFileName() ?: '', PATHINFO_DIRNAME).'/Resources/';
+        return pathinfo($r->getFileName() ?: '', \PATHINFO_DIRNAME).'/Resources/';
     }
 }

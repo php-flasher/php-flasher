@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Response\Presenter;
 
 use Flasher\Prime\Notification\Envelope;
@@ -20,7 +15,7 @@ class ArrayPresenterTest extends TestCase
      */
     public function testArrayPresenter()
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -34,32 +29,32 @@ class ArrayPresenterTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification);
 
-        $response = array(
-            'envelopes' => array(
-                array(
-                    'notification' => array(
+        $response = [
+            'envelopes' => [
+                [
+                    'notification' => [
                         'type' => 'success',
                         'title' => 'PHPFlasher',
                         'message' => 'success message',
-                        'options' => array(),
-                    ),
-                ),
-                array(
-                    'notification' => array(
+                        'options' => [],
+                    ],
+                ],
+                [
+                    'notification' => [
                         'type' => 'warning',
                         'title' => 'yoeunes/toastr',
                         'message' => 'warning message',
-                        'options' => array(),
-                    ),
-                ),
-            ),
-            'scripts' => array(),
-            'styles' => array(),
-            'options' => array(),
-        );
+                        'options' => [],
+                    ],
+                ],
+            ],
+            'scripts' => [],
+            'styles' => [],
+            'options' => [],
+        ];
 
         $presenter = new ArrayPresenter();
 
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array())));
+        $this->assertEquals($response, $presenter->render(new Response($envelopes, [])));
     }
 }

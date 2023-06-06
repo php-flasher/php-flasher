@@ -1,148 +1,82 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Notification;
 
 class Notification implements NotificationInterface
 {
-    /**
-     * @var string|null
-     */
-    protected $message;
-
-    /**
-     * @var string|null
-     */
-    protected $type;
+    protected string $title = '';
+    protected string $message = '';
+    protected string $type = '';
 
     /**
      * @var array<string, mixed>
      */
-    protected $options = array();
+    protected array $options = [];
 
-    /**
-     * @var string|null
-     */
-    private $title;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOptions()
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = array_replace($this->options, $options);
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOption($name, $default = null)
+    public function getOption(string $name, mixed $default = null): mixed
     {
-        if (!isset($this->options[$name])) {
-            return $default;
-        }
-
-        return $this->options[$name];
+        return array_key_exists($name, $this->options)
+            ? $this->options[$name]
+            : $default;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setOption($name, $value)
+    public function setOption(string $name, mixed $value): void
     {
         $this->options[$name] = $value;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unsetOption($name)
+    public function unsetOption(string $name): void
     {
         unset($this->options[$name]);
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
-        return array(
-            'type' => $this->getType(),
-            'message' => $this->getMessage(),
+        return [
             'title' => $this->getTitle(),
+            'message' => $this->getMessage(),
+            'type' => $this->getType(),
             'options' => $this->getOptions(),
-        );
+        ];
     }
 }

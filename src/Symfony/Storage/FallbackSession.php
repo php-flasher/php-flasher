@@ -4,24 +4,20 @@ namespace Flasher\Symfony\Storage;
 
 class FallbackSession
 {
-    private static $storage = array();
+    private static $storage = [];
 
     /**
      * @param string $name
-     * @param mixed  $default
-     *
-     * @return mixed
      */
     public function get($name, $default = null)
     {
-        return array_key_exists($name, self::$storage)
+        return \array_key_exists($name, self::$storage)
             ? self::$storage[$name]
             : $default;
     }
 
     /**
      * @param string $name
-     * @param mixed  $value
      *
      * @return void
      */

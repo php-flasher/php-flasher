@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Filter;
 
 use Flasher\Prime\Filter\CriteriaBuilder;
@@ -25,7 +20,7 @@ class CriteriaBuilderTest extends TestCase
     public function testItAddsPrioritySpecification()
     {
         $filter = $this->getFilter();
-        $criteria = array('priority' => 2);
+        $criteria = ['priority' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildPriority();
@@ -43,7 +38,7 @@ class CriteriaBuilderTest extends TestCase
     public function testItAddsHopsSpecification()
     {
         $filter = $this->getFilter();
-        $criteria = array('hops' => 2);
+        $criteria = ['hops' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildHops();
@@ -61,7 +56,7 @@ class CriteriaBuilderTest extends TestCase
     public function testItAddsDelaySpecification()
     {
         $filter = $this->getFilter();
-        $criteria = array('delay' => 2);
+        $criteria = ['delay' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildDelay();
@@ -79,7 +74,7 @@ class CriteriaBuilderTest extends TestCase
     public function testItAddsLifeSpecification()
     {
         $filter = $this->getFilter();
-        $criteria = array('life' => 2);
+        $criteria = ['life' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildLife();
@@ -97,14 +92,14 @@ class CriteriaBuilderTest extends TestCase
     public function testItAddsOrdering()
     {
         $filter = $this->getFilter();
-        $criteria = array('order_by' => 'priority');
+        $criteria = ['order_by' => 'priority'];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildOrder();
 
         $orderings = $this->getProperty($filter, 'orderings');
 
-        $this->assertEquals(array("Flasher\Prime\Stamp\PriorityStamp" => 'ASC'), $orderings);
+        $this->assertEquals(["Flasher\Prime\Stamp\PriorityStamp" => 'ASC'], $orderings);
     }
 
     /**
@@ -113,7 +108,7 @@ class CriteriaBuilderTest extends TestCase
     public function testItFilterEnvelopesByStamps()
     {
         $filter = $this->getFilter();
-        $criteria = array('stamps' => 'preset');
+        $criteria = ['stamps' => 'preset'];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildStamps();
@@ -121,7 +116,7 @@ class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf('Flasher\Prime\Filter\Specification\StampsSpecification', $specification);
-        $this->assertEquals(array('Flasher\Prime\Stamp\PresetStamp'), $this->getProperty($specification, 'stamps'));
+        $this->assertEquals(['Flasher\Prime\Stamp\PresetStamp'], $this->getProperty($specification, 'stamps'));
         $this->assertEquals('or', $this->getProperty($specification, 'strategy'));
     }
 
@@ -132,7 +127,7 @@ class CriteriaBuilderTest extends TestCase
     {
         $callback = function () {};
         $filter = $this->getFilter();
-        $criteria = array('filter' => $callback);
+        $criteria = ['filter' => $callback];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
         $criteriaBuilder->buildCallback();
@@ -149,29 +144,29 @@ class CriteriaBuilderTest extends TestCase
      */
     private function getFilter()
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
-        $envelopes[] = new Envelope($notification, array(
+        $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
             new UuidStamp('1111'),
             new PriorityStamp(1),
             new PresetStamp('entity_saved'),
-        ));
+        ]);
 
         $notification = new Notification();
         $notification->setMessage('warning message');
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
-        $envelopes[] = new Envelope($notification, array(
+        $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
             new UuidStamp('2222'),
             new PriorityStamp(3),
-        ));
+        ]);
 
-        return new Filter($envelopes, array());
+        return new Filter($envelopes, []);
     }
 }

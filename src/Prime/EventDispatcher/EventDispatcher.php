@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
@@ -18,7 +13,7 @@ final class EventDispatcher implements EventDispatcherInterface
     /**
      * @var array<string, EventSubscriberInterface[]>
      */
-    private $listeners = array();
+    private $listeners = [];
 
     public function __construct()
     {
@@ -27,33 +22,24 @@ final class EventDispatcher implements EventDispatcherInterface
         $this->addSubscriber(new AddToStorageListener());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch($event)
     {
-        $listeners = $this->getListeners(\get_class($event));
+        $listeners = $this->getListeners($event::class);
 
         $this->callListeners($listeners, $event); // @phpstan-ignore-line
 
         return $event;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addListener($eventName, $listener)
     {
         $this->listeners[$eventName][] = $listener; // @phpstan-ignore-line
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
         foreach ((array) $subscriber->getSubscribedEvents() as $eventName) {
-            $this->addListener($eventName, array($subscriber, '__invoke')); // @phpstan-ignore-line
+            $this->addListener($eventName, [$subscriber, '__invoke']); // @phpstan-ignore-line
         }
     }
 
@@ -68,7 +54,7 @@ final class EventDispatcher implements EventDispatcherInterface
             return $this->listeners[$eventName]; // @phpstan-ignore-line
         }
 
-        return array();
+        return [];
     }
 
     /**

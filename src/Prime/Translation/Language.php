@@ -1,16 +1,11 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Translation;
 
 final class Language
 {
-    const LTR = 'ltr';
-    const RTL = 'rtl';
+    public const LTR = 'ltr';
+    public const RTL = 'rtl';
 
     /**
      * @param string $locale

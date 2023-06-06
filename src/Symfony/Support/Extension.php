@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Support;
 
 use Flasher\Prime\Plugin\PluginInterface;
@@ -29,8 +24,6 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param array<int, array<string, mixed>> $configs
      *
      * @return void
@@ -45,7 +38,7 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
         $definition
             ->setClass($this->plugin->getFactory())
             ->setPublic(true)
-            ->addTag('flasher.factory', array('alias' => $this->plugin->getAlias()));
+            ->addTag('flasher.factory', ['alias' => $this->plugin->getAlias()]);
 
         $identifier = $this->plugin->getServiceID();
         $container->setDefinition($identifier, $definition);
@@ -55,9 +48,6 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFlasherAlias()
     {
         return $this->plugin->getName();
@@ -76,8 +66,6 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     public function process(ContainerBuilder $container)
@@ -104,13 +92,13 @@ final class Extension extends FlasherExtension implements CompilerPassInterface
         $definition = $container->getDefinition('flasher.resource_manager');
         $handler = $this->plugin->getAlias();
 
-        $scripts = isset($configs['scripts']) ? $configs['scripts'] : array();
-        $definition->addMethodCall('addScripts', array($handler, $scripts));
+        $scripts = isset($configs['scripts']) ? $configs['scripts'] : [];
+        $definition->addMethodCall('addScripts', [$handler, $scripts]);
 
-        $styles = isset($configs['styles']) ? $configs['styles'] : array();
-        $definition->addMethodCall('addStyles', array($handler, $styles));
+        $styles = isset($configs['styles']) ? $configs['styles'] : [];
+        $definition->addMethodCall('addStyles', [$handler, $styles]);
 
-        $options = isset($configs['options']) ? $configs['options'] : array();
-        $definition->addMethodCall('addOptions', array($handler, $options));
+        $options = isset($configs['options']) ? $configs['options'] : [];
+        $definition->addMethodCall('addOptions', [$handler, $options]);
     }
 }

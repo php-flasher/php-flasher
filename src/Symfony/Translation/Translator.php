@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Translation;
 
 use Flasher\Prime\Stamp\TranslationStamp;
@@ -27,10 +22,7 @@ final class Translator implements TranslatorInterface
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function translate($id, $parameters = array(), $locale = null)
+    public function translate($id, $parameters = [], $locale = null)
     {
         $order = TranslationStamp::parametersOrder($parameters, $locale);
         $parameters = $this->addPrefixedParams($order['parameters']);
@@ -42,7 +34,7 @@ final class Translator implements TranslatorInterface
 
         $catalogue = $this->translator->getCatalogue($locale);
 
-        foreach (array('flasher', 'messages') as $domain) {
+        foreach (['flasher', 'messages'] as $domain) {
             if ($catalogue->has($id, $domain)) {
                 return $this->translator->trans($id, $parameters, $domain, $locale);
             }
@@ -51,9 +43,6 @@ final class Translator implements TranslatorInterface
         return $id;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getLocale()
     {
         return $this->translator->getLocale();
@@ -67,7 +56,7 @@ final class Translator implements TranslatorInterface
     private function addPrefixedParams(array $parameters)
     {
         foreach ($parameters as $key => $value) {
-            if (0 !== strpos($key, ':')) {
+            if (!str_starts_with($key, ':')) {
                 $parameters[':'.$key] = $value;
             }
         }

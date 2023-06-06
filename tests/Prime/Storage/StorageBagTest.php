@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Storage;
 
 use Flasher\Prime\Notification\Envelope;
@@ -20,16 +15,16 @@ class StorageBagTest extends TestCase
      */
     public function testAddEnvelopes()
     {
-        $envelopes = array(
-            array(
+        $envelopes = [
+            [
                 new Envelope(new Notification(), new UuidStamp('1111')),
                 new Envelope(new Notification(), new UuidStamp('2222')),
-            ),
-            array(
+            ],
+            [
                 new Envelope(new Notification(), new UuidStamp('3333')),
                 new Envelope(new Notification(), new UuidStamp('4444')),
-            ),
-        );
+            ],
+        ];
 
         $storageBag = new StorageBag();
         $storageBag->add($envelopes[0]);
@@ -43,16 +38,16 @@ class StorageBagTest extends TestCase
      */
     public function testUpdateEnvelopes()
     {
-        $envelopes = array(
-            array(
+        $envelopes = [
+            [
                 new Envelope(new Notification(), new UuidStamp('1111')),
                 new Envelope(new Notification(), new UuidStamp('2222')),
-            ),
-            array(
+            ],
+            [
                 new Envelope(new Notification(), new UuidStamp('3333')),
                 new Envelope(new Notification(), new UuidStamp('4444')),
-            ),
-        );
+            ],
+        ];
 
         $storageBag = new StorageBag();
         $storageBag->update($envelopes[0]);
@@ -66,19 +61,19 @@ class StorageBagTest extends TestCase
      */
     public function testRemoveEnvelopes()
     {
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification(), new UuidStamp('1111')),
             new Envelope(new Notification(), new UuidStamp('2222')),
             new Envelope(new Notification(), new UuidStamp('3333')),
             new Envelope(new Notification(), new UuidStamp('4444')),
-        );
+        ];
 
         $storageBag = new StorageBag();
         $storageBag->add($envelopes);
 
-        $storageBag->remove(array(
+        $storageBag->remove([
             new Envelope(new Notification(), new UuidStamp('2222')),
-        ));
+        ]);
 
         unset($envelopes[1]);
 

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Template;
 
 use Flasher\Prime\Template\TemplateEngineInterface;
@@ -22,7 +17,7 @@ final class TwigTemplateEngine implements TemplateEngineInterface
         $this->engine = $engine;
     }
 
-    public function render($name, array $context = array())
+    public function render($name, array $context = [])
     {
         return $this->engine->render($name, $context);
     }

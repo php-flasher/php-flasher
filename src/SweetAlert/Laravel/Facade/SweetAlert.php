@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\SweetAlert\Laravel\Facade;
 
 use Flasher\Prime\Notification\Envelope;

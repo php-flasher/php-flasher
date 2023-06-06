@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
@@ -24,17 +19,17 @@ final class Response
     /**
      * @var string[]
      */
-    private $scripts = array();
+    private $scripts = [];
 
     /**
      * @var string[]
      */
-    private $styles = array();
+    private $styles = [];
 
     /**
      * @var array<string, array<string, mixed>>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * @var array<string, mixed>
@@ -141,8 +136,6 @@ final class Response
     }
 
     /**
-     * @param mixed $filter
-     *
      * @return array<string, mixed>
      */
     public function toArray($filter = false)
@@ -151,12 +144,12 @@ final class Response
             return $envelope->toArray();
         }, $this->getEnvelopes());
 
-        $response = array(
+        $response = [
             'envelopes' => $envelopes,
             'scripts' => $this->getScripts(),
             'styles' => $this->getStyles(),
             'options' => $this->getOptions(),
-        );
+        ];
 
         if (false === $filter) {
             return $response;

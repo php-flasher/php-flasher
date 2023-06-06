@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\CreatedAtStamp;
@@ -26,7 +21,7 @@ final class CreatedAtStampTest extends TestCase
         $this->assertInstanceOf('Flasher\Prime\Stamp\OrderableStampInterface', $stamp);
         $this->assertInstanceOf('DateTime', $stamp->getCreatedAt());
         $this->assertEquals('2023-01-30 23:33:51', $stamp->getCreatedAt()->format('Y-m-d H:i:s'));
-        $this->assertEquals(array('created_at' => '2023-01-30 23:33:51'), $stamp->toArray());
+        $this->assertEquals(['created_at' => '2023-01-30 23:33:51'], $stamp->toArray());
     }
 
     /**

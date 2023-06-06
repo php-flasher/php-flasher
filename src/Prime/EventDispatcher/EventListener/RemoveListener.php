@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
@@ -18,7 +13,7 @@ final class RemoveListener implements EventSubscriberInterface
     public function __invoke(RemoveEvent $event)
     {
         $envelopesToKeep = $event->getEnvelopesToKeep();
-        $envelopesToRemove = array();
+        $envelopesToRemove = [];
 
         foreach ($event->getEnvelopesToRemove() as $envelope) {
             $hopsStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
@@ -36,9 +31,6 @@ final class RemoveListener implements EventSubscriberInterface
         $event->setEnvelopesToRemove($envelopesToRemove);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return 'Flasher\Prime\EventDispatcher\Event\RemoveEvent';

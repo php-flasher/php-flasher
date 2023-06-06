@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Plugin;
 
 use Flasher\Prime\Config\ConfigInterface;
@@ -15,17 +10,11 @@ use Flasher\Prime\Notification\NotificationInterface;
  */
 final class FlasherPlugin extends Plugin
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'flasher';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getServiceID()
     {
         return 'flasher';
@@ -44,35 +33,32 @@ final class FlasherPlugin extends Plugin
      */
     public function getRootScript()
     {
-        return array(
+        return [
             'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js',
             'local' => '/vendor/flasher/flasher.min.js',
-        );
+        ];
     }
 
     public function getScripts()
     {
         $rootScript = $this->getRootScript();
 
-        return array(
-            'cdn' => is_string($rootScript) ? array($rootScript) : array($rootScript['cdn']),
-            'local' => is_string($rootScript) ? '' : array($rootScript['local']),
-        );
+        return [
+            'cdn' => \is_string($rootScript) ? [$rootScript] : [$rootScript['cdn']],
+            'local' => \is_string($rootScript) ? '' : [$rootScript['local']],
+        ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getStyles()
     {
-        return array(
-            'cdn' => array(
+        return [
+            'cdn' => [
                 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css',
-            ),
-            'local' => array(
+            ],
+            'local' => [
                 '/vendor/flasher/flasher.min.css',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -88,36 +74,33 @@ final class FlasherPlugin extends Plugin
      */
     public function getFlashBagMapping()
     {
-        return array(
-            'success' => array('success'),
-            'error' => array('error', 'danger'),
-            'warning' => array('warning', 'alarm'),
-            'info' => array('info', 'notice', 'alert'),
-        );
+        return [
+            'success' => ['success'],
+            'error' => ['error', 'danger'],
+            'warning' => ['warning', 'alarm'],
+            'info' => ['info', 'notice', 'alert'],
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function processConfiguration(array $options = array())
+    public function processConfiguration(array $options = [])
     {
         $options = $this->normalizeConfig($options); // @phpstan-ignore-line
 
-        return array_merge(array(
+        return array_merge([
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
-            'scripts' => array(),
+            'scripts' => [],
             'styles' => $this->getStyles(),
-            'options' => array(),
+            'options' => [],
             'use_cdn' => true,
             'auto_translate' => true,
             'auto_render' => true,
-            'flash_bag' => array(
+            'flash_bag' => [
                 'enabled' => true,
                 'mapping' => $this->getFlashBagMapping(),
-            ),
-            'filter_criteria' => array(),
-        ), $options);
+            ],
+            'filter_criteria' => [],
+        ], $options);
     }
 
     /**
@@ -143,16 +126,16 @@ final class FlasherPlugin extends Plugin
      */
     public function normalizeConfig(array $config)
     {
-        if (isset($config['root_script']) && is_string($config['root_script'])) {
-            $config['root_script'] = array(
+        if (isset($config['root_script']) && \is_string($config['root_script'])) {
+            $config['root_script'] = [
                 'local' => $config['root_script'],
                 'cdn' => $config['root_script'],
-            );
+            ];
         }
 
         if (isset($config['styles'])) {
-            if (is_string($config['styles'])) {
-                $config['styles'] = array('cdn' => $config['styles'], 'local' => $config['styles']);
+            if (\is_string($config['styles'])) {
+                $config['styles'] = ['cdn' => $config['styles'], 'local' => $config['styles']];
             }
 
             $config['styles']['cdn'] = (array) $config['styles']['cdn'];
@@ -160,15 +143,15 @@ final class FlasherPlugin extends Plugin
         }
 
         if (isset($config['scripts'])) {
-            if (is_string($config['scripts'])) {
-                $config['scripts'] = array('cdn' => $config['scripts'], 'local' => $config['scripts']);
+            if (\is_string($config['scripts'])) {
+                $config['scripts'] = ['cdn' => $config['scripts'], 'local' => $config['scripts']];
             }
 
             $config['scripts']['cdn'] = (array) $config['scripts']['cdn'];
             $config['scripts']['local'] = (array) $config['scripts']['local'];
         }
 
-        $deprecatedKeys = array();
+        $deprecatedKeys = [];
 
         if (isset($config['template_factory']['default'])) {
             $deprecatedKeys[] = 'template_factory.default';
@@ -212,7 +195,7 @@ final class FlasherPlugin extends Plugin
             unset($config['translate_by_default']);
         }
 
-        if (array() !== $deprecatedKeys) {
+        if ([] !== $deprecatedKeys) {
             @trigger_error(sprintf('Since php-flasher/flasher-laravel v1.0: The following configuration keys are deprecated and will be removed in v2.0: %s. Please use the new configuration structure.', implode(', ', $deprecatedKeys)), \E_USER_DEPRECATED);
         }
 
@@ -220,41 +203,39 @@ final class FlasherPlugin extends Plugin
             $config['flash_bag'] = $this->normalizeFlashBagConfig($config['flash_bag']);
         }
 
-        $config['presets'] = array_merge(array(
-            'created' => array(
+        $config['presets'] = array_merge([
+            'created' => [
                 'type' => NotificationInterface::SUCCESS,
                 'message' => 'The resource was created',
-            ),
-            'updated' => array(
+            ],
+            'updated' => [
                 'type' => NotificationInterface::SUCCESS,
                 'message' => 'The resource was updated',
-            ),
-            'saved' => array(
+            ],
+            'saved' => [
                 'type' => NotificationInterface::SUCCESS,
                 'message' => 'The resource was saved',
-            ),
-            'deleted' => array(
+            ],
+            'deleted' => [
                 'type' => NotificationInterface::SUCCESS,
                 'message' => 'The resource was deleted',
-            ),
-        ), isset($config['presets']) ? $config['presets'] : array());
+            ],
+        ], isset($config['presets']) ? $config['presets'] : []);
 
         return $config; // @phpstan-ignore-line
     }
 
     /**
-     * @param mixed $config
-     *
      * @return array<string, mixed>
      */
     private function normalizeFlashBagConfig($config)
     {
         if (null === $config || false === $config) {
-            return array('enabled' => false);
+            return ['enabled' => false];
         }
 
         if (!\is_array($config) || !\array_key_exists('mapping', $config) || !\is_array($config['mapping'])) {
-            return array('enabled' => true);
+            return ['enabled' => true];
         }
 
         $mapping = $config['mapping'];
@@ -265,7 +246,7 @@ final class FlasherPlugin extends Plugin
             }
 
             if (!\is_array($values)) {
-                $mapping[$key] = array($values);
+                $mapping[$key] = [$values];
             }
 
             foreach ($mapping[$key] as $index => $value) {
@@ -277,9 +258,9 @@ final class FlasherPlugin extends Plugin
             $mapping[$key] = array_values($mapping[$key]);
         }
 
-        return array(
+        return [
             'enabled' => true,
             'mapping' => $mapping,
-        );
+        ];
     }
 }

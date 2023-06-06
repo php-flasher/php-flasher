@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Plugin;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
@@ -76,5 +71,5 @@ interface PluginInterface
      *
      * @return array<string, mixed>
      */
-    public function processConfiguration(array $options = array());
+    public function processConfiguration(array $options = []);
 }

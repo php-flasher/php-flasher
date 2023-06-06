@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
@@ -16,45 +11,25 @@ use Flasher\Prime\Notification\NotificationBuilderInterface;
 interface FlasherInterface
 {
     /**
-     * Get a driver instance.
-     *
-     * @param string|null $alias
-     *
-     * @return NotificationFactoryInterface
+     * Get a notification factory instance.
      *
      * @throws \InvalidArgumentException
      */
-    public function create($alias = null);
+    public function use(string $alias): NotificationFactoryInterface;
 
     /**
-     * Get a driver instance.
-     *
-     * @param string|null $alias
-     *
-     * @return NotificationFactoryInterface
-     *
-     * @throws \InvalidArgumentException
+     * Register a custom notification factory.
      */
-    public function using($alias);
+    public function addFactory(string $alias, callable|NotificationFactoryInterface $factory): void;
 
     /**
-     * Register a custom driver creator.
+     * Renders the flash notifications based on the specified criteria, presenter, and context.
      *
-     * @param string                                $alias
-     * @param callable|NotificationFactoryInterface $factory
-     *
-     * @return static
-     */
-    public function addFactory($alias, $factory);
-
-    /**
-     * @param array<string, mixed> $criteria
-     * @param string               $presenter
-     * @param array<string, mixed> $context
-     *
-     * @return mixed
+     * @param array<string, mixed> $criteria  the criteria to filter the notifications
+     * @param string|"html"|"json" $presenter The presenter format for rendering the notifications (e.g., 'html', 'json').
+     * @param array<string, mixed> $context   additional context or options for rendering
      *
      * @phpstan-return ($presenter is 'html' ? string : mixed)
      */
-    public function render(array $criteria = array(), $presenter = 'html', array $context = array());
+    public function render(string $presenter = 'html', array $criteria = [], array $context = []): mixed;
 }

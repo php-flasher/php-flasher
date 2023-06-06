@@ -1,31 +1,25 @@
 {
     "name": "php-flasher/flasher",
-    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
-    "license": "MIT",
     "type": "library",
+    "homepage": "https://php-flasher.io",
+    "description": "PHPFlasher Core - A powerful pure PHP library, dedicated to bringing elegant flash messages to your web applications. Whether it's Laravel or Symfony, PHPFlasher ensures seamless user feedback integration, boosting user engagement and enriching the overall experience. Built with an intuitive design, it caters to developers across the spectrum, offering a reliable, flexible solution that is also framework-agnostic. PHPFlasher Core is built for RTL and Dark Mode support, and even includes PHPStorm auto-complete feature for easy development.",
     "keywords": [
         "php-flasher",
-        "flash-messages",
-        "notification-system",
-        "user-feedback",
-        "toastr",
-        "sweetalert",
-        "pnotify",
-        "noty",
-        "notyf",
-        "desktop-notifications",
-        "php",
+        "flash-messaging",
         "laravel",
         "symfony",
-        "javascript",
-        "yoeunes",
-        "framework-agnostic",
-        "phpstorm-auto-complete",
-        "custom-adapter",
+        "php",
+        "noty",
+        "notyf",
+        "pnotify",
+        "sweetalert",
+        "toastr",
+        "user-engagement",
         "user-experience",
-        "rtl",
-        "dark-mode"
+        "developer-tools",
+        "yoeunes"
     ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -34,12 +28,11 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://php-flasher.io",
-    "require": {
-        "php": ">=5.3"
-    },
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "require": {
+        "php": ">=8.1"
+    },
     "autoload": {
         "psr-4": {
             "Flasher\\Prime\\": ""

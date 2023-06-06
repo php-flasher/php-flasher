@@ -1,17 +1,12 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
 final class PnotifyBuilder extends NotificationBuilder
 {
-    public function warning($message = null, $title = null, array $options = array())
+    public function warning($message = null, $title = null, array $options = [])
     {
         return $this->type('notice', $message, $title, $options);
     }
@@ -310,13 +305,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * Desktop Module.
      *
      * @param string $desktop
-     * @param mixed  $value
      *
      * @return static
      */
     public function desktop($desktop, $value)
     {
-        $option = $this->getEnvelope()->getOption('desktop', array());
+        $option = $this->getEnvelope()->getOption('desktop', []);
         $option[$desktop] = $value; // @phpstan-ignore-line
 
         $this->option('desktop', $option);
@@ -328,13 +322,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * Buttons Module.
      *
      * @param string $buttons
-     * @param mixed  $value
      *
      * @return static
      */
     public function buttons($buttons, $value)
     {
-        $option = $this->getEnvelope()->getOption('buttons', array());
+        $option = $this->getEnvelope()->getOption('buttons', []);
         $option[$buttons] = $value; // @phpstan-ignore-line
 
         $this->option('buttons', $option);
@@ -346,13 +339,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * NonBlock Module.
      *
      * @param string $nonblock
-     * @param mixed  $value
      *
      * @return static
      */
     public function nonblock($nonblock, $value)
     {
-        $option = $this->getEnvelope()->getOption('nonblock', array());
+        $option = $this->getEnvelope()->getOption('nonblock', []);
         $option[$nonblock] = $value; // @phpstan-ignore-line
 
         $this->option('nonblock', $option);
@@ -364,13 +356,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * Mobile Module.
      *
      * @param string $mobile
-     * @param mixed  $value
      *
      * @return static
      */
     public function mobile($mobile, $value)
     {
-        $option = $this->getEnvelope()->getOption('mobile', array());
+        $option = $this->getEnvelope()->getOption('mobile', []);
         $option[$mobile] = $value; // @phpstan-ignore-line
 
         $this->option('mobile', $option);
@@ -382,13 +373,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * Animate Module.
      *
      * @param string $animate
-     * @param mixed  $value
      *
      * @return static
      */
     public function animate($animate, $value)
     {
-        $option = $this->getEnvelope()->getOption('animate', array());
+        $option = $this->getEnvelope()->getOption('animate', []);
         $option[$animate] = $value; // @phpstan-ignore-line
 
         $this->option('animate', $option);
@@ -400,13 +390,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * Confirm Module.
      *
      * @param string $confirm
-     * @param mixed  $value
      *
      * @return static
      */
     public function confirm($confirm, $value)
     {
-        $option = $this->getEnvelope()->getOption('confirm', array());
+        $option = $this->getEnvelope()->getOption('confirm', []);
         $option[$confirm] = $value; // @phpstan-ignore-line
 
         $this->option('confirm', $option);
@@ -418,13 +407,12 @@ final class PnotifyBuilder extends NotificationBuilder
      * History Module.
      *
      * @param string $history
-     * @param mixed  $value
      *
      * @return static
      */
     public function history($history, $value)
     {
-        $option = $this->getEnvelope()->getOption('history', array());
+        $option = $this->getEnvelope()->getOption('history', []);
         $option[$history] = $value; // @phpstan-ignore-line
 
         $this->option('history', $option);

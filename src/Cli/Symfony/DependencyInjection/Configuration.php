@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -32,7 +27,7 @@ final class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('icons')
                     ->prototype('variable')->end()
-                    ->defaultValue(array())
+                    ->defaultValue([])
                 ->end()
             ->end()
         ;

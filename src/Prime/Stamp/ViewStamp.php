@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Stamp;
 
 final class ViewStamp implements StampInterface, PresentableStampInterface
@@ -30,11 +25,8 @@ final class ViewStamp implements StampInterface, PresentableStampInterface
         return $this->view;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
-        return array('view' => $this->getView());
+        return ['view' => $this->getView()];
     }
 }

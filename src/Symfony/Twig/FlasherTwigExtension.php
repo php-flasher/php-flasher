@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Twig;
 
 use Flasher\Symfony\Bridge\Twig\FlasherTwigExtension as BaseFlasherTwigExtension;
@@ -17,9 +12,9 @@ final class FlasherTwigExtension extends BaseFlasherTwigExtension
      */
     public function getFlasherFunctions()
     {
-        return array(
-            new TwigFunction('flasher_render', array($this, 'render')),
-        );
+        return [
+            new TwigFunction('flasher_render', [$this, 'render']),
+        ];
     }
 
     /**

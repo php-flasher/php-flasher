@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Laravel;
 
 use Flasher\Cli\Prime\CliFactory;
@@ -29,9 +24,6 @@ final class FlasherCliServiceProvider extends ServiceProvider
         $this->registerPresenter();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function register()
     {
         $this->registerNotifierFactory();
@@ -46,7 +38,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
         $name = 'flasher_cli';
         $config = $this->app->make('config');
 
-        $config->set($name, $config->get($name, array())); // @phpstan-ignore-line
+        $config->set($name, $config->get($name, [])); // @phpstan-ignore-line
     }
 
     /**
@@ -69,7 +61,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
         $this->app->singleton('flasher.notify', function (Container $app) {
             /** @phpstan-ignore-next-line */
             $title = $app->make('config')->get('flasher_cli.title', null);
-            $icons = $app->make('config')->get('flasher_cli.icons', array()); // @phpstan-ignore-line
+            $icons = $app->make('config')->get('flasher_cli.icons', []); // @phpstan-ignore-line
 
             return new Notify($title, $icons);
         });

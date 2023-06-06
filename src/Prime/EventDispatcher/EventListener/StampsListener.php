@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -30,15 +25,12 @@ final class StampsListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             'Flasher\Prime\EventDispatcher\Event\PersistEvent',
             'Flasher\Prime\EventDispatcher\Event\UpdateEvent',
-        );
+        ];
     }
 
     /**

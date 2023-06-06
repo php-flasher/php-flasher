@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
@@ -22,25 +17,25 @@ class ResponseManagerTest extends TestCase
      */
     public function testRenderSavedNotifications()
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
-        $envelopes[] = new Envelope($notification, array(
+        $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
             new UuidStamp('1111'),
-        ));
+        ]);
 
         $notification = new Notification();
         $notification->setMessage('warning message');
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
-        $envelopes[] = new Envelope($notification, array(
+        $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
             new UuidStamp('2222'),
-        ));
+        ]);
 
         $storageManager = new StorageManager();
         $storageManager->add($envelopes);
@@ -130,6 +125,6 @@ JAVASCRIPT;
         $this->setExpectedException('\InvalidArgumentException', 'Presenter [xml] not supported.');
 
         $responseManager = new ResponseManager();
-        $responseManager->render(array(), 'xml');
+        $responseManager->render([], 'xml');
     }
 }

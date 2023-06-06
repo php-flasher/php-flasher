@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Template;
 
 interface EngineInterface
@@ -15,5 +10,5 @@ interface EngineInterface
      *
      * @return string
      */
-    public function render($name, array $context = array());
+    public function render($name, array $context = []);
 }

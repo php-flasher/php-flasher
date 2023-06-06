@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\Notification;
@@ -15,17 +10,11 @@ use Flasher\Prime\Notification\NotificationInterface;
 
 abstract class BaseNotifier implements NotifyInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported()
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority()
     {
         return 0;
@@ -44,7 +33,7 @@ abstract class BaseNotifier implements NotifyInterface
      */
     public function getBinaryPaths()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -67,42 +56,27 @@ abstract class BaseNotifier implements NotifyInterface
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function success($message, $title = null, $options = array())
+    public function success($message, $title = null, $options = [])
     {
         $this->type(NotificationInterface::SUCCESS, $message, $title, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function info($message, $title = null, $options = array())
+    public function info($message, $title = null, $options = [])
     {
         $this->type(NotificationInterface::INFO, $message, $title, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function error($message, $title = null, $options = array())
+    public function error($message, $title = null, $options = [])
     {
         $this->type(NotificationInterface::ERROR, $message, $title, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function warning($message, $title = null, $options = array())
+    public function warning($message, $title = null, $options = [])
     {
         $this->type(NotificationInterface::WARNING, $message, $title, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function type($type, $message, $title = null, $options = array())
+    public function type($type, $message, $title = null, $options = [])
     {
         $notification = new Notification($message, $title, null, $type, $options);
 

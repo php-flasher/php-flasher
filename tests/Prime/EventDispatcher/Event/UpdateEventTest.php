@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
@@ -19,20 +14,20 @@ class UpdateEventTest extends TestCase
      */
     public function testUpdateEvent()
     {
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
         $event = new UpdateEvent($envelopes);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
-        );
+        ];
         $event->setEnvelopes($envelopes);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());

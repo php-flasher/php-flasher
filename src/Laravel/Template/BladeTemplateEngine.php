@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Laravel\Template;
 
 use Flasher\Prime\Template\TemplateEngineInterface;
@@ -25,7 +20,7 @@ final class BladeTemplateEngine implements TemplateEngineInterface
         $this->engine = $engine;
     }
 
-    public function render($name, array $context = array())
+    public function render($name, array $context = [])
     {
         $view = $this->engine->make($name, $context);
 

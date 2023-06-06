@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -19,16 +14,16 @@ class PresentationEventTest extends TestCase
      */
     public function testPresentationEvent()
     {
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $context = array(
+        $context = [
             'livewire' => true,
-        );
+        ];
 
         $event = new PresentationEvent($envelopes, $context);
 

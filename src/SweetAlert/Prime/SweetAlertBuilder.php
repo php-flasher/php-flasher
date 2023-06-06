@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\SweetAlert\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
@@ -18,10 +13,7 @@ use Flasher\Prime\Notification\NotificationBuilder;
  */
 final class SweetAlertBuilder extends NotificationBuilder
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function type($type, $message = null, $title = null, array $options = array())
+    public function type($type, $message = null, $title = null, array $options = [])
     {
         $this->icon($type);
 
@@ -36,7 +28,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return SweetAlertBuilder
      */
-    public function question($message = null, array $options = array())
+    public function question($message = null, array $options = [])
     {
         $this->showCancelButton();
 
@@ -163,7 +155,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function showClass($showClass, $value)
     {
-        $option = $this->getEnvelope()->getOption('showClass', array());
+        $option = $this->getEnvelope()->getOption('showClass', []);
         $option[$showClass] = $value; // @phpstan-ignore-line
 
         $this->option('showClass', $option);
@@ -181,7 +173,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function hideClass($hideClass, $value)
     {
-        $option = $this->getEnvelope()->getOption('hideClass', array());
+        $option = $this->getEnvelope()->getOption('hideClass', []);
         $option[$hideClass] = $value; // @phpstan-ignore-line
 
         $this->option('hideClass', $option);
@@ -352,7 +344,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      */
     public function customClass($customClass, $value)
     {
-        $option = $this->getEnvelope()->getOption('customClass', array());
+        $option = $this->getEnvelope()->getOption('customClass', []);
         $option[$customClass] = $value; // @phpstan-ignore-line
 
         $this->option('customClass', $option);

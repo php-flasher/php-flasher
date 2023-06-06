@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\ViewStamp;
@@ -21,6 +16,6 @@ class ViewStampTest extends TestCase
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
         $this->assertEquals('template.html.twig', $stamp->getView());
-        $this->assertEquals(array('view' => 'template.html.twig'), $stamp->toArray());
+        $this->assertEquals(['view' => 'template.html.twig'], $stamp->toArray());
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime\System;
 
 final class OS
@@ -30,14 +25,14 @@ final class OS
      */
     public static function isUnix()
     {
-        return \in_array(self::getName(), array(
+        return \in_array(self::getName(), [
             'Linux',
             'FreeBSD',
             'NetBSD',
             'OpenBSD',
             'SunOS',
             'DragonFly',
-        ), true);
+        ], true);
     }
 
     /**
@@ -77,7 +72,7 @@ final class OS
      */
     public static function isMacOS()
     {
-        return false !== strpos(self::getName(), 'Darwin');
+        return str_contains(self::getName(), 'Darwin');
     }
 
     /**

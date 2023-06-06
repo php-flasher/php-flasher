@@ -1,23 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Response\Presenter;
 
 use Flasher\Prime\Response\Response;
 
 final class HtmlPresenter implements PresenterInterface
 {
-    const FLASHER_FLASH_BAG_PLACE_HOLDER = 'FLASHER_FLASH_BAG_PLACE_HOLDER';
-    const HEAD_END_PLACE_HOLDER = '</head>';
-    const BODY_END_PLACE_HOLDER = '</body>';
+    public const FLASHER_FLASH_BAG_PLACE_HOLDER = 'FLASHER_FLASH_BAG_PLACE_HOLDER';
+    public const HEAD_END_PLACE_HOLDER = '</head>';
+    public const BODY_END_PLACE_HOLDER = '</body>';
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(Response $response)
     {
         $options = json_encode($response->toArray(true));

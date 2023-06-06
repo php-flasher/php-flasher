@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\Notification;
@@ -13,9 +8,6 @@ use Flasher\Cli\Prime\System\OS;
 
 final class AppleScriptBaseNotifier extends BaseNotifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function send($notification)
     {
         $notification = Notification::wrap($notification);
@@ -35,9 +27,6 @@ final class AppleScriptBaseNotifier extends BaseNotifier
         $cmd->run();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported()
     {
         if (!$this->getProgram()) {
@@ -47,9 +36,6 @@ final class AppleScriptBaseNotifier extends BaseNotifier
         return OS::isMacOS() && version_compare(OS::getMacOSVersion(), '10.9.0', '>=');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary()
     {
         return 'osascript';

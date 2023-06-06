@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Stamp;
 
 final class CreatedAtStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
@@ -38,9 +33,6 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface, P
         return $this->createdAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function compare($orderable)
     {
         if (!$orderable instanceof self) {
@@ -50,13 +42,10 @@ final class CreatedAtStamp implements StampInterface, OrderableStampInterface, P
         return $this->createdAt->getTimestamp() - $orderable->createdAt->getTimestamp();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
         $createdAt = $this->getCreatedAt();
 
-        return array('created_at' => $createdAt->format($this->format));
+        return ['created_at' => $createdAt->format($this->format)];
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -22,14 +17,14 @@ class StampsListenerTest extends TestCase
     public function testStampsListener()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new StampsListener();
         $eventDispatcher->addSubscriber($listener);
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
-        );
+        ];
         $event = new PersistEvent($envelopes);
 
         $eventDispatcher->dispatch($event);

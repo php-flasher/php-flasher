@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
@@ -19,7 +14,7 @@ class ResponseTest extends TestCase
      */
     public function testAddRootScriptToResponse()
     {
-        $response = new Response(array(), array());
+        $response = new Response([], []);
 
         $response->setRootScript('flasher.min.js');
 
@@ -31,12 +26,12 @@ class ResponseTest extends TestCase
      */
     public function testItAddsScriptToResponse()
     {
-        $response = new Response(array(), array());
+        $response = new Response([], []);
 
-        $response->addScripts(array('flasher.min.js', 'toastr.min.js'));
-        $response->addScripts(array('flasher.min.js', 'noty.min.js'));
+        $response->addScripts(['flasher.min.js', 'toastr.min.js']);
+        $response->addScripts(['flasher.min.js', 'noty.min.js']);
 
-        $this->assertEquals(array('flasher.min.js', 'toastr.min.js', 'noty.min.js'), $response->getScripts());
+        $this->assertEquals(['flasher.min.js', 'toastr.min.js', 'noty.min.js'], $response->getScripts());
     }
 
     /**
@@ -44,12 +39,12 @@ class ResponseTest extends TestCase
      */
     public function testItAddsStylesToResponse()
     {
-        $response = new Response(array(), array());
+        $response = new Response([], []);
 
-        $response->addStyles(array('flasher.min.css', 'toastr.min.css'));
-        $response->addStyles(array('flasher.min.css', 'noty.min.css'));
+        $response->addStyles(['flasher.min.css', 'toastr.min.css']);
+        $response->addStyles(['flasher.min.css', 'noty.min.css']);
 
-        $this->assertEquals(array('flasher.min.css', 'toastr.min.css', 'noty.min.css'), $response->getStyles());
+        $this->assertEquals(['flasher.min.css', 'toastr.min.css', 'noty.min.css'], $response->getStyles());
     }
 
     /**
@@ -57,15 +52,15 @@ class ResponseTest extends TestCase
      */
     public function testItAddsAdaptersOptionsToResponse()
     {
-        $response = new Response(array(), array());
+        $response = new Response([], []);
 
-        $response->addOptions('flasher', array('position' => 'center', 'timeout' => 2500));
-        $response->addOptions('toastr', array('sounds' => false));
+        $response->addOptions('flasher', ['position' => 'center', 'timeout' => 2500]);
+        $response->addOptions('toastr', ['sounds' => false]);
 
-        $this->assertEquals(array(
-            'flasher' => array('position' => 'center', 'timeout' => 2500),
-            'toastr' => array('sounds' => false),
-        ), $response->getOptions());
+        $this->assertEquals([
+            'flasher' => ['position' => 'center', 'timeout' => 2500],
+            'toastr' => ['sounds' => false],
+        ], $response->getOptions());
     }
 
     /**
@@ -73,7 +68,7 @@ class ResponseTest extends TestCase
      */
     public function testItTurnsTheResponseIntoAnArray()
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -87,39 +82,39 @@ class ResponseTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification);
 
-        $response = new Response($envelopes, array());
+        $response = new Response($envelopes, []);
         $response->setRootScript('flasher.min.js');
-        $response->addScripts(array('noty.min.js', 'toastr.min.js'));
-        $response->addStyles(array('noty.min.css', 'toastr.min.css'));
-        $response->addOptions('flasher', array('position' => 'center', 'timeout' => 2500));
-        $response->addOptions('toastr', array('sounds' => false));
+        $response->addScripts(['noty.min.js', 'toastr.min.js']);
+        $response->addStyles(['noty.min.css', 'toastr.min.css']);
+        $response->addOptions('flasher', ['position' => 'center', 'timeout' => 2500]);
+        $response->addOptions('toastr', ['sounds' => false]);
 
-        $expected = array(
-            'envelopes' => array(
-                array(
-                    'notification' => array(
+        $expected = [
+            'envelopes' => [
+                [
+                    'notification' => [
                         'type' => 'success',
                         'title' => 'PHPFlasher',
                         'message' => 'success message',
-                        'options' => array(),
-                    ),
-                ),
-                array(
-                    'notification' => array(
+                        'options' => [],
+                    ],
+                ],
+                [
+                    'notification' => [
                         'type' => 'warning',
                         'title' => 'yoeunes/toastr',
                         'message' => 'warning message',
-                        'options' => array(),
-                    ),
-                ),
-            ),
-            'scripts' => array('noty.min.js', 'toastr.min.js'),
-            'styles' => array('noty.min.css', 'toastr.min.css'),
-            'options' => array(
-                'flasher' => array('position' => 'center', 'timeout' => 2500),
-                'toastr' => array('sounds' => false),
-            ),
-        );
+                        'options' => [],
+                    ],
+                ],
+            ],
+            'scripts' => ['noty.min.js', 'toastr.min.js'],
+            'styles' => ['noty.min.css', 'toastr.min.css'],
+            'options' => [
+                'flasher' => ['position' => 'center', 'timeout' => 2500],
+                'toastr' => ['sounds' => false],
+            ],
+        ];
 
         $this->assertEquals($expected, $response->toArray());
     }

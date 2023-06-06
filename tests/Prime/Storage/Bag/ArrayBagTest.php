@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Storage\Bag;
 
 use Flasher\Prime\Notification\Envelope;
@@ -21,10 +16,10 @@ class ArrayBagTest extends TestCase
     {
         $bag = new ArrayBag();
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
         $bag->set($envelopes);
 

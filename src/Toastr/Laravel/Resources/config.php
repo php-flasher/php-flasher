@@ -1,27 +1,22 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
-return array(
-    'scripts' => array(
-        'cdn' => array(
+return [
+    'scripts' => [
+        'cdn' => [
             'https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js',
             'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.js',
-        ),
-        'local' => array(
+        ],
+        'local' => [
             '/vendor/flasher/jquery.min.js',
             '/vendor/flasher/flasher-toastr.min.js',
-        ),
-    ),
-    'styles' => array(
-        'cdn' => array(
+        ],
+    ],
+    'styles' => [
+        'cdn' => [
             'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.css',
-        ),
-        'local' => array(
+        ],
+        'local' => [
             '/vendor/flasher/flasher-toastr.min.css',
-        ),
-    ),
-);
+        ],
+    ],
+];

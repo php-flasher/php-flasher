@@ -1,18 +1,13 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Filter\Specification;
 
 use Flasher\Prime\Notification\Envelope;
 
 final class StampsSpecification implements SpecificationInterface
 {
-    const STRATEGY_AND = 'and';
-    const STRATEGY_OR = 'or';
+    public const STRATEGY_AND = 'and';
+    public const STRATEGY_OR = 'or';
 
     /**
      * @var array|string[]
@@ -34,9 +29,6 @@ final class StampsSpecification implements SpecificationInterface
         $this->strategy = $strategy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         $diff = array_diff($this->stamps, array_keys($envelope->all()));

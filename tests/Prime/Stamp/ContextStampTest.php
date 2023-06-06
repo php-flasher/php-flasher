@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\ContextStamp;
@@ -17,11 +12,11 @@ class ContextStampTest extends TestCase
      */
     public function testContextStamp()
     {
-        $stamp = new ContextStamp(array('component' => 'livewire'));
+        $stamp = new ContextStamp(['component' => 'livewire']);
 
         $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
-        $this->assertEquals(array('component' => 'livewire'), $stamp->getContext());
-        $this->assertEquals(array('context' => array('component' => 'livewire')), $stamp->toArray());
+        $this->assertEquals(['component' => 'livewire'], $stamp->getContext());
+        $this->assertEquals(['context' => ['component' => 'livewire']], $stamp->toArray());
     }
 }

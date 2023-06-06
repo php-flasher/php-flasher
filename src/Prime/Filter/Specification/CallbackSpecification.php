@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Filter\Specification;
 
 use Flasher\Prime\Filter\Filter;
@@ -31,9 +26,6 @@ final class CallbackSpecification implements SpecificationInterface
         $this->callback = $callback;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSatisfiedBy(Envelope $envelope)
     {
         return (bool) \call_user_func($this->callback, $envelope, $this->filter);

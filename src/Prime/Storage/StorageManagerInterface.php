@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\Notification\Envelope;
@@ -21,7 +16,7 @@ interface StorageManagerInterface
      *
      * @return Envelope[]
      */
-    public function filter(array $criteria = array());
+    public function filter(array $criteria = []);
 
     /**
      * @param Envelope|Envelope[] $envelopes

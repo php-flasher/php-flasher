@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Cli\Prime;
 
 use Flasher\Cli\Prime\Notifier\BaseNotifier;
@@ -21,12 +16,12 @@ final class Notify extends BaseNotifier
     /**
      * @var NotifyInterface[]
      */
-    private $notifiers = array();
+    private $notifiers = [];
 
     /**
      * @var NotifyInterface[]
      */
-    private $sorted = array();
+    private $sorted = [];
 
     /**
      * @var bool|null
@@ -41,13 +36,13 @@ final class Notify extends BaseNotifier
     /**
      * @var array{success?: string, error?: string, info?: string, warning?: string}
      */
-    private $icons = array();
+    private $icons = [];
 
     /**
      * @param string|null                                                                     $title
      * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
      */
-    public function __construct($title = 'PHPFlasher', $icons = array())
+    public function __construct($title = 'PHPFlasher', $icons = [])
     {
         $this->title = $title;
         $this->icons = $this->configureIcons($icons);
@@ -69,14 +64,11 @@ final class Notify extends BaseNotifier
      *
      * @return static
      */
-    public static function create($title = null, $icons = array())
+    public static function create($title = null, $icons = [])
     {
         return new self($title, $icons);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send($notification)
     {
         $notification = $this->configureNotification($notification);
@@ -94,17 +86,11 @@ final class Notify extends BaseNotifier
         $this->reset();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority()
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported()
     {
         if (null !== $this->isSupported) {
@@ -130,7 +116,7 @@ final class Notify extends BaseNotifier
     private function reset()
     {
         $this->notifier = null;
-        $this->sorted = array();
+        $this->sorted = [];
         $this->isSupported = null;
     }
 
@@ -139,7 +125,7 @@ final class Notify extends BaseNotifier
      */
     private function getNotifiers()
     {
-        if (array() !== $this->sorted) {
+        if ([] !== $this->sorted) {
             return $this->sorted;
         }
 
@@ -182,27 +168,27 @@ final class Notify extends BaseNotifier
      *
      * @return array<'default'|'error'|'info'|'success'|'warning', string>
      */
-    private function configureIcons($icons = array())
+    private function configureIcons($icons = [])
     {
-        $icons = $icons ?: array();
+        $icons = $icons ?: [];
 
         if (!\is_array($icons)) {
-            $icons = array(
+            $icons = [
                 NotificationInterface::SUCCESS => $icons,
                 NotificationInterface::ERROR => $icons,
                 NotificationInterface::INFO => $icons,
                 NotificationInterface::WARNING => $icons,
                 'default' => $icons,
-            );
+            ];
         }
 
-        return array_merge(array(
+        return array_merge([
             NotificationInterface::SUCCESS => Path::realpath(__DIR__.'/Resources/icons/success.png'),
             NotificationInterface::ERROR => Path::realpath(__DIR__.'/Resources/icons/error.png'),
             NotificationInterface::INFO => Path::realpath(__DIR__.'/Resources/icons/info.png'),
             NotificationInterface::WARNING => Path::realpath(__DIR__.'/Resources/icons/warning.png'),
             'default' => Path::realpath(__DIR__.'/Resources/icons/info.png'),
-        ), $icons);
+        ], $icons);
     }
 
     /**

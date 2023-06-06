@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Laravel\Support;
 
 use Flasher\Prime\FlasherInterface;
@@ -21,9 +16,6 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected $plugin;
 
-    /**
-     * {@inheritdoc}
-     */
     public function register()
     {
         $this->plugin = $this->plugin ?: $this->createPlugin();
@@ -60,7 +52,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function registerPublishing()
     {
-        if (!in_array(\PHP_SAPI, array('cli', 'phpdbg'))) {
+        if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
             return;
         }
 
@@ -86,18 +78,18 @@ abstract class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $paths = array($file => config_path($this->plugin->getName().'.php'));
+        $paths = [$file => config_path($this->plugin->getName().'.php')];
 
         $this->publishes($paths);
 
-        $groups = array(
+        $groups = [
             'flasher-config',
             str_replace('_', '-', $this->plugin->getName()).'-config',
-        );
+        ];
 
         foreach ($groups as $group) {
-            if (!array_key_exists($group, static::$publishGroups)) {
-                static::$publishGroups[$group] = array();
+            if (!\array_key_exists($group, static::$publishGroups)) {
+                static::$publishGroups[$group] = [];
             }
 
             static::$publishGroups[$group] = array_merge(static::$publishGroups[$group], $paths);
@@ -119,18 +111,18 @@ abstract class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $paths = array($dir => public_path('vendor/flasher/'));
+        $paths = [$dir => public_path('vendor/flasher/')];
 
         $this->publishes($paths);
 
-        $groups = array(
+        $groups = [
             'flasher-assets',
             str_replace('_', '-', $this->plugin->getName()).'-assets',
-        );
+        ];
 
         foreach ($groups as $group) {
-            if (!array_key_exists($group, static::$publishGroups)) {
-                static::$publishGroups[$group] = array();
+            if (!\array_key_exists($group, static::$publishGroups)) {
+                static::$publishGroups[$group] = [];
             }
 
             static::$publishGroups[$group] = array_merge(static::$publishGroups[$group], $paths);
@@ -144,7 +136,7 @@ abstract class ServiceProvider extends BaseServiceProvider
     {
         $r = new \ReflectionClass($this);
 
-        return pathinfo($r->getFileName() ?: '', PATHINFO_DIRNAME).'/Resources/';
+        return pathinfo($r->getFileName() ?: '', \PATHINFO_DIRNAME).'/Resources/';
     }
 
     /**
@@ -162,7 +154,7 @@ abstract class ServiceProvider extends BaseServiceProvider
         $name = $this->plugin->getName();
 
         /** @var array<string, mixed> $configuration */
-        $configuration = $config->get($name, array());
+        $configuration = $config->get($name, []);
 
         $config->set($name, $this->plugin->processConfiguration($configuration));
     }
@@ -209,17 +201,17 @@ abstract class ServiceProvider extends BaseServiceProvider
             return $flasher;
         });
 
-        $config = $this->app->make('config')->get($this->plugin->getName(), array()); // @phpstan-ignore-line
+        $config = $this->app->make('config')->get($this->plugin->getName(), []); // @phpstan-ignore-line
         $this->app->extend('flasher.resource_manager', function (ResourceManagerInterface $manager) use ($plugin, $config) {
             $config = $plugin->normalizeConfig($config);
 
-            $scripts = isset($config['scripts']) ? $config['scripts'] : array();
+            $scripts = isset($config['scripts']) ? $config['scripts'] : [];
             $manager->addScripts($plugin->getAlias(), $scripts);
 
-            $styles = isset($config['styles']) ? $config['styles'] : array();
+            $styles = isset($config['styles']) ? $config['styles'] : [];
             $manager->addStyles($plugin->getAlias(), $styles);
 
-            $options = isset($config['options']) ? $config['options'] : array();
+            $options = isset($config['options']) ? $config['options'] : [];
             $manager->addOptions($plugin->getAlias(), $options);
 
             return $manager;

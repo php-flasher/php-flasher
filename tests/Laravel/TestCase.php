@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Laravel;
 
 use Flasher\Laravel\Support\Laravel;
@@ -19,15 +14,15 @@ class TestCase extends Orchestra
 {
     public function createApplication()
     {
-        if (0 !== strpos(Application::VERSION, '4.0')) {
+        if (!str_starts_with(Application::VERSION, '4.0')) {
             return parent::createApplication();
         }
 
         $app = new Application();
 
-        $app->detectEnvironment(array(
-            'local' => array('your-machine-name'),
-        ));
+        $app->detectEnvironment([
+            'local' => ['your-machine-name'],
+        ]);
 
         $app->bindInstallPaths($this->getApplicationPaths());
 
@@ -70,14 +65,14 @@ class TestCase extends Orchestra
      */
     protected function getPackageProviders($app = null)
     {
-        return array(
+        return [
             'Flasher\Laravel\FlasherServiceProvider',
             'Flasher\Noty\Laravel\FlasherNotyServiceProvider',
             'Flasher\Notyf\Laravel\FlasherNotyfServiceProvider',
             'Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider',
             'Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider',
             'Flasher\Toastr\Laravel\FlasherToastrServiceProvider',
-        );
+        ];
     }
 
     /**

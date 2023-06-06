@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Stamp;
 
 final class ContextStamp implements StampInterface, PresentableStampInterface
@@ -30,11 +25,8 @@ final class ContextStamp implements StampInterface, PresentableStampInterface
         return $this->context;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
-        return array('context' => $this->getContext());
+        return ['context' => $this->getContext()];
     }
 }

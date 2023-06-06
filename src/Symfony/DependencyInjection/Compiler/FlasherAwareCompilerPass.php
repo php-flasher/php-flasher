@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -25,7 +20,7 @@ final class FlasherAwareCompilerPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds('flasher.flasher_aware') as $id => $tags) {
             $service = $container->findDefinition($id);
-            $service->addMethodCall('setFlasher', array($flasher));
+            $service->addMethodCall('setFlasher', [$flasher]);
         }
     }
 }

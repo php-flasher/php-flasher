@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
@@ -19,7 +14,7 @@ if (!function_exists('toastr')) {
      *
      * @return Envelope|ToastrFactory
      */
-    function toastr($message = null, $type = NotificationInterface::SUCCESS, $title = '', array $options = array())
+    function toastr($message = null, $type = NotificationInterface::SUCCESS, $title = '', array $options = [])
     {
         /** @var ToastrFactory $factory */
         $factory = FlasherContainer::create('flasher.toastr');

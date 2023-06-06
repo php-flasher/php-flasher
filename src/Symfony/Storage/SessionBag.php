@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Symfony\Storage;
 
 use Flasher\Prime\Storage\Bag\BagInterface;
@@ -15,7 +10,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class SessionBag implements BagInterface
 {
-    const ENVELOPES_NAMESPACE = 'flasher::envelopes';
+    public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
      * @var RequestStack|SessionInterface
@@ -36,17 +31,11 @@ final class SessionBag implements BagInterface
         $this->fallbackSession = new FallbackSession();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get()
     {
-        return $this->session()->get(self::ENVELOPES_NAMESPACE, array()); // @phpstan-ignore-line
+        return $this->session()->get(self::ENVELOPES_NAMESPACE, []); // @phpstan-ignore-line
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set(array $envelopes)
     {
         $this->session()->set(self::ENVELOPES_NAMESPACE, $envelopes);

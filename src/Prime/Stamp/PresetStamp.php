@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Stamp;
 
 final class PresetStamp implements StampInterface
@@ -23,7 +18,7 @@ final class PresetStamp implements StampInterface
      * @param string               $preset
      * @param array<string, mixed> $parameters
      */
-    public function __construct($preset, array $parameters = array())
+    public function __construct($preset, array $parameters = [])
     {
         $this->preset = $preset;
         $this->parameters = $parameters;

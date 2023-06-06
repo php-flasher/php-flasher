@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Stamp;
 
 final class PriorityStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
@@ -30,9 +25,6 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface, Pr
         return $this->priority;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function compare($orderable)
     {
         if (!$orderable instanceof self) {
@@ -42,11 +34,8 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface, Pr
         return $this->priority - $orderable->priority;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
-        return array('priority' => $this->getPriority());
+        return ['priority' => $this->getPriority()];
     }
 }

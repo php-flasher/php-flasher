@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
@@ -15,13 +10,13 @@ use Flasher\Tests\Prime\TestCase;
 class EventDispatcherTest extends TestCase
 {
     // Some pseudo events
-    const preFoo = 'pre.foo';
+    public const preFoo = 'pre.foo';
 
-    const postFoo = 'post.foo';
+    public const postFoo = 'post.foo';
 
-    const preBar = 'pre.bar';
+    public const preBar = 'pre.bar';
 
-    const postBar = 'post.bar';
+    public const postBar = 'post.bar';
 
     /**
      * @return void
@@ -29,7 +24,7 @@ class EventDispatcherTest extends TestCase
     public function testInitialState()
     {
         $dispatcher = new EventDispatcher();
-        $this->assertEquals(array(), $dispatcher->getListeners('fake_event'));
+        $this->assertEquals([], $dispatcher->getListeners('fake_event'));
     }
 
     /**
@@ -40,8 +35,8 @@ class EventDispatcherTest extends TestCase
         $dispatcher = new EventDispatcher();
         $listener = new TestEventListener();
 
-        $dispatcher->addListener('pre.foo', array($listener, 'preFoo'));
-        $dispatcher->addListener('post.foo', array($listener, 'postFoo'));
+        $dispatcher->addListener('pre.foo', [$listener, 'preFoo']);
+        $dispatcher->addListener('post.foo', [$listener, 'postFoo']);
         $this->assertCount(1, $dispatcher->getListeners(self::preFoo));
         $this->assertCount(1, $dispatcher->getListeners(self::postFoo));
     }
@@ -55,8 +50,8 @@ class EventDispatcherTest extends TestCase
         $listener = new TestEventListener();
 
         $event = new Event();
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', array($listener, 'preFoo'));
-        $dispatcher->addListener('NotFoundEvent', array($listener, 'postFoo'));
+        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', [$listener, 'preFoo']);
+        $dispatcher->addListener('NotFoundEvent', [$listener, 'postFoo']);
 
         $return = $dispatcher->dispatch($event);
 
@@ -100,8 +95,8 @@ class EventDispatcherTest extends TestCase
         // postFoo() stops the propagation, so only one listener should
         // be executed
         // Manually set priority to enforce $listener to be called first
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', array($listener, 'postFoo'), 10);
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', array($otherListener, 'preFoo'));
+        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', [$listener, 'postFoo'], 10);
+        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', [$otherListener, 'preFoo']);
         $dispatcher->dispatch($event);
         $this->assertTrue($listener->postFooInvoked);
         $this->assertFalse($otherListener->postFooInvoked);
@@ -160,10 +155,10 @@ class TestEventSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             'pre.foo' => 'preFoo',
             'post.foo' => 'postFoo',
-        );
+        ];
     }
 }
 
@@ -171,10 +166,10 @@ class TestEventSubscriberWithPriorities implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
-            'pre.foo' => array('preFoo', 10),
-            'post.foo' => array('postFoo'),
-        );
+        return [
+            'pre.foo' => ['preFoo', 10],
+            'post.foo' => ['postFoo'],
+        ];
     }
 }
 
@@ -182,11 +177,11 @@ class TestEventSubscriberWithMultipleListeners implements EventSubscriberInterfa
 {
     public static function getSubscribedEvents()
     {
-        return array(
-            'pre.foo' => array(
-                array('preFoo1'),
-                array('preFoo2', 10),
-            ),
-        );
+        return [
+            'pre.foo' => [
+                ['preFoo1'],
+                ['preFoo2', 10],
+            ],
+        ];
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Http;
 
 use Flasher\Prime\FlasherInterface;
@@ -36,11 +31,11 @@ final class ResponseExtension
             return $response;
         }
 
-        $placeHolders = array(
+        $placeHolders = [
             HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
             HtmlPresenter::HEAD_END_PLACE_HOLDER,
             HtmlPresenter::BODY_END_PLACE_HOLDER,
-        );
+        ];
 
         foreach ($placeHolders as $insertPlaceHolder) {
             $insertPosition = strripos($content, $insertPlaceHolder);
@@ -54,7 +49,7 @@ final class ResponseExtension
         }
 
         $alreadyRendered = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER === $insertPlaceHolder;
-        $htmlResponse = $this->flasher->render(array(), 'html', array('envelopes_only' => $alreadyRendered));
+        $htmlResponse = $this->flasher->render([], 'html', ['envelopes_only' => $alreadyRendered]);
 
         if (empty($htmlResponse)) {
             return $response;

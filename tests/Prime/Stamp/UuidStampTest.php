@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\UuidStamp;
@@ -24,6 +19,6 @@ final class UuidStampTest extends TestCase
 
         $stamp = new UuidStamp('aaaa-bbbb-cccc');
         $this->assertEquals('aaaa-bbbb-cccc', $stamp->getUuid());
-        $this->assertEquals(array('uuid' => 'aaaa-bbbb-cccc'), $stamp->toArray());
+        $this->assertEquals(['uuid' => 'aaaa-bbbb-cccc'], $stamp->toArray());
     }
 }

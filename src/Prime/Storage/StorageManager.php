@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
@@ -32,30 +27,24 @@ final class StorageManager implements StorageManagerInterface
     /**
      * @var mixed[]
      */
-    private $criteria = array();
+    private $criteria = [];
 
     /**
      * @param mixed[] $criteria
      */
-    public function __construct(StorageInterface $storage = null, EventDispatcherInterface $eventDispatcher = null, array $criteria = array())
+    public function __construct(StorageInterface $storage = null, EventDispatcherInterface $eventDispatcher = null, array $criteria = [])
     {
         $this->storage = $storage ?: new StorageBag();
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
         $this->criteria = $criteria;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all()
     {
         return $this->storage->all();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function filter(array $criteria = array())
+    public function filter(array $criteria = [])
     {
         $criteria = array_merge($this->criteria, $criteria);
 
@@ -69,9 +58,6 @@ final class StorageManager implements StorageManagerInterface
         return $event->getEnvelopes();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function add($envelopes)
     {
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
@@ -85,9 +71,6 @@ final class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($envelopes)
     {
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
@@ -101,9 +84,6 @@ final class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove($envelopes)
     {
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
@@ -118,9 +98,6 @@ final class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear()
     {
         $this->storage->clear();

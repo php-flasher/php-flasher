@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
-
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\HopsStamp;
@@ -24,7 +19,7 @@ final class PriorityStampTest extends TestCase
         $this->assertInstanceOf('Flasher\Prime\Stamp\OrderableStampInterface', $stamp);
         $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
         $this->assertEquals(5, $stamp->getPriority());
-        $this->assertEquals(array('priority' => 5), $stamp->toArray());
+        $this->assertEquals(['priority' => 5], $stamp->toArray());
     }
 
     /**
