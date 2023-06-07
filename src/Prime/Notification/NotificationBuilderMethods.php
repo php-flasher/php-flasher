@@ -55,34 +55,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    public function when(bool|\Closure $condition): self
-    {
-        $condition = $this->validateCallableCondition($condition);
-
-        $stamp = $this->envelope->get(WhenStamp::class);
-        if ($stamp instanceof WhenStamp) {
-            $condition = $stamp->getCondition() && $condition;
-        }
-
-        $this->envelope->withStamp(new WhenStamp($condition));
-
-        return $this;
-    }
-
-    public function unless(bool|\Closure $condition): self
-    {
-        $condition = $this->validateCallableCondition($condition);
-
-        $stamp = $this->envelope->get(UnlessStamp::class);
-        if ($stamp instanceof UnlessStamp) {
-            $condition = $stamp->getCondition() || $condition;
-        }
-
-        $this->envelope->withStamp(new UnlessStamp($condition));
-
-        return $this;
-    }
-
     public function priority(int $priority): self
     {
         $this->envelope->withStamp(new PriorityStamp($priority));
@@ -136,6 +108,34 @@ trait NotificationBuilderMethods
     public function context(array $context): self
     {
         $this->envelope->withStamp(new ContextStamp($context));
+
+        return $this;
+    }
+
+    public function when(bool|\Closure $condition): self
+    {
+        $condition = $this->validateCallableCondition($condition);
+
+        $stamp = $this->envelope->get(WhenStamp::class);
+        if ($stamp instanceof WhenStamp) {
+            $condition = $stamp->getCondition() && $condition;
+        }
+
+        $this->envelope->withStamp(new WhenStamp($condition));
+
+        return $this;
+    }
+
+    public function unless(bool|\Closure $condition): self
+    {
+        $condition = $this->validateCallableCondition($condition);
+
+        $stamp = $this->envelope->get(UnlessStamp::class);
+        if ($stamp instanceof UnlessStamp) {
+            $condition = $stamp->getCondition() || $condition;
+        }
+
+        $this->envelope->withStamp(new UnlessStamp($condition));
 
         return $this;
     }

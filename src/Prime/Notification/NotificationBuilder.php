@@ -16,10 +16,9 @@ final class NotificationBuilder
     private readonly Envelope $envelope;
     private readonly StorageManagerInterface $storageManager;
 
-    public function __construct(
-        NotificationInterface $notification,
-        StorageManagerInterface $storageManager
-    ) {
+    public function __construct(NotificationInterface $notification, StorageManagerInterface $storageManager)
+    {
         $this->envelope = Envelope::wrap($notification);
+        $this->storageManager = $storageManager;
     }
 }
