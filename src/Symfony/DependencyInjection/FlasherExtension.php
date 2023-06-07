@@ -1,9 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\DependencyInjection;
 
-use Flasher\Prime\Config\ConfigInterface;
-use Flasher\Symfony\Bridge\Bridge;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
+use Flasher\Prime\Http\RequestExtension;
+use Flasher\Prime\Http\ResponseExtension;
+use Flasher\Prime\Plugin\FlasherPlugin;
+use Flasher\Prime\Storage\Bag\ArrayBag;
+use Flasher\Symfony\EventListener\FlasherListener;
+use Flasher\Symfony\EventListener\SessionListener;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -12,46 +20,58 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * @phpstan-import-type ConfigType from ConfigInterface
+ * @phpstan-type FlasherConfigType array{
+ *
+ * }
  */
 final class FlasherExtension extends Extension implements CompilerPassInterface
 {
-    /**
-     * @phpstan-param ConfigType[] $configs
-     *
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function __construct(private readonly FlasherPlugin $plugin)
+    {
+    }
+
+    public function getAlias(): string
+    {
+        return $this->plugin->getName();
+    }
+
+    public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
+    {
+        return new Configuration($this->plugin);
+    }
+
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
-        /** @var ConfigType $config */
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        /** @phpstan-var FlasherConfigType $config */
+        $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
 
+        $this->registerCompilerPassTags($container);
         $this->registerFlasherConfiguration($config, $container);
         $this->registerListeners($config, $container);
         $this->registerStorageManager($config, $container);
         $this->registerHttpExtensions($config, $container);
-        $this->registerFlasherAutoConfiguration($container);
     }
 
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $this->registerFlasherTranslator($container);
         $this->registerFlasherTemplateEngine($container);
         $this->configureSessionServices($container);
     }
 
+    private function registerCompilerPassTags(ContainerBuilder $container): void
+    {
+        $container->registerForAutoconfiguration(EventListenerInterface::class)
+            ->addTag('flasher.event_listener');
+    }
+
     /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
+     * @phpstan-param FlasherConfigType $config
      */
-    private function registerFlasherConfiguration(array $config, ContainerBuilder $container)
+    private function registerFlasherConfiguration(array $config, ContainerBuilder $container): void
     {
         $flasherConfig = $container->getDefinition('flasher.config');
         $flasherConfig->replaceArgument(0, $config);
@@ -64,79 +84,59 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
     }
 
     /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
+     * @phpstan-param FlasherConfigType $config
      */
-    private function registerListeners(array $config, ContainerBuilder $container)
+    private function registerListeners(array $config, ContainerBuilder $container): void
     {
         $this->registerSessionListener($config, $container);
         $this->registerFlasherListener($config, $container);
     }
 
-    /**
-     * @return void
-     */
-    private function registerResponseExtension(ContainerBuilder $container)
+    private function registerResponseExtension(ContainerBuilder $container): void
     {
-        $container->register('flasher.response_extension', 'Flasher\Prime\Http\ResponseExtension')
-            ->setPublic(false)
+        $container->register('flasher.response_extension', ResponseExtension::class)
             ->addArgument(new Reference('flasher'));
     }
 
-    /**
-     * @param array<string, string[]> $mapping
-     *
-     * @return void
-     */
-    private function registerRequestExtension(ContainerBuilder $container, array $mapping)
+    private function registerRequestExtension(ContainerBuilder $container, array $mapping): void
     {
-        $container->register('flasher.request_extension', 'Flasher\Prime\Http\RequestExtension')
-            ->setPublic(false)
+        $container->register('flasher.request_extension', RequestExtension::class)
             ->addArgument(new Reference('flasher'))
             ->addArgument($mapping);
     }
 
     /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
+     * @phpstan-param FlasherConfigType $config
      */
-    private function registerSessionListener(array $config, ContainerBuilder $container)
+    private function registerSessionListener(array $config, ContainerBuilder $container): void
     {
-        if (!$config['flash_bag']['enabled']) {
+        if (! $config['flash_bag']['enabled']) {
             return;
         }
 
-        $container->register('flasher.session_listener', 'Flasher\Symfony\EventListener\SessionListener')
-            ->setPublic(true)
+        $container->register('flasher.session_listener', SessionListener::class)
             ->addArgument(new Reference('flasher.request_extension'))
             ->addTag('kernel.event_listener', ['event' => 'kernel.response']);
     }
 
     /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
+     * @phpstan-param FlasherConfigType $config
      */
-    private function registerFlasherListener(array $config, ContainerBuilder $container)
+    private function registerFlasherListener(array $config, ContainerBuilder $container): void
     {
-        if (!$config['auto_render']) {
+        if (! $config['auto_render']) {
             return;
         }
 
-        $container->register('flasher.flasher_listener', 'Flasher\Symfony\EventListener\FlasherListener')
-            ->setPublic(true)
+        $container->register('flasher.flasher_listener', FlasherListener::class)
             ->addArgument(new Reference('flasher.response_extension'))
             ->addTag('kernel.event_listener', ['event' => 'kernel.response', 'priority' => -256]);
     }
 
     /**
-     * @phpstan-param ConfigType $config
-     *
-     * @return void
+     * @phpstan-param FlasherConfigType $config
      */
-    private function registerStorageManager(array $config, ContainerBuilder $container)
+    private function registerStorageManager(array $config, ContainerBuilder $container): void
     {
         $criteria = $config['filter_criteria'];
         $storageManager = $container->getDefinition('flasher.storage_manager');
@@ -144,9 +144,9 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
     }
 
     /**
-     * @return void
+     * @phpstan-param FlasherConfigType $config
      */
-    private function registerHttpExtensions(array $config, ContainerBuilder $container)
+    private function registerHttpExtensions(array $config, ContainerBuilder $container): void
     {
         $mapping = $config['flash_bag']['mapping'];
         $this->registerRequestExtension($container, $mapping);
@@ -154,24 +154,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $this->registerResponseExtension($container);
     }
 
-    /**
-     * @return void
-     */
-    private function registerFlasherAutoConfiguration(ContainerBuilder $container)
-    {
-        if (!method_exists($container, 'registerForAutoconfiguration')) {
-            return;
-        }
-
-        $container
-            ->registerForAutoconfiguration('Flasher\Prime\Aware\FlasherAwareInterface')
-            ->addTag('flasher.flasher_aware');
-    }
-
-    /**
-     * @return void
-     */
-    private function registerFlasherTranslator(ContainerBuilder $container)
+    private function registerFlasherTranslator(ContainerBuilder $container): void
     {
         $config = $container->getDefinition('flasher.config')->getArgument(0);
 
@@ -186,10 +169,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $translationListener->replaceArgument(0, null);
     }
 
-    /**
-     * @return void
-     */
-    private function registerFlasherTemplateEngine(ContainerBuilder $container)
+    private function registerFlasherTemplateEngine(ContainerBuilder $container): void
     {
         if ($container->has('twig')) {
             return;
@@ -201,10 +181,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $listener->replaceArgument(1, null);
     }
 
-    /**
-     * @return void
-     */
-    private function configureSessionServices(ContainerBuilder $container)
+    private function configureSessionServices(ContainerBuilder $container): void
     {
         if ($this->isSessionEnabled($container)) {
             return;
@@ -213,18 +190,11 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $container->removeDefinition('flasher.storage_bag');
         $container->removeDefinition('flasher.session_listener');
 
-        $container->register('flasher.storage_bag', 'Flasher\Prime\Storage\Bag\ArrayBag');
+        $container->register('flasher.storage_bag', ArrayBag::class);
     }
 
-    /**
-     * @return bool
-     */
-    private function isSessionEnabled(ContainerBuilder $container)
+    private function isSessionEnabled(ContainerBuilder $container): bool
     {
-        if (Bridge::versionCompare('5.3', '>=')) {
-            return $container->has('session.factory');
-        }
-
-        return $container->has('session');
+        return $container->has('session.factory');
     }
 }

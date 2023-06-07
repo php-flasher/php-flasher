@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
@@ -7,22 +9,16 @@ use Flasher\Prime\Notification\Envelope;
 final class PostPersistEvent
 {
     /**
-     * @var Envelope[]
+     * @param  Envelope[]  $envelopes
      */
-    private $envelopes;
-
-    /**
-     * @param Envelope[] $envelopes
-     */
-    public function __construct(array $envelopes)
+    public function __construct(private readonly array $envelopes)
     {
-        $this->envelopes = $envelopes;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->envelopes;
     }

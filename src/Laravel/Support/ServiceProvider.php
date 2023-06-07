@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Support;
 
 use Flasher\Prime\FlasherInterface;
@@ -16,7 +18,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected $plugin;
 
-    public function register()
+    public function register(): void
     {
         $this->plugin = $this->plugin ?: $this->createPlugin();
 
@@ -24,10 +26,7 @@ abstract class ServiceProvider extends BaseServiceProvider
         $this->afterRegister();
     }
 
-    /**
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPublishing();
         $this->registerFactory();
@@ -52,7 +51,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function registerPublishing()
     {
-        if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
+        if (! \in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
             return;
         }
 
@@ -69,12 +68,12 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function publishConfiguration()
     {
-        if (null === $this->plugin) {
+        if (! $this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
         $file = $this->getConfigurationFile();
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return;
         }
 
@@ -88,7 +87,7 @@ abstract class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($groups as $group) {
-            if (!\array_key_exists($group, static::$publishGroups)) {
+            if (! \array_key_exists($group, static::$publishGroups)) {
                 static::$publishGroups[$group] = [];
             }
 
@@ -101,13 +100,13 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function publishAssets()
     {
-        if (null === $this->plugin) {
+        if (! $this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
         $dir = $this->plugin->getAssetsDir();
 
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             return;
         }
 
@@ -121,7 +120,7 @@ abstract class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($groups as $group) {
-            if (!\array_key_exists($group, static::$publishGroups)) {
+            if (! \array_key_exists($group, static::$publishGroups)) {
                 static::$publishGroups[$group] = [];
             }
 
@@ -144,7 +143,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function processConfiguration()
     {
-        if (null === $this->plugin) {
+        if (! $this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
@@ -179,15 +178,15 @@ abstract class ServiceProvider extends BaseServiceProvider
     protected function registerFactory()
     {
         $plugin = $this->plugin;
-        if (null === $plugin) {
+        if (! $plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
-        if (!class_exists($plugin->getFactory())) {
+        if (! class_exists($plugin->getFactory())) {
             return;
         }
 
-        $this->app->singleton($plugin->getServiceID(), function (Container $app) use ($plugin) {
+        $this->app->singleton($plugin->getServiceID(), static function (Container $app) use ($plugin): \Flasher\Prime\Factory\NotificationFactoryInterface {
             $factory = $plugin->getFactory();
 
             return new $factory($app->make('flasher.storage_manager'));
@@ -195,23 +194,20 @@ abstract class ServiceProvider extends BaseServiceProvider
 
         $this->app->alias($plugin->getServiceID(), $plugin->getFactory());
 
-        $this->app->extend('flasher', function (FlasherInterface $flasher, Container $app) use ($plugin) {
-            $flasher->addFactory($plugin->getAlias(), $app->make($plugin->getServiceID())); // @phpstan-ignore-line
-
+        $this->app->extend('flasher', static function (FlasherInterface $flasher, Container $app) use ($plugin): \Flasher\Prime\FlasherInterface {
+            $flasher->addFactory($plugin->getAlias(), $app->make($plugin->getServiceID()));
+            // @phpstan-ignore-line
             return $flasher;
         });
 
         $config = $this->app->make('config')->get($this->plugin->getName(), []); // @phpstan-ignore-line
-        $this->app->extend('flasher.resource_manager', function (ResourceManagerInterface $manager) use ($plugin, $config) {
+        $this->app->extend('flasher.resource_manager', static function (ResourceManagerInterface $manager) use ($plugin, $config): \Flasher\Prime\Response\Resource\ResourceManagerInterface {
             $config = $plugin->normalizeConfig($config);
-
-            $scripts = isset($config['scripts']) ? $config['scripts'] : [];
+            $scripts = $config['scripts'] ?? [];
             $manager->addScripts($plugin->getAlias(), $scripts);
-
-            $styles = isset($config['styles']) ? $config['styles'] : [];
+            $styles = $config['styles'] ?? [];
             $manager->addStyles($plugin->getAlias(), $styles);
-
-            $options = isset($config['options']) ? $config['options'] : [];
+            $options = $config['options'] ?? [];
             $manager->addOptions($plugin->getAlias(), $options);
 
             return $manager;

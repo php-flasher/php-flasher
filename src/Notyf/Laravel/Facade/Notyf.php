@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Notyf\Laravel\Facade;
 
 use Flasher\Notyf\Prime\NotyfBuilder;
@@ -37,7 +39,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotyfBuilder position(string $position, string $value)
  * @method static NotyfBuilder dismissible(bool $dismissible)
  */
-class Notyf extends Facade
+final class Notyf extends Facade
 {
     protected static function getFacadeAccessor()
     {

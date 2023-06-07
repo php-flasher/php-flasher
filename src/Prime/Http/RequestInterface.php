@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Http;
 
 interface RequestInterface
@@ -20,22 +22,19 @@ interface RequestInterface
     public function hasSession();
 
     /**
-     * @param string $type
-     *
+     * @param  string  $type
      * @return bool
      */
     public function hasType($type);
 
     /**
-     * @param string $type
-     *
+     * @param  string  $type
      * @return string|string[]
      */
     public function getType($type);
 
     /**
-     * @param string $type
-     *
+     * @param  string  $type
      * @return void
      */
     public function forgetType($type);

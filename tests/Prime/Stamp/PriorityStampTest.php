@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\HopsStamp;
@@ -8,24 +10,18 @@ use Flasher\Tests\Prime\TestCase;
 
 final class PriorityStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testPriorityStamp()
+    public function testPriorityStamp(): void
     {
         $stamp = new PriorityStamp(5);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertInstanceOf('Flasher\Prime\Stamp\OrderableStampInterface', $stamp);
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\StampInterface::class, $stamp);
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\OrderableStampInterface::class, $stamp);
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresentableStampInterface::class, $stamp);
         $this->assertEquals(5, $stamp->getPriority());
         $this->assertEquals(['priority' => 5], $stamp->toArray());
     }
 
-    /**
-     * @return void
-     */
-    public function testCompare()
+    public function testCompare(): void
     {
         $stamp1 = new PriorityStamp(1);
         $stamp2 = new PriorityStamp(2);

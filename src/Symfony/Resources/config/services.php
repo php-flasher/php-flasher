@@ -1,85 +1,78 @@
 <?php
 
-use Flasher\Symfony\Bridge\Bridge;
-use Symfony\Component\DependencyInjection\Reference;
+declare(strict_types=1);
 
-if (!isset($container)) {
-    return;
-}
+use Flasher\Prime\Config\Config;
+use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
+use Flasher\Prime\Factory\NotificationFactory;
+use Flasher\Prime\Flasher;
+use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Response\Resource\ResourceManager;
+use Flasher\Prime\Response\ResponseManager;
+use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\StorageManager;
+use Flasher\Symfony\Storage\SessionBag;
+use Flasher\Symfony\Translation\Translator;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-$container->register('flasher.config', 'Flasher\Prime\Config\Config')
-    ->setPublic(false)
-    ->addArgument([]);
+use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
-$storage = Bridge::versionCompare('5.3', '>=')
-    ? new Reference('request_stack')
-    : new Reference('session');
+return static function (ContainerConfigurator $container): void {
+    $services = $container->services();
 
-$container->register('flasher.storage_bag', 'Flasher\Symfony\Storage\SessionBag')
-    ->setPublic(false)
-    ->addArgument($storage);
+    $services->set('flasher.config', Config::class)
+        ->args([abstract_arg('config')]);
 
-$container->register('flasher.storage', 'Flasher\Prime\Storage\StorageBag')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.storage_bag'));
+    $services->set('flasher.storage_bag', SessionBag::class)
+        ->args([service('request_stack')]);
 
-$container->register('flasher.event_dispatcher', 'Flasher\Prime\EventDispatcher\EventDispatcher')
-    ->setPublic(false);
+    $services->set('flasher.storage', StorageBag::class)
+        ->args([service('flasher.storage_bag')]);
 
-$container->register('flasher.storage_manager', 'Flasher\Prime\Storage\StorageManager')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.storage'))
-    ->addArgument(new Reference('flasher.event_dispatcher'))
-    ->addArgument([]);
+    $services->set('flasher.event_dispatcher', EventDispatcher::class);
 
-$container->register('flasher.twig.extension', 'Flasher\Symfony\Twig\FlasherTwigExtension')
-    ->setPublic(false)
-    ->addTag('twig.extension', []);
+    $services->set('flasher.storage_manager', StorageManager::class)
+        ->args([
+            service('flasher.storage'),
+            service('flasher.event_dispatcher'),
+            abstract_arg('config.filter_criteria'),
+        ]);
 
-$container->register('flasher.template_engine', 'Flasher\Symfony\Template\TwigTemplateEngine')
-    ->setPublic(false)
-    ->addArgument(new Reference('twig'));
+    $services->set('flasher.resource_manager', ResourceManager::class)
+        ->args([service('flasher.config')]);
 
-$container->register('flasher.resource_manager', 'Flasher\Prime\Response\Resource\ResourceManager')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.config'))
-    ->addArgument(new Reference('flasher.template_engine'));
+    $services->set('flasher.response_manager', ResponseManager::class)
+        ->args([
+            service('flasher.resource_manager'),
+            service('flasher.storage_manager'),
+            service('flasher.event_dispatcher'),
+        ]);
 
-$container->register('flasher.response_manager', 'Flasher\Prime\Response\ResponseManager')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.resource_manager'))
-    ->addArgument(new Reference('flasher.storage_manager'))
-    ->addArgument(new Reference('flasher.event_dispatcher'));
+    $services->alias('flasher', FlasherInterface::class)
+        ->set('flasher', Flasher::class)
+        ->args([
+            abstract_arg('config.default'),
+            service('flasher.response_manager'),
+            service('flasher.storage_manager'),
+        ]);
 
-$container->register('flasher', 'Flasher\Prime\Flasher')
-    ->setPublic(true)
-    ->addArgument(null)
-    ->addArgument(new Reference('flasher.response_manager'))
-    ->addArgument(new Reference('flasher.storage_manager'));
+    $services->set('flasher.notification_factory', NotificationFactory::class)
+        ->args([service('flasher.storage_manager')]);
 
-$container->register('flasher.notification_factory', 'Flasher\Prime\Factory\NotificationFactory')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.storage_manager'));
+    $services->set('flasher.translator', Translator::class)
+        ->args([service('translator')->ignoreOnInvalid()]);
 
-$container->register('flasher.translator', 'Flasher\Symfony\Translation\Translator')
-    ->setPublic(false)
-    ->addArgument(new Reference('translator'));
+    $services->set('flasher.translation_listener', TranslationListener::class)
+        ->args([
+            service('flasher.translator')->nullOnInvalid(),
+            abstract_arg('config.auto_translate'),
+        ]);
 
-$container->register('flasher.translation_listener', 'Flasher\Prime\EventDispatcher\EventListener\TranslationListener')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.translator'))
-    ->addArgument(true)
-    ->addTag('flasher.event_subscriber');
-
-$container->register('flasher.preset_listener', 'Flasher\Prime\EventDispatcher\EventListener\PresetListener')
-    ->setPublic(false)
-    ->addArgument([])
-    ->addTag('flasher.event_subscriber');
-
-$container->register('flasher.install_command', 'Flasher\Symfony\Command\InstallCommand')
-    ->addTag('console.command');
-
-if (Bridge::canLoadAliases()) {
-    $container->setAlias('Flasher\Prime\Flasher', 'flasher');
-    $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');
-}
+    $services->set('flasher.preset_listener', PresetListener::class)
+        ->args([
+            abstract_arg('config.presets'),
+        ]);
+};

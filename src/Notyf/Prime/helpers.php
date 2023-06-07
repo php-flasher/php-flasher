@@ -1,24 +1,24 @@
 <?php
 
-use Flasher\Notyf\Prime\NotyfFactory;
-use Flasher\Prime\Container\FlasherContainer;
-use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
+declare(strict_types=1);
 
-if (!function_exists('notyf')) {
+namespace Flasher\Notyf\Prime;
+
+use Flasher\Prime\Notification\Envelope;
+
+if (! \function_exists('notyf')) {
     /**
-     * @param string               $message
-     * @param string               $type
-     * @param array<string, mixed> $options
-     *
+     * @param  string  $message
+     * @param  string  $type
+     * @param  array<string, mixed>  $options
      * @return Envelope|NotyfFactory
      */
-    function notyf($message = null, $type = NotificationInterface::SUCCESS, array $options = [])
+    function notyf($message = null, $type = \Flasher\Prime\Notification\NotificationInterface::SUCCESS, array $options = [])
     {
         /** @var NotyfFactory $factory */
-        $factory = FlasherContainer::create('flasher.notyf');
+        $factory = \Flasher\Prime\Container\FlasherContainer::create('flasher.notyf');
 
-        if (0 === func_num_args()) {
+        if (0 === \func_num_args()) {
             return $factory;
         }
 

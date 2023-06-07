@@ -16,30 +16,32 @@ use Flasher\Prime\Stamp\WhenStamp;
 
 trait NotificationBuilderMethods
 {
-    public function title(string $title): self
+    private readonly Envelope $envelope;
+
+    public function title(string $title): static
     {
         $this->envelope->setTitle($title);
 
         return $this;
     }
 
-    public function message(string $message): self
+    public function message(string $message): static
     {
         $this->envelope->setMessage($message);
 
         return $this;
     }
 
-    public function type(string $type): self
+    public function type(string $type): static
     {
         $this->envelope->setType($type);
 
         return $this;
     }
 
-    public function options(array $options, bool $merge = true): self
+    public function options(array $options, bool $merge = true): static
     {
-        if (true === $merge) {
+        if ($merge) {
             $options = array_merge($this->envelope->getOptions(), $options);
         }
 
@@ -48,71 +50,64 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    public function option(string $name, mixed $value): self
+    public function option(string $name, mixed $value): static
     {
         $this->envelope->setOption($name, $value);
 
         return $this;
     }
 
-    public function priority(int $priority): self
+    public function priority(int $priority): static
     {
         $this->envelope->withStamp(new PriorityStamp($priority));
 
         return $this;
     }
 
-    public function keep(): self
+    public function keep(): static
     {
-        $hopsStamp = $this->envelope->get(HopsStamp::class);
-        $amount = $hopsStamp?->getAmount() ?: 1;
+        $stamp = $this->envelope->get(HopsStamp::class);
+        $amount = $stamp?->getAmount() ?: 1;
 
-        $this->envelope->withStamp(new HopsStamp(1 + $amount));
-
-        return $this;
+        return $this->hops(1 + $amount);
     }
 
-    public function hops(int $amount): self
+    public function hops(int $amount): static
     {
         $this->envelope->withStamp(new HopsStamp($amount));
 
         return $this;
     }
 
-    public function now(): self
-    {
-        return $this->delay(0);
-    }
-
-    public function delay(int $delay): self
+    public function delay(int $delay): static
     {
         $this->envelope->withStamp(new DelayStamp($delay));
 
         return $this;
     }
 
-    public function translate(array $parameters = [], string $locale = null): self
+    public function translate(array $parameters = [], string $locale = null): static
     {
         $this->envelope->withStamp(new TranslationStamp($parameters, $locale));
 
         return $this;
     }
 
-    public function handler(string $handler): self
+    public function handler(string $handler): static
     {
         $this->envelope->withStamp(new HandlerStamp($handler));
 
         return $this;
     }
 
-    public function context(array $context): self
+    public function context(array $context): static
     {
         $this->envelope->withStamp(new ContextStamp($context));
 
         return $this;
     }
 
-    public function when(bool|\Closure $condition): self
+    public function when(bool|\Closure $condition): static
     {
         $condition = $this->validateCallableCondition($condition);
 
@@ -126,7 +121,7 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    public function unless(bool|\Closure $condition): self
+    public function unless(bool|\Closure $condition): static
     {
         $condition = $this->validateCallableCondition($condition);
 
@@ -140,7 +135,7 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    public function with(array|StampInterface $stamps): self
+    public function with(array|StampInterface $stamps): static
     {
         if ($stamps instanceof StampInterface) {
             $stamps = [$stamps];
@@ -162,10 +157,10 @@ trait NotificationBuilderMethods
             $condition = $condition($this->envelope);
         }
 
-        if (!is_bool($condition)) {
+        if (! is_bool($condition)) {
             $type = gettype($condition);
 
-            throw new \InvalidArgumentException("The condition must be a boolean or a closure that returns a boolean. Got: {$type}");
+            throw new \InvalidArgumentException(sprintf('The condition must be a boolean or a closure that returns a boolean. Got: %s', $type));
         }
 
         return $condition;

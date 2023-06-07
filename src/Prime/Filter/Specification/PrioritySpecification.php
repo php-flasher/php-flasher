@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Filter\Specification;
 
 use Flasher\Prime\Notification\Envelope;
@@ -8,37 +10,28 @@ use Flasher\Prime\Stamp\PriorityStamp;
 final class PrioritySpecification implements SpecificationInterface
 {
     /**
-     * @var int
+     * @param  int  $minPriority
      */
-    private $minPriority;
-
-    /**
-     * @var int|null
-     */
-    private $maxPriority;
-
-    /**
-     * @param int      $minPriority
-     * @param int|null $maxPriority
-     */
-    public function __construct($minPriority, $maxPriority = null)
+    public function __construct(private $minPriority, private readonly ?int $maxPriority = null)
     {
-        $this->minPriority = $minPriority;
-        $this->maxPriority = $maxPriority;
     }
 
-    public function isSatisfiedBy(Envelope $envelope)
+    public function isSatisfiedBy(Envelope $envelope): bool
     {
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PriorityStamp');
+        $stamp = $envelope->get(\Flasher\Prime\Stamp\PriorityStamp::class);
 
-        if (!$stamp instanceof PriorityStamp) {
+        if (! $stamp instanceof PriorityStamp) {
             return false;
         }
 
-        if (null !== $this->maxPriority && $stamp->getPriority() > $this->maxPriority) {
-            return false;
+        if (null === $this->maxPriority) {
+            return $stamp->getPriority() >= $this->minPriority;
         }
 
-        return $stamp->getPriority() >= $this->minPriority;
+        if ($stamp->getPriority() <= $this->maxPriority) {
+            return $stamp->getPriority() >= $this->minPriority;
+        }
+
+        return false;
     }
 }

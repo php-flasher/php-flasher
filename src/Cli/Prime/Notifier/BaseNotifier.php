@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\Notification;
@@ -10,7 +12,7 @@ use Flasher\Prime\Notification\NotificationInterface;
 
 abstract class BaseNotifier implements NotifyInterface
 {
-    public function isSupported()
+    public function isSupported(): bool
     {
         return true;
     }
@@ -56,27 +58,27 @@ abstract class BaseNotifier implements NotifyInterface
         return null;
     }
 
-    public function success($message, $title = null, $options = [])
+    public function success($message, $title = null, $options = []): void
     {
         $this->type(NotificationInterface::SUCCESS, $message, $title, $options);
     }
 
-    public function info($message, $title = null, $options = [])
+    public function info($message, $title = null, $options = []): void
     {
         $this->type(NotificationInterface::INFO, $message, $title, $options);
     }
 
-    public function error($message, $title = null, $options = [])
+    public function error($message, $title = null, $options = []): void
     {
         $this->type(NotificationInterface::ERROR, $message, $title, $options);
     }
 
-    public function warning($message, $title = null, $options = [])
+    public function warning($message, $title = null, $options = []): void
     {
         $this->type(NotificationInterface::WARNING, $message, $title, $options);
     }
 
-    public function type($type, $message, $title = null, $options = [])
+    public function type($type, $message, $title = null, $options = []): void
     {
         $notification = new Notification($message, $title, null, $type, $options);
 

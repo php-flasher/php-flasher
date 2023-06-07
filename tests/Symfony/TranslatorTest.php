@@ -1,28 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Symfony\Translation\Translator;
 
-class TranslatorTest extends TestCase
+final class TranslatorTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testInitialState()
+    public function testInitialState(): void
     {
         $translator = $this->getTranslator();
 
         $this->assertEquals('en', $translator->getLocale());
     }
 
-    /**
-     * @return Translator
-     */
-    private function getTranslator()
+    private function getTranslator(): Translator
     {
         $messageFormatter = null;
-        if (class_exists('Symfony\Component\Translation\Formatter\MessageFormatter')) {
+        if (class_exists(\Symfony\Component\Translation\Formatter\MessageFormatter::class)) {
             $messageFormatter = new \Symfony\Component\Translation\Formatter\MessageFormatter();
         } elseif (class_exists('Symfony\Component\Translation\MessageSelector')) {
             $messageFormatter = new \Symfony\Component\Translation\MessageSelector();

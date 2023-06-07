@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Container;
 
 use Flasher\Prime\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as BaseSymfonyContainer;
 
+/**
+ * @internal
+ */
 final class SymfonyContainer implements ContainerInterface
 {
-    /** @var BaseSymfonyContainer */
-    private $container;
-
-    public function __construct(BaseSymfonyContainer $container)
+    public function __construct(private readonly BaseSymfonyContainer $container)
     {
-        $this->container = $container;
     }
 
-    public function get($id)
+    public function get(string $id): ?object
     {
         return $this->container->get($id);
     }

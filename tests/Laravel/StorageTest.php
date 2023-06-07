@@ -1,29 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Laravel;
 
 use Flasher\Laravel\Storage\SessionBag;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageBag;
 
 final class StorageTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testInitialState()
+    public function testInitialState(): void
     {
         $storage = $this->getStorage();
         $this->assertEquals([], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddEnvelope()
+    public function testAddEnvelope(): void
     {
         $storage = $this->getStorage();
         $envelope = new Envelope(new Notification());
@@ -32,10 +28,7 @@ final class StorageTest extends TestCase
         $this->assertEquals([$envelope], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddMultipleEnvelopes()
+    public function testAddMultipleEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
@@ -47,18 +40,15 @@ final class StorageTest extends TestCase
         $this->assertEquals($envelopes, $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testUpdateEnvelopes()
+    public function testUpdateEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -70,23 +60,20 @@ final class StorageTest extends TestCase
 
         $this->assertEquals($envelopes, $storage->all());
         $this->assertInstanceOf(
-            'Flasher\Prime\Stamp\PriorityStamp',
-            $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp')
+            \Flasher\Prime\Stamp\PriorityStamp::class,
+            $envelopes[1]->get(\Flasher\Prime\Stamp\PriorityStamp::class)
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testRemoveEnvelopes()
+    public function testRemoveEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -97,18 +84,15 @@ final class StorageTest extends TestCase
         $this->assertEquals([$envelopes[0]], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testRemoveMultipleEnvelopes()
+    public function testRemoveMultipleEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -119,18 +103,15 @@ final class StorageTest extends TestCase
         $this->assertEquals([], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testClearAllEnvelopes()
+    public function testClearAllEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -141,10 +122,7 @@ final class StorageTest extends TestCase
         $this->assertEquals([], $storage->all());
     }
 
-    /**
-     * @return StorageBag
-     */
-    private function getStorage()
+    private function getStorage(): StorageBag
     {
         /** @var \Illuminate\Session\Store $session */
         $session = $this->app->make('session');

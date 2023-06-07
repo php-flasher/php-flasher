@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
@@ -10,12 +12,9 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Tests\Prime\TestCase;
 
-class RemoveListenerTest extends TestCase
+final class RemoveListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testRemoveListener()
+    public function testRemoveListener(): void
     {
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
@@ -24,10 +23,10 @@ class RemoveListenerTest extends TestCase
         $eventDispatcher->addSubscriber($listener);
 
         $envelopes = [
-           new Envelope(new Notification()),
-           new Envelope(new Notification(), new HopsStamp(2)),
-           new Envelope(new Notification(), new HopsStamp(1)),
-           new Envelope(new Notification(), new HopsStamp(3)),
+            new Envelope(new Notification()),
+            new Envelope(new Notification(), new HopsStamp(2)),
+            new Envelope(new Notification(), new HopsStamp(1)),
+            new Envelope(new Notification(), new HopsStamp(3)),
         ];
         $event = new RemoveEvent($envelopes);
 

@@ -1,12 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Notification;
 
 interface NotificationInterface
 {
+    /**
+     * @var string
+     */
     public const SUCCESS = 'success';
+
+    /**
+     * @var string
+     */
     public const ERROR = 'error';
+
+    /**
+     * @var string
+     */
     public const INFO = 'info';
+
+    /**
+     * @var string
+     */
     public const WARNING = 'warning';
 
     public function getTitle(): string;
@@ -27,7 +44,7 @@ interface NotificationInterface
     public function getOptions(): array;
 
     /**
-     * @param array<string, mixed> $options
+     * @param  array<string, mixed>  $options
      */
     public function setOptions(array $options): void;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
@@ -7,12 +9,9 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Response;
 use Flasher\Tests\Prime\TestCase;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testAddRootScriptToResponse()
+    public function testAddRootScriptToResponse(): void
     {
         $response = new Response([], []);
 
@@ -21,10 +20,7 @@ class ResponseTest extends TestCase
         $this->assertEquals('flasher.min.js', $response->getRootScript());
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsScriptToResponse()
+    public function testItAddsScriptToResponse(): void
     {
         $response = new Response([], []);
 
@@ -34,10 +30,7 @@ class ResponseTest extends TestCase
         $this->assertEquals(['flasher.min.js', 'toastr.min.js', 'noty.min.js'], $response->getScripts());
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsStylesToResponse()
+    public function testItAddsStylesToResponse(): void
     {
         $response = new Response([], []);
 
@@ -47,10 +40,7 @@ class ResponseTest extends TestCase
         $this->assertEquals(['flasher.min.css', 'toastr.min.css', 'noty.min.css'], $response->getStyles());
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsAdaptersOptionsToResponse()
+    public function testItAddsAdaptersOptionsToResponse(): void
     {
         $response = new Response([], []);
 
@@ -63,10 +53,7 @@ class ResponseTest extends TestCase
         ], $response->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testItTurnsTheResponseIntoAnArray()
+    public function testItTurnsTheResponseIntoAnArray(): void
     {
         $envelopes = [];
 

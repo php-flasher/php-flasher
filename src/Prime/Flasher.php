@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime;
 
 use Flasher\Prime\Factory\NotificationFactory;
@@ -10,9 +12,7 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 
 final class Flasher implements FlasherInterface
 {
-    private ResponseManagerInterface $responseManager;
-
-    private ?StorageManagerInterface $storageManager = null;
+    private readonly ResponseManagerInterface $responseManager;
 
     /**
      * @var array<string, callable|NotificationFactoryInterface>
@@ -22,9 +22,8 @@ final class Flasher implements FlasherInterface
     public function __construct(
         private readonly string $default = 'flasher',
         ResponseManagerInterface $responseManager = null,
-        StorageManagerInterface $storageManager = null,
+        private readonly ?StorageManagerInterface $storageManager = null,
     ) {
-        $this->storageManager = $storageManager;
         $this->responseManager = $responseManager ?: new ResponseManager(storageManager: $storageManager);
     }
 
@@ -32,11 +31,11 @@ final class Flasher implements FlasherInterface
     {
         $alias = trim($alias ?: $this->default);
 
-        if (empty($alias)) {
+        if ('' === $alias) {
             throw new \InvalidArgumentException('Unable to resolve empty factory.');
         }
 
-        if (!isset($this->factories[$alias])) {
+        if (! isset($this->factories[$alias])) {
             $this->addFactory($alias, new NotificationFactory($this->storageManager, $alias));
         }
 
@@ -58,7 +57,7 @@ final class Flasher implements FlasherInterface
     /**
      * Dynamically call the default factory instance.
      *
-     * @param mixed[] $parameters
+     * @param  mixed[]  $parameters
      */
     public function __call(string $method, array $parameters): mixed
     {

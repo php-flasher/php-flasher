@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Response\Presenter;
 
 use Flasher\Prime\Notification\Envelope;
@@ -8,12 +10,9 @@ use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Flasher\Prime\Response\Response;
 use Flasher\Tests\Prime\TestCase;
 
-class HtmlPresenterTest extends TestCase
+final class HtmlPresenterTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testArrayPresenter()
+    public function testArrayPresenter(): void
     {
         $envelopes = [];
 
@@ -106,10 +105,7 @@ JAVASCRIPT;
         $this->assertEquals($response, $presenter->render(new Response($envelopes, [])));
     }
 
-    /**
-     * @return void
-     */
-    public function testItRenderOnlyEnvelopesAsJsonObject()
+    public function testItRenderOnlyEnvelopesAsJsonObject(): void
     {
         $envelopes = [];
 

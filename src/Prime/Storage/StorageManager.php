@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
@@ -11,40 +13,32 @@ use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Notification\Envelope;
 
 final class StorageManager implements StorageManagerInterface
 {
-    /**
-     * @var StorageInterface
-     */
-    private $storage;
+    private readonly StorageInterface $storage;
+
+    private readonly EventDispatcherInterface $eventDispatcher;
 
     /**
-     * @var EventDispatcherInterface
+     * @param  array<string, mixed>  $criteria
      */
-    private $eventDispatcher;
-
-    /**
-     * @var mixed[]
-     */
-    private $criteria = [];
-
-    /**
-     * @param mixed[] $criteria
-     */
-    public function __construct(StorageInterface $storage = null, EventDispatcherInterface $eventDispatcher = null, array $criteria = [])
-    {
+    public function __construct(
+        StorageInterface $storage = null,
+        EventDispatcherInterface $eventDispatcher = null,
+        private readonly array $criteria = [],
+    ) {
         $this->storage = $storage ?: new StorageBag();
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
-        $this->criteria = $criteria;
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->storage->all();
     }
 
-    public function filter(array $criteria = [])
+    public function filter(array $criteria = []): array
     {
         $criteria = array_merge($this->criteria, $criteria);
 
@@ -58,47 +52,41 @@ final class StorageManager implements StorageManagerInterface
         return $event->getEnvelopes();
     }
 
-    public function add($envelopes)
+    public function add(Envelope ...$envelopes): void
     {
-        $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
-
         $event = new PersistEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->add($event->getEnvelopes());
+        $this->storage->add(...$event->getEnvelopes());
 
         $event = new PostPersistEvent($event->getEnvelopes());
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function update($envelopes)
+    public function update(Envelope ...$envelopes): void
     {
-        $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
-
         $event = new UpdateEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->update($event->getEnvelopes());
+        $this->storage->update(...$event->getEnvelopes());
 
         $event = new PostUpdateEvent($event->getEnvelopes());
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function remove($envelopes)
+    public function remove(Envelope ...$envelopes): void
     {
-        $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
-
         $event = new RemoveEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->update($event->getEnvelopesToKeep());
-        $this->storage->remove($event->getEnvelopesToRemove());
+        $this->storage->update(...$event->getEnvelopesToKeep());
+        $this->storage->remove(...$event->getEnvelopesToRemove());
 
         $event = new PostRemoveEvent($event->getEnvelopesToRemove(), $event->getEnvelopesToKeep());
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->storage->clear();
     }

@@ -1,34 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Translation;
 
-use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
 final class Translator implements TranslatorInterface
 {
-    /**
-     * @var SymfonyTranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param SymfonyTranslatorInterface $translator
-     */
-    public function __construct($translator)
+    public function __construct(private readonly SymfonyTranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
-    public function translate($id, $parameters = [], $locale = null)
+    public function translate(string $id, array $parameters = [], string $locale = null): string
     {
-        $order = TranslationStamp::parametersOrder($parameters, $locale);
-        $parameters = $this->addPrefixedParams($order['parameters']);
-        $locale = $order['locale'];
-
-        if (!$this->translator instanceof TranslatorBagInterface) {
+        if (! $this->translator instanceof TranslatorBagInterface) {
             return $this->translator->trans($id, $parameters, 'flasher', $locale);
         }
 
@@ -43,24 +31,8 @@ final class Translator implements TranslatorInterface
         return $id;
     }
 
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->translator->getLocale();
-    }
-
-    /**
-     * @param array<string, mixed> $parameters
-     *
-     * @return array<string, mixed>
-     */
-    private function addPrefixedParams(array $parameters)
-    {
-        foreach ($parameters as $key => $value) {
-            if (!str_starts_with($key, ':')) {
-                $parameters[':'.$key] = $value;
-            }
-        }
-
-        return $parameters;
     }
 }

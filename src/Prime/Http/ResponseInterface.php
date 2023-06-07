@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Http;
 
 interface ResponseInterface
@@ -30,8 +32,7 @@ interface ResponseInterface
     public function getContent();
 
     /**
-     * @param string $content
-     *
+     * @param  string  $content
      * @return void
      */
     public function setContent($content);

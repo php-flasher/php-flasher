@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\Notification;
@@ -9,7 +11,7 @@ use Flasher\Cli\Prime\System\Path;
 
 final class SnoreToastBaseNotifier extends BaseNotifier
 {
-    public function send($notification)
+    public function send($notification): void
     {
         $notification = Notification::wrap($notification);
 
@@ -23,21 +25,25 @@ final class SnoreToastBaseNotifier extends BaseNotifier
         $cmd->run();
     }
 
-    public function isSupported()
+    public function isSupported(): bool
     {
-        if (!$this->getProgram()) {
+        if (! $this->getProgram()) {
             return false;
         }
 
-        return OS::isWindowsEightOrHigher() || OS::isWindowsSubsystemForLinux();
+        if (OS::isWindowsEightOrHigher()) {
+            return true;
+        }
+
+        return OS::isWindowsSubsystemForLinux();
     }
 
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'snoretoast';
     }
 
-    public function getBinaryPaths()
+    public function getBinaryPaths(): string
     {
         return Path::realpath(__DIR__.'/../Resources/bin/snoreToast/snoretoast-x86.exe');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Factory;
 
 use Flasher\Prime\Notification\NotificationBuilderInterface;
@@ -9,8 +11,5 @@ use Flasher\Prime\Notification\NotificationBuilderInterface;
  */
 interface NotificationFactoryInterface
 {
-    /**
-     * @return NotificationBuilderInterface
-     */
-    public function createNotificationBuilder();
+    public function createNotificationBuilder(): NotificationBuilderInterface;
 }

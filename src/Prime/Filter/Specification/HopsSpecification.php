@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Filter\Specification;
 
 use Flasher\Prime\Notification\Envelope;
@@ -8,37 +10,28 @@ use Flasher\Prime\Stamp\HopsStamp;
 final class HopsSpecification implements SpecificationInterface
 {
     /**
-     * @var int
+     * @param  int  $minAmount
      */
-    private $minAmount;
-
-    /**
-     * @var int|null
-     */
-    private $maxAmount;
-
-    /**
-     * @param int      $minAmount
-     * @param int|null $maxAmount
-     */
-    public function __construct($minAmount, $maxAmount = null)
+    public function __construct(private $minAmount, private readonly ?int $maxAmount = null)
     {
-        $this->minAmount = $minAmount;
-        $this->maxAmount = $maxAmount;
     }
 
-    public function isSatisfiedBy(Envelope $envelope)
+    public function isSatisfiedBy(Envelope $envelope): bool
     {
-        $stamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
+        $stamp = $envelope->get(\Flasher\Prime\Stamp\HopsStamp::class);
 
-        if (!$stamp instanceof HopsStamp) {
+        if (! $stamp instanceof HopsStamp) {
             return false;
         }
 
-        if (null !== $this->maxAmount && $stamp->getAmount() > $this->maxAmount) {
-            return false;
+        if (null === $this->maxAmount) {
+            return $stamp->getAmount() >= $this->minAmount;
         }
 
-        return $stamp->getAmount() >= $this->minAmount;
+        if ($stamp->getAmount() <= $this->maxAmount) {
+            return $stamp->getAmount() >= $this->minAmount;
+        }
+
+        return false;
     }
 }

@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Noty\Prime;
 
 use Flasher\Prime\Plugin\Plugin;
 
-class NotyPlugin extends Plugin
+final class NotyPlugin extends Plugin
 {
-    public function getScripts()
+    /**
+     * @return array{cdn: string[], local: string[]}
+     */
+    public function getScripts(): array
     {
         return [
             'cdn' => [
@@ -18,7 +23,10 @@ class NotyPlugin extends Plugin
         ];
     }
 
-    public function getStyles()
+    /**
+     * @return array{cdn: string[], local: string[]}
+     */
+    public function getStyles(): array
     {
         return [
             'cdn' => [

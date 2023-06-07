@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Middleware;
 
 use Illuminate\Http\Request;
@@ -8,27 +10,19 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 final class HttpKernelSessionMiddleware implements HttpKernelInterface
 {
-    /**
-     * @var \Symfony\Component\HttpKernel\HttpKernelInterface
-     */
-    private $app;
-
-    public function __construct(HttpKernelInterface $app)
+    public function __construct(private readonly HttpKernelInterface $app)
     {
-        $this->app = $app;
     }
 
-    public function handle(SymfonyRequest $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(SymfonyRequest $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): \Symfony\Component\HttpFoundation\Response
     {
         $response = $this->app->handle($request, $type, $catch);
 
         $request = Request::createFromBase($request);
-        $next = function () use ($response) {
-            return $response;
-        };
+        $next = static fn (): \Symfony\Component\HttpFoundation\Response => $response;
 
         /** @var SessionMiddleware $sessionMiddleware */
-        $sessionMiddleware = $this->app->make('Flasher\Laravel\Middleware\SessionMiddleware');
+        $sessionMiddleware = $this->app->make(\Flasher\Laravel\Middleware\SessionMiddleware::class);
 
         return $sessionMiddleware->handle($request, $next);
     }

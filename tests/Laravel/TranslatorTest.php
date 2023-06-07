@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Laravel;
 
 use Flasher\Laravel\Translation\Translator;
 
 final class TranslatorTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testTranslateMessage()
+    public function testTranslateMessage(): void
     {
         $translator = $this->getTranslator();
 
@@ -18,10 +17,7 @@ final class TranslatorTest extends TestCase
         $this->assertEquals('نجاح', $translator->translate('success', [], 'ar'));
     }
 
-    /**
-     * @return void
-     */
-    public function testTranslateMessageWithParameters()
+    public function testTranslateMessageWithParameters(): void
     {
         $translator = $this->getTranslator();
 
@@ -35,10 +31,7 @@ final class TranslatorTest extends TestCase
         $this->assertEquals('تم إنشاء الملف', $translator->translate('The resource was created', ['resource' => 'الملف'], 'ar'));
     }
 
-    /**
-     * @return Translator
-     */
-    private function getTranslator()
+    private function getTranslator(): Translator
     {
         /** @var \Illuminate\Translation\Translator $laravelTranslator */
         $laravelTranslator = $this->app->make('translator');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\EventListener;
 
 use Flasher\Prime\Http\RequestExtension;
@@ -9,22 +11,14 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final class SessionListener
 {
-    /**
-     * @var RequestExtension
-     */
-    private $requestExtension;
-
-    public function __construct(RequestExtension $requestExtension)
+    public function __construct(private readonly RequestExtension $requestExtension)
     {
-        $this->requestExtension = $requestExtension;
     }
 
     /**
-     * @param ResponseEvent $event
-     *
-     * @return void
+     * @param  ResponseEvent  $event
      */
-    public function onKernelResponse($event)
+    public function onKernelResponse($event): void
     {
         $request = new Request($event->getRequest());
         $response = new Response($event->getResponse());

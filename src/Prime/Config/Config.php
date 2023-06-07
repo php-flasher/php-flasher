@@ -1,31 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Config;
 
-/**
- * @phpstan-import-type ConfigType from ConfigInterface
- */
 final class Config implements ConfigInterface
 {
     /**
-     * @phpstan-var array{}|ConfigType
+     * @param  array<string, mixed>  $config
      */
-    private $config;
-
-    /**
-     * @phpstan-param array{}|ConfigType $config
-     */
-    public function __construct(array $config = [])
+    public function __construct(private readonly array $config = [])
     {
-        $this->config = $config;
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         $data = $this->config;
 
         foreach (explode('.', $key) as $segment) {
-            if (!isset($data[$segment])) { // @phpstan-ignore-line
+            if (! is_array($data) || ! array_key_exists($segment, $data)) {
                 return $default;
             }
 

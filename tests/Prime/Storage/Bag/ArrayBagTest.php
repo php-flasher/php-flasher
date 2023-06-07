@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Storage\Bag;
 
 use Flasher\Prime\Notification\Envelope;
@@ -7,12 +9,9 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Storage\Bag\ArrayBag;
 use Flasher\Tests\Prime\TestCase;
 
-class ArrayBagTest extends TestCase
+final class ArrayBagTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testArrayBag()
+    public function testArrayBag(): void
     {
         $bag = new ArrayBag();
 

@@ -1,53 +1,51 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Plugin;
 
 abstract class Plugin implements PluginInterface
 {
-    public function getAlias()
+    public function getAlias(): string
     {
         $alias = basename(str_replace('\\', '/', static::class));
         $alias = str_replace('Plugin', '', $alias);
-        /** @var string $alias */
-        $alias = preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $alias);
+        $alias = preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $alias) ?: '';
 
         return strtolower($alias);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'flasher_'.$this->getAlias();
     }
 
-    public function getServiceID()
+    public function getServiceID(): string
     {
-        return 'flasher.'.$this->getAlias();
+        return 'flasher.factory_'.$this->getAlias();
     }
 
-    public function getFactory()
+    public function getFactory(): string
     {
         return str_replace('Plugin', 'Factory', static::class); // @phpstan-ignore-line
     }
 
-    public function getScripts()
+    public function getScripts(): array
     {
         return [];
     }
 
-    public function getStyles()
+    public function getStyles(): array
     {
         return [];
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getAssetsDir()
+    public function getAssetsDir(): string
     {
         $resourcesDir = $this->getResourcesDir();
         $assetsDir = rtrim($resourcesDir, '/').'/assets/';
@@ -55,10 +53,7 @@ abstract class Plugin implements PluginInterface
         return realpath($assetsDir) ?: '';
     }
 
-    /**
-     * @return string
-     */
-    public function getResourcesDir()
+    public function getResourcesDir(): string
     {
         $r = new \ReflectionClass($this);
         $fileName = pathinfo($r->getFileName() ?: '', \PATHINFO_DIRNAME).'/Resources/';
@@ -66,67 +61,18 @@ abstract class Plugin implements PluginInterface
         return realpath($fileName) ?: '';
     }
 
-    /**
-     * @param array{
-     *     scripts?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     styles?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     options?: array<string, mixed>,
-     * } $config
-     *
-     * @return array{
-     *  scripts: array{cdn: string[], local: string[]},
-     *  styles: array{cdn: string[], local: string[]},
-     *  options: array<string, mixed>,
-     * }
-     */
-    public function normalizeConfig(array $config)
+    public function normalizeConfig(array $config): array
     {
-        $config = $this->processConfiguration($config);
-
-        $config['styles'] = $this->normalizeAssets($config['styles']);
-        $config['scripts'] = $this->normalizeAssets($config['scripts']);
-
-        return $config;
-    }
-
-    /**
-     * @param array{
-     *     scripts?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     styles?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     options?: array<string, mixed>,
-     * } $options
-     *
-     * @return array{
-     *    scripts: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *    styles: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *    options: array<string, mixed>,
-     * }
-     */
-    public function processConfiguration(array $options = [])
-    {
-        return array_merge([
+        $config = [
             'scripts' => $this->getScripts(),
             'styles' => $this->getStyles(),
             'options' => $this->getOptions(),
-        ], $options);
-    }
+            ...$config,
+        ];
 
-    /**
-     * @param string|array{cdn?: string|string[], local?: string|string[]} $assets
-     *
-     * @return array{cdn: string[], local: string[]}
-     */
-    protected function normalizeAssets($assets = [])
-    {
-        if (\is_string($assets)) {
-            $assets = ['cdn' => $assets, 'local' => $assets];
-        }
+        $config['scripts'] = (array) $config['scripts'];
+        $config['styles'] = (array) $config['styles'];
 
-        $assets = array_merge(['cdn' => null, 'local' => null], $assets);
-
-        $assets['cdn'] = (array) $assets['cdn'];
-        $assets['local'] = (array) $assets['local'];
-
-        return $assets;
+        return $config;
     }
 }

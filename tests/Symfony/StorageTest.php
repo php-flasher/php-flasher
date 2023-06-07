@@ -1,34 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageBag;
 use Flasher\Symfony\Storage\SessionBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\SessionStorage\ArraySessionStorage;
 
-class StorageTest extends TestCase
+final class StorageTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testInitialState()
+    public function testInitialState(): void
     {
         $storage = $this->getStorage();
         $this->assertEquals([], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddEnvelope()
+    public function testAddEnvelope(): void
     {
-        $uuid = new UuidStamp();
+        $uuid = new IdStamp();
         $envelope = new Envelope(new Notification());
         $envelope->withStamp($uuid);
 
@@ -38,10 +34,7 @@ class StorageTest extends TestCase
         $this->assertEquals([$envelope], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddMultipleEnvelopes()
+    public function testAddMultipleEnvelopes(): void
     {
         $envelopes = [
             new Envelope(new Notification()),
@@ -54,18 +47,15 @@ class StorageTest extends TestCase
         $this->assertEquals($envelopes, $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testUpdateEnvelopes()
+    public function testUpdateEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -77,23 +67,20 @@ class StorageTest extends TestCase
 
         $this->assertEquals($envelopes, $storage->all());
         $this->assertInstanceOf(
-            'Flasher\Prime\Stamp\PriorityStamp',
-            $envelopes[1]->get('Flasher\Prime\Stamp\PriorityStamp')
+            \Flasher\Prime\Stamp\PriorityStamp::class,
+            $envelopes[1]->get(\Flasher\Prime\Stamp\PriorityStamp::class)
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testRemoveEnvelopes()
+    public function testRemoveEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -104,18 +91,15 @@ class StorageTest extends TestCase
         $this->assertEquals([$envelopes[0]], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testRemoveMultipleEnvelopes()
+    public function testRemoveMultipleEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -126,18 +110,15 @@ class StorageTest extends TestCase
         $this->assertEquals([], $storage->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testClearAllEnvelopes()
+    public function testClearAllEnvelopes(): void
     {
         $storage = $this->getStorage();
         $envelopes = [
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
             new Envelope(new Notification(), [
-                new UuidStamp(),
+                new IdStamp(),
             ]),
         ];
 
@@ -148,12 +129,9 @@ class StorageTest extends TestCase
         $this->assertEquals([], $storage->all());
     }
 
-    /**
-     * @return StorageBag
-     */
-    private function getStorage()
+    private function getStorage(): StorageBag
     {
-        $session = class_exists('Symfony\Component\HttpFoundation\Session\Session')
+        $session = class_exists(\Symfony\Component\HttpFoundation\Session\Session::class)
             ? new Session(new MockArraySessionStorage())
             : new \Symfony\Component\HttpFoundation\Session(new ArraySessionStorage()); // @phpstan-ignore-line
 

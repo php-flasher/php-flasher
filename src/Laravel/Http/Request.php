@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Http;
 
 use Flasher\Prime\Http\RequestInterface;
@@ -7,14 +9,8 @@ use Illuminate\Http\Request as LaravelRequest;
 
 final class Request implements RequestInterface
 {
-    /**
-     * @var LaravelRequest
-     */
-    private $request;
-
-    public function __construct(LaravelRequest $request)
+    public function __construct(private readonly LaravelRequest $request)
     {
-        $this->request = $request;
     }
 
     public function isXmlHttpRequest()
@@ -22,12 +18,12 @@ final class Request implements RequestInterface
         return $this->request->ajax();
     }
 
-    public function isHtmlRequestFormat()
+    public function isHtmlRequestFormat(): bool
     {
         return 'html' === $this->request->getRequestFormat();
     }
 
-    public function hasSession()
+    public function hasSession(): bool
     {
         return $this->request->hasSession();
     }
@@ -46,7 +42,7 @@ final class Request implements RequestInterface
         return $session->get($type); // @phpstan-ignore-line
     }
 
-    public function forgetType($type)
+    public function forgetType($type): void
     {
         $session = $this->request->session();
 

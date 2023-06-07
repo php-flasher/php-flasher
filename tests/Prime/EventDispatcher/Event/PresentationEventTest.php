@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -7,12 +9,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Tests\Prime\TestCase;
 
-class PresentationEventTest extends TestCase
+final class PresentationEventTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testPresentationEvent()
+    public function testPresentationEvent(): void
     {
         $envelopes = [
             new Envelope(new Notification()),

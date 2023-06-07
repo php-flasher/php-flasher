@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Command;
 
 use Flasher\Laravel\Support\ServiceProvider as FlasherServiceProvider;
@@ -11,12 +13,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('flasher:install')
@@ -48,7 +47,7 @@ class InstallCommand extends Command
         $exitCode = 0;
 
         foreach (ServiceProvider::publishableProviders() as $provider) {
-            if (!is_a($provider, 'Flasher\Laravel\Support\ServiceProvider', true)) {
+            if (! is_a($provider, 'Flasher\Laravel\Support\ServiceProvider', true)) {
                 continue;
             }
 
@@ -83,16 +82,11 @@ class InstallCommand extends Command
         return $exitCode;
     }
 
-    /**
-     * @param string $publicDir
-     *
-     * @return void
-     */
-    private function publishAssets(PluginInterface $plugin, $publicDir)
+    private function publishAssets(PluginInterface $plugin, string $publicDir): void
     {
         $originDir = $plugin->getAssetsDir();
 
-        if (!is_dir($originDir)) {
+        if (! is_dir($originDir)) {
             return;
         }
 
@@ -102,13 +96,11 @@ class InstallCommand extends Command
     }
 
     /**
-     * @param string $configFile
-     *
-     * @return void
+     * @param  string  $configFile
      */
-    private function publishConfig(PluginInterface $plugin, $configFile)
+    private function publishConfig(PluginInterface $plugin, $configFile): void
     {
-        if (!file_exists($configFile)) {
+        if (! file_exists($configFile)) {
             return;
         }
 

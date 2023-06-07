@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
@@ -8,14 +10,13 @@ final class PnotifyBuilder extends NotificationBuilder
 {
     public function warning($message = null, $title = null, array $options = [])
     {
-        return $this->type('notice', $message, $title, $options);
+        return $this->type('notice');
     }
 
     /**
      * The notice's title.
      *
-     * @param bool|string $title
-     *
+     * @param  bool|string  $title
      * @return static
      */
     public function title($title)
@@ -28,11 +29,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Whether to escape the content of the title. (Not allow HTML.).
      *
-     * @param bool $titleEscape
-     *
+     * @param  bool  $titleEscape
      * @return static
      */
-    public function titleEscape($titleEscape = true)
+    public function titleEscape(mixed $titleEscape = true)
     {
         $this->option('title_escape', $titleEscape);
 
@@ -42,18 +42,17 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * The notice's text.
      *
-     * @param string $text
-     *
+     * @param  string  $text
      * @return static
      */
-    public function text($text)
+    public function text(mixed $text)
     {
         $this->option('text', $text);
 
         return $this;
     }
 
-    public function message($message)
+    public function message(string $message)
     {
         parent::message($message);
 
@@ -63,11 +62,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Whether to escape the content of the text. (Not allow HTML.).
      *
-     * @param bool $textEscape
-     *
+     * @param  bool  $textEscape
      * @return static
      */
-    public function textEscape($textEscape = true)
+    public function textEscape(mixed $textEscape = true)
     {
         $this->option('text_escape', $textEscape);
 
@@ -78,11 +76,10 @@ final class PnotifyBuilder extends NotificationBuilder
      * What styling classes to use. (Can be either "brighttheme", "bootstrap3", "fontawesome", or a custom style object.
      * See the source in the end of pnotify.js for the properties in a style object.).
      *
-     * @param string $styling
-     *
+     * @param  string  $styling
      * @return static
      */
-    public function styling($styling)
+    public function styling(mixed $styling)
     {
         $this->option('styling', $styling);
 
@@ -92,11 +89,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Additional classes to be added to the notice. (For custom styling.).
      *
-     * @param string $addClass
-     *
+     * @param  string  $addClass
      * @return static
      */
-    public function addClass($addClass)
+    public function addClass(mixed $addClass)
     {
         $this->option('addclass', $addClass);
 
@@ -106,11 +102,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Class to be added to the notice for corner styling.
      *
-     * @param string $cornerClass
-     *
+     * @param  string  $cornerClass
      * @return static
      */
-    public function cornerClass($cornerClass)
+    public function cornerClass(mixed $cornerClass)
     {
         $this->option('cornerclass', $cornerClass);
 
@@ -120,11 +115,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Display the notice when it is created. Turn this off to add notifications to the history without displaying them.
      *
-     * @param bool $autoDisplay
-     *
+     * @param  bool  $autoDisplay
      * @return static
      */
-    public function autoDisplay($autoDisplay = true)
+    public function autoDisplay(mixed $autoDisplay = true)
     {
         $this->option('auto_display', $autoDisplay);
 
@@ -134,11 +128,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Width of the notice.
      *
-     * @param int $width
-     *
+     * @param  int  $width
      * @return static
      */
-    public function width($width)
+    public function width(mixed $width)
     {
         $this->option('width', $width);
 
@@ -148,11 +141,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Minimum height of the notice. It will expand to fit content.
      *
-     * @param int $minHeight
-     *
+     * @param  int  $minHeight
      * @return static
      */
-    public function minHeight($minHeight)
+    public function minHeight(mixed $minHeight)
     {
         $this->option('minHeight', $minHeight);
 
@@ -163,11 +155,10 @@ final class PnotifyBuilder extends NotificationBuilder
      * Set icon to true to use the default icon for the selected style/type, false for no icon, or a string for your own
      * icon class.
      *
-     * @param bool $icon
-     *
+     * @param  bool  $icon
      * @return static
      */
-    public function icon($icon = true)
+    public function icon(mixed $icon = true)
     {
         $this->option('icon', $icon);
 
@@ -178,11 +169,10 @@ final class PnotifyBuilder extends NotificationBuilder
      * The animation to use when displaying and hiding the notice. "none" and "fade" are supported through CSS. Others
      * are supported through the Animate module and Animate.css.
      *
-     * @param string $animation
-     *
+     * @param  string  $animation
      * @return static
      */
-    public function animation($animation)
+    public function animation(mixed $animation)
     {
         $this->option('animation', $animation);
 
@@ -192,11 +182,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Speed at which the notice animates in and out. "slow", "normal", or "fast". Respectively, 400ms, 250ms, 100ms.
      *
-     * @param string $animateSpeed
-     *
+     * @param  string  $animateSpeed
      * @return static
      */
-    public function animateSpeed($animateSpeed)
+    public function animateSpeed(mixed $animateSpeed)
     {
         $this->option('animate_speed', $animateSpeed);
 
@@ -206,11 +195,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Display a drop shadow.
      *
-     * @param bool $shadow
-     *
+     * @param  bool  $shadow
      * @return static
      */
-    public function shadow($shadow = true)
+    public function shadow(mixed $shadow = true)
     {
         $this->option('shadow', $shadow);
 
@@ -220,11 +208,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * After a delay, remove the notice.
      *
-     * @param bool $hide
-     *
+     * @param  bool  $hide
      * @return static
      */
-    public function hide($hide = true)
+    public function hide(mixed $hide = true)
     {
         $this->option('hide', $hide);
 
@@ -234,11 +221,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Delay in milliseconds before the notice is removed.
      *
-     * @param int $timer
-     *
+     * @param  int  $timer
      * @return static
      */
-    public function timer($timer)
+    public function timer(mixed $timer)
     {
         $this->option('delay', $timer);
 
@@ -248,11 +234,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Reset the hide timer if the mouse moves over the notice.
      *
-     * @param bool $mouseReset
-     *
+     * @param  bool  $mouseReset
      * @return static
      */
-    public function mouseReset($mouseReset = true)
+    public function mouseReset(mixed $mouseReset = true)
     {
         $this->option('mouse_reset', $mouseReset);
 
@@ -262,11 +247,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Remove the notice's elements from the DOM after it is removed.
      *
-     * @param bool $remove
-     *
+     * @param  bool  $remove
      * @return static
      */
-    public function remove($remove = true)
+    public function remove(mixed $remove = true)
     {
         $this->option('remove', $remove);
 
@@ -276,11 +260,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Change new lines to br tags.
      *
-     * @param bool $insertBrs
-     *
+     * @param  bool  $insertBrs
      * @return static
      */
-    public function insertBrs($insertBrs = true)
+    public function insertBrs(mixed $insertBrs = true)
     {
         $this->option('insert_brs', $insertBrs);
 
@@ -290,11 +273,10 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Whether to remove the notice from the global array when it is closed.
      *
-     * @param bool $destroy
-     *
+     * @param  bool  $destroy
      * @return static
      */
-    public function destroy($destroy = true)
+    public function destroy(mixed $destroy = true)
     {
         $this->option('destroy', $destroy);
 
@@ -304,8 +286,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Desktop Module.
      *
-     * @param string $desktop
-     *
+     * @param  string  $desktop
      * @return static
      */
     public function desktop($desktop, $value)
@@ -321,8 +302,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Buttons Module.
      *
-     * @param string $buttons
-     *
+     * @param  string  $buttons
      * @return static
      */
     public function buttons($buttons, $value)
@@ -338,8 +318,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * NonBlock Module.
      *
-     * @param string $nonblock
-     *
+     * @param  string  $nonblock
      * @return static
      */
     public function nonblock($nonblock, $value)
@@ -355,8 +334,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Mobile Module.
      *
-     * @param string $mobile
-     *
+     * @param  string  $mobile
      * @return static
      */
     public function mobile($mobile, $value)
@@ -372,8 +350,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Animate Module.
      *
-     * @param string $animate
-     *
+     * @param  string  $animate
      * @return static
      */
     public function animate($animate, $value)
@@ -389,8 +366,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * Confirm Module.
      *
-     * @param string $confirm
-     *
+     * @param  string  $confirm
      * @return static
      */
     public function confirm($confirm, $value)
@@ -406,8 +382,7 @@ final class PnotifyBuilder extends NotificationBuilder
     /**
      * History Module.
      *
-     * @param string $history
-     *
+     * @param  string  $history
      * @return static
      */
     public function history($history, $value)

@@ -1,21 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Tests\Prime\TestCase;
 
-class ResponseManagerTest extends TestCase
+final class ResponseManagerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testRenderSavedNotifications()
+    public function testRenderSavedNotifications(): void
     {
         $envelopes = [];
 
@@ -25,7 +24,7 @@ class ResponseManagerTest extends TestCase
         $notification->setType('success');
         $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('1111'),
+            new IdStamp('1111'),
         ]);
 
         $notification = new Notification();
@@ -34,7 +33,7 @@ class ResponseManagerTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
-            new UuidStamp('2222'),
+            new IdStamp('2222'),
         ]);
 
         $storageManager = new StorageManager();
@@ -117,10 +116,7 @@ JAVASCRIPT;
         $this->assertEquals($response, $responseManager->render());
     }
 
-    /**
-     * @return void
-     */
-    public function testItThrowsExceptionIfPresenterNotFound()
+    public function testItThrowsExceptionIfPresenterNotFound(): void
     {
         $this->setExpectedException('\InvalidArgumentException', 'Presenter [xml] not supported.');
 

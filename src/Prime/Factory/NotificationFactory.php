@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Factory;
 
 use Flasher\Prime\Notification\Notification;
@@ -10,12 +12,10 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 
 class NotificationFactory implements NotificationFactoryInterface
 {
-    protected StorageManagerInterface $storageManager;
+    protected readonly StorageManagerInterface $storageManager;
 
-    public function __construct(
-        protected string $handler = 'flasher',
-        StorageManagerInterface $storageManager = null,
-    ) {
+    public function __construct(StorageManagerInterface $storageManager = null)
+    {
         $this->storageManager = $storageManager ?: new StorageManager();
     }
 
@@ -25,7 +25,7 @@ class NotificationFactory implements NotificationFactoryInterface
     }
 
     /**
-     * @param mixed[] $parameters
+     * @param  mixed[]  $parameters
      */
     public function __call(string $method, array $parameters): mixed
     {

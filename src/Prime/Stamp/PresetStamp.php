@@ -1,33 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class PresetStamp implements StampInterface
 {
     /**
-     * @var string
+     * @param  array<string, mixed>  $parameters
      */
-    private $preset;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private $parameters;
-
-    /**
-     * @param string               $preset
-     * @param array<string, mixed> $parameters
-     */
-    public function __construct($preset, array $parameters = [])
-    {
-        $this->preset = $preset;
-        $this->parameters = $parameters;
+    public function __construct(
+        private readonly string $preset,
+        private readonly array $parameters = [],
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getPreset()
+    public function getPreset(): string
     {
         return $this->preset;
     }
@@ -35,7 +23,7 @@ final class PresetStamp implements StampInterface
     /**
      * @return array<string, mixed>
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }

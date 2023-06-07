@@ -7,14 +7,11 @@ namespace Flasher\Prime\Notification;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\Macroable;
 
-final class NotificationBuilder
+class NotificationBuilder implements NotificationBuilderInterface
 {
     use NotificationBuilderMethods;
     use NotificationStorageMethods;
     use Macroable;
-
-    private readonly Envelope $envelope;
-    private readonly StorageManagerInterface $storageManager;
 
     public function __construct(NotificationInterface $notification, StorageManagerInterface $storageManager)
     {

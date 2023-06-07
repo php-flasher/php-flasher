@@ -1,75 +1,54 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Plugin;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
 
 interface PluginInterface
 {
-    /**
-     * @return string
-     */
-    public function getAlias();
+    public function getAlias(): string;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getServiceID();
+    public function getServiceID(): string;
 
     /**
      * @return class-string<NotificationFactoryInterface>
      */
-    public function getFactory();
+    public function getFactory(): string;
 
     /**
-     * @return string|string[]|array{cdn?: string|string[], local?: string|string[]}
+     * @return string[]
      */
-    public function getScripts();
+    public function getScripts(): array;
 
     /**
-     * @return string|string[]|array{cdn?: string|string[], local?: string|string[]}
+     * @return string[]
      */
-    public function getStyles();
+    public function getStyles(): array;
 
     /**
      * @return array<string, mixed>
      */
-    public function getOptions();
+    public function getOptions(): array;
+
+    public function getAssetsDir(): string;
+
+    public function getResourcesDir(): string;
 
     /**
-     * @return string
-     */
-    public function getAssetsDir();
-
-    /**
-     * @return string
-     */
-    public function getResourcesDir();
-
-    /**
-     * @phpstan-param array{
-     *     scripts?: string|array,
-     *     styles?: string|array,
-     *     options?: array,
+     * @param array{
+     *     scripts?: string|string[],
+     *     styles?: string|string[],
+     *     options?: array<string, mixed>,
      * } $config
-     *
-     * @phpstan-return array{
-     *  scripts?: array,
-     *  styles?: array,
-     *  options?: array,
+     * @return array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
      * }
      */
-    public function normalizeConfig(array $config);
-
-    /**
-     * @param array<string, mixed> $options
-     *
-     * @return array<string, mixed>
-     */
-    public function processConfiguration(array $options = []);
+    public function normalizeConfig(array $config): array;
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Exception;
 
 final class PresetNotFoundException extends \Exception
 {
     /**
-     * @param string[] $availablePresets
+     * @param  string[]  $availablePresets
      */
     public function __construct(string $preset, array $availablePresets = [])
     {

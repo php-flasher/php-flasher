@@ -7,7 +7,7 @@ namespace Flasher\Prime\Exception;
 final class FactoryNotFoundException extends \Exception
 {
     /**
-     * @param string[] $availableFactories
+     * @param  string[]  $availableFactories
      */
     public function __construct(string $alias, array $availableFactories = [])
     {

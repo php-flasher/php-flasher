@@ -1,0 +1,5 @@
+services:
+    -
+        class: Flasher\Phpstan\FlasherContainerReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension

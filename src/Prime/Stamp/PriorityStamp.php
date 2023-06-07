@@ -1,41 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class PriorityStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
 {
-    /**
-     * @var int
-     */
-    private $priority;
-
-    /**
-     * @param int $priority
-     */
-    public function __construct($priority)
+    public function __construct(private readonly int $priority)
     {
-        $this->priority = $priority;
     }
 
-    /**
-     * @return int
-     */
-    public function getPriority()
+    public function getPriority(): int
     {
         return $this->priority;
     }
 
-    public function compare($orderable)
+    public function compare(StampInterface $orderable): int
     {
-        if (!$orderable instanceof self) {
+        if (! $orderable instanceof self) {
             return 1;
         }
 
         return $this->priority - $orderable->priority;
     }
 
-    public function toArray()
+    /**
+     * @return array{priority: int}
+     */
+    public function toArray(): array
     {
-        return ['priority' => $this->getPriority()];
+        return ['priority' => $this->priority];
     }
 }

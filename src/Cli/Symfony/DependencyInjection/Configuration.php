@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -22,15 +24,14 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('title')
-                    ->defaultValue('PHPFlasher')
-                ->end()
-                ->arrayNode('icons')
-                    ->prototype('variable')->end()
-                    ->defaultValue([])
-                ->end()
+            ->scalarNode('title')
+            ->defaultValue('PHPFlasher')
             ->end()
-        ;
+            ->arrayNode('icons')
+            ->prototype('variable')->end()
+            ->defaultValue([])
+            ->end()
+            ->end();
 
         return $treeBuilder;
     }

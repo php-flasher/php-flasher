@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Middleware;
 
 use Flasher\Laravel\Http\Request;
@@ -10,14 +12,8 @@ use Illuminate\Http\Response as LaravelResponse;
 
 final class SessionMiddleware
 {
-    /**
-     * @var RequestExtension
-     */
-    private $requestExtension;
-
-    public function __construct(RequestExtension $requestExtension)
+    public function __construct(private readonly RequestExtension $requestExtension)
     {
-        $this->requestExtension = $requestExtension;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Symfony\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -8,18 +10,15 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class NotifierCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('flasher.cli_notifier')) {
+        if (! $container->has('flasher.cli_notifier')) {
             return;
         }
 
         $notifier = $container->findDefinition('flasher.cli_notifier');
 
-        foreach ($container->findTaggedServiceIds('flasher.cli_notifier') as $id => $tags) {
+        foreach (array_keys($container->findTaggedServiceIds('flasher.cli_notifier')) as $id) {
             $notifier->addMethodCall('addNotifier', [new Reference($id)]);
         }
     }

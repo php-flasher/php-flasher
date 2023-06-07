@@ -1,16 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Translation;
 
 interface ResourceInterface
 {
-    /**
-     * @return string
-     */
-    public function getResourceType();
+    public function getResourceType(): string;
 
-    /**
-     * @return string
-     */
-    public function getResourceName();
+    public function getResourceName(): string;
 }

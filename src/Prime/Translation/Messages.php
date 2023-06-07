@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Translation;
 
 final class Messages
@@ -7,7 +9,7 @@ final class Messages
     /**
      * @var array<string, string>
      */
-    public static $ar = [
+    public static array $ar = [
         'success' => 'نجاح',
         'error' => 'خطأ',
         'warning' => 'تحذير',
@@ -24,7 +26,7 @@ final class Messages
     /**
      * @var array<string, string>
      */
-    public static $en = [
+    public static array $en = [
         'success' => 'Success',
         'error' => 'Error',
         'warning' => 'Warning',
@@ -41,7 +43,7 @@ final class Messages
     /**
      * @var array<string, string>
      */
-    public static $fr = [
+    public static array $fr = [
         'success' => 'Succès',
         'error' => 'Erreur',
         'warning' => 'Avertissement',

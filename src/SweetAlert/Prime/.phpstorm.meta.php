@@ -19,3 +19,7 @@ override(\Flasher\Prime\FlasherInterface::create(), map([
 override(\Flasher\Prime\FlasherInterface::using(), map([
     'sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class
 ]));
+
+override(\Flasher\Prime\Container\FlasherContainer::create(0), map([
+    'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
+]));

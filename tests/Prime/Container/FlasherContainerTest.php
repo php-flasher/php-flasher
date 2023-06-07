@@ -1,54 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Container;
 
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Tests\Prime\TestCase;
 
-class FlasherContainerTest extends TestCase
+final class FlasherContainerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testInit()
+    public function testInit(): void
     {
-        $this->setProperty('Flasher\Prime\Container\FlasherContainer', 'instance', null);
-        $container = $this->getMockBuilder('Flasher\Prime\Container\ContainerInterface')->getMock();
+        $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
+        $container = $this->getMockBuilder(\Flasher\Prime\Container\ContainerInterface::class)->getMock();
 
         FlasherContainer::init($container);
 
-        $property = $this->getProperty('Flasher\Prime\Container\FlasherContainer', 'container');
+        $property = $this->getProperty(\Flasher\Prime\Container\FlasherContainer::class, 'container');
 
         $this->assertEquals($container, $property);
     }
 
-    /**
-     * @return void
-     */
-    public function testCreate()
+    public function testCreate(): void
     {
-        $this->setProperty('Flasher\Prime\Container\FlasherContainer', 'instance', null);
+        $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
 
-        $container = $this->getMockBuilder('Flasher\Prime\Container\ContainerInterface')->getMock();
+        $container = $this->getMockBuilder(\Flasher\Prime\Container\ContainerInterface::class)->getMock();
         $container
             ->method('get')
-            ->willreturn($this->getMockBuilder('Flasher\Prime\FlasherInterface')->getMock());
+            ->willreturn($this->getMockBuilder(\Flasher\Prime\FlasherInterface::class)->getMock());
 
         FlasherContainer::init($container);
 
         $service = FlasherContainer::create('flasher');
 
-        $this->assertInstanceOf('Flasher\Prime\FlasherInterface', $service);
+        $this->assertInstanceOf(\Flasher\Prime\FlasherInterface::class, $service);
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowsExceptionIfNotInitialized()
+    public function testThrowsExceptionIfNotInitialized(): void
     {
         $this->setExpectedException('\LogicException', 'Container is not initialized yet. Container::init() must be called with a real container.');
 
-        $this->setProperty('Flasher\Prime\Container\FlasherContainer', 'instance', null);
+        $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
 
         FlasherContainer::create('flasher');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Filter;
 
 use Flasher\Prime\Filter\CriteriaBuilder;
@@ -7,17 +9,14 @@ use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\CreatedAtStamp;
+use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Tests\Prime\TestCase;
 
-class CriteriaBuilderTest extends TestCase
+final class CriteriaBuilderTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testItAddsPrioritySpecification()
+    public function testItAddsPrioritySpecification(): void
     {
         $filter = $this->getFilter();
         $criteria = ['priority' => 2];
@@ -27,15 +26,12 @@ class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Specification\PrioritySpecification', $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\PrioritySpecification::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minPriority'));
         $this->assertNull($this->getProperty($specification, 'maxPriority'));
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsHopsSpecification()
+    public function testItAddsHopsSpecification(): void
     {
         $filter = $this->getFilter();
         $criteria = ['hops' => 2];
@@ -45,15 +41,12 @@ class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Specification\HopsSpecification', $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\HopsSpecification::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsDelaySpecification()
+    public function testItAddsDelaySpecification(): void
     {
         $filter = $this->getFilter();
         $criteria = ['delay' => 2];
@@ -63,15 +56,12 @@ class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Specification\DelaySpecification', $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\DelaySpecification::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minDelay'));
         $this->assertNull($this->getProperty($specification, 'maxDelay'));
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsLifeSpecification()
+    public function testItAddsLifeSpecification(): void
     {
         $filter = $this->getFilter();
         $criteria = ['life' => 2];
@@ -81,15 +71,12 @@ class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Specification\HopsSpecification', $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\HopsSpecification::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
 
-    /**
-     * @return void
-     */
-    public function testItAddsOrdering()
+    public function testItAddsOrdering(): void
     {
         $filter = $this->getFilter();
         $criteria = ['order_by' => 'priority'];
@@ -99,13 +86,10 @@ class CriteriaBuilderTest extends TestCase
 
         $orderings = $this->getProperty($filter, 'orderings');
 
-        $this->assertEquals(["Flasher\Prime\Stamp\PriorityStamp" => 'ASC'], $orderings);
+        $this->assertEquals([\Flasher\Prime\Stamp\PriorityStamp::class => 'ASC'], $orderings);
     }
 
-    /**
-     * @return void
-     */
-    public function testItFilterEnvelopesByStamps()
+    public function testItFilterEnvelopesByStamps(): void
     {
         $filter = $this->getFilter();
         $criteria = ['stamps' => 'preset'];
@@ -115,17 +99,15 @@ class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Specification\StampsSpecification', $specification);
-        $this->assertEquals(['Flasher\Prime\Stamp\PresetStamp'], $this->getProperty($specification, 'stamps'));
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\StampsSpecification::class, $specification);
+        $this->assertEquals([\Flasher\Prime\Stamp\PresetStamp::class], $this->getProperty($specification, 'stamps'));
         $this->assertEquals('or', $this->getProperty($specification, 'strategy'));
     }
 
-    /**
-     * @return void
-     */
-    public function testItFilterEnvelopesByCallbacks()
+    public function testItFilterEnvelopesByCallbacks(): void
     {
-        $callback = function () {};
+        $callback = static function (): void {
+        };
         $filter = $this->getFilter();
         $criteria = ['filter' => $callback];
 
@@ -134,15 +116,12 @@ class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Specification\CallbackSpecification', $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\CallbackSpecification::class, $specification);
         $this->assertEquals($filter, $this->getProperty($specification, 'filter'));
         $this->assertEquals($callback, $this->getProperty($specification, 'callback'));
     }
 
-    /**
-     * @return Filter
-     */
-    private function getFilter()
+    private function getFilter(): Filter
     {
         $envelopes = [];
 
@@ -152,7 +131,7 @@ class CriteriaBuilderTest extends TestCase
         $notification->setType('success');
         $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('1111'),
+            new IdStamp('1111'),
             new PriorityStamp(1),
             new PresetStamp('entity_saved'),
         ]);
@@ -163,7 +142,7 @@ class CriteriaBuilderTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification, [
             new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
-            new UuidStamp('2222'),
+            new IdStamp('2222'),
             new PriorityStamp(3),
         ]);
 

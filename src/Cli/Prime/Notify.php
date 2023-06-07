@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime;
 
 use Flasher\Cli\Prime\Notifier\BaseNotifier;
@@ -8,43 +10,30 @@ use Flasher\Prime\Notification\NotificationInterface;
 
 final class Notify extends BaseNotifier
 {
-    /**
-     * @var NotifyInterface|null
-     */
-    private $notifier;
+    private ?\Flasher\Cli\Prime\NotifyInterface $notifier = null;
 
     /**
      * @var NotifyInterface[]
      */
-    private $notifiers = [];
+    private array $notifiers = [];
 
     /**
      * @var NotifyInterface[]
      */
-    private $sorted = [];
+    private array $sorted = [];
 
-    /**
-     * @var bool|null
-     */
-    private $isSupported;
-
-    /**
-     * @var string|null
-     */
-    private $title;
+    private ?bool $isSupported = null;
 
     /**
      * @var array{success?: string, error?: string, info?: string, warning?: string}
      */
-    private $icons = [];
+    private array $icons = [];
 
     /**
-     * @param string|null                                                                     $title
-     * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
+     * @param  array{success?: string, error?: string, info?: string, warning?: string}|string  $icons
      */
-    public function __construct($title = 'PHPFlasher', $icons = [])
+    public function __construct(private readonly ?string $title = 'PHPFlasher', $icons = [])
     {
-        $this->title = $title;
         $this->icons = $this->configureIcons($icons);
 
         $this->addNotifier(new Notifier\NotifySendBaseNotifier());
@@ -59,17 +48,16 @@ final class Notify extends BaseNotifier
     }
 
     /**
-     * @param string|null                                                                     $title
-     * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
-     *
+     * @param  string|null  $title
+     * @param  array{success?: string, error?: string, info?: string, warning?: string}|string  $icons
      * @return static
      */
-    public static function create($title = null, $icons = [])
+    public static function create($title = null, $icons = []): self
     {
         return new self($title, $icons);
     }
 
-    public function send($notification)
+    public function send($notification): void
     {
         $notification = $this->configureNotification($notification);
 
@@ -77,21 +65,18 @@ final class Notify extends BaseNotifier
         $notifier->send($notification);
     }
 
-    /**
-     * @return void
-     */
-    public function addNotifier(NotifyInterface $notifier)
+    public function addNotifier(NotifyInterface $notifier): void
     {
         $this->notifiers[] = $notifier;
         $this->reset();
     }
 
-    public function getPriority()
+    public function getPriority(): int
     {
         return 0;
     }
 
-    public function isSupported()
+    public function isSupported(): bool
     {
         if (null !== $this->isSupported) {
             return $this->isSupported;
@@ -110,10 +95,7 @@ final class Notify extends BaseNotifier
         return false;
     }
 
-    /**
-     * @return void
-     */
-    private function reset()
+    private function reset(): void
     {
         $this->notifier = null;
         $this->sorted = [];
@@ -123,7 +105,7 @@ final class Notify extends BaseNotifier
     /**
      * @return NotifyInterface[]
      */
-    private function getNotifiers()
+    private function getNotifiers(): array
     {
         if ([] !== $this->sorted) {
             return $this->sorted;
@@ -131,15 +113,11 @@ final class Notify extends BaseNotifier
 
         $this->sorted = $this->notifiers;
 
-        usort($this->sorted, static function (NotifyInterface $a, NotifyInterface $b) {
+        usort($this->sorted, static function (NotifyInterface $a, NotifyInterface $b): int {
             $priorityA = $a->getPriority();
             $priorityB = $b->getPriority();
 
-            if ($priorityA === $priorityB) {
-                return 0;
-            }
-
-            return $priorityA < $priorityB ? 1 : -1;
+            return $priorityB <=> $priorityA;
         });
 
         return $this->sorted;
@@ -164,15 +142,14 @@ final class Notify extends BaseNotifier
     }
 
     /**
-     * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
-     *
+     * @param  array{success?: string, error?: string, info?: string, warning?: string}|string  $icons
      * @return array<'default'|'error'|'info'|'success'|'warning', string>
      */
-    private function configureIcons($icons = [])
+    private function configureIcons($icons = []): array
     {
         $icons = $icons ?: [];
 
-        if (!\is_array($icons)) {
+        if (! \is_array($icons)) {
             $icons = [
                 NotificationInterface::SUCCESS => $icons,
                 NotificationInterface::ERROR => $icons,
@@ -192,8 +169,7 @@ final class Notify extends BaseNotifier
     }
 
     /**
-     * @param Notification|string $notification
-     *
+     * @param  Notification|string  $notification
      * @return Notification
      */
     private function configureNotification($notification)

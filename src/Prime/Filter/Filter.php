@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Filter;
 
 use Flasher\Prime\Filter\Specification\AndSpecification;
@@ -10,28 +12,22 @@ use Flasher\Prime\Stamp\StampInterface;
 
 final class Filter
 {
+    /**
+     * @var string
+     */
     public const ASC = 'ASC';
+
+    /**
+     * @var string
+     */
     public const DESC = 'DESC';
 
-    /**
-     * @var Envelope[]
-     */
-    private $envelopes;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private $criteria;
-
-    /**
-     * @var SpecificationInterface
-     */
-    private $specification;
+    private \Flasher\Prime\Filter\Specification\AndSpecification|\Flasher\Prime\Filter\Specification\SpecificationInterface|null $specification = null;
 
     /**
      * @var array<string, string>
      */
-    private $orderings = [];
+    private array $orderings = [];
 
     /**
      * @var int|null
@@ -39,19 +35,17 @@ final class Filter
     private $maxResults;
 
     /**
-     * @param Envelope[]           $envelopes
-     * @param array<string, mixed> $criteria
+     * @param  Envelope[]  $envelopes
+     * @param  array<string, mixed>  $criteria
      */
-    public function __construct(array $envelopes, array $criteria)
+    public function __construct(private array $envelopes, private readonly array $criteria)
     {
-        $this->envelopes = $envelopes;
-        $this->criteria = $criteria;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getResult()
+    public function getResult(): array
     {
         $criteriaBuilder = new CriteriaBuilder($this, $this->criteria);
         $criteriaBuilder->build();
@@ -66,7 +60,7 @@ final class Filter
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->envelopes;
     }
@@ -74,67 +68,52 @@ final class Filter
     /**
      * @return array<string, mixed>
      */
-    public function getCriteria()
+    public function getCriteria(): array
     {
         return $this->criteria;
     }
 
-    /**
-     * @return void
-     */
-    public function addSpecification(SpecificationInterface $specification)
+    public function addSpecification(SpecificationInterface $specification): void
     {
-        $this->specification = null !== $this->specification
+        $this->specification = $this->specification instanceof \Flasher\Prime\Filter\Specification\SpecificationInterface
             ? new AndSpecification($this->specification, $specification)
             : $specification;
     }
 
     /**
-     * @param array<string, string> $orderings
-     *
-     * @return void
+     * @param  array<string, string>  $orderings
      */
-    public function orderBy(array $orderings)
+    public function orderBy(array $orderings): void
     {
         $this->orderings = $orderings;
     }
 
     /**
-     * @param int $maxResults
-     *
-     * @return void
+     * @param  int  $maxResults
      */
-    public function setMaxResults($maxResults)
+    public function setMaxResults($maxResults): void
     {
         $this->maxResults = $maxResults;
     }
 
-    /**
-     * @return void
-     */
-    private function applySpecification()
+    private function applySpecification(): void
     {
-        if (null === $this->specification) {
+        if (! $this->specification instanceof \Flasher\Prime\Filter\Specification\SpecificationInterface) {
             return;
         }
 
         $specification = $this->specification;
-        $this->envelopes = array_filter($this->envelopes, function (Envelope $envelope) use ($specification) {
-            return $specification->isSatisfiedBy($envelope);
-        });
+        $this->envelopes = array_filter($this->envelopes, static fn (Envelope $envelope): bool => $specification->isSatisfiedBy($envelope));
     }
 
-    /**
-     * @return void
-     */
-    private function applyOrdering()
+    private function applyOrdering(): void
     {
         if ([] === $this->orderings) {
             return;
         }
 
         $orderings = $this->orderings;
-        usort($this->envelopes, function (Envelope $first, Envelope $second) use ($orderings) {
+        usort($this->envelopes, static function (Envelope $first, Envelope $second) use ($orderings): int {
             /**
              * @var class-string<StampInterface> $field
              * @var string                       $ordering
@@ -143,7 +122,7 @@ final class Filter
                 $stampA = $first->get($field);
                 $stampB = $second->get($field);
 
-                if (!$stampA instanceof OrderableStampInterface || !$stampB instanceof OrderableStampInterface) {
+                if (! $stampA instanceof OrderableStampInterface || ! $stampB instanceof OrderableStampInterface) {
                     return 0;
                 }
 
@@ -158,10 +137,7 @@ final class Filter
         });
     }
 
-    /**
-     * @return void
-     */
-    private function applyLimit()
+    private function applyLimit(): void
     {
         if (null === $this->maxResults) {
             return;

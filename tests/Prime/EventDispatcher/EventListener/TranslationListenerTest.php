@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -12,12 +14,9 @@ use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Tests\Prime\TestCase;
 
-class TranslationListenerTest extends TestCase
+final class TranslationListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testTranslationListenerWithAutoTranslateEnabled()
+    public function testTranslationListenerWithAutoTranslateEnabled(): void
     {
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
@@ -47,10 +46,7 @@ class TranslationListenerTest extends TestCase
         $this->assertEquals($envelopes, $event->getEnvelopes());
     }
 
-    /**
-     * @return void
-     */
-    public function testTranslationListenerWithAutoTranslateDisabled()
+    public function testTranslationListenerWithAutoTranslateDisabled(): void
     {
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);

@@ -26,7 +26,7 @@ trait Macroable
      */
     public static function __callStatic(string $method, array $parameters): mixed
     {
-        if (!static::hasMacro($method)) {
+        if (! static::hasMacro($method)) {
             throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $method));
         }
 
@@ -44,7 +44,7 @@ trait Macroable
      */
     public function __call(string $method, array $parameters): mixed
     {
-        if (!static::hasMacro($method)) {
+        if (! static::hasMacro($method)) {
             throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $method));
         }
 

@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\PresetStamp;
+use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Translation\ResourceInterface;
 
 trait NotificationStorageMethods
 {
+    private readonly StorageManagerInterface $storageManager;
+
     public function success(string $message, array $options = [], string $title = null): Envelope
     {
         return $this->flash(NotificationInterface::SUCCESS, $message, $options, $title);
@@ -86,7 +89,7 @@ trait NotificationStorageMethods
             $resource = sprintf(
                 '%s %s',
                 $type,
-                empty($name) ? '' : sprintf('"%s"', $name)
+                '' === $name ? '' : sprintf('"%s"', $name)
             );
         }
 

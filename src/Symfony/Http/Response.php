@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Http;
 
 use Flasher\Prime\Http\ResponseInterface;
@@ -8,17 +10,11 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 final class Response implements ResponseInterface
 {
-    /**
-     * @var SymfonyResponse
-     */
-    private $response;
-
-    public function __construct(SymfonyResponse $response)
+    public function __construct(private readonly SymfonyResponse $response)
     {
-        $this->response = $response;
     }
 
-    public function isRedirection()
+    public function isRedirection(): bool
     {
         return $this->response->isRedirection();
     }
@@ -28,22 +24,22 @@ final class Response implements ResponseInterface
         return $this->response instanceof JsonResponse;
     }
 
-    public function isHtml()
+    public function isHtml(): bool
     {
         $contentType = $this->response->headers->get('Content-Type');
 
-        if (!\is_string($contentType)) {
+        if (! \is_string($contentType)) {
             return false;
         }
 
         return false !== stripos($contentType, 'html');
     }
 
-    public function isAttachment()
+    public function isAttachment(): bool
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
-        if (!\is_string($contentDisposition)) {
+        if (! \is_string($contentDisposition)) {
             return false;
         }
 
@@ -57,7 +53,7 @@ final class Response implements ResponseInterface
         return \is_string($content) ? $content : '';
     }
 
-    public function setContent($content)
+    public function setContent($content): void
     {
         $this->response->setContent($content);
     }

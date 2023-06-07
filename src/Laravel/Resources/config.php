@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Flasher\Laravel\Resources;
+
 return [
     /*
     |---------------------------------------------------------------------------

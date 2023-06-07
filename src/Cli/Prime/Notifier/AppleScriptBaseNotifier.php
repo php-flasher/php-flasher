@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\Notification;
@@ -8,7 +10,7 @@ use Flasher\Cli\Prime\System\OS;
 
 final class AppleScriptBaseNotifier extends BaseNotifier
 {
-    public function send($notification)
+    public function send($notification): void
     {
         $notification = Notification::wrap($notification);
 
@@ -20,23 +22,27 @@ final class AppleScriptBaseNotifier extends BaseNotifier
 
         /** @var string $subtitle */
         $subtitle = $notification->getOption('subtitle');
-        if ($subtitle) {
+        if ('' !== $subtitle && '0' !== $subtitle) {
             $cmd->addArgument(sprintf('subtitle "%s"', $subtitle));
         }
 
         $cmd->run();
     }
 
-    public function isSupported()
+    public function isSupported(): bool
     {
-        if (!$this->getProgram()) {
+        if (! $this->getProgram()) {
             return false;
         }
 
-        return OS::isMacOS() && version_compare(OS::getMacOSVersion(), '10.9.0', '>=');
+        if (! OS::isMacOS()) {
+            return false;
+        }
+
+        return version_compare(OS::getMacOSVersion(), '10.9.0', '>=');
     }
 
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'osascript';
     }

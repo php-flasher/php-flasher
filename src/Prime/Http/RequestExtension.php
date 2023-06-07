@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Http;
 
 use Flasher\Prime\FlasherInterface;
@@ -7,21 +9,15 @@ use Flasher\Prime\FlasherInterface;
 final class RequestExtension
 {
     /**
-     * @var FlasherInterface
-     */
-    private $flasher;
-
-    /**
      * @var array<string, string>
      */
-    private $mapping;
+    private readonly array $mapping;
 
     /**
-     * @param array<string, string[]> $mapping
+     * @param  array<string, string[]>  $mapping
      */
-    public function __construct(FlasherInterface $flasher, array $mapping = [])
+    public function __construct(private readonly FlasherInterface $flasher, array $mapping = [])
     {
-        $this->flasher = $flasher;
         $this->mapping = $this->flatMapping($mapping);
     }
 
@@ -30,12 +26,12 @@ final class RequestExtension
      */
     public function flash(RequestInterface $request, ResponseInterface $response)
     {
-        if (!$request->hasSession()) {
+        if (! $request->hasSession()) {
             return $response;
         }
 
         foreach ($this->mapping as $alias => $type) {
-            if (false === $request->hasType($alias)) {
+            if (! $request->hasType($alias)) {
                 continue;
             }
 
@@ -52,11 +48,10 @@ final class RequestExtension
     }
 
     /**
-     * @param array<string, string[]> $mapping
-     *
+     * @param  array<string, string[]>  $mapping
      * @return array<string, string>
      */
-    private function flatMapping(array $mapping)
+    private function flatMapping(array $mapping): array
     {
         $flatMapping = [];
 

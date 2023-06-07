@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -7,12 +9,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 
-final class AddToStorageListener implements EventSubscriberInterface
+final class AddToStorageListener implements EventListenerInterface
 {
-    /**
-     * @return void
-     */
-    public function __invoke(PersistEvent $event)
+    public function __invoke(PersistEvent $event): void
     {
         $envelopesToKeep = [];
 
@@ -25,26 +24,20 @@ final class AddToStorageListener implements EventSubscriberInterface
         $event->setEnvelopes($envelopesToKeep);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): string
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PersistEvent';
+        return PersistEvent::class;
     }
 
-    /**
-     * @return bool
-     */
-    private function shouldKeep(Envelope $envelope)
+    private function shouldKeep(Envelope $envelope): bool
     {
-        $stamp = $envelope->get('Flasher\Prime\Stamp\WhenStamp');
-        if ($stamp instanceof WhenStamp && false === $stamp->getCondition()) {
+        $stamp = $envelope->get(WhenStamp::class);
+        if ($stamp instanceof WhenStamp && ! $stamp->getCondition()) {
             return false;
         }
 
-        $stamp = $envelope->get('Flasher\Prime\Stamp\UnlessStamp');
-        if ($stamp instanceof UnlessStamp && true === $stamp->getCondition()) {
-            return false;
-        }
+        $stamp = $envelope->get(UnlessStamp::class);
 
-        return true;
+        return ! ($stamp instanceof UnlessStamp && $stamp->getCondition());
     }
 }

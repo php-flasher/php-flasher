@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Template;
 
 use Flasher\Prime\Template\TemplateEngineInterface;
@@ -8,16 +10,10 @@ use Illuminate\View\Factory;
 final class BladeTemplateEngine implements TemplateEngineInterface
 {
     /**
-     * @var Factory
+     * @param  Factory  $engine
      */
-    private $engine;
-
-    /**
-     * @param Factory $engine
-     */
-    public function __construct($engine)
+    public function __construct(private $engine)
     {
-        $this->engine = $engine;
     }
 
     public function render($name, array $context = [])

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Storage;
 
 use Flasher\Prime\Storage\Bag\BagInterface;
@@ -7,19 +9,16 @@ use Illuminate\Session\Store;
 
 final class SessionBag implements BagInterface
 {
+    /**
+     * @var string
+     */
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @var Store
+     * @param  Store  $session
      */
-    private $session;
-
-    /**
-     * @param Store $session
-     */
-    public function __construct($session)
+    public function __construct(private $session)
     {
-        $this->session = $session;
     }
 
     public function get()
@@ -27,7 +26,7 @@ final class SessionBag implements BagInterface
         return $this->session->get(self::ENVELOPES_NAMESPACE, []); // @phpstan-ignore-line
     }
 
-    public function set(array $envelopes)
+    public function set(array $envelopes): void
     {
         $this->session->put(self::ENVELOPES_NAMESPACE, $envelopes);
     }

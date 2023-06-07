@@ -1,26 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class DelayStamp implements StampInterface
 {
-    /**
-     * @var int
-     */
-    private $delay;
-
-    /**
-     * @param int $delay
-     */
-    public function __construct($delay)
+    public function __construct(private readonly int $delay)
     {
-        $this->delay = $delay;
     }
 
-    /**
-     * @return int
-     */
-    public function getDelay()
+    public function getDelay(): int
     {
         return $this->delay;
     }

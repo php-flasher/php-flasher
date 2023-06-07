@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\System;
 
 final class Program
 {
     /**
-     * @param string|null $program
-     *
+     * @param  string|null  $program
      * @return bool
      */
     public static function exist($program)
@@ -16,13 +17,13 @@ final class Program
         }
 
         if (OS::isWindows()) {
-            $output = shell_exec("where {$program} 2>null");
+            $output = shell_exec(sprintf('where %s 2>null', $program));
 
-            return !empty($output);
+            return ! ('' === $output || false === $output || null === $output);
         }
 
-        $output = shell_exec("command -v {$program}");
+        $output = shell_exec(sprintf('command -v %s', $program));
 
-        return !empty($output);
+        return ! ('' === $output || false === $output || null === $output);
     }
 }

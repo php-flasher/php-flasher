@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Config;
 
 use Flasher\Prime\Config\Config;
@@ -7,10 +9,7 @@ use Flasher\Tests\Prime\TestCase;
 
 final class ConfigTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testGet()
+    public function testGet(): void
     {
         /** @phpstan-ignore-next-line */
         $config = new Config([

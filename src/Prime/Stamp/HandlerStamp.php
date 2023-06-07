@@ -1,32 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class HandlerStamp implements StampInterface, PresentableStampInterface
 {
-    /**
-     * @var string
-     */
-    private $handler;
-
-    /**
-     * @param string $handler
-     */
-    public function __construct($handler)
+    public function __construct(private readonly string $handler)
     {
-        $this->handler = $handler;
     }
 
-    /**
-     * @return string
-     */
-    public function getHandler()
+    public function getHandler(): string
     {
         return $this->handler;
     }
 
-    public function toArray()
+    /**
+     * @return array{handler: string}
+     */
+    public function toArray(): array
     {
-        return ['handler' => $this->getHandler()];
+        return ['handler' => $this->handler];
     }
 }

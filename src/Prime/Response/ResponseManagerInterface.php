@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Response;
 
 use Flasher\Prime\Response\Presenter\PresenterInterface;
@@ -7,17 +9,10 @@ use Flasher\Prime\Response\Presenter\PresenterInterface;
 interface ResponseManagerInterface
 {
     /**
-     * @param mixed[] $criteria
-     * @param string  $presenter
-     * @param mixed[] $context
+     * @param  array<string, mixed>  $criteria
+     * @param  array<string, mixed>  $context
      */
-    public function render(array $criteria = [], $presenter = 'html', array $context = []);
+    public function render(string $presenter = 'html', array $criteria = [], array $context = []): mixed;
 
-    /**
-     * @param string                      $alias
-     * @param callable|PresenterInterface $presenter
-     *
-     * @return void
-     */
-    public function addPresenter($alias, $presenter);
+    public function addPresenter(string $alias, callable|PresenterInterface $presenter): void;
 }

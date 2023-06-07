@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -10,11 +12,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 final class FlasherCliExtension extends Extension
 {
     /**
-     * @param array<int, array<string, mixed>> $configs
-     *
-     * @return void
+     * @param  array<int, array<string, mixed>>  $configs
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configs = $this->processConfiguration(new Configuration(), $configs);
 
@@ -25,11 +25,9 @@ final class FlasherCliExtension extends Extension
     }
 
     /**
-     * @param array<int, array<string, mixed>> $configs
-     *
-     * @return void
+     * @param  array<int, array<string, mixed>>  $configs
      */
-    private function configureNotifier(array $configs, ContainerBuilder $container)
+    private function configureNotifier(array $configs, ContainerBuilder $container): void
     {
         $notifier = $container->getDefinition('flasher.notify');
         $notifier->replaceArgument(0, $configs['title']); // @phpstan-ignore-line

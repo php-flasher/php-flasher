@@ -1,50 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Container;
 
-/**
- * @internal
- */
+use Flasher\Prime\Factory\NotificationFactoryInterface;
+
 final class FlasherContainer
 {
-    /**
-     * @var self|null
-     */
-    private static $instance;
+    private static ?FlasherContainer $instance = null;
 
-    /**
-     * @var ContainerInterface
-     */
-    private static $container;
-
-    private function __construct(ContainerInterface $container)
+    private function __construct(private readonly ContainerInterface $container)
     {
-        self::$container = $container;
     }
 
-    /**
-     * @param string $id
-     *
-     * @throws \LogicException
-     */
-    public static function create($id)
+    public static function getInstance(): self
     {
-        if (null === self::$instance) {
+        if (! self::$instance instanceof self) {
             throw new \LogicException('Container is not initialized yet. Container::init() must be called with a real container.');
         }
 
-        return self::$container->get($id);
+        return self::$instance;
     }
 
-    /**
-     * @return void
-     */
-    public static function init(ContainerInterface $container)
+    public static function init(ContainerInterface $container): void
     {
-        if (null !== self::$instance) {
+        if (self::$instance instanceof self) {
             return;
         }
 
         self::$instance = new self($container);
+    }
+
+    public function create(string $id): NotificationFactoryInterface
+    {
+        $factory = $this->container->get($id);
+
+        if (! $factory instanceof NotificationFactoryInterface) {
+            throw new \InvalidArgumentException(sprintf('only instance of %s are allowed to be fetched from service container', NotificationFactoryInterface::class));
+        }
+
+        return $factory;
     }
 }

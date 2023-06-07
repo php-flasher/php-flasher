@@ -1,26 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class WhenStamp implements StampInterface
 {
-    /**
-     * @var bool
-     */
-    private $condition;
-
-    /**
-     * @param bool $condition
-     */
-    public function __construct($condition)
+    public function __construct(private readonly bool $condition)
     {
-        $this->condition = $condition;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCondition()
+    public function getCondition(): bool
     {
         return $this->condition;
     }

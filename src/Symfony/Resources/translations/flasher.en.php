@@ -1,5 +1,7 @@
 <?php
 
-use Flasher\Prime\Translation\Messages;
+declare(strict_types=1);
 
-return Messages::$en;
+namespace Flasher\Symfony\Resources\translations;
+
+return \Flasher\Prime\Translation\Messages::$en;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\PresentableStampInterface;
@@ -13,7 +15,7 @@ final class Envelope implements NotificationInterface
     private array $stamps = [];
 
     /**
-     * @param StampInterface[]|StampInterface $stamps
+     * @param  StampInterface[]|StampInterface  $stamps
      */
     public function __construct(
         private readonly NotificationInterface $notification,
@@ -23,13 +25,13 @@ final class Envelope implements NotificationInterface
             $stamps = [$stamps];
         }
 
-        $this->with(...$stamps);
+        $this->with($stamps);
     }
 
     /**
      * Makes sure the notification is in an Envelope and adds the given stamps.
      *
-     * @param StampInterface|StampInterface[] $stamps
+     * @param  StampInterface|StampInterface[]  $stamps
      */
     public static function wrap(NotificationInterface $notification, array|StampInterface $stamps = []): self
     {
@@ -39,13 +41,20 @@ final class Envelope implements NotificationInterface
             $stamps = [$stamps];
         }
 
-        $envelope->with(...$stamps);
+        $envelope->with($stamps);
 
         return $envelope;
     }
 
-    public function with(StampInterface ...$stamps): void
+    /**
+     * @param  StampInterface[]|StampInterface  $stamps
+     */
+    public function with(array|StampInterface $stamps = []): void
     {
+        if ($stamps instanceof StampInterface) {
+            $stamps = [$stamps];
+        }
+
         foreach ($stamps as $stamp) {
             $this->withStamp($stamp);
         }
@@ -57,7 +66,7 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * @param StampInterface[]|StampInterface $stamps
+     * @param  StampInterface[]|StampInterface  $stamps
      */
     public function without(array|StampInterface $stamps): void
     {
@@ -71,7 +80,7 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * @param class-string<StampInterface>|StampInterface $type
+     * @param  class-string<StampInterface>|StampInterface  $type
      */
     public function withoutStamp(string|StampInterface $type): void
     {
@@ -81,7 +90,11 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * @param class-string<StampInterface> $type
+     * @phpstan-template T of StampInterface
+     *
+     * @phpstan-param class-string<T> $type
+     *
+     * @phpstan-return T|null
      */
     public function get(string $type): ?StampInterface
     {
@@ -174,26 +187,24 @@ final class Envelope implements NotificationInterface
     {
         $stamps = [];
 
-        foreach ($this->all() as $stamp) {
+        foreach ($this->stamps as $stamp) {
             if ($stamp instanceof PresentableStampInterface) {
                 $stamps[] = $stamp->toArray();
             }
         }
 
-        return array_merge($this->notification->toArray(), [
-            'stamps' => array_merge(...$stamps),
-        ]);
+        return [...$this->notification->toArray(), 'stamps' => array_merge(...$stamps)];
     }
 
     /**
      * Dynamically call methods on the notification.
      *
-     * @param mixed[] $parameters
+     * @param  mixed[]  $parameters
      */
     public function __call(string $method, array $parameters): mixed
     {
         /** @var callable $callback */
-        $callback = [$this->getNotification(), $method];
+        $callback = [$this->notification, $method];
 
         return $callback(...$parameters);
     }

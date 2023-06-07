@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Laravel;
 
 use Flasher\Cli\Prime\CliFactory;
@@ -14,26 +16,20 @@ use Illuminate\Support\ServiceProvider;
 
 final class FlasherCliServiceProvider extends ServiceProvider
 {
-    /**
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         $this->processConfiguration();
         $this->registerRenderListener();
         $this->registerPresenter();
     }
 
-    public function register()
+    public function register(): void
     {
         $this->registerNotifierFactory();
         $this->registerNotifier();
     }
 
-    /**
-     * @return void
-     */
-    private function processConfiguration()
+    private function processConfiguration(): void
     {
         $name = 'flasher_cli';
         $config = $this->app->make('config');
@@ -41,57 +37,46 @@ final class FlasherCliServiceProvider extends ServiceProvider
         $config->set($name, $config->get($name, [])); // @phpstan-ignore-line
     }
 
-    /**
-     * @return void
-     */
-    private function registerNotifierFactory()
+    private function registerNotifierFactory(): void
     {
-        $this->app->singleton('flasher.cli', function (Container $app) {
-            return new CliFactory($app->make('flasher.storage_manager')); // @phpstan-ignore-line
+        $this->app->singleton('flasher.cli', static function (Container $app): CliFactory {
+            return new CliFactory($app->make('flasher.storage_manager'));
+            // @phpstan-ignore-line
         });
 
-        $this->app->alias('flasher.cli', 'Flasher\Cli\Prime\CliFactory');
+        $this->app->alias('flasher.cli', \Flasher\Cli\Prime\CliFactory::class);
     }
 
-    /**
-     * @return void
-     */
-    private function registerNotifier()
+    private function registerNotifier(): void
     {
-        $this->app->singleton('flasher.notify', function (Container $app) {
+        $this->app->singleton('flasher.notify', static function (Container $app): Notify {
             /** @phpstan-ignore-next-line */
             $title = $app->make('config')->get('flasher_cli.title', null);
-            $icons = $app->make('config')->get('flasher_cli.icons', []); // @phpstan-ignore-line
-
+            $icons = $app->make('config')->get('flasher_cli.icons', []);
+            // @phpstan-ignore-line
             return new Notify($title, $icons);
         });
 
-        $this->app->alias('flasher.notify', 'Flasher\Cli\Prime\Notify');
-        $this->app->alias('flasher.notify', 'Flasher\Cli\Prime\NotifyInterface');
+        $this->app->alias('flasher.notify', \Flasher\Cli\Prime\Notify::class);
+        $this->app->alias('flasher.notify', \Flasher\Cli\Prime\NotifyInterface::class);
     }
 
-    /**
-     * @return void
-     */
-    private function registerRenderListener()
+    private function registerRenderListener(): void
     {
         /** @var FlasherInterface $flasher */
         $flasher = $this->app->make('flasher');
-        $this->app->extend('flasher.event_dispatcher', function (EventDispatcherInterface $dispatcher) use ($flasher) {
+        $this->app->extend('flasher.event_dispatcher', static function (EventDispatcherInterface $dispatcher) use ($flasher): \Flasher\Prime\EventDispatcher\EventDispatcherInterface {
             $dispatcher->addSubscriber(new RenderListener($flasher));
 
             return $dispatcher;
         });
     }
 
-    /**
-     * @return void
-     */
-    private function registerPresenter()
+    private function registerPresenter(): void
     {
-        $this->app->extend('flasher.response_manager', function (ResponseManagerInterface $manager, Container $app) {
-            $manager->addPresenter(CliPresenter::NAME, new CliPresenter($app->make('flasher.notify'))); // @phpstan-ignore-line
-
+        $this->app->extend('flasher.response_manager', static function (ResponseManagerInterface $manager, Container $app): ResponseManagerInterface {
+            $manager->addPresenter(CliPresenter::NAME, new CliPresenter($app->make('flasher.notify')));
+            // @phpstan-ignore-line
             return $manager;
         });
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -9,12 +11,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Tests\Prime\TestCase;
 
-class StampsListenerTest extends TestCase
+final class StampsListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testStampsListener()
+    public function testStampsListener(): void
     {
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
@@ -31,10 +30,10 @@ class StampsListenerTest extends TestCase
 
         $envelopes = $event->getEnvelopes();
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\CreatedAtStamp', $envelopes[0]->get('Flasher\Prime\Stamp\CreatedAtStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\UuidStamp', $envelopes[0]->get('Flasher\Prime\Stamp\UuidStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\DelayStamp', $envelopes[0]->get('Flasher\Prime\Stamp\DelayStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $envelopes[0]->get('Flasher\Prime\Stamp\HopsStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp', $envelopes[0]->get('Flasher\Prime\Stamp\PriorityStamp'));
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\CreatedAtStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\CreatedAtStamp::class));
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\IdStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\IdStamp::class));
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\DelayStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\DelayStamp::class));
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\HopsStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\HopsStamp::class));
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\PriorityStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\PriorityStamp::class));
     }
 }

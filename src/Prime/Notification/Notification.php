@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Notification;
 
-class Notification implements NotificationInterface
+final class Notification implements NotificationInterface
 {
-    protected string $title = '';
-    protected string $message = '';
-    protected string $type = '';
+    private string $title = '';
+
+    private string $message = '';
+
+    private string $type = '';
 
     /**
      * @var array<string, mixed>
      */
-    protected array $options = [];
+    private array $options = [];
 
     public function getTitle(): string
     {
@@ -73,10 +77,10 @@ class Notification implements NotificationInterface
     public function toArray(): array
     {
         return [
-            'title' => $this->getTitle(),
-            'message' => $this->getMessage(),
-            'type' => $this->getType(),
-            'options' => $this->getOptions(),
+            'title' => $this->title,
+            'message' => $this->message,
+            'type' => $this->type,
+            'options' => $this->options,
         ];
     }
 }

@@ -1,43 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Plugin;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Tests\Prime\TestCase;
 
-class FlasherPluginTest extends TestCase
+final class FlasherPluginTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testGetName()
+    public function testGetName(): void
     {
         $plugin = new FlasherPlugin();
         $this->assertEquals('flasher', $plugin->getName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetServiceID()
+    public function testGetServiceID(): void
     {
         $plugin = new FlasherPlugin();
         $this->assertEquals('flasher', $plugin->getServiceID());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetDefault()
+    public function testGetDefault(): void
     {
         $plugin = new FlasherPlugin();
         $this->assertEquals('flasher', $plugin->getDefault());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetRootScript()
+    public function testGetRootScript(): void
     {
         $plugin = new FlasherPlugin();
         $rootScript = [
@@ -48,10 +38,7 @@ class FlasherPluginTest extends TestCase
         $this->assertEquals($rootScript, $plugin->getRootScript());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetScripts()
+    public function testGetScripts(): void
     {
         $plugin = new FlasherPlugin();
         $scripts = [
@@ -62,10 +49,7 @@ class FlasherPluginTest extends TestCase
         $this->assertEquals($scripts, $plugin->getScripts());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetResourcesDir()
+    public function testGetResourcesDir(): void
     {
         $plugin = new FlasherPlugin();
         $resourceDir = realpath(__DIR__.'/../../../src/Prime/Resources');
@@ -73,10 +57,7 @@ class FlasherPluginTest extends TestCase
         $this->assertEquals($resourceDir, $plugin->getResourcesDir());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetFlashBagMapping()
+    public function testGetFlashBagMapping(): void
     {
         $plugin = new FlasherPlugin();
         $mapping = [
@@ -89,10 +70,7 @@ class FlasherPluginTest extends TestCase
         $this->assertEquals($mapping, $plugin->getFlashBagMapping());
     }
 
-    /**
-     * @return void
-     */
-    public function testProcessConfiguration()
+    public function testProcessConfiguration(): void
     {
         $plugin = new FlasherPlugin();
         $config = [
@@ -143,10 +121,7 @@ class FlasherPluginTest extends TestCase
         $this->assertEquals($config, $plugin->processConfiguration());
     }
 
-    /**
-     * @return void
-     */
-    public function testNormalizeConfig()
+    public function testNormalizeConfig(): void
     {
         $plugin = new FlasherPlugin();
 

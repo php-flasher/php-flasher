@@ -1,29 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\System;
 
 final class OS
 {
-    /**
-     * @return string
-     */
-    public static function getName()
+    public static function getName(): string
     {
         return php_uname('s');
     }
 
-    /**
-     * @return string
-     */
-    public static function getRelease()
+    public static function getRelease(): string
     {
         return php_uname('r');
     }
 
-    /**
-     * @return bool
-     */
-    public static function isUnix()
+    public static function isUnix(): bool
     {
         return \in_array(self::getName(), [
             'Linux',
@@ -35,50 +28,44 @@ final class OS
         ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindows()
+    public static function isWindows(): bool
     {
         return 'WIN' === strtoupper(substr(self::getName(), 0, 3));
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindowsSeven()
+    public static function isWindowsSeven(): bool
     {
-        return self::isWindows() && '6.1' === self::getRelease();
+        if (! self::isWindows()) {
+            return false;
+        }
+
+        return '6.1' === self::getRelease();
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindowsEightOrHigher()
+    public static function isWindowsEightOrHigher(): bool
     {
-        return self::isWindows() && version_compare(self::getRelease(), '6.2', '>=');
+        if (! self::isWindows()) {
+            return false;
+        }
+
+        return version_compare(self::getRelease(), '6.2', '>=');
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindowsSubsystemForLinux()
+    public static function isWindowsSubsystemForLinux(): bool
     {
-        return self::isUnix() && false !== mb_strpos(strtolower(self::getName()), 'microsoft');
+        if (! self::isUnix()) {
+            return false;
+        }
+
+        return false !== mb_strpos(strtolower(self::getName()), 'microsoft');
     }
 
-    /**
-     * @return bool
-     */
-    public static function isMacOS()
+    public static function isMacOS(): bool
     {
         return str_contains(self::getName(), 'Darwin');
     }
 
-    /**
-     * @return string
-     */
-    public static function getMacOSVersion()
+    public static function getMacOSVersion(): string
     {
         exec('sw_vers -productVersion', $output);
 

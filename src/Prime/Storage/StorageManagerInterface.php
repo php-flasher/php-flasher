@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Storage;
 
 use Flasher\Prime\Notification\Envelope;
@@ -9,40 +11,19 @@ interface StorageManagerInterface
     /**
      * @return Envelope[]
      */
-    public function all();
+    public function all(): array;
 
     /**
-     * @param mixed[] $criteria
-     *
+     * @param  array<string, mixed>  $criteria
      * @return Envelope[]
      */
-    public function filter(array $criteria = []);
+    public function filter(array $criteria = []): array;
 
-    /**
-     * @param Envelope|Envelope[] $envelopes
-     *
-     * @return void
-     */
-    public function add($envelopes);
+    public function add(Envelope ...$envelopes): void;
 
-    /**
-     * @param Envelope|Envelope[] $envelopes
-     *
-     * @return void
-     */
-    public function update($envelopes);
+    public function update(Envelope ...$envelopes): void;
 
-    /**
-     * @param Envelope|Envelope[] $envelopes
-     *
-     * @return void
-     */
-    public function remove($envelopes);
+    public function remove(Envelope ...$envelopes): void;
 
-    /**
-     * remove All notifications from storage.
-     *
-     * @return void
-     */
-    public function clear();
+    public function clear(): void;
 }

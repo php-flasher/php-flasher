@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\SweetAlert\Laravel;
 
 use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 
-final class LivewireListener implements EventSubscriberInterface
+final class LivewireListener implements EventListenerInterface
 {
     /**
      * @return void
@@ -17,7 +19,7 @@ final class LivewireListener implements EventSubscriberInterface
         }
 
         $response = $event->getResponse() ?: '';
-        if (!\is_string($response)) {
+        if (! \is_string($response)) {
             return;
         }
 
@@ -59,8 +61,8 @@ JAVASCRIPT;
         $event->setResponse($response);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): string|array
     {
-        return 'Flasher\Prime\EventDispatcher\Event\ResponseEvent';
+        return \Flasher\Prime\EventDispatcher\Event\ResponseEvent::class;
     }
 }

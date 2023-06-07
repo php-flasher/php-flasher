@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
@@ -9,35 +11,22 @@ use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Prime\Translation\Language;
 use Flasher\Prime\Translation\TranslatorInterface;
 
-final class TranslationListener implements EventSubscriberInterface
+final class TranslationListener implements EventListenerInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
+    private readonly TranslatorInterface $translator;
 
-    /**
-     * @var bool
-     */
-    private $autoTranslate;
-
-    /**
-     * @param bool $autoTranslate
-     */
-    public function __construct(TranslatorInterface $translator = null, $autoTranslate = true)
-    {
+    public function __construct(
+        TranslatorInterface $translator = null,
+        private readonly bool $autoTranslate = true,
+    ) {
         $this->translator = $translator ?: new EchoTranslator();
-        $this->autoTranslate = $autoTranslate;
     }
 
-    /**
-     * @return void
-     */
-    public function __invoke(PresentationEvent $event)
+    public function __invoke(PresentationEvent $event): void
     {
         foreach ($event->getEnvelopes() as $envelope) {
-            $stamp = $envelope->get('Flasher\Prime\Stamp\TranslationStamp');
-            if (!$stamp instanceof TranslationStamp && !$this->autoTranslate) {
+            $stamp = $envelope->get(TranslationStamp::class);
+            if (! $stamp instanceof TranslationStamp && ! $this->autoTranslate) {
                 continue;
             }
 
@@ -49,10 +38,10 @@ final class TranslationListener implements EventSubscriberInterface
                 ? $stamp->getParameters()
                 : [];
 
-            $preset = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+            $preset = $envelope->get(PresetStamp::class);
             if ($preset instanceof PresetStamp) {
                 foreach ($preset->getParameters() as $key => $value) {
-                    $parameters[$key] = $this->translator->translate($value, $parameters, $locale); // @phpstan-ignore-line
+                    $parameters[$key] = $this->translator->translate($value, $parameters, $locale);
                 }
             }
 
@@ -74,8 +63,8 @@ final class TranslationListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): string
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PresentationEvent';
+        return PresentationEvent::class;
     }
 }

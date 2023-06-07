@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Laravel;
 
 use Flasher\Laravel\Support\Laravel;
@@ -14,7 +16,7 @@ class TestCase extends Orchestra
 {
     public function createApplication()
     {
-        if (!str_starts_with(Application::VERSION, '4.0')) {
+        if (! str_starts_with(Application::VERSION, '4.0')) {
             return parent::createApplication();
         }
 
@@ -43,7 +45,7 @@ class TestCase extends Orchestra
 
         date_default_timezone_set($this->getApplicationTimezone());
 
-        $aliases = array_merge($this->getApplicationAliases(), $this->getPackageAliases());
+        $aliases = [...$this->getApplicationAliases(), ...$this->getPackageAliases()];
         AliasLoader::getInstance($aliases)->register();
 
         Request::enableHttpMethodParameterOverride();
@@ -59,24 +61,23 @@ class TestCase extends Orchestra
     }
 
     /**
-     * @param Application|null $app
-     *
+     * @param  Application|null  $app
      * @return string[]
      */
     protected function getPackageProviders($app = null)
     {
         return [
-            'Flasher\Laravel\FlasherServiceProvider',
-            'Flasher\Noty\Laravel\FlasherNotyServiceProvider',
-            'Flasher\Notyf\Laravel\FlasherNotyfServiceProvider',
-            'Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider',
-            'Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider',
-            'Flasher\Toastr\Laravel\FlasherToastrServiceProvider',
+            \Flasher\Laravel\FlasherServiceProvider::class,
+            \Flasher\Noty\Laravel\FlasherNotyServiceProvider::class,
+            \Flasher\Notyf\Laravel\FlasherNotyfServiceProvider::class,
+            \Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider::class,
+            \Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider::class,
+            \Flasher\Toastr\Laravel\FlasherToastrServiceProvider::class,
         ];
     }
 
     /**
-     * @param Application $app
+     * @param  Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {

@@ -1,26 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\System;
 
 final class Command
 {
-    /**
-     * @var string|null
-     */
-    private $command;
+    private ?string $command = null;
 
     /**
      * @var array<string, int|string|null>
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * @var array<int|string|null>
      */
-    private $arguments = [];
+    private array $arguments = [];
 
     /**
-     * @param string|null $command
+     * @param  string|null  $command
      */
     public function __construct($command)
     {
@@ -28,9 +27,8 @@ final class Command
     }
 
     /**
-     * @param string          $name
-     * @param int|string|null $value
-     *
+     * @param  string  $name
+     * @param  int|string|null  $value
      * @return static
      */
     public function addOption($name, $value = null)
@@ -41,8 +39,7 @@ final class Command
     }
 
     /**
-     * @param int|string|null $argument
-     *
+     * @param  int|string|null  $argument
      * @return static
      */
     public function addArgument($argument)
@@ -52,10 +49,7 @@ final class Command
         return $this;
     }
 
-    /**
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         $command = $this->command.' '.$this->formatOptions().' '.$this->formatArguments();
 
@@ -68,10 +62,7 @@ final class Command
         exec($command);
     }
 
-    /**
-     * @return string
-     */
-    private function formatArguments()
+    private function formatArguments(): string
     {
         return implode(' ', $this->arguments);
     }

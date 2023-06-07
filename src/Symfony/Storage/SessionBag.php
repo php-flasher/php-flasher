@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Storage;
 
 use Flasher\Prime\Storage\Bag\BagInterface;
@@ -10,24 +12,18 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class SessionBag implements BagInterface
 {
+    /**
+     * @var string
+     */
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    /**
-     * @var RequestStack|SessionInterface
-     */
-    private $session;
+    private readonly \Flasher\Symfony\Storage\FallbackSession $fallbackSession;
 
     /**
-     * @var FallbackSession
+     * @param  RequestStack|SessionInterface  $session
      */
-    private $fallbackSession;
-
-    /**
-     * @param RequestStack|SessionInterface $session
-     */
-    public function __construct($session)
+    public function __construct(private $session)
     {
-        $this->session = $session;
         $this->fallbackSession = new FallbackSession();
     }
 
@@ -36,7 +32,7 @@ final class SessionBag implements BagInterface
         return $this->session()->get(self::ENVELOPES_NAMESPACE, []); // @phpstan-ignore-line
     }
 
-    public function set(array $envelopes)
+    public function set(array $envelopes): void
     {
         $this->session()->set(self::ENVELOPES_NAMESPACE, $envelopes);
     }
@@ -57,12 +53,12 @@ final class SessionBag implements BagInterface
                 $session = $this->session->getCurrentRequest()->getSession();
             }
 
-            if (null !== $session && $session->isStarted()) {
+            if ($session instanceof \Symfony\Component\HttpFoundation\Session\SessionInterface && $session->isStarted()) {
                 return $this->session = $session;
             }
 
             return $this->fallbackSession;
-        } catch (SessionNotFoundException $e) {
+        } catch (SessionNotFoundException) {
             return $this->fallbackSession;
         }
     }

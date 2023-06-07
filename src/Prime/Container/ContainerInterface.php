@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Container;
 
 interface ContainerInterface
 {
-    /**
-     * @param string $id
-     */
-    public function get($id);
+    public function get(string $id): ?object;
 }

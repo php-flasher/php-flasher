@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 interface OrderableStampInterface
 {
-    /**
-     * @return int
-     */
-    public function compare($orderable);
+    public function compare(StampInterface $orderable): int;
 }

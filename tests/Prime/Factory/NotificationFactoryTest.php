@@ -1,40 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Factory;
 
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Tests\Prime\TestCase;
 
-class NotificationFactoryTest extends TestCase
+final class NotificationFactoryTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testCreateNotificationBuilder()
+    public function testCreateNotificationBuilder(): void
     {
         $factory = new NotificationFactory();
         $builder = $factory->createNotificationBuilder();
 
-        $this->assertInstanceOf('Flasher\Prime\Notification\NotificationBuilderInterface', $builder);
+        $this->assertInstanceOf(\Flasher\Prime\Notification\NotificationBuilderInterface::class, $builder);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetStorageManager()
+    public function testGetStorageManager(): void
     {
         $factory = new NotificationFactory();
         $manager = $factory->getStorageManager();
 
-        $this->assertInstanceOf('Flasher\Prime\Storage\StorageManagerInterface', $manager);
+        $this->assertInstanceOf(\Flasher\Prime\Storage\StorageManagerInterface::class, $manager);
     }
 
-    /**
-     * @return void
-     */
-    public function testDynamicCallToNotificationBuilder()
+    public function testDynamicCallToNotificationBuilder(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $factory = new NotificationFactory($storageManager);

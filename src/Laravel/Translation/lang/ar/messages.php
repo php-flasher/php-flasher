@@ -1,5 +1,7 @@
 <?php
 
-use Flasher\Prime\Translation\Messages;
+declare(strict_types=1);
 
-return Messages::$ar;
+namespace Flasher\Laravel\Translation\lang\ar;
+
+return \Flasher\Prime\Translation\Messages::$ar;

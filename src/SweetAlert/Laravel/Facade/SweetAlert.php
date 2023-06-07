@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\SweetAlert\Laravel\Facade;
 
 use Flasher\Prime\Notification\Envelope;
@@ -102,7 +104,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static SweetAlertBuilder inputValidator(string $inputValidator)
  * @method static SweetAlertBuilder validationMessage(string $validationMessage)
  */
-class SweetAlert extends Facade
+final class SweetAlert extends Facade
 {
     protected static function getFacadeAccessor()
     {

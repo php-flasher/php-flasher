@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
 use Flasher\Tests\Prime\TestCase;
 
-class ResponseEventTest extends TestCase
+final class ResponseEventTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testResponseEvent()
+    public function testResponseEvent(): void
     {
         $event = new ResponseEvent('{"foo": "bar"}', 'json');
 

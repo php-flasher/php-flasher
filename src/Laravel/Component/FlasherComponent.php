@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Component;
 
 use Illuminate\View\Component;
 
-class FlasherComponent extends Component
+final class FlasherComponent extends Component
 {
     public function render()
     {

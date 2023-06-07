@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\PostUpdateEvent;
@@ -7,12 +9,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Tests\Prime\TestCase;
 
-class PostUpdateEventTest extends TestCase
+final class PostUpdateEventTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testPostUpdateEvent()
+    public function testPostUpdateEvent(): void
     {
         $envelopes = [
             new Envelope(new Notification()),

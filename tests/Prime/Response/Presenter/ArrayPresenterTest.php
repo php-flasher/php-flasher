@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Response\Presenter;
 
 use Flasher\Prime\Notification\Envelope;
@@ -8,12 +10,9 @@ use Flasher\Prime\Response\Presenter\ArrayPresenter;
 use Flasher\Prime\Response\Response;
 use Flasher\Tests\Prime\TestCase;
 
-class ArrayPresenterTest extends TestCase
+final class ArrayPresenterTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testArrayPresenter()
+    public function testArrayPresenter(): void
     {
         $envelopes = [];
 

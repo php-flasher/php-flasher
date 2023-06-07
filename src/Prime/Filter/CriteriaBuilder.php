@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Filter;
 
 use Flasher\Prime\Filter\Specification\CallbackSpecification;
@@ -15,43 +17,28 @@ final class CriteriaBuilder
      * @var array<string, class-string<StampInterface>>
      */
     public $aliases = [
-        'context' => 'Flasher\Prime\Stamp\ContextStamp',
-        'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
-        'delay' => 'Flasher\Prime\Stamp\DelayStamp',
-        'handler' => 'Flasher\Prime\Stamp\HandlerStamp',
-        'hops' => 'Flasher\Prime\Stamp\HopsStamp',
-        'preset' => 'Flasher\Prime\Stamp\PresetStamp',
-        'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
-        'translation' => 'Flasher\Prime\Stamp\TranslationStamp',
-        'unless' => 'Flasher\Prime\Stamp\UnlessStamp',
-        'uuid' => 'Flasher\Prime\Stamp\UuidStamp',
-        'view' => 'Flasher\Prime\Stamp\ViewStamp',
-        'when' => 'Flasher\Prime\Stamp\WhenStamp',
+        'context' => \Flasher\Prime\Stamp\ContextStamp::class,
+        'created_at' => \Flasher\Prime\Stamp\CreatedAtStamp::class,
+        'delay' => \Flasher\Prime\Stamp\DelayStamp::class,
+        'handler' => \Flasher\Prime\Stamp\HandlerStamp::class,
+        'hops' => \Flasher\Prime\Stamp\HopsStamp::class,
+        'preset' => \Flasher\Prime\Stamp\PresetStamp::class,
+        'priority' => \Flasher\Prime\Stamp\PriorityStamp::class,
+        'translation' => \Flasher\Prime\Stamp\TranslationStamp::class,
+        'unless' => \Flasher\Prime\Stamp\UnlessStamp::class,
+        'uuid' => \Flasher\Prime\Stamp\IdStamp::class,
+        'view' => \Flasher\Prime\Stamp\ViewStamp::class,
+        'when' => \Flasher\Prime\Stamp\WhenStamp::class,
     ];
 
     /**
-     * @var Filter
+     * @param  array<string, mixed>  $criteria
      */
-    private $filter;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private $criteria;
-
-    /**
-     * @param array<string, mixed> $criteria
-     */
-    public function __construct(Filter $filter, array $criteria)
+    public function __construct(private readonly Filter $filter, private array $criteria)
     {
-        $this->filter = $filter;
-        $this->criteria = $criteria;
     }
 
-    /**
-     * @return void
-     */
-    public function build()
+    public function build(): void
     {
         $this->buildPriority();
         $this->buildHops();
@@ -63,12 +50,9 @@ final class CriteriaBuilder
         $this->buildCallback();
     }
 
-    /**
-     * @return void
-     */
-    public function buildPriority()
+    public function buildPriority(): void
     {
-        if (!isset($this->criteria['priority'])) {
+        if (! isset($this->criteria['priority'])) {
             return;
         }
 
@@ -77,12 +61,9 @@ final class CriteriaBuilder
         $this->filter->addSpecification(new PrioritySpecification($criteria['min'], $criteria['max']));
     }
 
-    /**
-     * @return void
-     */
-    public function buildHops()
+    public function buildHops(): void
     {
-        if (!isset($this->criteria['hops'])) {
+        if (! isset($this->criteria['hops'])) {
             return;
         }
 
@@ -91,12 +72,9 @@ final class CriteriaBuilder
         $this->filter->addSpecification(new HopsSpecification($criteria['min'], $criteria['max']));
     }
 
-    /**
-     * @return void
-     */
-    public function buildDelay()
+    public function buildDelay(): void
     {
-        if (!isset($this->criteria['delay'])) {
+        if (! isset($this->criteria['delay'])) {
             return;
         }
 
@@ -105,12 +83,9 @@ final class CriteriaBuilder
         $this->filter->addSpecification(new DelaySpecification($criteria['min'], $criteria['max']));
     }
 
-    /**
-     * @return void
-     */
-    public function buildLife()
+    public function buildLife(): void
     {
-        if (!isset($this->criteria['life'])) {
+        if (! isset($this->criteria['life'])) {
             return;
         }
 
@@ -119,12 +94,9 @@ final class CriteriaBuilder
         $this->filter->addSpecification(new HopsSpecification($criteria['min'], $criteria['max']));
     }
 
-    /**
-     * @return void
-     */
-    public function buildOrder()
+    public function buildOrder(): void
     {
-        if (!isset($this->criteria['order_by'])) {
+        if (! isset($this->criteria['order_by'])) {
             return;
         }
 
@@ -152,12 +124,9 @@ final class CriteriaBuilder
         $this->filter->orderBy($orderings);
     }
 
-    /**
-     * @return void
-     */
-    public function buildLimit()
+    public function buildLimit(): void
     {
-        if (!isset($this->criteria['limit'])) {
+        if (! isset($this->criteria['limit'])) {
             return;
         }
 
@@ -166,17 +135,14 @@ final class CriteriaBuilder
         $this->filter->setMaxResults((int) $limit);
     }
 
-    /**
-     * @return void
-     */
-    public function buildStamps()
+    public function buildStamps(): void
     {
-        if (!isset($this->criteria['stamps'])) {
+        if (! isset($this->criteria['stamps'])) {
             return;
         }
 
         /** @var string $strategy */
-        $strategy = isset($this->criteria['stamps_strategy']) ? $this->criteria['stamps_strategy'] : StampsSpecification::STRATEGY_OR;
+        $strategy = $this->criteria['stamps_strategy'] ?? StampsSpecification::STRATEGY_OR;
 
         /** @var array<string, class-string<StampInterface>> $stamps */
         $stamps = (array) $this->criteria['stamps'];
@@ -194,12 +160,9 @@ final class CriteriaBuilder
         $this->filter->addSpecification(new StampsSpecification($stamps, $strategy));
     }
 
-    /**
-     * @return void
-     */
-    public function buildCallback()
+    public function buildCallback(): void
     {
-        if (!isset($this->criteria['filter'])) {
+        if (! isset($this->criteria['filter'])) {
             return;
         }
 
@@ -212,14 +175,14 @@ final class CriteriaBuilder
     /**
      * @return array{min: int, max: int}
      */
-    private function extractMinMax($criteria)
+    private function extractMinMax($criteria): array
     {
-        if (!\is_array($criteria)) {
+        if (! \is_array($criteria)) {
             $criteria = ['min' => $criteria];
         }
 
-        $min = isset($criteria['min']) ? $criteria['min'] : null;
-        $max = isset($criteria['max']) ? $criteria['max'] : null;
+        $min = $criteria['min'] ?? null;
+        $max = $criteria['max'] ?? null;
 
         return ['min' => $min, 'max' => $max];
     }

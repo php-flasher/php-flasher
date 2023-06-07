@@ -1,50 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class CreatedAtStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
 {
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
+    private readonly \DateTime $createdAt;
+
+    private readonly string $format;
 
     /**
-     * @var string
-     */
-    private $format;
-
-    /**
-     * @param string|null $format
-     *
      * @throws \Exception
      */
-    public function __construct(\DateTime $createdAt = null, $format = null)
+    public function __construct(\DateTime $createdAt = null, string $format = null)
     {
         $this->createdAt = $createdAt ?: new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
         $this->format = $format ?: 'Y-m-d H:i:s';
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function compare($orderable)
+    public function compare(StampInterface $orderable): int
     {
-        if (!$orderable instanceof self) {
+        if (! $orderable instanceof self) {
             return 1;
         }
 
         return $this->createdAt->getTimestamp() - $orderable->createdAt->getTimestamp();
     }
 
-    public function toArray()
+    /**
+     * @return array{created_at: string}
+     */
+    public function toArray(): array
     {
-        $createdAt = $this->getCreatedAt();
+        $createdAt = $this->createdAt;
 
         return ['created_at' => $createdAt->format($this->format)];
     }

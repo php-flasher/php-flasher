@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Flasher\Symfony\Support;
+
+use Flasher\Prime\Plugin\PluginInterface;
+use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+
+final class PluginExtension extends Extension implements PrependExtensionInterface
+{
+    public function __construct(private readonly PluginInterface $plugin)
+    {
+    }
+
+    public function getAlias(): string
+    {
+        return $this->plugin->getName();
+    }
+
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+        $definition = new ChildDefinition('flasher.notification_factory');
+        $definition
+            ->setClass($this->plugin->getFactory())
+            ->addTag('flasher.factory', ['alias' => $this->plugin->getAlias()]);
+
+        $identifier = 'flasher.'.$this->plugin->getAlias().'_factory';
+        $container->setDefinition($identifier, $definition);
+        $container->setAlias($this->plugin->getFactory(), $identifier);
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig('flasher', [
+            'plugins' => [
+                $this->plugin->getAlias() => [
+                    'scripts' => $this->plugin->getScripts(),
+                    'styles' => $this->plugin->getStyles(),
+                    'options' => $this->plugin->getOptions(),
+                ],
+            ],
+        ]);
+    }
+}

@@ -1,24 +1,24 @@
 <?php
 
-use Flasher\Noty\Prime\NotyFactory;
-use Flasher\Prime\Container\FlasherContainer;
-use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
+declare(strict_types=1);
 
-if (!function_exists('noty')) {
+namespace Flasher\Noty\Prime;
+
+use Flasher\Prime\Notification\Envelope;
+
+if (! \function_exists('noty')) {
     /**
-     * @param string               $message
-     * @param string               $type
-     * @param array<string, mixed> $options
-     *
+     * @param  string  $message
+     * @param  string  $type
+     * @param  array<string, mixed>  $options
      * @return Envelope|NotyFactory
      */
-    function noty($message = null, $type = NotificationInterface::SUCCESS, array $options = [])
+    function noty($message = null, $type = \Flasher\Prime\Notification\NotificationInterface::SUCCESS, array $options = [])
     {
         /** @var NotyFactory $factory */
-        $factory = FlasherContainer::create('flasher.noty');
+        $factory = \Flasher\Prime\Container\FlasherContainer::create('flasher.noty');
 
-        if (0 === func_num_args()) {
+        if (0 === \func_num_args()) {
             return $factory;
         }
 

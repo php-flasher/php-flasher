@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -8,53 +10,45 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Stamp\UuidStamp;
 
-final class StampsListener implements EventSubscriberInterface
+final class StampsListener implements EventListenerInterface
 {
-    /**
-     * @param PersistEvent|UpdateEvent $event
-     *
-     * @return void
-     */
-    public function __invoke($event)
+    public function __invoke(PersistEvent|UpdateEvent $event): void
     {
         foreach ($event->getEnvelopes() as $envelope) {
             $this->attachStamps($envelope);
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): string|array
     {
         return [
-            'Flasher\Prime\EventDispatcher\Event\PersistEvent',
-            'Flasher\Prime\EventDispatcher\Event\UpdateEvent',
+            PersistEvent::class,
+            UpdateEvent::class,
         ];
     }
 
-    /**
-     * @return void
-     */
-    private function attachStamps(Envelope $envelope)
+    private function attachStamps(Envelope $envelope): void
     {
-        if (null === $envelope->get('Flasher\Prime\Stamp\CreatedAtStamp')) {
+        if (! $envelope->get(CreatedAtStamp::class) instanceof CreatedAtStamp) {
             $envelope->withStamp(new CreatedAtStamp());
         }
 
-        if (null === $envelope->get('Flasher\Prime\Stamp\UuidStamp')) {
-            $envelope->withStamp(new UuidStamp(spl_object_hash($envelope)));
+        if (! $envelope->get(IdStamp::class) instanceof IdStamp) {
+            $envelope->withStamp(new IdStamp(spl_object_hash($envelope)));
         }
 
-        if (null === $envelope->get('Flasher\Prime\Stamp\DelayStamp')) {
+        if (! $envelope->get(DelayStamp::class) instanceof DelayStamp) {
             $envelope->withStamp(new DelayStamp(0));
         }
 
-        if (null === $envelope->get('Flasher\Prime\Stamp\HopsStamp')) {
+        if (! $envelope->get(HopsStamp::class) instanceof HopsStamp) {
             $envelope->withStamp(new HopsStamp(1));
         }
 
-        if (null === $envelope->get('Flasher\Prime\Stamp\PriorityStamp')) {
+        if (! $envelope->get(PriorityStamp::class) instanceof PriorityStamp) {
             $envelope->withStamp(new PriorityStamp(0));
         }
     }

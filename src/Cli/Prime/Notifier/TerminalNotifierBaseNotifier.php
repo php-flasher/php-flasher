@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\Notifier;
 
 use Flasher\Cli\Prime\Notification;
@@ -8,7 +10,7 @@ use Flasher\Cli\Prime\System\OS;
 
 final class TerminalNotifierBaseNotifier extends BaseNotifier
 {
-    public function send($notification)
+    public function send($notification): void
     {
         $notification = Notification::wrap($notification);
 
@@ -31,12 +33,16 @@ final class TerminalNotifierBaseNotifier extends BaseNotifier
         $cmd->run();
     }
 
-    public function isSupported()
+    public function isSupported(): bool
     {
-        return OS::isMacOS() && $this->getProgram();
+        if (! OS::isMacOS()) {
+            return false;
+        }
+
+        return (bool) $this->getProgram();
     }
 
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'terminal-notifier';
     }

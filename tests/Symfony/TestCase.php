@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Symfony\Bridge\Bridge;

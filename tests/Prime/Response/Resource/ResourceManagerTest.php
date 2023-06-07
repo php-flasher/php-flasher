@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Response\Resource;
 
 use Flasher\Prime\Config\Config;
@@ -9,15 +11,12 @@ use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\HandlerStamp;
-use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Tests\Prime\TestCase;
 
-class ResourceManagerTest extends TestCase
+final class ResourceManagerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testItPopulateResponseFromResources()
+    public function testItPopulateResponseFromResources(): void
     {
         $config = new Config([
             'default' => 'flasher',
@@ -42,7 +41,7 @@ class ResourceManagerTest extends TestCase
         $envelopes[] = new Envelope($notification, [
             new HandlerStamp('flasher'),
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('1111'),
+            new IdStamp('1111'),
         ]);
 
         $notification = new Notification();
@@ -52,12 +51,12 @@ class ResourceManagerTest extends TestCase
         $envelopes[] = new Envelope($notification, [
             new HandlerStamp('toastr'),
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('2222'),
+            new IdStamp('2222'),
         ]);
 
         $response = new Response($envelopes, []);
 
-        $response = $resourceManager->buildResponse($response);
+        $response = $resourceManager->populateResponse($response);
 
         $this->assertEquals($envelopes, $response->getEnvelopes());
         $this->assertEquals('root_script.min.js', $response->getRootScript());

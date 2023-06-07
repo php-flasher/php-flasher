@@ -1,90 +1,87 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher;
 
-use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
 use Flasher\Tests\Prime\TestCase;
 
-class EventDispatcherTest extends TestCase
+final class EventDispatcherTest extends TestCase
 {
     // Some pseudo events
+    /**
+     * @var string
+     */
     public const preFoo = 'pre.foo';
 
+    /**
+     * @var string
+     */
     public const postFoo = 'post.foo';
 
+    /**
+     * @var string
+     */
     public const preBar = 'pre.bar';
 
+    /**
+     * @var string
+     */
     public const postBar = 'post.bar';
 
-    /**
-     * @return void
-     */
-    public function testInitialState()
+    public function testInitialState(): void
     {
         $dispatcher = new EventDispatcher();
         $this->assertEquals([], $dispatcher->getListeners('fake_event'));
     }
 
-    /**
-     * @return void
-     */
-    public function testAddListener()
+    public function testAddListener(): void
     {
         $dispatcher = new EventDispatcher();
         $listener = new TestEventListener();
 
-        $dispatcher->addListener('pre.foo', [$listener, 'preFoo']);
-        $dispatcher->addListener('post.foo', [$listener, 'postFoo']);
+        $dispatcher->addListener('pre.foo');
+        $dispatcher->addListener('post.foo');
         $this->assertCount(1, $dispatcher->getListeners(self::preFoo));
         $this->assertCount(1, $dispatcher->getListeners(self::postFoo));
     }
 
-    /**
-     * @return void
-     */
-    public function testDispatch()
+    public function testDispatch(): void
     {
         $dispatcher = new EventDispatcher();
         $listener = new TestEventListener();
 
         $event = new Event();
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', [$listener, 'preFoo']);
-        $dispatcher->addListener('NotFoundEvent', [$listener, 'postFoo']);
+        $dispatcher->addListener(\Flasher\Tests\Prime\EventDispatcher\Event::class);
+        $dispatcher->addListener('NotFoundEvent');
 
         $return = $dispatcher->dispatch($event);
 
         $this->assertTrue($listener->preFooInvoked);
         $this->assertFalse($listener->postFooInvoked);
 
-        $this->assertInstanceOf('Flasher\Tests\Prime\EventDispatcher\Event', $return);
+        $this->assertInstanceOf(\Flasher\Tests\Prime\EventDispatcher\Event::class, $return);
         $this->assertEquals($event, $return);
     }
 
-    /**
-     * @return void
-     */
-    public function testDispatchForClosure()
+    public function testDispatchForClosure(): void
     {
         $dispatcher = new EventDispatcher();
 
         $invoked = 0;
-        $listener = function () use (&$invoked) {
-            ++$invoked;
+        $listener = static function () use (&$invoked): void {
+            $invoked++;
         };
 
         $event = new Event();
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', $listener);
-        $dispatcher->addListener('AnotherEvent', $listener);
+        $dispatcher->addListener(\Flasher\Tests\Prime\EventDispatcher\Event::class);
+        $dispatcher->addListener('AnotherEvent');
         $dispatcher->dispatch($event);
         $this->assertEquals(1, $invoked);
     }
 
-    /**
-     * @return void
-     */
-    public function testStopEventPropagation()
+    public function testStopEventPropagation(): void
     {
         $dispatcher = new EventDispatcher();
         $listener = new TestEventListener();
@@ -95,93 +92,10 @@ class EventDispatcherTest extends TestCase
         // postFoo() stops the propagation, so only one listener should
         // be executed
         // Manually set priority to enforce $listener to be called first
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', [$listener, 'postFoo'], 10);
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', [$otherListener, 'preFoo']);
+        $dispatcher->addListener(\Flasher\Tests\Prime\EventDispatcher\Event::class);
+        $dispatcher->addListener(\Flasher\Tests\Prime\EventDispatcher\Event::class);
         $dispatcher->dispatch($event);
         $this->assertTrue($listener->postFooInvoked);
         $this->assertFalse($otherListener->postFooInvoked);
-    }
-}
-
-class Event implements StoppableEventInterface
-{
-    private $propagationStopped = false;
-
-    private $data;
-
-    public function __construct($data = null)
-    {
-        $this->data = $data;
-    }
-
-    public function isPropagationStopped()
-    {
-        return $this->propagationStopped;
-    }
-
-    public function stopPropagation()
-    {
-        $this->propagationStopped = true;
-    }
-}
-
-class CallableClass
-{
-    public function __invoke()
-    {
-    }
-}
-
-class TestEventListener
-{
-    public $preFooInvoked = false;
-
-    public $postFooInvoked = false;
-
-    public function preFoo(Event $e)
-    {
-        $this->preFooInvoked = true;
-    }
-
-    public function postFoo(Event $e)
-    {
-        $this->postFooInvoked = true;
-
-        $e->stopPropagation();
-    }
-}
-
-class TestEventSubscriber implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return [
-            'pre.foo' => 'preFoo',
-            'post.foo' => 'postFoo',
-        ];
-    }
-}
-
-class TestEventSubscriberWithPriorities implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return [
-            'pre.foo' => ['preFoo', 10],
-            'post.foo' => ['postFoo'],
-        ];
-    }
-}
-
-class TestEventSubscriberWithMultipleListeners implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return [
-            'pre.foo' => [
-                ['preFoo1'],
-                ['preFoo2', 10],
-            ],
-        ];
     }
 }

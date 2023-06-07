@@ -2,7 +2,7 @@
     "name": "php-flasher/php-flasher",
     "type": "library",
     "homepage": "https://php-flasher.io",
-    "description": "PHPFlasher is a robust and intuitive PHP package, purpose-built for enhancing user engagement and experience in Laravel or Symfony projects. By integrating seamless flash messaging, it provides essential user feedback and boasts an easy-to-use interface, making it a reliable choice for both novice and experienced developers.",
+    "description": "PHPFlasher Monorepo: A comprehensive solution for Laravel or Symfony projects looking to improve user engagement with seamless flash messaging. This robust PHP package simplifies user feedback management across your applications. Suitable for both beginners and experienced developers, PHPFlasher includes adapters for Noty, Notyf, PNotify, SweetAlert, and Toastr.",
     "keywords": [
         "php-flasher",
         "flash-messaging",
@@ -39,18 +39,19 @@
         "friendsofphp/php-cs-fixer": "^3.17",
         "illuminate/routing": "^10.0",
         "illuminate/support": "^10.0",
-        "livewire/livewire": "^2.12",
-        "orchestra/testbench": "^8.0",
-        "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^10.2",
-        "symfony/config": "^6.0",
-        "symfony/console": "^6.0",
-        "symfony/dependency-injection": "^6.0",
-        "symfony/framework-bundle": "^6.0",
-        "symfony/http-kernel": "^6.0",
-        "symfony/translation": "^6.0",
-        "symfony/twig-bundle": "^6.0",
-        "symplify/monorepo-builder": "^11.2"
+        "livewire/livewire": "^2.12.3",
+        "orchestra/testbench": "^8.5.5",
+        "phpstan/phpstan": "^1.10.18",
+        "phpunit/phpunit": "^10.2.1",
+        "rector/rector": "^0.17.0",
+        "symfony/config": "^6.3",
+        "symfony/console": "^6.3",
+        "symfony/dependency-injection": "^6.3",
+        "symfony/framework-bundle": "^6.3",
+        "symfony/http-kernel": "^6.3",
+        "symfony/translation": "^6.3",
+        "symfony/twig-bundle": "^6.3",
+        "symplify/monorepo-builder": "^11.2.3.72"
     },
     "replace": {
         "php-flasher/flasher": "self.version",
@@ -91,7 +92,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Flasher\\Tests\\": "tests/"
+            "Flasher\\Tests\\": "tests/",
+            "Flasher\\Phpstan\\": "phpstan/"
         }
     },
     "extra": {

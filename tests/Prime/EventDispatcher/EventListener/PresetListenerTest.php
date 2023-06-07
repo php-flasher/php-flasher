@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -10,12 +12,9 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Tests\Prime\TestCase;
 
-class PresetListenerTest extends TestCase
+final class PresetListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testPresetListener()
+    public function testPresetListener(): void
     {
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
@@ -47,13 +46,10 @@ class PresetListenerTest extends TestCase
         $this->assertEquals(['timeout' => 2500], $envelopes[0]->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testThrowExceptionIfPresetNotFound()
+    public function testThrowExceptionIfPresetNotFound(): void
     {
         $this->setExpectedException(
-            'Flasher\Prime\Exception\PresetNotFoundException',
+            \Flasher\Prime\Exception\PresetNotFoundException::class,
             'Preset "entity_deleted" not found, did you forget to register it? Available presets: entity_saved'
         );
 

@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\Event;
 
 interface StoppableEventInterface
 {
-    /**
-     * @return bool
-     */
-    public function isPropagationStopped();
+    public function isPropagationStopped(): bool;
 }

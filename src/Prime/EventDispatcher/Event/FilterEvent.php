@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Filter\Filter;
@@ -7,14 +9,11 @@ use Flasher\Prime\Notification\Envelope;
 
 final class FilterEvent
 {
-    /**
-     * @var Filter
-     */
-    private $filter;
+    private Filter $filter;
 
     /**
-     * @param Envelope[]           $envelopes
-     * @param array<string, mixed> $criteria
+     * @param  Envelope[]  $envelopes
+     * @param  array<string, mixed>  $criteria
      */
     public function __construct(array $envelopes, array $criteria)
     {
@@ -24,23 +23,17 @@ final class FilterEvent
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->filter->getResult();
     }
 
-    /**
-     * @return Filter
-     */
-    public function getFilter()
+    public function getFilter(): Filter
     {
         return $this->filter;
     }
 
-    /**
-     * @return void
-     */
-    public function setFilter(Filter $filter)
+    public function setFilter(Filter $filter): void
     {
         $this->filter = $filter;
     }

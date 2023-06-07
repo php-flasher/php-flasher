@@ -1,27 +1,25 @@
 <?php
 
-use Flasher\Prime\Container\FlasherContainer;
-use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
-use Flasher\SweetAlert\Prime\SweetAlertFactory;
+declare(strict_types=1);
 
-if (!function_exists('sweetalert')) {
+namespace Flasher\SweetAlert\Prime;
+
+if (! \function_exists('sweetalert')) {
     /**
-     * @param string               $message
-     * @param string               $type
-     * @param array<string, mixed> $options
-     *
-     * @return Envelope|SweetAlertFactory
+     * @param  array<string, mixed>  $options
      */
-    function sweetalert($message = null, $type = NotificationInterface::SUCCESS, array $options = [])
-    {
-        /** @var SweetAlertFactory $factory */
-        $factory = FlasherContainer::create('flasher.sweetalert');
+    function sweetalert(
+        string $message = null,
+        string $type = \Flasher\Prime\Notification\NotificationInterface::SUCCESS,
+        array $options = [],
+        string $title = null,
+    ): \Flasher\Prime\Notification\Envelope|SweetAlertFactory {
+        $factory = \Flasher\Prime\Container\FlasherContainer::getInstance()->create('flasher.sweetalert');
 
-        if (0 === func_num_args()) {
+        if (0 === \func_num_args()) {
             return $factory;
         }
 
-        return $factory->addFlash($type, $message, $options);
+        return $factory->flash($type, $message, $options, $title);
     }
 }

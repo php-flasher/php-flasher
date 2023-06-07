@@ -1,42 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\Event;
+
+use Flasher\Prime\Response\Response;
 
 final class ResponseEvent
 {
-    private $response;
-
-    /**
-     * @var string
-     */
-    private $presenter;
-
-    /**
-     * @param string $presenter
-     */
-    public function __construct($response, $presenter)
-    {
-        $this->response = $response;
-        $this->presenter = $presenter;
+    public function __construct(
+        private mixed $response,
+        private readonly string $presenter,
+    ) {
     }
 
-    public function getResponse()
+    public function getResponse(): mixed
     {
         return $this->response;
     }
 
-    /**
-     * @return void
-     */
-    public function setResponse($response)
+    public function setResponse(mixed $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return string
-     */
-    public function getPresenter()
+    public function getPresenter(): string
     {
         return $this->presenter;
     }

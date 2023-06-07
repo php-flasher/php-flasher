@@ -1,37 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Response\Resource;
 
 use Flasher\Prime\Response\Response;
 
 interface ResourceManagerInterface
 {
-    /**
-     * @return Response
-     */
-    public function buildResponse(Response $response);
+    public function populateResponse(Response $response): Response;
 
     /**
-     * @param string   $handler
-     * @param string[] $scripts
-     *
-     * @return void
+     * @param  string[]  $scripts
      */
-    public function addScripts($handler, array $scripts);
+    public function addScripts(string $handler, array $scripts): void;
 
     /**
-     * @param string   $handler
-     * @param string[] $styles
-     *
-     * @return void
+     * @param  string[]  $styles
      */
-    public function addStyles($handler, array $styles);
+    public function addStyles(string $handler, array $styles): void;
 
     /**
-     * @param string               $handler
-     * @param array<string, mixed> $options
-     *
-     * @return void
+     * @param  array<string, mixed>  $options
      */
-    public function addOptions($handler, array $options);
+    public function addOptions(string $handler, array $options): void;
 }

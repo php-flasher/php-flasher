@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Middleware;
 
 use Flasher\Laravel\Http\Request;
@@ -10,14 +12,8 @@ use Illuminate\Http\Response as LaravelResponse;
 
 final class FlasherMiddleware
 {
-    /**
-     * @var ResponseExtension
-     */
-    private $responseExtension;
-
-    public function __construct(ResponseExtension $responseExtension)
+    public function __construct(private readonly ResponseExtension $responseExtension)
     {
-        $this->responseExtension = $responseExtension;
     }
 
     /**

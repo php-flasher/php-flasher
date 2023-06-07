@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Http;
 
 use Flasher\Prime\Http\ResponseInterface;
@@ -9,16 +11,10 @@ use Illuminate\Http\Response as LaravelResponse;
 final class Response implements ResponseInterface
 {
     /**
-     * @var LaravelJsonResponse|LaravelResponse
+     * @param  LaravelJsonResponse|LaravelResponse  $response
      */
-    private $response;
-
-    /**
-     * @param LaravelJsonResponse|LaravelResponse $response
-     */
-    public function __construct($response)
+    public function __construct(private $response)
     {
-        $this->response = $response;
     }
 
     public function isRedirection()
@@ -31,14 +27,14 @@ final class Response implements ResponseInterface
         return $this->response instanceof LaravelJsonResponse;
     }
 
-    public function isHtml()
+    public function isHtml(): bool
     {
         $contentType = $this->response->headers->get('Content-Type');
 
         return false !== stripos($contentType, 'html'); // @phpstan-ignore-line
     }
 
-    public function isAttachment()
+    public function isAttachment(): bool
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
@@ -50,7 +46,7 @@ final class Response implements ResponseInterface
         return $this->response->getContent(); // @phpstan-ignore-line
     }
 
-    public function setContent($content)
+    public function setContent($content): void
     {
         $this->response->setContent($content);
     }

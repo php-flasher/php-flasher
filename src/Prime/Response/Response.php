@@ -1,104 +1,83 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Response;
 
 use Flasher\Prime\Notification\Envelope;
 
 final class Response
 {
-    /**
-     * @var Envelope[]
-     */
-    private $envelopes;
-
-    /**
-     * @var string|null
-     */
-    private $rootScript;
+    private string $rootScript = '';
 
     /**
      * @var string[]
      */
-    private $scripts = [];
+    private array $scripts = [];
 
     /**
      * @var string[]
      */
-    private $styles = [];
+    private array $styles = [];
 
     /**
      * @var array<string, array<string, mixed>>
      */
-    private $options = [];
+    private array $options = [];
 
     /**
-     * @var array<string, mixed>
+     * @param  Envelope[]  $envelopes
+     * @param  array<string, mixed>  $context
      */
-    private $context;
-
-    /**
-     * @param Envelope[]           $envelopes
-     * @param array<string, mixed> $context
-     */
-    public function __construct(array $envelopes, array $context)
-    {
-        $this->envelopes = $envelopes;
-        $this->context = $context;
+    public function __construct(
+        private readonly array $envelopes,
+        private readonly array $context,
+    ) {
     }
 
     /**
-     * @param string[] $scripts
-     *
-     * @return void
+     * @param  string[]  $scripts
      */
-    public function addScripts(array $scripts)
+    public function addScripts(array $scripts): void
     {
-        $this->scripts = array_merge($this->scripts, $scripts);
+        $scripts = array_merge($this->scripts, $scripts);
+        $scripts = array_filter(array_unique($scripts));
+        $this->scripts = array_values($scripts);
     }
 
     /**
-     * @param string[] $styles
-     *
-     * @return void
+     * @param  string[]  $styles
      */
-    public function addStyles(array $styles)
+    public function addStyles(array $styles): void
     {
-        $this->styles = array_merge($this->styles, $styles);
+        $styles = array_merge($this->styles, $styles);
+        $styles = array_filter(array_unique($styles));
+        $this->styles = array_values($styles);
     }
 
     /**
-     * @param string               $alias
-     * @param array<string, mixed> $options
-     *
-     * @return void
+     * @param  array<string, mixed>  $options
      */
-    public function addOptions($alias, array $options)
+    public function addOptions(string $alias, array $options): void
     {
+        $options = array_merge($this->options[$alias] ?? [], $options);
         $this->options[$alias] = $options;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->envelopes;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRootScript()
+    public function getRootScript(): string
     {
         return $this->rootScript;
     }
 
-    /**
-     * @param string|null $rootScript
-     *
-     * @return void
-     */
-    public function setRootScript($rootScript)
+    public function setRootScript(string $rootScript): void
     {
         $this->rootScript = $rootScript;
     }
@@ -106,23 +85,23 @@ final class Response
     /**
      * @return string[]
      */
-    public function getStyles()
+    public function getStyles(): array
     {
-        return array_values(array_filter(array_unique($this->styles)));
+        return $this->styles;
     }
 
     /**
      * @return string[]
      */
-    public function getScripts()
+    public function getScripts(): array
     {
-        return array_values(array_filter(array_unique($this->scripts)));
+        return $this->scripts;
     }
 
     /**
      * @return array<string, array<string, mixed>>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -130,31 +109,36 @@ final class Response
     /**
      * @return array<string, mixed>
      */
-    public function getContext()
+    public function getContext(): array
     {
         return $this->context;
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array{
+     *     envelopes: array<array{
+     *         title: string,
+     *         message: string,
+     *         type: string,
+     *         options: array<string, mixed>,
+     *         stamps: array<string, mixed>,
+     *     }>,
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, array<string, mixed>>,
+     *     context: array<string, mixed>,
+     * }
      */
-    public function toArray($filter = false)
+    public function toArray(): array
     {
-        $envelopes = array_map(function (Envelope $envelope) {
-            return $envelope->toArray();
-        }, $this->getEnvelopes());
+        $envelopes = array_map(static fn (Envelope $envelope): array => $envelope->toArray(), $this->getEnvelopes());
 
-        $response = [
+        return [
             'envelopes' => $envelopes,
             'scripts' => $this->getScripts(),
             'styles' => $this->getStyles(),
             'options' => $this->getOptions(),
+            'context' => $this->getContext(),
         ];
-
-        if (false === $filter) {
-            return $response;
-        }
-
-        return array_filter($response);
     }
 }

@@ -1,20 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Translation;
 
 interface TranslatorInterface
 {
     /**
-     * @param string               $id
-     * @param array<string, mixed> $parameters
-     * @param string|null          $locale
-     *
-     * @return string
+     * @param  array<string, mixed>  $parameters
      */
-    public function translate($id, $parameters = [], $locale = null);
+    public function translate(string $id, array $parameters = [], string $locale = null): string;
 
-    /**
-     * @return string
-     */
-    public function getLocale();
+    public function getLocale(): string;
 }

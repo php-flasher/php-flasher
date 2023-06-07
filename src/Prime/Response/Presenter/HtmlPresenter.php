@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Response\Presenter;
 
 use Flasher\Prime\Response\Response;
@@ -10,13 +12,13 @@ final class HtmlPresenter implements PresenterInterface
     public const HEAD_END_PLACE_HOLDER = '</head>';
     public const BODY_END_PLACE_HOLDER = '</body>';
 
-    public function render(Response $response)
+    public function render(Response $response): string
     {
-        $options = json_encode($response->toArray(true));
+        $options = json_encode($response->toArray());
         $context = $response->getContext();
 
         if (isset($context['envelopes_only']) && true === $context['envelopes_only']) {
-            return $options;
+            return $options ?: '';
         }
 
         $rootScript = $response->getRootScript();

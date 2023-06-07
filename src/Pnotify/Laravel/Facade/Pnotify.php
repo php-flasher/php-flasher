@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Pnotify\Laravel\Facade;
 
 use Flasher\Pnotify\Prime\PnotifyBuilder;
@@ -60,7 +62,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static PnotifyBuilder confirm(string $confirm, mixed $value)
  * @method static PnotifyBuilder history(string $history, mixed $value)
  */
-class Pnotify extends Facade
+final class Pnotify extends Facade
 {
     protected static function getFacadeAccessor()
     {

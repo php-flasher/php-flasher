@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Http;
 
 use Flasher\Prime\FlasherInterface;
@@ -7,14 +9,8 @@ use Flasher\Prime\Response\Presenter\HtmlPresenter;
 
 final class ResponseExtension
 {
-    /**
-     * @var FlasherInterface
-     */
-    private $flasher;
-
-    public function __construct(FlasherInterface $flasher)
+    public function __construct(private readonly FlasherInterface $flasher)
     {
-        $this->flasher = $flasher;
     }
 
     /**
@@ -22,12 +18,12 @@ final class ResponseExtension
      */
     public function render(RequestInterface $request, ResponseInterface $response)
     {
-        if (!$this->isRenderable($request, $response)) {
+        if (! $this->isRenderable($request, $response)) {
             return $response;
         }
 
         $content = $response->getContent() ?: '';
-        if (!\is_string($content)) {
+        if (! \is_string($content)) {
             return $response;
         }
 
@@ -55,7 +51,7 @@ final class ResponseExtension
             return $response;
         }
 
-        $htmlResponse = "\n".str_replace("\n", '', $htmlResponse)."\n";
+        $htmlResponse = "\n".str_replace("\n", '', (string) $htmlResponse)."\n";
         $offset = $alreadyRendered ? strlen(HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER) : 0;
 
         $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + $offset);
@@ -64,16 +60,28 @@ final class ResponseExtension
         return $response;
     }
 
-    /**
-     * @return bool
-     */
-    private function isRenderable(RequestInterface $request, ResponseInterface $response)
+    private function isRenderable(RequestInterface $request, ResponseInterface $response): bool
     {
-        return !$request->isXmlHttpRequest()
-            && $request->isHtmlRequestFormat()
-            && !$response->isRedirection()
-            && $response->isHtml()
-            && !$response->isAttachment()
-            && !$response->isJson();
+        if ($request->isXmlHttpRequest()) {
+            return false;
+        }
+
+        if (! $request->isHtmlRequestFormat()) {
+            return false;
+        }
+
+        if ($response->isRedirection()) {
+            return false;
+        }
+
+        if (! $response->isHtml()) {
+            return false;
+        }
+
+        if ($response->isAttachment()) {
+            return false;
+        }
+
+        return ! $response->isJson();
     }
 }

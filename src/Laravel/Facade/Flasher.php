@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Laravel\Facade;
 
 use Flasher\Prime\Notification\Envelope;
@@ -33,7 +35,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotificationBuilder handler(string $handler)
  * @method static Envelope            getEnvelope()
  */
-class Flasher extends Facade
+final class Flasher extends Facade
 {
     protected static function getFacadeAccessor()
     {

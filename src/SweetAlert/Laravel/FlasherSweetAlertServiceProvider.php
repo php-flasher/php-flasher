@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\SweetAlert\Laravel;
 
 use Flasher\Laravel\Support\ServiceProvider;
@@ -9,31 +11,28 @@ use Livewire\LivewireManager;
 
 final class FlasherSweetAlertServiceProvider extends ServiceProvider
 {
-    public function createPlugin()
+    public function createPlugin(): SweetAlertPlugin
     {
         return new SweetAlertPlugin();
     }
 
-    protected function afterBoot()
+    protected function afterBoot(): void
     {
         $this->registerLivewireListener();
     }
 
-    /**
-     * @return void
-     */
-    private function registerLivewireListener()
+    private function registerLivewireListener(): void
     {
-        if (!$this->app->bound('livewire')) {
+        if (! $this->app->bound('livewire')) {
             return;
         }
 
         $livewire = $this->app->make('livewire');
-        if (!$livewire instanceof LivewireManager) {
+        if (! $livewire instanceof LivewireManager) {
             return;
         }
 
-        $this->app->extend('flasher.event_dispatcher', function (EventDispatcherInterface $dispatcher) {
+        $this->app->extend('flasher.event_dispatcher', static function (EventDispatcherInterface $dispatcher): EventDispatcherInterface {
             $dispatcher->addSubscriber(new LivewireListener());
 
             return $dispatcher;

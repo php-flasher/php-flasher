@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Command;
 
 use Flasher\Prime\Plugin\PluginInterface;
@@ -13,12 +15,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('flasher:install')
@@ -53,7 +52,7 @@ class InstallCommand extends Command
         /** @var KernelInterface $kernel */
         $kernel = $this->getApplication()->getKernel();
         foreach ($kernel->getBundles() as $bundle) {
-            if (!$bundle instanceof Bundle) {
+            if (! $bundle instanceof Bundle) {
                 continue;
             }
 
@@ -86,12 +85,7 @@ class InstallCommand extends Command
         return $exitCode;
     }
 
-    /**
-     * @param string|null $publicDir
-     *
-     * @return void
-     */
-    private function publishAssets(PluginInterface $plugin, $publicDir)
+    private function publishAssets(PluginInterface $plugin, string $publicDir): void
     {
         if (null === $publicDir) {
             return;
@@ -99,7 +93,7 @@ class InstallCommand extends Command
 
         $originDir = $plugin->getAssetsDir();
 
-        if (!is_dir($originDir)) {
+        if (! is_dir($originDir)) {
             return;
         }
 
@@ -109,14 +103,12 @@ class InstallCommand extends Command
     }
 
     /**
-     * @param string|null $configDir
-     * @param string      $configFile
-     *
-     * @return void
+     * @param  string|null  $configDir
+     * @param  string  $configFile
      */
-    private function publishConfig(PluginInterface $plugin, $configDir, $configFile)
+    private function publishConfig(PluginInterface $plugin, $configDir, $configFile): void
     {
-        if (null === $configDir || !file_exists($configFile)) {
+        if (null === $configDir || ! file_exists($configFile)) {
             return;
         }
 
@@ -179,18 +171,18 @@ class InstallCommand extends Command
     /**
      * @return string|null
      */
-    private function getComposerDir($dir)
+    private function getComposerDir(string $dir)
     {
         $projectDir = $this->getProjectDir();
 
         $composerFilePath = $projectDir.'/composer.json';
 
-        if (!file_exists($composerFilePath)) {
+        if (! file_exists($composerFilePath)) {
             return null;
         }
 
-        $composerConfig = json_decode(file_get_contents($composerFilePath), true);
+        $composerConfig = json_decode(file_get_contents($composerFilePath), true, 512, JSON_THROW_ON_ERROR);
 
-        return isset($composerConfig['extra'][$dir]) ? $composerConfig['extra'][$dir] : null;
+        return $composerConfig['extra'][$dir] ?? null;
     }
 }

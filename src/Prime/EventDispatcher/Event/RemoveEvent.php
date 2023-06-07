@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
@@ -9,35 +11,27 @@ final class RemoveEvent
     /**
      * @var Envelope[]
      */
-    private $envelopesToRemove = [];
+    private array $envelopesToKeep = [];
 
     /**
-     * @var Envelope[]
+     * @param  Envelope[]  $envelopesToRemove
      */
-    private $envelopesToKeep = [];
-
-    /**
-     * @param Envelope[] $envelopesToRemove
-     */
-    public function __construct(array $envelopesToRemove)
+    public function __construct(private array $envelopesToRemove)
     {
-        $this->envelopesToRemove = $envelopesToRemove;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopesToRemove()
+    public function getEnvelopesToRemove(): array
     {
         return $this->envelopesToRemove;
     }
 
     /**
-     * @param Envelope[] $envelopesToRemove
-     *
-     * @return void
+     * @param  Envelope[]  $envelopesToRemove
      */
-    public function setEnvelopesToRemove($envelopesToRemove)
+    public function setEnvelopesToRemove(array $envelopesToRemove): void
     {
         $this->envelopesToRemove = $envelopesToRemove;
     }
@@ -45,17 +39,15 @@ final class RemoveEvent
     /**
      * @return Envelope[]
      */
-    public function getEnvelopesToKeep()
+    public function getEnvelopesToKeep(): array
     {
         return $this->envelopesToKeep;
     }
 
     /**
-     * @param Envelope[] $envelopesToKeep
-     *
-     * @return void
+     * @param  Envelope[]  $envelopesToKeep
      */
-    public function setEnvelopesToKeep($envelopesToKeep)
+    public function setEnvelopesToKeep(array $envelopesToKeep): void
     {
         $this->envelopesToKeep = $envelopesToKeep;
     }

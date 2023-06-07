@@ -1,31 +1,25 @@
 {
     "name": "php-flasher/flasher-laravel",
-    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
-    "license": "MIT",
     "type": "library",
+    "homepage": "https://php-flasher.io",
+    "description": "PHPFlasher Laravel Adapter: Seamlessly integrate powerful flash messaging into your Laravel projects. Boost user engagement and improve user experience with this robust, flexible tool. Designed with developers in mind, PHPFlasher makes managing user feedback in Laravel applications as simple as ever.",
     "keywords": [
         "php-flasher",
-        "flash-messages",
-        "notification-system",
-        "user-feedback",
-        "toastr",
-        "sweetalert",
-        "pnotify",
-        "noty",
-        "notyf",
-        "desktop-notifications",
-        "php",
+        "flash-messaging",
         "laravel",
         "symfony",
-        "javascript",
-        "yoeunes",
-        "framework-agnostic",
-        "phpstorm-auto-complete",
-        "custom-adapter",
+        "php",
+        "noty",
+        "notyf",
+        "pnotify",
+        "sweetalert",
+        "toastr",
+        "user-engagement",
         "user-experience",
-        "rtl",
-        "dark-mode"
+        "developer-tools",
+        "yoeunes"
     ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Younes KHOUBZA",
@@ -34,14 +28,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://php-flasher.io",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {
         "php": ">=5.3",
         "illuminate/support": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
         "php-flasher/flasher": "^1.15.1"
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Laravel\\": ""

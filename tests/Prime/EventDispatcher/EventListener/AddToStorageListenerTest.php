@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
@@ -11,12 +13,9 @@ use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 use Flasher\Tests\Prime\TestCase;
 
-class AddToStorageListenerTest extends TestCase
+final class AddToStorageListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testAddToStorageListener()
+    public function testAddToStorageListener(): void
     {
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);

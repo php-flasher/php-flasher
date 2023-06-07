@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Storage;
 
-class FallbackSession
+final class FallbackSession
 {
-    private static $storage = [];
+    private static array $storage = [];
 
     /**
-     * @param string $name
+     * @param  string  $name
      */
     public function get($name, $default = null)
     {
@@ -17,11 +19,9 @@ class FallbackSession
     }
 
     /**
-     * @param string $name
-     *
-     * @return void
+     * @param  string  $name
      */
-    public function set($name, $value)
+    public function set($name, $value): void
     {
         self::$storage[$name] = $value;
     }

@@ -40,9 +40,7 @@ flasher:
     # You can then specify the local path to the javascript file in the 'local'
     # field of this option.
     #
-    root_script:
-        cdn: 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js'
-        local: '/vendor/flasher/flasher.min.js'
+    root_script: 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js'
 
     # --------------------------------------------------------------------------
     #  PHPFlasher Stylesheet
@@ -59,8 +57,7 @@ flasher:
     # the stylesheet file in the 'local' field of this option.
     #
     styles:
-        cdn: 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css'
-        local: '/vendor/flasher/flasher.min.css'
+        - 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css'
 
     # --------------------------------------------------------------------------
     #  Whether to use CDN for PHPFlasher assets or not
@@ -108,6 +105,20 @@ flasher:
     # need to manually include the necessary files in your application's layout.
     #
     auto_render: true
+
+    presets:
+        created:
+            type: 'success'
+            message: 'The resource was created'
+        updated:
+            type: 'success'
+            message: 'The resource was updated'
+        saved:
+            type: 'success'
+            message: 'The resource was saved'
+        deleted:
+            type: 'success'
+            message: 'The resource was deleted'
 
     flash_bag:
         # -----------------------------------------------------------------------

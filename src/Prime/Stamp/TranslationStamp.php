@@ -1,45 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class TranslationStamp implements StampInterface
 {
     /**
-     * @var array<string, mixed>
+     * @param  array<string, mixed>  $parameters
      */
-    private $parameters;
-
-    /**
-     * @var string|null
-     */
-    private $locale;
-
-    /**
-     * @param array<string, mixed> $parameters
-     * @param string|null          $locale
-     */
-    public function __construct($parameters = [], $locale = null)
-    {
-        $order = self::parametersOrder($parameters, $locale);
-        $parameters = $order['parameters'];
-        $locale = $order['locale'];
-
-        $this->parameters = $parameters;
-        $this->locale = $locale;
+    public function __construct(
+        private readonly array $parameters = [],
+        private readonly ?string $locale = null,
+    ) {
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }

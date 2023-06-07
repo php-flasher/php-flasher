@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\DependencyInjection;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
@@ -9,126 +11,156 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function __construct(private readonly FlasherPlugin $plugin)
     {
-        $plugin = new FlasherPlugin();
+    }
 
-        $treeBuilder = new TreeBuilder($plugin->getName());
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder($this->plugin->getName());
 
-        $rootNode = method_exists($treeBuilder, 'getRootNode')
-            ? $treeBuilder->getRootNode()
-            : $treeBuilder->root($plugin->getName()); // @phpstan-ignore-line
+        /** @var ArrayNodeDefinition $rootNode */
+        $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
-             ->beforeNormalization()
-                ->always(function ($v) use ($plugin) {
-                    return $plugin->normalizeConfig($v);
-                })
-            ->end()
-            ->children()
-                ->scalarNode('default')
-                    ->cannotBeEmpty()
-                    ->defaultValue($plugin->getDefault())
-                ->end()
-                ->arrayNode('root_script')
-                    ->prototype('scalar')->end()
-                    ->defaultValue($plugin->getRootScript())
-                ->end()
-                ->arrayNode('scripts')
-                    ->prototype('variable')->end()
-                ->end()
-                ->arrayNode('styles')
-                    ->prototype('variable')->end()
-                    ->defaultValue($plugin->getStyles())
-                ->end()
-                ->arrayNode('options')
-                    ->prototype('scalar')->end()
-                ->end()
-                ->booleanNode('use_cdn')->defaultTrue()->end()
-                ->booleanNode('auto_translate')->defaultTrue()->end()
-                ->booleanNode('auto_render')->defaultTrue()->end()
-                ->arrayNode('filter_criteria')
-                    ->prototype('scalar')->end()
-                ->end()
-            ->end()
-        ;
-
+        $this->normalizeConfig($rootNode);
+        $this->addGeneralSection($rootNode);
         $this->addThemesSection($rootNode);
-        $this->addFlashBagSection($rootNode, $plugin);
+        $this->addFlashBagSection($rootNode);
         $this->addPresetsSection($rootNode);
+        $this->addPluginsSection($rootNode);
 
         return $treeBuilder;
     }
 
-    /**
-     * @return void
-     */
-    private function addThemesSection(ArrayNodeDefinition $rootNode)
+    private function normalizeConfig(ArrayNodeDefinition $rootNode): void
     {
-        $rootNode // @phpstan-ignore-line
-            ->children()
-                ->arrayNode('themes')
-                    ->ignoreExtraKeys()
-                    ->prototype('variable')->end()
-                    ->children()
-                        ->scalarNode('view')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                        ->end()
-                        ->arrayNode('styles')->end()
-                        ->arrayNode('scripts')->end()
-                        ->arrayNode('options')->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
+        $rootNode
+            ->beforeNormalization()
+                ->always(fn ($v) => $this->plugin->normalizeConfig($v))
+            ->end();
     }
 
-    /**
-     * @return void
-     */
-    private function addFlashBagSection(ArrayNodeDefinition $rootNode, FlasherPlugin $plugin)
+    private function addGeneralSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->children()
+                ->scalarNode('default')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                    ->defaultValue($this->plugin->getDefault())
+                ->end()
+                ->scalarNode('root_script')
+                    ->defaultValue($this->plugin->getRootScript())
+                ->end()
+                ->arrayNode('scripts')
+                    ->scalarPrototype()->end()
+                ->end()
+                ->arrayNode('styles')
+                    ->scalarPrototype()->end()
+                    ->defaultValue($this->plugin->getStyles())
+                ->end()
+                ->arrayNode('options')
+                    ->variablePrototype()->end()
+                ->end()
+                ->booleanNode('use_cdn')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('auto_translate')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('auto_render')
+                    ->defaultTrue()
+                ->end()
+                ->arrayNode('filter_criteria')
+                    ->variablePrototype()->end()
+                ->end()
+            ->end();
+    }
+
+    private function addThemesSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode // @phpstan-ignore-line
+            ->fixXmlConfig('theme')
+            ->children()
+                ->arrayNode('themes')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->arrayNode('styles')
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('scripts')
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('options')
+                                ->variablePrototype()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addFlashBagSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode // @phpstan-ignore-line
             ->children()
                 ->arrayNode('flash_bag')
-                    ->canBeUnset()
-                    ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('enabled')->defaultTrue()->end()
+                        ->booleanNode('enabled')
+                            ->defaultTrue()
+                        ->end()
                         ->arrayNode('mapping')
-                            ->prototype('variable')->end()
-                            ->defaultValue($plugin->getFlashBagMapping())
+                            ->useAttributeAsKey('name')
+                            ->variablePrototype()->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
-    /**
-     * @return void
-     */
-    private function addPresetsSection(ArrayNodeDefinition $rootNode)
+    private function addPresetsSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode // @phpstan-ignore-line
+            ->fixXmlConfig('preset')
             ->children()
                 ->arrayNode('presets')
-                    ->prototype('array')
-                    ->children()
-                        ->scalarNode('type')->end()
-                        ->scalarNode('title')->end()
-                        ->scalarNode('message')->end()
-                        ->arrayNode('options')
-                            ->useAttributeAsKey('name')
-                            ->prototype('variable')->end()
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('type')->end()
+                            ->scalarNode('title')->end()
+                            ->scalarNode('message')->end()
+                            ->arrayNode('options')
+                                ->variablePrototype()->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
+    }
+
+    private function addPluginsSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode // @phpstan-ignore-line
+            ->fixXmlConfig('plugin')
+            ->children()
+                ->arrayNode('plugins')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->arrayNode('styles')
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('scripts')
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('options')
+                                ->variablePrototype()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

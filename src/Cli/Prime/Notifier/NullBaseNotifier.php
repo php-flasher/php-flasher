@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\Notifier;
 
 final class NullBaseNotifier extends BaseNotifier
 {
-    public function send($notification)
+    public function send($notification): void
     {
     }
 
-    public function isSupported()
+    public function isSupported(): bool
     {
         return false;
     }
 
-    public function getBinary()
+    public function getBinary(): string
     {
         return '';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Filter\Specification;
 
 use Flasher\Prime\Notification\Envelope;
@@ -9,10 +11,10 @@ final class AndSpecification implements SpecificationInterface
     /**
      * @var SpecificationInterface[]
      */
-    private $specifications;
+    private array $specifications = [];
 
     /**
-     * @param SpecificationInterface|SpecificationInterface[] $specifications
+     * @param  SpecificationInterface|SpecificationInterface[]  $specifications
      */
     public function __construct($specifications)
     {
@@ -21,10 +23,10 @@ final class AndSpecification implements SpecificationInterface
         $this->specifications = $specifications;
     }
 
-    public function isSatisfiedBy(Envelope $envelope)
+    public function isSatisfiedBy(Envelope $envelope): bool
     {
         foreach ($this->specifications as $specification) {
-            if (!$specification->isSatisfiedBy($envelope)) {
+            if (! $specification->isSatisfiedBy($envelope)) {
                 return false;
             }
         }

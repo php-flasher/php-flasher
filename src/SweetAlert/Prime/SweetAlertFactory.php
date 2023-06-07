@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\SweetAlert\Prime;
 
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
  * @mixin SweetAlertBuilder
  */
 final class SweetAlertFactory extends NotificationFactory
 {
-    public function createNotificationBuilder()
+    public function createNotificationBuilder(): NotificationBuilderInterface
     {
-        return new SweetAlertBuilder($this->getStorageManager(), new Notification(), 'sweetalert');
+        return new SweetAlertBuilder(new Notification(), $this->storageManager);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Toastr\Laravel\Facade;
 
 use Flasher\Prime\Notification\Envelope;
@@ -67,7 +69,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static ToastrBuilder toastClass(string $toastClass)
  * @method static ToastrBuilder persistent()
  */
-class Toastr extends Facade
+final class Toastr extends Facade
 {
     protected static function getFacadeAccessor()
     {

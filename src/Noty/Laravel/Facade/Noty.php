@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Noty\Laravel\Facade;
 
 use Flasher\Noty\Prime\NotyBuilder;
@@ -51,7 +53,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotyBuilder buttons(array $buttons)
  * @method static NotyBuilder visibilityControl(bool $visibilityControl)
  */
-class Noty extends Facade
+final class Noty extends Facade
 {
     protected static function getFacadeAccessor()
     {

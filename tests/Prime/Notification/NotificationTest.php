@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Notification;
 use Flasher\Tests\Prime\TestCase;
 
-class NotificationTest extends TestCase
+final class NotificationTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testType()
+    public function testType(): void
     {
         $notification = new Notification();
 
@@ -21,10 +20,7 @@ class NotificationTest extends TestCase
         $this->assertEquals('success', $notification->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testMessage()
+    public function testMessage(): void
     {
         $notification = new Notification();
 
@@ -35,10 +31,7 @@ class NotificationTest extends TestCase
         $this->assertEquals('success message', $notification->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testTitle()
+    public function testTitle(): void
     {
         $notification = new Notification();
 
@@ -49,10 +42,7 @@ class NotificationTest extends TestCase
         $this->assertEquals('success title', $notification->getTitle());
     }
 
-    /**
-     * @return void
-     */
-    public function testOptions()
+    public function testOptions(): void
     {
         $notification = new Notification();
 
@@ -63,10 +53,7 @@ class NotificationTest extends TestCase
         $this->assertEquals(['timeout' => 2500], $notification->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testOption()
+    public function testOption(): void
     {
         $notification = new Notification();
 
@@ -77,10 +64,7 @@ class NotificationTest extends TestCase
         $this->assertEquals(2500, $notification->getOption('timeout'));
     }
 
-    /**
-     * @return void
-     */
-    public function testUnsetOption()
+    public function testUnsetOption(): void
     {
         $notification = new Notification();
         $notification->setOptions(['timeout' => 2500, 'position' => 'center']);
@@ -92,10 +76,7 @@ class NotificationTest extends TestCase
         $this->assertEquals(['position' => 'center'], $notification->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testToArray()
+    public function testToArray(): void
     {
         $notification = new Notification();
         $notification->setType('success');

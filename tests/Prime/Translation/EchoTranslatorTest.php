@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Tests\Prime\Translation;
 
 use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Tests\Prime\TestCase;
 
-class EchoTranslatorTest extends TestCase
+final class EchoTranslatorTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testEchoTranslator()
+    public function testEchoTranslator(): void
     {
         $translator = new EchoTranslator();
 

@@ -1,32 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Prime\Stamp;
 
 final class ContextStamp implements StampInterface, PresentableStampInterface
 {
     /**
-     * @var mixed[]
+     * @param  array<string, mixed>  $context
      */
-    private $context;
-
-    /**
-     * @param mixed[] $context
-     */
-    public function __construct(array $context)
+    public function __construct(private readonly array $context)
     {
-        $this->context = $context;
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
-    public function getContext()
+    public function getContext(): array
     {
         return $this->context;
     }
 
-    public function toArray()
+    /**
+     * @return array{context: array<string, mixed>}
+     */
+    public function toArray(): array
     {
-        return ['context' => $this->getContext()];
+        return ['context' => $this->context];
     }
 }

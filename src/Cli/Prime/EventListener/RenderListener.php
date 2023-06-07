@@ -1,22 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Cli\Prime\EventListener;
 
 use Flasher\Cli\Prime\Presenter\CliPresenter;
 use Flasher\Prime\EventDispatcher\Event\PostPersistEvent;
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 use Flasher\Prime\FlasherInterface;
 
-final class RenderListener implements EventSubscriberInterface
+final class RenderListener implements EventListenerInterface
 {
-    /**
-     * @var FlasherInterface
-     */
-    private $flasher;
-
-    public function __construct(FlasherInterface $flasher)
+    public function __construct(private readonly FlasherInterface $flasher)
     {
-        $this->flasher = $flasher;
     }
 
     /**
@@ -31,8 +27,8 @@ final class RenderListener implements EventSubscriberInterface
         $this->flasher->render([], CliPresenter::NAME);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): string|array
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PostPersistEvent';
+        return \Flasher\Prime\EventDispatcher\Event\PostPersistEvent::class;
     }
 }
