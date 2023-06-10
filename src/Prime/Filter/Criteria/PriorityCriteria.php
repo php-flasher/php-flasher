@@ -9,18 +9,26 @@ use Flasher\Prime\Stamp\PriorityStamp;
 
 final class PriorityCriteria implements CriteriaInterface
 {
-    public function __construct(
-        private readonly ?int $minPriority,
-        private readonly ?int $maxPriority = null
-    ) {
+    use ExtractRange;
+
+    private ?int $minPriority;
+
+    private ?int $maxPriority;
+
+    public function __construct(mixed $criteria)
+    {
+        $criteria = $this->extractRange('priority', $criteria);
+
+        $this->minPriority = $criteria['min'];
+        $this->maxPriority = $criteria['max'];
     }
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $e) => $this->isSatisfiedBy($e));
+        return array_filter($envelopes, fn (Envelope $e) => $this->match($e));
     }
 
-    public function isSatisfiedBy(Envelope $envelope): bool
+    public function match(Envelope $envelope): bool
     {
         $stamp = $envelope->get(PriorityStamp::class);
 

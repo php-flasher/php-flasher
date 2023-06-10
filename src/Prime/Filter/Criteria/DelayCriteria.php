@@ -9,18 +9,26 @@ use Flasher\Prime\Stamp\DelayStamp;
 
 final class DelayCriteria implements CriteriaInterface
 {
-    public function __construct(
-        private readonly ?int $minDelay,
-        private readonly ?int $maxDelay = null,
-    ) {
+    use ExtractRange;
+
+    private ?int $minDelay;
+
+    private ?int $maxDelay;
+
+    public function __construct(mixed $criteria)
+    {
+        $criteria = $this->extractRange('priority', $criteria);
+
+        $this->minDelay = $criteria['min'];
+        $this->maxDelay = $criteria['max'];
     }
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $e) => $this->isSatisfiedBy($e));
+        return array_filter($envelopes, fn (Envelope $e) => $this->match($e));
     }
 
-    public function isSatisfiedBy(Envelope $envelope): bool
+    public function match(Envelope $envelope): bool
     {
         $stamp = $envelope->get(DelayStamp::class);
 

@@ -6,8 +6,15 @@ namespace Flasher\Prime\Filter\Criteria;
 
 class LimitCriteria implements CriteriaInterface
 {
-    public function __construct(private readonly int $limit)
+    private int $limit;
+
+    public function __construct(mixed $criteria)
     {
+        if (! is_int($criteria)) {
+            throw new \InvalidArgumentException("Invalid type for criteria 'limit'.");
+        }
+
+        $this->limit = $criteria;
     }
 
     public function apply(array $envelopes): array

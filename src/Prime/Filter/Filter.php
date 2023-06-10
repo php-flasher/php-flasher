@@ -9,22 +9,13 @@ use Flasher\Prime\Notification\Envelope;
 
 final class Filter
 {
-    public const ASC = 'ASC';
-    public const DESC = 'DESC';
-
     /**
      * @var CriteriaInterface[]
      */
     private array $criteriaChain = [];
 
-    public function addCriteria(CriteriaInterface $criteria): void
-    {
-        $this->criteriaChain[] = $criteria;
-    }
-
     /**
-     * @param Envelope[] $envelopes
-     *
+     * @param  Envelope[]  $envelopes
      * @return Envelope[]
      */
     public function apply(array $envelopes): array
@@ -34,5 +25,10 @@ final class Filter
         }
 
         return $envelopes;
+    }
+
+    public function addCriteria(CriteriaInterface $criteria): void
+    {
+        $this->criteriaChain[] = $criteria;
     }
 }

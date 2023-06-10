@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Filter;
 
-use Flasher\Prime\Filter\CriteriaBuilder;
 use Flasher\Prime\Filter\Filter;
+use Flasher\Prime\Filter\FilterFactory;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\CreatedAtStamp;
@@ -21,7 +21,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['priority' => 2];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getPriority();
 
         $specification = $this->getProperty($filter, 'specification');
@@ -36,7 +36,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['hops' => 2];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getHops();
 
         $specification = $this->getProperty($filter, 'specification');
@@ -51,7 +51,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['delay' => 2];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getDelay();
 
         $specification = $this->getProperty($filter, 'specification');
@@ -67,7 +67,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['life' => 2];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getLife();
 
         $specification = $this->getProperty($filter, 'specification');
@@ -82,7 +82,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['order_by' => 'priority'];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getOrderBy();
 
         $orderings = $this->getProperty($filter, 'orderings');
@@ -95,7 +95,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['stamps' => 'preset'];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getStamps();
 
         $specification = $this->getProperty($filter, 'specification');
@@ -113,7 +113,7 @@ final class CriteriaBuilderTest extends TestCase
         $filter = $this->getFilter();
         $criteria = ['filter' => $callback];
 
-        $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
+        $criteriaBuilder = new FilterFactory($filter, $criteria);
         $criteriaBuilder->getCallback();
 
         $specification = $this->getProperty($filter, 'specification');
