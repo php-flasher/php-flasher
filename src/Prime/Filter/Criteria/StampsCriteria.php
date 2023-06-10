@@ -2,24 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter\Specification;
+namespace Flasher\Prime\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 
-final class StampsSpecification implements SpecificationInterface
+final class StampsCriteria implements CriteriaInterface
 {
-    /**
-     * @var string
-     */
     public const STRATEGY_AND = 'and';
-
-    /**
-     * @var string
-     */
     public const STRATEGY_OR = 'or';
 
     /**
-     * @var array|string[]
+     * @var string[] $stamps
      */
     private readonly array $stamps;
 
@@ -27,9 +20,14 @@ final class StampsSpecification implements SpecificationInterface
      * @param  string|string[]  $stamps
      * @param  string  $strategy
      */
-    public function __construct($stamps, private $strategy)
+    public function __construct(string|array $stamps, private readonly string $strategy)
     {
         $this->stamps = (array) $stamps;
+    }
+
+    public function apply(array $envelopes): array
+    {
+        return array_filter($envelopes, fn(Envelope $e) => $this->isSatisfiedBy($e));
     }
 
     public function isSatisfiedBy(Envelope $envelope): bool

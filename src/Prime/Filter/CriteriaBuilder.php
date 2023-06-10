@@ -4,102 +4,133 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Filter;
 
-use Flasher\Prime\Filter\Specification\CallbackSpecification;
-use Flasher\Prime\Filter\Specification\DelaySpecification;
-use Flasher\Prime\Filter\Specification\HopsSpecification;
-use Flasher\Prime\Filter\Specification\PrioritySpecification;
-use Flasher\Prime\Filter\Specification\StampsSpecification;
+use Flasher\Prime\Filter\Criteria\DelayCriteria;
+use Flasher\Prime\Filter\Criteria\HopsCriteria;
+use Flasher\Prime\Filter\Criteria\PriorityCriteria;
+use Flasher\Prime\Filter\Criteria\StampsCriteria;
+use Flasher\Prime\Stamp\ContextStamp;
+use Flasher\Prime\Stamp\CreatedAtStamp;
+use Flasher\Prime\Stamp\DelayStamp;
+use Flasher\Prime\Stamp\HandlerStamp;
+use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\PresetStamp;
+use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Stamp\TranslationStamp;
+use Flasher\Prime\Stamp\UnlessStamp;
+use Flasher\Prime\Stamp\WhenStamp;
+use Flasher\Prime\Filter\Criteria\CriteriaInterface;
 
 final class CriteriaBuilder
 {
     /**
      * @var array<string, class-string<StampInterface>>
      */
-    public $aliases = [
-        'context' => \Flasher\Prime\Stamp\ContextStamp::class,
-        'created_at' => \Flasher\Prime\Stamp\CreatedAtStamp::class,
-        'delay' => \Flasher\Prime\Stamp\DelayStamp::class,
-        'handler' => \Flasher\Prime\Stamp\HandlerStamp::class,
-        'hops' => \Flasher\Prime\Stamp\HopsStamp::class,
-        'preset' => \Flasher\Prime\Stamp\PresetStamp::class,
-        'priority' => \Flasher\Prime\Stamp\PriorityStamp::class,
-        'translation' => \Flasher\Prime\Stamp\TranslationStamp::class,
-        'unless' => \Flasher\Prime\Stamp\UnlessStamp::class,
-        'uuid' => \Flasher\Prime\Stamp\IdStamp::class,
-        'view' => \Flasher\Prime\Stamp\ViewStamp::class,
-        'when' => \Flasher\Prime\Stamp\WhenStamp::class,
+    public array $aliases = [
+        'context' => ContextStamp::class,
+        'created_at' => CreatedAtStamp::class,
+        'delay' => DelayStamp::class,
+        'handler' => HandlerStamp::class,
+        'hops' => HopsStamp::class,
+        'preset' => PresetStamp::class,
+        'priority' => PriorityStamp::class,
+        'translation' => TranslationStamp::class,
+        'unless' => UnlessStamp::class,
+        'uuid' => IdStamp::class,
+        'when' => WhenStamp::class,
     ];
 
     /**
-     * @param  array<string, mixed>  $criteria
+     * @var array<string, class-string<CriteriaInterface>>
      */
-    public function __construct(private readonly Filter $filter, private array $criteria)
-    {
+    protected static $customCriteria = [];
+
+    /**
+     * @param  array{
+     *     priority?: int|array{min?: int, max?: int},
+     *     hops?: int|array{min?: int, max?: int},
+     *     delay?: int|array{min?: int, max?: int},
+     *     life?: int|array{min?: int, max?: int},
+     * } $criteria
+     */
+    public function __construct(
+        private readonly CriteriaChain $criteriaChain,
+        private readonly array $criteria,
+    ) {
     }
 
-    public function build(): void
+    public function build(array $config): CriteriaChain
     {
-        $this->buildPriority();
-        $this->buildHops();
-        $this->buildDelay();
-        $this->buildLife();
-        $this->buildOrder();
-        $this->buildLimit();
-        $this->buildStamps();
-        $this->buildCallback();
-    }
+        $chain = new CriteriaChain();
 
-    public function buildPriority(): void
-    {
-        if (! isset($this->criteria['priority'])) {
-            return;
+        foreach ($config as $name => $value) {
+            if (!isset($this->criteria[$name])) {
+                throw new \InvalidArgumentException("Criteria '{$name}' is not registered.");
+            }
+
+            $criteria = match ($name) {
+                'priority' => $this->buildPriority($value),
+                'hops' => $this->buildHops($value),
+                'delay' => $this->buildDelay($value),
+                'life' => $this->buildLife($value),
+                'order_by' => $this->buildOrder($value),
+                'limit' => $this->buildLimit($value),
+                'stamps' => $this->buildStamps($value),
+                'filter' => $this->buildCallback($value),
+                default => $this->getCustomCriteria($name, $value)
+            };
+
+            $chain->addCriteria($criteria);
         }
 
-        $criteria = $this->extractMinMax($this->criteria['priority']);
-
-        $this->filter->addSpecification(new PrioritySpecification($criteria['min'], $criteria['max']));
+        return $chain;
     }
 
-    public function buildHops(): void
+    public function registerCriteria(string $name, CriteriaInterface $criteria): void
     {
-        if (! isset($this->criteria['hops'])) {
-            return;
+        $this->customCriteria[$name] = $criteria;
+    }
+
+    private function getCustomCriteria(string $criteriaName, $value): ?CriteriaInterface
+    {
+        if (isset($this->customCriteria[$criteriaName])) {
+            return $this->customCriteria[$criteriaName]->withValue($value);
         }
 
+        return null;
+    }
+
+    public function buildPriority(array $criteria): CriteriaInterface
+    {
+        $criteria = $this->extractMinMax($criteria['priority']);
+
+        return new PriorityCriteria($criteria['min'], $criteria['max']);
+    }
+
+    public function buildHops(): CriteriaInterface
+    {
         $criteria = $this->extractMinMax($this->criteria['hops']);
 
-        $this->filter->addSpecification(new HopsSpecification($criteria['min'], $criteria['max']));
+        return new HopsCriteria($criteria['min'], $criteria['max']);
     }
 
-    public function buildDelay(): void
+    public function buildDelay(): CriteriaInterface
     {
-        if (! isset($this->criteria['delay'])) {
-            return;
-        }
-
         $criteria = $this->extractMinMax($this->criteria['delay']);
 
-        $this->filter->addSpecification(new DelaySpecification($criteria['min'], $criteria['max']));
+        return new DelayCriteria($criteria['min'], $criteria['max']);
     }
 
-    public function buildLife(): void
+    public function buildLife(): CriteriaInterface
     {
-        if (! isset($this->criteria['life'])) {
-            return;
-        }
-
         $criteria = $this->extractMinMax($this->criteria['life']);
 
-        $this->filter->addSpecification(new HopsSpecification($criteria['min'], $criteria['max']));
+        return new HopsCriteria($criteria['min'], $criteria['max']);
     }
 
-    public function buildOrder(): void
+    public function buildOrder(): CriteriaInterface
     {
-        if (! isset($this->criteria['order_by'])) {
-            return;
-        }
-
         $orderings = [];
 
         /**
@@ -121,10 +152,10 @@ final class CriteriaBuilder
             $orderings[$field] = $direction;
         }
 
-        $this->filter->orderBy($orderings);
+        $this->criteriaChain->orderBy($orderings);
     }
 
-    public function buildLimit(): void
+    public function buildLimit(): CriteriaInterface
     {
         if (! isset($this->criteria['limit'])) {
             return;
@@ -132,17 +163,13 @@ final class CriteriaBuilder
 
         /** @var int $limit */
         $limit = $this->criteria['limit'];
-        $this->filter->setMaxResults((int) $limit);
+        $this->criteriaChain->setMaxResults((int) $limit);
     }
 
-    public function buildStamps(): void
+    public function buildStamps(): CriteriaInterface
     {
-        if (! isset($this->criteria['stamps'])) {
-            return;
-        }
-
         /** @var string $strategy */
-        $strategy = $this->criteria['stamps_strategy'] ?? StampsSpecification::STRATEGY_OR;
+        $strategy = $this->criteria['stamps_strategy'] ?? StampsCriteria::STRATEGY_OR;
 
         /** @var array<string, class-string<StampInterface>> $stamps */
         $stamps = (array) $this->criteria['stamps'];
@@ -157,10 +184,10 @@ final class CriteriaBuilder
             }
         }
 
-        $this->filter->addSpecification(new StampsSpecification($stamps, $strategy));
+        return new StampsCriteria($stamps, $strategy);
     }
 
-    public function buildCallback(): void
+    public function buildCallback(): CriteriaInterface
     {
         if (! isset($this->criteria['filter'])) {
             return;
@@ -168,14 +195,16 @@ final class CriteriaBuilder
 
         /** @var callable $callback */
         foreach ((array) $this->criteria['filter'] as $callback) {
-            $this->filter->addSpecification(new CallbackSpecification($this->filter, $callback));
+            $this->criteriaChain->addCriteria(new CallbackCriteria($this->criteriaChain, $callback));
         }
     }
 
     /**
-     * @return array{min: int, max: int}
+     * @param int|array{min?: int, max?: int} $criteria
+     *
+     * @return array{min: ?int, max: ?int}
      */
-    private function extractMinMax($criteria): array
+    private function extractMinMax(int|array $criteria): array
     {
         if (! \is_array($criteria)) {
             $criteria = ['min' => $criteria];

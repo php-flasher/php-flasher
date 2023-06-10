@@ -2,23 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter\Specification;
+namespace Flasher\Prime\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\HopsStamp;
 
-final class HopsSpecification implements SpecificationInterface
+final class HopsCriteria implements CriteriaInterface
 {
-    /**
-     * @param  int  $minAmount
-     */
-    public function __construct(private $minAmount, private readonly ?int $maxAmount = null)
+    public function __construct(
+        private readonly int $minAmount,
+        private readonly ?int $maxAmount = null,
+    ) {
+    }
+
+    public function apply(array $envelopes): array
     {
+        return array_filter($envelopes, fn(Envelope $e) => $this->isSatisfiedBy($e));
     }
 
     public function isSatisfiedBy(Envelope $envelope): bool
     {
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\HopsStamp::class);
+        $stamp = $envelope->get(HopsStamp::class);
 
         if (! $stamp instanceof HopsStamp) {
             return false;

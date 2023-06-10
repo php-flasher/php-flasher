@@ -2,23 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter\Specification;
+namespace Flasher\Prime\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PriorityStamp;
 
-final class PrioritySpecification implements SpecificationInterface
+final class PriorityCriteria implements CriteriaInterface
 {
-    /**
-     * @param  int  $minPriority
-     */
-    public function __construct(private $minPriority, private readonly ?int $maxPriority = null)
+    public function __construct(
+        private readonly int $minPriority,
+        private readonly ?int $maxPriority = null
+    ) {
+    }
+
+    public function apply(array $envelopes): array
     {
+        return array_filter($envelopes, fn(Envelope $e) => $this->isSatisfiedBy($e));
     }
 
     public function isSatisfiedBy(Envelope $envelope): bool
     {
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PriorityStamp::class);
+        $stamp = $envelope->get(PriorityStamp::class);
 
         if (! $stamp instanceof PriorityStamp) {
             return false;

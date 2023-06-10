@@ -41,7 +41,7 @@ final class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\HopsSpecification::class, $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Criteria\HopsCriteria::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
@@ -56,7 +56,8 @@ final class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\DelaySpecification::class, $specification);
+        $this->assertInstanceOf(
+            \Flasher\Prime\Filter\Criteria\DelayCriteria::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minDelay'));
         $this->assertNull($this->getProperty($specification, 'maxDelay'));
     }
@@ -71,7 +72,7 @@ final class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\HopsSpecification::class, $specification);
+        $this->assertInstanceOf(\Flasher\Prime\Filter\Criteria\HopsCriteria::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
@@ -99,7 +100,8 @@ final class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf(\Flasher\Prime\Filter\Specification\StampsSpecification::class, $specification);
+        $this->assertInstanceOf(
+            \Flasher\Prime\Filter\Criteria\StampsCriteria::class, $specification);
         $this->assertEquals([\Flasher\Prime\Stamp\PresetStamp::class], $this->getProperty($specification, 'stamps'));
         $this->assertEquals('or', $this->getProperty($specification, 'strategy'));
     }
