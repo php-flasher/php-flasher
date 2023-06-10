@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Filter;
 
+use Flasher\Prime\Filter\Criteria\CallbackCriteria;
 use Flasher\Prime\Filter\Criteria\DelayCriteria;
 use Flasher\Prime\Filter\Criteria\HopsCriteria;
+use Flasher\Prime\Filter\Criteria\LimitCriteria;
+use Flasher\Prime\Filter\Criteria\OrderByCriteria;
 use Flasher\Prime\Filter\Criteria\PriorityCriteria;
 use Flasher\Prime\Filter\Criteria\StampsCriteria;
 use Flasher\Prime\Stamp\ContextStamp;
@@ -27,7 +30,7 @@ final class CriteriaBuilder
     /**
      * @var array<string, class-string<StampInterface>>
      */
-    public array $aliases = [
+    public array $stamps = [
         'context' => ContextStamp::class,
         'created_at' => CreatedAtStamp::class,
         'delay' => DelayStamp::class,
@@ -42,131 +45,131 @@ final class CriteriaBuilder
     ];
 
     /**
-     * @var array<string, class-string<CriteriaInterface>>
+     * @var array<string, CriteriaInterface>
      */
-    protected static $customCriteria = [];
+    private array $criteria = [];
 
     /**
      * @param  array{
      *     priority?: int|array{min?: int, max?: int},
      *     hops?: int|array{min?: int, max?: int},
-     *     delay?: int|array{min?: int, max?: int},
      *     life?: int|array{min?: int, max?: int},
-     * } $criteria
+     *     delay?: int|array{min?: int, max?: int},
+     *     order_by?: string|array{string, 'ASC'|'DESC'},
+     *     limit?: int,
+     *     stamps?: class-string<StampInterface>|array<class-string<StampInterface>>,
+     *     filter?: callable|callable[],
+     * } $config
      */
-    public function __construct(
-        private readonly CriteriaChain $criteriaChain,
-        private readonly array $criteria,
-    ) {
-    }
-
-    public function build(array $config): CriteriaChain
+    public function build(array $config): Filter
     {
-        $chain = new CriteriaChain();
+        $filter = new Filter();
 
         foreach ($config as $name => $value) {
+            $criteria = match ($name) {
+                'priority' => $this->getPriority($value),
+                'hops' => $this->getHops($value),
+                'delay' => $this->getDelay($value),
+                'life' => $this->getLife($value),
+                'order_by' => $this->getOrderBy($value),
+                'limit' => $this->getLimit($value),
+                'stamps' => $this->getStamps($value),
+                'filter' => $this->getCallback($value),
+                default => null,
+            };
+
+            if ($criteria instanceof CriteriaInterface) {
+                $filter->addCriteria($criteria);
+
+                continue;
+            }
+
             if (!isset($this->criteria[$name])) {
                 throw new \InvalidArgumentException("Criteria '{$name}' is not registered.");
             }
 
-            $criteria = match ($name) {
-                'priority' => $this->buildPriority($value),
-                'hops' => $this->buildHops($value),
-                'delay' => $this->buildDelay($value),
-                'life' => $this->buildLife($value),
-                'order_by' => $this->buildOrder($value),
-                'limit' => $this->buildLimit($value),
-                'stamps' => $this->buildStamps($value),
-                'filter' => $this->buildCallback($value),
-                default => $this->getCustomCriteria($name, $value)
-            };
-
-            $chain->addCriteria($criteria);
+            $filter->addCriteria($this->criteria[$name]);
         }
 
-        return $chain;
+        return $filter;
     }
 
-    public function registerCriteria(string $name, CriteriaInterface $criteria): void
+    /**
+     * @param int|array{min?: int, max?: int} $criteria
+     */
+    public function getPriority(int|array $criteria): CriteriaInterface
     {
-        $this->customCriteria[$name] = $criteria;
-    }
-
-    private function getCustomCriteria(string $criteriaName, $value): ?CriteriaInterface
-    {
-        if (isset($this->customCriteria[$criteriaName])) {
-            return $this->customCriteria[$criteriaName]->withValue($value);
-        }
-
-        return null;
-    }
-
-    public function buildPriority(array $criteria): CriteriaInterface
-    {
-        $criteria = $this->extractMinMax($criteria['priority']);
+        $criteria = $this->extractMinMax($criteria);
 
         return new PriorityCriteria($criteria['min'], $criteria['max']);
     }
 
-    public function buildHops(): CriteriaInterface
+    /**
+     * @param int|array{min?: int, max?: int} $criteria
+     */
+    public function getHops(int|array $criteria): CriteriaInterface
     {
-        $criteria = $this->extractMinMax($this->criteria['hops']);
+        $criteria = $this->extractMinMax($criteria);
 
         return new HopsCriteria($criteria['min'], $criteria['max']);
     }
 
-    public function buildDelay(): CriteriaInterface
+    /**
+     * @param int|array{min?: int, max?: int} $criteria
+     */
+    public function getLife(int|array $criteria): CriteriaInterface
     {
-        $criteria = $this->extractMinMax($this->criteria['delay']);
+        $criteria = $this->extractMinMax($criteria);
+
+        return new HopsCriteria($criteria['min'], $criteria['max']);
+    }
+
+    /**
+     * @param int|array{min?: int, max?: int} $criteria
+     */
+    public function getDelay(int|array $criteria): CriteriaInterface
+    {
+        $criteria = $this->extractMinMax($criteria);
 
         return new DelayCriteria($criteria['min'], $criteria['max']);
     }
 
-    public function buildLife(): CriteriaInterface
-    {
-        $criteria = $this->extractMinMax($this->criteria['life']);
-
-        return new HopsCriteria($criteria['min'], $criteria['max']);
-    }
-
-    public function buildOrder(): CriteriaInterface
+    /**
+     * @param string|array{string, "ASC"|"DESC"} $criteria
+     *
+     * @example array{
+     *     "created_at": "ASC",
+     *     "priority": "DESC",
+     * }
+     *
+     * @example "priority"
+     */
+    public function getOrderBy(string|array $criteria): CriteriaInterface
     {
         $orderings = [];
 
-        /**
-         * @var int|string $field
-         * @var string     $direction
-         */
-        foreach ((array) $this->criteria['order_by'] as $field => $direction) {
+        foreach ((array) $criteria as $field => $direction) {
             if (\is_int($field)) {
                 $field = $direction;
                 $direction = Filter::ASC;
             }
 
-            $direction = Filter::ASC === strtoupper($direction) ? Filter::ASC : Filter::DESC;
-
-            if (\array_key_exists($field, $this->aliases)) {
-                $field = $this->aliases[$field];
+            if (\array_key_exists($field, $this->stamps)) {
+                $field = $this->stamps[$field];
             }
 
-            $orderings[$field] = $direction;
+            $orderings[$field] = strtoupper($direction);
         }
 
-        $this->criteriaChain->orderBy($orderings);
+        return new OrderByCriteria($orderings);
     }
 
-    public function buildLimit(): CriteriaInterface
+    public function getLimit(int $criteria): CriteriaInterface
     {
-        if (! isset($this->criteria['limit'])) {
-            return;
-        }
-
-        /** @var int $limit */
-        $limit = $this->criteria['limit'];
-        $this->criteriaChain->setMaxResults((int) $limit);
+        return new LimitCriteria($criteria);
     }
 
-    public function buildStamps(): CriteriaInterface
+    public function getStamps(array $criteria): CriteriaInterface
     {
         /** @var string $strategy */
         $strategy = $this->criteria['stamps_strategy'] ?? StampsCriteria::STRATEGY_OR;
@@ -179,24 +182,20 @@ final class CriteriaBuilder
          * @var class-string<StampInterface> $value
          */
         foreach ($stamps as $key => $value) {
-            if (\array_key_exists($value, $this->aliases)) {
-                $stamps[$key] = $this->aliases[$value];
+            if (\array_key_exists($value, $this->stamps)) {
+                $stamps[$key] = $this->stamps[$value];
             }
         }
 
         return new StampsCriteria($stamps, $strategy);
     }
 
-    public function buildCallback(): CriteriaInterface
+    /**
+     * @param callable[]|callable $criteria
+     */
+    public function getCallback(array|callable $criteria): CriteriaInterface
     {
-        if (! isset($this->criteria['filter'])) {
-            return;
-        }
-
-        /** @var callable $callback */
-        foreach ((array) $this->criteria['filter'] as $callback) {
-            $this->criteriaChain->addCriteria(new CallbackCriteria($this->criteriaChain, $callback));
-        }
+        return new CallbackCriteria((array) $criteria);
     }
 
     /**

@@ -10,14 +10,14 @@ use Flasher\Prime\Stamp\PriorityStamp;
 final class PriorityCriteria implements CriteriaInterface
 {
     public function __construct(
-        private readonly int $minPriority,
+        private readonly ?int $minPriority,
         private readonly ?int $maxPriority = null
     ) {
     }
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn(Envelope $e) => $this->isSatisfiedBy($e));
+        return array_filter($envelopes, fn (Envelope $e) => $this->isSatisfiedBy($e));
     }
 
     public function isSatisfiedBy(Envelope $envelope): bool

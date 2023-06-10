@@ -22,7 +22,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['priority' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildPriority();
+        $criteriaBuilder->getPriority();
 
         $specification = $this->getProperty($filter, 'specification');
 
@@ -37,7 +37,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['hops' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildHops();
+        $criteriaBuilder->getHops();
 
         $specification = $this->getProperty($filter, 'specification');
 
@@ -52,7 +52,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['delay' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildDelay();
+        $criteriaBuilder->getDelay();
 
         $specification = $this->getProperty($filter, 'specification');
 
@@ -68,7 +68,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['life' => 2];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildLife();
+        $criteriaBuilder->getLife();
 
         $specification = $this->getProperty($filter, 'specification');
 
@@ -83,7 +83,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['order_by' => 'priority'];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildOrder();
+        $criteriaBuilder->getOrderBy();
 
         $orderings = $this->getProperty($filter, 'orderings');
 
@@ -96,7 +96,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['stamps' => 'preset'];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildStamps();
+        $criteriaBuilder->getStamps();
 
         $specification = $this->getProperty($filter, 'specification');
 
@@ -114,7 +114,7 @@ final class CriteriaBuilderTest extends TestCase
         $criteria = ['filter' => $callback];
 
         $criteriaBuilder = new CriteriaBuilder($filter, $criteria);
-        $criteriaBuilder->buildCallback();
+        $criteriaBuilder->getCallback();
 
         $specification = $this->getProperty($filter, 'specification');
 
