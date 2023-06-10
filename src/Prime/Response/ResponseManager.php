@@ -17,7 +17,6 @@ use Flasher\Prime\Response\Resource\ResourceManagerInterface;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use InvalidArgumentException;
-
 use function is_callable;
 
 final class ResponseManager implements ResponseManagerInterface

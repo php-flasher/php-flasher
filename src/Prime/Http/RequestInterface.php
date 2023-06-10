@@ -6,36 +6,20 @@ namespace Flasher\Prime\Http;
 
 interface RequestInterface
 {
-    /**
-     * @return bool
-     */
-    public function isXmlHttpRequest();
+    public function isXmlHttpRequest(): bool;
+
+    public function isHtmlRequestFormat(): bool;
+
+    public function hasSession(): bool;
+
+    public function isSessionStarted(): bool;
+
+    public function hasType(string $type): bool;
 
     /**
-     * @return bool
-     */
-    public function isHtmlRequestFormat();
-
-    /**
-     * @return bool
-     */
-    public function hasSession();
-
-    /**
-     * @param  string  $type
-     * @return bool
-     */
-    public function hasType($type);
-
-    /**
-     * @param  string  $type
      * @return string|string[]
      */
-    public function getType($type);
+    public function getType(string $type): string|array;
 
-    /**
-     * @param  string  $type
-     * @return void
-     */
-    public function forgetType($type);
+    public function forgetType(string $type): void;
 }

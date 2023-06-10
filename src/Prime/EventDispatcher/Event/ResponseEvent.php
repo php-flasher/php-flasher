@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
-use Flasher\Prime\Response\Response;
-
 final class ResponseEvent
 {
     public function __construct(

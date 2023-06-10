@@ -15,10 +15,7 @@ final class SessionListener
     {
     }
 
-    /**
-     * @param  ResponseEvent  $event
-     */
-    public function onKernelResponse($event): void
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $request = new Request($event->getRequest());
         $response = new Response($event->getResponse());

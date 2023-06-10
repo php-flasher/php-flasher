@@ -15,9 +15,8 @@ use Flasher\Prime\Storage\StorageBag;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Symfony\Storage\SessionBag;
 use Flasher\Symfony\Translation\Translator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {

@@ -6,34 +6,15 @@ namespace Flasher\Prime\Http;
 
 interface ResponseInterface
 {
-    /**
-     * @return bool
-     */
-    public function isRedirection();
+    public function isRedirection(): bool;
 
-    /**
-     * @return bool
-     */
-    public function isJson();
+    public function isJson(): bool;
 
-    /**
-     * @return bool
-     */
-    public function isHtml();
+    public function isHtml(): bool;
 
-    /**
-     * @return bool
-     */
-    public function isAttachment();
+    public function isAttachment(): bool;
 
-    /**
-     * @return string
-     */
-    public function getContent();
+    public function getContent(): string;
 
-    /**
-     * @param  string  $content
-     * @return void
-     */
-    public function setContent($content);
+    public function setContent(string $content): void;
 }

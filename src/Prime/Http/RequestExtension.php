@@ -21,10 +21,7 @@ final class RequestExtension
         $this->mapping = $this->flatMapping($mapping);
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function flash(RequestInterface $request, ResponseInterface $response)
+    public function flash(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         if (! $request->hasSession()) {
             return $response;
@@ -38,7 +35,7 @@ final class RequestExtension
             $messages = (array) $request->getType($alias);
 
             foreach ($messages as $message) {
-                $this->flasher->addFlash($type, $message);
+                $this->flasher->flash($type, $message);
             }
 
             $request->forgetType($alias);

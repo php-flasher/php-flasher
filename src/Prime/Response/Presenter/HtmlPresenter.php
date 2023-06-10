@@ -9,7 +9,9 @@ use Flasher\Prime\Response\Response;
 final class HtmlPresenter implements PresenterInterface
 {
     public const FLASHER_FLASH_BAG_PLACE_HOLDER = 'FLASHER_FLASH_BAG_PLACE_HOLDER';
+
     public const HEAD_END_PLACE_HOLDER = '</head>';
+
     public const BODY_END_PLACE_HOLDER = '</body>';
 
     public function render(Response $response): string

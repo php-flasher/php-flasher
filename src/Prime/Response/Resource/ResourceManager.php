@@ -9,7 +9,6 @@ use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\HandlerStamp;
-
 use function in_array;
 use function strlen;
 

@@ -19,7 +19,7 @@ final class Response implements ResponseInterface
         return $this->response->isRedirection();
     }
 
-    public function isJson()
+    public function isJson(): bool
     {
         return $this->response instanceof JsonResponse;
     }
@@ -46,14 +46,12 @@ final class Response implements ResponseInterface
         return false !== stripos($contentDisposition, 'attachment;');
     }
 
-    public function getContent()
+    public function getContent(): string
     {
-        $content = $this->response->getContent();
-
-        return \is_string($content) ? $content : '';
+        return $this->response->getContent() ?: '';
     }
 
-    public function setContent($content): void
+    public function setContent(string $content): void
     {
         $this->response->setContent($content);
     }

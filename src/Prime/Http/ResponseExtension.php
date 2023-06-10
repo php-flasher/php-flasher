@@ -13,10 +13,7 @@ final class ResponseExtension
     {
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function render(RequestInterface $request, ResponseInterface $response)
+    public function render(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         if (! $this->isRenderable($request, $response)) {
             return $response;
@@ -45,7 +42,7 @@ final class ResponseExtension
         }
 
         $alreadyRendered = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER === $insertPlaceHolder;
-        $htmlResponse = $this->flasher->render([], 'html', ['envelopes_only' => $alreadyRendered]);
+        $htmlResponse = $this->flasher->render('html', [], ['envelopes_only' => $alreadyRendered]);
 
         if (empty($htmlResponse)) {
             return $response;
