@@ -60,9 +60,11 @@ final class Envelope implements NotificationInterface
         }
     }
 
-    public function withStamp(StampInterface $stamp): void
+    public function withStamp(StampInterface $stamp, bool $replace = true): void
     {
-        $this->stamps[$stamp::class] = $stamp;
+        if (!isset($this->stamps[$stamp::class]) || $replace) {
+            $this->stamps[$stamp::class] = $stamp;
+        }
     }
 
     /**

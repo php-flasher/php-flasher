@@ -32,24 +32,10 @@ final class StampsListener implements EventListenerInterface
 
     private function attachStamps(Envelope $envelope): void
     {
-        if (! $envelope->get(CreatedAtStamp::class) instanceof CreatedAtStamp) {
-            $envelope->withStamp(new CreatedAtStamp());
-        }
-
-        if (! $envelope->get(IdStamp::class) instanceof IdStamp) {
-            $envelope->withStamp(new IdStamp(spl_object_hash($envelope)));
-        }
-
-        if (! $envelope->get(DelayStamp::class) instanceof DelayStamp) {
-            $envelope->withStamp(new DelayStamp(0));
-        }
-
-        if (! $envelope->get(HopsStamp::class) instanceof HopsStamp) {
-            $envelope->withStamp(new HopsStamp(1));
-        }
-
-        if (! $envelope->get(PriorityStamp::class) instanceof PriorityStamp) {
-            $envelope->withStamp(new PriorityStamp(0));
-        }
+        $envelope->withStamp(new CreatedAtStamp(), false);
+        $envelope->withStamp(new IdStamp(), false);
+        $envelope->withStamp(new DelayStamp(0), false);
+        $envelope->withStamp(new HopsStamp(1), false);
+        $envelope->withStamp(new PriorityStamp(0), false);
     }
 }

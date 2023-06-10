@@ -46,13 +46,13 @@ final class TranslationListener implements EventListenerInterface
             }
 
             $title = $envelope->getTitle() ?: $envelope->getType();
-            if (null !== $title) {
+            if ('' !== $title) {
                 $title = $this->translator->translate($title, $parameters, $locale);
                 $envelope->setTitle($title);
             }
 
             $message = $envelope->getMessage();
-            if (null !== $message) {
+            if ('' !== $message) {
                 $message = $this->translator->translate($message, $parameters, $locale);
                 $envelope->setMessage($message);
             }

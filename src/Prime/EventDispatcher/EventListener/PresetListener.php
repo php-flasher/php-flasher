@@ -56,21 +56,29 @@ final class PresetListener implements EventListenerInterface
         }
 
         $preset = $this->presets[$presetStamp->getPreset()];
-        $preset = ['type' => 'info', 'title' => null, 'message' => null, 'options' => [], ...$preset];
+        $preset = [
+            'type' => 'info',
+            'title' => null,
+            'message' => null,
+            'options' => [],
+            ...$preset,
+        ];
 
-        if (null === $envelope->getType()) {
+        if ('' === $envelope->getType()) {
             $envelope->setType($preset['type']);
         }
 
-        if (null === $envelope->getTitle()) {
+        if ('' === $envelope->getTitle()) {
             $envelope->setTitle($preset['title']);
         }
 
-        if (null === $envelope->getMessage()) {
+        if ('' === $envelope->getMessage()) {
             $envelope->setMessage($preset['message']);
         }
 
-        $options = [...$preset['options'], ...$envelope->getOptions()];
-        $envelope->setOptions($options);
+        $envelope->setOptions([
+            ...$preset['options'],
+            ...$envelope->getOptions(),
+        ]);
     }
 }
