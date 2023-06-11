@@ -9,7 +9,7 @@ trait MethodAliasResolver
     /**
      * @var array<string, string>
      */
-   protected array $methodAliases = [];
+    protected array $methodAliases = [];
 
     /**
      * @return array<string, string>
@@ -21,7 +21,7 @@ trait MethodAliasResolver
 
     protected function getMethodAlias(string $method): string
     {
-        if (!$this->hasMethodAlias($method)) {
+        if (! $this->hasMethodAlias($method)) {
             throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $method));
         }
 
@@ -37,7 +37,7 @@ trait MethodAliasResolver
     {
         $alias = $this->getMethodAlias($method);
 
-        if (!method_exists($this, $alias)) {
+        if (! method_exists($this, $alias)) {
             throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $alias));
         }
 

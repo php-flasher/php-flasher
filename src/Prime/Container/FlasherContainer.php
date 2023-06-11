@@ -37,7 +37,7 @@ final class FlasherContainer
     {
         $factory = $this->container->get($id);
 
-        if (! $factory instanceof NotificationFactoryInterface && !$factory instanceof FlasherInterface) {
+        if (! $factory instanceof NotificationFactoryInterface && ! $factory instanceof FlasherInterface) {
             throw new \InvalidArgumentException(sprintf('only instance of %s are allowed to be fetched from service container', NotificationFactoryInterface::class));
         }
 

@@ -14,7 +14,6 @@ use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Storage\Filter\Filter;
 use Flasher\Prime\Storage\Filter\FilterFactory;
 
 final class StorageManager implements StorageManagerInterface
@@ -22,6 +21,7 @@ final class StorageManager implements StorageManagerInterface
     private readonly StorageInterface $storage;
 
     private readonly EventDispatcherInterface $eventDispatcher;
+
     private readonly FilterFactory $filterFactory;
 
     /**
