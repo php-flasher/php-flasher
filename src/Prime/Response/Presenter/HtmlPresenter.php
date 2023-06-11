@@ -16,20 +16,24 @@ final class HtmlPresenter implements PresenterInterface
 
     public function render(Response $response): string
     {
-        $jsonOptions = json_encode($response->toArray()) ?: '';
+        $options = json_encode($response->toArray());
+        if (false === $options) {
+            throw new \RuntimeException('invalid options');
+        }
+
         $context = $response->getContext();
 
-        if (isset($context['envelopes_only']) && true === $context['envelopes_only']) {
-            return $jsonOptions;
+        if ($context['envelopes_only'] ?? false) {
+            return $options;
         }
 
         $mainScript = $response->getRootScript();
         $placeholder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
 
-        return $this->renderJavascript($jsonOptions, $mainScript, $placeholder);
+        return $this->renderJavascript($options, $mainScript, $placeholder);
     }
 
-    private function renderJavascript(string $jsonOptions, string $mainScript, string $placeholder): string
+    private function renderJavascript(string $options, string $mainScript, string $placeholder): string
     {
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
@@ -103,7 +107,7 @@ final class HtmlPresenter implements PresenterInterface
     };
 
     const options = [];
-    options.push({$jsonOptions});
+    options.push({$options});
     {$placeholder}
     addScriptAndRender(mergeOptions(...options));
     addRenderListener();
