@@ -62,23 +62,26 @@ final class HtmlPresenter implements PresenterInterface
     };
 
     const renderCallback = (options) => {
-        if(!window.hasOwnProperty('flasher')) {
+        if(!window.flasher) {
             throw new Error('Flasher is not loaded');
         }
 
         window.flasher.render(options);
-    }
+    };
 
     const render = (options) => {
-        if (['interactive', 'complete'].indexOf(document.readyState)) {
+        if (options instanceof Event) {
+            options = options.detail;
+        }
+
+        if (['interactive', 'complete'].includes(document.readyState)) {
             renderCallback(options);
         } else {
             document.addEventListener('DOMContentLoaded', () => renderCallback(options));
         }
-    }
+    };
 
-    const loadAndRender = (options) => {
-        console.log(options);
+    const addScriptAndRender = (options) => {
         const mainScript = '{$mainScript}';
 
         if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
@@ -91,14 +94,19 @@ final class HtmlPresenter implements PresenterInterface
 
             document.head.appendChild(tag);
         }
-    }
+    };
 
-    document.addEventListener('flasher:render', e => render(e.detail));
+    const addRenderListener = () => {
+        if (1 === document.querySelectorAll('script.flasher-js').length) {
+            document.addEventListener('flasher:render', render);
+        }
+    };
 
     const options = [];
     options.push({$jsonOptions});
     {$placeholder}
-    loadAndRender(mergeOptions(...options))
+    addScriptAndRender(mergeOptions(...options));
+    addRenderListener();
 })(window, document);
 </script>
 JAVASCRIPT;
