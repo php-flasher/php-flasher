@@ -33,7 +33,7 @@ final class HtmlPresenter implements PresenterInterface
     {
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
-(function() {
+(function(global, document) {
     const deepMergeArrays = (first, second) => [...first, ...second.filter(item => !first.includes(item))];
 
     const deepMergeObjects = (first, second) => {
@@ -53,13 +53,13 @@ final class HtmlPresenter implements PresenterInterface
     }, { envelopes: [], scripts: [], styles: [], options: {}, context: {} });
 
     const renderOptions = options => {
-        if(!window.hasOwnProperty('flasher')) {
+        if(!global.hasOwnProperty('flasher')) {
             console.error('Flasher is not loaded');
             return;
         }
 
         requestAnimationFrame(function () {
-            window.flasher.render(options);
+            global.flasher.render(options);
         });
     }
 
@@ -84,7 +84,7 @@ final class HtmlPresenter implements PresenterInterface
         document.addEventListener('flasher:render', e => render(e.detail));
     }
 
-    if (window.hasOwnProperty('flasher') || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
+    if (global.hasOwnProperty('flasher') || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
         render(options);
     } else {
         const tag = document.createElement('script');
@@ -94,7 +94,7 @@ final class HtmlPresenter implements PresenterInterface
 
         document.head.appendChild(tag);
     }
-})();
+})(window, document);
 </script>
 JAVASCRIPT;
     }
