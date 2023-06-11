@@ -6,6 +6,7 @@ namespace Flasher\Phpstan;
 
 use Flasher\Noty\Prime\NotyFactory;
 use Flasher\Prime\Container\FlasherContainer;
+use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\SweetAlert\Prime\SweetAlertFactory;
 use Flasher\Toastr\Prime\ToastrFactory;
 use PhpParser\Node\Expr\MethodCall;
@@ -40,9 +41,10 @@ final class FlasherContainerReturnTypeExtension implements DynamicMethodReturnTy
 
         return $argType instanceof ConstantStringType
             ? match ($argType->getValue()) {
-                'flasher.noty' => new ObjectType(NotyFactory::class),
-                'flasher.toastr' => new ObjectType(ToastrFactory::class),
-                'flasher.sweetalert' => new ObjectType(SweetAlertFactory::class),
+                'flasher' => new ObjectType(NotificationFactory::class),
+                'flasher.noty_factory' => new ObjectType(NotyFactory::class),
+                'flasher.toastr_factory' => new ObjectType(ToastrFactory::class),
+                'flasher.sweetalert_factory' => new ObjectType(SweetAlertFactory::class),
                 default => new MixedType(),
             }
             : new MixedType();

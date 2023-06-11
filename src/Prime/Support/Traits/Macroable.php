@@ -6,6 +6,8 @@ namespace Flasher\Prime\Support\Traits;
 
 trait Macroable
 {
+    use MethodAliasResolver;
+
     /**
      * @var array<string, callable>
      */
@@ -44,6 +46,10 @@ trait Macroable
      */
     public function __call(string $method, array $parameters): mixed
     {
+        if ($this->hasMethodAlias($method)) {
+            return $this->callMethodAlias($method, $parameters);
+        }
+
         if (! static::hasMacro($method)) {
             throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $method));
         }

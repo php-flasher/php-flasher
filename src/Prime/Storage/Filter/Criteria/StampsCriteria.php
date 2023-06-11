@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter\Criteria;
+namespace Flasher\Prime\Storage\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\ContextStamp;

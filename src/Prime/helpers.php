@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime;
-
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
+use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 
@@ -18,7 +17,7 @@ if (! \function_exists('flash')) {
         string $type = NotificationInterface::SUCCESS,
         array $options = [],
         string $title = null,
-    ): Envelope|NotificationFactoryInterface {
+    ): Envelope|FlasherInterface|NotificationFactoryInterface {
         $factory = FlasherContainer::getInstance()->create('flasher');
 
         if (0 === \func_num_args()) {

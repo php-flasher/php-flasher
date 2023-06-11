@@ -14,12 +14,15 @@ use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Storage\Filter\Filter;
+use Flasher\Prime\Storage\Filter\FilterFactory;
 
 final class StorageManager implements StorageManagerInterface
 {
     private readonly StorageInterface $storage;
 
     private readonly EventDispatcherInterface $eventDispatcher;
+    private readonly FilterFactory $filterFactory;
 
     /**
      * @param  array<string, mixed>  $criteria
@@ -27,10 +30,12 @@ final class StorageManager implements StorageManagerInterface
     public function __construct(
         StorageInterface $storage = null,
         EventDispatcherInterface $eventDispatcher = null,
+        FilterFactory $filterFactory = null,
         private readonly array $criteria = [],
     ) {
         $this->storage = $storage ?: new StorageBag();
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
+        $this->filterFactory = $filterFactory ?: new FilterFactory();
     }
 
     public function all(): array
@@ -40,16 +45,12 @@ final class StorageManager implements StorageManagerInterface
 
     public function filter(array $criteria = []): array
     {
-        $criteria = array_merge($this->criteria, $criteria);
+        $filter = $this->filterFactory->createFilter(array_merge($this->criteria, $criteria));
 
-        $criteria['delay'] = 0;
-        // @phpstan-ignore-next-line
-        $criteria['hops']['min'] = 1;
-
-        $event = new FilterEvent($this->all(), $criteria);
+        $event = new FilterEvent($filter, $this->all(), $criteria);
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getEnvelopes();
+        return $event->getFilter()->apply($event->getEnvelopes());
     }
 
     public function add(Envelope ...$envelopes): void

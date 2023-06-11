@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter;
+namespace Flasher\Prime\Storage\Filter;
 
 use Flasher\Prime\Exception\CriteriaNotRegisteredException;
-use Flasher\Prime\Filter\Criteria\CriteriaInterface;
-use Flasher\Prime\Filter\Criteria\DelayCriteria;
-use Flasher\Prime\Filter\Criteria\FilterCriteria;
-use Flasher\Prime\Filter\Criteria\HopsCriteria;
-use Flasher\Prime\Filter\Criteria\LimitCriteria;
-use Flasher\Prime\Filter\Criteria\OrderByCriteria;
-use Flasher\Prime\Filter\Criteria\PriorityCriteria;
-use Flasher\Prime\Filter\Criteria\StampsCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\CriteriaInterface;
+use Flasher\Prime\Storage\Filter\Criteria\DelayCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\FilterCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\HopsCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\LimitCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\OrderByCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\PriorityCriteria;
+use Flasher\Prime\Storage\Filter\Criteria\StampsCriteria;
 
-final class FilterFactory
+final class FilterFactory implements FilterFactoryInterface
 {
     /**
      * @var array<string, callable|CriteriaInterface>
@@ -32,11 +32,6 @@ final class FilterFactory
         $this->addCriteria('filter', fn (mixed $criteria) => new FilterCriteria($criteria));
     }
 
-    /**
-     * @param  array<string, mixed>  $config
-     *
-     * @throws \Flasher\Prime\Exception\CriteriaNotRegisteredException
-     */
     public function createFilter(array $config): Filter
     {
         $filter = new Filter();

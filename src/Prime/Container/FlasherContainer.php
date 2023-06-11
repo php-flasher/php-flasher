@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flasher\Prime\Container;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
+use Flasher\Prime\FlasherInterface;
 
 final class FlasherContainer
 {
@@ -32,11 +33,11 @@ final class FlasherContainer
         self::$instance = new self($container);
     }
 
-    public function create(string $id): NotificationFactoryInterface
+    public function create(string $id): FlasherInterface|NotificationFactoryInterface
     {
         $factory = $this->container->get($id);
 
-        if (! $factory instanceof NotificationFactoryInterface) {
+        if (! $factory instanceof NotificationFactoryInterface && !$factory instanceof FlasherInterface) {
             throw new \InvalidArgumentException(sprintf('only instance of %s are allowed to be fetched from service container', NotificationFactoryInterface::class));
         }
 

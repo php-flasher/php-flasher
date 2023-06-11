@@ -11,6 +11,7 @@ use Flasher\Prime\Flasher;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
+use Flasher\Prime\Storage\Filter\FilterFactory;
 use Flasher\Prime\Storage\StorageBag;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Symfony\Storage\SessionBag;
@@ -33,10 +34,13 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set('flasher.event_dispatcher', EventDispatcher::class);
 
+    $services->set('flasher.filter_factory', FilterFactory::class);
+
     $services->set('flasher.storage_manager', StorageManager::class)
         ->args([
             service('flasher.storage'),
             service('flasher.event_dispatcher'),
+            service('flasher.filter_factory'),
             abstract_arg('config.filter_criteria'),
         ]);
 
@@ -52,6 +56,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->alias('flasher', FlasherInterface::class)
         ->set('flasher', Flasher::class)
+        ->public()
         ->args([
             abstract_arg('config.default'),
             service('flasher.response_manager'),

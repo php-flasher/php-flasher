@@ -46,7 +46,7 @@ final class Flasher implements FlasherInterface
 
     public function render(string $presenter = 'html', array $criteria = [], array $context = []): mixed
     {
-        return $this->responseManager->render($criteria, $presenter, $context);
+        return $this->responseManager->render($presenter, $criteria, $context);
     }
 
     public function addFactory(string $alias, callable|NotificationFactoryInterface $factory): void

@@ -2,22 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter;
+namespace Flasher\Prime\Storage\Filter;
 
-use Flasher\Prime\Filter\Criteria\CriteriaInterface;
-use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Storage\Filter\Criteria\CriteriaInterface;
 
-final class Filter
+final class Filter implements FilterInterface
 {
     /**
      * @var CriteriaInterface[]
      */
     private array $criteriaChain = [];
 
-    /**
-     * @param  Envelope[]  $envelopes
-     * @return Envelope[]
-     */
     public function apply(array $envelopes): array
     {
         foreach ($this->criteriaChain as $criteria) {

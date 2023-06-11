@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Prime\Filter\Criteria;
+namespace Flasher\Prime\Storage\Filter\Criteria;
 
 class FilterCriteria implements CriteriaInterface
 {

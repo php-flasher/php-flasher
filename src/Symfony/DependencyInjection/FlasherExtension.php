@@ -140,7 +140,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
     {
         $criteria = $config['filter_criteria'];
         $storageManager = $container->getDefinition('flasher.storage_manager');
-        $storageManager->replaceArgument(2, $criteria);
+        $storageManager->replaceArgument(3, $criteria);
     }
 
     /**

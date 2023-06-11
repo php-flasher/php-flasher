@@ -71,7 +71,7 @@ use Illuminate\Support\Facades\Facade;
  */
 final class Toastr extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher.toastr';
     }

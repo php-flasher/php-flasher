@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Flasher\Toastr\Prime;
-
+use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Toastr\Prime\ToastrFactory;
 
 if (! \function_exists('toastr')) {
     /**
-     * @param  string  $message
-     * @param  string  $type
-     * @param  string  $title
      * @param  array<string, mixed>  $options
-     * @return Envelope|ToastrFactory
      */
-    function toastr($message = null, $type = \Flasher\Prime\Notification\NotificationInterface::SUCCESS, $title = '', array $options = [])
-    {
-        /** @var ToastrFactory $factory */
-        $factory = \Flasher\Prime\Container\FlasherContainer::create('flasher.toastr');
+    function toastr(
+        string $message = null,
+        string $type = NotificationInterface::SUCCESS,
+        array $options = [],
+        string $title = null,
+    ): Envelope|ToastrFactory {
+        $factory = FlasherContainer::getInstance()->create('flasher.toastr_factory');
 
         if (0 === \func_num_args()) {
             return $factory;
         }
 
-        return $factory->title($title)->addFlash($type, $message, $options);
+        return $factory->flash($type, $message, $options, $title);
     }
 }

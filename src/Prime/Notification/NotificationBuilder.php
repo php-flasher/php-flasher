@@ -17,5 +17,27 @@ class NotificationBuilder implements NotificationBuilderInterface
     {
         $this->envelope = Envelope::wrap($notification);
         $this->storageManager = $storageManager;
+        $this->addMethodAliases();
+    }
+
+    private function addMethodAliases(): void
+    {
+        $methods = [
+            'success',
+            'error',
+            'info',
+            'warning',
+            'flash',
+            'preset',
+            'created',
+            'updated',
+            'saved',
+            'deleted',
+            'operation',
+        ];
+
+        foreach ($methods as $method) {
+            $this->methodAliases['add'.ucfirst($method)] = $method;
+        }
     }
 }

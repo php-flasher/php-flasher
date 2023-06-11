@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Filter;
 
-use Flasher\Prime\Filter\Filter;
-use Flasher\Prime\Filter\FilterFactory;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
+use Flasher\Prime\Storage\Filter\Filter;
+use Flasher\Prime\Storage\Filter\FilterFactory;
 use Flasher\Tests\Prime\TestCase;
 
 final class CriteriaBuilderTest extends TestCase
@@ -41,7 +41,8 @@ final class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf(\Flasher\Prime\Filter\Criteria\HopsCriteria::class, $specification);
+        $this->assertInstanceOf(
+            \Flasher\Prime\Storage\Filter\Criteria\HopsCriteria::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
@@ -57,7 +58,7 @@ final class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf(
-            \Flasher\Prime\Filter\Criteria\DelayCriteria::class, $specification);
+            \Flasher\Prime\Storage\Filter\Criteria\DelayCriteria::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minDelay'));
         $this->assertNull($this->getProperty($specification, 'maxDelay'));
     }
@@ -72,7 +73,8 @@ final class CriteriaBuilderTest extends TestCase
 
         $specification = $this->getProperty($filter, 'specification');
 
-        $this->assertInstanceOf(\Flasher\Prime\Filter\Criteria\HopsCriteria::class, $specification);
+        $this->assertInstanceOf(
+            \Flasher\Prime\Storage\Filter\Criteria\HopsCriteria::class, $specification);
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
@@ -101,7 +103,7 @@ final class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf(
-            \Flasher\Prime\Filter\Criteria\StampsCriteria::class, $specification);
+            \Flasher\Prime\Storage\Filter\Criteria\StampsCriteria::class, $specification);
         $this->assertEquals([\Flasher\Prime\Stamp\PresetStamp::class], $this->getProperty($specification, 'stamps'));
         $this->assertEquals('or', $this->getProperty($specification, 'strategy'));
     }
