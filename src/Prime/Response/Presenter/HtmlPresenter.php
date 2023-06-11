@@ -26,10 +26,10 @@ final class HtmlPresenter implements PresenterInterface
         $mainScript = $response->getRootScript();
         $placeholder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
 
-        return $this->createJavascript($jsonOptions, $mainScript, $placeholder);
+        return $this->renderJavascript($jsonOptions, $mainScript, $placeholder);
     }
 
-    private function createJavascript(string $jsonOptions, string $mainScript, string $placeholder): string
+    private function renderJavascript(string $jsonOptions, string $mainScript, string $placeholder): string
     {
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
