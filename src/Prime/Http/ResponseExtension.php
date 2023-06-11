@@ -49,7 +49,7 @@ final class ResponseExtension
         }
 
         if ($alreadyRendered) {
-            $htmlResponse = sprintf("registry.push(%s);", $htmlResponse);
+            $htmlResponse = sprintf("optionsRegistry.push(%s);", $htmlResponse);
         }
 
         // $htmlResponse = "\n".str_replace("\n", '', (string) $htmlResponse)."\n";

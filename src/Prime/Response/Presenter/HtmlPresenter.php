@@ -16,11 +16,11 @@ final class HtmlPresenter implements PresenterInterface
 
     public function render(Response $response): string
     {
-        $jsonOptions = json_encode($response->toArray());
+        $jsonOptions = json_encode($response->toArray()) ?: '';
         $context = $response->getContext();
 
         if (isset($context['envelopes_only']) && true === $context['envelopes_only']) {
-            return $jsonOptions ?: '';
+            return $jsonOptions;
         }
 
         $mainScript = $response->getRootScript();
@@ -34,11 +34,7 @@ final class HtmlPresenter implements PresenterInterface
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
 (function() {
-    const mainScript = '{$mainScript}';
-
-    const deepMergeArrays = (first, second) => {
-        return [...first, ...second.filter(item => !first.includes(item))];
-    };
+    const deepMergeArrays = (first, second) => [...first, ...second.filter(item => !first.includes(item))];
 
     const deepMergeObjects = (first, second) => {
         for (const [key, value] of Object.entries(second)) {
@@ -47,23 +43,16 @@ final class HtmlPresenter implements PresenterInterface
         return first;
     };
 
-    const mergeOptions = (...options) => {
-        return options.reduce((result, option) => {
-            result.envelopes.push(...option.envelopes);
-            result.scripts = deepMergeArrays(result.scripts, option.scripts);
-            result.styles = deepMergeArrays(result.styles, option.styles);
-            result.options = deepMergeObjects(result.options, option.options);
-            result.context = { ...result.context, ...option.context };
-            return result;
-        }, { envelopes: [], scripts: [], styles: [], options: {}, context: {} });
-    }
+    const mergeOptions = (...options) => options.reduce((result, option) => {
+        result.envelopes.push(...option.envelopes);
+        result.scripts = deepMergeArrays(result.scripts, option.scripts);
+        result.styles = deepMergeArrays(result.styles, option.styles);
+        result.options = deepMergeObjects(result.options, option.options);
+        result.context = { ...result.context, ...option.context };
+        return result;
+    }, { envelopes: [], scripts: [], styles: [], options: {}, context: {} });
 
-    const optionsRegistry = [];
-    optionsRegistry.push({$jsonOptions});
-    {$placeholder}
-    const options = mergeOptions(...optionsRegistry);
-
-    const renderOptions = (options) => {
+    const renderOptions = options => {
         if(!window.hasOwnProperty('flasher')) {
             console.error('Flasher is not loaded');
             return;
@@ -74,28 +63,33 @@ final class HtmlPresenter implements PresenterInterface
         });
     }
 
-    const render = (options) => {
-        if ('loading' !== document.readyState) {
+    const render = options => {
+        const readyState = document.readyState;
+        if (readyState === 'interactive' || readyState === 'complete') {
             renderOptions(options);
-
-            return;
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                renderOptions(options);
+            });
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            renderOptions(options);
-        });
     }
 
-    if (document.querySelector('script.flasher-js').length) {
-        document.addEventListener('flasher:render', (e) => render(e.detail));
+    const mainScript = '{$mainScript}';
+    const optionsRegistry = [];
+    optionsRegistry.push({$jsonOptions});
+    {$placeholder}
+    const options = mergeOptions(...optionsRegistry);
+
+    if (document.querySelector('script.flasher-js')) {
+        document.addEventListener('flasher:render', e => render(e.detail));
     }
 
     if (window.hasOwnProperty('flasher') || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
         render(options);
     } else {
         const tag = document.createElement('script');
-        tag.setAttribute('src', mainScript);
-        tag.setAttribute('type', 'text/javascript');
+        tag.src = mainScript;
+        tag.type = 'text/javascript';
         tag.onload = () => render(options);
 
         document.head.appendChild(tag);
