@@ -16,20 +16,25 @@ final class HtmlPresenter implements PresenterInterface
 
     public function render(Response $response): string
     {
-        $options = json_encode($response->toArray());
+        $jsonOptions = json_encode($response->toArray());
         $context = $response->getContext();
 
         if (isset($context['envelopes_only']) && true === $context['envelopes_only']) {
-            return $options ?: '';
+            return $jsonOptions ?: '';
         }
 
-        $rootScript = $response->getRootScript();
-        $placeHolder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
+        $mainScript = $response->getRootScript();
+        $placeholder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
 
+        return $this->createJavascript($jsonOptions, $mainScript, $placeholder);
+    }
+
+    private function createJavascript(string $jsonOptions, string $mainScript, string $placeholder): string
+    {
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
 (function() {
-    const mainScript = '{$rootScript}';
+    const mainScript = '{$mainScript}';
 
     const deepMergeArrays = (first, second) => {
         return [...first, ...second.filter(item => !first.includes(item))];
@@ -53,10 +58,10 @@ final class HtmlPresenter implements PresenterInterface
         }, { envelopes: [], scripts: [], styles: [], options: {}, context: {} });
     }
 
-    const registry = [];
-    registry.push({$options});
-    {$placeHolder}
-    const options = mergeOptions(...registry);
+    const optionsRegistry = [];
+    optionsRegistry.push({$jsonOptions});
+    {$placeholder}
+    const options = mergeOptions(...optionsRegistry);
 
     const renderOptions = (options) => {
         if(!window.hasOwnProperty('flasher')) {
