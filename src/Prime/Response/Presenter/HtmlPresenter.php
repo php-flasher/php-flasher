@@ -33,7 +33,7 @@ final class HtmlPresenter implements PresenterInterface
     {
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
-(function(global, document) {
+(function(window, document) {
     const merge = (first, second) => {
         if (Array.isArray(first) && Array.isArray(second)) {
             return [...first, ...second.filter(item => !first.includes(item))];
@@ -41,7 +41,7 @@ final class HtmlPresenter implements PresenterInterface
 
         if (typeof first === 'object' && typeof second === 'object') {
             for (const [key, value] of Object.entries(second)) {
-                first[key] = first.hasOwnProperty(key) ? { ...first[key], ...value } : value;
+                first[key] = key in first ? { ...first[key], ...value } : value;
             }
             return first;
         }
@@ -54,56 +54,51 @@ final class HtmlPresenter implements PresenterInterface
 
         options.forEach(option => {
             Object.entries(option).forEach(([key, value]) => {
-                result[key] = result.hasOwnProperty(key) ? merge(result[key], value) : value;
+                result[key] = key in result ? merge(result[key], value) : value;
             });
         });
 
         return result;
     };
 
-    const renderOptions = options => {
-        if(!global.hasOwnProperty('flasher')) {
-            console.error('Flasher is not loaded');
-            return;
+    const renderCallback = (options) => {
+        if(!window.hasOwnProperty('flasher')) {
+            throw new Error('Flasher is not loaded');
         }
 
-        requestAnimationFrame(function () {
-            global.flasher.render(options);
-        });
+        window.flasher.render(options);
     }
 
-    const render = options => {
-        const readyState = document.readyState;
-        if (readyState === 'interactive' || readyState === 'complete') {
-            renderOptions(options);
+    const render = (options) => {
+        if (['interactive', 'complete'].indexOf(document.readyState)) {
+            renderCallback(options);
         } else {
-            document.addEventListener('DOMContentLoaded', () => {
-                renderOptions(options);
-            });
+            document.addEventListener('DOMContentLoaded', () => renderCallback(options));
         }
     }
 
-    const mainScript = '{$mainScript}';
-    const optionsRegistry = [];
-    optionsRegistry.push({$jsonOptions});
+    const loadAndRender = (options) => {
+        console.log(options);
+        const mainScript = '{$mainScript}';
+
+        if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
+            render(options);
+        } else {
+            const tag = document.createElement('script');
+            tag.src = mainScript;
+            tag.type = 'text/javascript';
+            tag.onload = () => render(options);
+
+            document.head.appendChild(tag);
+        }
+    }
+
+    document.addEventListener('flasher:render', e => render(e.detail));
+
+    const options = [];
+    options.push({$jsonOptions});
     {$placeholder}
-    const options = mergeOptions(...optionsRegistry);
-    console.log(options);
-
-    if (document.querySelector('script.flasher-js')) {
-        document.addEventListener('flasher:render', e => render(e.detail));
-    }
-
-    if (global.hasOwnProperty('flasher') || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
-        render(options);
-    } else {
-        const tag = document.createElement('script');
-        tag.src = mainScript;
-        tag.type = 'text/javascript';
-        tag.onload = () => render(options);
-
-        document.head.appendChild(tag);
-    }
+    loadAndRender(mergeOptions(...options))
 })(window, document);
 </script>
 JAVASCRIPT;
