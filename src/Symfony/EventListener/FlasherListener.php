@@ -21,5 +21,9 @@ final class FlasherListener
         $response = new Response($event->getResponse());
 
         $this->responseExtension->render($request, $response);
+        $this->responseExtension->render($request, $response);
+        $this->responseExtension->render($request, $response);
+        $this->responseExtension->render($request, $response);
+        $this->responseExtension->render($request, $response);
     }
 }

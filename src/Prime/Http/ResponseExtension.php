@@ -48,11 +48,14 @@ final class ResponseExtension
             return $response;
         }
 
+        if ($alreadyRendered) {
+            $htmlResponse = sprintf("registry.push(%s);", $htmlResponse);
+        }
+
         // $htmlResponse = "\n".str_replace("\n", '', (string) $htmlResponse)."\n";
         $htmlResponse .= "\n";
-        $offset = $alreadyRendered ? strlen(HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER) : 0;
 
-        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition + $offset);
+        $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition);
         $response->setContent($content);
 
         return $response;

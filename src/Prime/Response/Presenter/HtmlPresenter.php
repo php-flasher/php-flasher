@@ -8,7 +8,7 @@ use Flasher\Prime\Response\Response;
 
 final class HtmlPresenter implements PresenterInterface
 {
-    public const FLASHER_FLASH_BAG_PLACE_HOLDER = 'FLASHER_FLASH_BAG_PLACE_HOLDER';
+    public const FLASHER_FLASH_BAG_PLACE_HOLDER = '/** FLASHER_FLASH_BAG_PLACE_HOLDER **/';
 
     public const HEAD_END_PLACE_HOLDER = '</head>';
 
@@ -30,37 +30,35 @@ final class HtmlPresenter implements PresenterInterface
 <script type="text/javascript" class="flasher-js">
 (function() {
     const mainScript = '{$rootScript}';
-    const optionsRegistry = new Map();
-    const options = {$options};
 
-    function mergeOptions(...options) {
+    const deepMergeArrays = (first, second) => {
+        return [...first, ...second.filter(item => !first.includes(item))];
+    };
+
+    const deepMergeObjects = (first, second) => {
+        for (const [key, value] of Object.entries(second)) {
+            first[key] = first.hasOwnProperty(key) ? { ...first[key], ...value } : value;
+        }
+        return first;
+    };
+
+    const mergeOptions = (...options) => {
         return options.reduce((result, option) => {
-            // Merge envelopes
             result.envelopes.push(...option.envelopes);
-
-            // Merge scripts and ensure uniqueness
-            result.scripts.push(...option.scripts.filter(script => !result.scripts.includes(script)));
-
-            // Merge styles and ensure uniqueness
-            result.styles.push(...option.styles.filter(style => !result.styles.includes(style)));
-
-            // Merge options and perform a deep merge
-            for (const [key, value] of Object.entries(option.options)) {
-              if (result.options.hasOwnProperty(key)) {
-                result.options[key] = { ...result.options[key], ...value };
-              } else {
-                result.options[key] = value;
-              }
-            }
-
-            // Merge context
+            result.scripts = deepMergeArrays(result.scripts, option.scripts);
+            result.styles = deepMergeArrays(result.styles, option.styles);
+            result.options = deepMergeObjects(result.options, option.options);
             result.context = { ...result.context, ...option.context };
-
             return result;
-        }, {envelopes: [], scripts: [], styles: [], options: {}, context: {}});
+        }, { envelopes: [], scripts: [], styles: [], options: {}, context: {} });
     }
 
-    function renderOptions(options) {
+    const registry = [];
+    registry.push({$options});
+    {$placeHolder}
+    const options = mergeOptions(...registry);
+
+    const renderOptions = (options) => {
         if(!window.hasOwnProperty('flasher')) {
             console.error('Flasher is not loaded');
             return;
@@ -71,7 +69,7 @@ final class HtmlPresenter implements PresenterInterface
         });
     }
 
-    function render(options) {
+    const render = (options) => {
         if ('loading' !== document.readyState) {
             renderOptions(options);
 
