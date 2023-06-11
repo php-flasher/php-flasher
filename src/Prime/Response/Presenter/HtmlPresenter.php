@@ -34,23 +34,32 @@ final class HtmlPresenter implements PresenterInterface
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
 (function(global, document) {
-    const deepMergeArrays = (first, second) => [...first, ...second.filter(item => !first.includes(item))];
-
-    const deepMergeObjects = (first, second) => {
-        for (const [key, value] of Object.entries(second)) {
-            first[key] = first.hasOwnProperty(key) ? { ...first[key], ...value } : value;
+    const merge = (first, second) => {
+        if (Array.isArray(first) && Array.isArray(second)) {
+            return [...first, ...second.filter(item => !first.includes(item))];
         }
-        return first;
+
+        if (typeof first === 'object' && typeof second === 'object') {
+            for (const [key, value] of Object.entries(second)) {
+                first[key] = first.hasOwnProperty(key) ? { ...first[key], ...value } : value;
+            }
+            return first;
+        }
+
+        return undefined;
     };
 
-    const mergeOptions = (...options) => options.reduce((result, option) => {
-        result.envelopes.push(...option.envelopes);
-        result.scripts = deepMergeArrays(result.scripts, option.scripts);
-        result.styles = deepMergeArrays(result.styles, option.styles);
-        result.options = deepMergeObjects(result.options, option.options);
-        result.context = { ...result.context, ...option.context };
+    const mergeOptions = (...options) => {
+        const result = {};
+
+        options.forEach(option => {
+            Object.entries(option).forEach(([key, value]) => {
+                result[key] = result.hasOwnProperty(key) ? merge(result[key], value) : value;
+            });
+        });
+
         return result;
-    }, { envelopes: [], scripts: [], styles: [], options: {}, context: {} });
+    };
 
     const renderOptions = options => {
         if(!global.hasOwnProperty('flasher')) {
@@ -79,6 +88,7 @@ final class HtmlPresenter implements PresenterInterface
     optionsRegistry.push({$jsonOptions});
     {$placeholder}
     const options = mergeOptions(...optionsRegistry);
+    console.log(options);
 
     if (document.querySelector('script.flasher-js')) {
         document.addEventListener('flasher:render', e => render(e.detail));
