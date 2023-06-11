@@ -29,28 +29,35 @@ final class HtmlPresenter implements PresenterInterface
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
 (function() {
-    var rootScript = '{$rootScript}';
-    var {$placeHolder} = {};
-    var options = mergeOptions({$options}, {$placeHolder});
+    const mainScript = '{$rootScript}';
+    const optionsRegistry = new Map();
+    const options = {$options};
 
-    function mergeOptions(first, second) {
-        return {
-            context: merge(first.context || {}, second.context || {}),
-            envelopes: merge(first.envelopes || [], second.envelopes || []),
-            options: merge(first.options || {}, second.options || {}),
-            scripts: merge(first.scripts || [], second.scripts || []),
-            styles: merge(first.styles || [], second.styles || []),
-        };
-    }
+    function mergeOptions(...options) {
+        return options.reduce((result, option) => {
+            // Merge envelopes
+            result.envelopes.push(...option.envelopes);
 
-    function merge(first, second) {
-        if (Array.isArray(first) && Array.isArray(second)) {
-            return first.concat(second).filter(function(item, index, array) {
-                return array.indexOf(item) === index;
-            });
-        }
+            // Merge scripts and ensure uniqueness
+            result.scripts.push(...option.scripts.filter(script => !result.scripts.includes(script)));
 
-        return Object.assign({}, first, second);
+            // Merge styles and ensure uniqueness
+            result.styles.push(...option.styles.filter(style => !result.styles.includes(style)));
+
+            // Merge options and perform a deep merge
+            for (const [key, value] of Object.entries(option.options)) {
+              if (result.options.hasOwnProperty(key)) {
+                result.options[key] = { ...result.options[key], ...value };
+              } else {
+                result.options[key] = value;
+              }
+            }
+
+            // Merge context
+            result.context = { ...result.context, ...option.context };
+
+            return result;
+        }, {envelopes: [], scripts: [], styles: [], options: {}, context: {}});
     }
 
     function renderOptions(options) {
@@ -76,21 +83,17 @@ final class HtmlPresenter implements PresenterInterface
         });
     }
 
-    if (1 === document.querySelectorAll('script.flasher-js').length) {
-        document.addEventListener('flasher:render', function (event) {
-            render(event.detail);
-        });
+    if (document.querySelector('script.flasher-js').length) {
+        document.addEventListener('flasher:render', (e) => render(e.detail));
     }
 
-    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
+    if (window.hasOwnProperty('flasher') || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
         render(options);
     } else {
-        var tag = document.createElement('script');
-        tag.setAttribute('src', rootScript);
+        const tag = document.createElement('script');
+        tag.setAttribute('src', mainScript);
         tag.setAttribute('type', 'text/javascript');
-        tag.onload = function () {
-            render(options);
-        };
+        tag.onload = () => render(options);
 
         document.head.appendChild(tag);
     }
