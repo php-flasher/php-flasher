@@ -49,10 +49,21 @@ final class FlasherPlugin extends Plugin
     {
         $config = parent::normalizeConfig($config);
 
+        $config = $this->normalizePlugins($config);
+        $config = $this->normalizePresets($config);
+        $config = $this->addDefaultConfig($config);
+        $config = $this->normalizeFlashBag($config);
+        $config = $this->setPresetsDefaults($config);
+
+        return $config;
+    }
+
+    private function normalizePlugins(array $config): array
+    {
         if (!isset($config['plugins']['flasher'])) {
             $config['plugins']['flasher'] = [
                 'scripts' => [],
-                'styles' => [],
+                'styles'  => [],
                 'options' => [],
             ];
         }
@@ -70,19 +81,30 @@ final class FlasherPlugin extends Plugin
         }
 
         foreach ($config['plugins'] ?? [] as $name => $options) {
-            $config['plugins'][$name]['scripts'] = (array) ($options['scripts'] ?? []);
-            $config['plugins'][$name]['styles'] = (array) ($options['styles'] ?? []);
+            $config['plugins'][$name]['scripts'] = (array)($options['scripts'] ?? []);
+            $config['plugins'][$name]['styles'] = (array)($options['styles'] ?? []);
         }
 
+        return $config;
+    }
+
+    private function normalizePresets(array $config): array
+    {
         foreach ($config['presets'] ?? [] as $name => $options) {
             if (is_string($options)) {
                 $options = ['message' => $options];
             }
+
             $config['presets'][$name] = $options;
         }
 
+        return $config;
+    }
+
+    private function addDefaultConfig(array $config = []): array
+    {
         // @phpstan-ignore-next-line
-        $config = array_replace([
+        return array_replace([
             'default' => $this->getDefault(),
             'root_script' => $this->getRootScript(),
             'auto_translate' => true,
@@ -105,7 +127,10 @@ final class FlasherPlugin extends Plugin
                 ],
             ],
         ], $config);
+    }
 
+    private function normalizeFlashBag(array $config = []): array
+    {
         $mapping = [
             'success' => ['success'],
             'error' => ['error', 'danger'],
@@ -127,6 +152,11 @@ final class FlasherPlugin extends Plugin
             $config['flash_bag'] = [];
         }
 
+        return $config;
+    }
+
+    private function setPresetsDefaults(array $config = []): array
+    {
         foreach ($config['presets'] ?? [] as $name => $options) {
             $config['presets'][$name]['type'] ??= NotificationInterface::INFO;
             $config['presets'][$name]['options'] ??= [];
