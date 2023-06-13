@@ -195,7 +195,7 @@ final class Envelope implements NotificationInterface
             }
         }
 
-        return [...$this->notification->toArray(), 'stamps' => array_merge(...$stamps)];
+        return [...$this->notification->toArray(), 'metadata' => array_merge(...$stamps)];
     }
 
     /**

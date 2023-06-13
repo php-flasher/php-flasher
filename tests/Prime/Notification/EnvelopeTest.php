@@ -6,8 +6,8 @@ namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Tests\Prime\TestCase;
 
@@ -63,7 +63,7 @@ final class EnvelopeTest extends TestCase
     {
         $notification = $this->getMockBuilder(\Flasher\Prime\Notification\NotificationInterface::class)->getMock();
         $stamp1 = new HopsStamp(2);
-        $stamp2 = new HandlerStamp('flasher');
+        $stamp2 = new PluginStamp('flasher');
         $stamp3 = new PresetStamp('entity_saved');
 
         $envelope = new Envelope($notification);
@@ -81,7 +81,7 @@ final class EnvelopeTest extends TestCase
     {
         $notification = $this->getMockBuilder(\Flasher\Prime\Notification\NotificationInterface::class)->getMock();
         $stamp1 = new HopsStamp(2);
-        $stamp2 = new HandlerStamp('flasher');
+        $stamp2 = new PluginStamp('flasher');
         $stamp3 = new PresetStamp('entity_saved');
 
         $envelope = new Envelope($notification);
@@ -100,7 +100,7 @@ final class EnvelopeTest extends TestCase
         $notification = $this->getMockBuilder('\\'.\Flasher\Prime\Notification\NotificationInterface::class)->getMock();
         $stamps = [
             new HopsStamp(2),
-            new HandlerStamp('flasher'),
+            new PluginStamp('flasher'),
             new PresetStamp('entity_saved'),
         ];
 
@@ -121,7 +121,7 @@ final class EnvelopeTest extends TestCase
         $notification = $this->getMockBuilder(\Flasher\Prime\Notification\NotificationInterface::class)->getMock();
         $stamps = [
             new HopsStamp(2),
-            new HandlerStamp('flasher'),
+            new PluginStamp('flasher'),
             new PresetStamp('entity_saved'),
         ];
 
@@ -255,7 +255,7 @@ final class EnvelopeTest extends TestCase
         $notification = $this->getMockBuilder(\Flasher\Prime\Notification\NotificationInterface::class)->getMock();
         $notification->expects($this->once())->method('toArray')->willReturn($array);
 
-        $envelope = new Envelope($notification, new HandlerStamp('flasher'));
+        $envelope = new Envelope($notification, new PluginStamp('flasher'));
 
         $this->assertEquals(['notification' => $array, 'handler' => 'flasher'], $envelope->toArray());
     }

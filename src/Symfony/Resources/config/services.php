@@ -41,7 +41,7 @@ return static function (ContainerConfigurator $container): void {
             service('flasher.storage'),
             service('flasher.event_dispatcher'),
             service('flasher.filter_factory'),
-            abstract_arg('config.filter_criteria'),
+            abstract_arg('config.filter'),
         ]);
 
     $services->set('flasher.resource_manager', ResourceManager::class)

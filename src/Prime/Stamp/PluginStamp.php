@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class HandlerStamp implements StampInterface, PresentableStampInterface
+final class PluginStamp implements StampInterface, PresentableStampInterface
 {
     public function __construct(private readonly string $handler)
     {
     }
 
-    public function getHandler(): string
+    public function getPlugin(): string
     {
         return $this->handler;
     }

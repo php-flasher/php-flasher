@@ -8,33 +8,13 @@ use Flasher\Prime\Plugin\Plugin;
 
 final class PnotifyPlugin extends Plugin
 {
-    /**
-     * @return array{cdn: string[], local: string[]}
-     */
-    public function getScripts(): array
+    public function getScripts(): string
     {
-        return [
-            'cdn' => [
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.3.1/dist/flasher-pnotify.min.js',
-            ],
-            'local' => [
-                '/vendor/flasher/flasher-pnotify.min.js',
-            ],
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.3.1/dist/flasher-pnotify.min.js';
     }
 
-    /**
-     * @return array{cdn: string[], local: string[]}
-     */
-    public function getStyles(): array
+    public function getStyles(): string
     {
-        return [
-            'cdn' => [
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.3.1/dist/flasher-pnotify.min.css',
-            ],
-            'local' => [
-                '/vendor/flasher/flasher-pnotify.min.css',
-            ],
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-pnotify@1.3.1/dist/flasher-pnotify.min.css';
     }
 }

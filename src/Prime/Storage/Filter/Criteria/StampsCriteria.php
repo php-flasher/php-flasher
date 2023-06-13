@@ -8,9 +8,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\ContextStamp;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\DelayStamp;
-use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
@@ -46,7 +46,7 @@ final class StampsCriteria implements CriteriaInterface
         'context' => ContextStamp::class,
         'created_at' => CreatedAtStamp::class,
         'delay' => DelayStamp::class,
-        'handler' => HandlerStamp::class,
+        'handler' => PluginStamp::class,
         'hops' => HopsStamp::class,
         'preset' => PresetStamp::class,
         'priority' => PriorityStamp::class,

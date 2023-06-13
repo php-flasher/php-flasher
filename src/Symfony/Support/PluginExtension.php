@@ -26,6 +26,7 @@ final class PluginExtension extends Extension implements PrependExtensionInterfa
         $definition = new ChildDefinition('flasher.notification_factory');
         $definition
             ->setClass($this->plugin->getFactory())
+            ->setPublic(true)
             ->addTag('flasher.factory', ['alias' => $this->plugin->getAlias()]);
 
         $identifier = 'flasher.'.$this->plugin->getAlias().'_factory';

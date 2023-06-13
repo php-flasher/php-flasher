@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Flasher\SweetAlert\Prime;
-
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;

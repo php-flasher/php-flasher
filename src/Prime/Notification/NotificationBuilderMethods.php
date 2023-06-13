@@ -6,8 +6,8 @@ namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\ContextStamp;
 use Flasher\Prime\Stamp\DelayStamp;
-use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Stamp\TranslationStamp;
@@ -95,7 +95,7 @@ trait NotificationBuilderMethods
 
     public function handler(string $handler): static
     {
-        $this->envelope->withStamp(new HandlerStamp($handler));
+        $this->envelope->withStamp(new PluginStamp($handler));
 
         return $this;
     }

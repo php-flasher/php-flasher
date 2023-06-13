@@ -19,11 +19,6 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * @phpstan-type FlasherConfigType array{
- *
- * }
- */
 final class FlasherExtension extends Extension implements CompilerPassInterface
 {
     public function __construct(private readonly FlasherPlugin $plugin)
@@ -45,7 +40,6 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
-        /** @phpstan-var FlasherConfigType $config */
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
 
         $this->registerCompilerPassTags($container);
@@ -68,9 +62,6 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
             ->addTag('flasher.event_listener');
     }
 
-    /**
-     * @phpstan-param FlasherConfigType $config
-     */
     private function registerFlasherConfiguration(array $config, ContainerBuilder $container): void
     {
         $flasherConfig = $container->getDefinition('flasher.config');
@@ -83,9 +74,6 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $presetListener->replaceArgument(0, $config['presets']);
     }
 
-    /**
-     * @phpstan-param FlasherConfigType $config
-     */
     private function registerListeners(array $config, ContainerBuilder $container): void
     {
         $this->registerSessionListener($config, $container);
@@ -105,23 +93,13 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
             ->addArgument($mapping);
     }
 
-    /**
-     * @phpstan-param FlasherConfigType $config
-     */
     private function registerSessionListener(array $config, ContainerBuilder $container): void
     {
-        if (! $config['flash_bag']['enabled']) {
-            return;
-        }
-
         $container->register('flasher.session_listener', SessionListener::class)
             ->addArgument(new Reference('flasher.request_extension'))
             ->addTag('kernel.event_listener', ['event' => 'kernel.response']);
     }
 
-    /**
-     * @phpstan-param FlasherConfigType $config
-     */
     private function registerFlasherListener(array $config, ContainerBuilder $container): void
     {
         if (! $config['auto_render']) {
@@ -133,24 +111,16 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
             ->addTag('kernel.event_listener', ['event' => 'kernel.response', 'priority' => -256]);
     }
 
-    /**
-     * @phpstan-param FlasherConfigType $config
-     */
     private function registerStorageManager(array $config, ContainerBuilder $container): void
     {
-        $criteria = $config['filter_criteria'];
+        $criteria = $config['filter'];
         $storageManager = $container->getDefinition('flasher.storage_manager');
         $storageManager->replaceArgument(3, $criteria);
     }
 
-    /**
-     * @phpstan-param FlasherConfigType $config
-     */
     private function registerHttpExtensions(array $config, ContainerBuilder $container): void
     {
-        $mapping = $config['flash_bag']['mapping'];
-        $this->registerRequestExtension($container, $mapping);
-
+        $this->registerRequestExtension($container, $config['flash_bag']);
         $this->registerResponseExtension($container);
     }
 

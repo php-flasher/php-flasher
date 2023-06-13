@@ -30,12 +30,12 @@ abstract class Plugin implements PluginInterface
         return str_replace('Plugin', 'Factory', static::class); // @phpstan-ignore-line
     }
 
-    public function getScripts(): array
+    public function getScripts(): string|array
     {
         return [];
     }
 
-    public function getStyles(): array
+    public function getStyles(): string|array
     {
         return [];
     }
@@ -69,6 +69,7 @@ abstract class Plugin implements PluginInterface
             'options' => $this->getOptions(),
             ...$config,
         ];
+
 
         $config['scripts'] = (array) $config['scripts'];
         $config['styles'] = (array) $config['styles'];

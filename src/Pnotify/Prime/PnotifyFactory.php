@@ -10,15 +10,15 @@ declare(strict_types=1);
 namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Factory\NotificationFactory;
-use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
  * @mixin PnotifyBuilder
  */
 final class PnotifyFactory extends NotificationFactory
 {
-    public function createNotificationBuilder(): \Flasher\Prime\Notification\NotificationBuilderInterface
+    public function createNotificationBuilder(): NotificationBuilderInterface
     {
-        return new PnotifyBuilder($this->getStorageManager(), new Notification(), 'pnotify');
+        return new PnotifyBuilder('pnotify', $this->storageManager);
     }
 }

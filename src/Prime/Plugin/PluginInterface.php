@@ -20,14 +20,14 @@ interface PluginInterface
     public function getFactory(): string;
 
     /**
-     * @return string[]
+     * @return string|string[]
      */
-    public function getScripts(): array;
+    public function getScripts(): string|array;
 
     /**
-     * @return string[]
+     * @return string|string[]
      */
-    public function getStyles(): array;
+    public function getStyles(): string|array;
 
     /**
      * @return array<string, mixed>

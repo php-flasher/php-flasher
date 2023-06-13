@@ -489,10 +489,10 @@ final class NotificationBuilderTest extends TestCase
         $builder->handler('flasher');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\HandlerStamp::class);
+        $stamp = $envelope->get(\Flasher\Prime\Stamp\PluginStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\HandlerStamp::class, $stamp);
-        $this->assertEquals('flasher', $stamp->getHandler());
+        $this->assertInstanceOf(\Flasher\Prime\Stamp\PluginStamp::class, $stamp);
+        $this->assertEquals('flasher', $stamp->getPlugin());
     }
 
     public function testContext(): void

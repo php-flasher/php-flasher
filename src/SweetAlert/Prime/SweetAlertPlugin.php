@@ -13,17 +13,13 @@ final class SweetAlertPlugin extends Plugin
         return 'sweetalert';
     }
 
-    public function getScripts(): array
+    public function getScripts(): string
     {
-        return [
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.js',
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.js';
     }
 
-    public function getStyles(): array
+    public function getStyles(): string
     {
-        return [
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.css',
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.css';
     }
 }

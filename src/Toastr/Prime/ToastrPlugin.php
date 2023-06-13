@@ -8,7 +8,7 @@ use Flasher\Prime\Plugin\Plugin;
 
 final class ToastrPlugin extends Plugin
 {
-    public function getScripts(): array
+    public function getScripts(): string|array
     {
         return [
             'https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js',
@@ -16,10 +16,8 @@ final class ToastrPlugin extends Plugin
         ];
     }
 
-    public function getStyles(): array
+    public function getStyles(): string
     {
-        return [
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.css',
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.css';
     }
 }

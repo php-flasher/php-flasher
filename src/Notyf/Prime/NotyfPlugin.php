@@ -8,33 +8,13 @@ use Flasher\Prime\Plugin\Plugin;
 
 final class NotyfPlugin extends Plugin
 {
-    /**
-     * @return array{cdn: string[], local: string[]}
-     */
-    public function getScripts(): array
+    public function getScripts(): string
     {
-        return [
-            'cdn' => [
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.1/dist/flasher-notyf.min.js',
-            ],
-            'local' => [
-                '/vendor/flasher/flasher-notyf.min.js',
-            ],
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.1/dist/flasher-notyf.min.js';
     }
 
-    /**
-     * @return array{cdn: string[], local: string[]}
-     */
-    public function getStyles(): array
+    public function getStyles(): string
     {
-        return [
-            'cdn' => [
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.1/dist/flasher-notyf.min.css',
-            ],
-            'local' => [
-                '/vendor/flasher/flasher-notyf.min.css',
-            ],
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.1/dist/flasher-notyf.min.css';
     }
 }

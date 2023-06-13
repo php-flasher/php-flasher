@@ -10,8 +10,8 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\HandlerStamp;
 use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Tests\Prime\TestCase;
 
 final class ResourceManagerTest extends TestCase
@@ -39,7 +39,7 @@ final class ResourceManagerTest extends TestCase
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
         $envelopes[] = new Envelope($notification, [
-            new HandlerStamp('flasher'),
+            new PluginStamp('flasher'),
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
             new IdStamp('1111'),
         ]);
@@ -49,7 +49,7 @@ final class ResourceManagerTest extends TestCase
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification, [
-            new HandlerStamp('toastr'),
+            new PluginStamp('toastr'),
             new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
             new IdStamp('2222'),
         ]);

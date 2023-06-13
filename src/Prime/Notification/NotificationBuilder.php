@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Notification;
 
+use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\Macroable;
 
@@ -13,9 +14,19 @@ class NotificationBuilder implements NotificationBuilderInterface
     use NotificationStorageMethods;
     use Macroable;
 
-    public function __construct(NotificationInterface $notification, StorageManagerInterface $storageManager)
+    public function __construct(string|NotificationInterface $notification, StorageManagerInterface $storageManager)
     {
-        $this->envelope = Envelope::wrap($notification);
+        if (is_string($notification)) {
+            $plugin = new PluginStamp($notification);
+
+            $notification = Envelope::wrap(new Notification());
+            $notification->withStamp($plugin);
+        }
+
+        $envelope = Envelope::wrap($notification);
+        $envelope->withStamp(new PluginStamp('flasher'), false);
+
+        $this->envelope = $envelope;
         $this->storageManager = $storageManager;
         $this->addMethodAliases();
     }
