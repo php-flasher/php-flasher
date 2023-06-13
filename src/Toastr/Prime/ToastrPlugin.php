@@ -20,4 +20,11 @@ final class ToastrPlugin extends Plugin
     {
         return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.css';
     }
+
+    public function getOptions(): array
+    {
+        return [
+            'position' => 'center',
+        ];
+    }
 }
