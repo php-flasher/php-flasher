@@ -27,7 +27,7 @@ final class HtmlPresenter implements PresenterInterface
             return $options;
         }
 
-        $mainScript = $response->getRootScript();
+        $mainScript = $response->getMainScript();
         $placeholder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
 
         return $this->renderJavascript($options, $mainScript, $placeholder);
@@ -66,11 +66,11 @@ final class HtmlPresenter implements PresenterInterface
     };
 
     const renderCallback = (options) => {
-        if(!window.flasher) {
+        if(!window.flash) {
             throw new Error('Flasher is not loaded');
         }
 
-        window.flasher.render(options);
+        window.flash.render(options);
     };
 
     const render = (options) => {
@@ -88,7 +88,7 @@ final class HtmlPresenter implements PresenterInterface
     const addScriptAndRender = (options) => {
         const mainScript = '{$mainScript}';
 
-        if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
+        if (window.flash || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
             render(options);
         } else {
             const tag = document.createElement('script');

@@ -15,9 +15,9 @@ final class ResponseTest extends TestCase
     {
         $response = new Response([], []);
 
-        $response->setRootScript('flasher.min.js');
+        $response->setMainScript('flasher.min.js');
 
-        $this->assertEquals('flasher.min.js', $response->getRootScript());
+        $this->assertEquals('flasher.min.js', $response->getMainScript());
     }
 
     public function testItAddsScriptToResponse(): void
@@ -70,7 +70,7 @@ final class ResponseTest extends TestCase
         $envelopes[] = new Envelope($notification);
 
         $response = new Response($envelopes, []);
-        $response->setRootScript('flasher.min.js');
+        $response->setMainScript('flasher.min.js');
         $response->addScripts(['noty.min.js', 'toastr.min.js']);
         $response->addStyles(['noty.min.css', 'toastr.min.css']);
         $response->addOptions('flasher', ['position' => 'center', 'timeout' => 2500]);

@@ -8,6 +8,7 @@ use Flasher\Prime\Config\Config;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\PluginStamp;
+
 use function in_array;
 
 final class ResourceManager implements ResourceManagerInterface
@@ -23,7 +24,7 @@ final class ResourceManager implements ResourceManagerInterface
     {
         /** @var string $rootScript */
         $rootScript = $this->config->get('root_script');
-        $response->setRootScript($rootScript);
+        $response->setMainScript($rootScript);
 
         $plugins = [];
         foreach ($response->getEnvelopes() as $envelope) {

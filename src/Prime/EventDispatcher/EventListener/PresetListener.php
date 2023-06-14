@@ -57,9 +57,9 @@ final class PresetListener implements EventListenerInterface
 
         $preset = $this->presets[$presetStamp->getPreset()];
         $preset = [
-            'type' => 'info',
-            'title' => null,
-            'message' => null,
+            'type' => '',
+            'title' => '',
+            'message' => '',
             'options' => [],
             ...$preset,
         ];

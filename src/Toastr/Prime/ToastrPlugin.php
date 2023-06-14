@@ -23,8 +23,6 @@ final class ToastrPlugin extends Plugin
 
     public function getOptions(): array
     {
-        return [
-            'position' => 'center',
-        ];
+        return [];
     }
 }

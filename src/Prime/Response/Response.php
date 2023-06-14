@@ -8,7 +8,7 @@ use Flasher\Prime\Notification\Envelope;
 
 final class Response
 {
-    private string $rootScript = '';
+    private string $mainScript = '';
 
     /**
      * @var string[]
@@ -72,14 +72,14 @@ final class Response
         return $this->envelopes;
     }
 
-    public function getRootScript(): string
+    public function getMainScript(): string
     {
-        return $this->rootScript;
+        return $this->mainScript;
     }
 
-    public function setRootScript(string $rootScript): void
+    public function setMainScript(string $mainScript): void
     {
-        $this->rootScript = $rootScript;
+        $this->mainScript = $mainScript;
     }
 
     /**

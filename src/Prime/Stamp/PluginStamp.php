@@ -6,20 +6,20 @@ namespace Flasher\Prime\Stamp;
 
 final class PluginStamp implements StampInterface, PresentableStampInterface
 {
-    public function __construct(private readonly string $handler)
+    public function __construct(private readonly string $plugin)
     {
     }
 
     public function getPlugin(): string
     {
-        return $this->handler;
+        return $this->plugin;
     }
 
     /**
-     * @return array{handler: string}
+     * @return array{plugin: string}
      */
     public function toArray(): array
     {
-        return ['handler' => $this->handler];
+        return ['plugin' => $this->plugin];
     }
 }

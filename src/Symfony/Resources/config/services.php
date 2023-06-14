@@ -16,6 +16,7 @@ use Flasher\Prime\Storage\StorageBag;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Symfony\Storage\SessionBag;
 use Flasher\Symfony\Translation\Translator;
+use Flasher\Symfony\Twig\FlasherTwigExtension;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -73,10 +74,16 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service('flasher.translator')->nullOnInvalid(),
             abstract_arg('config.auto_translate'),
-        ]);
+        ])
+        ->tag('flasher.event_listener');
 
     $services->set('flasher.preset_listener', PresetListener::class)
         ->args([
             abstract_arg('config.presets'),
-        ]);
+        ])
+        ->tag('flasher.event_listener');
+
+    $services->set('flasher.twig_extension', FlasherTwigExtension::class)
+        ->args([service('flasher')])
+        ->tag('twig.extension');
 };

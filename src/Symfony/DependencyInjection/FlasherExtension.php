@@ -76,7 +76,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
 
     private function registerListeners(array $config, ContainerBuilder $container): void
     {
-        $this->registerSessionListener($config, $container);
+        $this->registerSessionListener($container);
         $this->registerFlasherListener($config, $container);
     }
 
@@ -93,7 +93,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
             ->addArgument($mapping);
     }
 
-    private function registerSessionListener(array $config, ContainerBuilder $container): void
+    private function registerSessionListener(ContainerBuilder $container): void
     {
         $container->register('flasher.session_listener', SessionListener::class)
             ->addArgument(new Reference('flasher.request_extension'))
