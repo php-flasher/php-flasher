@@ -13,7 +13,7 @@ abstract class AbstractFlasherKernel extends \Symfony\Component\HttpKernel\Kerne
 
     public function doRegisterBundles()
     {
-        return [new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(), new \Symfony\Bundle\TwigBundle\TwigBundle(), new \Flasher\Symfony\FlasherBundle(), new \Flasher\Noty\Symfony\FlasherNotySymfonyBundle(), new \Flasher\Notyf\Symfony\FlasherNotyfSymfonyBundle(), new \Flasher\Pnotify\Symfony\FlasherPnotifyBundle(), new \Flasher\SweetAlert\Symfony\FlasherSweetAlertBundle(), new \Flasher\Toastr\Symfony\FlasherToastrBundle()];
+        return [new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(), new \Symfony\Bundle\TwigBundle\TwigBundle(), new \Flasher\Symfony\FlasherBundle(), new \Flasher\Noty\Symfony\FlasherNotyBundle(), new \Flasher\Notyf\Symfony\FlasherNotyfBundle(), new \Flasher\Pnotify\Symfony\FlasherPnotifyBundle(), new \Flasher\SweetAlert\Symfony\FlasherSweetAlertBundle(), new \Flasher\Toastr\Symfony\FlasherToastrBundle()];
     }
 
     public function configureContainer(\Symfony\Component\DependencyInjection\ContainerBuilder $container, \Symfony\Component\Config\Loader\LoaderInterface $loader): void
