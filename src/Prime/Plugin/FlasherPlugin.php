@@ -155,6 +155,8 @@ final class FlasherPlugin extends Plugin
                 $config['styles'] = array('cdn' => $config['styles'], 'local' => $config['styles']);
             }
 
+            $config['styles'] = array_merge(array('cdn' => array(), 'local' => array()), $config['styles']);
+
             $config['styles']['cdn'] = (array) $config['styles']['cdn'];
             $config['styles']['local'] = (array) $config['styles']['local'];
         }
@@ -163,6 +165,8 @@ final class FlasherPlugin extends Plugin
             if (is_string($config['scripts'])) {
                 $config['scripts'] = array('cdn' => $config['scripts'], 'local' => $config['scripts']);
             }
+
+            $config['scripts'] = array_merge(array('cdn' => array(), 'local' => array()), $config['scripts']);
 
             $config['scripts']['cdn'] = (array) $config['scripts']['cdn'];
             $config['scripts']['local'] = (array) $config['scripts']['local'];
