@@ -38,7 +38,7 @@
     "require": {
         "php": ">=5.3",
         "ext-mbstring": "*",
-        "php-flasher/flasher": "^1.15.1"
+        "php-flasher/flasher": "^1.15.2"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
