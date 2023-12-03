@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class PluginStamp implements StampInterface, PresentableStampInterface
+final class PluginStamp implements PresentableStampInterface, StampInterface
 {
     public function __construct(private readonly string $plugin)
     {

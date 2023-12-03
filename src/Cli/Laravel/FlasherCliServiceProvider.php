@@ -53,6 +53,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
             /** @phpstan-ignore-next-line */
             $title = $app->make('config')->get('flasher_cli.title', null);
             $icons = $app->make('config')->get('flasher_cli.icons', []);
+
             // @phpstan-ignore-line
             return new Notify($title, $icons);
         });
@@ -76,6 +77,7 @@ final class FlasherCliServiceProvider extends ServiceProvider
     {
         $this->app->extend('flasher.response_manager', static function (ResponseManagerInterface $manager, Container $app): ResponseManagerInterface {
             $manager->addPresenter(CliPresenter::NAME, new CliPresenter($app->make('flasher.notify')));
+
             // @phpstan-ignore-line
             return $manager;
         });

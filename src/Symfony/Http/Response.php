@@ -28,7 +28,7 @@ final class Response implements ResponseInterface
     {
         $contentType = $this->response->headers->get('Content-Type');
 
-        if (! \is_string($contentType)) {
+        if (!\is_string($contentType)) {
             return false;
         }
 
@@ -39,7 +39,7 @@ final class Response implements ResponseInterface
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
-        if (! \is_string($contentDisposition)) {
+        if (!\is_string($contentDisposition)) {
             return false;
         }
 

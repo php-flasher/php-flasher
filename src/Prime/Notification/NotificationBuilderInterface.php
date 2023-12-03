@@ -16,7 +16,7 @@ interface NotificationBuilderInterface
     public function type(string $type): static;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function options(array $options, bool $merge = true): static;
 
@@ -31,14 +31,14 @@ interface NotificationBuilderInterface
     public function delay(int $delay): static;
 
     /**
-     * @param  array<string, mixed>  $parameters
+     * @param array<string, mixed> $parameters
      */
     public function translate(array $parameters = [], string $locale = null): static;
 
     public function handler(string $handler): static;
 
     /**
-     * @param  array<string, mixed>  $context
+     * @param array<string, mixed> $context
      */
     public function context(array $context): static;
 
@@ -47,39 +47,39 @@ interface NotificationBuilderInterface
     public function unless(bool|\Closure $condition): static;
 
     /**
-     * @param  StampInterface[]|StampInterface  $stamps
+     * @param StampInterface[]|StampInterface $stamps
      */
     public function with(array|StampInterface $stamps): static;
 
     public function getEnvelope(): Envelope;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function success(string $message, array $options = [], string $title = null): Envelope;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function error(string $message, array $options = [], string $title = null): Envelope;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function info(string $message, array $options = [], string $title = null): Envelope;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function warning(string $message, array $options = [], string $title = null): Envelope;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
-    public function flash(string $type = null, string $message = null, array $options = [], string $title = null): Envelope;
+    public function flash(string|Type $type = null, string $message = null, array $options = [], string $title = null): Envelope;
 
     /**
-     * @param  array<string, mixed>  $parameters
+     * @param array<string, mixed> $parameters
      */
     public function preset(string $preset, array $parameters = []): Envelope;
 

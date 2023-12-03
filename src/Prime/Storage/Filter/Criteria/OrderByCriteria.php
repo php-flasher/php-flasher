@@ -8,7 +8,7 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\OrderableStampInterface;
 use Flasher\Prime\Stamp\StampInterface;
 
-class OrderByCriteria implements CriteriaInterface
+final class OrderByCriteria implements CriteriaInterface
 {
     public const ASC = 'ASC';
 
@@ -21,7 +21,7 @@ class OrderByCriteria implements CriteriaInterface
 
     public function __construct(mixed $criteria)
     {
-        if (! is_string($criteria) && ! is_array($criteria)) {
+        if (!is_string($criteria) && !is_array($criteria)) {
             throw new \InvalidArgumentException("Invalid type for criteria 'order_by'.");
         }
 
@@ -33,7 +33,7 @@ class OrderByCriteria implements CriteriaInterface
 
             $direction = strtoupper($direction);
 
-            if (! in_array($direction, [self::ASC, self::DESC])) {
+            if (!in_array($direction, [self::ASC, self::DESC])) {
                 throw new \InvalidArgumentException();
             }
 
@@ -56,7 +56,7 @@ class OrderByCriteria implements CriteriaInterface
                 $stampA = $first->get($field);
                 $stampB = $second->get($field);
 
-                if (! $stampA instanceof OrderableStampInterface || ! $stampB instanceof OrderableStampInterface) {
+                if (!$stampA instanceof OrderableStampInterface || !$stampB instanceof OrderableStampInterface) {
                     return 0;
                 }
 

@@ -12,7 +12,7 @@ final class NotifierCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (! $container->has('flasher.cli_notifier')) {
+        if (!$container->has('flasher.cli_notifier')) {
             return;
         }
 

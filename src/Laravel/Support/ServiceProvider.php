@@ -51,7 +51,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function registerPublishing()
     {
-        if (! \in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
+        if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
             return;
         }
 
@@ -68,12 +68,12 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function publishConfiguration()
     {
-        if (! $this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
+        if (!$this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
         $file = $this->getConfigurationFile();
-        if (! file_exists($file)) {
+        if (!file_exists($file)) {
             return;
         }
 
@@ -87,7 +87,7 @@ abstract class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($groups as $group) {
-            if (! \array_key_exists($group, static::$publishGroups)) {
+            if (!\array_key_exists($group, static::$publishGroups)) {
                 static::$publishGroups[$group] = [];
             }
 
@@ -100,13 +100,13 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function publishAssets()
     {
-        if (! $this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
+        if (!$this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
         $dir = $this->plugin->getAssetsDir();
 
-        if (! is_dir($dir)) {
+        if (!is_dir($dir)) {
             return;
         }
 
@@ -120,7 +120,7 @@ abstract class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($groups as $group) {
-            if (! \array_key_exists($group, static::$publishGroups)) {
+            if (!\array_key_exists($group, static::$publishGroups)) {
                 static::$publishGroups[$group] = [];
             }
 
@@ -143,7 +143,7 @@ abstract class ServiceProvider extends BaseServiceProvider
      */
     protected function processConfiguration()
     {
-        if (! $this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
+        if (!$this->plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
@@ -178,11 +178,11 @@ abstract class ServiceProvider extends BaseServiceProvider
     protected function registerFactory()
     {
         $plugin = $this->plugin;
-        if (! $plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
+        if (!$plugin instanceof \Flasher\Prime\Plugin\PluginInterface) {
             return;
         }
 
-        if (! class_exists($plugin->getFactory())) {
+        if (!class_exists($plugin->getFactory())) {
             return;
         }
 
@@ -196,6 +196,7 @@ abstract class ServiceProvider extends BaseServiceProvider
 
         $this->app->extend('flasher', static function (FlasherInterface $flasher, Container $app) use ($plugin): \Flasher\Prime\FlasherInterface {
             $flasher->addFactory($plugin->getAlias(), $app->make($plugin->getServiceID()));
+
             // @phpstan-ignore-line
             return $flasher;
         });

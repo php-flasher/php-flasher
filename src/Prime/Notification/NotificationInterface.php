@@ -6,26 +6,6 @@ namespace Flasher\Prime\Notification;
 
 interface NotificationInterface
 {
-    /**
-     * @var string
-     */
-    public const SUCCESS = 'success';
-
-    /**
-     * @var string
-     */
-    public const ERROR = 'error';
-
-    /**
-     * @var string
-     */
-    public const INFO = 'info';
-
-    /**
-     * @var string
-     */
-    public const WARNING = 'warning';
-
     public function getTitle(): string;
 
     public function setTitle(string $title): void;
@@ -34,9 +14,9 @@ interface NotificationInterface
 
     public function setMessage(string $message): void;
 
-    public function getType(): string;
+    public function getType(): ?Type;
 
-    public function setType(string $type): void;
+    public function setType(string|Type $type): void;
 
     /**
      * @return array<string, mixed>
@@ -44,7 +24,7 @@ interface NotificationInterface
     public function getOptions(): array;
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function setOptions(array $options): void;
 

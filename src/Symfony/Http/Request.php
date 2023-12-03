@@ -43,12 +43,12 @@ final class Request implements RequestInterface
 
     public function hasType(string $type): bool
     {
-        if (! $this->hasSession() || ! $this->isSessionStarted()) {
+        if (!$this->hasSession() || !$this->isSessionStarted()) {
             return false;
         }
 
         $session = $this->request->getSession();
-        if (! $session instanceof FlashBagAwareSessionInterface) {
+        if (!$session instanceof FlashBagAwareSessionInterface) {
             return false;
         }
 
@@ -63,7 +63,7 @@ final class Request implements RequestInterface
     public function getType(string $type): array
     {
         $session = $this->request->getSession();
-        if (! $session instanceof FlashBagAwareSessionInterface) {
+        if (!$session instanceof FlashBagAwareSessionInterface) {
             return [];
         }
 

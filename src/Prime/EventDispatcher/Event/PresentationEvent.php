@@ -9,8 +9,8 @@ use Flasher\Prime\Notification\Envelope;
 final class PresentationEvent
 {
     /**
-     * @param  Envelope[]  $envelopes
-     * @param  array<string, mixed>  $context
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $context
      */
     public function __construct(
         private readonly array $envelopes,

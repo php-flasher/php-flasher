@@ -9,7 +9,7 @@ final class FallbackSession
     private static array $storage = [];
 
     /**
-     * @param  string  $name
+     * @param string $name
      */
     public function get($name, $default = null)
     {
@@ -19,7 +19,7 @@ final class FallbackSession
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      */
     public function set($name, $value): void
     {

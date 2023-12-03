@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Exception;
 
-class CriteriaNotRegisteredException extends \Exception
+final class CriteriaNotRegisteredException extends \Exception
 {
     /**
-     * @param  string[]  $availableCriterias
+     * @param string[] $availableCriteria
      */
-    public function __construct(string $alias, array $availableCriterias = [])
+    public static function create(string $alias, array $availableCriteria = []): self
     {
         $message = sprintf('Criteria "%s" is not found, did you forget to register it?', $alias);
 
-        if ([] !== $availableCriterias) {
-            $message .= sprintf(' Available criteria: %s', implode(', ', $availableCriterias));
+        if ([] !== $availableCriteria) {
+            $message .= sprintf(' Available criteria: [%s]', implode(', ', $availableCriteria));
         }
 
-        parent::__construct($message);
+        return new self($message);
     }
 }

@@ -20,7 +20,7 @@ final class SessionBag implements BagInterface
     private readonly \Flasher\Symfony\Storage\FallbackSession $fallbackSession;
 
     /**
-     * @param  RequestStack|SessionInterface  $session
+     * @param RequestStack|SessionInterface $session
      */
     public function __construct(private $session)
     {

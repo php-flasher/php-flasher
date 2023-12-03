@@ -26,14 +26,15 @@ final class Notification extends BaseNotification
     public $options = [];
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function __construct(public ?string $message = null, private ?string $title = null, private ?string $icon = null, public string $type = self::INFO, public array $options = [])
     {
     }
 
     /**
-     * @param  Notification|string  $notification
+     * @param Notification|string $notification
+     *
      * @return static
      */
     public static function wrap($notification)
@@ -46,11 +47,12 @@ final class Notification extends BaseNotification
     }
 
     /**
-     * @param  string  $message
-     * @param  string|null  $title
-     * @param  string|null  $icon
-     * @param  string  $type
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string|null          $title
+     * @param string|null          $icon
+     * @param string               $type
+     * @param array<string, mixed> $options
+     *
      * @return static
      */
     public static function create($message, $title = null, $icon = null, $type = self::INFO, array $options = []): self
@@ -59,10 +61,11 @@ final class Notification extends BaseNotification
     }
 
     /**
-     * @param  string  $message
-     * @param  string|null  $title
-     * @param  string|null  $icon
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string|null          $title
+     * @param string|null          $icon
+     * @param array<string, mixed> $options
+     *
      * @return static
      */
     public static function error($message, $title = null, $icon = null, array $options = []): Notification
@@ -71,10 +74,11 @@ final class Notification extends BaseNotification
     }
 
     /**
-     * @param  string  $message
-     * @param  string|null  $title
-     * @param  string|null  $icon
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string|null          $title
+     * @param string|null          $icon
+     * @param array<string, mixed> $options
+     *
      * @return static
      */
     public static function info($message, $title = null, $icon = null, array $options = []): Notification
@@ -83,10 +87,11 @@ final class Notification extends BaseNotification
     }
 
     /**
-     * @param  string  $message
-     * @param  string|null  $title
-     * @param  string|null  $icon
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string|null          $title
+     * @param string|null          $icon
+     * @param array<string, mixed> $options
+     *
      * @return static
      */
     public static function success($message, $title = null, $icon = null, array $options = []): Notification
@@ -95,10 +100,11 @@ final class Notification extends BaseNotification
     }
 
     /**
-     * @param  string  $message
-     * @param  string|null  $title
-     * @param  string|null  $icon
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string|null          $title
+     * @param string|null          $icon
+     * @param array<string, mixed> $options
+     *
      * @return static
      */
     public static function warning($message, $title = null, $icon = null, array $options = []): Notification
@@ -184,7 +190,7 @@ final class Notification extends BaseNotification
         $self->setOptions($envelope->getOptions());
 
         $notification = $envelope->getNotification();
-        if (! $notification instanceof self) {
+        if (!$notification instanceof self) {
             return $self;
         }
 

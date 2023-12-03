@@ -14,7 +14,7 @@ interface BagInterface
     public function get(): array;
 
     /**
-     * @param  Envelope[]  $envelopes
+     * @param Envelope[] $envelopes
      */
     public function set(array $envelopes): void;
 }

@@ -6,83 +6,86 @@ namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\PresentableStampInterface;
 use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Support\Traits\ForwardsCalls;
 
+/**
+ * Envelope class wraps a notification and manages associated stamps.
+ */
 final class Envelope implements NotificationInterface
 {
+    use ForwardsCalls;
+
     /**
      * @var array<class-string<StampInterface>, StampInterface>
      */
     private array $stamps = [];
 
     /**
-     * @param  StampInterface[]|StampInterface  $stamps
+     * @param StampInterface[]|StampInterface $stamps stamps to be added to the envelope
      */
     public function __construct(
         private readonly NotificationInterface $notification,
         array|StampInterface $stamps = []
     ) {
-        if ($stamps instanceof StampInterface) {
-            $stamps = [$stamps];
-        }
+        $stamps = $stamps instanceof StampInterface ? [$stamps] : $stamps;
 
-        $this->with($stamps);
+        $this->with(...$stamps);
     }
 
     /**
-     * Makes sure the notification is in an Envelope and adds the given stamps.
+     * Wraps a notification in an Envelope and adds the given stamps.
      *
-     * @param  StampInterface|StampInterface[]  $stamps
+     * @param StampInterface|StampInterface[] $stamps stamps to be added to the envelope
      */
     public static function wrap(NotificationInterface $notification, array|StampInterface $stamps = []): self
     {
         $envelope = $notification instanceof self ? $notification : new self($notification);
+        $stamps = $stamps instanceof StampInterface ? [$stamps] : $stamps;
 
-        if ($stamps instanceof StampInterface) {
-            $stamps = [$stamps];
-        }
-
-        $envelope->with($stamps);
+        $envelope->with(...$stamps);
 
         return $envelope;
     }
 
     /**
-     * @param  StampInterface[]|StampInterface  $stamps
+     * Adds multiple stamps to the envelope.
+     *
+     * @param StampInterface ...$stamps The stamps to add.
      */
-    public function with(array|StampInterface $stamps = []): void
+    public function with(StampInterface ...$stamps): void
     {
-        if ($stamps instanceof StampInterface) {
-            $stamps = [$stamps];
-        }
-
         foreach ($stamps as $stamp) {
             $this->withStamp($stamp);
         }
     }
 
+    /**
+     * Adds or replaces a stamp in the envelope.
+     *
+     * @param StampInterface $stamp   the stamp to add or replace
+     * @param bool           $replace whether to replace an existing stamp of the same type
+     */
     public function withStamp(StampInterface $stamp, bool $replace = true): void
     {
-        if (! isset($this->stamps[$stamp::class]) || $replace) {
+        if (!isset($this->stamps[$stamp::class]) || $replace) {
             $this->stamps[$stamp::class] = $stamp;
         }
     }
 
     /**
-     * @param  StampInterface[]|StampInterface  $stamps
+     * Removes specified stamps from the envelope.
      */
-    public function without(array|StampInterface $stamps): void
+    public function without(StampInterface ...$stamps): void
     {
-        if ($stamps instanceof StampInterface) {
-            $stamps = [$stamps];
-        }
-
         foreach ($stamps as $stamp) {
             $this->withoutStamp($stamp);
         }
     }
 
     /**
-     * @param  class-string<StampInterface>|StampInterface  $type
+     * Removes a specific type of stamp from the envelope.
+     *
+     * @param class-string<StampInterface>|StampInterface $type the type of stamp to remove
      */
     public function withoutStamp(string|StampInterface $type): void
     {
@@ -92,6 +95,8 @@ final class Envelope implements NotificationInterface
     }
 
     /**
+     * Retrieves a stamp by its type.
+     *
      * @phpstan-template T of StampInterface
      *
      * @phpstan-param class-string<T> $type
@@ -100,7 +105,7 @@ final class Envelope implements NotificationInterface
      */
     public function get(string $type): ?StampInterface
     {
-        return $this->stamps[$type] ?? null;
+        return $this->stamps[$type] ?? null; // @phpstan-ignore-line
     }
 
     /**
@@ -114,7 +119,9 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * The original notification contained in the envelope.
+     * Gets the original notification contained in the envelope.
+     *
+     * @return NotificationInterface the wrapped notification
      */
     public function getNotification(): NotificationInterface
     {
@@ -141,12 +148,12 @@ final class Envelope implements NotificationInterface
         $this->notification->setMessage($message);
     }
 
-    public function getType(): string
+    public function getType(): ?Type
     {
         return $this->notification->getType();
     }
 
-    public function setType(string $type): void
+    public function setType(string|Type $type): void
     {
         $this->notification->setType($type);
     }
@@ -177,6 +184,8 @@ final class Envelope implements NotificationInterface
     }
 
     /**
+     * Converts the envelope and its contents to an array format.
+     *
      * @return array{
      *     title: string,
      *     message: string,
@@ -195,19 +204,22 @@ final class Envelope implements NotificationInterface
             }
         }
 
-        return [...$this->notification->toArray(), 'metadata' => array_merge(...$stamps)];
+        return [
+            ...$this->notification->toArray(),
+            'metadata' => array_merge(...$stamps),
+        ];
     }
 
     /**
-     * Dynamically call methods on the notification.
+     * Dynamically call methods on the wrapped notification.
      *
-     * @param  mixed[]  $parameters
+     * @param string  $method     the method name to call
+     * @param mixed[] $parameters the parameters to pass to the method
+     *
+     * @return mixed the result of the method call
      */
     public function __call(string $method, array $parameters): mixed
     {
-        /** @var callable $callback */
-        $callback = [$this->notification, $method];
-
-        return $callback(...$parameters);
+        return $this->forwardCallTo($this->notification, $method, $parameters);
     }
 }

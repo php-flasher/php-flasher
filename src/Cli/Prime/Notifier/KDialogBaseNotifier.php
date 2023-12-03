@@ -26,7 +26,7 @@ final class KDialogBaseNotifier extends BaseNotifier
 
     public function isSupported(): bool
     {
-        if (! OS::isUnix()) {
+        if (!OS::isUnix()) {
             return false;
         }
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class ContextStamp implements StampInterface, PresentableStampInterface
+final class ContextStamp implements PresentableStampInterface, StampInterface
 {
     /**
-     * @param  array<string, mixed>  $context
+     * @param array<string, mixed> $context
      */
     public function __construct(private readonly array $context)
     {

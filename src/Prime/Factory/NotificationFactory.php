@@ -7,16 +7,15 @@ namespace Flasher\Prime\Factory;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
-use Flasher\Prime\Storage\StorageManager;
 use Flasher\Prime\Storage\StorageManagerInterface;
+use Flasher\Prime\Support\Traits\ForwardsCalls;
 
 class NotificationFactory implements NotificationFactoryInterface
 {
-    protected readonly StorageManagerInterface $storageManager;
+    use ForwardsCalls;
 
-    public function __construct(StorageManagerInterface $storageManager = null)
+    public function __construct(protected readonly StorageManagerInterface $storageManager)
     {
-        $this->storageManager = $storageManager ?: new StorageManager();
     }
 
     public function createNotificationBuilder(): NotificationBuilderInterface
@@ -25,13 +24,10 @@ class NotificationFactory implements NotificationFactoryInterface
     }
 
     /**
-     * @param  mixed[]  $parameters
+     * @param mixed[] $parameters
      */
     public function __call(string $method, array $parameters): mixed
     {
-        /** @var callable $callback */
-        $callback = [$this->createNotificationBuilder(), $method];
-
-        return $callback(...$parameters);
+        return $this->forwardCallTo($this->createNotificationBuilder(), $method, $parameters);
     }
 }

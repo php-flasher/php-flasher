@@ -18,7 +18,7 @@ use Flasher\Prime\Config\Config;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\FlasherInterface;
@@ -76,7 +76,7 @@ final class FlasherServiceProvider extends ServiceProvider
 
     private function registerCommands(): void
     {
-        if (! \in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
+        if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'])) {
             return;
         }
 
@@ -142,6 +142,7 @@ final class FlasherServiceProvider extends ServiceProvider
             /** @phpstan-ignore-next-line */
             $storageBag = new StorageBag(new SessionBag($session));
             $criteria = $config->get('filter_criteria', []);
+
             // @phpstan-ignore-line
             return new StorageManager($storageBag, $eventDispatcher, $criteria);
             // @phpstan-ignore-line
@@ -159,7 +160,7 @@ final class FlasherServiceProvider extends ServiceProvider
             $autoTranslate = $config->get('auto_translate', true);
             $translatorListener = new TranslationListener($translator, $autoTranslate);
             $eventDispatcher->addSubscriber($translatorListener);
-            $presetListener = new PresetListener($config->get('presets', []));
+            $presetListener = new ApplyPresetListener($config->get('presets', []));
             // @phpstan-ignore-line
             $eventDispatcher->addSubscriber($presetListener);
 
@@ -176,12 +177,12 @@ final class FlasherServiceProvider extends ServiceProvider
 
     private function registerLivewire(): void
     {
-        if (! $this->app->bound('livewire')) {
+        if (!$this->app->bound('livewire')) {
             return;
         }
 
         $livewire = $this->app->make('livewire');
-        if (! $livewire instanceof LivewireManager) {
+        if (!$livewire instanceof LivewireManager) {
             return;
         }
 
@@ -212,7 +213,7 @@ final class FlasherServiceProvider extends ServiceProvider
     {
         Blade::extend(static function ($view) {
             $pattern = '/(?<!\w)(\s*)@flasher_(livewire_)?render(\(.*?\))?/';
-            if (! preg_match($pattern, $view)) {
+            if (!preg_match($pattern, $view)) {
                 return $view;
             }
 
@@ -242,7 +243,7 @@ final class FlasherServiceProvider extends ServiceProvider
         /** @var ConfigInterface $config */
         $config = $this->app->make('flasher.config');
 
-        if (! $config->get('auto_render', true)) {
+        if (!$config->get('auto_render', true)) {
             return;
         }
 
@@ -265,7 +266,7 @@ final class FlasherServiceProvider extends ServiceProvider
         /** @var ConfigInterface $config */
         $config = $this->app->make('flasher.config');
 
-        if (! $config->get('flash_bag.enabled', true)) {
+        if (!$config->get('flash_bag.enabled', true)) {
             return;
         }
 
@@ -288,7 +289,7 @@ final class FlasherServiceProvider extends ServiceProvider
 
     private function appendMiddlewareToWebGroup(string $middleware): void
     {
-        if (! $this->app->bound($middleware)) {
+        if (!$this->app->bound($middleware)) {
             return;
         }
 
@@ -300,7 +301,7 @@ final class FlasherServiceProvider extends ServiceProvider
             return;
         }
 
-        if (! $this->app->bound(\Illuminate\Contracts\Http\Kernel::class)) {
+        if (!$this->app->bound(\Illuminate\Contracts\Http\Kernel::class)) {
             return;
         }
 

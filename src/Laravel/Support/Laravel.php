@@ -9,8 +9,9 @@ use Illuminate\Foundation\Application;
 final class Laravel
 {
     /**
-     * @param  string  $version
-     * @param  string|null  $operator
+     * @param string      $version
+     * @param string|null $operator
+     *
      * @return bool
      */
     public static function isVersion($version, $operator = null)
@@ -20,9 +21,9 @@ final class Laravel
         }
 
         $parts = explode('.', $version);
-        $parts[\count($parts) - 1]++;
+        ++$parts[\count($parts) - 1];
         $next = implode('.', $parts);
-        if (! self::isVersion($version, '>=')) {
+        if (!self::isVersion($version, '>=')) {
             return false;
         }
 

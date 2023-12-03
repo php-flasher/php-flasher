@@ -11,31 +11,22 @@ use Flasher\Prime\EventDispatcher\Event\PostRemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\PostUpdateEvent;
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
-use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Exception\CriteriaNotRegisteredException;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Filter\FilterFactory;
 
 final class StorageManager implements StorageManagerInterface
 {
-    private readonly StorageInterface $storage;
-
-    private readonly EventDispatcherInterface $eventDispatcher;
-
-    private readonly FilterFactory $filterFactory;
-
     /**
-     * @param  array<string, mixed>  $criteria
+     * @param array<string, mixed> $criteria
      */
     public function __construct(
-        StorageInterface $storage = null,
-        EventDispatcherInterface $eventDispatcher = null,
-        FilterFactory $filterFactory = null,
+        private readonly StorageInterface $storage,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly FilterFactory $filterFactory,
         private readonly array $criteria = [],
     ) {
-        $this->storage = $storage ?: new StorageBag();
-        $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
-        $this->filterFactory = $filterFactory ?: new FilterFactory();
     }
 
     public function all(): array
@@ -43,9 +34,13 @@ final class StorageManager implements StorageManagerInterface
         return $this->storage->all();
     }
 
+    /**
+     * @throws CriteriaNotRegisteredException
+     */
     public function filter(array $criteria = []): array
     {
-        $filter = $this->filterFactory->createFilter(array_merge($this->criteria, $criteria));
+        $criteria = array_merge($this->criteria, $criteria);
+        $filter = $this->filterFactory->createFilter($criteria);
 
         $event = new FilterEvent($filter, $this->all(), $criteria);
         $this->eventDispatcher->dispatch($event);

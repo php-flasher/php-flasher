@@ -7,7 +7,7 @@ namespace Flasher\Prime\Stamp;
 final class PresetStamp implements StampInterface
 {
     /**
-     * @param  array<string, string>  $parameters
+     * @param array<string, string> $parameters
      */
     public function __construct(
         private readonly string $preset,

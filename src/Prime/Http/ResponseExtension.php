@@ -15,12 +15,12 @@ final class ResponseExtension
 
     public function render(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        if (! $this->isRenderable($request, $response)) {
+        if (!$this->isRenderable($request, $response)) {
             return $response;
         }
 
         $content = $response->getContent() ?: '';
-        if (! \is_string($content)) {
+        if (!\is_string($content)) {
             return $response;
         }
 
@@ -67,7 +67,7 @@ final class ResponseExtension
             return false;
         }
 
-        if (! $request->isHtmlRequestFormat()) {
+        if (!$request->isHtmlRequestFormat()) {
             return false;
         }
 
@@ -75,7 +75,7 @@ final class ResponseExtension
             return false;
         }
 
-        if (! $response->isHtml()) {
+        if (!$response->isHtml()) {
             return false;
         }
 
@@ -83,6 +83,6 @@ final class ResponseExtension
             return false;
         }
 
-        return ! $response->isJson();
+        return !$response->isJson();
     }
 }

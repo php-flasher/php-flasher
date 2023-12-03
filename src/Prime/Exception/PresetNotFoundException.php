@@ -7,16 +7,17 @@ namespace Flasher\Prime\Exception;
 final class PresetNotFoundException extends \Exception
 {
     /**
-     * @param  string[]  $availablePresets
+     * @param string   $preset           the name of the preset that was not found
+     * @param string[] $availablePresets the list of available presets for reference
      */
-    public function __construct(string $preset, array $availablePresets = [])
+    public static function create(string $preset, array $availablePresets = []): self
     {
         $message = sprintf('Preset "%s" not found, did you forget to register it?', $preset);
 
         if ([] !== $availablePresets) {
-            $message .= sprintf(' Available presets: %s', implode(', ', $availablePresets));
+            $message .= sprintf(' Available presets: [%s]', implode(', ', $availablePresets));
         }
 
-        parent::__construct($message);
+        return new self($message);
     }
 }

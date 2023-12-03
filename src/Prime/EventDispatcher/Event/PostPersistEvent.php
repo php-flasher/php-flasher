@@ -9,7 +9,7 @@ use Flasher\Prime\Notification\Envelope;
 final class PostPersistEvent
 {
     /**
-     * @param  Envelope[]  $envelopes
+     * @param Envelope[] $envelopes
      */
     public function __construct(private readonly array $envelopes)
     {

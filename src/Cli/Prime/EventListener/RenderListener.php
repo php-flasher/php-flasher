@@ -15,10 +15,7 @@ final class RenderListener implements EventListenerInterface
     {
     }
 
-    /**
-     * @return void
-     */
-    public function __invoke(PostPersistEvent $event)
+    public function __invoke(PostPersistEvent $event): void
     {
         if ('cli' !== \PHP_SAPI) {
             return;
@@ -29,6 +26,6 @@ final class RenderListener implements EventListenerInterface
 
     public static function getSubscribedEvents(): string|array
     {
-        return \Flasher\Prime\EventDispatcher\Event\PostPersistEvent::class;
+        return PostPersistEvent::class;
     }
 }

@@ -7,7 +7,8 @@ namespace Flasher\Cli\Prime\System;
 final class Program
 {
     /**
-     * @param  string|null  $program
+     * @param string|null $program
+     *
      * @return bool
      */
     public static function exist($program)
@@ -19,11 +20,11 @@ final class Program
         if (OS::isWindows()) {
             $output = shell_exec(sprintf('where %s 2>null', $program));
 
-            return ! ('' === $output || false === $output || null === $output);
+            return !('' === $output || false === $output || null === $output);
         }
 
         $output = shell_exec(sprintf('command -v %s', $program));
 
-        return ! ('' === $output || false === $output || null === $output);
+        return !('' === $output || false === $output || null === $output);
     }
 }

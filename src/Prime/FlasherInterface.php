@@ -27,9 +27,9 @@ interface FlasherInterface
     /**
      * Renders the flash notifications based on the specified criteria, presenter, and context.
      *
-     * @param  array<string, mixed>  $criteria  the criteria to filter the notifications
-     * @param  string|"html"|"json"  $presenter The presenter format for rendering the notifications (e.g., 'html', 'json').
-     * @param  array<string, mixed>  $context   additional context or options for rendering
+     * @param array<string, mixed> $criteria  the criteria to filter the notifications
+     * @param string|"html"|"json" $presenter The presenter format for rendering the notifications (e.g., 'html', 'json').
+     * @param array<string, mixed> $context   additional context or options for rendering
      *
      * @phpstan-return ($presenter is 'html' ? string : mixed)
      */

@@ -6,7 +6,7 @@ namespace Flasher\Cli\Symfony\Resources\config;
 
 use Symfony\Component\DependencyInjection\ChildDefinition;
 
-if (! isset($container)) {
+if (!isset($container)) {
     return;
 }
 

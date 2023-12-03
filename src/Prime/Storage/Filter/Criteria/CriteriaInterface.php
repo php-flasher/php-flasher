@@ -9,7 +9,8 @@ use Flasher\Prime\Notification\Envelope;
 interface CriteriaInterface
 {
     /**
-     * @param  Envelope[]  $envelopes
+     * @param Envelope[] $envelopes
+     *
      * @return Envelope[]
      */
     public function apply(array $envelopes): array;

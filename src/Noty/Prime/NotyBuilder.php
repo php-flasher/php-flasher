@@ -17,7 +17,7 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public function alert(string $message = null, array $options = []): self
     {

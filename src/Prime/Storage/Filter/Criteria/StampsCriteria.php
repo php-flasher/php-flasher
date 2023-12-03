@@ -26,7 +26,7 @@ final class StampsCriteria implements CriteriaInterface
 
     public function __construct(mixed $criteria)
     {
-        if (! is_array($criteria)) {
+        if (!is_array($criteria)) {
             throw new \InvalidArgumentException("Invalid type for criteria 'stamps'.");
         }
 

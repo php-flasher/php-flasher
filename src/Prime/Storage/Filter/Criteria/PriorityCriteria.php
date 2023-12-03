@@ -9,7 +9,7 @@ use Flasher\Prime\Stamp\PriorityStamp;
 
 final class PriorityCriteria implements CriteriaInterface
 {
-    use ExtractRange;
+    use RangeExtractor;
 
     private ?int $minPriority;
 
@@ -25,23 +25,25 @@ final class PriorityCriteria implements CriteriaInterface
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $e) => $this->match($e));
+        return array_filter($envelopes, fn (Envelope $envelope) => $this->match($envelope));
     }
 
     public function match(Envelope $envelope): bool
     {
         $stamp = $envelope->get(PriorityStamp::class);
 
-        if (! $stamp instanceof PriorityStamp) {
+        if (!$stamp instanceof PriorityStamp) {
             return false;
         }
 
+        $priority = $stamp->getPriority();
+
         if (null === $this->maxPriority) {
-            return $stamp->getPriority() >= $this->minPriority;
+            return $priority >= $this->minPriority;
         }
 
-        if ($stamp->getPriority() <= $this->maxPriority) {
-            return $stamp->getPriority() >= $this->minPriority;
+        if ($priority <= $this->maxPriority) {
+            return $priority >= $this->minPriority;
         }
 
         return false;

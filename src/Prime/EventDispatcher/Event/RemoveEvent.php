@@ -14,7 +14,7 @@ final class RemoveEvent
     private array $envelopesToKeep = [];
 
     /**
-     * @param  Envelope[]  $envelopesToRemove
+     * @param Envelope[] $envelopesToRemove
      */
     public function __construct(private array $envelopesToRemove)
     {
@@ -29,7 +29,7 @@ final class RemoveEvent
     }
 
     /**
-     * @param  Envelope[]  $envelopesToRemove
+     * @param Envelope[] $envelopesToRemove
      */
     public function setEnvelopesToRemove(array $envelopesToRemove): void
     {
@@ -45,7 +45,7 @@ final class RemoveEvent
     }
 
     /**
-     * @param  Envelope[]  $envelopesToKeep
+     * @param Envelope[] $envelopesToKeep
      */
     public function setEnvelopesToKeep(array $envelopesToKeep): void
     {

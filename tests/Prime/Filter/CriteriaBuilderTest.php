@@ -42,7 +42,9 @@ final class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf(
-            \Flasher\Prime\Storage\Filter\Criteria\HopsCriteria::class, $specification);
+            \Flasher\Prime\Storage\Filter\Criteria\HopsCriteria::class,
+            $specification
+        );
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
@@ -58,7 +60,9 @@ final class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf(
-            \Flasher\Prime\Storage\Filter\Criteria\DelayCriteria::class, $specification);
+            \Flasher\Prime\Storage\Filter\Criteria\DelayCriteria::class,
+            $specification
+        );
         $this->assertEquals(2, $this->getProperty($specification, 'minDelay'));
         $this->assertNull($this->getProperty($specification, 'maxDelay'));
     }
@@ -74,7 +78,9 @@ final class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf(
-            \Flasher\Prime\Storage\Filter\Criteria\HopsCriteria::class, $specification);
+            \Flasher\Prime\Storage\Filter\Criteria\HopsCriteria::class,
+            $specification
+        );
         $this->assertEquals(2, $this->getProperty($specification, 'minAmount'));
         $this->assertNull($this->getProperty($specification, 'maxAmount'));
     }
@@ -103,7 +109,9 @@ final class CriteriaBuilderTest extends TestCase
         $specification = $this->getProperty($filter, 'specification');
 
         $this->assertInstanceOf(
-            \Flasher\Prime\Storage\Filter\Criteria\StampsCriteria::class, $specification);
+            \Flasher\Prime\Storage\Filter\Criteria\StampsCriteria::class,
+            $specification
+        );
         $this->assertEquals([\Flasher\Prime\Stamp\PresetStamp::class], $this->getProperty($specification, 'stamps'));
         $this->assertEquals('or', $this->getProperty($specification, 'strategy'));
     }

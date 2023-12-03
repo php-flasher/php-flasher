@@ -35,7 +35,7 @@ final class OS
 
     public static function isWindowsSeven(): bool
     {
-        if (! self::isWindows()) {
+        if (!self::isWindows()) {
             return false;
         }
 
@@ -44,7 +44,7 @@ final class OS
 
     public static function isWindowsEightOrHigher(): bool
     {
-        if (! self::isWindows()) {
+        if (!self::isWindows()) {
             return false;
         }
 
@@ -53,7 +53,7 @@ final class OS
 
     public static function isWindowsSubsystemForLinux(): bool
     {
-        if (! self::isUnix()) {
+        if (!self::isUnix()) {
             return false;
         }
 

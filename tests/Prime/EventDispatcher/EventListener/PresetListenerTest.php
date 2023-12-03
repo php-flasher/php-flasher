@@ -6,7 +6,7 @@ namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\PresetStamp;
@@ -19,7 +19,7 @@ final class PresetListenerTest extends TestCase
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new PresetListener([
+        $listener = new ApplyPresetListener([
             'entity_saved' => [
                 'type' => 'success',
                 'title' => 'PHPFlasher',
@@ -56,7 +56,7 @@ final class PresetListenerTest extends TestCase
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new PresetListener([
+        $listener = new ApplyPresetListener([
             'entity_saved' => [
                 'type' => 'success',
                 'title' => 'PHPFlasher',

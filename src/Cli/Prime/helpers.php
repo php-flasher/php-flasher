@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Flasher\Cli\Prime;
 
-if (! \function_exists('notify')) {
+if (!\function_exists('notify')) {
     /**
-     * @param  Flasher\Cli\Prime\Notification|string|null  $notification
+     * @param Flasher\Cli\Prime\Notification|string|null $notification
+     *
      * @return Flasher\Cli\Prime\Notify
      */
     function notify($notification = null)

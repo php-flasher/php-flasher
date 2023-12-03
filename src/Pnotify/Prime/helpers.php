@@ -6,11 +6,12 @@ namespace Flasher\Pnotify\Prime;
 
 use Flasher\Prime\Notification\Envelope;
 
-if (! \function_exists('pnotify')) {
+if (!\function_exists('pnotify')) {
     /**
-     * @param  string  $message
-     * @param  string  $type
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string               $type
+     * @param array<string, mixed> $options
+     *
      * @return Envelope|PnotifyFactory
      */
     function pnotify($message = null, $type = \Flasher\Prime\Notification\NotificationInterface::SUCCESS, array $options = [])

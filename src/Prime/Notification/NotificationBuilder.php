@@ -10,9 +10,9 @@ use Flasher\Prime\Support\Traits\Macroable;
 
 class NotificationBuilder implements NotificationBuilderInterface
 {
+    use Macroable;
     use NotificationBuilderMethods;
     use NotificationStorageMethods;
-    use Macroable;
 
     public function __construct(string|NotificationInterface $notification, StorageManagerInterface $storageManager)
     {

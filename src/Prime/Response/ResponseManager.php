@@ -6,18 +6,13 @@ namespace Flasher\Prime\Response;
 
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
 use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
-use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Response\Presenter\ArrayPresenter;
 use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Flasher\Prime\Response\Presenter\PresenterInterface;
-use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\Resource\ResourceManagerInterface;
-use Flasher\Prime\Storage\StorageManager;
 use Flasher\Prime\Storage\StorageManagerInterface;
-use InvalidArgumentException;
-use function is_callable;
 
 final class ResponseManager implements ResponseManagerInterface
 {
@@ -26,21 +21,11 @@ final class ResponseManager implements ResponseManagerInterface
      */
     private array $presenters = [];
 
-    private readonly ResourceManagerInterface $resourceManager;
-
-    private readonly StorageManagerInterface $storageManager;
-
-    private readonly EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        ResourceManagerInterface $resourceManager = null,
-        StorageManagerInterface $storageManager = null,
-        EventDispatcherInterface $eventDispatcher = null,
+        private readonly ResourceManagerInterface $resourceManager,
+        private readonly StorageManagerInterface $storageManager,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->resourceManager = $resourceManager ?: new ResourceManager();
-        $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
-        $this->storageManager = $storageManager ?: new StorageManager(eventDispatcher: $this->eventDispatcher);
-
         $this->addPresenter('html', fn () => new HtmlPresenter());
         $this->addPresenter('json', fn () => new ArrayPresenter());
         $this->addPresenter('array', fn () => new ArrayPresenter());
@@ -71,18 +56,18 @@ final class ResponseManager implements ResponseManagerInterface
 
     private function createPresenter(string $alias): PresenterInterface
     {
-        if (! isset($this->presenters[$alias])) {
-            throw new InvalidArgumentException(sprintf('Presenter [%s] not supported.', $alias));
+        if (!isset($this->presenters[$alias])) {
+            throw new \InvalidArgumentException(sprintf('Presenter [%s] not supported.', $alias));
         }
 
         $presenter = $this->presenters[$alias];
 
-        return is_callable($presenter) ? $presenter() : $presenter;
+        return \is_callable($presenter) ? $presenter() : $presenter;
     }
 
     /**
-     * @param  Envelope[]  $envelopes
-     * @param  array<string, mixed>  $context
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $context
      */
     private function createResponse(array $envelopes, array $context): Response
     {

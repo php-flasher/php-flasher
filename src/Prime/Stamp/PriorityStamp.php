@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class PriorityStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
+final class PriorityStamp implements OrderableStampInterface, PresentableStampInterface, StampInterface
 {
     public function __construct(private readonly int $priority)
     {
@@ -17,7 +17,7 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface, Pr
 
     public function compare(StampInterface $orderable): int
     {
-        if (! $orderable instanceof self) {
+        if (!$orderable instanceof self) {
             return 1;
         }
 

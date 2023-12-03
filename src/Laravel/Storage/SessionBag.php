@@ -15,7 +15,7 @@ final class SessionBag implements BagInterface
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
     /**
-     * @param  Store  $session
+     * @param Store $session
      */
     public function __construct(private $session)
     {

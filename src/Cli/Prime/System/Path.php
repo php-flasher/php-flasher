@@ -7,7 +7,7 @@ namespace Flasher\Cli\Prime\System;
 final class Path
 {
     /**
-     * @param  string  $path
+     * @param string $path
      */
     public static function realpath($path): string
     {

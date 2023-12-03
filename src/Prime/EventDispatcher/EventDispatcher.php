@@ -6,9 +6,9 @@ namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
 use Flasher\Prime\EventDispatcher\EventListener\AddToStorageListener;
+use Flasher\Prime\EventDispatcher\EventListener\AttachDefaultStampsListener;
+use Flasher\Prime\EventDispatcher\EventListener\EnvelopeRemovalListener;
 use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
-use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
-use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
@@ -19,8 +19,8 @@ final class EventDispatcher implements EventDispatcherInterface
 
     public function __construct()
     {
-        $this->addListener(new RemoveListener());
-        $this->addListener(new StampsListener());
+        $this->addListener(new EnvelopeRemovalListener());
+        $this->addListener(new AttachDefaultStampsListener());
         $this->addListener(new AddToStorageListener());
     }
 
@@ -28,7 +28,17 @@ final class EventDispatcher implements EventDispatcherInterface
     {
         $listeners = $this->getListeners($event::class);
 
-        $this->callListeners($listeners, $event);
+        foreach ($listeners as $listener) {
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                break;
+            }
+
+            if (!is_callable($listener)) {
+                throw new \InvalidArgumentException(sprintf('Listener "%s" is not callable. Listeners must implement __invoke method.', get_class($listener)));
+            }
+
+            $listener($event);
+        }
 
         return $event;
     }
@@ -40,24 +50,11 @@ final class EventDispatcher implements EventDispatcherInterface
         }
     }
 
+    /**
+     * @return EventListenerInterface[]
+     */
     public function getListeners(string $eventName): array
     {
         return $this->listeners[$eventName] ?? [];
-    }
-
-    /**
-     * @param  EventListenerInterface[]  $listeners
-     */
-    private function callListeners(array $listeners, object $event): void
-    {
-        foreach ($listeners as $listener) {
-            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
-                break;
-            }
-
-            if (is_callable($listener)) {
-                $listener($event);
-            }
-        }
     }
 }

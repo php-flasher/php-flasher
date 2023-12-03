@@ -6,7 +6,7 @@ namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
+use Flasher\Prime\EventDispatcher\EventListener\AttachDefaultStampsListener;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Tests\Prime\TestCase;
@@ -18,7 +18,7 @@ final class StampsListenerTest extends TestCase
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new StampsListener();
+        $listener = new AttachDefaultStampsListener();
         $eventDispatcher->addSubscriber($listener);
 
         $envelopes = [

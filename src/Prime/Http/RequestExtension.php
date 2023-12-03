@@ -14,7 +14,7 @@ final class RequestExtension
     private readonly array $mapping;
 
     /**
-     * @param  array<string, string[]>  $mapping
+     * @param array<string, string[]> $mapping
      */
     public function __construct(private readonly FlasherInterface $flasher, array $mapping = [])
     {
@@ -23,12 +23,12 @@ final class RequestExtension
 
     public function flash(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        if (! $request->hasSession()) {
+        if (!$request->hasSession()) {
             return $response;
         }
 
         foreach ($this->mapping as $alias => $type) {
-            if (! $request->hasType($alias)) {
+            if (!$request->hasType($alias)) {
                 continue;
             }
 
@@ -45,7 +45,8 @@ final class RequestExtension
     }
 
     /**
-     * @param  array<string, string[]>  $mapping
+     * @param array<string, string[]> $mapping
+     *
      * @return array<string, string>
      */
     private function flatMapping(array $mapping): array

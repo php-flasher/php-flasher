@@ -63,7 +63,7 @@ final class FlasherPlugin extends Plugin
         if (!isset($config['plugins']['flasher'])) {
             $config['plugins']['flasher'] = [
                 'scripts' => [],
-                'styles'  => [],
+                'styles' => [],
                 'options' => [],
             ];
         }
@@ -81,8 +81,8 @@ final class FlasherPlugin extends Plugin
         }
 
         foreach ($config['plugins'] ?? [] as $name => $options) {
-            $config['plugins'][$name]['scripts'] = (array)($options['scripts'] ?? []);
-            $config['plugins'][$name]['styles'] = (array)($options['styles'] ?? []);
+            $config['plugins'][$name]['scripts'] = (array) ($options['scripts'] ?? []);
+            $config['plugins'][$name]['styles'] = (array) ($options['styles'] ?? []);
         }
 
         return $config;
@@ -144,10 +144,10 @@ final class FlasherPlugin extends Plugin
             }
 
             foreach ($config['flash_bag'] as $key => $value) {
-                 $config['flash_bag'][$key] = array_merge($mapping[$key] ?? [], (array) $value);
+                $config['flash_bag'][$key] = array_merge($mapping[$key] ?? [], (array) $value);
             }
 
-             $config['flash_bag'] += $mapping;
+            $config['flash_bag'] += $mapping;
         } else {
             $config['flash_bag'] = [];
         }

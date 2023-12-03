@@ -10,7 +10,8 @@ use Flasher\Prime\Storage\Filter\Criteria\CriteriaInterface;
 interface FilterInterface
 {
     /**
-     * @param  Envelope[]  $envelopes
+     * @param Envelope[] $envelopes
+     *
      * @return Envelope[]
      */
     public function apply(array $envelopes): array;

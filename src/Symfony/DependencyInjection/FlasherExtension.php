@@ -102,7 +102,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
 
     private function registerFlasherListener(array $config, ContainerBuilder $container): void
     {
-        if (! $config['auto_render']) {
+        if (!$config['auto_render']) {
             return;
         }
 

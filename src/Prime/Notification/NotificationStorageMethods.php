@@ -14,25 +14,25 @@ trait NotificationStorageMethods
 
     public function success(string $message, array $options = [], string $title = null): Envelope
     {
-        return $this->flash(NotificationInterface::SUCCESS, $message, $options, $title);
+        return $this->flash(Type::success(), $message, $options, $title);
     }
 
     public function error(string $message, array $options = [], string $title = null): Envelope
     {
-        return $this->flash(NotificationInterface::ERROR, $message, $options, $title);
+        return $this->flash(Type::error(), $message, $options, $title);
     }
 
     public function info(string $message, array $options = [], string $title = null): Envelope
     {
-        return $this->flash(NotificationInterface::INFO, $message, $options, $title);
+        return $this->flash(Type::info(), $message, $options, $title);
     }
 
     public function warning(string $message, array $options = [], string $title = null): Envelope
     {
-        return $this->flash(NotificationInterface::WARNING, $message, $options, $title);
+        return $this->flash(Type::warning(), $message, $options, $title);
     }
 
-    public function flash(string $type = null, string $message = null, array $options = [], string $title = null): Envelope
+    public function flash(string|Type $type = null, string $message = null, array $options = [], string $title = null): Envelope
     {
         if (null !== $type) {
             $this->type($type);

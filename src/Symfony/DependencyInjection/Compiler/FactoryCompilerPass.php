@@ -13,7 +13,7 @@ final class FactoryCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (! $container->has('flasher')) {
+        if (!$container->has('flasher')) {
             return;
         }
 

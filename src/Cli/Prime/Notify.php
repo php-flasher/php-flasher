@@ -30,7 +30,7 @@ final class Notify extends BaseNotifier
     private array $icons = [];
 
     /**
-     * @param  array{success?: string, error?: string, info?: string, warning?: string}|string  $icons
+     * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
      */
     public function __construct(private readonly ?string $title = 'PHPFlasher', $icons = [])
     {
@@ -48,8 +48,9 @@ final class Notify extends BaseNotifier
     }
 
     /**
-     * @param  string|null  $title
-     * @param  array{success?: string, error?: string, info?: string, warning?: string}|string  $icons
+     * @param string|null                                                                     $title
+     * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
+     *
      * @return static
      */
     public static function create($title = null, $icons = []): self
@@ -142,14 +143,15 @@ final class Notify extends BaseNotifier
     }
 
     /**
-     * @param  array{success?: string, error?: string, info?: string, warning?: string}|string  $icons
+     * @param array{success?: string, error?: string, info?: string, warning?: string}|string $icons
+     *
      * @return array<'default'|'error'|'info'|'success'|'warning', string>
      */
     private function configureIcons($icons = []): array
     {
         $icons = $icons ?: [];
 
-        if (! \is_array($icons)) {
+        if (!\is_array($icons)) {
             $icons = [
                 NotificationInterface::SUCCESS => $icons,
                 NotificationInterface::ERROR => $icons,
@@ -169,7 +171,8 @@ final class Notify extends BaseNotifier
     }
 
     /**
-     * @param  Notification|string  $notification
+     * @param Notification|string $notification
+     *
      * @return Notification
      */
     private function configureNotification($notification)

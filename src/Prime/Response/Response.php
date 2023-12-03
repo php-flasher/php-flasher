@@ -26,8 +26,8 @@ final class Response
     private array $options = [];
 
     /**
-     * @param  Envelope[]  $envelopes
-     * @param  array<string, mixed>  $context
+     * @param Envelope[]           $envelopes the array of notification envelopes
+     * @param array<string, mixed> $context   additional context for the response
      */
     public function __construct(
         private readonly array $envelopes,
@@ -36,7 +36,9 @@ final class Response
     }
 
     /**
-     * @param  string[]  $scripts
+     * Add scripts to the response.
+     *
+     * @param string[] $scripts the scripts to add
      */
     public function addScripts(array $scripts): void
     {
@@ -46,7 +48,9 @@ final class Response
     }
 
     /**
-     * @param  string[]  $styles
+     * Add styles to the response.
+     *
+     * @param string[] $styles the styles to add
      */
     public function addStyles(array $styles): void
     {
@@ -56,7 +60,10 @@ final class Response
     }
 
     /**
-     * @param  array<string, mixed>  $options
+     * Add or merge options for a specific alias.
+     *
+     * @param string               $alias   the alias for the options
+     * @param array<string, mixed> $options the options to add or merge
      */
     public function addOptions(string $alias, array $options): void
     {

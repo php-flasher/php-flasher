@@ -11,7 +11,8 @@ final class CliBuilder extends NotificationBuilder
     public $envelope;
 
     /**
-     * @param  string  $title
+     * @param string $title
+     *
      * @return static
      */
     public function title($title)

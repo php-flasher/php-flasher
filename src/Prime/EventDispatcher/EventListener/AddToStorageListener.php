@@ -13,15 +13,9 @@ final class AddToStorageListener implements EventListenerInterface
 {
     public function __invoke(PersistEvent $event): void
     {
-        $envelopesToKeep = [];
+        $envelopes = array_filter($event->getEnvelopes(), [$this, 'isEligibleForStorage']);
 
-        foreach ($event->getEnvelopes() as $envelope) {
-            if ($this->shouldKeep($envelope)) {
-                $envelopesToKeep[] = $envelope;
-            }
-        }
-
-        $event->setEnvelopes($envelopesToKeep);
+        $event->setEnvelopes($envelopes);
     }
 
     public static function getSubscribedEvents(): string
@@ -29,15 +23,22 @@ final class AddToStorageListener implements EventListenerInterface
         return PersistEvent::class;
     }
 
-    private function shouldKeep(Envelope $envelope): bool
+    private function isEligibleForStorage(Envelope $envelope): bool
     {
-        $stamp = $envelope->get(WhenStamp::class);
-        if ($stamp instanceof WhenStamp && ! $stamp->getCondition()) {
-            return false;
-        }
+        return $this->whenCondition($envelope) && $this->unlessCondition($envelope);
+    }
 
-        $stamp = $envelope->get(UnlessStamp::class);
+    private function whenCondition(Envelope $envelope): bool
+    {
+        $whenStamp = $envelope->get(WhenStamp::class);
 
-        return ! ($stamp instanceof UnlessStamp && $stamp->getCondition());
+        return !($whenStamp instanceof WhenStamp && !$whenStamp->getCondition());
+    }
+
+    private function unlessCondition(Envelope $envelope): bool
+    {
+        $unlessStamp = $envelope->get(UnlessStamp::class);
+
+        return !($unlessStamp instanceof UnlessStamp && $unlessStamp->getCondition());
     }
 }

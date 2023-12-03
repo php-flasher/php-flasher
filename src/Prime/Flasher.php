@@ -6,13 +6,13 @@ namespace Flasher\Prime;
 
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
-use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Response\ResponseManagerInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
+use Flasher\Prime\Support\Traits\ForwardsCalls;
 
 final class Flasher implements FlasherInterface
 {
-    private readonly ResponseManagerInterface $responseManager;
+    use ForwardsCalls;
 
     /**
      * @var array<string, callable|NotificationFactoryInterface>
@@ -20,11 +20,10 @@ final class Flasher implements FlasherInterface
     private array $factories = [];
 
     public function __construct(
-        private readonly string $default = 'flasher',
-        ResponseManagerInterface $responseManager = null,
-        private readonly ?StorageManagerInterface $storageManager = null,
+        private string $default,
+        private ResponseManagerInterface $responseManager,
+        private StorageManagerInterface $storageManager,
     ) {
-        $this->responseManager = $responseManager ?: new ResponseManager(storageManager: $storageManager);
     }
 
     public function use(?string $alias): NotificationFactoryInterface
@@ -35,8 +34,8 @@ final class Flasher implements FlasherInterface
             throw new \InvalidArgumentException('Unable to resolve empty factory.');
         }
 
-        if (! isset($this->factories[$alias])) {
-            $this->addFactory($alias, new NotificationFactory($this->storageManager, $alias));
+        if (!isset($this->factories[$alias])) {
+            $this->addFactory($alias, new NotificationFactory($this->storageManager));
         }
 
         $factory = $this->factories[$alias];
@@ -57,13 +56,10 @@ final class Flasher implements FlasherInterface
     /**
      * Dynamically call the default factory instance.
      *
-     * @param  mixed[]  $parameters
+     * @param mixed[] $parameters
      */
     public function __call(string $method, array $parameters): mixed
     {
-        /** @var callable $callback */
-        $callback = [$this->use(null), $method];
-
-        return $callback(...$parameters);
+        return $this->forwardCallTo($this->use(null), $method, $parameters);
     }
 }

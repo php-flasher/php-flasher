@@ -9,7 +9,7 @@ use Flasher\Prime\Stamp\DelayStamp;
 
 final class DelayCriteria implements CriteriaInterface
 {
-    use ExtractRange;
+    use RangeExtractor;
 
     private ?int $minDelay;
 
@@ -25,23 +25,25 @@ final class DelayCriteria implements CriteriaInterface
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $e) => $this->match($e));
+        return array_filter($envelopes, fn (Envelope $envelope) => $this->match($envelope));
     }
 
     public function match(Envelope $envelope): bool
     {
         $stamp = $envelope->get(DelayStamp::class);
 
-        if (! $stamp instanceof DelayStamp) {
+        if (!$stamp instanceof DelayStamp) {
             return false;
         }
 
+        $delay = $stamp->getDelay();
+
         if (null === $this->maxDelay) {
-            return $stamp->getDelay() >= $this->minDelay;
+            return $delay >= $this->minDelay;
         }
 
-        if ($stamp->getDelay() <= $this->maxDelay) {
-            return $stamp->getDelay() >= $this->minDelay;
+        if ($delay <= $this->maxDelay) {
+            return $delay >= $this->minDelay;
         }
 
         return false;

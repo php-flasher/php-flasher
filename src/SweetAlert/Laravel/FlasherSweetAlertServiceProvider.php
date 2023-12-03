@@ -23,12 +23,12 @@ final class FlasherSweetAlertServiceProvider extends ServiceProvider
 
     private function registerLivewireListener(): void
     {
-        if (! $this->app->bound('livewire')) {
+        if (!$this->app->bound('livewire')) {
             return;
         }
 
         $livewire = $this->app->make('livewire');
-        if (! $livewire instanceof LivewireManager) {
+        if (!$livewire instanceof LivewireManager) {
             return;
         }
 

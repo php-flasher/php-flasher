@@ -35,7 +35,7 @@ final class TerminalNotifierBaseNotifier extends BaseNotifier
 
     public function isSupported(): bool
     {
-        if (! OS::isMacOS()) {
+        if (!OS::isMacOS()) {
             return false;
         }
 

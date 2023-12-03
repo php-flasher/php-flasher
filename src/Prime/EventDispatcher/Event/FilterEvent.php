@@ -11,8 +11,8 @@ use Flasher\Prime\Storage\Filter\FilterInterface;
 final class FilterEvent
 {
     /**
-     * @param  Envelope[]  $envelopes
-     * @param  array<string, mixed>  $criteria
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $criteria
      */
     public function __construct(
         private FilterInterface $filter,
@@ -40,7 +40,7 @@ final class FilterEvent
     }
 
     /**
-     * @param  Envelope[]  $envelopes
+     * @param Envelope[] $envelopes
      */
     public function setEnvelopes(array $envelopes): void
     {
@@ -48,7 +48,7 @@ final class FilterEvent
     }
 
     /**
-     * @return  array<string, mixed>
+     * @return array<string, mixed>
      */
     public function getCriteria(): array
     {

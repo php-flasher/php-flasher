@@ -28,7 +28,7 @@ final class ToasterBaseNotifier extends BaseNotifier
 
     public function isSupported(): bool
     {
-        if (! $this->getProgram()) {
+        if (!$this->getProgram()) {
             return false;
         }
 

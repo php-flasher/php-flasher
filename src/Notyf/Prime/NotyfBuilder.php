@@ -11,7 +11,8 @@ final class NotyfBuilder extends NotificationBuilder
     /**
      * Number of miliseconds before hiding the notification. Use 0 for infinite duration.
      *
-     * @param  int  $duration
+     * @param int $duration
+     *
      * @return static
      */
     public function duration(mixed $duration)
@@ -24,7 +25,8 @@ final class NotyfBuilder extends NotificationBuilder
     /**
      * Whether to show the notification with a ripple effect.
      *
-     * @param  bool  $ripple
+     * @param bool $ripple
+     *
      * @return static
      */
     public function ripple(mixed $ripple)
@@ -37,8 +39,9 @@ final class NotyfBuilder extends NotificationBuilder
     /**
      * Viewport location where notifications are rendered.
      *
-     * @param  string  $position
-     * @param  string  $value
+     * @param string $position
+     * @param string $value
+     *
      * @return static
      */
     public function position($position, $value)
@@ -54,7 +57,8 @@ final class NotyfBuilder extends NotificationBuilder
     /**
      * Whether to allow users to dismiss the notification with a button.
      *
-     * @param  bool  $dismissible
+     * @param bool $dismissible
+     *
      * @return static
      */
     public function dismissible(mixed $dismissible)

@@ -44,6 +44,7 @@ interface PluginInterface
      *     styles?: string|string[],
      *     options?: array<string, mixed>,
      * } $config
+     *
      * @return array{
      *     scripts: string[],
      *     styles: string[],

@@ -7,9 +7,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Toastr\Prime\ToastrFactory;
 
-if (! \function_exists('toastr')) {
+if (!\function_exists('toastr')) {
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     function toastr(
         string $message = null,

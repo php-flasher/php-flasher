@@ -11,7 +11,7 @@ use Illuminate\Http\Response as LaravelResponse;
 final class Response implements ResponseInterface
 {
     /**
-     * @param  LaravelJsonResponse|LaravelResponse  $response
+     * @param LaravelJsonResponse|LaravelResponse $response
      */
     public function __construct(private $response)
     {

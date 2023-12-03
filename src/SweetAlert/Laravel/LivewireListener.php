@@ -19,7 +19,7 @@ final class LivewireListener implements EventListenerInterface
         }
 
         $response = $event->getResponse() ?: '';
-        if (! \is_string($response)) {
+        if (!\is_string($response)) {
             return;
         }
 

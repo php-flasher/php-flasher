@@ -71,7 +71,7 @@ final class EventDispatcherTest extends TestCase
 
         $invoked = 0;
         $listener = static function () use (&$invoked): void {
-            $invoked++;
+            ++$invoked;
         };
 
         $event = new Event();

@@ -7,7 +7,7 @@ namespace Flasher\Prime\Translation;
 interface TranslatorInterface
 {
     /**
-     * @param  array<string, mixed>  $parameters
+     * @param array<string, mixed> $parameters
      */
     public function translate(string $id, array $parameters = [], string $locale = null): string;
 

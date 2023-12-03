@@ -27,7 +27,7 @@ final class NotifuBaseNotifier extends BaseNotifier
 
     public function isSupported(): bool
     {
-        if (! OS::isWindowsSeven()) {
+        if (!OS::isWindowsSeven()) {
             return false;
         }
 

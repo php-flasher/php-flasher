@@ -13,7 +13,10 @@ use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 
-final class StampsListener implements EventListenerInterface
+/**
+ * Listener responsible for attaching default stamps to envelopes during persist and update events.
+ */
+final class AttachDefaultStampsListener implements EventListenerInterface
 {
     public function __invoke(PersistEvent|UpdateEvent $event): void
     {

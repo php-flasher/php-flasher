@@ -9,8 +9,8 @@ use Flasher\Prime\Notification\Envelope;
 final class PostRemoveEvent
 {
     /**
-     * @param  Envelope[]  $envelopesToRemove
-     * @param  Envelope[]  $envelopesToKeep
+     * @param Envelope[] $envelopesToRemove
+     * @param Envelope[] $envelopesToKeep
      */
     public function __construct(
         private readonly array $envelopesToRemove = [],

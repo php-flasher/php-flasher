@@ -7,7 +7,7 @@ namespace Flasher\Prime\Config;
 final class Config implements ConfigInterface
 {
     /**
-     * @param  array<string, mixed>  $config
+     * @param array<string, mixed> $config
      */
     public function __construct(private readonly array $config = [])
     {
@@ -18,7 +18,7 @@ final class Config implements ConfigInterface
         $data = $this->config;
 
         foreach (explode('.', $key) as $segment) {
-            if (! is_array($data) || ! array_key_exists($segment, $data)) {
+            if (!is_array($data) || !array_key_exists($segment, $data)) {
                 return $default;
             }
 

@@ -16,7 +16,7 @@ class TestCase extends Orchestra
 {
     public function createApplication()
     {
-        if (! str_starts_with(Application::VERSION, '4.0')) {
+        if (!str_starts_with(Application::VERSION, '4.0')) {
             return parent::createApplication();
         }
 
@@ -61,7 +61,8 @@ class TestCase extends Orchestra
     }
 
     /**
-     * @param  Application|null  $app
+     * @param Application|null $app
+     *
      * @return string[]
      */
     protected function getPackageProviders($app = null)
@@ -77,7 +78,7 @@ class TestCase extends Orchestra
     }
 
     /**
-     * @param  Application  $app
+     * @param Application $app
      */
     protected function getEnvironmentSetUp($app)
     {

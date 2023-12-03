@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 final class FlasherCliExtension extends Extension
 {
     /**
-     * @param  array<int, array<string, mixed>>  $configs
+     * @param array<int, array<string, mixed>> $configs
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -25,7 +25,7 @@ final class FlasherCliExtension extends Extension
     }
 
     /**
-     * @param  array<int, array<string, mixed>>  $configs
+     * @param array<int, array<string, mixed>> $configs
      */
     private function configureNotifier(array $configs, ContainerBuilder $container): void
     {

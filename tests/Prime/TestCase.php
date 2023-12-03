@@ -7,9 +7,9 @@ namespace Flasher\Tests\Prime;
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @param  class-string<\Throwable>  $exceptionName
-     * @param  string  $exceptionMessage
-     * @param  int  $exceptionCode
+     * @param class-string<\Throwable> $exceptionName
+     * @param string                   $exceptionMessage
+     * @param int                      $exceptionCode
      */
     public function setExpectedException($exceptionName, $exceptionMessage = '', $exceptionCode = null): void
     {
@@ -24,9 +24,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Call a protected or private method of a class using reflection.
      *
-     * @param  object|string  $object     instantiated object or FQCN that we will run method
-     * @param  string  $methodName method name to call
-     * @param  array|mixed  $parameters array of parameters to pass into method
+     * @param object|string $object     instantiated object or FQCN that we will run method
+     * @param string        $methodName method name to call
+     * @param array|mixed   $parameters array of parameters to pass into method
+     *
      * @return mixed method return
      *
      * @throws \ReflectionException
@@ -49,8 +50,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Get the value of a protected or private property of a class using reflection.
      *
-     * @param  object|string  $object       instantiated object or FQCN that we will access property from
-     * @param  string  $propertyName name of property to access
+     * @param object|string $object       instantiated object or FQCN that we will access property from
+     * @param string        $propertyName name of property to access
+     *
      * @return mixed property value
      *
      * @throws \ReflectionException
@@ -72,9 +74,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Set the value of a protected or private property of a class using reflection.
      *
-     * @param  object|string  $object       instantiated object or FQCN that we will run method
-     * @param  string  $propertyName name of property to set
-     * @param  mixed  $value        value to set the property to
+     * @param object|string $object       instantiated object or FQCN that we will run method
+     * @param string        $propertyName name of property to set
+     * @param mixed         $value        value to set the property to
+     *
      * @return void
      *
      * @throws \ReflectionException

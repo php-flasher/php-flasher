@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Flasher\Prime\Config\Config;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Flasher;
@@ -17,8 +17,9 @@ use Flasher\Prime\Storage\StorageManager;
 use Flasher\Symfony\Storage\SessionBag;
 use Flasher\Symfony\Translation\Translator;
 use Flasher\Symfony\Twig\FlasherTwigExtension;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
@@ -77,7 +78,7 @@ return static function (ContainerConfigurator $container): void {
         ])
         ->tag('flasher.event_listener');
 
-    $services->set('flasher.preset_listener', PresetListener::class)
+    $services->set('flasher.preset_listener', ApplyPresetListener::class)
         ->args([
             abstract_arg('config.presets'),
         ])

@@ -4,20 +4,14 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Response\Resource;
 
-use Flasher\Prime\Config\Config;
 use Flasher\Prime\Config\ConfigInterface;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\PluginStamp;
 
-use function in_array;
-
 final class ResourceManager implements ResourceManagerInterface
 {
-    private readonly ConfigInterface $config;
-
-    public function __construct(ConfigInterface $config = null)
+    public function __construct(private readonly ConfigInterface $config)
     {
-        $this->config = $config ?: new Config();
     }
 
     public function populateResponse(Response $response): Response
@@ -29,7 +23,7 @@ final class ResourceManager implements ResourceManagerInterface
         $plugins = [];
         foreach ($response->getEnvelopes() as $envelope) {
             $plugin = $envelope->get(PluginStamp::class)?->getPlugin();
-            if (null === $plugin || in_array($plugin, $plugins, true)) {
+            if (null === $plugin || \in_array($plugin, $plugins, true)) {
                 continue;
             }
 

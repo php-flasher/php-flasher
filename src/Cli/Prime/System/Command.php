@@ -19,7 +19,7 @@ final class Command
     private array $arguments = [];
 
     /**
-     * @param  string|null  $command
+     * @param string|null $command
      */
     public function __construct($command)
     {
@@ -27,8 +27,9 @@ final class Command
     }
 
     /**
-     * @param  string  $name
-     * @param  int|string|null  $value
+     * @param string          $name
+     * @param int|string|null $value
+     *
      * @return static
      */
     public function addOption($name, $value = null)
@@ -39,7 +40,8 @@ final class Command
     }
 
     /**
-     * @param  int|string|null  $argument
+     * @param int|string|null $argument
+     *
      * @return static
      */
     public function addArgument($argument)

@@ -16,7 +16,7 @@ final class Translator implements TranslatorInterface
 
     public function translate(string $id, array $parameters = [], string $locale = null): string
     {
-        if (! $this->translator instanceof TranslatorBagInterface) {
+        if (!$this->translator instanceof TranslatorBagInterface) {
             return $this->translator->trans($id, $parameters, 'flasher', $locale);
         }
 

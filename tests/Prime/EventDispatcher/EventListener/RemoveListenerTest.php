@@ -6,7 +6,7 @@ namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
+use Flasher\Prime\EventDispatcher\EventListener\EnvelopeRemovalListener;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\HopsStamp;
@@ -19,7 +19,7 @@ final class RemoveListenerTest extends TestCase
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new RemoveListener();
+        $listener = new EnvelopeRemovalListener();
         $eventDispatcher->addSubscriber($listener);
 
         $envelopes = [

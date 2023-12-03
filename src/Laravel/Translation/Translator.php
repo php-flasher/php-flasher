@@ -26,7 +26,7 @@ final class Translator implements TranslatorInterface
                 ? $this->translator->get('messages.'.$id, $parameters, $locale)
                 : $this->translator->get($id, $parameters, $locale));
 
-        if (! \is_string($translation)) {
+        if (!\is_string($translation)) {
             return $id;
         }
 

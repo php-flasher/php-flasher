@@ -9,7 +9,7 @@ use Flasher\Prime\Stamp\HopsStamp;
 
 final class HopsCriteria implements CriteriaInterface
 {
-    use ExtractRange;
+    use RangeExtractor;
 
     private ?int $minAmount;
 
@@ -32,7 +32,7 @@ final class HopsCriteria implements CriteriaInterface
     {
         $stamp = $envelope->get(HopsStamp::class);
 
-        if (! $stamp instanceof HopsStamp) {
+        if (!$stamp instanceof HopsStamp) {
             return false;
         }
 

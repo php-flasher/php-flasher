@@ -47,7 +47,7 @@ final class InstallCommand extends Command
         $exitCode = 0;
 
         foreach (ServiceProvider::publishableProviders() as $provider) {
-            if (! is_a($provider, 'Flasher\Laravel\Support\ServiceProvider', true)) {
+            if (!is_a($provider, 'Flasher\Laravel\Support\ServiceProvider', true)) {
                 continue;
             }
 
@@ -86,7 +86,7 @@ final class InstallCommand extends Command
     {
         $originDir = $plugin->getAssetsDir();
 
-        if (! is_dir($originDir)) {
+        if (!is_dir($originDir)) {
             return;
         }
 
@@ -96,11 +96,11 @@ final class InstallCommand extends Command
     }
 
     /**
-     * @param  string  $configFile
+     * @param string $configFile
      */
     private function publishConfig(PluginInterface $plugin, $configFile): void
     {
-        if (! file_exists($configFile)) {
+        if (!file_exists($configFile)) {
             return;
         }
 

@@ -8,16 +8,12 @@ use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 
-if (! \function_exists('flash')) {
+if (!\function_exists('flash')) {
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
-    function flash(
-        string $message = null,
-        string $type = NotificationInterface::SUCCESS,
-        array $options = [],
-        string $title = null,
-    ): Envelope|FlasherInterface|NotificationFactoryInterface {
+    function flash(string $message = null, string $type = NotificationInterface::SUCCESS, array $options = [], string $title = null): Envelope|FlasherInterface|NotificationFactoryInterface
+    {
         $factory = FlasherContainer::getInstance()->create('flasher');
 
         if (0 === \func_num_args()) {

@@ -14,7 +14,8 @@ interface StorageManagerInterface
     public function all(): array;
 
     /**
-     * @param  array<string, mixed>  $criteria
+     * @param array<string, mixed> $criteria
+     *
      * @return Envelope[]
      */
     public function filter(array $criteria = []): array;

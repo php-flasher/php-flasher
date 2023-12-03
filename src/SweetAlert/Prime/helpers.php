@@ -6,9 +6,9 @@ use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationInterface;
 
-if (! \function_exists('sweetalert')) {
+if (!\function_exists('sweetalert')) {
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     function sweetalert(
         string $message = null,

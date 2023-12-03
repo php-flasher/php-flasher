@@ -51,19 +51,18 @@ final class FilterFactory implements FilterFactoryInterface
     }
 
     /**
-     * @throws \Flasher\Prime\Exception\CriteriaNotRegisteredException
+     * @throws CriteriaNotRegisteredException
      */
     private function createCriteria(string $name, mixed $value): CriteriaInterface
     {
-        if (! isset($this->criteria[$name])) {
-            throw new CriteriaNotRegisteredException($name, array_keys($this->criteria));
+        if (!isset($this->criteria[$name])) {
+            throw CriteriaNotRegisteredException::create($name, array_keys($this->criteria));
         }
 
         $criteria = $this->criteria[$name];
-
         $criteria = is_callable($criteria) ? $criteria($value) : $criteria;
 
-        if (! $criteria instanceof CriteriaInterface) {
+        if (!$criteria instanceof CriteriaInterface) {
             throw new \UnexpectedValueException(sprintf('Expected an instance of "%s", got "%s" instead.', CriteriaInterface::class, get_debug_type($criteria)));
         }
 

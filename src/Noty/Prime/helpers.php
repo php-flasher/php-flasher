@@ -6,11 +6,12 @@ namespace Flasher\Noty\Prime;
 
 use Flasher\Prime\Notification\Envelope;
 
-if (! \function_exists('noty')) {
+if (!\function_exists('noty')) {
     /**
-     * @param  string  $message
-     * @param  string  $type
-     * @param  array<string, mixed>  $options
+     * @param string               $message
+     * @param string               $type
+     * @param array<string, mixed> $options
+     *
      * @return Envelope|NotyFactory
      */
     function noty($message = null, $type = \Flasher\Prime\Notification\NotificationInterface::SUCCESS, array $options = [])

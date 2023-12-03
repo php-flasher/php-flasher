@@ -10,7 +10,7 @@ use Illuminate\View\Factory;
 final class BladeTemplateEngine implements TemplateEngineInterface
 {
     /**
-     * @param  Factory  $engine
+     * @param Factory $engine
      */
     public function __construct(private $engine)
     {
