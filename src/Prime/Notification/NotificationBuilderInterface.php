@@ -76,7 +76,7 @@ interface NotificationBuilderInterface
     /**
      * @param array<string, mixed> $options
      */
-    public function flash(string|Type $type = null, string $message = null, array $options = [], string $title = null): Envelope;
+    public function flash(string $type = null, string $message = null, array $options = [], string $title = null): Envelope;
 
     /**
      * @param array<string, mixed> $parameters

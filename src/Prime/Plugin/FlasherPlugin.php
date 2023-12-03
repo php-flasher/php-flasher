@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flasher\Prime\Plugin;
 
 use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Notification\Type;
 
 final class FlasherPlugin extends Plugin
 {
@@ -114,10 +115,10 @@ final class FlasherPlugin extends Plugin
             'styles' => [],
             'options' => [],
             'presets' => [
-                'created' => ['type' => NotificationInterface::SUCCESS, 'message' => 'The resource was created'],
-                'updated' => ['type' => NotificationInterface::SUCCESS, 'message' => 'The resource was updated'],
-                'saved' => ['type' => NotificationInterface::SUCCESS, 'message' => 'The resource was saved'],
-                'deleted' => ['type' => NotificationInterface::SUCCESS, 'message' => 'The resource was deleted'],
+                'created' => ['type' => Type::SUCCESS, 'message' => 'The resource was created'],
+                'updated' => ['type' => Type::SUCCESS, 'message' => 'The resource was updated'],
+                'saved' => ['type' => Type::SUCCESS, 'message' => 'The resource was saved'],
+                'deleted' => ['type' => Type::SUCCESS, 'message' => 'The resource was deleted'],
             ],
             'plugins' => [
                 'flasher' => [

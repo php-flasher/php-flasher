@@ -10,7 +10,7 @@ final class Notification implements NotificationInterface
 
     private string $message = '';
 
-    private ?Type $type = null;
+    private string $type = '';
 
     /**
      * @var array<string, mixed> options for the notification
@@ -60,9 +60,9 @@ final class Notification implements NotificationInterface
     /**
      * Gets the type of the notification.
      *
-     * @return Type|null the notification type
+     * @return string the notification type
      */
-    public function getType(): ?Type
+    public function getType(): string
     {
         return $this->type;
     }
@@ -70,11 +70,11 @@ final class Notification implements NotificationInterface
     /**
      * Sets the type of the notification.
      *
-     * @param string|Type $type the type to set
+     * @param string $type the type to set
      */
-    public function setType(string|Type $type): void
+    public function setType(string $type): void
     {
-        $this->type = Type::from($type);
+        $this->type = $type;
     }
 
     /**
@@ -139,7 +139,7 @@ final class Notification implements NotificationInterface
      * @return array{
      *     title: string,
      *     message: string,
-     *     type: ?string,
+     *     type: string,
      *     options: array<string, mixed>,
      * }
      */
@@ -148,7 +148,7 @@ final class Notification implements NotificationInterface
         return [
             'title' => $this->title,
             'message' => $this->message,
-            'type' => $this->type instanceof Type ? (string) $this->type : $this->type,
+            'type' => $this->type,
             'options' => $this->options,
         ];
     }

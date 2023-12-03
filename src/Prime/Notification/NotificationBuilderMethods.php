@@ -32,7 +32,7 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    public function type(string|Type $type): static
+    public function type(string $type): static
     {
         $this->envelope->setType($type);
 

@@ -30,6 +30,9 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         return $this->plugin->getName();
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
         return new Configuration($this->plugin);

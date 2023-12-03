@@ -19,7 +19,9 @@ final class FlasherBundle extends Bundle
 {
     public function boot(): void
     {
-        FlasherContainer::init(new SymfonyContainer($this->container));
+        if ($this->container) {
+            FlasherContainer::init(new SymfonyContainer($this->container));
+        }
     }
 
     public function build(ContainerBuilder $container): void

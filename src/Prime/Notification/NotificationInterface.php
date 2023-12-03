@@ -14,9 +14,9 @@ interface NotificationInterface
 
     public function setMessage(string $message): void;
 
-    public function getType(): ?Type;
+    public function getType(): string;
 
-    public function setType(string|Type $type): void;
+    public function setType(string $type): void;
 
     /**
      * @return array<string, mixed>

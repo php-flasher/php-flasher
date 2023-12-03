@@ -148,12 +148,12 @@ final class Envelope implements NotificationInterface
         $this->notification->setMessage($message);
     }
 
-    public function getType(): ?Type
+    public function getType(): string
     {
         return $this->notification->getType();
     }
 
-    public function setType(string|Type $type): void
+    public function setType(string $type): void
     {
         $this->notification->setType($type);
     }
@@ -191,7 +191,7 @@ final class Envelope implements NotificationInterface
      *     message: string,
      *     type: string,
      *     options: array<string, mixed>,
-     *     stamps: array<string, mixed>,
+     *     metadata: array<string, mixed>,
      * }
      */
     public function toArray(): array
