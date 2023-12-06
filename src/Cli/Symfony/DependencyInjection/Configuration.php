@@ -7,15 +7,15 @@
 
 namespace Flasher\Cli\Symfony\DependencyInjection;
 
+use Flasher\Symfony\Bridge\DependencyInjection\FlasherConfiguration;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-final class Configuration implements ConfigurationInterface
+final class Configuration extends FlasherConfiguration
 {
     /**
      * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getFlasherConfigTreeBuilder()
     {
         $name = 'flasher_cli';
 

@@ -8,16 +8,16 @@
 namespace Flasher\Symfony\DependencyInjection;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
+use Flasher\Symfony\Bridge\DependencyInjection\FlasherConfiguration;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-final class Configuration implements ConfigurationInterface
+final class Configuration extends FlasherConfiguration
 {
     /**
      * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getFlasherConfigTreeBuilder()
     {
         $plugin = new FlasherPlugin();
 

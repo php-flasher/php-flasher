@@ -9,8 +9,8 @@ namespace Flasher\Symfony\Command;
 
 use Flasher\Prime\Plugin\PluginInterface;
 use Flasher\Symfony\Bridge\Bridge;
+use Flasher\Symfony\Bridge\Command\FlasherCommand;
 use Flasher\Symfony\Support\Bundle;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class InstallCommand extends Command
+class InstallCommand extends FlasherCommand
 {
     /**
      * @return void
@@ -34,7 +34,7 @@ class InstallCommand extends Command
     /**
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function flasherExecute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('');
         $output->writeln('<fg=blue;options=bold>
