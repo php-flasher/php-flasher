@@ -73,6 +73,7 @@ jobs:
                                      "symfony/http-kernel:${{ matrix.symfony }}" \
                                      "symfony/translation:${{ matrix.symfony }}" \
                                      "symfony/framework-bundle:${{ matrix.symfony }}" \
+                                     "symfony/twig-bundle:${{ matrix.symfony }}" \
                                      "phpunit/phpunit:${{ matrix.phpunit }}" \
                                      "monolog/monolog" --no-interaction --no-update
                     composer update --prefer-stable --prefer-dist
