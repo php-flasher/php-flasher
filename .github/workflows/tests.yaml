@@ -67,7 +67,14 @@ jobs:
                     sed -i '/\"require\": {/,/},/d; /\"require-dev\": {/,/},/d' composer.json
                     composer config --global allow-plugins true
                     composer config extra.symfony.require "${{ matrix.symfony }}"
-                    composer require "symfony/config:${{ matrix.symfony }}" "symfony/console:${{ matrix.symfony }}" "symfony/dependency-injection:${{ matrix.symfony }}" "symfony/http-kernel:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/twig-bundle:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" "monolog/monolog" --no-interaction --no-update
+                    composer require "symfony/config:${{ matrix.symfony }}" \
+                                     "symfony/console:${{ matrix.symfony }}" \
+                                     "symfony/dependency-injection:${{ matrix.symfony }}" \
+                                     "symfony/http-kernel:${{ matrix.symfony }}" \
+                                     "symfony/translation:${{ matrix.symfony }}" \
+                                     "symfony/framework-bundle:${{ matrix.symfony }}" \
+                                     "phpunit/phpunit:${{ matrix.phpunit }}" \
+                                     "monolog/monolog" --no-interaction --no-update
                     composer update --prefer-stable --prefer-dist
 
             -   name: Execute tests
