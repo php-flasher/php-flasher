@@ -9,9 +9,9 @@ namespace Flasher\Symfony\Bridge\DependencyInjection;
 
 use Flasher\Symfony\Bridge\Bridge;
 
-$class = Bridge::versionCompare('6.4', '<=')
-    ? 'Flasher\Symfony\Bridge\Legacy\DependencyInjection\FlasherConfiguration'
-    : 'Flasher\Symfony\Bridge\Typed\DependencyInjection\FlasherConfiguration';
+$class = Bridge::versionCompare('6.4', '>=')
+    ? 'Flasher\Symfony\Bridge\Typed\DependencyInjection\FlasherConfiguration'
+    : 'Flasher\Symfony\Bridge\Legacy\DependencyInjection\FlasherConfiguration';
 
 class_alias($class, 'Flasher\Symfony\Bridge\DependencyInjection\FlasherConfiguration');
 

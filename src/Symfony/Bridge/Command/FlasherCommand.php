@@ -11,9 +11,9 @@ use Flasher\Symfony\Bridge\Bridge;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-$class = Bridge::versionCompare('6.4', '<=')
-    ? 'Flasher\Symfony\Bridge\Legacy\Command\FlasherCommand'
-    : 'Flasher\Symfony\Bridge\Typed\Command\FlasherCommand';
+$class = Bridge::versionCompare('6.4', '>=')
+    ? 'Flasher\Symfony\Bridge\Typed\Command\FlasherCommand'
+    : 'Flasher\Symfony\Bridge\Legacy\Command\FlasherCommand';
 
 class_alias($class, 'Flasher\Symfony\Bridge\Command\FlasherCommand');
 
