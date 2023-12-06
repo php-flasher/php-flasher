@@ -22,7 +22,7 @@ final class StampsCriteria implements CriteriaInterface
 {
     private array $stamps = [];
 
-    private string $strategy;
+    private readonly string $strategy;
 
     public function __construct(mixed $criteria)
     {
@@ -58,7 +58,7 @@ final class StampsCriteria implements CriteriaInterface
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $e) => $this->match($e));
+        return array_filter($envelopes, fn (Envelope $e): bool => $this->match($e));
     }
 
     public function match(Envelope $envelope): bool

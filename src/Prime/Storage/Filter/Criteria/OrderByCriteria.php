@@ -31,7 +31,7 @@ final class OrderByCriteria implements CriteriaInterface
                 $direction = self::ASC;
             }
 
-            $direction = strtoupper($direction);
+            $direction = strtoupper((string) $direction);
 
             if (!in_array($direction, [self::ASC, self::DESC])) {
                 throw new \InvalidArgumentException();

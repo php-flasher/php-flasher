@@ -11,9 +11,9 @@ final class DelayCriteria implements CriteriaInterface
 {
     use RangeExtractor;
 
-    private ?int $minDelay;
+    private readonly ?int $minDelay;
 
-    private ?int $maxDelay;
+    private readonly ?int $maxDelay;
 
     public function __construct(mixed $criteria)
     {
@@ -25,7 +25,7 @@ final class DelayCriteria implements CriteriaInterface
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $envelope) => $this->match($envelope));
+        return array_filter($envelopes, fn (Envelope $envelope): bool => $this->match($envelope));
     }
 
     public function match(Envelope $envelope): bool

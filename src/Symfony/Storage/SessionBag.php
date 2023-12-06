@@ -40,7 +40,7 @@ final class SessionBag implements BagInterface
     /**
      * @return SessionInterface
      */
-    private function session()
+    private function session(): SessionInterface|LegacySession|FallbackSession
     {
         if ($this->session instanceof SessionInterface || $this->session instanceof LegacySession) { // @phpstan-ignore-line
             return $this->session; // @phpstan-ignore-line

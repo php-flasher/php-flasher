@@ -8,7 +8,7 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class SweetAlertBuilder extends NotificationBuilder
 {
-    public function types(string $type, $message = null, $title = null, array $options = [])
+    public function types(string $type, $message = null, $title = null, array $options = []): SweetAlertBuilder
     {
         $this->icon($type);
 
@@ -20,14 +20,12 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @param string               $message
      * @param array<string, mixed> $options
-     *
-     * @return SweetAlertBuilder
      */
-    public function question($message = null, array $options = [])
+    public function question($message = null, array $options = []): SweetAlertBuilder
     {
         $this->showCancelButton();
 
-        return $this->type('question', $message, $options);
+        return $this->type('question');
     }
 
     /**
@@ -37,7 +35,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function titles($title)
+    public function titles(mixed $title)
     {
         $this->option('title', $title);
 
@@ -1046,7 +1044,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function image($title, mixed $text, mixed $imageUrl, mixed $imageWidth = 400, mixed $imageHeight = 200, $imageAlt = null)
+    public function image(mixed $title, mixed $text, mixed $imageUrl, mixed $imageWidth = 400, mixed $imageHeight = 200, $imageAlt = null)
     {
         $this->title($title);
         $this->text($text);
@@ -1074,7 +1072,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param int    $imageHeight
      * @param string $imageAlt
      */
-    public function addImage($title, mixed $text, mixed $imageUrl, mixed $imageWidth = 400, mixed $imageHeight = 200, $imageAlt = null): \Flasher\Prime\Notification\Envelope
+    public function addImage(mixed $title, mixed $text, mixed $imageUrl, mixed $imageWidth = 400, mixed $imageHeight = 200, $imageAlt = null): \Flasher\Prime\Notification\Envelope
     {
         $this->image($title, $text, $imageUrl, $imageWidth, $imageHeight, $imageAlt);
 

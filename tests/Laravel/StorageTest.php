@@ -9,7 +9,7 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\Storage;
 
 final class StorageTest extends TestCase
 {
@@ -122,11 +122,11 @@ final class StorageTest extends TestCase
         $this->assertEquals([], $storage->all());
     }
 
-    private function getStorage(): StorageBag
+    private function getStorage(): Storage
     {
         /** @var \Illuminate\Session\Store $session */
         $session = $this->app->make('session');
 
-        return new StorageBag(new SessionBag($session));
+        return new Storage(new SessionBag($session));
     }
 }

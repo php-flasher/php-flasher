@@ -14,7 +14,7 @@ final class Translator implements TranslatorInterface
     {
     }
 
-    public function translate($id, $parameters = [], $locale = null)
+    public function translate($id, $parameters = [], $locale = null): string
     {
         $order = TranslationStamp::parametersOrder($parameters, $locale);
         $parameters = $order['parameters'];
@@ -33,7 +33,7 @@ final class Translator implements TranslatorInterface
         return $translation;
     }
 
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->translator->getLocale();
     }

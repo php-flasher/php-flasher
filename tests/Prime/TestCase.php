@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+final class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param class-string<\Throwable> $exceptionName
-     * @param string                   $exceptionMessage
      * @param int                      $exceptionCode
      */
-    public function setExpectedException($exceptionName, $exceptionMessage = '', $exceptionCode = null): void
+    public function setExpectedException(string $exceptionName, string $exceptionMessage = '', $exceptionCode = null): void
     {
         if (method_exists($this, 'expectException')) {
             $this->expectException($exceptionName);
@@ -32,7 +31,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @throws \ReflectionException
      */
-    protected function invokeMethod($object, $methodName, $parameters = [])
+    private function invokeMethod($object, $methodName, $parameters = [])
     {
         $class = \is_string($object) ? $object : $object::class;
 
@@ -57,7 +56,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @throws \ReflectionException
      */
-    protected function getProperty($object, $propertyName)
+    private function getProperty($object, $propertyName)
     {
         $class = \is_string($object) ? $object : $object::class;
 
@@ -78,11 +77,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
      * @param string        $propertyName name of property to set
      * @param mixed         $value        value to set the property to
      *
-     * @return void
-     *
      * @throws \ReflectionException
      */
-    protected function setProperty($object, $propertyName, mixed $value)
+    private function setProperty($object, $propertyName, mixed $value): void
     {
         $class = \is_string($object) ? $object : $object::class;
 

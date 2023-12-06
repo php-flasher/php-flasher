@@ -8,7 +8,7 @@ use Flasher\Prime\FlasherInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class FlasherTwigExtension extends AbstractExtension
+final class FlasherTwigExtension extends AbstractExtension
 {
     public function __construct(private readonly FlasherInterface $flasher)
     {
@@ -17,7 +17,7 @@ class FlasherTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('flasher_render', [$this, 'render'], ['is_safe' => ['html']]),
+            new TwigFunction('flasher_render', $this->render(...), ['is_safe' => ['html']]),
         ];
     }
 

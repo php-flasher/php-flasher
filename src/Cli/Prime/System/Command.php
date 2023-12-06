@@ -69,10 +69,7 @@ final class Command
         return implode(' ', $this->arguments);
     }
 
-    /**
-     * @return string
-     */
-    private function formatOptions()
+    private function formatOptions(): string
     {
         $line = '';
 

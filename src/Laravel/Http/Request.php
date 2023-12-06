@@ -13,7 +13,7 @@ final class Request implements RequestInterface
     {
     }
 
-    public function isXmlHttpRequest()
+    public function isXmlHttpRequest(): bool
     {
         return $this->request->ajax();
     }
@@ -28,14 +28,14 @@ final class Request implements RequestInterface
         return $this->request->hasSession();
     }
 
-    public function hasType($type)
+    public function hasType($type): bool
     {
         $session = $this->request->session();
 
         return $session->has($type);
     }
 
-    public function getType($type)
+    public function getType($type): string|array
     {
         $session = $this->request->session();
 

@@ -11,9 +11,9 @@ final class PriorityCriteria implements CriteriaInterface
 {
     use RangeExtractor;
 
-    private ?int $minPriority;
+    private readonly ?int $minPriority;
 
-    private ?int $maxPriority;
+    private readonly ?int $maxPriority;
 
     public function __construct(mixed $criteria)
     {
@@ -25,7 +25,7 @@ final class PriorityCriteria implements CriteriaInterface
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $envelope) => $this->match($envelope));
+        return array_filter($envelopes, fn (Envelope $envelope): bool => $this->match($envelope));
     }
 
     public function match(Envelope $envelope): bool

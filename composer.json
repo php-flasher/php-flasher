@@ -14,17 +14,14 @@
         "pnotify",
         "sweetalert",
         "toastr",
-        "user-engagement",
-        "user-experience",
-        "developer-tools",
         "yoeunes"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Younes KHOUBZA",
-            "email": "younes.khoubza@gmail.com",
-            "homepage": "https://www.linkedin.com/in/younes-khoubza",
+            "name": "Younes ENNAJI",
+            "email": "younes.ennaji.pro@gmail.com",
+            "homepage": "https://www.linkedin.com/in/younes--ennaji/",
             "role": "Developer"
         }
     ],

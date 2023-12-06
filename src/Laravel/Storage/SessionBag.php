@@ -21,7 +21,7 @@ final class SessionBag implements BagInterface
     {
     }
 
-    public function get()
+    public function get(): array
     {
         return $this->session->get(self::ENVELOPES_NAMESPACE, []); // @phpstan-ignore-line
     }

@@ -13,10 +13,6 @@ final class PresenterCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('flasher.response_manager')) {
-            return;
-        }
-
         $definition = $container->findDefinition('flasher.response_manager');
 
         foreach ($container->findTaggedServiceIds('flasher.presenter') as $id => $tags) {

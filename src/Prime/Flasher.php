@@ -20,9 +20,9 @@ final class Flasher implements FlasherInterface
     private array $factories = [];
 
     public function __construct(
-        private string $default,
-        private ResponseManagerInterface $responseManager,
-        private StorageManagerInterface $storageManager,
+        private readonly string $default,
+        private readonly ResponseManagerInterface $responseManager,
+        private readonly StorageManagerInterface $storageManager,
     ) {
     }
 

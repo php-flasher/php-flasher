@@ -19,7 +19,7 @@ final class FlasherBundle extends Bundle
 {
     public function boot(): void
     {
-        if ($this->container) {
+        if ($this->container instanceof \Symfony\Component\DependencyInjection\ContainerInterface) {
             FlasherContainer::init(new SymfonyContainer($this->container));
         }
     }

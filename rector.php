@@ -11,6 +11,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__.'/phpstan/',
         __DIR__.'/src/',
         __DIR__.'/tests/',
+        __DIR__.'/bin/',
     ]);
 
     $rectorConfig->sets([
@@ -19,5 +20,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::EARLY_RETURN,
         SetList::TYPE_DECLARATION,
         SetList::PRIVATIZATION,
+        SetList::CODING_STYLE,
     ]);
 };

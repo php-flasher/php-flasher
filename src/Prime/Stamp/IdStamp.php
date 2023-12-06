@@ -8,7 +8,7 @@ use Flasher\Prime\Notification\Envelope;
 
 final class IdStamp implements PresentableStampInterface, StampInterface
 {
-    private string $id;
+    private readonly string $id;
 
     /**
      * Constructs an IdStamp with a unique identifier.

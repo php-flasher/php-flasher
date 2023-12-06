@@ -7,7 +7,7 @@ namespace Flasher\Tests\Prime\Storage;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\IdStamp;
-use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\Storage;
 use Flasher\Tests\Prime\TestCase;
 
 final class StorageBagTest extends TestCase
@@ -25,7 +25,7 @@ final class StorageBagTest extends TestCase
             ],
         ];
 
-        $storageBag = new StorageBag();
+        $storageBag = new Storage();
         $storageBag->add($envelopes[0]);
         $storageBag->add($envelopes[1]);
 
@@ -45,7 +45,7 @@ final class StorageBagTest extends TestCase
             ],
         ];
 
-        $storageBag = new StorageBag();
+        $storageBag = new Storage();
         $storageBag->update($envelopes[0]);
         $storageBag->update($envelopes[1]);
 
@@ -61,7 +61,7 @@ final class StorageBagTest extends TestCase
             new Envelope(new Notification(), new IdStamp('4444')),
         ];
 
-        $storageBag = new StorageBag();
+        $storageBag = new Storage();
         $storageBag->add($envelopes);
 
         $storageBag->remove([

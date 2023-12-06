@@ -16,7 +16,7 @@ final class HtmlPresenter implements PresenterInterface
 
     public function render(Response $response): string
     {
-        $options = json_encode($response->toArray());
+        $options = json_encode($response->toArray(), JSON_THROW_ON_ERROR);
         if (false === $options) {
             throw new \RuntimeException('invalid options');
         }

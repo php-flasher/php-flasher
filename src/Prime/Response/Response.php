@@ -138,14 +138,14 @@ final class Response
      */
     public function toArray(): array
     {
-        $envelopes = array_map(static fn (Envelope $envelope): array => $envelope->toArray(), $this->getEnvelopes());
+        $envelopes = array_map(static fn (Envelope $envelope): array => $envelope->toArray(), $this->envelopes);
 
         return [
             'envelopes' => $envelopes,
-            'scripts' => $this->getScripts(),
-            'styles' => $this->getStyles(),
-            'options' => $this->getOptions(),
-            'context' => $this->getContext(),
+            'scripts' => $this->scripts,
+            'styles' => $this->styles,
+            'options' => $this->options,
+            'context' => $this->context,
         ];
     }
 }

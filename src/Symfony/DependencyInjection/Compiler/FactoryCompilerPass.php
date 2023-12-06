@@ -13,10 +13,6 @@ final class FactoryCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('flasher')) {
-            return;
-        }
-
         $definition = $container->findDefinition('flasher');
 
         foreach ($container->findTaggedServiceIds('flasher.factory') as $id => $tags) {

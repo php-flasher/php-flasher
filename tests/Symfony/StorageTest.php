@@ -8,7 +8,7 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\Storage;
 use Flasher\Symfony\Storage\SessionBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -129,12 +129,12 @@ final class StorageTest extends TestCase
         $this->assertEquals([], $storage->all());
     }
 
-    private function getStorage(): StorageBag
+    private function getStorage(): Storage
     {
         $session = class_exists(\Symfony\Component\HttpFoundation\Session\Session::class)
             ? new Session(new MockArraySessionStorage())
             : new \Symfony\Component\HttpFoundation\Session(new ArraySessionStorage()); // @phpstan-ignore-line
 
-        return new StorageBag(new SessionBag($session)); // @phpstan-ignore-line
+        return new Storage(new SessionBag($session)); // @phpstan-ignore-line
     }
 }

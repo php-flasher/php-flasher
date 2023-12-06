@@ -23,7 +23,11 @@ final class ResourceManager implements ResourceManagerInterface
         $plugins = [];
         foreach ($response->getEnvelopes() as $envelope) {
             $plugin = $envelope->get(PluginStamp::class)?->getPlugin();
-            if (null === $plugin || \in_array($plugin, $plugins, true)) {
+            if (null === $plugin) {
+                continue;
+            }
+
+            if (\in_array($plugin, $plugins, true)) {
                 continue;
             }
 
@@ -36,7 +40,7 @@ final class ResourceManager implements ResourceManagerInterface
              *     options?: array<string, mixed>,
              * } $resource
              */
-            $resource = $this->config->get("plugins.$plugin", []);
+            $resource = $this->config->get(sprintf('plugins.%s', $plugin), []);
 
             $response->addScripts($resource['scripts'] ?? []);
             $response->addStyles($resource['styles'] ?? []);

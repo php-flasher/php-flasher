@@ -6,7 +6,7 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 
 final class LimitCriteria implements CriteriaInterface
 {
-    private int $limit;
+    private readonly int $limit;
 
     public function __construct(mixed $criteria)
     {

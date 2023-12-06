@@ -54,9 +54,8 @@ final class FlasherPlugin extends Plugin
         $config = $this->normalizePresets($config);
         $config = $this->addDefaultConfig($config);
         $config = $this->normalizeFlashBag($config);
-        $config = $this->setPresetsDefaults($config);
 
-        return $config;
+        return $this->setPresetsDefaults($config);
     }
 
     private function normalizePlugins(array $config): array

@@ -8,10 +8,8 @@ final class Program
 {
     /**
      * @param string|null $program
-     *
-     * @return bool
      */
-    public static function exist($program)
+    public static function exist($program): bool
     {
         if (null === $program) {
             return false;

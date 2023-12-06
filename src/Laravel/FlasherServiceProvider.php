@@ -28,7 +28,7 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
-use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\Storage;
 use Flasher\Prime\Storage\StorageManager;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
@@ -140,7 +140,7 @@ final class FlasherServiceProvider extends ServiceProvider
             $eventDispatcher = $app->make('flasher.event_dispatcher');
             $session = $app->make('session');
             /** @phpstan-ignore-next-line */
-            $storageBag = new StorageBag(new SessionBag($session));
+            $storageBag = new Storage(new SessionBag($session));
             $criteria = $config->get('filter_criteria', []);
 
             // @phpstan-ignore-line
@@ -213,13 +213,13 @@ final class FlasherServiceProvider extends ServiceProvider
     {
         Blade::extend(static function ($view) {
             $pattern = '/(?<!\w)(\s*)@flasher_(livewire_)?render(\(.*?\))?/';
-            if (!preg_match($pattern, $view)) {
+            if (!preg_match($pattern, (string) $view)) {
                 return $view;
             }
 
             @trigger_error('Since php-flasher/flasher-laravel v1.6.0: Using @flasher_render or @flasher_livewire_render is deprecated and will be removed in v2.0. PHPFlasher will render notification automatically', \E_USER_DEPRECATED);
 
-            return preg_replace($pattern, '', $view);
+            return preg_replace($pattern, '', (string) $view);
         });
     }
 

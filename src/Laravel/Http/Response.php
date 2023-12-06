@@ -17,12 +17,12 @@ final class Response implements ResponseInterface
     {
     }
 
-    public function isRedirection()
+    public function isRedirection(): bool
     {
         return $this->response->isRedirection();
     }
 
-    public function isJson()
+    public function isJson(): bool
     {
         return $this->response instanceof LaravelJsonResponse;
     }
@@ -41,7 +41,7 @@ final class Response implements ResponseInterface
         return false !== stripos($contentDisposition, 'attachment;'); // @phpstan-ignore-line
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->response->getContent(); // @phpstan-ignore-line
     }

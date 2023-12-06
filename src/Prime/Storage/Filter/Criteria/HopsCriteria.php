@@ -11,9 +11,9 @@ final class HopsCriteria implements CriteriaInterface
 {
     use RangeExtractor;
 
-    private ?int $minAmount;
+    private readonly ?int $minAmount;
 
-    private ?int $maxAmount;
+    private readonly ?int $maxAmount;
 
     public function __construct(mixed $criteria)
     {
@@ -25,7 +25,7 @@ final class HopsCriteria implements CriteriaInterface
 
     public function apply(array $envelopes): array
     {
-        return array_filter($envelopes, fn (Envelope $e) => $this->match($e));
+        return array_filter($envelopes, fn (Envelope $e): bool => $this->match($e));
     }
 
     public function match(Envelope $envelope): bool

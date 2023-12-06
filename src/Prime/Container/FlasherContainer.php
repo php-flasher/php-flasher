@@ -32,10 +32,15 @@ final class FlasherContainer
     public function create(string $id): FlasherInterface|NotificationFactoryInterface
     {
         $factory = $this->container->get($id);
-
-        if (!$factory instanceof FlasherInterface && !$factory instanceof NotificationFactoryInterface) {
-            throw new \InvalidArgumentException(sprintf('Factory must be an instance of %s or %s.', FlasherInterface::class, NotificationFactoryInterface::class));
+        if ($factory instanceof FlasherInterface) {
+            return $factory;
         }
+
+        if ($factory instanceof NotificationFactoryInterface) {
+            return $factory;
+        }
+
+        throw new \InvalidArgumentException(sprintf('Factory must be an instance of %s or %s.', FlasherInterface::class, NotificationFactoryInterface::class));
 
         return $factory;
     }

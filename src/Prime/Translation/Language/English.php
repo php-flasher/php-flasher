@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Translation\Language;
 
-class English
+final class English
 {
     /**
      * English translations.

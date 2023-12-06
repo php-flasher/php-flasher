@@ -13,7 +13,7 @@ final class AddToStorageListener implements EventListenerInterface
 {
     public function __invoke(PersistEvent $event): void
     {
-        $envelopes = array_filter($event->getEnvelopes(), [$this, 'isEligibleForStorage']);
+        $envelopes = array_filter($event->getEnvelopes(), $this->isEligibleForStorage(...));
 
         $event->setEnvelopes($envelopes);
     }

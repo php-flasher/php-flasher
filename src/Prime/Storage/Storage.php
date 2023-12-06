@@ -9,7 +9,7 @@ use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Storage\Bag\ArrayBag;
 use Flasher\Prime\Storage\Bag\BagInterface;
 
-final class StorageBag implements StorageInterface
+final class Storage implements StorageInterface
 {
     private readonly BagInterface $bag;
 

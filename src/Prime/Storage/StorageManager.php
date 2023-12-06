@@ -14,7 +14,7 @@ use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Exception\CriteriaNotRegisteredException;
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Storage\Filter\FilterFactory;
+use Flasher\Prime\Storage\Filter\FilterFactoryInterface;
 
 final class StorageManager implements StorageManagerInterface
 {
@@ -24,7 +24,7 @@ final class StorageManager implements StorageManagerInterface
     public function __construct(
         private readonly StorageInterface $storage,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly FilterFactory $filterFactory,
+        private readonly FilterFactoryInterface $filterFactory,
         private readonly array $criteria = [],
     ) {
     }
@@ -39,7 +39,7 @@ final class StorageManager implements StorageManagerInterface
      */
     public function filter(array $criteria = []): array
     {
-        $criteria = array_merge($this->criteria, $criteria);
+        $criteria = [...$this->criteria, ...$criteria];
         $filter = $this->filterFactory->createFilter($criteria);
 
         $event = new FilterEvent($filter, $this->all(), $criteria);

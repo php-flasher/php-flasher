@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Translation\Language;
 
-class German
+final class German
 {
     /**
      * German translations.

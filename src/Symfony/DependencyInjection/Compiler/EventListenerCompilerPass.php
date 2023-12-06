@@ -12,13 +12,9 @@ final class EventListenerCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('flasher.event_dispatcher')) {
-            return;
-        }
-
         $definition = $container->findDefinition('flasher.event_dispatcher');
 
-        foreach ($container->findTaggedServiceIds('flasher.event_listener') as $id => $tags) {
+        foreach (array_keys($container->findTaggedServiceIds('flasher.event_listener')) as $id) {
             $definition->addMethodCall('addListener', [new Reference($id)]);
         }
     }

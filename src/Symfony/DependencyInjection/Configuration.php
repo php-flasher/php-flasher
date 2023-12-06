@@ -35,7 +35,7 @@ final class Configuration implements ConfigurationInterface
     {
         $rootNode
             ->beforeNormalization()
-            ->always(fn ($v) => $this->plugin->normalizeConfig($v))
+            ->always(fn ($v): array => $this->plugin->normalizeConfig($v))
             ->end();
     }
 
