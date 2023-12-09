@@ -8,10 +8,10 @@
 namespace Flasher\Symfony\Support;
 
 use Flasher\Prime\Plugin\PluginInterface;
+use Flasher\Symfony\Bridge\DependencyInjection\FlasherConfiguration;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration implements ConfigurationInterface
+class Configuration extends FlasherConfiguration
 {
     /**
      * @var PluginInterface
@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
         $this->plugin = $plugin;
     }
 
-    public function getConfigTreeBuilder()
+    public function getFlasherConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder($this->plugin->getName());
 
