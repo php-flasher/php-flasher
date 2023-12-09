@@ -3,6 +3,13 @@
 # Set the "errexit" options
 set -o errexit
 
+# Define colors and emoji for better visual feedback
+INDIGO='\033[0;94m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+CHECK_MARK="✅"
+CROSS_MARK="❌"
+
 # Define remotes
 REMOTES=(
     'src/Prime:flasher'
@@ -44,11 +51,10 @@ function split() {
     local prefix="${prefix_and_remote%:*}"
     local remote="${prefix_and_remote#*:}"
 
-    # Add the remote repository
-    echo -e "\033[32mAdding remote repository 'git@github.com:php-flasher/$remote'\033[0m"
-
-    git remote remove "$remote"
-    git remote add "$remote" "git@github.com:php-flasher/$remote"
+    # Add remote if it does not exist (ignoring errors silently)
+    if git remote add "$remote" "git@github.com:php-flasher/$remote.git" 2>/dev/null; then
+        echo -e "${GREEN}Added remote ${INDIGO}$remote${NC} ${CHECK_MARK}"
+    fi
 
     # Split the code using the splitsh-lite utility
     SHA1=$(./bin/splitsh-lite --prefix="$prefix")
@@ -58,10 +64,12 @@ function split() {
 }
 
 # Pull the latest code from the origin repository
-echo -e "\033[32mPulling the latest code from the origin repository...\033[0m"
+echo -e "${INDIGO}Pulling the latest code from the origin repository...${NC}"
 git fetch origin main
 
 # Iterate over the remotes and split and push the code
 for remote in "${REMOTES[@]}"; do
     split "$remote"
 done
+
+echo -e "${GREEN}All done!${NC} ${CHECK_MARK}"
