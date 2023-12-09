@@ -40,6 +40,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Component;
 use Livewire\LivewireManager;
+use Livewire\Mechanisms\HandleComponents\ComponentContext;
 use Livewire\Response;
 
 /**
@@ -218,6 +219,35 @@ final class FlasherServiceProvider extends ServiceProvider
 
         $livewire = $this->app->make('livewire');
         if (!$livewire instanceof LivewireManager) {
+            return;
+        }
+
+        // Livewire v3
+        if (method_exists($livewire, 'componentHook')) {
+            $livewire->listen('dehydrate', function (Component $component, ComponentContext $context) {
+                if ($context->mounting || isset($context->effects['redirect'])) {
+                    return;
+                }
+
+                /** @var FlasherInterface $flasher */
+                $flasher = app('flasher');
+
+                /** @var array{envelopes: Envelope[]} $data */
+                $data = $flasher->render(array(), 'array');
+
+                if (\count($data['envelopes']) > 0) {
+                    $data['context']['livewire'] = array(
+                        'id' => $component->getId(),
+                        'name' => $component->getName(),
+                    );
+
+                    $context->addEffect('dispatches', array(array(
+                        'name' => 'flasher:render',
+                        'params' => $data,
+                    )));
+                }
+            });
+
             return;
         }
 
