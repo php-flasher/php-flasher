@@ -68,7 +68,7 @@ final class SessionBag implements BagInterface
                 $session = $this->session->getCurrentRequest()->getSession();
             }
 
-            if (null !== $session && $session->isStarted()) {
+            if (null !== $session) {
                 return $this->session = $session;
             }
 
