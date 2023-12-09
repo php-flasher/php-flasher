@@ -44,7 +44,7 @@
         "friendsofphp/php-cs-fixer": "^3.17",
         "illuminate/routing": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
         "illuminate/support": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
-        "livewire/livewire": "^2.12.3",
+        "livewire/livewire": "^2.12.3 || ^3.0",
         "orchestra/testbench": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
         "phpro/grumphp": "^1.16",
         "phpstan/phpstan": "^1.10.16",
