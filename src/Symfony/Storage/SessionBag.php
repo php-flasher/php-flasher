@@ -68,7 +68,9 @@ final class SessionBag implements BagInterface
                 $session = $this->session->getCurrentRequest()->getSession();
             }
 
-            if (null !== $session && $session->isStarted()) {
+            $isStateless = $this->session->getCurrentRequest()->attributes->has('_stateless');
+
+            if (null !== $session && !$isStateless) {
                 return $this->session = $session;
             }
 
