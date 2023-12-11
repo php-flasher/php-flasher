@@ -241,10 +241,10 @@ final class FlasherServiceProvider extends ServiceProvider
                         'name' => $component->getName(),
                     );
 
-                    $context->addEffect('dispatches', array(array(
-                        'name' => 'flasher:render',
-                        'params' => $data,
-                    )));
+                    $dispatches = isset($context->effects['dispatches']) ? $context->effects['dispatches'] : [];
+                    $dispatches[] = array('name' => 'flasher:render', 'params' => $data);
+
+                    $context->addEffect('dispatches', $dispatches);
                 }
             });
 
