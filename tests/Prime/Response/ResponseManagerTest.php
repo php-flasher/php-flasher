@@ -14,7 +14,6 @@ use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Tests\Prime\TestCase;
-use Livewire\LivewireManager;
 
 class ResponseManagerTest extends TestCase
 {
@@ -144,7 +143,7 @@ JAVASCRIPT;
      */
     private function getLivewireListenerScript()
     {
-        if (!class_exists(LivewireManager::class)) {
+        if (!class_exists('Livewire\LivewireManager')) {
             return '';
         }
 

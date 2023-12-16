@@ -12,7 +12,6 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Flasher\Prime\Response\Response;
 use Flasher\Tests\Prime\TestCase;
-use Livewire\LivewireManager;
 
 class HtmlPresenterTest extends TestCase
 {
@@ -149,7 +148,7 @@ JAVASCRIPT;
      */
     private function getLivewireListenerScript()
     {
-        if (!class_exists(LivewireManager::class)) {
+        if (!class_exists('Livewire\LivewireManager')) {
             return '';
         }
 

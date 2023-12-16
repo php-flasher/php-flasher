@@ -8,7 +8,6 @@
 namespace Flasher\Prime\Response\Presenter;
 
 use Flasher\Prime\Response\Response;
-use Livewire\LivewireManager;
 
 final class HtmlPresenter implements PresenterInterface
 {
@@ -114,7 +113,7 @@ JAVASCRIPT;
      */
     private function getLivewireListenerScript()
     {
-        if (!class_exists(LivewireManager::class)) {
+        if (!class_exists('Livewire\LivewireManager')) {
             return '';
         }
 
