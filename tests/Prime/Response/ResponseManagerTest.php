@@ -14,6 +14,7 @@ use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\UuidStamp;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Tests\Prime\TestCase;
+use Livewire\LivewireManager;
 
 class ResponseManagerTest extends TestCase
 {
@@ -46,6 +47,7 @@ class ResponseManagerTest extends TestCase
         $storageManager->add($envelopes);
 
         $responseManager = new ResponseManager(null, $storageManager);
+        $livewireListener = $this->getLivewireListenerScript();
 
         $response = <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
@@ -101,6 +103,8 @@ class ResponseManagerTest extends TestCase
         document.addEventListener('flasher:render', function (event) {
             render(event.detail);
         });
+
+        {$livewireListener}
     }
 
     if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
@@ -131,5 +135,26 @@ JAVASCRIPT;
 
         $responseManager = new ResponseManager();
         $responseManager->render(array(), 'xml');
+    }
+
+    /**
+     * Generate the script for Livewire event handling.
+     *
+     * @return string
+     */
+    private function getLivewireListenerScript()
+    {
+        if (!class_exists(LivewireManager::class)) {
+            return '';
+        }
+
+        return <<<JAVASCRIPT
+document.addEventListener('livewire:navigating', function () {
+    var elements = document.querySelectorAll('.fl-no-cache');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].remove();
+    }
+});
+JAVASCRIPT;
     }
 }
