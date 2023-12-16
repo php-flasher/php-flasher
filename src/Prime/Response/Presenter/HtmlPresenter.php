@@ -29,6 +29,7 @@ final class HtmlPresenter implements PresenterInterface
 
         $rootScript = $response->getRootScript();
         $placeHolder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
+        $livewireListener = $this->getLivewireListenerScript();
 
         return <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
@@ -84,6 +85,8 @@ final class HtmlPresenter implements PresenterInterface
         document.addEventListener('flasher:render', function (event) {
             render(event.detail);
         });
+
+        {$livewireListener}
     }
 
     if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
@@ -100,6 +103,27 @@ final class HtmlPresenter implements PresenterInterface
     }
 })();
 </script>
+JAVASCRIPT;
+    }
+
+    /**
+     * Generate the script for Livewire event handling.
+     *
+     * @return string
+     */
+    private function getLivewireListenerScript()
+    {
+        if (!class_exists('Livewire\LivewireManager')) {
+            return '';
+        }
+
+        return <<<JAVASCRIPT
+document.addEventListener('livewire:navigating', function () {
+    var elements = document.querySelectorAll('.fl-no-cache');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].remove();
+    }
+});
 JAVASCRIPT;
     }
 }

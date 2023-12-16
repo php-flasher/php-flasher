@@ -34,6 +34,8 @@ class HtmlPresenterTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification);
 
+        $livewireListener = $this->getLivewireListenerScript();
+
         $response = <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
 (function() {
@@ -88,6 +90,8 @@ class HtmlPresenterTest extends TestCase
         document.addEventListener('flasher:render', function (event) {
             render(event.detail);
         });
+
+        {$livewireListener}
     }
 
     if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
@@ -135,5 +139,26 @@ JAVASCRIPT;
         $presenter = new HtmlPresenter();
 
         $this->assertEquals($response, $presenter->render(new Response($envelopes, array('envelopes_only' => true))));
+    }
+
+    /**
+     * Generate the script for Livewire event handling.
+     *
+     * @return string
+     */
+    private function getLivewireListenerScript()
+    {
+        if (!class_exists('Livewire\LivewireManager')) {
+            return '';
+        }
+
+        return <<<JAVASCRIPT
+document.addEventListener('livewire:navigating', function () {
+    var elements = document.querySelectorAll('.fl-no-cache');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].remove();
+    }
+});
+JAVASCRIPT;
     }
 }

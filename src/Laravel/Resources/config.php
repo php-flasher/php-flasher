@@ -50,7 +50,7 @@ return array(
     | field of this option.
     */
     'root_script' => array(
-        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js',
+        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.js',
         'local' => '/vendor/flasher/flasher.min.js',
     ),
 
@@ -70,7 +70,7 @@ return array(
     | the stylesheet file in the 'local' field of this option.
     */
     'styles' => array(
-        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css',
+        'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.css',
         'local' => '/vendor/flasher/flasher.min.css',
     ),
 
