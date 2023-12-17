@@ -10,7 +10,7 @@ use Flasher\Prime\Notification\NotificationBuilderInterface;
 /**
  * @mixin ToastrBuilder
  */
-final class ToastrFactory extends NotificationFactory
+final class Toastr extends NotificationFactory implements ToastrInterface
 {
     public function createNotificationBuilder(): NotificationBuilderInterface
     {

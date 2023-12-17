@@ -29,9 +29,12 @@ final class PluginExtension extends Extension implements PrependExtensionInterfa
             ->setPublic(true)
             ->addTag('flasher.factory', ['alias' => $this->plugin->getAlias()]);
 
-        $identifier = 'flasher.'.$this->plugin->getAlias().'_factory';
+        $identifier = $this->plugin->getServiceId();
         $container->setDefinition($identifier, $definition);
-        $container->setAlias($this->plugin->getFactory(), $identifier);
+
+        foreach ($this->plugin->getServiceAliases() as $alias) {
+            $container->setAlias($alias, $identifier);
+        }
     }
 
     public function prepend(ContainerBuilder $container): void

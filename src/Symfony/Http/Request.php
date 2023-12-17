@@ -8,6 +8,7 @@ use Flasher\Prime\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class Request implements RequestInterface
 {
@@ -32,13 +33,9 @@ final class Request implements RequestInterface
 
     public function isSessionStarted(): bool
     {
-        try {
-            $session = $this->request->getSession();
+        $session = $this->getSession();
 
-            return $session->isStarted();
-        } catch (SessionNotFoundException) {
-            return false;
-        }
+        return $session?->isStarted() ?: false;
     }
 
     public function hasType(string $type): bool
@@ -47,7 +44,7 @@ final class Request implements RequestInterface
             return false;
         }
 
-        $session = $this->request->getSession();
+        $session = $this->getSession();
         if (!$session instanceof FlashBagAwareSessionInterface) {
             return false;
         }
@@ -62,7 +59,7 @@ final class Request implements RequestInterface
      */
     public function getType(string $type): array
     {
-        $session = $this->request->getSession();
+        $session = $this->getSession();
         if (!$session instanceof FlashBagAwareSessionInterface) {
             return [];
         }
@@ -75,5 +72,14 @@ final class Request implements RequestInterface
     public function forgetType(string $type): void
     {
         $this->getType($type);
+    }
+
+    private function getSession(): ?SessionInterface
+    {
+        try {
+            return $this->request->getSession();
+        } catch (SessionNotFoundException) {
+            return null;
+        }
     }
 }

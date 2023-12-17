@@ -8,7 +8,7 @@ use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\Macroable;
 
-final class NotificationBuilder implements NotificationBuilderInterface
+class NotificationBuilder implements NotificationBuilderInterface
 {
     use Macroable;
     use NotificationBuilderMethods;
@@ -32,7 +32,7 @@ final class NotificationBuilder implements NotificationBuilderInterface
         $this->addMethodAliases();
     }
 
-    private function addMethodAliases(): void
+    protected function addMethodAliases(): void
     {
         $methods = [
             'success',

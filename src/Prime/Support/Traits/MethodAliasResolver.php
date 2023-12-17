@@ -52,6 +52,8 @@ trait MethodAliasResolver
 
     /**
      * Calls the real method for a given alias with the provided parameters.
+     *
+     * @param array<string, mixed> $parameters
      */
     protected function callMethodAlias(string $method, array $parameters): mixed
     {

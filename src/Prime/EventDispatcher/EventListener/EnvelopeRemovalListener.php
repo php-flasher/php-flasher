@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\HopsStamp;
 
 final class EnvelopeRemovalListener implements EventListenerInterface
@@ -22,6 +23,11 @@ final class EnvelopeRemovalListener implements EventListenerInterface
         return RemoveEvent::class;
     }
 
+    /**
+     * @param Envelope[] $envelopes
+     *
+     * @return array<Envelope[]>
+     */
     private function categorizeEnvelopes(array $envelopes): array
     {
         $envelopesToKeep = [];
@@ -30,8 +36,8 @@ final class EnvelopeRemovalListener implements EventListenerInterface
         foreach ($envelopes as $envelope) {
             $hopsStamp = $envelope->get(HopsStamp::class);
 
-            if (!$this->shouldRemove($hopsStamp)) {
-                $envelope = $this->decrementHops($envelope, $hopsStamp);
+            if ($hopsStamp instanceof HopsStamp && 1 < $hopsStamp->getAmount()) {
+                $envelope->withStamp(new HopsStamp($hopsStamp->getAmount() - 1));
                 $envelopesToKeep[] = $envelope;
                 continue;
             }
@@ -40,15 +46,5 @@ final class EnvelopeRemovalListener implements EventListenerInterface
         }
 
         return [$envelopesToKeep, $envelopesToRemove];
-    }
-
-    private function shouldRemove(?HopsStamp $hopsStamp): bool
-    {
-        return !$hopsStamp instanceof HopsStamp || 1 === $hopsStamp->getAmount();
-    }
-
-    private function decrementHops($envelope, HopsStamp $hopsStamp): object
-    {
-        return $envelope->withStamp(new HopsStamp($hopsStamp->getAmount() - 1));
     }
 }

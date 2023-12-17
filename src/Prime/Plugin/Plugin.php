@@ -20,9 +20,14 @@ abstract class Plugin implements PluginInterface
         return 'flasher_'.$this->getAlias();
     }
 
-    public function getServiceID(): string
+    public function getServiceId(): string
     {
         return 'flasher.factory_'.$this->getAlias();
+    }
+
+    public function getServiceAliases(): array
+    {
+        return [];
     }
 
     public function getFactory(): string

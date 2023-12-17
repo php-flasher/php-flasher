@@ -7,8 +7,10 @@ namespace Flasher\Symfony\DependencyInjection;
 use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Storage\Bag\ArrayBag;
+use Flasher\Symfony\Attribute\AsFlasherFactory;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -48,20 +50,14 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
          */
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
 
+        $this->registerFlasherParameters($config, $container);
         $this->registerServicesForAutoconfiguration($container);
-        $this->registerFlasherConfiguration($config, $container);
     }
 
     public function process(ContainerBuilder $container): void
     {
         $this->registerFlasherTranslator($container);
         $this->configureSessionServices($container);
-    }
-
-    private function registerServicesForAutoconfiguration(ContainerBuilder $container): void
-    {
-        $container->registerForAutoconfiguration(EventListenerInterface::class)
-            ->addTag('flasher.event_listener');
     }
 
     /**
@@ -72,22 +68,27 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
      *     filter: array<string, mixed>,
      * } $config
      */
-    private function registerFlasherConfiguration(array $config, ContainerBuilder $container): void
+    private function registerFlasherParameters(array $config, ContainerBuilder $container): void
     {
-        $flasherConfig = $container->getDefinition('flasher.config');
-        $flasherConfig->replaceArgument(0, $config);
+        $container->setParameter('flasher', $config);
+        $container->setParameter('flasher.default', $config['default']);
+        $container->setParameter('flasher.flash_bag', $config['flash_bag']);
+        $container->setParameter('flasher.filter', $config['filter']);
+        $container->setParameter('flasher.presets', $config['presets']);
+    }
 
-        $flasher = $container->getDefinition('flasher');
-        $flasher->replaceArgument(0, $config['default']);
+    private function registerServicesForAutoconfiguration(ContainerBuilder $container): void
+    {
+        $container->registerForAutoconfiguration(EventListenerInterface::class)
+            ->addTag('flasher.event_listener');
 
-        $presetListener = $container->getDefinition('flasher.preset_listener');
-        $presetListener->replaceArgument(0, $config['presets']);
+        $container->registerAttributeForAutoconfiguration(AsFlasherFactory::class, static function (ChildDefinition $definition, AsFlasherFactory $attribute): void {
+            $definition->addTag('flasher.factory', get_object_vars($attribute));
+        });
 
-        $requestExtension = $container->getDefinition('flasher.request_extension');
-        $requestExtension->replaceArgument(1, $config['flash_bag']);
-
-        $storageManager = $container->getDefinition('flasher.storage_manager');
-        $storageManager->replaceArgument(3, $config['filter']);
+        $container->registerAttributeForAutoconfiguration(AsFlasherFactory::class, static function (ChildDefinition $definition, AsFlasherFactory $attribute): void {
+            $definition->addTag('flasher.presenter', get_object_vars($attribute));
+        });
     }
 
     private function registerFlasherTranslator(ContainerBuilder $container): void
@@ -101,7 +102,7 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
 
     private function configureSessionServices(ContainerBuilder $container): void
     {
-        if ($this->isSessionEnabled($container)) {
+        if ($container->has('session.factory')) {
             return;
         }
 
@@ -109,10 +110,5 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         $container->removeDefinition('flasher.session_listener');
 
         $container->register('flasher.storage_bag', ArrayBag::class);
-    }
-
-    private function isSessionEnabled(ContainerBuilder $container): bool
-    {
-        return $container->has('session.factory');
     }
 }

@@ -16,7 +16,7 @@ use Flasher\Prime\Stamp\WhenStamp;
 
 trait NotificationBuilderMethods
 {
-    private readonly Envelope $envelope;
+    protected readonly Envelope $envelope;
 
     public function title(string $title): static
     {

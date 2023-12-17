@@ -186,16 +186,16 @@ abstract class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $this->app->singleton($plugin->getServiceID(), static function (Container $app) use ($plugin): \Flasher\Prime\Factory\NotificationFactoryInterface {
+        $this->app->singleton($plugin->getServiceId(), static function (Container $app) use ($plugin): \Flasher\Prime\Factory\NotificationFactoryInterface {
             $factory = $plugin->getFactory();
 
             return new $factory($app->make('flasher.storage_manager'));
         });
 
-        $this->app->alias($plugin->getServiceID(), $plugin->getFactory());
+        $this->app->alias($plugin->getServiceId(), $plugin->getFactory());
 
         $this->app->extend('flasher', static function (FlasherInterface $flasher, Container $app) use ($plugin): \Flasher\Prime\FlasherInterface {
-            $flasher->addFactory($plugin->getAlias(), $app->make($plugin->getServiceID()));
+            $flasher->addFactory($plugin->getAlias(), $app->make($plugin->getServiceId()));
 
             // @phpstan-ignore-line
             return $flasher;

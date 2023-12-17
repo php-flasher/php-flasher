@@ -14,7 +14,7 @@ final class FlasherContainerTest extends TestCase
         $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
         $container = $this->getMockBuilder(\Flasher\Prime\Container\ContainerInterface::class)->getMock();
 
-        FlasherContainer::init($container);
+        FlasherContainer::from($container);
 
         $property = $this->getProperty(\Flasher\Prime\Container\FlasherContainer::class, 'container');
 
@@ -30,7 +30,7 @@ final class FlasherContainerTest extends TestCase
             ->method('get')
             ->willreturn($this->getMockBuilder(\Flasher\Prime\FlasherInterface::class)->getMock());
 
-        FlasherContainer::init($container);
+        FlasherContainer::from($container);
 
         $service = FlasherContainer::create('flasher');
 

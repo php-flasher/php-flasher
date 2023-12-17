@@ -97,7 +97,7 @@ final class Envelope implements NotificationInterface
     /**
      * Retrieves a stamp by its type.
      *
-     * @phpstan-template T of StampInterface
+     * @template T of StampInterface
      *
      * @phpstan-param class-string<T> $type
      *

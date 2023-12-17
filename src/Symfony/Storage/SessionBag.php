@@ -7,59 +7,44 @@ namespace Flasher\Symfony\Storage;
 use Flasher\Prime\Storage\Bag\BagInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session as LegacySession;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class SessionBag implements BagInterface
 {
-    /**
-     * @var string
-     */
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    private readonly \Flasher\Symfony\Storage\FallbackSession $fallbackSession;
+    private readonly FallbackSession $fallbackSession;
 
-    /**
-     * @param RequestStack|SessionInterface $session
-     */
-    public function __construct(private $session)
+    public function __construct(private readonly RequestStack $requestStack)
     {
         $this->fallbackSession = new FallbackSession();
     }
 
     public function get(): array
     {
-        return $this->session()->get(self::ENVELOPES_NAMESPACE, []); // @phpstan-ignore-line
+        $session = $this->getSession();
+
+        return $session->get(self::ENVELOPES_NAMESPACE, []);
     }
 
     public function set(array $envelopes): void
     {
-        $this->session()->set(self::ENVELOPES_NAMESPACE, $envelopes);
+        $session = $this->getSession();
+
+        $session->set(self::ENVELOPES_NAMESPACE, $envelopes);
     }
 
-    /**
-     * @return SessionInterface
-     */
-    private function session(): SessionInterface|LegacySession|FallbackSession
+    private function getSession(): SessionInterface|FallbackSession
     {
-        if ($this->session instanceof SessionInterface || $this->session instanceof LegacySession) { // @phpstan-ignore-line
-            return $this->session; // @phpstan-ignore-line
-        }
-
         try {
-            if (method_exists($this->session, 'getSession')) {
-                $session = $this->session->getSession();
-            } else {
-                $session = $this->session->getCurrentRequest()->getSession();
-            }
+            $request = $this->requestStack->getCurrentRequest();
 
-            if ($session instanceof \Symfony\Component\HttpFoundation\Session\SessionInterface && $session->isStarted()) {
-                return $this->session = $session;
+            if (!$request->attributes->get('_stateless', false)) {
+                return $this->requestStack->getSession();
             }
-
-            return $this->fallbackSession;
         } catch (SessionNotFoundException) {
-            return $this->fallbackSession;
         }
+
+        return $this->fallbackSession;
     }
 }

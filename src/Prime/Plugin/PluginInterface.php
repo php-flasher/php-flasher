@@ -12,7 +12,7 @@ interface PluginInterface
 
     public function getName(): string;
 
-    public function getServiceID(): string;
+    public function getServiceId(): string;
 
     /**
      * @return class-string<NotificationFactoryInterface>
@@ -52,4 +52,9 @@ interface PluginInterface
      * }
      */
     public function normalizeConfig(array $config): array;
+
+    /**
+     * @return string[]
+     */
+    public function getServiceAliases(): array;
 }

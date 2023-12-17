@@ -5,26 +5,18 @@ declare(strict_types=1);
 namespace Flasher\Prime\Storage\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Stamp\ContextStamp;
-use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\DelayStamp;
-use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Prime\Stamp\IdStamp;
-use Flasher\Prime\Stamp\PluginStamp;
-use Flasher\Prime\Stamp\PresetStamp;
-use Flasher\Prime\Stamp\PriorityStamp;
-use Flasher\Prime\Stamp\StampInterface;
-use Flasher\Prime\Stamp\TranslationStamp;
-use Flasher\Prime\Stamp\UnlessStamp;
-use Flasher\Prime\Stamp\WhenStamp;
 
 final class StampsCriteria implements CriteriaInterface
 {
+    public const STRATEGY_AND = 'and';
+    public const STRATEGY_OR = 'or';
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $stamps = [];
 
-    private readonly string $strategy;
-
-    public function __construct(mixed $criteria)
+    public function __construct(mixed $criteria, private readonly string $strategy = self::STRATEGY_AND)
     {
         if (!is_array($criteria)) {
             throw new \InvalidArgumentException("Invalid type for criteria 'stamps'.");
@@ -34,27 +26,6 @@ final class StampsCriteria implements CriteriaInterface
             $this->stamps[$key] = $value;
         }
     }
-
-    public const STRATEGY_AND = 'and';
-
-    public const STRATEGY_OR = 'or';
-
-    /**
-     * @var array<string, class-string<StampInterface>>
-     */
-    public const STAMP_ALIASES = [
-        'context' => ContextStamp::class,
-        'created_at' => CreatedAtStamp::class,
-        'delay' => DelayStamp::class,
-        'handler' => PluginStamp::class,
-        'hops' => HopsStamp::class,
-        'preset' => PresetStamp::class,
-        'priority' => PriorityStamp::class,
-        'translation' => TranslationStamp::class,
-        'unless' => UnlessStamp::class,
-        'uuid' => IdStamp::class,
-        'when' => WhenStamp::class,
-    ];
 
     public function apply(array $envelopes): array
     {

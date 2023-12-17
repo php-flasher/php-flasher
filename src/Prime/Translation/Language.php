@@ -34,9 +34,12 @@ final class Language
 
         $resource = \ResourceBundle::create($locale, 'ICUDATA', false);
         $layout = $resource?->get('layout');
-        $characters = $layout?->get('characters');
 
-        return 'right-to-left' === $characters ? self::RTL : self::LTR;
+        if (!$layout instanceof \ResourceBundle) {
+            return self::LTR;
+        }
+
+        return 'right-to-left' === $layout->get('characters') ? self::RTL : self::LTR;
     }
 
     /**

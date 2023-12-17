@@ -6,7 +6,6 @@ namespace Flasher\Symfony;
 
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Plugin\FlasherPlugin;
-use Flasher\Symfony\Container\SymfonyContainer;
 use Flasher\Symfony\DependencyInjection\Compiler\EventListenerCompilerPass;
 use Flasher\Symfony\DependencyInjection\Compiler\FactoryCompilerPass;
 use Flasher\Symfony\DependencyInjection\Compiler\PresenterCompilerPass;
@@ -19,9 +18,7 @@ final class FlasherBundle extends Bundle
 {
     public function boot(): void
     {
-        if ($this->container instanceof \Symfony\Component\DependencyInjection\ContainerInterface) {
-            FlasherContainer::init(new SymfonyContainer($this->container));
-        }
+        FlasherContainer::from($this->container);
     }
 
     public function build(ContainerBuilder $container): void

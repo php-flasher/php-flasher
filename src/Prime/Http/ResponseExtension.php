@@ -19,10 +19,7 @@ final class ResponseExtension
             return $response;
         }
 
-        $content = $response->getContent() ?: '';
-        if (!\is_string($content)) {
-            return $response;
-        }
+        $content = $response->getContent();
 
         $placeHolders = [
             HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
@@ -63,26 +60,11 @@ final class ResponseExtension
 
     private function isRenderable(RequestInterface $request, ResponseInterface $response): bool
     {
-        if ($request->isXmlHttpRequest()) {
-            return false;
-        }
-
-        if (!$request->isHtmlRequestFormat()) {
-            return false;
-        }
-
-        if ($response->isRedirection()) {
-            return false;
-        }
-
-        if (!$response->isHtml()) {
-            return false;
-        }
-
-        if ($response->isAttachment()) {
-            return false;
-        }
-
-        return !$response->isJson();
+        return !$request->isXmlHttpRequest()
+            && $request->isHtmlRequestFormat()
+            && $response->isHtml()
+            && !$response->isRedirection()
+            && !$response->isAttachment()
+            && !$response->isJson();
     }
 }

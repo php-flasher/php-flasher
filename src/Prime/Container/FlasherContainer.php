@@ -6,7 +6,11 @@ namespace Flasher\Prime\Container;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
 use Flasher\Prime\FlasherInterface;
+use Psr\Container\ContainerInterface;
 
+/**
+ * @internal
+ */
 final class FlasherContainer
 {
     private static ?self $instance = null;
@@ -15,33 +19,30 @@ final class FlasherContainer
     {
     }
 
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            throw new \LogicException('Container is not initialized yet. Use FlasherContainer::init().');
-        }
-
-        return self::$instance;
-    }
-
-    public static function init(ContainerInterface $container): void
+    public static function from(ContainerInterface $container): void
     {
         self::$instance ??= new self($container);
     }
 
-    public function create(string $id): FlasherInterface|NotificationFactoryInterface
+    public static function create(string $id): FlasherInterface|NotificationFactoryInterface
     {
-        $factory = $this->container->get($id);
-        if ($factory instanceof FlasherInterface) {
-            return $factory;
-        }
+        $instance = self::getInstance();
 
-        if ($factory instanceof NotificationFactoryInterface) {
-            return $factory;
-        }
+        $factory = $instance->container->get($id);
 
-        throw new \InvalidArgumentException(sprintf('Factory must be an instance of %s or %s.', FlasherInterface::class, NotificationFactoryInterface::class));
+        if (!$factory instanceof FlasherInterface && !$factory instanceof NotificationFactoryInterface) {
+            throw new \InvalidArgumentException(sprintf('Expected an instance of "%s" or "%s", got "%s".', FlasherInterface::class, NotificationFactoryInterface::class, get_debug_type($factory)));
+        }
 
         return $factory;
+    }
+
+    private static function getInstance(): self
+    {
+        if (!self::$instance instanceof self) {
+            throw new \LogicException('FlasherContainer has not been initialized. Please initialize it by calling FlasherContainer::from(ContainerInterface $container).');
+        }
+
+        return self::$instance;
     }
 }

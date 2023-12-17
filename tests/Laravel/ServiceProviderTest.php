@@ -22,7 +22,7 @@ final class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(\Flasher\Notyf\Prime\NotyfFactory::class, $this->app->make('flasher.notyf'));
         $this->assertInstanceOf(\Flasher\Pnotify\Prime\PnotifyFactory::class, $this->app->make('flasher.pnotify'));
         $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertFactory::class, $this->app->make('flasher.sweetalert'));
-        $this->assertInstanceOf(\Flasher\Toastr\Prime\ToastrFactory::class, $this->app->make('flasher.toastr'));
+        $this->assertInstanceOf(\Flasher\Toastr\Prime\Toastr::class, $this->app->make('flasher.toastr'));
     }
 
     public function testFlasherCanCreateServicesFromAlias(): void
@@ -43,6 +43,6 @@ final class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertFactory::class, $adapter);
 
         $adapter = $flasher->create('toastr');
-        $this->assertInstanceOf(\Flasher\Toastr\Prime\ToastrFactory::class, $adapter);
+        $this->assertInstanceOf(\Flasher\Toastr\Prime\Toastr::class, $adapter);
     }
 }

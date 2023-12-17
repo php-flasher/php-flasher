@@ -23,7 +23,8 @@ use Flasher\Symfony\Translation\Translator;
 use Flasher\Symfony\Twig\FlasherTwigExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
@@ -31,50 +32,46 @@ return static function (ContainerConfigurator $container): void {
         ->set('flasher', Flasher::class)
             ->public()
             ->args([
-                abstract_arg('config.default'),
+                param('flasher.default'),
                 service('flasher.response_manager'),
                 service('flasher.storage_manager'),
             ])
             ->alias(FlasherInterface::class, 'flasher')
 
         ->set('flasher.flasher_listener', FlasherListener::class)
-            ->args([service('flasher.response_extension')])
-            ->tag('kernel.event_listener', ['event' => 'kernel.response', 'priority' => -256])
+            ->args([
+                inline_service(ResponseExtension::class)
+                    ->args([service('flasher')]),
+            ])
+            ->tag('kernel.event_subscriber')
 
         ->set('flasher.twig_extension', FlasherTwigExtension::class)
             ->args([service('flasher')])
             ->tag('twig.extension')
 
         ->set('flasher.session_listener', SessionListener::class)
-            ->args([service('flasher.request_extension')])
-            ->tag('kernel.event_listener', ['event' => 'kernel.response'])
+            ->args([
+                inline_service(RequestExtension::class)
+                    ->args([
+                        service('flasher'),
+                        param('flasher.flash_bag'),
+                    ]),
+            ])
+            ->tag('kernel.event_subscriber')
 
         ->set('flasher.translation_listener', TranslationListener::class)
-            ->args([
-                service('flasher.translator')->nullOnInvalid(),
-            ])
+            ->args([service('flasher.translator')->nullOnInvalid()])
             ->tag('kernel.event_listener')
 
         ->set('flasher.preset_listener', ApplyPresetListener::class)
-            ->args([
-                abstract_arg('config.presets'),
-            ])
+            ->args([param('flasher.presets')])
             ->tag('kernel.event_listener')
 
         ->set('flasher.notification_factory', NotificationFactory::class)
             ->args([service('flasher.storage_manager')])
 
-        ->set('flasher.request_extension', RequestExtension::class)
-            ->args([
-                service('flasher'),
-                abstract_arg('config.flash_bag'),
-            ])
-
-        ->set('flasher.response_extension', ResponseExtension::class)
-            ->args([service('flasher')])
-
         ->set('flasher.config', Config::class)
-            ->args([abstract_arg('config')])
+            ->args([param('flasher')])
 
         ->set('flasher.storage', Storage::class)
             ->args([service('flasher.storage_bag')])
@@ -91,7 +88,7 @@ return static function (ContainerConfigurator $container): void {
                 service('flasher.storage'),
                 service('flasher.event_dispatcher'),
                 service('flasher.filter_factory'),
-                abstract_arg('config.filter'),
+                param('flasher.filter'),
             ])
 
         ->set('flasher.resource_manager', ResourceManager::class)

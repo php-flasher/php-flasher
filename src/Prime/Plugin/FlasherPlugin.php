@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Plugin;
 
-use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Type;
 
 final class FlasherPlugin extends Plugin
@@ -14,9 +14,16 @@ final class FlasherPlugin extends Plugin
         return 'flasher';
     }
 
-    public function getServiceID(): string
+    public function getServiceId(): string
     {
         return 'flasher';
+    }
+
+    public function getServiceAliases(): array
+    {
+        return [
+            FlasherInterface::class,
+        ];
     }
 
     public function getDefault(): string
@@ -54,10 +61,26 @@ final class FlasherPlugin extends Plugin
         $config = $this->normalizePresets($config);
         $config = $this->addDefaultConfig($config);
         $config = $this->normalizeFlashBag($config);
+        $config = $this->setPresetsDefaults($config);
 
-        return $this->setPresetsDefaults($config);
+        return $config;
     }
 
+    /**
+     * @param array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     plugins?: array<string, array<string, mixed>>,
+     * } $config
+     *
+     * @return array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     plugins: array<string, mixed>,
+     * }
+     */
     private function normalizePlugins(array $config): array
     {
         if (!isset($config['plugins']['flasher'])) {
@@ -80,7 +103,7 @@ final class FlasherPlugin extends Plugin
             $config['plugins']['flasher']['options'] += $config['options'];
         }
 
-        foreach ($config['plugins'] ?? [] as $name => $options) {
+        foreach ($config['plugins'] as $name => $options) {
             $config['plugins'][$name]['scripts'] = (array) ($options['scripts'] ?? []);
             $config['plugins'][$name]['styles'] = (array) ($options['styles'] ?? []);
         }
@@ -88,6 +111,23 @@ final class FlasherPlugin extends Plugin
         return $config;
     }
 
+    /**
+     * @param array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     presets?: array<string, string|array<string, mixed>>,
+     *     plugins: array<string, mixed>,
+     * } $config
+     *
+     * @return array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     presets?: array<string, array<string, mixed>>,
+     *     plugins: array<string, mixed>,
+     * }
+     */
     private function normalizePresets(array $config): array
     {
         foreach ($config['presets'] ?? [] as $name => $options) {
@@ -98,38 +138,85 @@ final class FlasherPlugin extends Plugin
             $config['presets'][$name] = $options;
         }
 
+        return $config; // @phpstan-ignore-line
+    }
+
+    /**
+     * @param array{
+     *     default?: string|null,
+     *     root_script?: string|null,
+     *     auto_translate?: bool,
+     *     auto_render?: bool,
+     *     filter?: array<mixed>,
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     presets?: array<string, array<string, mixed>>,
+     *     plugins: array<string, mixed>,
+     * } $config
+     *
+     * @return array{
+     *     default: string|null,
+     *     root_script: string|null,
+     *     auto_translate: bool,
+     *     auto_render: bool,
+     *     filter: array<mixed>,
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     presets: array<string, array<string, mixed>>,
+     *     plugins: array<string, mixed>,
+     * }
+     */
+    private function addDefaultConfig(array $config): array
+    {
+        $defaultPresets = [
+            'created' => ['type' => Type::SUCCESS, 'message' => 'The resource was created'],
+            'updated' => ['type' => Type::SUCCESS, 'message' => 'The resource was updated'],
+            'saved' => ['type' => Type::SUCCESS, 'message' => 'The resource was saved'],
+            'deleted' => ['type' => Type::SUCCESS, 'message' => 'The resource was deleted'],
+        ];
+
+        $config['default'] = array_key_exists('default', $config) ? $config['default'] : $this->getDefault();
+        $config['root_script'] = array_key_exists('root_script', $config) ? $config['root_script'] : $this->getRootScript();
+        $config['auto_translate'] = array_key_exists('auto_translate', $config) ? $config['auto_translate'] : true;
+        $config['auto_render'] = array_key_exists('auto_render', $config) ? $config['auto_render'] : true;
+        $config['filter'] = array_key_exists('filter', $config) ? $config['filter'] : [];
+        $config['presets'] = array_key_exists('presets', $config) ? $config['presets'] : $defaultPresets;
+
         return $config;
     }
 
-    private function addDefaultConfig(array $config = []): array
-    {
-        // @phpstan-ignore-next-line
-        return array_replace([
-            'default' => $this->getDefault(),
-            'root_script' => $this->getRootScript(),
-            'auto_translate' => true,
-            'auto_render' => true,
-            'filter' => [],
-            'scripts' => [],
-            'styles' => [],
-            'options' => [],
-            'presets' => [
-                'created' => ['type' => Type::SUCCESS, 'message' => 'The resource was created'],
-                'updated' => ['type' => Type::SUCCESS, 'message' => 'The resource was updated'],
-                'saved' => ['type' => Type::SUCCESS, 'message' => 'The resource was saved'],
-                'deleted' => ['type' => Type::SUCCESS, 'message' => 'The resource was deleted'],
-            ],
-            'plugins' => [
-                'flasher' => [
-                    'scripts' => [],
-                    'styles' => $this->getStyles(),
-                    'options' => [],
-                ],
-            ],
-        ], $config);
-    }
-
-    private function normalizeFlashBag(array $config = []): array
+    /**
+     * @param array{
+     *     default: string|null,
+     *     root_script: string|null,
+     *     auto_translate: bool,
+     *     auto_render: bool,
+     *     filter: array<mixed>,
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     presets: array<string, array<string, mixed>>,
+     *     plugins: array<string, mixed>,
+     *     flash_bag?: mixed,
+     * } $config
+     *
+     * @return array{
+     *      default: string|null,
+     *      root_script: string|null,
+     *      auto_translate: bool,
+     *      auto_render: bool,
+     *      filter: array<mixed>,
+     *      scripts: string[],
+     *      styles: string[],
+     *      options: array<string, mixed>,
+     *      presets: array<string, array<string, mixed>>,
+     *      plugins: array<string, mixed>,
+     *      flash_bag: array<string, string[]>,
+     * }
+     */
+    private function normalizeFlashBag(array $config): array
     {
         $mapping = [
             'success' => ['success'],
@@ -155,10 +242,39 @@ final class FlasherPlugin extends Plugin
         return $config;
     }
 
-    private function setPresetsDefaults(array $config = []): array
+    /**
+     * @param array{
+     *      default: string|null,
+     *      root_script: string|null,
+     *      auto_translate: bool,
+     *      auto_render: bool,
+     *      filter: array<mixed>,
+     *      scripts: string[],
+     *      styles: string[],
+     *      options: array<string, mixed>,
+     *      presets: array<string, array<string, mixed>>,
+     *      plugins: array<string, mixed>,
+     *      flash_bag: array<string, string[]>,
+     * } $config
+     *
+     * @return array{
+     *      default: string|null,
+     *      root_script: string|null,
+     *      auto_translate: bool,
+     *      auto_render: bool,
+     *      filter: array<mixed>,
+     *      scripts: string[],
+     *      styles: string[],
+     *      options: array<string, mixed>,
+     *      presets: array<string, array<string, mixed>>,
+     *      plugins: array<string, mixed>,
+     *      flash_bag: array<string, string[]>,
+     * }
+     */
+    private function setPresetsDefaults(array $config): array
     {
-        foreach ($config['presets'] ?? [] as $name => $options) {
-            $config['presets'][$name]['type'] ??= NotificationInterface::INFO;
+        foreach ($config['presets'] as $name => $options) {
+            $config['presets'][$name]['type'] ??= Type::INFO;
             $config['presets'][$name]['options'] ??= [];
         }
 

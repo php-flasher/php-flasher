@@ -26,6 +26,8 @@ trait ForwardsCalls
     /**
      * Forward a method call to the given object.
      *
+     * @param mixed[] $parameters
+     *
      * @throws \BadMethodCallException
      */
     protected function forwardCallTo(object $object, string $method, array $parameters): mixed
@@ -49,6 +51,8 @@ trait ForwardsCalls
 
     /**
      * Forward a method call to the given object, returning $this if the forwarded call returned itself.
+     *
+     * @param mixed[] $parameters
      *
      * @throws \BadMethodCallException
      */

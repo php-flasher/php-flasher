@@ -10,7 +10,7 @@ use Flasher\Prime\Translation\ResourceInterface;
 
 trait NotificationStorageMethods
 {
-    private readonly StorageManagerInterface $storageManager;
+    protected readonly StorageManagerInterface $storageManager;
 
     public function success(string $message, array $options = [], string $title = null): Envelope
     {

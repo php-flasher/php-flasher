@@ -10,7 +10,10 @@ use Flasher\Prime\Notification\NotificationBuilderInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\ForwardsCalls;
 
-final class NotificationFactory implements NotificationFactoryInterface
+/**
+ * @mixin NotificationBuilderInterface
+ */
+class NotificationFactory implements NotificationFactoryInterface
 {
     use ForwardsCalls;
 

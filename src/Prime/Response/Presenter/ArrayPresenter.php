@@ -15,7 +15,7 @@ final class ArrayPresenter implements PresenterInterface
      *         message: string,
      *         type: string,
      *         options: array<string, mixed>,
-     *         stamps: array<string, mixed>,
+     *         metadata: array<string, mixed>,
      *     }>,
      *     scripts: string[],
      *     styles: string[],

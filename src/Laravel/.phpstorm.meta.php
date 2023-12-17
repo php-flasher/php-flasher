@@ -11,7 +11,7 @@ override(new \Illuminate\Contracts\Container\Container, map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\Illuminate\Container\Container::makeWith(0), map([
@@ -23,7 +23,7 @@ override(\Illuminate\Container\Container::makeWith(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\Illuminate\Contracts\Container\Container::get(0), map([
@@ -35,7 +35,7 @@ override(\Illuminate\Contracts\Container\Container::get(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\Illuminate\Contracts\Container\Container::make(0), map([
@@ -47,7 +47,7 @@ override(\Illuminate\Contracts\Container\Container::make(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
@@ -59,7 +59,7 @@ override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\App::get(0), map([
@@ -71,7 +71,7 @@ override(\App::get(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\App::make(0), map([
@@ -83,7 +83,7 @@ override(\App::make(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\App::makeWith(0), map([
@@ -95,7 +95,7 @@ override(\App::makeWith(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\app(0), map([
@@ -107,7 +107,7 @@ override(\app(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\resolve(0), map([
@@ -119,7 +119,7 @@ override(\resolve(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));
 
 override(\Psr\Container\ContainerInterface::get(0), map([
@@ -131,5 +131,5 @@ override(\Psr\Container\ContainerInterface::get(0), map([
     'flasher.pnotify' => \Flasher\Pnotify\Prime\PnotifyFactory::class,
     'flasher.sweetalert' => \Flasher\SweetAlert\Prime\SweetAlertFactory::class,
     'flasher.template' => \Flasher\Prime\Factory\FlasherFactory::class,
-    'flasher.toastr' => \Flasher\Toastr\Prime\ToastrFactory::class,
+    'flasher.toastr' => \Flasher\Toastr\Prime\Toastr::class,
 ]));

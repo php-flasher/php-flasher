@@ -28,6 +28,6 @@ final class FlasherBundleTest extends TestCase
         $this->assertInstanceOf(\Flasher\Notyf\Prime\NotyfFactory::class, $container->get('flasher.notyf'));
         $this->assertInstanceOf(\Flasher\Pnotify\Prime\PnotifyFactory::class, $container->get('flasher.pnotify'));
         $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertFactory::class, $container->get('flasher.sweetalert'));
-        $this->assertInstanceOf(\Flasher\Toastr\Prime\ToastrFactory::class, $container->get('flasher.toastr'));
+        $this->assertInstanceOf(\Flasher\Toastr\Prime\Toastr::class, $container->get('flasher.toastr'));
     }
 }

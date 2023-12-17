@@ -18,7 +18,7 @@ final class FlasherPluginTest extends TestCase
     public function testGetServiceID(): void
     {
         $plugin = new FlasherPlugin();
-        $this->assertEquals('flasher', $plugin->getServiceID());
+        $this->assertEquals('flasher', $plugin->getServiceId());
     }
 
     public function testGetDefault(): void
