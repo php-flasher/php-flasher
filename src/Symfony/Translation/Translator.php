@@ -33,6 +33,10 @@ final class Translator implements TranslatorInterface
 
     public function getLocale(): string
     {
-        return $this->translator->getLocale();
+        if (method_exists($this->translator, 'getLocale')) {
+            return $this->translator->getLocale();
+        }
+
+        return class_exists(\Locale::class) ? \Locale::getDefault() : 'en';
     }
 }

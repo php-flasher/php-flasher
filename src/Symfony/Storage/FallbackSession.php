@@ -9,6 +9,7 @@ namespace Flasher\Symfony\Storage;
  */
 final class FallbackSession
 {
+    /** @var array<string, mixed> */
     private static array $storage = [];
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Symfony\Storage;
 
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -24,7 +25,10 @@ final class SessionBag implements BagInterface
     {
         $session = $this->getSession();
 
-        return $session->get(self::ENVELOPES_NAMESPACE, []);
+        /** @var Envelope[] $envelopes */
+        $envelopes = $session->get(self::ENVELOPES_NAMESPACE, []);
+
+        return $envelopes;
     }
 
     public function set(array $envelopes): void
@@ -39,7 +43,7 @@ final class SessionBag implements BagInterface
         try {
             $request = $this->requestStack->getCurrentRequest();
 
-            if (!$request->attributes->get('_stateless', false)) {
+            if ($request && !$request->attributes->get('_stateless', false)) {
                 return $this->requestStack->getSession();
             }
         } catch (SessionNotFoundException) {
