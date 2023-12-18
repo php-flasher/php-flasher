@@ -50,7 +50,7 @@
                 "Flasher": "Flasher\\Laravel\\Facade\\Flasher"
             },
             "providers": [
-                "Flasher\\Laravel\\FlasherServiceProvider"
+              "FlasherPluginServiceProvider"
             ]
         }
     }

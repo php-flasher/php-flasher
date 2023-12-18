@@ -8,6 +8,21 @@ use Flasher\Prime\Plugin\Plugin;
 
 final class ToastrPlugin extends Plugin
 {
+    public function getAlias(): string
+    {
+        return 'toastr';
+    }
+
+    public function getFactory(): string
+    {
+        return Toastr::class;
+    }
+
+    public function getServiceAliases(): string
+    {
+        return ToastrInterface::class;
+    }
+
     public function getScripts(): string|array
     {
         return [

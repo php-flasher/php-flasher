@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Flasher\Toastr\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Toastr\Prime\ToastrPlugin;
 
-final class FlasherToastrServiceProvider extends ServiceProvider
+final class FlasherToastrServiceProvider extends PluginServiceProvider
 {
     public function createPlugin(): ToastrPlugin
     {

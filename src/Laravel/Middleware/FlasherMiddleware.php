@@ -7,6 +7,7 @@ namespace Flasher\Laravel\Middleware;
 use Flasher\Laravel\Http\Request;
 use Flasher\Laravel\Http\Response;
 use Flasher\Prime\Http\ResponseExtension;
+use Illuminate\Http\JsonResponse as LaravelJsonResponse;
 use Illuminate\Http\Request as LaravelRequest;
 use Illuminate\Http\Response as LaravelResponse;
 
@@ -16,15 +17,13 @@ final class FlasherMiddleware
     {
     }
 
-    /**
-     * @return LaravelResponse
-     */
-    public function handle(LaravelRequest $request, \Closure $next)
+    public function handle(LaravelRequest $request, \Closure $next): mixed
     {
-        /** @var LaravelResponse $response */
         $response = $next($request);
 
-        $this->responseExtension->render(new Request($request), new Response($response));
+        if ($response instanceof LaravelJsonResponse || $response instanceof LaravelResponse) {
+            $this->responseExtension->render(new Request($request), new Response($response));
+        }
 
         return $response;
     }

@@ -68,11 +68,11 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app = null)
     {
         return [
-            \Flasher\Laravel\FlasherServiceProvider::class,
-            \Flasher\Noty\Laravel\FlasherNotyServiceProvider::class,
-            \Flasher\Notyf\Laravel\FlasherNotyfServiceProvider::class,
-            \Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider::class,
-            \Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider::class,
+            \Flasher\Laravel\FlasherPluginServiceProvider::class,
+            \Flasher\Noty\Laravel\FlasherNotyPluginServiceProvider::class,
+            \Flasher\Notyf\Laravel\FlasherNotyfPluginServiceProvider::class,
+            \Flasher\Pnotify\Laravel\FlasherPnotifyPluginServiceProvider::class,
+            \Flasher\SweetAlert\Laravel\FlasherSweetAlertPluginServiceProvider::class,
             \Flasher\Toastr\Laravel\FlasherToastrServiceProvider::class,
         ];
     }

@@ -57,7 +57,7 @@
                 "SweetAlert": "Flasher\\SweetAlert\\Laravel\\Facade\\SweetAlert"
             },
             "providers": [
-                "Flasher\\SweetAlert\\Laravel\\FlasherSweetAlertServiceProvider"
+              "FlasherSweetAlertPluginServiceProvider"
             ]
         }
     }

@@ -35,6 +35,7 @@
         "friendsofphp/php-cs-fixer": "^3.41",
         "illuminate/routing": "^10.0",
         "illuminate/support": "^10.0",
+        "larastan/larastan": "^2.6",
         "livewire/livewire": "^3.0",
         "orchestra/testbench": "^8.17",
         "phpstan/phpstan": "^1.10",
@@ -72,10 +73,7 @@
     },
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "ergebnis/composer-normalize": true
-        }
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -88,13 +86,13 @@
         },
         "laravel": {
             "providers": [
-                "Flasher\\Laravel\\FlasherServiceProvider",
+                "FlasherPluginServiceProvider",
                 "Flasher\\Cli\\Laravel\\FlasherCliServiceProvider",
-                "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider",
-                "Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider",
-                "Flasher\\Pnotify\\Laravel\\FlasherPnotifyServiceProvider",
-                "Flasher\\SweetAlert\\Laravel\\FlasherSweetAlertServiceProvider",
-                "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
+                "FlasherNotyPluginServiceProvider",
+                "FlasherNotyfPluginServiceProvider",
+                "FlasherPnotifyPluginServiceProvider",
+                "FlasherSweetAlertPluginServiceProvider",
+                "FlasherToastrPluginServiceProvider"
             ],
             "aliases": {
                 "Flasher": "Flasher\\Laravel\\Facade\\Flasher",

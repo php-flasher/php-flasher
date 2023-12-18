@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flasher\Laravel\Http;
 
 use Flasher\Prime\Http\RequestInterface;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request as LaravelRequest;
 
 final class Request implements RequestInterface
@@ -20,7 +21,7 @@ final class Request implements RequestInterface
 
     public function isHtmlRequestFormat(): bool
     {
-        return 'html' === $this->request->getRequestFormat();
+        return $this->request->acceptsHtml();
     }
 
     public function hasSession(): bool
@@ -28,24 +29,50 @@ final class Request implements RequestInterface
         return $this->request->hasSession();
     }
 
-    public function hasType($type): bool
+    public function isSessionStarted(): bool
     {
-        $session = $this->request->session();
+        $session = $this->getSession();
 
-        return $session->has($type);
+        return $session?->isStarted() ?: false;
     }
 
-    public function getType($type): string|array
+    public function hasType(string $type): bool
     {
-        $session = $this->request->session();
+        if (!$this->hasSession() || !$this->isSessionStarted()) {
+            return false;
+        }
 
-        return $session->get($type); // @phpstan-ignore-line
+        $session = $this->getSession();
+
+        return $session?->has($type) ?: false;
     }
 
-    public function forgetType($type): void
+    public function getType(string $type): string|array
     {
-        $session = $this->request->session();
+        $session = $this->getSession();
 
-        $session->forget($type);
+        $type = $session?->get($type);
+
+        if (!is_string($type) && !is_array($type)) {
+            return [];
+        }
+
+        return $type;
+    }
+
+    public function forgetType(string $type): void
+    {
+        $session = $this->getSession();
+
+        $session?->forget($type);
+    }
+
+    private function getSession(): ?Session
+    {
+        try {
+            return $this->request->session();
+        } catch (\RuntimeException) {
+            return null;
+        }
     }
 }

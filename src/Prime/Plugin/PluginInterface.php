@@ -22,6 +22,11 @@ interface PluginInterface
     /**
      * @return string|string[]
      */
+    public function getServiceAliases(): string|array;
+
+    /**
+     * @return string|string[]
+     */
     public function getScripts(): string|array;
 
     /**
@@ -33,10 +38,6 @@ interface PluginInterface
      * @return array<string, mixed>
      */
     public function getOptions(): array;
-
-    public function getAssetsDir(): string;
-
-    public function getResourcesDir(): string;
 
     /**
      * @param array{
@@ -52,9 +53,4 @@ interface PluginInterface
      * }
      */
     public function normalizeConfig(array $config): array;
-
-    /**
-     * @return string[]
-     */
-    public function getServiceAliases(): array;
 }

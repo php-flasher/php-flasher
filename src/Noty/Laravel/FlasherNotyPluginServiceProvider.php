@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Flasher\Noty\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Noty\Prime\NotyPlugin;
 
-final class FlasherNotyServiceProvider extends ServiceProvider
+final class FlasherNotyPluginServiceProvider extends PluginServiceProvider
 {
     public function createPlugin(): NotyPlugin
     {

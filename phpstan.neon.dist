@@ -2,8 +2,9 @@ includes:
     - extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/larastan/larastan/extension.neon
 
 parameters:
-    level: max
+    level: 9
     paths:
-        - src
+        - src/

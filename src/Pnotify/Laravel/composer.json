@@ -57,7 +57,7 @@
                 "Pnotify": "Flasher\\Pnotify\\Laravel\\Facade\\Pnotify"
             },
             "providers": [
-                "Flasher\\Pnotify\\Laravel\\FlasherPnotifyServiceProvider"
+              "FlasherPnotifyPluginServiceProvider"
             ]
         }
     }

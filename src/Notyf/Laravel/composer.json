@@ -57,7 +57,7 @@
                 "Notyf": "Flasher\\Notyf\\Laravel\\Facade\\Notyf"
             },
             "providers": [
-                "Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider"
+              "FlasherNotyfPluginServiceProvider"
             ]
         }
     }

@@ -38,10 +38,10 @@ final class FlasherContainerDynamicStaticMethodReturnTypeExtension implements Dy
         foreach ($type->getConstantStrings() as $service) {
             return match ($service->getValue()) {
                 'flasher' => new ObjectType(NotificationFactory::class),
-                'flasher.noty_factory' => new ObjectType(NotyFactory::class),
-                'flasher.notyf_factory' => new ObjectType(NotyfFactory::class),
-                'flasher.toastr_factory' => new ObjectType(Toastr::class),
-                'flasher.sweetalert_factory' => new ObjectType(SweetAlertFactory::class),
+                'flasher.noty' => new ObjectType(NotyFactory::class),
+                'flasher.notyf' => new ObjectType(NotyfFactory::class),
+                'flasher.toastr' => new ObjectType(Toastr::class),
+                'flasher.sweetalert' => new ObjectType(SweetAlertFactory::class),
                 default => new MixedType(),
             };
         }

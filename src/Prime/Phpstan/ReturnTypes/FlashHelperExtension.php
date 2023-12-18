@@ -19,8 +19,6 @@ final class FlashHelperExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
-        dump('here');
-
         return 'flash' === $functionReflection->getName();
     }
 

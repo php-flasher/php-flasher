@@ -12,13 +12,24 @@ if (!\function_exists('flash')) {
     /**
      * Creates a flash message or returns the Flasher factory.
      *
-     * When called with no arguments, it returns an instance of FlasherInterface or NotificationFactoryInterface.
-     * When called with arguments, it creates a flash message and returns an Envelope.
+     * This function serves a dual purpose:
+     * 1. When called with no arguments, it returns an instance of FlasherInterface or NotificationFactoryInterface.
+     *    This allows for accessing various methods provided by the Flasher factory.
+     * 2. When called with arguments, it creates a flash message and returns an Envelope.
+     *    This envelope contains the flash message details and can be used for further operations.
      *
-     * @param string|null          $message The message content
-     * @param string               $type    The type of the message (e.g., success, error)
-     * @param array<string, mixed> $options Additional options for the flash message
-     * @param string|null          $title   The title of the flash message
+     * @param string|null          $message the message content of the flash message
+     * @param string               $type    The type of the message (e.g., success, error, warning, info).
+     * @param array<string, mixed> $options additional options for the flash message
+     * @param string|null          $title   the title of the flash message
+     *
+     * @return Envelope|FlasherInterface|NotificationFactoryInterface Returns an Envelope containing the message details when arguments are provided.
+     *                                                                Returns an instance of FlasherInterface or NotificationFactoryInterface when no arguments are provided.
+     *
+     * Usage:
+     * 1. Without arguments - Get the Flasher factory: $flasher = flash();
+     * 2. With arguments - Create and return a flash message:
+     *    flash('Message', Type::SUCCESS, ['option' => 'value'], 'Title');
      */
     function flash(string $message = null, string $type = Type::SUCCESS, array $options = [], string $title = null): Envelope|FlasherInterface|NotificationFactoryInterface
     {

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Flasher\SweetAlert\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\SweetAlert\Prime\SweetAlertPlugin;
 use Livewire\LivewireManager;
 
-final class FlasherSweetAlertServiceProvider extends ServiceProvider
+final class FlasherSweetAlertPluginServiceProvider extends PluginServiceProvider
 {
     public function createPlugin(): SweetAlertPlugin
     {

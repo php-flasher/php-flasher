@@ -32,7 +32,7 @@ final class PluginExtension extends Extension implements PrependExtensionInterfa
         $identifier = $this->plugin->getServiceId();
         $container->setDefinition($identifier, $definition);
 
-        foreach ($this->plugin->getServiceAliases() as $alias) {
+        foreach ((array) $this->plugin->getServiceAliases() as $alias) {
             $container->setAlias($alias, $identifier);
         }
     }

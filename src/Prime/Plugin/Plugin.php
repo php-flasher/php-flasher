@@ -6,15 +6,6 @@ namespace Flasher\Prime\Plugin;
 
 abstract class Plugin implements PluginInterface
 {
-    public function getAlias(): string
-    {
-        $alias = basename(str_replace('\\', '/', static::class));
-        $alias = str_replace('Plugin', '', $alias);
-        $alias = preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $alias) ?: '';
-
-        return strtolower($alias);
-    }
-
     public function getName(): string
     {
         return 'flasher_'.$this->getAlias();
@@ -22,17 +13,12 @@ abstract class Plugin implements PluginInterface
 
     public function getServiceId(): string
     {
-        return 'flasher.factory_'.$this->getAlias();
+        return 'flasher.'.$this->getAlias();
     }
 
-    public function getServiceAliases(): array
+    public function getServiceAliases(): string|array
     {
         return [];
-    }
-
-    public function getFactory(): string
-    {
-        return str_replace('Plugin', 'Factory', static::class); // @phpstan-ignore-line
     }
 
     public function getScripts(): string|array
@@ -48,22 +34,6 @@ abstract class Plugin implements PluginInterface
     public function getOptions(): array
     {
         return [];
-    }
-
-    public function getAssetsDir(): string
-    {
-        $resourcesDir = $this->getResourcesDir();
-        $assetsDir = rtrim($resourcesDir, '/').'/assets/';
-
-        return realpath($assetsDir) ?: '';
-    }
-
-    public function getResourcesDir(): string
-    {
-        $r = new \ReflectionClass($this);
-        $fileName = pathinfo($r->getFileName() ?: '', \PATHINFO_DIRNAME).'/Resources/';
-
-        return realpath($fileName) ?: '';
     }
 
     public function normalizeConfig(array $config): array

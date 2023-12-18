@@ -54,10 +54,7 @@ final class Request implements RequestInterface
         return $flashBag->has($type);
     }
 
-    /**
-     * @return string[]
-     */
-    public function getType(string $type): array
+    public function getType(string $type): string|array
     {
         $session = $this->getSession();
         if (!$session instanceof FlashBagAwareSessionInterface) {

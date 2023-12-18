@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Flasher\Pnotify\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Pnotify\Prime\PnotifyPlugin;
 
-final class FlasherPnotifyServiceProvider extends ServiceProvider
+final class FlasherPnotifyPluginServiceProvider extends PluginServiceProvider
 {
     public function createPlugin(): PnotifyPlugin
     {

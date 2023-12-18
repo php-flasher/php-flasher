@@ -57,7 +57,7 @@
                 "Noty": "Flasher\\Laravel\\Facade\\Flasher"
             },
             "providers": [
-                "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider"
+              "FlasherNotyPluginServiceProvider"
             ]
         }
     }
