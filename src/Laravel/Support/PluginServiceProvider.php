@@ -65,10 +65,8 @@ abstract class PluginServiceProvider extends ServiceProvider
             $this->app->alias($identifier, $alias);
         }
 
-        $this->app->extend('flasher', function (FlasherInterface $flasher, Application $app) {
+        $this->callAfterResolving('flasher', function (FlasherInterface $flasher, Application $app) {
             $flasher->addFactory($this->plugin->getAlias(), fn () => $app->make($this->plugin->getServiceId()));
-
-            return $flasher;
         });
     }
 }

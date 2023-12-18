@@ -23,17 +23,16 @@ use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Storage\Storage;
 use Flasher\Prime\Storage\StorageManager;
-use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 
-final class FlasherPluginServiceProvider extends PluginServiceProvider
+final class FlasherServiceProvider extends PluginServiceProvider
 {
     protected function afterBoot(): void
     {
         FlasherContainer::from($this->app);
 
-        $this->registerTranslations();
+        $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
         $this->registerMiddlewares();
     }
 
@@ -54,8 +53,7 @@ final class FlasherPluginServiceProvider extends PluginServiceProvider
 
     private function registerConfig(): void
     {
-        $this->app->singleton('flasher.config', static function (Application $app): Config {
-            /** @var Repository $config */
+        $this->app->singleton('flasher.config', static function (Application $app) {
             $config = $app->make('config');
 
             return new Config($config->get('flasher', []));
@@ -64,22 +62,22 @@ final class FlasherPluginServiceProvider extends PluginServiceProvider
 
     private function registerFlasher(): void
     {
-        $this->app->singleton('flasher', static function (Application $app): Flasher {
+        $this->app->singleton('flasher', static function (Application $app) {
             $config = $app->make('flasher.config');
             $responseManager = $app->make('flasher.response_manager');
             $storageManager = $app->make('flasher.storage_manager');
 
             return new Flasher($config->get('default'), $responseManager, $storageManager);
         });
+
         $this->app->alias('flasher', Flasher::class);
         $this->app->bind(FlasherInterface::class, 'flasher');
     }
 
     private function registerResourceManager(): void
     {
-        $this->app->singleton('flasher.resource_manager', static function (Application $app): ResourceManager {
+        $this->app->singleton('flasher.resource_manager', static function (Application $app) {
             $config = $app->make('flasher.config');
-            $view = $app->make('view');
 
             return new ResourceManager($config);
         });
@@ -87,7 +85,7 @@ final class FlasherPluginServiceProvider extends PluginServiceProvider
 
     private function registerResponseManager(): void
     {
-        $this->app->singleton('flasher.response_manager', static function (Application $app): ResponseManager {
+        $this->app->singleton('flasher.response_manager', static function (Application $app) {
             $resourceManager = $app->make('flasher.resource_manager');
             $storageManager = $app->make('flasher.storage_manager');
             $eventDispatcher = $app->make('flasher.event_dispatcher');
@@ -98,11 +96,12 @@ final class FlasherPluginServiceProvider extends PluginServiceProvider
 
     private function registerStorageManager(): void
     {
-        $this->app->singleton('flasher.storage_manager', static function (Application $app): StorageManager {
+        $this->app->singleton('flasher.storage_manager', static function (Application $app) {
             $config = $app->make('flasher.config');
+
             $eventDispatcher = $app->make('flasher.event_dispatcher');
             $session = $app->make('session');
-            /** @phpstan-ignore-next-line */
+
             $storageBag = new Storage(new SessionBag($session));
             $criteria = $config->get('filter_criteria', []);
 
@@ -112,28 +111,18 @@ final class FlasherPluginServiceProvider extends PluginServiceProvider
 
     private function registerEventDispatcher(): void
     {
-        $this->app->singleton('flasher.event_dispatcher', static function (Application $app): EventDispatcher {
+        $this->app->singleton('flasher.event_dispatcher', static function (Application $app) {
             $eventDispatcher = new EventDispatcher();
             $config = $app->make('flasher.config');
-            /** @phpstan-ignore-next-line */
-            $translator = new Translator($app->make('translator'));
-            /** @phpstan-ignore-next-line */
-            $autoTranslate = $config->get('auto_translate', true);
-            $translatorListener = new TranslationListener($translator, $autoTranslate);
-            $eventDispatcher->addSubscriber($translatorListener);
+
+            $translatorListener = new TranslationListener(new Translator($app->make('translator')));
+            $eventDispatcher->addListener($translatorListener);
+
             $presetListener = new ApplyPresetListener($config->get('presets', []));
-            // @phpstan-ignore-line
-            $eventDispatcher->addSubscriber($presetListener);
+            $eventDispatcher->addListener($presetListener);
 
             return $eventDispatcher;
         });
-    }
-
-    private function registerTranslations(): void
-    {
-        /** @var \Illuminate\Translation\Translator $translator */
-        $translator = $this->app->make('translator');
-        $translator->addNamespace('flasher', __DIR__.'/Translation/lang');
     }
 
     private function registerMiddlewares(): void
@@ -168,10 +157,10 @@ final class FlasherPluginServiceProvider extends PluginServiceProvider
 
     private function pushMiddlewareToGroup(string $middleware): void
     {
-        $router = $this->app->make('router');
-
-        if ($router instanceof Router && $router->hasMiddlewareGroup('web')) {
-            $router->pushMiddlewareToGroup('web', $middleware);
-        }
+        $this->callAfterResolving('router', function (Router $router) use ($middleware) {
+            if ($router->hasMiddlewareGroup('web')) {
+                $router->pushMiddlewareToGroup('web', $middleware);
+            }
+        });
     }
 }

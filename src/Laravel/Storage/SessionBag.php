@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace Flasher\Laravel\Storage;
 
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
-use Illuminate\Session\Store;
+use Illuminate\Contracts\Session\Session;
 
 final class SessionBag implements BagInterface
 {
-    /**
-     * @var string
-     */
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    /**
-     * @param Store $session
-     */
-    public function __construct(private $session)
+    public function __construct(private readonly Session $session)
     {
     }
 
     public function get(): array
     {
-        return $this->session->get(self::ENVELOPES_NAMESPACE, []); // @phpstan-ignore-line
+        /** @var Envelope[] $envelopes */
+        $envelopes = $this->session->get(self::ENVELOPES_NAMESPACE, []);
+
+        return $envelopes;
     }
 
     public function set(array $envelopes): void
