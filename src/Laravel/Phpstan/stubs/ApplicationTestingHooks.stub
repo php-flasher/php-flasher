@@ -1,0 +1,11 @@
+<?php
+
+namespace Orchestra\Testbench\Concerns;
+
+trait ApplicationTestingHooks
+{
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+}
