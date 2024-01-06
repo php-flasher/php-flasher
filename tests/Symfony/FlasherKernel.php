@@ -4,69 +4,64 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Symfony;
 
-use Flasher\Symfony\Bridge\Bridge;
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-if (Bridge::versionCompare('6.0', '>=')) {
-    eval('
-        namespace Flasher\Tests\Symfony;
-
-        class FlasherKernel extends AbstractFlasherKernel
-        {
-            public function registerBundles(): iterable
-            {
-                return $this->doRegisterBundles();
-            }
-
-            public function getCacheDir(): string
-            {
-                return $this->doGetLogDir();
-            }
-
-            public function getLogDir(): string
-            {
-                return $this->doGetLogDir();
-            }
-
-            public function getProjectDir(): string
-            {
-                return \dirname(__DIR__);
-            }
-        }
-    ');
-} else {
-    final class FlasherKernel extends AbstractFlasherKernel
-    {
-        public function registerBundles(): iterable
-        {
-            return $this->doRegisterBundles();
-        }
-
-        public function getCacheDir(): string
-        {
-            return $this->doGetLogDir();
-        }
-
-        public function getLogDir(): string
-        {
-            return $this->doGetLogDir();
-        }
-    }
-}
-
-final class FlasherKernel extends AbstractFlasherKernel
+class FlasherKernel extends \Symfony\Component\HttpKernel\Kernel
 {
+    public function __construct()
+    {
+        parent::__construct('test', true);
+    }
+
     public function registerBundles(): iterable
     {
-        return $this->doRegisterBundles();
+        return [
+            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new \Symfony\Bundle\TwigBundle\TwigBundle(),
+            new \Flasher\Symfony\FlasherBundle(),
+            new \Flasher\Noty\Symfony\FlasherNotyBundle(),
+            new \Flasher\Notyf\Symfony\FlasherNotyfBundle(),
+            new \Flasher\SweetAlert\Symfony\FlasherSweetAlertBundle(),
+            new \Flasher\Toastr\Symfony\FlasherToastrBundle(),
+        ];
+    }
+
+    public function registerContainerConfiguration(LoaderInterface $loader): void
+    {
+        $loader->load(function (ContainerBuilder $container): void {
+            $container->register('kernel', static::class)
+                ->setPublic(true);
+
+            $this->configureContainer($container);
+            $container->addObjectResource($this);
+        });
+    }
+
+    public function configureContainer(ContainerBuilder $container): void
+    {
+        $container->loadFromExtension('framework', [
+            'secret' => 'foo',
+            'test' => true,
+            'session' => [
+                'handler_id' => null,
+                'storage_factory_id' => 'session.storage.factory.mock_file',
+            ],
+        ]);
+
+        $container->loadFromExtension('twig', [
+            'debug' => true,
+            'strict_variables' => true,
+        ]);
     }
 
     public function getCacheDir(): string
     {
-        return $this->doGetLogDir();
+        return sys_get_temp_dir().'/cache'.spl_object_hash($this);
     }
 
     public function getLogDir(): string
     {
-        return $this->doGetLogDir();
+        return sys_get_temp_dir().'/logs'.spl_object_hash($this);
     }
 }

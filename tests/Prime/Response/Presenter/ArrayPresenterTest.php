@@ -31,25 +31,24 @@ final class ArrayPresenterTest extends TestCase
         $response = [
             'envelopes' => [
                 [
-                    'notification' => [
-                        'type' => 'success',
-                        'title' => 'PHPFlasher',
-                        'message' => 'success message',
-                        'options' => [],
-                    ],
+                    'type' => 'success',
+                    'title' => 'PHPFlasher',
+                    'message' => 'success message',
+                    'options' => [],
+                    'metadata' => [],
                 ],
                 [
-                    'notification' => [
-                        'type' => 'warning',
-                        'title' => 'yoeunes/toastr',
-                        'message' => 'warning message',
-                        'options' => [],
-                    ],
+                    'type' => 'warning',
+                    'title' => 'yoeunes/toastr',
+                    'message' => 'warning message',
+                    'options' => [],
+                    'metadata' => [],
                 ],
             ],
             'scripts' => [],
             'styles' => [],
             'options' => [],
+            'context' => [],
         ];
 
         $presenter = new ArrayPresenter();

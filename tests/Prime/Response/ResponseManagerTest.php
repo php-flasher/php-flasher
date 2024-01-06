@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response;
 
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Response\Resource\ResourceManagerInterface;
 use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Stamp\CreatedAtStamp;
 use Flasher\Prime\Stamp\IdStamp;
-use Flasher\Prime\Storage\StorageManager;
+use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Tests\Prime\TestCase;
 
 final class ResponseManagerTest extends TestCase
@@ -23,7 +25,7 @@ final class ResponseManagerTest extends TestCase
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
         $envelopes[] = new Envelope($notification, [
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-05 16:22:50')),
             new IdStamp('1111'),
         ]);
 
@@ -32,95 +34,112 @@ final class ResponseManagerTest extends TestCase
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification, [
-            new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-06 16:22:50')),
             new IdStamp('2222'),
         ]);
 
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
 
-        $responseManager = new ResponseManager(null, $storageManager);
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
 
         $response = <<<JAVASCRIPT
 <script type="text/javascript" class="flasher-js">
-(function() {
-    var rootScript = '';
-    var FLASHER_FLASH_BAG_PLACE_HOLDER = {};
-    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]},"created_at":"2023-02-05 16:22:50","uuid":"1111","priority":0},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]},"created_at":"2023-02-06 16:22:50","uuid":"2222","priority":0}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
-
-    function mergeOptions(first, second) {
-        return {
-            context: merge(first.context || {}, second.context || {}),
-            envelopes: merge(first.envelopes || [], second.envelopes || []),
-            options: merge(first.options || {}, second.options || {}),
-            scripts: merge(first.scripts || [], second.scripts || []),
-            styles: merge(first.styles || [], second.styles || []),
-        };
-    }
-
-    function merge(first, second) {
+(function(window, document) {
+    const merge = (first, second) => {
         if (Array.isArray(first) && Array.isArray(second)) {
-            return first.concat(second).filter(function(item, index, array) {
-                return array.indexOf(item) === index;
+            return [...first, ...second.filter(item => !first.includes(item))];
+        }
+
+        if (typeof first === 'object' && typeof second === 'object') {
+            for (const [key, value] of Object.entries(second)) {
+                first[key] = key in first ? { ...first[key], ...value } : value;
+            }
+            return first;
+        }
+
+        return undefined;
+    };
+
+    const mergeOptions = (...options) => {
+        const result = {};
+
+        options.forEach(option => {
+            Object.entries(option).forEach(([key, value]) => {
+                result[key] = key in result ? merge(result[key], value) : value;
             });
+        });
+
+        return result;
+    };
+
+    const renderCallback = (options) => {
+        if(!window.flash) {
+            throw new Error('Flasher is not loaded');
         }
 
-        return Object.assign({}, first, second);
-    }
+        window.flash.render(options);
+    };
 
-    function renderOptions(options) {
-        if(!window.hasOwnProperty('flasher')) {
-            console.error('Flasher is not loaded');
-            return;
+    const render = (options) => {
+        if (options instanceof Event) {
+            options = options.detail;
         }
 
-        requestAnimationFrame(function () {
-            window.flasher.render(options);
-        });
-    }
-
-    function render(options) {
-        if ('loading' !== document.readyState) {
-            renderOptions(options);
-
-            return;
+        if (['interactive', 'complete'].includes(document.readyState)) {
+            renderCallback(options);
+        } else {
+            document.addEventListener('DOMContentLoaded', () => renderCallback(options));
         }
+    };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            renderOptions(options);
-        });
-    }
+    const addScriptAndRender = (options) => {
+        const mainScript = '';
 
-    if (1 === document.querySelectorAll('script.flasher-js').length) {
-        document.addEventListener('flasher:render', function (event) {
-            render(event.detail);
-        });
-    }
-
-    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
-        render(options);
-    } else {
-        var tag = document.createElement('script');
-        tag.setAttribute('src', rootScript);
-        tag.setAttribute('type', 'text/javascript');
-        tag.onload = function () {
+        if (window.flash || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
             render(options);
-        };
+        } else {
+            const tag = document.createElement('script');
+            tag.src = mainScript;
+            tag.type = 'text/javascript';
+            tag.onload = () => render(options);
 
-        document.head.appendChild(tag);
-    }
-})();
+            document.head.appendChild(tag);
+        }
+    };
+
+    const addRenderListener = () => {
+        if (1 === document.querySelectorAll('script.flasher-js').length) {
+            document.addEventListener('flasher:render', render);
+        }
+    };
+
+    const options = [];
+    options.push({"envelopes":[],"scripts":[],"styles":[],"options":[],"context":[]});
+    /** FLASHER_FLASH_BAG_PLACE_HOLDER **/
+    addScriptAndRender(mergeOptions(...options));
+    addRenderListener();
+})(window, document);
 </script>
 JAVASCRIPT;
 
-        $this->assertEquals($response, $responseManager->render());
+        $this->assertEquals($response, $responseManager->render('html'));
     }
 
     public function testItThrowsExceptionIfPresenterNotFound(): void
     {
         $this->setExpectedException('\InvalidArgumentException', 'Presenter [xml] not supported.');
 
-        $responseManager = new ResponseManager();
-        $responseManager->render([], 'xml');
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
+
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
+        $responseManager->render('xml');
     }
 }

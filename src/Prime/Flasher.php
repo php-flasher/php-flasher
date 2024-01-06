@@ -43,6 +43,11 @@ final class Flasher implements FlasherInterface
         return \is_callable($factory) ? $factory() : $factory;
     }
 
+    public function create(?string $alias): NotificationFactoryInterface
+    {
+        return $this->use($alias);
+    }
+
     public function render(string $presenter = 'html', array $criteria = [], array $context = []): mixed
     {
         return $this->responseManager->render($presenter, $criteria, $context);

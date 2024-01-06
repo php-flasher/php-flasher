@@ -26,8 +26,8 @@ final class StorageBagTest extends TestCase
         ];
 
         $storageBag = new Storage();
-        $storageBag->add($envelopes[0]);
-        $storageBag->add($envelopes[1]);
+        $storageBag->add(...$envelopes[0]);
+        $storageBag->add(...$envelopes[1]);
 
         $this->assertEquals([...$envelopes[0], ...$envelopes[1]], $storageBag->all());
     }
@@ -46,8 +46,8 @@ final class StorageBagTest extends TestCase
         ];
 
         $storageBag = new Storage();
-        $storageBag->update($envelopes[0]);
-        $storageBag->update($envelopes[1]);
+        $storageBag->update(...$envelopes[0]);
+        $storageBag->update(...$envelopes[1]);
 
         $this->assertEquals([...$envelopes[0], ...$envelopes[1]], $storageBag->all());
     }
@@ -62,11 +62,9 @@ final class StorageBagTest extends TestCase
         ];
 
         $storageBag = new Storage();
-        $storageBag->add($envelopes);
+        $storageBag->add(...$envelopes);
 
-        $storageBag->remove([
-            new Envelope(new Notification(), new IdStamp('2222')),
-        ]);
+        $storageBag->remove(new Envelope(new Notification(), new IdStamp('2222')));
 
         unset($envelopes[1]);
 

@@ -20,7 +20,7 @@ final class RemoveListenerTest extends TestCase
         $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new EnvelopeRemovalListener();
-        $eventDispatcher->addSubscriber($listener);
+        $eventDispatcher->addListener($listener);
 
         $envelopes = [
             new Envelope(new Notification()),

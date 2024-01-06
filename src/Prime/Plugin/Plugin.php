@@ -45,8 +45,8 @@ abstract class Plugin implements PluginInterface
             ...$config,
         ];
 
-        $config['scripts'] = (array) $config['scripts'];
         $config['styles'] = (array) $config['styles'];
+        $config['scripts'] = (array) $config['scripts'];
 
         return $config;
     }

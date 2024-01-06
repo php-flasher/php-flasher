@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher;
 
-final class TestEventListener implements \Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
+
+final class TestEventListener implements EventListenerInterface
 {
     public static function getSubscribedEvents(): string|array
     {

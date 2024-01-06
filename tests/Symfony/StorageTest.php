@@ -10,9 +10,7 @@ use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Prime\Storage\Storage;
 use Flasher\Symfony\Storage\SessionBag;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
-use Symfony\Component\HttpFoundation\SessionStorage\ArraySessionStorage;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final class StorageTest extends TestCase
 {
@@ -42,7 +40,7 @@ final class StorageTest extends TestCase
         ];
 
         $storage = $this->getStorage();
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
 
         $this->assertEquals($envelopes, $storage->all());
     }
@@ -59,7 +57,7 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $envelopes[1]->withStamp(new PriorityStamp(1));
@@ -84,7 +82,7 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes[1]);
@@ -103,10 +101,10 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
-        $storage->remove($envelopes);
+        $storage->remove(...$envelopes);
         $this->assertEquals([], $storage->all());
     }
 
@@ -122,7 +120,7 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->clear();
@@ -131,10 +129,6 @@ final class StorageTest extends TestCase
 
     private function getStorage(): Storage
     {
-        $session = class_exists(\Symfony\Component\HttpFoundation\Session\Session::class)
-            ? new Session(new MockArraySessionStorage())
-            : new \Symfony\Component\HttpFoundation\Session(new ArraySessionStorage()); // @phpstan-ignore-line
-
-        return new Storage(new SessionBag($session)); // @phpstan-ignore-line
+        return new Storage(new SessionBag(new RequestStack()));
     }
 }

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Flasher\Prime\Config\Config;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
@@ -70,9 +69,6 @@ return static function (ContainerConfigurator $container): void {
         ->set('flasher.notification_factory', NotificationFactory::class)
             ->args([service('flasher.storage_manager')])
 
-        ->set('flasher.config', Config::class)
-            ->args([param('flasher')])
-
         ->set('flasher.storage', Storage::class)
             ->args([service('flasher.storage_bag')])
 
@@ -92,7 +88,10 @@ return static function (ContainerConfigurator $container): void {
             ])
 
         ->set('flasher.resource_manager', ResourceManager::class)
-            ->args([service('flasher.config')])
+            ->args([
+                param('flasher.root_script'),
+                param('flasher.plugins'),
+            ])
 
         ->set('flasher.response_manager', ResponseManager::class)
             ->args([

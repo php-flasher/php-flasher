@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime;
 
-final class TestCase extends \PHPUnit\Framework\TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param class-string<\Throwable> $exceptionName
-     * @param int                      $exceptionCode
      */
-    public function setExpectedException(string $exceptionName, string $exceptionMessage = '', $exceptionCode = null): void
+    protected function setExpectedException(string $exceptionName, string $exceptionMessage = ''): void
     {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($exceptionName);
-            $this->expectExceptionMessage($exceptionMessage);
-        } else {
-            // @phpstan-ignore-line
-        }
+        $this->expectException($exceptionName);
+        $this->expectExceptionMessage($exceptionMessage);
     }
 
     /**
@@ -31,19 +26,14 @@ final class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @throws \ReflectionException
      */
-    private function invokeMethod($object, $methodName, $parameters = [])
+    protected function invokeMethod(object|string $object, string $methodName, array $parameters = [])
     {
-        $class = \is_string($object) ? $object : $object::class;
-
-        $reflection = new \ReflectionClass($class);
+        $reflection = new \ReflectionClass($object);
 
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
-        $object = \is_string($object) ? null : $object;
-        $parameters = \is_array($parameters) ? $parameters : \array_slice(\func_get_args(), 2);
-
-        return $method->invokeArgs($object, $parameters);
+        return $method->invokeArgs(is_string($object) ? null : $object, $parameters);
     }
 
     /**
@@ -53,19 +43,22 @@ final class TestCase extends \PHPUnit\Framework\TestCase
      * @param string        $propertyName name of property to access
      *
      * @return mixed property value
-     *
-     * @throws \ReflectionException
      */
-    private function getProperty($object, $propertyName)
+    protected function getProperty(object|string $object, string $propertyName): mixed
     {
-        $class = \is_string($object) ? $object : $object::class;
-
-        $reflection = new \ReflectionClass($class);
+        $reflection = new \ReflectionClass($object);
 
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 
-        $object = \is_string($object) ? null : $object;
+        // Ensure that an object instance is provided for non-static properties
+        if (is_string($object)) {
+            if (!$property->isStatic()) {
+                throw new \InvalidArgumentException("An instance of the class is required to access the non-static property '{$propertyName}'.");
+            }
+
+            return $property->getValue();
+        }
 
         return $property->getValue($object);
     }
@@ -76,19 +69,14 @@ final class TestCase extends \PHPUnit\Framework\TestCase
      * @param object|string $object       instantiated object or FQCN that we will run method
      * @param string        $propertyName name of property to set
      * @param mixed         $value        value to set the property to
-     *
-     * @throws \ReflectionException
      */
-    private function setProperty($object, $propertyName, mixed $value): void
+    protected function setProperty(object|string $object, string $propertyName, mixed $value): void
     {
-        $class = \is_string($object) ? $object : $object::class;
-
-        $reflection = new \ReflectionClass($class);
+        $reflection = new \ReflectionClass($object);
 
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 
-        $object = \is_string($object) ? null : $object;
-        $property->setValue($object, $value);
+        $property->setValue(is_string($object) ? null : $object, $value);
     }
 }

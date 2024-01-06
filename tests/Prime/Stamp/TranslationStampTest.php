@@ -17,11 +17,4 @@ final class TranslationStampTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $stamp->getParameters());
         $this->assertEquals('ar', $stamp->getLocale());
     }
-
-    public function testParametersOrder(): void
-    {
-        $parameters = TranslationStamp::parametersOrder('ar');
-
-        $this->assertEquals(['locale' => 'ar', 'parameters' => []], $parameters);
-    }
 }

@@ -53,13 +53,10 @@ git push origin --tags --force
 
 # Tag Repositories
 for REMOTE in flasher flasher-laravel flasher-symfony \
-              flasher-toastr flasher-toastr-laravel flasher-toastr-symfony \
+              flasher-noty flasher-noty-laravel flasher-noty-symfony \
               flasher-notyf flasher-notyf-laravel flasher-notyf-symfony \
               flasher-sweetalert flasher-sweetalert-laravel flasher-sweetalert-symfony \
-              flasher-pnotify flasher-pnotify-laravel flasher-pnotify-symfony \
-              flasher-noty flasher-noty-laravel flasher-noty-symfony \
-              flasher-cli flasher-cli-laravel flasher-cli-symfony \
-              laravel-pack php-pack symfony-pack
+              flasher-toastr flasher-toastr-laravel flasher-toastr-symfony
 do
     echo ""
     echo ""

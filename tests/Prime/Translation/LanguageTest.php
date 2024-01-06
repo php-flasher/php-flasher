@@ -18,13 +18,13 @@ final class LanguageTest extends TestCase
 
     public function testIsRTL(): void
     {
-        $this->assertTrue(Language::isRTL('ar_AE'));
-        $this->assertFalse(Language::isRTL('en_US'));
+        $this->assertTrue(Language::isRTL('ar'));
+        $this->assertFalse(Language::isRTL('fr'));
     }
 
     public function testIsLTR(): void
     {
         $this->assertTrue(Language::isLTR('en_US'));
-        $this->assertFalse(Language::isLTR('ar_AE'));
+        $this->assertFalse(Language::isLTR('ar'));
     }
 }

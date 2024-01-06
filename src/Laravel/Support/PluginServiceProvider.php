@@ -14,7 +14,7 @@ abstract class PluginServiceProvider extends ServiceProvider
 {
     protected PluginInterface $plugin;
 
-    abstract public function createPlugin(): PluginInterface;
+    abstract protected function createPlugin(): PluginInterface;
 
     public function register(): void
     {
@@ -36,12 +36,20 @@ abstract class PluginServiceProvider extends ServiceProvider
             return;
         }
 
-        $name = $this->plugin->getName();
+        $alias = $this->plugin->getAlias();
         $config = $this->app->make('config');
 
-        $config->set($name, $this->plugin->normalizeConfig(
-            $config->get($name, [])
-        ));
+        $key = 'flasher' === $alias ? $alias : "flasher.plugins.$alias";
+        /**
+         * @var array{
+         *      scripts?: string|string[],
+         *      styles?: string|string[],
+         *      options?: array<string, mixed>,
+         *  } $current
+         */
+        $current = $config->get($key, []);
+
+        $config->set($key, $this->plugin->normalizeConfig($current));
     }
 
     protected function afterRegister(): void

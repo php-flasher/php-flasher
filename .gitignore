@@ -1,14 +1,10 @@
-.idea
-vendor
+.idea/
+vendor/
 composer.lock
 .phpunit.result.cache
 .phpcs-cache
 .php-cs-fixer.cache
 
-packs/**/composer.lock
-packs/**/vendor/
-
 node_modules/
 coverage/
 .phpunit.cache/
-.run/

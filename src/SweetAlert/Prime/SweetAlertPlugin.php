@@ -13,6 +13,16 @@ final class SweetAlertPlugin extends Plugin
         return 'sweetalert';
     }
 
+    public function getFactory(): string
+    {
+        return SweetAlert::class;
+    }
+
+    public function getServiceAliases(): string|array
+    {
+        return SweetAlertInterface::class;
+    }
+
     public function getScripts(): string
     {
         return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.1/dist/flasher-sweetalert.min.js';

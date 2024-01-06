@@ -20,5 +20,4 @@ expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::addF
 expectedArguments(\Flasher\Prime\Notification\NotificationInterface::setType(), 0, argumentsSet('types'));
 expectedReturnValues(\Flasher\Prime\Notification\NotificationInterface::getType(), argumentsSet('types'));
 
-
-expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::handler(), 0, 'flasher', 'toastr', 'noty', 'notyf', 'pnotify', 'sweetalert');
+expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::handler(), 0, 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert');

@@ -9,10 +9,7 @@ use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 
 final class LivewireListener implements EventListenerInterface
 {
-    /**
-     * @return void
-     */
-    public function __invoke(ResponseEvent $event)
+    public function __invoke(ResponseEvent $event): void
     {
         if ('html' !== $event->getPresenter()) {
             return;
@@ -63,6 +60,6 @@ JAVASCRIPT;
 
     public static function getSubscribedEvents(): string|array
     {
-        return \Flasher\Prime\EventDispatcher\Event\ResponseEvent::class;
+        return ResponseEvent::class;
     }
 }

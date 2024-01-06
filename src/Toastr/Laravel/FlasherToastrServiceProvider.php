@@ -9,7 +9,7 @@ use Flasher\Toastr\Prime\ToastrPlugin;
 
 final class FlasherToastrServiceProvider extends PluginServiceProvider
 {
-    public function createPlugin(): ToastrPlugin
+    protected function createPlugin(): ToastrPlugin
     {
         return new ToastrPlugin();
     }

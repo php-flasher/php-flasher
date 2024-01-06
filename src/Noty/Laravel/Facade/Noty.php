@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\Facade;
  */
 final class Noty extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher.noty';
     }

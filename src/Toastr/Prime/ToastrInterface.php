@@ -7,7 +7,7 @@ namespace Flasher\Toastr\Prime;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
 
 /**
- * @mixin ToastrBuilder
+ * @mixin \Flasher\Toastr\Prime\ToastrBuilder
  */
 interface ToastrInterface extends NotificationFactoryInterface
 {

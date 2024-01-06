@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response\Resource;
 
-use Flasher\Prime\Config\Config;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Resource\ResourceManager;
@@ -18,19 +17,18 @@ final class ResourceManagerTest extends TestCase
 {
     public function testItPopulateResponseFromResources(): void
     {
-        $config = new Config([
-            'default' => 'flasher',
-            'root_script' => 'root_script.min.js',
+        $resourceManager = new ResourceManager('root_script.min.js', [
+            'flasher' => [
+                'scripts' => ['flasher.min.js'],
+                'styles' => ['flasher.min.css'],
+                'options' => ['timeout' => 2500, 'position' => 'center'],
+            ],
+            'toastr' => [
+                'scripts' => ['toastr.min.js', 'jquery.min.js'],
+                'styles' => ['toastr.min.css'],
+                'options' => ['sounds' => false],
+            ],
         ]);
-        $resourceManager = new ResourceManager($config);
-
-        $resourceManager->addScripts('flasher', ['flasher.min.js']);
-        $resourceManager->addStyles('flasher', ['flasher.min.css']);
-        $resourceManager->addOptions('flasher', ['timeout' => 2500, 'position' => 'center']);
-
-        $resourceManager->addScripts('toastr', ['toastr.min.js', 'jquery.min.js']);
-        $resourceManager->addStyles('toastr', ['toastr.min.css']);
-        $resourceManager->addOptions('toastr', ['sounds' => false]);
 
         $envelopes = [];
 
@@ -40,7 +38,7 @@ final class ResourceManagerTest extends TestCase
         $notification->setType('success');
         $envelopes[] = new Envelope($notification, [
             new PluginStamp('flasher'),
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-05 16:22:50')),
             new IdStamp('1111'),
         ]);
 
@@ -50,7 +48,7 @@ final class ResourceManagerTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification, [
             new PluginStamp('toastr'),
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-05 16:22:50')),
             new IdStamp('2222'),
         ]);
 
@@ -63,9 +61,8 @@ final class ResourceManagerTest extends TestCase
         $this->assertEquals(['flasher.min.js', 'toastr.min.js', 'jquery.min.js'], $response->getScripts());
         $this->assertEquals(['flasher.min.css', 'toastr.min.css'], $response->getStyles());
         $this->assertEquals([
-            'theme.flasher' => ['timeout' => 2500, 'position' => 'center'],
             'toastr' => ['sounds' => false],
+            'flasher' => ['timeout' => 2500, 'position' => 'center'],
         ], $response->getOptions());
-        $this->assertEquals($config, $resourceManager->getConfig());
     }
 }

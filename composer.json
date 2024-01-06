@@ -2,7 +2,7 @@
     "name": "php-flasher/php-flasher",
     "type": "library",
     "homepage": "https://php-flasher.io",
-    "description": "Elevate user engagement in Laravel and Symfony projects with PHPFlasher, a comprehensive flash messaging toolkit. This library facilitates streamlined user feedback management and supports a variety of popular notification styles including Noty, Notyf, PNotify, SweetAlert, and Toastr. PHPFlasher is designed for ease of use, making it accessible to both beginners and experienced developers seeking to enhance the interactive elements of their web applications.",
+    "description": "Elevate user engagement in Laravel and Symfony projects with PHPFlasher, a comprehensive flash messaging toolkit. This library facilitates streamlined user feedback management and supports a variety of popular notification styles including Noty, Notyf, SweetAlert, and Toastr. PHPFlasher is designed for ease of use, making it accessible to both beginners and experienced developers seeking to enhance the interactive elements of their web applications.",
     "keywords": [
         "flash-messages",
         "php-notification-system",
@@ -58,10 +58,8 @@
         },
         "files": [
             "src/Prime/helpers.php",
-            "src/Cli/Prime/helpers.php",
             "src/Noty/Prime/helpers.php",
             "src/Notyf/Prime/helpers.php",
-            "src/Pnotify/Prime/helpers.php",
             "src/SweetAlert/Prime/helpers.php",
             "src/Toastr/Prime/helpers.php"
         ]
@@ -86,19 +84,16 @@
         },
         "laravel": {
             "providers": [
-                "FlasherPluginServiceProvider",
-                "Flasher\\Cli\\Laravel\\FlasherCliServiceProvider",
-                "FlasherNotyPluginServiceProvider",
-                "FlasherNotyfPluginServiceProvider",
-                "FlasherPnotifyPluginServiceProvider",
-                "FlasherSweetAlertPluginServiceProvider",
-                "FlasherToastrPluginServiceProvider"
+                "Flasher\\Laravel\\FlasherServiceProvider",
+                "Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider",
+                "Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider",
+                "Flasher\\SweetAlert\\Laravel\\FlasherSweetAlertServiceProvider",
+                "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
             ],
             "aliases": {
                 "Flasher": "Flasher\\Laravel\\Facade\\Flasher",
                 "Noty": "Flasher\\Noty\\Facade\\Flasher\\Noty",
                 "Notyf": "Flasher\\Notyf\\Laravel\\Facade\\Notyf",
-                "Pnotify": "Flasher\\Pnotify\\Laravel\\Facade\\Pnotify",
                 "SweetAlert": "Flasher\\SweetAlert\\Laravel\\Facade\\SweetAlert",
                 "Toastr": "Flasher\\Toastr\\Laravel\\Facade\\Toastr"
             }

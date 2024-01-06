@@ -13,15 +13,13 @@ final class ServiceProviderTest extends TestCase
         $this->assertTrue($this->app->bound('flasher'));
         $this->assertTrue($this->app->bound('flasher.noty'));
         $this->assertTrue($this->app->bound('flasher.notyf'));
-        $this->assertTrue($this->app->bound('flasher.pnotify'));
         $this->assertTrue($this->app->bound('flasher.sweetalert'));
         $this->assertTrue($this->app->bound('flasher.toastr'));
 
         $this->assertInstanceOf(\Flasher\Prime\Flasher::class, $this->app->make('flasher'));
-        $this->assertInstanceOf(\Flasher\Noty\Prime\NotyFactory::class, $this->app->make('flasher.noty'));
-        $this->assertInstanceOf(\Flasher\Notyf\Prime\NotyfFactory::class, $this->app->make('flasher.notyf'));
-        $this->assertInstanceOf(\Flasher\Pnotify\Prime\PnotifyFactory::class, $this->app->make('flasher.pnotify'));
-        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertFactory::class, $this->app->make('flasher.sweetalert'));
+        $this->assertInstanceOf(\Flasher\Noty\Prime\Noty::class, $this->app->make('flasher.noty'));
+        $this->assertInstanceOf(\Flasher\Notyf\Prime\Notyf::class, $this->app->make('flasher.notyf'));
+        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlert::class, $this->app->make('flasher.sweetalert'));
         $this->assertInstanceOf(\Flasher\Toastr\Prime\Toastr::class, $this->app->make('flasher.toastr'));
     }
 
@@ -30,19 +28,16 @@ final class ServiceProviderTest extends TestCase
         /** @var FlasherInterface $flasher */
         $flasher = $this->app->make('flasher');
 
-        $adapter = $flasher->create('noty');
-        $this->assertInstanceOf(\Flasher\Noty\Prime\NotyFactory::class, $adapter);
+        $adapter = $flasher->use('noty');
+        $this->assertInstanceOf(\Flasher\Noty\Prime\Noty::class, $adapter);
 
-        $adapter = $flasher->create('notyf');
-        $this->assertInstanceOf(\Flasher\Notyf\Prime\NotyfFactory::class, $adapter);
+        $adapter = $flasher->use('notyf');
+        $this->assertInstanceOf(\Flasher\Notyf\Prime\Notyf::class, $adapter);
 
-        $adapter = $flasher->create('pnotify');
-        $this->assertInstanceOf(\Flasher\Pnotify\Prime\PnotifyFactory::class, $adapter);
+        $adapter = $flasher->use('sweetalert');
+        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlert::class, $adapter);
 
-        $adapter = $flasher->create('sweetalert');
-        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertFactory::class, $adapter);
-
-        $adapter = $flasher->create('toastr');
+        $adapter = $flasher->use('toastr');
         $this->assertInstanceOf(\Flasher\Toastr\Prime\Toastr::class, $adapter);
     }
 }

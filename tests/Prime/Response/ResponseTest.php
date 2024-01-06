@@ -79,20 +79,18 @@ final class ResponseTest extends TestCase
         $expected = [
             'envelopes' => [
                 [
-                    'notification' => [
-                        'type' => 'success',
-                        'title' => 'PHPFlasher',
-                        'message' => 'success message',
-                        'options' => [],
-                    ],
+                    'type' => 'success',
+                    'title' => 'PHPFlasher',
+                    'message' => 'success message',
+                    'options' => [],
+                    'metadata' => [],
                 ],
                 [
-                    'notification' => [
-                        'type' => 'warning',
-                        'title' => 'yoeunes/toastr',
-                        'message' => 'warning message',
-                        'options' => [],
-                    ],
+                    'type' => 'warning',
+                    'title' => 'yoeunes/toastr',
+                    'message' => 'warning message',
+                    'options' => [],
+                    'metadata' => [],
                 ],
             ],
             'scripts' => ['noty.min.js', 'toastr.min.js'],
@@ -101,6 +99,7 @@ final class ResponseTest extends TestCase
                 'flasher' => ['position' => 'center', 'timeout' => 2500],
                 'toastr' => ['sounds' => false],
             ],
+            'context' => [],
         ];
 
         $this->assertEquals($expected, $response->toArray());

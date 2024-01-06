@@ -7,9 +7,17 @@ namespace Flasher\Tests\Prime\Notification;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
-use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Notification\Type;
+use Flasher\Prime\Stamp\ContextStamp;
+use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\PluginStamp;
+use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
+use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Stamp\TranslationStamp;
+use Flasher\Prime\Stamp\UnlessStamp;
+use Flasher\Prime\Stamp\WhenStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Tests\Prime\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,77 +26,77 @@ final class NotificationBuilderTest extends TestCase
 {
     public function testAddSuccessMessage(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addSuccess('success message');
+        $builder->success('success message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
+        $this->assertEquals(Type::SUCCESS, $envelope->getType());
         $this->assertEquals('success message', $envelope->getMessage());
     }
 
     public function testAddErrorMessage(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addError('error message');
+        $builder->error('error message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::ERROR, $envelope->getType());
+        $this->assertEquals(Type::ERROR, $envelope->getType());
         $this->assertEquals('error message', $envelope->getMessage());
     }
 
     public function testAddWarningMessage(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addWarning('warning message');
+        $builder->warning('warning message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::WARNING, $envelope->getType());
+        $this->assertEquals(Type::WARNING, $envelope->getType());
         $this->assertEquals('warning message', $envelope->getMessage());
     }
 
     public function testAddInfoMessage(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addInfo('info message');
+        $builder->info('info message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::INFO, $envelope->getType());
+        $this->assertEquals(Type::INFO, $envelope->getType());
         $this->assertEquals('info message', $envelope->getMessage());
     }
 
     public function testAddFlashMessage(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addFlash('success', 'success message');
+        $builder->flash('success', 'success message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
+        $this->assertEquals(Type::SUCCESS, $envelope->getType());
         $this->assertEquals('success message', $envelope->getMessage());
     }
 
     public function testPushToStorage(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
@@ -102,7 +110,7 @@ final class NotificationBuilderTest extends TestCase
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
+        $this->assertEquals(Type::SUCCESS, $envelope->getType());
     }
 
     public function testNotificationMessage(): void
@@ -148,41 +156,41 @@ final class NotificationBuilderTest extends TestCase
     public function testSuccessType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->success();
+        $builder->type('success');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
+        $this->assertEquals(Type::SUCCESS, $envelope->getType());
     }
 
     public function testErrorType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->error();
+        $builder->type('error');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::ERROR, $envelope->getType());
+        $this->assertEquals(Type::ERROR, $envelope->getType());
     }
 
     public function testInfoType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->info();
+        $builder->type('info');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::INFO, $envelope->getType());
+        $this->assertEquals(Type::INFO, $envelope->getType());
     }
 
     public function testWarningType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->warning();
+        $builder->type('warning');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::WARNING, $envelope->getType());
+        $this->assertEquals(Type::WARNING, $envelope->getType());
     }
 
     public function testWhenCondition(): void
@@ -191,9 +199,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->when(true);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\WhenStamp::class);
+        $stamp = $envelope->get(WhenStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\WhenStamp::class, $stamp);
+        $this->assertInstanceOf(WhenStamp::class, $stamp);
         $this->assertTrue($stamp->getCondition());
     }
 
@@ -203,9 +211,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->unless(true);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\UnlessStamp::class);
+        $stamp = $envelope->get(UnlessStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\UnlessStamp::class, $stamp);
+        $this->assertInstanceOf(UnlessStamp::class, $stamp);
         $this->assertTrue($stamp->getCondition());
     }
 
@@ -215,9 +223,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->priority(2);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PriorityStamp::class);
+        $stamp = $envelope->get(PriorityStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PriorityStamp::class, $stamp);
+        $this->assertInstanceOf(PriorityStamp::class, $stamp);
         $this->assertEquals(2, $stamp->getPriority());
     }
 
@@ -227,9 +235,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->hops(3);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\HopsStamp::class);
+        $stamp = $envelope->get(HopsStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\HopsStamp::class, $stamp);
+        $this->assertInstanceOf(HopsStamp::class, $stamp);
         $this->assertEquals(3, $stamp->getAmount());
     }
 
@@ -239,9 +247,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->keep();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\HopsStamp::class);
+        $stamp = $envelope->get(HopsStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\HopsStamp::class, $stamp);
+        $this->assertInstanceOf(HopsStamp::class, $stamp);
         $this->assertEquals(2, $stamp->getAmount());
     }
 
@@ -251,22 +259,10 @@ final class NotificationBuilderTest extends TestCase
         $builder->delay(3);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\DelayStamp::class);
+        $stamp = $envelope->get(DelayStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\DelayStamp::class, $stamp);
+        $this->assertInstanceOf(DelayStamp::class, $stamp);
         $this->assertEquals(3, $stamp->getDelay());
-    }
-
-    public function testNow(): void
-    {
-        $builder = $this->getNotificationBuilder();
-        $builder->now();
-
-        $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\DelayStamp::class);
-
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\DelayStamp::class, $stamp);
-        $this->assertEquals(0, $stamp->getDelay());
     }
 
     public function testTranslate(): void
@@ -275,105 +271,105 @@ final class NotificationBuilderTest extends TestCase
         $builder->translate(['foo' => 'bar'], 'ar');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\TranslationStamp::class);
+        $stamp = $envelope->get(TranslationStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\TranslationStamp::class, $stamp);
+        $this->assertInstanceOf(TranslationStamp::class, $stamp);
         $this->assertEquals('ar', $stamp->getLocale());
         $this->assertEquals(['foo' => 'bar'], $stamp->getParameters());
     }
 
     public function testAddPreset(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addPreset('entity_saved');
+        $builder->preset('entity_saved');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('entity_saved', $stamp->getPreset());
         $this->assertEquals([], $stamp->getParameters());
     }
 
     public function testAddOperation(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addPreset('saved');
+        $builder->preset('saved');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('saved', $stamp->getPreset());
         $this->assertEquals([], $stamp->getParameters());
     }
 
     public function testAddCreated(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addCreated();
+        $builder->created();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('created', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testAddUpdated(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addUpdated();
+        $builder->updated();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('updated', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testAddSaved(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addSaved();
+        $builder->saved();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('saved', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testAddDeleted(): void
     {
-        $storageManager = $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addDeleted();
+        $builder->deleted();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('deleted', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
@@ -384,9 +380,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->preset('entity_saved');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('entity_saved', $stamp->getPreset());
         $this->assertEquals([], $stamp->getParameters());
     }
@@ -397,9 +393,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->operation('someOperation');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('someOperation', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
@@ -410,9 +406,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->created();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('created', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
@@ -423,9 +419,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->updated();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('updated', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
@@ -435,9 +431,9 @@ final class NotificationBuilderTest extends TestCase
         $builder = $this->getNotificationBuilder();
         $builder->saved();
 
-        $stamp = $builder->getEnvelope()->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $builder->getEnvelope()->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('saved', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
@@ -447,9 +443,9 @@ final class NotificationBuilderTest extends TestCase
         $builder = $this->getNotificationBuilder();
         $builder->deleted();
 
-        $stamp = $builder->getEnvelope()->get(\Flasher\Prime\Stamp\PresetStamp::class);
+        $stamp = $builder->getEnvelope()->get(PresetStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresetStamp::class, $stamp);
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertEquals('deleted', $stamp->getPreset());
         $this->assertEquals(['resource' => 'resource'], $stamp->getParameters());
     }
@@ -467,6 +463,8 @@ final class NotificationBuilderTest extends TestCase
         $envelope = $builder->getEnvelope();
         $all = $envelope->all();
 
+        array_unshift($stamps, new PluginStamp('flasher'));
+
         $this->assertEquals($stamps, array_values($all));
     }
 
@@ -474,8 +472,8 @@ final class NotificationBuilderTest extends TestCase
     {
         $builder = $this->getNotificationBuilder();
 
-        $stamp = $this->getMockBuilder(\Flasher\Prime\Stamp\StampInterface::class)->getMock();
-        $builder->withStamp($stamp);
+        $stamp = $this->createMock(StampInterface::class);
+        $builder->with($stamp);
 
         $envelope = $builder->getEnvelope();
         $stamps = $envelope->all();
@@ -489,9 +487,9 @@ final class NotificationBuilderTest extends TestCase
         $builder->handler('flasher');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\PluginStamp::class);
+        $stamp = $envelope->get(PluginStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PluginStamp::class, $stamp);
+        $this->assertInstanceOf(PluginStamp::class, $stamp);
         $this->assertEquals('flasher', $stamp->getPlugin());
     }
 
@@ -501,19 +499,15 @@ final class NotificationBuilderTest extends TestCase
         $builder->context(['foo' => 'bar']);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get(\Flasher\Prime\Stamp\ContextStamp::class);
+        $stamp = $envelope->get(ContextStamp::class);
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\ContextStamp::class, $stamp);
+        $this->assertInstanceOf(ContextStamp::class, $stamp);
         $this->assertEquals(['foo' => 'bar'], $stamp->getContext());
     }
 
     public function testMacro(): void
     {
-        if (PHP_VERSION_ID < 50400) {
-            $this->markTestSkipped('Not working for PHP 5.3');
-        }
-
-        NotificationBuilder::macro('foo', static fn (): string => 'Called from a macro');
+        NotificationBuilder::macro('foo', fn (): string => 'Called from a macro');
 
         $builder = $this->getNotificationBuilder();
         $response = $builder->foo();
@@ -524,14 +518,12 @@ final class NotificationBuilderTest extends TestCase
 
     /**
      * @phpstan-param MockObject|StorageManagerInterface $storageManager
-     *
-     * @return NotificationBuilderInterface
      */
-    private function getNotificationBuilder(StorageManagerInterface $storageManager = null): NotificationBuilder
+    private function getNotificationBuilder(StorageManagerInterface $storageManager = null): NotificationBuilderInterface
     {
         /** @var StorageManagerInterface $storageManager */
-        $storageManager = $storageManager ?: $this->getMockBuilder(\Flasher\Prime\Storage\StorageManagerInterface::class)->getMock();
+        $storageManager = $storageManager ?: $this->createMock(StorageManagerInterface::class);
 
-        return new NotificationBuilder($storageManager, new Notification());
+        return new NotificationBuilder(new Notification(), $storageManager);
     }
 }

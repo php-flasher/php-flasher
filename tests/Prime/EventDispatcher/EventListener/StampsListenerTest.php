@@ -9,6 +9,11 @@ use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\AttachDefaultStampsListener;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Stamp\CreatedAtStamp;
+use Flasher\Prime\Stamp\DelayStamp;
+use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\PriorityStamp;
 use Flasher\Tests\Prime\TestCase;
 
 final class StampsListenerTest extends TestCase
@@ -19,7 +24,7 @@ final class StampsListenerTest extends TestCase
         $this->setProperty($eventDispatcher, 'listeners', []);
 
         $listener = new AttachDefaultStampsListener();
-        $eventDispatcher->addSubscriber($listener);
+        $eventDispatcher->addListener($listener);
 
         $envelopes = [
             new Envelope(new Notification()),
@@ -30,10 +35,10 @@ final class StampsListenerTest extends TestCase
 
         $envelopes = $event->getEnvelopes();
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\CreatedAtStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\CreatedAtStamp::class));
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\IdStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\IdStamp::class));
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\DelayStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\DelayStamp::class));
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\HopsStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\HopsStamp::class));
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PriorityStamp::class, $envelopes[0]->get(\Flasher\Prime\Stamp\PriorityStamp::class));
+        $this->assertInstanceOf(CreatedAtStamp::class, $envelopes[0]->get(CreatedAtStamp::class));
+        $this->assertInstanceOf(IdStamp::class, $envelopes[0]->get(IdStamp::class));
+        $this->assertInstanceOf(DelayStamp::class, $envelopes[0]->get(DelayStamp::class));
+        $this->assertInstanceOf(HopsStamp::class, $envelopes[0]->get(HopsStamp::class));
+        $this->assertInstanceOf(PriorityStamp::class, $envelopes[0]->get(PriorityStamp::class));
     }
 }

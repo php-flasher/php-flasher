@@ -7,7 +7,7 @@ namespace Flasher\Prime\Factory;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
- * @mixin NotificationBuilderInterface
+ * @mixin \Flasher\Prime\Notification\NotificationBuilderInterface
  */
 interface NotificationFactoryInterface
 {

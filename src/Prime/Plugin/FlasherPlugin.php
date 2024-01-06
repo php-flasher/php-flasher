@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Plugin;
 
+use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Type;
 
 final class FlasherPlugin extends Plugin
 {
+    public function getAlias(): string
+    {
+        return 'flasher';
+    }
+
     public function getName(): string
     {
         return 'flasher';
@@ -19,11 +25,14 @@ final class FlasherPlugin extends Plugin
         return 'flasher';
     }
 
-    public function getServiceAliases(): array
+    public function getFactory(): string
     {
-        return [
-            FlasherInterface::class,
-        ];
+        return NotificationFactory::class;
+    }
+
+    public function getServiceAliases(): string|array
+    {
+        return FlasherInterface::class;
     }
 
     public function getDefault(): string
@@ -46,11 +55,6 @@ final class FlasherPlugin extends Plugin
         return [
             'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.css',
         ];
-    }
-
-    public function getResourcesDir(): string
-    {
-        return realpath(__DIR__.'/../Resources') ?: '';
     }
 
     public function normalizeConfig(array $config = []): array
@@ -103,11 +107,6 @@ final class FlasherPlugin extends Plugin
             $config['plugins']['flasher']['options'] += $config['options'];
         }
 
-        foreach ($config['plugins'] as $name => $options) {
-            $config['plugins'][$name]['scripts'] = (array) ($options['scripts'] ?? []);
-            $config['plugins'][$name]['styles'] = (array) ($options['styles'] ?? []);
-        }
-
         return $config;
     }
 
@@ -145,8 +144,8 @@ final class FlasherPlugin extends Plugin
      * @param array{
      *     default?: string|null,
      *     root_script?: string|null,
-     *     auto_translate?: bool,
-     *     auto_render?: bool,
+     *     translate?: bool,
+     *     inject_assets?: bool,
      *     filter?: array<mixed>,
      *     scripts: string[],
      *     styles: string[],
@@ -158,8 +157,8 @@ final class FlasherPlugin extends Plugin
      * @return array{
      *     default: string|null,
      *     root_script: string|null,
-     *     auto_translate: bool,
-     *     auto_render: bool,
+     *     translate: bool,
+     *     inject_assets: bool,
      *     filter: array<mixed>,
      *     scripts: string[],
      *     styles: string[],
@@ -179,8 +178,8 @@ final class FlasherPlugin extends Plugin
 
         $config['default'] = array_key_exists('default', $config) ? $config['default'] : $this->getDefault();
         $config['root_script'] = array_key_exists('root_script', $config) ? $config['root_script'] : $this->getRootScript();
-        $config['auto_translate'] = array_key_exists('auto_translate', $config) ? $config['auto_translate'] : true;
-        $config['auto_render'] = array_key_exists('auto_render', $config) ? $config['auto_render'] : true;
+        $config['translate'] = array_key_exists('translate', $config) ? $config['translate'] : true;
+        $config['inject_assets'] = array_key_exists('inject_assets', $config) ? $config['inject_assets'] : true;
         $config['filter'] = array_key_exists('filter', $config) ? $config['filter'] : [];
         $config['presets'] = array_key_exists('presets', $config) ? $config['presets'] : $defaultPresets;
 
@@ -191,8 +190,8 @@ final class FlasherPlugin extends Plugin
      * @param array{
      *     default: string|null,
      *     root_script: string|null,
-     *     auto_translate: bool,
-     *     auto_render: bool,
+     *     translate: bool,
+     *     inject_assets: bool,
      *     filter: array<mixed>,
      *     scripts: string[],
      *     styles: string[],
@@ -205,8 +204,8 @@ final class FlasherPlugin extends Plugin
      * @return array{
      *      default: string|null,
      *      root_script: string|null,
-     *      auto_translate: bool,
-     *      auto_render: bool,
+     *      translate: bool,
+     *      inject_assets: bool,
      *      filter: array<mixed>,
      *      scripts: string[],
      *      styles: string[],
@@ -246,8 +245,8 @@ final class FlasherPlugin extends Plugin
      * @param array{
      *      default: string|null,
      *      root_script: string|null,
-     *      auto_translate: bool,
-     *      auto_render: bool,
+     *      translate: bool,
+     *      inject_assets: bool,
      *      filter: array<mixed>,
      *      scripts: string[],
      *      styles: string[],
@@ -260,8 +259,8 @@ final class FlasherPlugin extends Plugin
      * @return array{
      *      default: string|null,
      *      root_script: string|null,
-     *      auto_translate: bool,
-     *      auto_render: bool,
+     *      translate: bool,
+     *      inject_assets: bool,
      *      filter: array<mixed>,
      *      scripts: string[],
      *      styles: string[],

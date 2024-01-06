@@ -6,13 +6,13 @@ namespace Flasher\Laravel\Storage;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Session\SessionManager;
 
 final class SessionBag implements BagInterface
 {
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    public function __construct(private readonly Session $session)
+    public function __construct(private readonly SessionManager $session)
     {
     }
 

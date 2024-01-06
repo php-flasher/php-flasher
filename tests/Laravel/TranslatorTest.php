@@ -33,9 +33,8 @@ final class TranslatorTest extends TestCase
 
     private function getTranslator(): Translator
     {
-        /** @var \Illuminate\Translation\Translator $laravelTranslator */
-        $laravelTranslator = $this->app->make('translator');
+        $translator = $this->app->make('translator');
 
-        return new Translator($laravelTranslator);
+        return new Translator($translator);
     }
 }

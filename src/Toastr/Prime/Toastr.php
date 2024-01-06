@@ -8,7 +8,7 @@ use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
- * @mixin ToastrBuilder
+ * @mixin \Flasher\Toastr\Prime\ToastrBuilder
  */
 final class Toastr extends NotificationFactory implements ToastrInterface
 {

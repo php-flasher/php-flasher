@@ -4,87 +4,44 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Laravel;
 
-use Flasher\Laravel\Support\Laravel;
-use Illuminate\Config\Repository as Config;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Testbench\TestCase as Orchestra;
+use Illuminate\Support\ServiceProvider;
 
-class TestCase extends Orchestra
+class TestCase extends \Orchestra\Testbench\TestCase
 {
-    public function createApplication()
-    {
-        if (!str_starts_with(Application::VERSION, '4.0')) {
-            return parent::createApplication();
-        }
-
-        $app = new Application();
-
-        $app->detectEnvironment([
-            'local' => ['your-machine-name'],
-        ]);
-
-        $app->bindInstallPaths($this->getApplicationPaths());
-
-        $app['env'] = 'testing';
-
-        $app->instance('app', $app);
-
-        Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($app);
-
-        $config = new Config($app->getConfigLoader(), $app['env']);
-        $app->instance('config', $config);
-        $app->startExceptionHandling();
-
-        if ($app->runningInConsole()) {
-            $app->setRequestForConsoleEnvironment();
-        }
-
-        date_default_timezone_set($this->getApplicationTimezone());
-
-        $aliases = [...$this->getApplicationAliases(), ...$this->getPackageAliases()];
-        AliasLoader::getInstance($aliases)->register();
-
-        Request::enableHttpMethodParameterOverride();
-
-        $providers = array_merge($this->getApplicationProviders(), $this->getPackageProviders());
-        $app->getProviderRepository()->load($app, $providers);
-
-        $this->getEnvironmentSetUp($app);
-
-        $app->boot();
-
-        return $app;
-    }
-
     /**
-     * @param Application|null $app
-     *
-     * @return string[]
+     * @return array<class-string<ServiceProvider>>
      */
-    protected function getPackageProviders($app = null)
+    protected function getPackageProviders($app): array
     {
         return [
             \Flasher\Laravel\FlasherServiceProvider::class,
-            \Flasher\Noty\Laravel\FlasherNotyPluginServiceProvider::class,
-            \Flasher\Notyf\Laravel\FlasherNotyfPluginServiceProvider::class,
-            \Flasher\Pnotify\Laravel\FlasherPnotifyPluginServiceProvider::class,
-            \Flasher\SweetAlert\Laravel\FlasherSweetAlertPluginServiceProvider::class,
+            \Flasher\Noty\Laravel\FlasherNotyServiceProvider::class,
+            \Flasher\Notyf\Laravel\FlasherNotyfServiceProvider::class,
+            \Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider::class,
             \Flasher\Toastr\Laravel\FlasherToastrServiceProvider::class,
         ];
     }
 
     /**
-     * @param Application $app
+     * Override application aliases.
+     *
+     * @return array<string, class-string<Facade>>
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getPackageAliases($app): array
     {
-        $separator = Laravel::isVersion('4') ? '::config' : '';
+        return [
+            'Flasher' => \Flasher\Laravel\Facade\Flasher::class,
+            'Noty' => \Flasher\Noty\Laravel\Facade\Noty::class,
+            'Notyf' => \Flasher\Notyf\Laravel\Facade\Notyf::class,
+            'SweetAlert' => \Flasher\SweetAlert\Laravel\Facade\SweetAlert::class,
+            'Toastr' => \Flasher\Toastr\Laravel\Facade\Toastr::class,
+        ];
+    }
 
-        $app->make('config')->set('session.driver', 'array');
-        $app->make('config')->set('session'.$separator.'.driver', 'array');
+    protected function getEnvironmentSetUp($app): void
+    {
+        $config = $app->make('config');
+        $config->set('session.driver', 'array');
     }
 }

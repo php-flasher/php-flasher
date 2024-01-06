@@ -7,6 +7,7 @@ namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
+use Flasher\Prime\Exception\PresetNotFoundException;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\PresetStamp;
@@ -27,7 +28,7 @@ final class PresetListenerTest extends TestCase
                 'options' => ['timeout' => 2500],
             ],
         ]);
-        $eventDispatcher->addSubscriber($listener);
+        $eventDispatcher->addListener($listener);
 
         $envelopes = [
             new Envelope(new Notification(), new PresetStamp('entity_saved')),
@@ -49,8 +50,8 @@ final class PresetListenerTest extends TestCase
     public function testThrowExceptionIfPresetNotFound(): void
     {
         $this->setExpectedException(
-            \Flasher\Prime\Exception\PresetNotFoundException::class,
-            'Preset "entity_deleted" not found, did you forget to register it? Available presets: entity_saved'
+            PresetNotFoundException::class,
+            'Preset "entity_deleted" not found, did you forget to register it? Available presets: "entity_saved"'
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -64,7 +65,7 @@ final class PresetListenerTest extends TestCase
                 'options' => ['timeout' => 2500],
             ],
         ]);
-        $eventDispatcher->addSubscriber($listener);
+        $eventDispatcher->addListener($listener);
 
         $envelopes = [
             new Envelope(new Notification(), new PresetStamp('entity_deleted')),

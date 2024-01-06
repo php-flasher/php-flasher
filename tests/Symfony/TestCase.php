@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Symfony;
 
-use Flasher\Symfony\Bridge\Bridge;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TestCase extends \Flasher\Tests\Prime\TestCase
 {
-    protected function getContainer()
+    protected function getContainer(): ContainerInterface
     {
         $kernel = new FlasherKernel();
         $kernel->boot();
-
-        if (Bridge::versionCompare('4.1', '>=')) {
-            return $kernel->getContainer()->get('test.service_container');
-        }
 
         return $kernel->getContainer();
     }

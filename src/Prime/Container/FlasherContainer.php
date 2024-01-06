@@ -24,6 +24,11 @@ final class FlasherContainer
         self::$instance ??= new self($container);
     }
 
+    public static function reset(): void
+    {
+        self::$instance = null;
+    }
+
     public static function create(string $id): FlasherInterface|NotificationFactoryInterface
     {
         $instance = self::getInstance();

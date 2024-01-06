@@ -21,8 +21,8 @@ final class TranslationListenerTest extends TestCase
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new TranslationListener(new EchoTranslator(), true);
-        $eventDispatcher->addSubscriber($listener);
+        $listener = new TranslationListener(new EchoTranslator());
+        $eventDispatcher->addListener($listener);
 
         $notification = new Notification();
         $notification->setTitle('PHPFlasher');
@@ -51,8 +51,8 @@ final class TranslationListenerTest extends TestCase
         $eventDispatcher = new EventDispatcher();
         $this->setProperty($eventDispatcher, 'listeners', []);
 
-        $listener = new TranslationListener(new EchoTranslator(), false);
-        $eventDispatcher->addSubscriber($listener);
+        $listener = new TranslationListener(new EchoTranslator());
+        $eventDispatcher->addListener($listener);
 
         $notification = new Notification();
         $notification->setTitle('PHPFlasher');

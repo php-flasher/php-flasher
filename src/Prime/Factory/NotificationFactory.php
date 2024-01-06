@@ -11,7 +11,7 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\ForwardsCalls;
 
 /**
- * @mixin NotificationBuilderInterface
+ * @mixin \Flasher\Prime\Notification\NotificationBuilderInterface
  */
 class NotificationFactory implements NotificationFactoryInterface
 {

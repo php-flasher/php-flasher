@@ -11,8 +11,7 @@ return [
     |---------------------------------------------------------------------------
     | This option controls the default library that will be used by PHPFlasher
     | to display notifications in your Laravel application. PHPFlasher supports
-    | several libraries, including "flasher", "toastr", "noty", "notyf",
-    | "sweetalert" and "pnotify".
+    | several libraries, including "flasher", "toastr", "noty", "notyf" and "sweetalert".
     |
     | The "flasher" library is used by default. If you want to use a different
     | library, you will need to install it using composer. For example, to use
@@ -26,7 +25,6 @@ return [
     | "noty"       : composer require php-flasher/flasher-noty-laravel
     | "notyf"      : composer require php-flasher/flasher-notyf-laravel
     | "sweetalert" : composer require php-flasher/flasher-sweetalert-laravel
-    | "pnotify"    : composer require php-flasher/flasher-pnotify-laravel
     */
     'default' => 'flasher',
 
@@ -104,7 +102,7 @@ return [
     | set this option to 'false'. In this case, PHPFlasher will use the messages
     | as-is, without attempting to translate them.
     */
-    'auto_translate' => true,
+    'translate' => true,
 
     /*
     |---------------------------------------------------------------------------
@@ -121,7 +119,7 @@ return [
     | into the response, you can set this option to 'false'. In this case, you will
     | need to manually include the necessary files in your application's layout.
     */
-    'auto_render' => true,
+    'inject_assets' => true,
 
     'flash_bag' => [
         /*

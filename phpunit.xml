@@ -8,8 +8,14 @@
     cacheDirectory=".phpunit.cache"
 >
     <testsuites>
-        <testsuite name="default">
-            <directory>tests</directory>
+        <testsuite name="prime">
+            <directory>tests/Prime</directory>
+        </testsuite>
+        <testsuite name="laravel">
+            <directory>tests/Laravel</directory>
+        </testsuite>
+        <testsuite name="symfony">
+            <directory>tests/Symfony</directory>
         </testsuite>
     </testsuites>
     <coverage/>

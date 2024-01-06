@@ -43,9 +43,11 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
         /**
          * @var array{
          *     default: string,
+         *     root_script: string,
          *     presets: array<string, mixed>,
          *     flash_bag: array<string, mixed>,
          *     filter: array<string, mixed>,
+         *     plugins: array<array<string, mixed>>,
          * } $config
          */
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
@@ -63,18 +65,22 @@ final class FlasherExtension extends Extension implements CompilerPassInterface
     /**
      * @param array{
      *     default: string,
+     *     root_script: string,
      *     presets: array<string, mixed>,
      *     flash_bag: array<string, mixed>,
      *     filter: array<string, mixed>,
+     *     plugins: array<array<string, mixed>>,
      * } $config
      */
     private function registerFlasherParameters(array $config, ContainerBuilder $container): void
     {
         $container->setParameter('flasher', $config);
         $container->setParameter('flasher.default', $config['default']);
+        $container->setParameter('flasher.root_script', $config['root_script']);
         $container->setParameter('flasher.flash_bag', $config['flash_bag']);
         $container->setParameter('flasher.filter', $config['filter']);
         $container->setParameter('flasher.presets', $config['presets']);
+        $container->setParameter('flasher.plugins', $config['plugins']);
     }
 
     private function registerServicesForAutoconfiguration(ContainerBuilder $container): void

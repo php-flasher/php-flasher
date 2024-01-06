@@ -9,7 +9,6 @@ use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
 use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Laravel\Translation\Translator;
-use Flasher\Prime\Config\Config;
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
@@ -21,6 +20,7 @@ use Flasher\Prime\Http\ResponseExtension;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
+use Flasher\Prime\Storage\Filter\FilterFactory;
 use Flasher\Prime\Storage\Storage;
 use Flasher\Prime\Storage\StorageManager;
 use Illuminate\Foundation\Application;
@@ -28,22 +28,11 @@ use Illuminate\Routing\Router;
 
 final class FlasherServiceProvider extends PluginServiceProvider
 {
-    protected function afterBoot(): void
+    public function register(): void
     {
-        FlasherContainer::from($this->app);
+        $this->plugin = $this->createPlugin();
 
-        $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
-        $this->registerMiddlewares();
-    }
-
-    public function createPlugin(): FlasherPlugin
-    {
-        return new FlasherPlugin();
-    }
-
-    protected function afterRegister(): void
-    {
-        $this->registerConfig();
+        $this->registerConfiguration();
         $this->registerFlasher();
         $this->registerResourceManager();
         $this->registerResponseManager();
@@ -51,36 +40,31 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->registerEventDispatcher();
     }
 
-    private function registerConfig(): void
+    public function boot(): void
     {
-        $this->app->singleton('flasher.config', static function (Application $app) {
-            $config = $app->make('config');
+        FlasherContainer::from($this->app);
 
-            return new Config($config->get('flasher', []));
-        });
+        $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
+        $this->registerMiddlewares();
+    }
+
+    protected function createPlugin(): FlasherPlugin
+    {
+        return new FlasherPlugin();
     }
 
     private function registerFlasher(): void
     {
         $this->app->singleton('flasher', static function (Application $app) {
-            $config = $app->make('flasher.config');
+            $config = $app->make('config');
             $responseManager = $app->make('flasher.response_manager');
             $storageManager = $app->make('flasher.storage_manager');
 
-            return new Flasher($config->get('default'), $responseManager, $storageManager);
+            return new Flasher($config->get('flasher.default'), $responseManager, $storageManager);
         });
 
         $this->app->alias('flasher', Flasher::class);
         $this->app->bind(FlasherInterface::class, 'flasher');
-    }
-
-    private function registerResourceManager(): void
-    {
-        $this->app->singleton('flasher.resource_manager', static function (Application $app) {
-            $config = $app->make('flasher.config');
-
-            return new ResourceManager($config);
-        });
     }
 
     private function registerResponseManager(): void
@@ -94,18 +78,29 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
+    private function registerResourceManager(): void
+    {
+        $this->app->singleton('flasher.resource_manager', static function (Application $app) {
+            $config = $app->make('config')->get('flasher');
+
+            return new ResourceManager($config['root_script'], $config['plugins']);
+        });
+    }
+
     private function registerStorageManager(): void
     {
         $this->app->singleton('flasher.storage_manager', static function (Application $app) {
-            $config = $app->make('flasher.config');
+            $config = $app->make('config');
 
             $eventDispatcher = $app->make('flasher.event_dispatcher');
             $session = $app->make('session');
 
-            $storageBag = new Storage(new SessionBag($session));
-            $criteria = $config->get('filter_criteria', []);
+            $filterFactory = new FilterFactory();
 
-            return new StorageManager($storageBag, $eventDispatcher, $criteria);
+            $storageBag = new Storage(new SessionBag($session));
+            $criteria = $config->get('flasher.filter_criteria', []);
+
+            return new StorageManager($storageBag, $eventDispatcher, $filterFactory, $criteria);
         });
     }
 
@@ -113,12 +108,12 @@ final class FlasherServiceProvider extends PluginServiceProvider
     {
         $this->app->singleton('flasher.event_dispatcher', static function (Application $app) {
             $eventDispatcher = new EventDispatcher();
-            $config = $app->make('flasher.config');
+            $config = $app->make('config');
 
             $translatorListener = new TranslationListener(new Translator($app->make('translator')));
             $eventDispatcher->addListener($translatorListener);
 
-            $presetListener = new ApplyPresetListener($config->get('presets', []));
+            $presetListener = new ApplyPresetListener($config->get('flasher.presets', []));
             $eventDispatcher->addListener($presetListener);
 
             return $eventDispatcher;
@@ -145,8 +140,8 @@ final class FlasherServiceProvider extends PluginServiceProvider
     private function registerSessionMiddleware(): void
     {
         $this->app->singleton(SessionMiddleware::class, static function (Application $app) {
-            $config = $app->make('flasher.config');
-            $mapping = $config->get('flash_bag.mapping', []);
+            $config = $app->make('config');
+            $mapping = $config->get('flasher.flash_bag.mapping', []);
             $flasher = $app->make('flasher');
 
             return new SessionMiddleware(new RequestExtension($flasher, $mapping));

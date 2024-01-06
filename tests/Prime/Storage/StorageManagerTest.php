@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Storage;
 
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Storage\Filter\Filter;
+use Flasher\Prime\Storage\Filter\FilterFactoryInterface;
+use Flasher\Prime\Storage\StorageInterface;
 use Flasher\Prime\Storage\StorageManager;
 use Flasher\Tests\Prime\TestCase;
 
@@ -23,10 +27,13 @@ final class StorageManagerTest extends TestCase
             new Envelope(new Notification(), new IdStamp('4444')),
         ];
 
-        $storage = $this->getMockBuilder(\Flasher\Prime\Storage\StorageInterface::class)->getMock();
+        $storage = $this->createMock(StorageInterface::class);
         $storage->expects($this->once())->method('all')->willReturn($envelopes);
 
-        $storageManager = new StorageManager($storage);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $filterFactory = $this->createMock(FilterFactoryInterface::class);
+
+        $storageManager = new StorageManager($storage, $eventDispatcher, $filterFactory);
 
         $this->assertEquals($envelopes, $storageManager->all());
     }
@@ -35,83 +42,21 @@ final class StorageManagerTest extends TestCase
     {
         $envelopes = [
             new Envelope(new Notification(), new IdStamp('1111')),
-            new Envelope(new Notification(), new IdStamp('2222'), new HopsStamp(1), new DelayStamp(0)),
+            new Envelope(new Notification(), [new IdStamp('2222'), new HopsStamp(1), new DelayStamp(0)]),
             new Envelope(new Notification(), new IdStamp('3333')),
             new Envelope(new Notification(), new IdStamp('4444')),
         ];
 
-        $storage = $this->getMockBuilder(\Flasher\Prime\Storage\StorageInterface::class)->getMock();
+        $storage = $this->createMock(StorageInterface::class);
         $storage->expects($this->once())->method('all')->willReturn($envelopes);
 
-        $storageManager = new StorageManager($storage);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        $this->assertEquals([$envelopes[1]], $storageManager->filter());
-    }
+        $filterFactory = $this->createMock(FilterFactoryInterface::class);
+        $filterFactory->method('createFilter')->willReturn(new Filter());
 
-    public function testAddEnvelopes(): void
-    {
-        $envelopes = [
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        ];
+        $storageManager = new StorageManager($storage, $eventDispatcher, $filterFactory);
 
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
-
-        $this->assertEquals($envelopes, $storageManager->all());
-    }
-
-    public function testUpdateEnvelopes(): void
-    {
-        $envelopes = [
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        ];
-
-        $storageManager = new StorageManager();
-        $storageManager->update($envelopes);
-
-        $this->assertEquals($envelopes, $storageManager->all());
-    }
-
-    public function testRemoveEnvelopes(): void
-    {
-        $envelopes = [
-            new Envelope(new Notification(), new IdStamp('1111')),
-            new Envelope(new Notification(), new IdStamp('2222')),
-            new Envelope(new Notification(), new IdStamp('3333')),
-            new Envelope(new Notification(), new IdStamp('4444')),
-        ];
-
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
-
-        $storageManager->remove([
-            new Envelope(new Notification(), new IdStamp('2222')),
-            new Envelope(new Notification(), new IdStamp('3333')),
-        ]);
-
-        $this->assertEquals([$envelopes[0], $envelopes[3]], $storageManager->all());
-    }
-
-    public function testClearEnvelopes(): void
-    {
-        $envelopes = [
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        ];
-
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
-
-        $storageManager->clear();
-
-        $this->assertEquals([], $storageManager->all());
+        $this->assertEquals($envelopes, $storageManager->filter());
     }
 }

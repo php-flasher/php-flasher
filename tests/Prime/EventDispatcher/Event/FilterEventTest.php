@@ -14,6 +14,8 @@ final class FilterEventTest extends TestCase
 {
     public function testFilterEvent(): void
     {
+        $filter = new Filter();
+
         $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
@@ -21,14 +23,12 @@ final class FilterEventTest extends TestCase
             new Envelope(new Notification()),
         ];
 
-        $event = new FilterEvent($envelopes, ['limit' => 2]);
+        $criteria = ['limit' => 2];
 
-        $this->assertInstanceOf(\Flasher\Prime\Storage\Filter\Filter::class, $event->getFilter());
-        $this->assertEquals([$envelopes[0], $envelopes[1]], $event->getEnvelopes());
+        $event = new FilterEvent($filter, $envelopes, $criteria);
 
-        $filter = new Filter($envelopes, []);
-        $event->setFilter($filter);
-
-        $this->assertEquals($envelopes, $event->getEnvelopes());
+        $this->assertSame($filter, $event->getFilter());
+        $this->assertSame($envelopes, $event->getEnvelopes());
+        $this->assertSame($criteria, $event->getCriteria());
     }
 }

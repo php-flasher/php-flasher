@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\PluginStamp;
+use Flasher\Prime\Stamp\PresentableStampInterface;
+use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Tests\Prime\TestCase;
 
 final class HandlerStampTest extends TestCase
@@ -13,9 +15,9 @@ final class HandlerStampTest extends TestCase
     {
         $stamp = new PluginStamp('toastr');
 
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\StampInterface::class, $stamp);
-        $this->assertInstanceOf(\Flasher\Prime\Stamp\PresentableStampInterface::class, $stamp);
+        $this->assertInstanceOf(StampInterface::class, $stamp);
+        $this->assertInstanceOf(PresentableStampInterface::class, $stamp);
         $this->assertEquals('toastr', $stamp->getPlugin());
-        $this->assertEquals(['handler' => 'toastr'], $stamp->toArray());
+        $this->assertEquals(['plugin' => 'toastr'], $stamp->toArray());
     }
 }

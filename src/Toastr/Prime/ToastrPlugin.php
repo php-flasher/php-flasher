@@ -25,10 +25,7 @@ final class ToastrPlugin extends Plugin
 
     public function getScripts(): string|array
     {
-        return [
-            'https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js',
-            'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.js',
-        ];
+        return 'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@1.3.1/dist/flasher-toastr.min.js';
     }
 
     public function getStyles(): string

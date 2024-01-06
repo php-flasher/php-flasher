@@ -13,7 +13,7 @@ final class NotificationTest extends TestCase
     {
         $notification = new Notification();
 
-        $this->assertNull($notification->getType());
+        $this->assertEquals('', $notification->getType());
 
         $notification->setType('success');
 
@@ -24,7 +24,7 @@ final class NotificationTest extends TestCase
     {
         $notification = new Notification();
 
-        $this->assertNull($notification->getMessage());
+        $this->assertEquals('', $notification->getMessage());
 
         $notification->setMessage('success message');
 
@@ -35,7 +35,7 @@ final class NotificationTest extends TestCase
     {
         $notification = new Notification();
 
-        $this->assertNull($notification->getTitle());
+        $this->assertEquals('', $notification->getTitle());
 
         $notification->setTitle('success title');
 

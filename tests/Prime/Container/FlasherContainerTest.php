@@ -5,43 +5,50 @@ declare(strict_types=1);
 namespace Flasher\Tests\Prime\Container;
 
 use Flasher\Prime\Container\FlasherContainer;
+use Flasher\Prime\FlasherInterface;
 use Flasher\Tests\Prime\TestCase;
+use Psr\Container\ContainerInterface;
 
 final class FlasherContainerTest extends TestCase
 {
-    public function testInit(): void
+    protected function setUp(): void
     {
-        $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
-        $container = $this->getMockBuilder(\Flasher\Prime\Container\ContainerInterface::class)->getMock();
+        // Reset the FlasherContainer instance to ensure isolation between tests
+        FlasherContainer::reset();
+    }
+
+    public function testCreateReturnsCorrectType(): void
+    {
+        $flasher = $this->createMock(FlasherInterface::class);
+
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('get')->willReturn($flasher);
 
         FlasherContainer::from($container);
 
-        $property = $this->getProperty(\Flasher\Prime\Container\FlasherContainer::class, 'container');
-
-        $this->assertEquals($container, $property);
+        $this->assertInstanceOf(FlasherInterface::class, FlasherContainer::create('flasher'));
     }
 
-    public function testCreate(): void
+    public function testCreateThrowsExceptionForInvalidServiceType(): void
     {
-        $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected an instance of');
 
-        $container = $this->getMockBuilder(\Flasher\Prime\Container\ContainerInterface::class)->getMock();
-        $container
-            ->method('get')
-            ->willreturn($this->getMockBuilder(\Flasher\Prime\FlasherInterface::class)->getMock());
+        $invalidService = new \stdClass();
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('get')->willReturn($invalidService);
 
         FlasherContainer::from($container);
-
-        $service = FlasherContainer::create('flasher');
-
-        $this->assertInstanceOf(\Flasher\Prime\FlasherInterface::class, $service);
+        FlasherContainer::create('invalid_service');
     }
 
-    public function testThrowsExceptionIfNotInitialized(): void
+    public function testCreateThrowsExceptionIfNotInitialized(): void
     {
-        $this->setExpectedException('\LogicException', 'Container is not initialized yet. Container::init() must be called with a real container.');
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('FlasherContainer has not been initialized.');
 
-        $this->setProperty(\Flasher\Prime\Container\FlasherContainer::class, 'instance', null);
+        // Ensure that FlasherContainer is not initialized
+        FlasherContainer::reset();
 
         FlasherContainer::create('flasher');
     }

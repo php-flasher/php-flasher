@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Flasher\Prime;
 
 use Flasher\Prime\Factory\NotificationFactoryInterface;
-use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
- * @mixin NotificationBuilderInterface
+ * @mixin \Flasher\Prime\Notification\NotificationBuilderInterface
+ *
+ * @method NotificationFactoryInterface create(string $alias)
  */
 interface FlasherInterface
 {

@@ -42,8 +42,8 @@ final class PluginExtension extends Extension implements PrependExtensionInterfa
         $container->prependExtensionConfig('flasher', [
             'plugins' => [
                 $this->plugin->getAlias() => [
-                    'scripts' => $this->plugin->getScripts(),
-                    'styles' => $this->plugin->getStyles(),
+                    'scripts' => (array) $this->plugin->getScripts(),
+                    'styles' => (array) $this->plugin->getStyles(),
                     'options' => $this->plugin->getOptions(),
                 ],
             ],

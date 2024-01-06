@@ -12,10 +12,5 @@ expectedArguments(\Flasher\Noty\Prime\NotyBuilder::sounds(), 0, 'sources', 'volu
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::docTitle(), 0, 'conditions');
 expectedArguments(\Flasher\Noty\Prime\NotyBuilder::queue(), 0, 'global');
 
-override(\Flasher\Prime\FlasherInterface::create(), map([
-    'noty' => \Flasher\Noty\Prime\NotyFactory::class
-]));
-
-override(\Flasher\Prime\FlasherInterface::using(), map([
-    'noty' => \Flasher\Noty\Prime\NotyFactory::class
-]));
+override(\Flasher\Prime\FlasherInterface::use(), map(['noty' => \Flasher\Noty\Prime\NotyInterface::class]));
+override(\Flasher\Prime\Container\FlasherContainer::create(), map(['flasher.noty' => \Flasher\Noty\Prime\NotyInterface::class]));

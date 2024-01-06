@@ -67,6 +67,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * click, button.
+     *
+     * @param string|string[] $closeWith
      */
     public function closeWith(string|array $closeWith): self
     {
@@ -157,6 +159,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * An array of Noty.button, for creating confirmation dialogs.
+     *
+     * @param string[] $buttons
      */
     public function buttons(array $buttons): self
     {

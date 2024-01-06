@@ -36,7 +36,7 @@ final class StorageTest extends TestCase
             new Envelope(new Notification()),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
     }
 
@@ -52,7 +52,7 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $envelopes[1]->withStamp(new PriorityStamp(1));
@@ -77,7 +77,7 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->remove($envelopes[1]);
@@ -96,10 +96,10 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
-        $storage->remove($envelopes);
+        $storage->remove(...$envelopes);
         $this->assertEquals([], $storage->all());
     }
 
@@ -115,7 +115,7 @@ final class StorageTest extends TestCase
             ]),
         ];
 
-        $storage->add($envelopes);
+        $storage->add(...$envelopes);
         $this->assertEquals($envelopes, $storage->all());
 
         $storage->clear();
@@ -124,7 +124,6 @@ final class StorageTest extends TestCase
 
     private function getStorage(): Storage
     {
-        /** @var \Illuminate\Session\Store $session */
         $session = $this->app->make('session');
 
         return new Storage(new SessionBag($session));

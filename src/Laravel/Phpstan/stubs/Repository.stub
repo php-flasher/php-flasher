@@ -1,0 +1,44 @@
+<?php
+
+namespace Illuminate\Contracts\Config;
+
+/**
+ * @phpstan-type ConfigType array{
+ *     default: string,
+ *     root_script: string,
+ *     translate: bool,
+ *     inject_assets: bool,
+ *     filter: array<mixed>,
+ *     scripts: string[],
+ *     styles: string[],
+ *     options: array<string, mixed>,
+ *     presets: array<string, mixed>,
+ *     plugins: array<string, array{
+ *         scripts?: string[],
+ *         styles?: string[],
+ *         options?: array<string, mixed>,
+ *     }>,
+ * }
+ *
+ * @phpstan-type PresetType array{
+ *     type: string,
+ *     title: string,
+ *     message: string,
+ *     options: array<string, mixed>,
+ * }
+ */
+interface Repository
+{
+    /**
+     * @param  string[]|string  $key
+     * @param  mixed  $default
+     *
+     * @return ($key is 'flasher' ? ConfigType :
+     *            ($key is 'flasher.default' ? string :
+     *            ($key is 'flasher.filter_criteria' ? array<string, mixed> :
+     *            ($key is 'flasher.presets' ? array<string, PresetType> :
+     *            ($key is 'flasher.flash_bag.mapping' ? array<string, string[]> :
+     *                  mixed)))))
+     */
+    public function get($key, $default = null);
+}

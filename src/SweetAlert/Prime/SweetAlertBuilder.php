@@ -8,13 +8,6 @@ use Flasher\Prime\Notification\NotificationBuilder;
 
 final class SweetAlertBuilder extends NotificationBuilder
 {
-    public function types(string $type, $message = null, $title = null, array $options = []): SweetAlertBuilder
-    {
-        $this->icon($type);
-
-        return parent::type($type, $message, $title, $options);
-    }
-
     /**
      * Display a question typed alert message.
      *
@@ -66,7 +59,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function html(mixed $html)
+    public function html(mixed $html): self
     {
         $this->option('html', $html);
 
@@ -77,17 +70,15 @@ final class SweetAlertBuilder extends NotificationBuilder
      * A description for the popup. If "text" and "html" parameters are provided in the same time, "text" will be used.
      *
      * @param string $text
-     *
-     * @return static
      */
-    public function text(mixed $text)
+    public function text(mixed $text): self
     {
         $this->option('text', $text);
 
         return $this;
     }
 
-    public function messages(string $message)
+    public function messages(string $message): self
     {
         parent::message($message);
 
@@ -103,7 +94,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function icon(mixed $icon)
+    public function icon(mixed $icon): self
     {
         $this->option('icon', $icon);
 
@@ -117,7 +108,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function iconColor(mixed $iconColor)
+    public function iconColor(mixed $iconColor): self
     {
         $this->option('iconColor', $iconColor);
 
@@ -131,7 +122,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function iconHtml(mixed $iconHtml)
+    public function iconHtml(mixed $iconHtml): self
     {
         $this->option('iconHtml', $iconHtml);
 
@@ -146,7 +137,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      *
      * @return static
      */
-    public function showClass($showClass, $value)
+    public function showClass($showClass, $value): self
     {
         $option = $this->getEnvelope()->getOption('showClass', []);
         $option[$showClass] = $value; // @phpstan-ignore-line
