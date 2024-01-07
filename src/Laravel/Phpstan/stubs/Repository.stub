@@ -10,12 +10,11 @@ use Flasher\Prime\Plugin\FlasherPlugin;
  *     root_script: string,
  *     translate: bool,
  *     inject_assets: bool,
- *     filter: array<mixed>,
  *     scripts: string[],
  *     styles: string[],
  *     options: array<string, mixed>,
  *     filter: array<string, mixed>,
- *     flash_bag: array{mapping: array<string, string[]>},
+ *     flash_bag: array{mapping?: array<string, string[]>},
  *     presets: array<string, array{
  *         type: string,
  *         title: string,

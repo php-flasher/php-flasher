@@ -37,6 +37,7 @@
         "illuminate/support": "^10.0",
         "larastan/larastan": "^2.6",
         "livewire/livewire": "^3.0",
+        "matthiasnoback/symfony-config-test": "^5.1",
         "orchestra/testbench": "^8.17",
         "overtrue/phplint": "^9.0",
         "phpstan/phpstan": "^1.10",

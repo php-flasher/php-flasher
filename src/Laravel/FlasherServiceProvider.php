@@ -141,7 +141,7 @@ final class FlasherServiceProvider extends PluginServiceProvider
             $config = $app->make('config')->get('flasher');
 
             $flasher = $app->make('flasher');
-            $mapping = $config['flash_bag']['mapping'];
+            $mapping = $config['flash_bag']['mapping'] ?? [];
 
             return new SessionMiddleware(new RequestExtension($flasher, $mapping));
         });

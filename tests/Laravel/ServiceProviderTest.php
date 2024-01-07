@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Laravel;
 
-use Flasher\Prime\FlasherInterface;
-
 final class ServiceProviderTest extends TestCase
 {
     public function testContainerContainServices(): void
