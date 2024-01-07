@@ -7,3 +7,8 @@ node_modules/
 .phpunit.cache/
 .phpstan.cache/
 .phplint.cache/
+
+.php-cs-fixer.php
+phpunit.xml
+taskfile.yml
+phpstan.neon
