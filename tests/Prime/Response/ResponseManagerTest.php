@@ -131,7 +131,8 @@ JAVASCRIPT;
 
     public function testItThrowsExceptionIfPresenterNotFound(): void
     {
-        $this->setExpectedException('\InvalidArgumentException', 'Presenter [xml] not supported.');
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage('Presenter [xml] not supported.');
 
         $resourceManager = $this->createMock(ResourceManagerInterface::class);
         $resourceManager->method('populateResponse')->willReturnArgument(0);

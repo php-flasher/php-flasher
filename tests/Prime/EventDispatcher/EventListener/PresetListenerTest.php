@@ -49,8 +49,10 @@ final class PresetListenerTest extends TestCase
 
     public function testThrowExceptionIfPresetNotFound(): void
     {
-        $this->setExpectedException(
-            PresetNotFoundException::class,
+        $this->expectException(
+            PresetNotFoundException::class
+        );
+        $this->expectExceptionMessage(
             'Preset "entity_deleted" not found, did you forget to register it? Available presets: "entity_saved"'
         );
 
