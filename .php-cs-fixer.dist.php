@@ -7,6 +7,7 @@ return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12' => true,
+        '@PHPUnit75Migration:risky' => true,
         '@PHP71Migration' => true,
         '@Symfony' => true,
         'declare_strict_types' => true,
