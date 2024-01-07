@@ -2,6 +2,8 @@
 
 namespace Illuminate\Contracts\Config;
 
+use Flasher\Prime\Plugin\FlasherPlugin;
+
 /**
  * @phpstan-type ConfigType array{
  *     default: string,
@@ -12,19 +14,19 @@ namespace Illuminate\Contracts\Config;
  *     scripts: string[],
  *     styles: string[],
  *     options: array<string, mixed>,
- *     presets: array<string, mixed>,
+ *     filters: array<string, mixed>,
+ *     flash_bag: array{mapping: array<string, string[]>},
+ *     presets: array<string, array{
+ *         type: string,
+ *         title: string,
+ *         message: string,
+ *         options: array<string, mixed>,
+ *     }>,
  *     plugins: array<string, array{
  *         scripts?: string[],
  *         styles?: string[],
  *         options?: array<string, mixed>,
  *     }>,
- * }
- *
- * @phpstan-type PresetType array{
- *     type: string,
- *     title: string,
- *     message: string,
- *     options: array<string, mixed>,
  * }
  */
 interface Repository
@@ -33,12 +35,7 @@ interface Repository
      * @param  string[]|string  $key
      * @param  mixed  $default
      *
-     * @return ($key is 'flasher' ? ConfigType :
-     *            ($key is 'flasher.default' ? string :
-     *            ($key is 'flasher.filter_criteria' ? array<string, mixed> :
-     *            ($key is 'flasher.presets' ? array<string, PresetType> :
-     *            ($key is 'flasher.flash_bag.mapping' ? array<string, string[]> :
-     *                  mixed)))))
+     * @return ($key is 'flasher' ? ConfigType : mixed)
      */
     public function get($key, $default = null);
 }

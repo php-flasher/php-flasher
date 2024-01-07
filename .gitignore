@@ -1,10 +1,9 @@
 .idea/
-vendor/
-composer.lock
-.phpunit.result.cache
-.phpcs-cache
-.php-cs-fixer.cache
 
+vendor/
 node_modules/
-coverage/
+
+.php-cs-fixer.cache
 .phpunit.cache/
+.phpstan.cache/
+.phplint.cache/

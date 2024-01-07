@@ -471,7 +471,7 @@ final class SweetAlertBuilder extends NotificationBuilder
         mixed $showConfirmButton = true,
         $confirmButtonText = null,
         $confirmButtonColor = null,
-        $confirmButtonAriaLabel = null
+        $confirmButtonAriaLabel = null,
     ) {
         $this->option('showConfirmButton', $showConfirmButton);
 
@@ -504,7 +504,7 @@ final class SweetAlertBuilder extends NotificationBuilder
         mixed $showDenyButton = true,
         $denyButtonText = null,
         $denyButtonColor = null,
-        $denyButtonAriaLabel = null
+        $denyButtonAriaLabel = null,
     ) {
         $this->option('showDenyButton', $showDenyButton);
 
@@ -539,7 +539,7 @@ final class SweetAlertBuilder extends NotificationBuilder
         mixed $showCancelButton = true,
         $cancelButtonText = null,
         $cancelButtonColor = null,
-        $cancelButtonAriaLabel = null
+        $cancelButtonAriaLabel = null,
     ) {
         $this->option('showCancelButton', $showCancelButton);
 

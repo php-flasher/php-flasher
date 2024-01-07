@@ -25,7 +25,7 @@ final class Envelope implements NotificationInterface
      */
     public function __construct(
         private readonly NotificationInterface $notification,
-        array|StampInterface $stamps = []
+        array|StampInterface $stamps = [],
     ) {
         $stamps = $stamps instanceof StampInterface ? [$stamps] : $stamps;
 

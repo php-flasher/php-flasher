@@ -184,7 +184,7 @@ return [
     |     'limit' => 5,
     |     'types' => ['error'],
     */
-    'filter_criteria' => [
+    'filters' => [
         'limit' => 5, // Limit the number of notifications to display
     ],
 ];

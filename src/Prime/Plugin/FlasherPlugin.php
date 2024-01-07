@@ -8,6 +8,31 @@ use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Type;
 
+/**
+ * @phpstan-type ConfigType array{
+ *     default: string,
+ *     root_script: string,
+ *     translate: bool,
+ *     inject_assets: bool,
+ *     filter: array<mixed>,
+ *     scripts: string[],
+ *     styles: string[],
+ *     options: array<string, mixed>,
+ *     filters: array<string, mixed>,
+ *     flash_bag: array{mapping: array<string, string[]>},
+ *     presets: array<string, array{
+ *         type: string,
+ *         title: string,
+ *         message: string,
+ *         options: array<string, mixed>,
+ *     }>,
+ *     plugins: array<string, array{
+ *         scripts?: string[],
+ *         styles?: string[],
+ *         options?: array<string, mixed>,
+ *     }>,
+ * }
+ */
 final class FlasherPlugin extends Plugin
 {
     public function getAlias(): string

@@ -8,3 +8,7 @@ parameters:
     level: 9
     paths:
         - src/
+    tmpDir: .phpstan.cache
+    ignoreErrors:
+        - message: '#Undefined array key "filters"#'
+          path: src/Laravel/FlasherServiceProvider.php

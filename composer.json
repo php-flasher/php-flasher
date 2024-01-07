@@ -38,6 +38,7 @@
         "larastan/larastan": "^2.6",
         "livewire/livewire": "^3.0",
         "orchestra/testbench": "^8.17",
+        "overtrue/phplint": "^9.0",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-symfony": "^1.3",
         "phpunit/phpunit": "^10.5",

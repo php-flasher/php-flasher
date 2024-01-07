@@ -9,3 +9,5 @@ override(\Illuminate\Foundation\Application::make(0), map([
     'translator' => \Illuminate\Translation\Translator::class,
     'livewire' => \Livewire\LivewireManager::class,
 ]));
+
+expectedArguments(\Illuminate\Contracts\Config\Repository::get(), 0, 'flasher');
