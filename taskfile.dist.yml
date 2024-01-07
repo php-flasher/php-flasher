@@ -32,6 +32,7 @@ tasks:
             - composer validate --strict
             - vendor/bin/phplint
         aliases:
+            - pint
             - check
             - validate
 
