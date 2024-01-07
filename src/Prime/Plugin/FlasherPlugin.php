@@ -155,7 +155,7 @@ final class FlasherPlugin extends Plugin
     private function normalizePresets(array $config): array
     {
         foreach ($config['presets'] ?? [] as $name => $options) {
-            if (is_string($options)) {
+            if (\is_string($options)) {
                 $options = ['message' => $options];
             }
 
@@ -201,12 +201,12 @@ final class FlasherPlugin extends Plugin
             'deleted' => ['type' => Type::SUCCESS, 'message' => 'The resource was deleted'],
         ];
 
-        $config['default'] = array_key_exists('default', $config) ? $config['default'] : $this->getDefault();
-        $config['root_script'] = array_key_exists('root_script', $config) ? $config['root_script'] : $this->getRootScript();
-        $config['translate'] = array_key_exists('translate', $config) ? $config['translate'] : true;
-        $config['inject_assets'] = array_key_exists('inject_assets', $config) ? $config['inject_assets'] : true;
-        $config['filter'] = array_key_exists('filter', $config) ? $config['filter'] : [];
-        $config['presets'] = array_key_exists('presets', $config) ? $config['presets'] : $defaultPresets;
+        $config['default'] = \array_key_exists('default', $config) ? $config['default'] : $this->getDefault();
+        $config['root_script'] = \array_key_exists('root_script', $config) ? $config['root_script'] : $this->getRootScript();
+        $config['translate'] = \array_key_exists('translate', $config) ? $config['translate'] : true;
+        $config['inject_assets'] = \array_key_exists('inject_assets', $config) ? $config['inject_assets'] : true;
+        $config['filter'] = \array_key_exists('filter', $config) ? $config['filter'] : [];
+        $config['presets'] = \array_key_exists('presets', $config) ? $config['presets'] : $defaultPresets;
 
         return $config;
     }
@@ -249,8 +249,8 @@ final class FlasherPlugin extends Plugin
             'info' => ['info', 'notice', 'alert'],
         ];
 
-        if (array_key_exists('flash_bag', $config) && $config['flash_bag']) {
-            if (!is_array($config['flash_bag'])) {
+        if (\array_key_exists('flash_bag', $config) && $config['flash_bag']) {
+            if (!\is_array($config['flash_bag'])) {
                 $config['flash_bag'] = [];
             }
 

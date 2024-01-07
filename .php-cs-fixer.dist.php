@@ -10,6 +10,7 @@ return (new PhpCsFixer\Config())
         '@PHPUnit75Migration:risky' => true,
         '@PHP71Migration' => true,
         '@Symfony' => true,
+        '@Symfony:risky' => true,
         'declare_strict_types' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays', 'match', 'parameters']],
     ])

@@ -57,7 +57,7 @@ trait Macroable
         foreach ($methods as $method) {
             $macro = $method->invoke($mixin);
 
-            if (!is_callable($macro) && !is_object($macro)) {
+            if (!\is_callable($macro) && !\is_object($macro)) {
                 throw new \InvalidArgumentException(sprintf('Expect the result of method %s::%s from the mixin object to be be a callable or an object, got "%s".', $mixin::class, $method->name, get_debug_type($macro)));
             }
 
@@ -94,7 +94,7 @@ trait Macroable
             $macro = $macro->bindTo(null, static::class);
         }
 
-        if (!is_callable($macro)) {
+        if (!\is_callable($macro)) {
             throw new \BadMethodCallException(sprintf('Macro %s is not callable.', $method));
         }
 
@@ -124,7 +124,7 @@ trait Macroable
             $macro = $macro->bindTo($this, static::class);
         }
 
-        if (!is_callable($macro)) {
+        if (!\is_callable($macro)) {
             throw new \BadMethodCallException(sprintf('Macro %s is not callable.', $method));
         }
 

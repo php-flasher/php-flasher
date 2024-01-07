@@ -23,7 +23,7 @@ final class FlashHelperExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
-        return in_array($functionReflection->getName(), [
+        return \in_array($functionReflection->getName(), [
             'flash',
             'noty',
             'notyf',
@@ -36,7 +36,7 @@ final class FlashHelperExtension implements DynamicFunctionReturnTypeExtension
     {
         var_dump('ok');
 
-        if (count($functionCall->getArgs())) {
+        if (\count($functionCall->getArgs())) {
             return new ObjectType(Envelope::class);
         }
 

@@ -16,7 +16,7 @@ class NotificationBuilder implements NotificationBuilderInterface
 
     public function __construct(string|NotificationInterface $notification, StorageManagerInterface $storageManager)
     {
-        if (is_string($notification)) {
+        if (\is_string($notification)) {
             $plugin = new PluginStamp($notification);
 
             $notification = Envelope::wrap(new Notification());

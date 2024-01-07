@@ -47,7 +47,7 @@ trait MethodAliasResolver
      */
     protected function hasMethodAlias(string $method): bool
     {
-        return array_key_exists($method, $this->methodAliases);
+        return \array_key_exists($method, $this->methodAliases);
     }
 
     /**

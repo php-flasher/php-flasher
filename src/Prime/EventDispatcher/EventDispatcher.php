@@ -33,7 +33,7 @@ final class EventDispatcher implements EventDispatcherInterface
                 break;
             }
 
-            if (!is_callable($listener)) {
+            if (!\is_callable($listener)) {
                 throw new \InvalidArgumentException(sprintf('Listener "%s" is not callable. Listeners must implement __invoke method.', $listener::class));
             }
 

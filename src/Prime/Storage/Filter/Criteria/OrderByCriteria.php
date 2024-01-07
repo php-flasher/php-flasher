@@ -48,7 +48,7 @@ final class OrderByCriteria implements CriteriaInterface
 
     public function __construct(mixed $criteria)
     {
-        if (!is_string($criteria) && !is_array($criteria)) {
+        if (!\is_string($criteria) && !\is_array($criteria)) {
             throw new \InvalidArgumentException(sprintf('Invalid type for criteria "order_by". Expect a "string" or an "array", got "%s".', get_debug_type($criteria)));
         }
 
@@ -58,13 +58,13 @@ final class OrderByCriteria implements CriteriaInterface
                 $direction = self::ASC;
             }
 
-            if (!is_string($field)) {
+            if (!\is_string($field)) {
                 throw new \InvalidArgumentException(sprintf('Invalid Field value, must be "string", got "%s".', get_debug_type($field)));
             }
 
             $direction = strtoupper((string) $direction);
 
-            if (!in_array($direction, [self::ASC, self::DESC], true)) {
+            if (!\in_array($direction, [self::ASC, self::DESC], true)) {
                 throw new \InvalidArgumentException(sprintf('Invalid ordering direction: must be "ASC" or "DESC", got "%s".', $direction));
             }
 

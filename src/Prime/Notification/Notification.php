@@ -107,7 +107,7 @@ final class Notification implements NotificationInterface
      */
     public function getOption(string $name, mixed $default = null): mixed
     {
-        return array_key_exists($name, $this->options)
+        return \array_key_exists($name, $this->options)
             ? $this->options[$name]
             : $default;
     }

@@ -8,7 +8,7 @@ use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Type;
 
-if (!\function_exists('flash')) {
+if (!function_exists('flash')) {
     /**
      * Creates a flash message or returns the Flasher factory.
      *
@@ -35,7 +35,7 @@ if (!\function_exists('flash')) {
     {
         $factory = FlasherContainer::create('flasher');
 
-        if (0 === \func_num_args()) {
+        if (0 === func_num_args()) {
             return $factory;
         }
 

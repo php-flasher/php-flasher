@@ -33,7 +33,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
-        return $method->invokeArgs(is_string($object) ? null : $object, $parameters);
+        return $method->invokeArgs(\is_string($object) ? null : $object, $parameters);
     }
 
     /**
@@ -52,7 +52,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $property->setAccessible(true);
 
         // Ensure that an object instance is provided for non-static properties
-        if (is_string($object)) {
+        if (\is_string($object)) {
             if (!$property->isStatic()) {
                 throw new \InvalidArgumentException("An instance of the class is required to access the non-static property '{$propertyName}'.");
             }
@@ -77,6 +77,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 
-        $property->setValue(is_string($object) ? null : $object, $value);
+        $property->setValue(\is_string($object) ? null : $object, $value);
     }
 }

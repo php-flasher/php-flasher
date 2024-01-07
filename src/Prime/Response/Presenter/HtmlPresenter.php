@@ -17,7 +17,7 @@ final class HtmlPresenter implements PresenterInterface
      */
     public function render(Response $response): string
     {
-        $options = json_encode($response->toArray(), JSON_THROW_ON_ERROR);
+        $options = json_encode($response->toArray(), \JSON_THROW_ON_ERROR);
         $context = $response->getContext();
 
         if ($context['envelopes_only'] ?? false) {

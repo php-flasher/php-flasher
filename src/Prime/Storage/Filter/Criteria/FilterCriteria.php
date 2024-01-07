@@ -16,7 +16,7 @@ final class FilterCriteria implements CriteriaInterface
      */
     public function __construct(mixed $criteria)
     {
-        if (!$criteria instanceof \Closure && !is_array($criteria)) {
+        if (!$criteria instanceof \Closure && !\is_array($criteria)) {
             throw new \InvalidArgumentException(sprintf('Invalid type for criteria "filter". Expect a closure or array of closure, got "%s".', get_debug_type($criteria)));
         }
 

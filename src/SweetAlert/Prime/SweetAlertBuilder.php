@@ -14,7 +14,7 @@ final class SweetAlertBuilder extends NotificationBuilder
      * @param string               $message
      * @param array<string, mixed> $options
      */
-    public function question($message = null, array $options = []): SweetAlertBuilder
+    public function question($message = null, array $options = []): self
     {
         $this->showCancelButton();
 

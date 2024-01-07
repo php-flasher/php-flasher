@@ -18,7 +18,7 @@ final class StampsCriteria implements CriteriaInterface
 
     public function __construct(mixed $criteria, private readonly string $strategy = self::STRATEGY_AND)
     {
-        if (!is_array($criteria)) {
+        if (!\is_array($criteria)) {
             throw new \InvalidArgumentException("Invalid type for criteria 'stamps'.");
         }
 

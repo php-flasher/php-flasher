@@ -10,7 +10,7 @@ final class LimitCriteria implements CriteriaInterface
 
     public function __construct(mixed $criteria)
     {
-        if (!is_int($criteria)) {
+        if (!\is_int($criteria)) {
             throw new \InvalidArgumentException("Invalid type for criteria 'limit'.");
         }
 

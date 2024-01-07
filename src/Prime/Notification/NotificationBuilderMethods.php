@@ -157,8 +157,8 @@ trait NotificationBuilderMethods
             $condition = $condition($this->envelope);
         }
 
-        if (!is_bool($condition)) {
-            $type = gettype($condition);
+        if (!\is_bool($condition)) {
+            $type = \gettype($condition);
 
             throw new \InvalidArgumentException(sprintf('The condition must be a boolean or a closure that returns a boolean. Got: %s', $type));
         }

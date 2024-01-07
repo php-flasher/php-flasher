@@ -53,7 +53,7 @@ final class Request implements RequestInterface
 
         $type = $session?->get($type);
 
-        if (!is_string($type) && !is_array($type)) {
+        if (!\is_string($type) && !\is_array($type)) {
             return [];
         }
 
