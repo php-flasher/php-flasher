@@ -5,7 +5,7 @@
     bootstrap="vendor/autoload.php"
     colors="true"
     stopOnFailure="true"
-    cacheDirectory=".phpunit.cache"
+    cacheDirectory=".cache/phpunit/"
 >
     <testsuites>
         <testsuite name="prime">

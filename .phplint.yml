@@ -5,3 +5,5 @@ jobs: 10
 
 extensions:
     - php
+
+cache: .cache/phplint/

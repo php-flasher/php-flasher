@@ -3,10 +3,10 @@
 vendor/
 node_modules/
 
-.php-cs-fixer.cache/
-.phpunit.cache/
-.phpstan.cache/
-.phplint.cache/
+.cache/php-cs-fixer/
+.cache/phpunit/
+.cache/phpstan/
+.cache/phplint/
 
 .php-cs-fixer.php
 phpunit.xml

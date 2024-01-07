@@ -14,7 +14,7 @@ use Flasher\Prime\Plugin\FlasherPlugin;
  *     scripts: string[],
  *     styles: string[],
  *     options: array<string, mixed>,
- *     filters: array<string, mixed>,
+ *     filter: array<string, mixed>,
  *     flash_bag: array{mapping: array<string, string[]>},
  *     presets: array<string, array{
  *         type: string,

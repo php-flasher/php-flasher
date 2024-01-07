@@ -28,4 +28,4 @@ return (new PhpCsFixer\Config())
         'trailing_comma_in_multiline' => ['elements' => ['arrays', 'match', 'parameters']],
     ])
     ->setFinder($finder)
-    ->setCacheFile('.php-cs-fixer.cache/cache.json');
+    ->setCacheFile('.cache/php-cs-fixer/cache.json');

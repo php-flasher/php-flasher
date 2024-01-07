@@ -95,7 +95,7 @@ final class FlasherServiceProvider extends PluginServiceProvider
             $storageBag = new Storage(new SessionBag($app->make('session')));
             $eventDispatcher = $app->make('flasher.event_dispatcher');
             $filterFactory = new FilterFactory();
-            $criteria = $config['filters'];
+            $criteria = $config['filter'];
 
             return new StorageManager($storageBag, $eventDispatcher, $filterFactory, $criteria);
         });

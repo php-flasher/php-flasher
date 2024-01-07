@@ -25,7 +25,6 @@ final class ServiceProviderTest extends TestCase
 
     public function testFlasherCanCreateServicesFromAlias(): void
     {
-        /** @var FlasherInterface $flasher */
         $flasher = $this->app->make('flasher');
 
         $adapter = $flasher->use('noty');

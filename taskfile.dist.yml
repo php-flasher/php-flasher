@@ -43,3 +43,4 @@ tasks:
         aliases:
             - tests
             - phpunit
+            - unit
