@@ -25,7 +25,7 @@ final class AttachDefaultStampsListener implements EventListenerInterface
         }
     }
 
-    public static function getSubscribedEvents(): string|array
+    public function getSubscribedEvents(): string|array
     {
         return [
             PersistEvent::class,

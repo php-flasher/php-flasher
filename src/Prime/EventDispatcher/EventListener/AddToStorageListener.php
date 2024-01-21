@@ -18,7 +18,7 @@ final class AddToStorageListener implements EventListenerInterface
         $event->setEnvelopes($envelopes);
     }
 
-    public static function getSubscribedEvents(): string
+    public function getSubscribedEvents(): string
     {
         return PersistEvent::class;
     }

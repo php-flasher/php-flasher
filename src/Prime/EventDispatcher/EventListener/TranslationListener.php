@@ -31,7 +31,7 @@ final class TranslationListener implements EventListenerInterface
         }
     }
 
-    public static function getSubscribedEvents(): string
+    public function getSubscribedEvents(): string
     {
         return PresentationEvent::class;
     }

@@ -18,7 +18,7 @@ final class EnvelopeRemovalListener implements EventListenerInterface
         $event->setEnvelopesToRemove($envelopesToRemove);
     }
 
-    public static function getSubscribedEvents(): string
+    public function getSubscribedEvents(): string
     {
         return RemoveEvent::class;
     }

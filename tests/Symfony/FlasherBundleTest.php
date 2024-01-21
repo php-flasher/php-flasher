@@ -16,10 +16,10 @@ final class FlasherBundleTest extends TestCase
         $this->assertTrue($container->has('flasher.sweetalert'));
         $this->assertTrue($container->has('flasher.toastr'));
 
-        $this->assertInstanceOf(\Flasher\Prime\Flasher::class, $container->get('flasher'));
-        $this->assertInstanceOf(\Flasher\Noty\Prime\Noty::class, $container->get('flasher.noty'));
-        $this->assertInstanceOf(\Flasher\Notyf\Prime\Notyf::class, $container->get('flasher.notyf'));
-        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlert::class, $container->get('flasher.sweetalert'));
-        $this->assertInstanceOf(\Flasher\Toastr\Prime\Toastr::class, $container->get('flasher.toastr'));
+        $this->assertInstanceOf(\Flasher\Prime\FlasherInterface::class, $container->get('flasher'));
+        $this->assertInstanceOf(\Flasher\Noty\Prime\NotyInterface::class, $container->get('flasher.noty'));
+        $this->assertInstanceOf(\Flasher\Notyf\Prime\NotyfInterface::class, $container->get('flasher.notyf'));
+        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertInterface::class, $container->get('flasher.sweetalert'));
+        $this->assertInstanceOf(\Flasher\Toastr\Prime\ToastrInterface::class, $container->get('flasher.toastr'));
     }
 }

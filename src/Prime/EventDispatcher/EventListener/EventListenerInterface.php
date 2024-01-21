@@ -19,5 +19,5 @@ interface EventListenerInterface
      *
      * @return string|string[]
      */
-    public static function getSubscribedEvents(): string|array;
+    public function getSubscribedEvents(): string|array;
 }

@@ -65,8 +65,8 @@ final class StorageTest extends TestCase
 
         $this->assertEquals($envelopes, $storage->all());
         $this->assertInstanceOf(
-            \Flasher\Prime\Stamp\PriorityStamp::class,
-            $envelopes[1]->get(\Flasher\Prime\Stamp\PriorityStamp::class)
+            PriorityStamp::class,
+            $envelopes[1]->get(PriorityStamp::class)
         );
     }
 

@@ -55,4 +55,24 @@ final class Response implements ResponseInterface
     {
         $this->response->setContent($content);
     }
+
+    public function hasHeader(string $key): bool
+    {
+        return $this->response->headers->has($key);
+    }
+
+    public function getHeader(string $key): ?string
+    {
+        return $this->response->headers->get($key);
+    }
+
+    public function setHeader(string $key, array|string|null $values): void
+    {
+        $this->response->headers->set($key, $values);
+    }
+
+    public function removeHeader(string $key): void
+    {
+        $this->response->headers->remove($key);
+    }
 }

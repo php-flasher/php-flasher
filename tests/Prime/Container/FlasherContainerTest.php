@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flasher\Tests\Prime\Container;
 
 use Flasher\Prime\Container\FlasherContainer;
+use Flasher\Prime\Factory\NotificationFactoryInterface;
 use Flasher\Prime\FlasherInterface;
 use Flasher\Tests\Prime\TestCase;
 use Psr\Container\ContainerInterface;
@@ -31,12 +32,12 @@ final class FlasherContainerTest extends TestCase
 
     public function testCreateThrowsExceptionForInvalidServiceType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected an instance of');
-
         $invalidService = new \stdClass();
         $container = $this->createMock(ContainerInterface::class);
         $container->method('get')->willReturn($invalidService);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Expected an instance of "%s" or "%s", got "%s".', FlasherInterface::class, NotificationFactoryInterface::class, get_debug_type($invalidService)));
 
         FlasherContainer::from($container);
         FlasherContainer::create('invalid_service');
@@ -45,7 +46,7 @@ final class FlasherContainerTest extends TestCase
     public function testCreateThrowsExceptionIfNotInitialized(): void
     {
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('FlasherContainer has not been initialized.');
+        $this->expectExceptionMessage('FlasherContainer has not been initialized. Please initialize it by calling FlasherContainer::from(ContainerInterface $container).');
 
         // Ensure that FlasherContainer is not initialized
         FlasherContainer::reset();

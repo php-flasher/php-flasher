@@ -8,7 +8,7 @@ use Flasher\Prime\Response\Response;
 
 final class HtmlPresenter implements PresenterInterface
 {
-    public const FLASHER_FLASH_BAG_PLACE_HOLDER = '/** FLASHER_FLASH_BAG_PLACE_HOLDER **/';
+    public const FLASHER_REPLACE_ME = '/** {--FLASHER_REPLACE_ME--} **/';
     public const HEAD_END_PLACE_HOLDER = '</head>';
     public const BODY_END_PLACE_HOLDER = '</body>';
 
@@ -18,6 +18,7 @@ final class HtmlPresenter implements PresenterInterface
     public function render(Response $response): string
     {
         $options = json_encode($response->toArray(), \JSON_THROW_ON_ERROR);
+        /** @var array{csp_script_nonce?: ?string, envelopes_only?: bool} $context */
         $context = $response->getContext();
 
         if ($context['envelopes_only'] ?? false) {
@@ -25,15 +26,19 @@ final class HtmlPresenter implements PresenterInterface
         }
 
         $mainScript = $response->getMainScript();
-        $placeholder = self::FLASHER_FLASH_BAG_PLACE_HOLDER;
+        $replaceMe = self::FLASHER_REPLACE_ME;
+        $nonce = $context['csp_script_nonce'] ?? null;
 
-        return $this->renderJavascript($options, $mainScript, $placeholder);
+        return $this->renderJavascript($options, $mainScript, $replaceMe, $nonce);
     }
 
-    private function renderJavascript(string $options, string $mainScript, string $placeholder): string
+    private function renderJavascript(string $options, string $mainScript, string $replaceMe, ?string $nonce): string
     {
+        $nonceAttribute = $nonce ? " nonce='{$nonce}'" : '';
+        $scriptTagWithNonce = $nonce ? "tag.setAttribute('nonce', '{$nonce}');" : '';
+
         return <<<JAVASCRIPT
-<script type="text/javascript" class="flasher-js">
+<script type="text/javascript" class="flasher-js"{$nonceAttribute}>
 (function(window, document) {
     const merge = (first, second) => {
         if (Array.isArray(first) && Array.isArray(second)) {
@@ -91,6 +96,7 @@ final class HtmlPresenter implements PresenterInterface
             const tag = document.createElement('script');
             tag.src = mainScript;
             tag.type = 'text/javascript';
+            {$scriptTagWithNonce}
             tag.onload = () => render(options);
 
             document.head.appendChild(tag);
@@ -105,7 +111,7 @@ final class HtmlPresenter implements PresenterInterface
 
     const options = [];
     options.push({$options});
-    {$placeholder}
+    {$replaceMe}
     addScriptAndRender(mergeOptions(...options));
     addRenderListener();
 })(window, document);

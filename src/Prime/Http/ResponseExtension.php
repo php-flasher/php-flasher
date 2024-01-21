@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Flasher\Prime\Http;
 
 use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandler;
 use Flasher\Prime\Response\Presenter\HtmlPresenter;
 
 final class ResponseExtension
 {
-    public function __construct(private readonly FlasherInterface $flasher)
-    {
+    public function __construct(
+        private readonly FlasherInterface $flasher,
+        private readonly ContentSecurityPolicyHandler $cspHandler,
+    ) {
     }
 
     public function render(RequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -22,7 +25,7 @@ final class ResponseExtension
         $content = $response->getContent();
 
         $placeHolders = [
-            HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER,
+            HtmlPresenter::FLASHER_REPLACE_ME,
             HtmlPresenter::HEAD_END_PLACE_HOLDER,
             HtmlPresenter::BODY_END_PLACE_HOLDER,
         ];
@@ -38,8 +41,16 @@ final class ResponseExtension
             return $response;
         }
 
-        $alreadyRendered = HtmlPresenter::FLASHER_FLASH_BAG_PLACE_HOLDER === $insertPlaceHolder;
-        $htmlResponse = $this->flasher->render('html', [], ['envelopes_only' => $alreadyRendered]);
+        $alreadyRendered = HtmlPresenter::FLASHER_REPLACE_ME === $insertPlaceHolder;
+        $nonces = $this->cspHandler->updateResponseHeaders($request, $response);
+
+        $context = [
+            'envelopes_only' => $alreadyRendered,
+            'csp_script_nonce' => $nonces['csp_script_nonce'] ?? null,
+            'csp_style_nonce' => $nonces['csp_style_nonce'] ?? null,
+        ];
+
+        $htmlResponse = $this->flasher->render('html', [], $context);
 
         if (empty($htmlResponse)) {
             return $response;

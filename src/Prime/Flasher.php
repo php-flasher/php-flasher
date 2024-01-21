@@ -14,6 +14,8 @@ final class Flasher implements FlasherInterface
 {
     use ForwardsCalls;
 
+    public const VERSION = '2.0.0';
+
     /**
      * @var array<string, callable|NotificationFactoryInterface>
      */

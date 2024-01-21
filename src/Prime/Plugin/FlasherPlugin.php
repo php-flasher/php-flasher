@@ -131,6 +131,16 @@ final class FlasherPlugin extends Plugin
             $config['plugins']['flasher']['options'] += $config['options'];
         }
 
+        foreach ($config['plugins'] as $name => $options) {
+            if (isset($options['scripts'])) {
+                $config['plugins'][$name]['scripts'] = (array) $options['scripts'];
+            }
+
+            if (isset($options['styles'])) {
+                $config['plugins'][$name]['styles'] = (array) $options['styles'];
+            }
+        }
+
         return $config;
     }
 

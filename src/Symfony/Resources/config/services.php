@@ -8,6 +8,8 @@ use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandler;
+use Flasher\Prime\Http\Csp\NonceGenerator;
 use Flasher\Prime\Http\RequestExtension;
 use Flasher\Prime\Http\ResponseExtension;
 use Flasher\Prime\Response\Resource\ResourceManager;
@@ -40,7 +42,10 @@ return static function (ContainerConfigurator $container): void {
         ->set('flasher.flasher_listener', FlasherListener::class)
             ->args([
                 inline_service(ResponseExtension::class)
-                    ->args([service('flasher')]),
+                    ->args([
+                        service('flasher'),
+                        service('flasher.csp_handler'),
+                    ]),
             ])
             ->tag('kernel.event_subscriber')
 
@@ -102,5 +107,8 @@ return static function (ContainerConfigurator $container): void {
 
         ->set('flasher.translator', Translator::class)
             ->args([service('translator')->nullOnInvalid()])
+
+        ->set('flasher.csp_handler', ContentSecurityPolicyHandler::class)
+            ->args([inline_service(NonceGenerator::class)])
     ;
 };

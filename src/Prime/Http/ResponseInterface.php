@@ -17,4 +17,15 @@ interface ResponseInterface
     public function getContent(): string;
 
     public function setContent(string $content): void;
+
+    public function hasHeader(string $key): bool;
+
+    public function getHeader(string $key): ?string;
+
+    /**
+     * @param string|string[]|null $values
+     */
+    public function setHeader(string $key, string|array|null $values): void;
+
+    public function removeHeader(string $key): void;
 }

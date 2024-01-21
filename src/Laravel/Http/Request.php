@@ -75,4 +75,14 @@ final class Request implements RequestInterface
             return null;
         }
     }
+
+    public function hasHeader(string $key): bool
+    {
+        return $this->request->headers->has($key);
+    }
+
+    public function getHeader(string $key): ?string
+    {
+        return $this->request->headers->get($key);
+    }
 }

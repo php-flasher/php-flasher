@@ -22,4 +22,8 @@ interface RequestInterface
     public function getType(string $type): string|array;
 
     public function forgetType(string $type): void;
+
+    public function hasHeader(string $key): bool;
+
+    public function getHeader(string $key): ?string;
 }
