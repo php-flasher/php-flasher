@@ -75,6 +75,16 @@ final class Response implements ResponseInterface
      */
     public function setContent($content)
     {
+        $original = null;
+        if ($this->response instanceof \Illuminate\Http\Response && $this->response->getOriginalContent()) {
+            $original = $this->response->getOriginalContent();
+        }
+
         $this->response->setContent($content);
+
+        // Restore original response (eg. the View or Ajax data)
+        if ($original) {
+            $this->response->original = $original;
+        }
     }
 }
