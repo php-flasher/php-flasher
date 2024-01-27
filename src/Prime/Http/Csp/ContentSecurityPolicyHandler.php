@@ -142,7 +142,7 @@ final class ContentSecurityPolicyHandler
                     $headers[$header][$type] = $fallback;
                 }
                 $ruleIsSet = true;
-                if (!\in_array('\'unsafe-inline\'', $headers[$header][$type], true)) { // @phpstan-ignore-line
+                if (!\in_array('\'unsafe-inline\'', $headers[$header][$type], true)) {
                     $headers[$header][$type][] = '\'unsafe-inline\'';
                 }
                 $headers[$header][$type][] = sprintf('\'nonce-%s\'', $nonces[$tokenName]);
