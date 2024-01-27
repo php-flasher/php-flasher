@@ -54,7 +54,7 @@ final class Response implements ResponseInterface
     public function setContent(string $content): void
     {
         $original = null;
-        if ($this->response instanceof \Illuminate\Http\Response && $this->response->getOriginalContent()) {
+        if ($this->response instanceof LaravelResponse && $this->response->getOriginalContent()) {
             $original = $this->response->getOriginalContent();
         }
 

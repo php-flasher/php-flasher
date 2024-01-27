@@ -2,4 +2,4 @@
 
 declare(strict_types=1);
 
-return \Flasher\Prime\Translation\Messages::get('zh');
+return Flasher\Prime\Translation\Messages::get('zh');

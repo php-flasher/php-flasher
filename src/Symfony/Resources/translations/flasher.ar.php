@@ -2,4 +2,4 @@
 
 declare(strict_types=1);
 
-return \Flasher\Prime\Translation\Messages::get('ar');
+return Flasher\Prime\Translation\Messages::get('ar');
