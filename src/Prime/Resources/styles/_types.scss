@@ -1,0 +1,33 @@
+@each $type in success, info, warning, error {
+  .fl-#{$type} {
+    .fl-icon {
+      background-color: var(--#{$type}-color);
+    }
+
+    .fl-progress-bar {
+      background-color: var(--#{$type}-color-light);
+
+      .fl-progress {
+        background-color: var(--#{$type}-color);
+      }
+    }
+  }
+
+  .fl-flasher.fl-#{$type} {
+    border-left: 0.8em solid var(--#{$type}-color);
+
+    &.fl-rtl {
+      border-right: 0.8em solid var(--#{$type}-color);
+      border-left: none;
+    }
+
+    &:not(.fl-rtl) {
+      border-right: none;
+      border-left: 0.8em solid var(--#{$type}-color);
+    }
+
+    .fl-title {
+      color: var(--#{$type}-color);
+    }
+  }
+}

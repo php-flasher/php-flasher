@@ -1,4 +1,5 @@
 .idea/
+.DS_Store
 
 vendor/
 node_modules/
@@ -12,3 +13,6 @@ node_modules/
 phpunit.xml
 taskfile.yml
 phpstan.neon
+
+lerna-debug.log
+npm-debug.log

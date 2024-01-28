@@ -1,0 +1,49 @@
+.fl-flasher {
+  margin-top: 0.5em;
+  line-height: 1.5;
+  color: var(--text-color);
+  word-break: break-word;
+  cursor: pointer;
+  background-color: var(--background-color);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
+
+  &.fl-rtl {
+    border-radius: 0 0.375em 0.375em 0;
+  }
+
+  &:not(.fl-rtl) {
+    border-radius: 0.375em 0 0 0.375em;
+  }
+
+  .fl-content {
+    display: flex;
+    align-items: center;
+    padding: 0.75em;
+  }
+
+  .fl-icon {
+    font-size: 2.5em;
+  }
+
+  .fl-title,
+  .fl-message {
+    display: block;
+    margin-right: 1em;
+    margin-left: 1em;
+    line-height: 1.25em;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  .fl-title {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  .fl-message {
+    margin-top: 0.25em;
+    font-size: 0.875em;
+  }
+}

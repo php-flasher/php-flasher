@@ -2353,16 +2353,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.4.2",
+            "version": "v3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "ab0baed58b774dde8e0ddbab1bbfd5b3d6334a82"
+                "reference": "c0489d4a76382f6dcf6e2702112f86aa089d0c8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/ab0baed58b774dde8e0ddbab1bbfd5b3d6334a82",
-                "reference": "ab0baed58b774dde8e0ddbab1bbfd5b3d6334a82",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/c0489d4a76382f6dcf6e2702112f86aa089d0c8d",
+                "reference": "c0489d4a76382f6dcf6e2702112f86aa089d0c8d",
                 "shasum": ""
             },
             "require": {
@@ -2416,7 +2416,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.4.2"
+                "source": "https://github.com/livewire/livewire/tree/v3.4.4"
             },
             "funding": [
                 {
@@ -2424,7 +2424,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-26T14:25:51+00:00"
+            "time": "2024-01-28T19:07:11+00:00"
         },
         {
             "name": "matthiasnoback/symfony-config-test",
