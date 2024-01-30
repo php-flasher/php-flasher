@@ -1,7 +1,7 @@
 {
     "name": "@flasher/flasher-sweetalert",
     "type": "module",
-    "version": "1.3.1",
+    "version": "2.0.0",
     "description": "javascript integration for php flasher",
     "keywords": [
         "PHPFlasher",
@@ -38,6 +38,6 @@
     },
     "dependencies": {
         "@flasher/flasher": "workspace:*",
-        "sweetalert2": "^11.7.12"
+        "sweetalert2": "^11.10.4"
     }
 }

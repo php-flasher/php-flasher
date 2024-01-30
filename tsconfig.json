@@ -1,15 +1,9 @@
 {
-  "extends": "./tsconfig.build.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@flasher/*": [
-        "src/Prime/Resources/**",
-        "src/Noty/Prime/Resources/**",
-        "src/Notyf/Prime/Resources/**",
-        "src/SweetAlert/Prime/Resources/**",
-        "src/Toastr/Prime/Resources/**"
-      ]
+    "extends": "./tsconfig.build.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@flasher/flasher": ["src/Prime/Resources/js"]
+        }
     }
-  }
 }
