@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../config.build.json",
+  "extends": "../../../../tsconfig.build.json",
 
   "compilerOptions": {
     "outDir": "./public/"
