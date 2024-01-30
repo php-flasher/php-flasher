@@ -42,8 +42,6 @@
     "url": "https://github.com/php-flasher/flasher-js.git"
   },
   "devDependencies": {
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-eslint": "^9.0.5",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -54,7 +52,9 @@
     "@typescript-eslint/parser": "^6.20.0",
     "autoprefixer": "^10.4.17",
     "browserslist": "^4.22.3",
+    "commitizen": "^4.3.0",
     "cssnano": "^6.0.3",
+    "cz-conventional-changelog": "^3.3.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
@@ -63,6 +63,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
     "lerna": "^8.0.2",
+    "nx": "17.3.0",
     "postcss-discard-comments": "^6.0.1",
     "prettier": "^3.2.4",
     "rollup": "^4.9.6",

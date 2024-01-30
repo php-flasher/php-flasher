@@ -71,6 +71,9 @@ importers:
       lerna:
         specifier: ^8.0.2
         version: 8.0.2
+      nx:
+        specifier: 17.3.0
+        version: 17.3.0
       postcss-discard-comments:
         specifier: ^6.0.1
         version: 6.0.1(postcss@8.4.33)
@@ -5772,7 +5775,7 @@ packages:
       '@yarnpkg/parsers': 3.0.0-rc.46
       '@zkochan/js-yaml': 0.0.6
       axios: 1.6.7
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       cliui: 8.0.1
@@ -5910,9 +5913,9 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
-      cli-spinners: 2.6.1
+      cli-spinners: 2.9.2
       is-interactive: 1.0.0
       log-symbols: 4.1.0
       strip-ansi: 6.0.1
