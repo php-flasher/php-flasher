@@ -62,7 +62,7 @@ const resolveConfig = (config) => {
     config.file = `public/flasher-${name}.js`;
 
     if ('flasher' === name) {
-        config.file = `dist/flasher.js`;
+        config.file = `public/flasher.js`;
     }
 
     return config;
