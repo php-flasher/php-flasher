@@ -3,7 +3,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@flasher/flasher": ["src/Prime/Resources/js"]
+            "@flasher/flasher": ["src/Prime/Resources/assets"]
         }
     }
 }

@@ -3,9 +3,9 @@
     "version": "2.0.0",
     "type": "module",
     "license": "MIT",
-    "main": "public/flasher-sweetalert.js",
-    "browser": "public/flasher-sweetalert.min.js",
-    "types": "public/sweetalert.d.ts",
+    "main": "dist/flasher-sweetalert.js",
+    "browser": "dist/flasher-sweetalert.min.js",
+    "types": "dist/sweetalert.d.ts",
     "dependencies": {
         "@flasher/flasher": "workspace:*"
     },

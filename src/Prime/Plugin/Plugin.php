@@ -36,6 +36,25 @@ abstract class Plugin implements PluginInterface
         return [];
     }
 
+    public function getAssetsDir(): string
+    {
+        $resourcesDir = $this->getResourcesDir();
+        $assetsDir = rtrim($resourcesDir, '/').'/public/';
+
+        return realpath($assetsDir) ?: '';
+    }
+
+    public function getResourcesDir(): string
+    {
+        $reflection = new \ReflectionClass($this);
+        $pluginDir = pathinfo($reflection->getFileName() ?: '', \PATHINFO_DIRNAME);
+        $resourcesDir = is_dir($pluginDir.'/Resources/')
+            ? $pluginDir.'/Resources/'
+            : $pluginDir.'/../Resources/';
+
+        return realpath($resourcesDir) ?: '';
+    }
+
     public function normalizeConfig(array $config): array
     {
         $config = [

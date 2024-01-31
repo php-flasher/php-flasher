@@ -2,8 +2,8 @@
   "extends": "../../../tsconfig.build.json",
 
   "compilerOptions": {
-    "outDir": "./public/"
+    "outDir": "./dist/"
   },
 
-  "include": ["js/**/*"]
+  "include": ["assets/**/*"]
 }

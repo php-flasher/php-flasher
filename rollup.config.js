@@ -1,6 +1,7 @@
 import cleanup from 'rollup-plugin-cleanup';
 import clear from 'rollup-plugin-clear';
 import commonjs from '@rollup/plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 import cssnano from 'cssnano';
 import filesize from 'rollup-plugin-filesize';
 import resolve from '@rollup/plugin-node-resolve';
@@ -58,11 +59,11 @@ const resolveConfig = (config) => {
         config.external = [...(config.external || []), 'jquery'];
     }
 
-    config.input = 'js/index.ts';
-    config.file = `public/flasher-${name}.js`;
+    config.input = 'assets/index.ts';
+    config.file = `dist/flasher-${name}.js`;
 
     if ('flasher' === name) {
-        config.file = `public/flasher.js`;
+        config.file = `dist/flasher.js`;
     }
 
     return config;
@@ -92,7 +93,7 @@ const packageConfig = modules[packageName];
 
 const plugins = [
     clear({
-        targets: ['public'],
+        targets: ['dist/', 'public/'],
     }),
     styles({
         mode: 'extract',
@@ -111,6 +112,14 @@ const plugins = [
     cleanup({
         comments: 'none',
         extensions: ['.ts'],
+    }),
+    copy({
+        targets: [
+            {
+                src: ['dist/*.min.js', 'dist/*.min.css'], dest: 'public/',
+            },
+        ],
+        hook: 'writeBundle',
     }),
 ];
 

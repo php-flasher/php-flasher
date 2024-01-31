@@ -3,9 +3,9 @@
     "version": "2.0.0",
     "type": "module",
     "license": "MIT",
-    "main": "public/flasher-notyf.js",
-    "browser": "public/flasher-notyf.min.js",
-    "types": "public/notyf.d.ts",
+    "main": "dist/flasher-notyf.js",
+    "browser": "dist/flasher-notyf.min.js",
+    "types": "dist/notyf.d.ts",
     "dependencies": {
         "@flasher/flasher": "workspace:*"
     },

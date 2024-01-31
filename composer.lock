@@ -9987,7 +9987,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "orchestra/testbench": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

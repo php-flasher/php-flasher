@@ -3,9 +3,9 @@
     "version": "2.0.0",
     "type": "module",
     "license": "MIT",
-    "main": "public/flasher-noty.js",
-    "browser": "public/flasher-noty.min.js",
-    "types": "public/noty.d.ts",
+    "main": "dist/flasher-noty.js",
+    "browser": "dist/flasher-noty.min.js",
+    "types": "dist/noty.d.ts",
     "dependencies": {
         "@flasher/flasher": "workspace:*"
     },

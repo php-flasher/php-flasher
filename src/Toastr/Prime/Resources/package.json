@@ -3,9 +3,9 @@
     "version": "2.0.0",
     "type": "module",
     "license": "MIT",
-    "main": "public/flasher-toastr.js",
-    "browser": "public/flasher-toastr.min.js",
-    "types": "public/toastr.d.ts",
+    "main": "dist/flasher-toastr.js",
+    "browser": "dist/flasher-toastr.min.js",
+    "types": "dist/toastr.d.ts",
     "dependencies": {
         "@flasher/flasher": "workspace:*"
     },

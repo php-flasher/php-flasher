@@ -39,6 +39,10 @@ interface PluginInterface
      */
     public function getOptions(): array;
 
+    public function getAssetsDir(): string;
+
+    public function getResourcesDir(): string;
+
     /**
      * @param array{
      *     scripts?: string|string[],

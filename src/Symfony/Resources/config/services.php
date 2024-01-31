@@ -17,6 +17,7 @@ use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Storage\Filter\FilterFactory;
 use Flasher\Prime\Storage\Storage;
 use Flasher\Prime\Storage\StorageManager;
+use Flasher\Symfony\Command\InstallCommand;
 use Flasher\Symfony\EventListener\FlasherListener;
 use Flasher\Symfony\EventListener\SessionListener;
 use Flasher\Symfony\Storage\SessionBag;
@@ -70,6 +71,9 @@ return static function (ContainerConfigurator $container): void {
         ->set('flasher.preset_listener', ApplyPresetListener::class)
             ->args([param('flasher.presets')])
             ->tag('kernel.event_listener')
+
+        ->set('flasher.install_command', InstallCommand::class)
+            ->tag('console.command')
 
         ->set('flasher.notification_factory', NotificationFactory::class)
             ->args([service('flasher.storage_manager')])
