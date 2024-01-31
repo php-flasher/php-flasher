@@ -111,7 +111,7 @@ const plugins = [
     commonjs(),
     typescript({
         tsconfig: 'tsconfig.build.json',
-        sourceMap: true,
+        sourceMap: isProduction,
     }),
     cleanup({
         comments: 'none',
