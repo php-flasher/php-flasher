@@ -38,7 +38,7 @@
         "larastan/larastan": "^2.8",
         "livewire/livewire": "^3.4",
         "matthiasnoback/symfony-config-test": "^5.1",
-        "orchestra/testbench": "9.x",
+        "orchestra/testbench": "9.x-dev",
         "overtrue/phplint": "^9.1",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-symfony": "^1.3",
