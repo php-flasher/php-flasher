@@ -1,43 +1,15 @@
 {
     "name": "@flasher/flasher-noty",
-    "type": "module",
     "version": "2.0.0",
-    "description": "javascript integration for php flasher",
-    "keywords": [
-        "PHPFlasher",
-        "flash messages",
-        "javascript",
-        "notification",
-        "notify",
-        "noty",
-        "notyf",
-        "php flasher",
-        "plugin",
-        "pnotify",
-        "sweetalert",
-        "toast",
-        "yoeunes"
-    ],
-    "author": "younes KHOUBZA <younes.khoubza@gmail.com>",
+    "type": "module",
     "license": "MIT",
-    "publishConfig": {
-        "access": "public"
-    },
-    "browser": "public/flasher-noty.min.js",
     "main": "public/flasher-noty.js",
+    "browser": "public/flasher-noty.min.js",
     "types": "public/noty.d.ts",
-    "files": [
-        "public"
-    ],
-    "bugs": {
-        "url": "https://github.com/php-flasher/flasher-js/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/php-flasher/flasher-js.git"
-    },
     "dependencies": {
-        "@flasher/flasher": "workspace:*",
+        "@flasher/flasher": "workspace:*"
+    },
+    "peerDependencies": {
         "noty": "^3.2.0-beta-deprecated"
     }
 }
