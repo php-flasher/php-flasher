@@ -120,7 +120,7 @@ const plugins = [
     copy({
         targets: [
             {
-                src: 'public/*', dest: [
+                src: 'public/*.js', dest: [
                     '../../Symfony/Resources/public/',
                     '../../Laravel/Resources/public/',
                 ],
