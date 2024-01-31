@@ -1,6 +1,7 @@
 import cleanup from 'rollup-plugin-cleanup';
 import clear from 'rollup-plugin-clear';
 import commonjs from '@rollup/plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 import cssnano from 'cssnano';
 import filesize from 'rollup-plugin-filesize';
 import resolve from '@rollup/plugin-node-resolve';
@@ -91,7 +92,13 @@ debug(`Building package: ${packageName}.`);
 const packageConfig = modules[packageName];
 
 const plugins = [
-    clear({ targets: ['public'] }),
+    clear({
+        targets: [
+            'public',
+            '../../Symfony/Resources/public/',
+            '../../Laravel/Resources/public/',
+        ],
+    }),
     styles({
         mode: 'extract',
         plugins: {
@@ -109,6 +116,17 @@ const plugins = [
     cleanup({
         comments: 'none',
         extensions: ['.ts'],
+    }),
+    copy({
+        targets: [
+            {
+                src: 'public/*', dest: [
+                    '../../Symfony/Resources/public/',
+                    '../../Laravel/Resources/public/',
+                ],
+            },
+        ],
+        hook: 'writeBundle',
     }),
 ];
 
