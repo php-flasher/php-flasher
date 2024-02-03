@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Flasher\Symfony\Command;
 
 use Flasher\Prime\Plugin\PluginInterface;
-use Flasher\Symfony\Support\FlasherBundleInterface;
+use Flasher\Symfony\Support\PluginBundleInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -21,7 +22,8 @@ final class InstallCommand extends Command
         $this
             ->setName('flasher:install')
             ->setDescription('Installs all <fg=blue;options=bold>PHPFlasher</> resources to the <comment>public</comment> and <comment>config</comment> directories.')
-            ->setHelp('The command copies <fg=blue;options=bold>PHPFlasher</> assets to <comment>public/vendor/flasher/</comment> directory and config files to the <comment>config/packages/</comment> directory without overwriting any existing config files.');
+            ->setHelp('The command copies <fg=blue;options=bold>PHPFlasher</> assets to <comment>public/vendor/flasher/</comment> directory and config files to the <comment>config/packages/</comment> directory without overwriting any existing config files.')
+            ->addOption('config', 'c', InputOption::VALUE_NONE, 'Publish all config files to the <comment>config/packages/</comment> directory.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -47,22 +49,25 @@ final class InstallCommand extends Command
         }
 
         $publicDir = $this->getPublicDir().'/vendor/flasher/';
-        // $configDir = $this->getConfigDir();
+        $configDir = $this->getConfigDir();
+
         $exitCode = self::SUCCESS;
 
         $kernel = $application->getKernel();
         foreach ($kernel->getBundles() as $bundle) {
-            if (!$bundle instanceof FlasherBundleInterface) {
+            if (!$bundle instanceof PluginBundleInterface) {
                 continue;
             }
 
             $plugin = $bundle->createPlugin();
-
-            // $configFile = $bundle->getConfigurationFile();
+            $configFile = $bundle->getConfigurationFile();
 
             try {
                 $this->publishAssets($plugin, $publicDir);
-                // $this->publishConfig($plugin, $configDir, $configFile);
+
+                if ($input->getOption('config')) {
+                    $this->publishConfig($plugin, $configDir, $configFile);
+                }
 
                 $status = sprintf('<fg=green;options=bold>%s</>', '\\' === \DIRECTORY_SEPARATOR ? 'OK' : "\xE2\x9C\x94" /* HEAVY CHECK MARK (U+2714) */);
                 $output->writeln(sprintf(' %s <fg=blue;options=bold>%s</>', $status, $plugin->getAlias()));
@@ -143,8 +148,7 @@ final class InstallCommand extends Command
             return null;
         }
 
-        $configDir = '/config/packages/';
-        $configDir = rtrim($projectDir, '/').$configDir;
+        $configDir = rtrim($projectDir, '/').'/config/packages/';
 
         if (is_dir($configDir)) {
             return $configDir;

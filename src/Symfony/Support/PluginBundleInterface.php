@@ -6,7 +6,9 @@ namespace Flasher\Symfony\Support;
 
 use Flasher\Prime\Plugin\PluginInterface;
 
-interface FlasherBundleInterface
+interface PluginBundleInterface
 {
     public function createPlugin(): PluginInterface;
+
+    public function getConfigurationFile(): string;
 }

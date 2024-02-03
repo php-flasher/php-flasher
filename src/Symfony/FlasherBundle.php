@@ -10,13 +10,11 @@ use Flasher\Symfony\DependencyInjection\Compiler\EventListenerCompilerPass;
 use Flasher\Symfony\DependencyInjection\Compiler\FactoryCompilerPass;
 use Flasher\Symfony\DependencyInjection\Compiler\PresenterCompilerPass;
 use Flasher\Symfony\DependencyInjection\FlasherExtension;
-use Flasher\Symfony\Support\FlasherBundleInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class FlasherBundle extends Bundle implements FlasherBundleInterface
+final class FlasherBundle extends Support\PluginBundle
 {
     public function boot(): void
     {
