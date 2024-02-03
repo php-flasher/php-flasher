@@ -14,7 +14,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-final class FlasherBundle extends Support\PluginBundle
+final class PluginBundle extends Support\PluginBundle
 {
     public function boot(): void
     {
