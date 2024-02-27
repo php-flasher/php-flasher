@@ -16,3 +16,5 @@ phpstan.neon
 
 lerna-debug.log
 npm-debug.log
+
+/.phpunit.cache
