@@ -170,4 +170,4 @@ flasher:
     #     types: ['error'],
     #
     filter_criteria:
-        limit: 5 # Limit the number of notifications to display
+        limit: 5
