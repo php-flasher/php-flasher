@@ -9,7 +9,7 @@ namespace Flasher\Laravel\Command;
 
 use Flasher\Laravel\Support\ServiceProvider as FlasherServiceProvider;
 use Flasher\Prime\Plugin\PluginInterface;
-use Flasher\Symfony\Bridge\Command\FlasherCommand;
+use Flasher\Laravel\Bridge\Command\FlasherCommand;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
