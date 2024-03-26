@@ -1,0 +1,10 @@
+services:
+    -
+        class: Flasher\Prime\Phpstan\ReturnTypes\FlasherContainerDynamicStaticMethodReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+
+    -
+        class: Flasher\Prime\Phpstan\ReturnTypes\FlashHelperExtension
+        tags:
+            - phpstan.broker.dynamicFunctionReturnTypeExtension

@@ -1,92 +1,46 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Notification;
 
 interface NotificationInterface
 {
-    const SUCCESS = 'success';
-    const ERROR = 'error';
-    const INFO = 'info';
-    const WARNING = 'warning';
+    public function getTitle(): string;
 
-    /**
-     * @return string|null
-     */
-    public function getType();
+    public function setTitle(string $title): void;
 
-    /**
-     * @param string|null $type
-     *
-     * @return static
-     */
-    public function setType($type);
+    public function getMessage(): string;
 
-    /**
-     * @return string|null
-     */
-    public function getMessage();
+    public function setMessage(string $message): void;
 
-    /**
-     * @param string|null $message
-     *
-     * @return static
-     */
-    public function setMessage($message);
+    public function getType(): string;
 
-    /**
-     * @return string|null
-     */
-    public function getTitle();
-
-    /**
-     * @param string|null $title
-     *
-     * @return static
-     */
-    public function setTitle($title);
+    public function setType(string $type): void;
 
     /**
      * @return array<string, mixed>
      */
-    public function getOptions();
+    public function getOptions(): array;
 
     /**
      * @param array<string, mixed> $options
-     *
-     * @return static
      */
-    public function setOptions(array $options);
+    public function setOptions(array $options): void;
+
+    public function getOption(string $name, mixed $default = null): mixed;
+
+    public function setOption(string $name, mixed $value): void;
+
+    public function unsetOption(string $name): void;
 
     /**
-     * @param string $name
-     * @param mixed  $default
-     *
-     * @return mixed
+     * @return array{
+     *     title: string,
+     *     message: string,
+     *     type: string,
+     *     options: array<string, mixed>,
+     * }
      */
-    public function getOption($name, $default = null);
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return static
-     */
-    public function setOption($name, $value);
-
-    /**
-     * @param string $name
-     *
-     * @return static
-     */
-    public function unsetOption($name);
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray();
+    public function toArray(): array;
 }

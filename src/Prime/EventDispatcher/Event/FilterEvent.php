@@ -1,52 +1,57 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
-use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Storage\Filter\Filter;
+use Flasher\Prime\Storage\Filter\FilterInterface;
 
 final class FilterEvent
 {
     /**
-     * @var Filter
-     */
-    private $filter;
-
-    /**
      * @param Envelope[]           $envelopes
      * @param array<string, mixed> $criteria
      */
-    public function __construct(array $envelopes, array $criteria)
+    public function __construct(
+        private FilterInterface $filter,
+        private array $envelopes,
+        private readonly array $criteria,
+    ) {
+    }
+
+    public function getFilter(): FilterInterface
     {
-        $this->filter = new Filter($envelopes, $criteria);
+        return $this->filter;
+    }
+
+    public function setFilter(Filter $filter): void
+    {
+        $this->filter = $filter;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
-        return $this->filter->getResult();
+        return $this->envelopes;
     }
 
     /**
-     * @return Filter
+     * @param Envelope[] $envelopes
      */
-    public function getFilter()
+    public function setEnvelopes(array $envelopes): void
     {
-        return $this->filter;
+        $this->envelopes = $envelopes;
     }
 
     /**
-     * @return void
+     * @return array<string, mixed>
      */
-    public function setFilter(Filter $filter)
+    public function getCriteria(): array
     {
-        $this->filter = $filter;
+        return $this->criteria;
     }
 }

@@ -1,42 +1,59 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Translation;
 
 use Flasher\Prime\Translation\Language;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-class LanguageTest extends TestCase
+final class LanguageTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testLanguageDirection()
+    #[DataProvider('provideLocaleData')]
+    public function testDirectionMethod(string $locale, string $expectedDirection): void
     {
-        $this->assertEquals(Language::RTL, Language::direction('ar'));
-        $this->assertEquals(Language::LTR, Language::direction('fr'));
-        $this->assertEquals(Language::LTR, Language::direction('unknown'));
+        $this->assertSame($expectedDirection, Language::direction($locale));
     }
 
     /**
-     * @return void
+     * Provide test cases for testDirectionMethod.
      */
-    public function testIsRTL()
+    public static function provideLocaleData(): \Iterator
     {
-        $this->assertTrue(Language::isRTL('ar_AE'));
-        $this->assertFalse(Language::isRTL('en_US'));
+        yield ['en', Language::LTR];
+        yield ['ar', Language::RTL];
+        yield ['unknown', Language::LTR];
+    }
+
+    #[DataProvider('provideLocaleDataForIsRTL')]
+    public function testIsRTLMethod(string $locale, bool $expectedResult): void
+    {
+        $this->assertSame($expectedResult, Language::isRTL($locale));
     }
 
     /**
-     * @return void
+     * Provide test cases for testIsRTLMethod.
      */
-    public function testIsLTR()
+    public static function provideLocaleDataForIsRTL(): \Iterator
     {
-        $this->assertTrue(Language::isLTR('en_US'));
-        $this->assertFalse(Language::isLTR('ar_AE'));
+        yield ['en', false];
+        yield ['en_US', false];
+        yield ['ar', true];
+    }
+
+    #[DataProvider('provideLocaleDataForIsLTR')]
+    public function testIsLTRMethod(string $locale, bool $expectedResult): void
+    {
+        $this->assertSame($expectedResult, Language::isLTR($locale));
+    }
+
+    /**
+     * Provide test cases for testIsLTRMethod.
+     */
+    public static function provideLocaleDataForIsLTR(): \Iterator
+    {
+        yield ['en', true];
+        yield ['ar', false];
     }
 }

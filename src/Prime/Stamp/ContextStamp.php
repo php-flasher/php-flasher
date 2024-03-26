@@ -1,40 +1,31 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class ContextStamp implements StampInterface, PresentableStampInterface
+final readonly class ContextStamp implements PresentableStampInterface, StampInterface
 {
     /**
-     * @var mixed[]
+     * @param array<string, mixed> $context
      */
-    private $context;
-
-    /**
-     * @param mixed[] $context
-     */
-    public function __construct(array $context)
+    public function __construct(private array $context)
     {
-        $this->context = $context;
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
-    public function getContext()
+    public function getContext(): array
     {
         return $this->context;
     }
 
     /**
-     * {@inheritdoc}
+     * @return array{context: array<string, mixed>}
      */
-    public function toArray()
+    public function toArray(): array
     {
-        return array('context' => $this->getContext());
+        return ['context' => $this->context];
     }
 }

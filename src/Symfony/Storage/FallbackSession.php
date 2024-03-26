@@ -1,31 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Flasher\Symfony\Storage;
 
-class FallbackSession
+/**
+ * FallbackSession acts as a stand-in when the regular session is not available.
+ */
+final class FallbackSession implements FallbackSessionInterface
 {
-    private static $storage = array();
+    /** @var array<string, mixed> */
+    private static array $storage = [];
 
-    /**
-     * @param string $name
-     * @param mixed  $default
-     *
-     * @return mixed
-     */
-    public function get($name, $default = null)
+    public function get(string $name, mixed $default = null): mixed
     {
-        return array_key_exists($name, self::$storage)
-            ? self::$storage[$name]
-            : $default;
+        return \array_key_exists($name, self::$storage) ? self::$storage[$name] : $default;
     }
 
-    /**
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return void
-     */
-    public function set($name, $value)
+    public function set(string $name, mixed $value): void
     {
         self::$storage[$name] = $value;
     }

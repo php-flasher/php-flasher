@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Notyf\Prime;
 
@@ -13,12 +10,8 @@ final class NotyfBuilder extends NotificationBuilder
 {
     /**
      * Number of miliseconds before hiding the notification. Use 0 for infinite duration.
-     *
-     * @param int $duration
-     *
-     * @return static
      */
-    public function duration($duration)
+    public function duration(int $duration): self
     {
         $this->option('duration', $duration);
 
@@ -27,12 +20,8 @@ final class NotyfBuilder extends NotificationBuilder
 
     /**
      * Whether to show the notification with a ripple effect.
-     *
-     * @param bool $ripple
-     *
-     * @return static
      */
-    public function ripple($ripple)
+    public function ripple(bool $ripple = true): self
     {
         $this->option('ripple', $ripple);
 
@@ -42,14 +31,12 @@ final class NotyfBuilder extends NotificationBuilder
     /**
      * Viewport location where notifications are rendered.
      *
-     * @param string $position
-     * @param string $value
-     *
-     * @return static
+     * @param "x"|"y"                                $position
+     * @param "left"|"center"|"right"|"top"|"bottom" $value
      */
-    public function position($position, $value)
+    public function position(string $position, string $value): self
     {
-        $option = $this->getEnvelope()->getOption('position', array());
+        $option = $this->getEnvelope()->getOption('position', []);
         $option[$position] = $value; // @phpstan-ignore-line
 
         $this->option('position', $option);
@@ -59,12 +46,8 @@ final class NotyfBuilder extends NotificationBuilder
 
     /**
      * Whether to allow users to dismiss the notification with a button.
-     *
-     * @param bool $dismissible
-     *
-     * @return static
      */
-    public function dismissible($dismissible)
+    public function dismissible(bool $dismissible): self
     {
         $this->option('dismissible', $dismissible);
 

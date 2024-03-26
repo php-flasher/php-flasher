@@ -1,25 +1,20 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\WhenStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class WhenStampTest extends TestCase
+final class WhenStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testWhenStamp()
+    public function testGetCondition(): void
     {
-        $stamp = new WhenStamp(true);
+        $whenStamp = new WhenStamp(true);
+        $this->assertTrue($whenStamp->getCondition());
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertTrue($stamp->getCondition());
+        $whenStamp = new WhenStamp(false);
+        $this->assertFalse($whenStamp->getCondition());
     }
 }

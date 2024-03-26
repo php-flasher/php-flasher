@@ -1,82 +1,54 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Storage;
 
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session as LegacySession;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-final class SessionBag implements BagInterface
+final readonly class SessionBag implements BagInterface
 {
-    const ENVELOPES_NAMESPACE = 'flasher::envelopes';
+    public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    /**
-     * @var RequestStack|SessionInterface
-     */
-    private $session;
+    private FallbackSessionInterface $fallbackSession;
 
-    /**
-     * @var FallbackSession
-     */
-    private $fallbackSession;
-
-    /**
-     * @param RequestStack|SessionInterface $session
-     */
-    public function __construct($session)
+    public function __construct(private RequestStack $requestStack, ?FallbackSessionInterface $fallbackSession = null)
     {
-        $this->session = $session;
-        $this->fallbackSession = new FallbackSession();
+        $this->fallbackSession = $fallbackSession ?: new FallbackSession();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get()
+    public function get(): array
     {
-        return $this->session()->get(self::ENVELOPES_NAMESPACE, array()); // @phpstan-ignore-line
+        $session = $this->getSession();
+
+        /** @var Envelope[] $envelopes */
+        $envelopes = $session->get(self::ENVELOPES_NAMESPACE, []);
+
+        return $envelopes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function set(array $envelopes)
+    public function set(array $envelopes): void
     {
-        $this->session()->set(self::ENVELOPES_NAMESPACE, $envelopes);
+        $session = $this->getSession();
+
+        $session->set(self::ENVELOPES_NAMESPACE, $envelopes);
     }
 
-    /**
-     * @return SessionInterface
-     */
-    private function session()
+    private function getSession(): SessionInterface|FallbackSessionInterface
     {
-        if ($this->session instanceof SessionInterface || $this->session instanceof LegacySession) { // @phpstan-ignore-line
-            return $this->session; // @phpstan-ignore-line
-        }
-
         try {
-            if (method_exists($this->session, 'getSession')) {
-                $session = $this->session->getSession();
-            } else {
-                $session = $this->session->getCurrentRequest()->getSession();
+            $request = $this->requestStack->getCurrentRequest();
+
+            if ($request && !$request->attributes->get('_stateless', false)) {
+                return $this->requestStack->getSession();
             }
-
-            $isStateless = $this->session->getCurrentRequest()->attributes->has('_stateless');
-
-            if (null !== $session && !$isStateless) {
-                return $this->session = $session;
-            }
-
-            return $this->fallbackSession;
-        } catch (SessionNotFoundException $e) {
-            return $this->fallbackSession;
+        } catch (SessionNotFoundException) {
         }
+
+        return $this->fallbackSession;
     }
 }

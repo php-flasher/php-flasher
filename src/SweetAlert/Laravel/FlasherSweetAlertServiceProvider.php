@@ -1,39 +1,27 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\SweetAlert\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\SweetAlert\Prime\SweetAlertPlugin;
 use Livewire\LivewireManager;
 
-final class FlasherSweetAlertServiceProvider extends ServiceProvider
+final class FlasherSweetAlertServiceProvider extends PluginServiceProvider
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function createPlugin()
+    public function createPlugin(): SweetAlertPlugin
     {
         return new SweetAlertPlugin();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function afterBoot()
+    protected function afterBoot(): void
     {
         $this->registerLivewireListener();
     }
 
-    /**
-     * @return void
-     */
-    private function registerLivewireListener()
+    private function registerLivewireListener(): void
     {
         if (!$this->app->bound('livewire')) {
             return;
@@ -44,8 +32,8 @@ final class FlasherSweetAlertServiceProvider extends ServiceProvider
             return;
         }
 
-        $this->app->extend('flasher.event_dispatcher', function (EventDispatcherInterface $dispatcher) {
-            $dispatcher->addSubscriber(new LivewireListener());
+        $this->app->extend('flasher.event_dispatcher', static function (EventDispatcherInterface $dispatcher) {
+            $dispatcher->addListener(new LivewireListener());
 
             return $dispatcher;
         });

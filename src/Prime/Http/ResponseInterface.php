@@ -1,43 +1,33 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Http;
 
 interface ResponseInterface
 {
-    /**
-     * @return bool
-     */
-    public function isRedirection();
+    public function isRedirection(): bool;
+
+    public function isJson(): bool;
+
+    public function isHtml(): bool;
+
+    public function isAttachment(): bool;
+
+    public function isSuccessful(): bool;
+
+    public function getContent(): string;
+
+    public function setContent(string $content): void;
+
+    public function hasHeader(string $key): bool;
+
+    public function getHeader(string $key): ?string;
 
     /**
-     * @return bool
+     * @param string|string[]|null $values
      */
-    public function isJson();
+    public function setHeader(string $key, string|array|null $values): void;
 
-    /**
-     * @return bool
-     */
-    public function isHtml();
-
-    /**
-     * @return bool
-     */
-    public function isAttachment();
-
-    /**
-     * @return string
-     */
-    public function getContent();
-
-    /**
-     * @param string $content
-     *
-     * @return void
-     */
-    public function setContent($content);
+    public function removeHeader(string $key): void;
 }

@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\SweetAlert\Laravel\Facade;
 
@@ -107,9 +104,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static SweetAlertBuilder inputValidator(string $inputValidator)
  * @method static SweetAlertBuilder validationMessage(string $validationMessage)
  */
-class SweetAlert extends Facade
+final class SweetAlert extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher.sweetalert';
     }

@@ -1,0 +1,46 @@
+{
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 4,
+    "arrowParens": "avoid",
+    "jsxBracketSameLine": true,
+    "overrides": [
+        {
+            "files": "*.scss",
+            "options": {
+                "parser": "scss",
+                "singleQuote": false,
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": "*.json",
+            "options": {
+                "parser": "json",
+                "singleQuote": false,
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": "*.{ts,tsx}",
+            "options": {
+                "parser": "typescript"
+            }
+        },
+        {
+            "files": "*.{js,jsx}",
+            "options": {
+                "parser": "babel"
+            }
+        },
+        {
+            "files": "*.yaml",
+            "options": {
+                "parser": "yaml",
+                "tabWidth": 4
+            }
+        }
+    ]
+}

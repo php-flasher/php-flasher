@@ -1,0 +1,15 @@
+includes:
+    - extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/larastan/larastan/extension.neon
+    - vendor/phpstan/phpstan-mockery/extension.neon
+
+parameters:
+    level: 9
+
+    paths:
+        - src/
+        - tests/
+
+    tmpDir: .cache/phpstan

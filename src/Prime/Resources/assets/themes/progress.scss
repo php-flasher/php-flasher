@@ -1,0 +1,65 @@
+.fl-progress-top {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    .fl-progress {
+        width: 0;
+        height: 0.125em;
+    }
+}
+
+.fl-progress-bottom {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+
+    .fl-progress {
+        width: 0;
+        height: 0.125em;
+        margin-left: auto;
+    }
+}
+
+.fl-progress-right {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+
+    .fl-progress {
+        height: 0;
+        width: 0.125em;
+    }
+}
+
+.fl-progress-left {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+
+    .fl-progress {
+        height: 0;
+        width: 0.125em;
+        margin-top: auto;
+    }
+}
+
+@each $type in success, info, warning, error {
+    .fl-#{$type} {
+        .fl-progress-top, .fl-progress-bottom, .fl-progress-right, .fl-progress-left {
+            background-color: var(--#{$type}-color-light);
+
+            .fl-progress {
+                background-color: var(--#{$type}-color);
+            }
+        }
+    }
+}

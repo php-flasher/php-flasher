@@ -1,33 +1,26 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher;
 
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 
 interface EventDispatcherInterface
 {
     /**
-     * @param object $event
+     * @phpstan-template T of object
      *
-     * @return object
+     * @phpstan-param T $event
+     *
+     * @phpstan-return T
      */
-    public function dispatch($event);
+    public function dispatch(object $event): object;
+
+    public function addListener(EventListenerInterface $listener): void;
 
     /**
-     * @param string   $eventName
-     * @param callable $listener
-     *
-     * @return void
+     * @return EventListenerInterface[]
      */
-    public function addListener($eventName, $listener);
-
-    /**
-     * @return void
-     */
-    public function addSubscriber(EventSubscriberInterface $subscriber);
+    public function getListeners(string $eventName): array;
 }

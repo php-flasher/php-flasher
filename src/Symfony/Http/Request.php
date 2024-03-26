@@ -1,90 +1,88 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Http;
 
 use Flasher\Prime\Http\RequestInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-final class Request implements RequestInterface
+final readonly class Request implements RequestInterface
 {
-    /**
-     * @var SymfonyRequest
-     */
-    private $request;
-
-    public function __construct(SymfonyRequest $request)
+    public function __construct(private SymfonyRequest $request)
     {
-        $this->request = $request;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isXmlHttpRequest()
+    public function isXmlHttpRequest(): bool
     {
         return $this->request->isXmlHttpRequest();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isHtmlRequestFormat()
+    public function isHtmlRequestFormat(): bool
     {
         return 'html' === $this->request->getRequestFormat();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasSession()
+    public function hasSession(): bool
     {
         return $this->request->hasSession();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasType($type)
+    public function isSessionStarted(): bool
     {
-        if (!$this->hasSession()) {
+        $session = $this->getSession();
+
+        return $session?->isStarted() ?: false;
+    }
+
+    public function hasType(string $type): bool
+    {
+        if (!$this->hasSession() || !$this->isSessionStarted()) {
             return false;
         }
 
-        $session = $this->request->getSession();
-        if (!$session->isStarted()) {
+        $session = $this->getSession();
+        if (!$session instanceof FlashBagAwareSessionInterface) {
             return false;
         }
 
-        /** @var Session $session */
-        $session = $this->request->getSession();
-        $flashBag = $session->getFlashBag();
-
-        return $flashBag->has($type);
+        return $session->getFlashBag()->has($type);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getType($type)
+    public function getType(string $type): string|array
     {
-        /** @var Session $session */
-        $session = $this->request->getSession();
-        $flashBag = $session->getFlashBag();
+        $session = $this->getSession();
+        if (!$session instanceof FlashBagAwareSessionInterface) {
+            return [];
+        }
 
-        return $flashBag->get($type);
+        return $session->getFlashBag()->get($type);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function forgetType($type)
+    public function forgetType(string $type): void
     {
         $this->getType($type);
+    }
+
+    private function getSession(): ?SessionInterface
+    {
+        try {
+            return $this->request->getSession();
+        } catch (SessionNotFoundException) {
+            return null;
+        }
+    }
+
+    public function hasHeader(string $key): bool
+    {
+        return $this->request->headers->has($key);
+    }
+
+    public function getHeader(string $key): ?string
+    {
+        return $this->request->headers->get($key);
     }
 }

@@ -1,147 +1,169 @@
-name: tests
+name: 🧪 Run Tests & 🛠️ Static Analysis
 
 on:
     push:
+        branches:
+            - main
+            - 2.x
+    pull_request:
+    schedule:
+        -   cron: '0 0 * * *' # Daily at midnight
 
 jobs:
-    symfony-test:
-        runs-on: ${{ matrix.os }}
+    static-analysis:
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
-                os: [ubuntu-latest]
-                symfony: [ 7.1.*, 7.0.*, 6.4.*, 6.3.*, 6.2.*, 6.1.*, 6.0.*, 5.4.*, 5.3.*, 5.2.*, 5.1.*, 5.0.*, 4.4.*, 4.3.*, 4.2.*, 4.1.*, 4.0.*, 3.4.*, 3.3.*, 3.2.*, 3.1.*, 3.0.*, 2.8.*, 2.7.*, 2.6.*, 2.5.*, 2.4.*, 2.3.*, 2.2.*, 2.1.*, 2.0.* ]
-                include:
-                    - { symfony: 7.1.*, php: 8.3, phpunit: 10.5.* }
-                    - { symfony: 7.0.*, php: 8.2, phpunit: 10.5.* }
-                    - { symfony: 6.4.*, php: 8.2, phpunit: 9.5.*  }
-                    - { symfony: 6.3.*, php: 8.2, phpunit: 9.5.*  }
-                    - { symfony: 6.2.*, php: 8.1, phpunit: 9.5.*  }
-                    - { symfony: 6.1.*, php: 8.1, phpunit: 9.5.*  }
-                    - { symfony: 6.0.*, php: 8.0, phpunit: 9.5.*  }
-                    - { symfony: 5.4.*, php: 7.2, phpunit: 8.3.*  }
-                    - { symfony: 5.3.*, php: 7.2, phpunit: 8.3.*  }
-                    - { symfony: 5.2.*, php: 7.2, phpunit: 8.3.*  }
-                    - { symfony: 5.1.*, php: 7.2, phpunit: 8.3.*  }
-                    - { symfony: 5.0.*, php: 7.2, phpunit: 8.3.*  }
-                    - { symfony: 4.4.*, php: 7.1, phpunit: 7.0.*  }
-                    - { symfony: 4.3.*, php: 7.1, phpunit: 7.0.*  }
-                    - { symfony: 4.2.*, php: 7.1, phpunit: 7.0.*  }
-                    - { symfony: 4.1.*, php: 7.1, phpunit: 7.0.*  }
-                    - { symfony: 4.0.*, php: 7.1, phpunit: 7.0.*  }
-                    - { symfony: 3.4.*, php: 5.5, phpunit: 4.8.36 }
-                    - { symfony: 3.3.*, php: 5.5, phpunit: 4.8.36 }
-                    - { symfony: 3.2.*, php: 5.5, phpunit: 4.8.36 }
-                    - { symfony: 3.1.*, php: 5.5, phpunit: 4.8.36 }
-                    - { symfony: 3.0.*, php: 5.5, phpunit: 4.8.36 }
-                    - { symfony: 2.8.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.7.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.6.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.5.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.4.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.3.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.2.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.1.*, php: 5.3, phpunit: 4.8.36 }
-                    - { symfony: 2.0.*, php: 5.3, phpunit: 4.8.36 }
+                php: [ 8.2 ]
 
-        name: symfony[${{ matrix.symfony }}] php[${{ matrix.php }}] - ${{ matrix.os }}
+        name: 🐘 PHP ${{ matrix.php }} Static Analysis
 
         steps:
-            -   name: Checkout code
+            -   name: 📥 Checkout Code
                 uses: actions/checkout@v4
 
-            -   name: Setup PHP
+            -   name: 🔧 Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
 
-            -   name: Cache dependencies
-                uses: actions/cache@v3
+            -   name: 🚚 Cache Composer Dependencies
+                uses: actions/cache@v4
                 with:
                     path: ~/.composer/cache
-                    key: ${{ runner.os }}-composer-${{ hashFiles('composer.json') }}
-                    restore-keys: ${{ runner.os }}-composer
+                    key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-
 
-            -   name: Install dependencies
+            -   name: 📦 Install Dependencies
                 run: |
-                    sed -i '/\"require\": {/,/},/d; /\"require-dev\": {/,/},/d' composer.json
                     composer config --global allow-plugins true
-                    composer config extra.symfony.require "${{ matrix.symfony }}"
+                    composer install
 
-                    if [[ "${{ matrix.symfony }}" == "7.0.*" || "${{ matrix.symfony }}" == "7.1.*" ]]; then
-                        composer require "symfony/config:${{ matrix.symfony }}" \
-                                         "symfony/console:${{ matrix.symfony }}" \
-                                         "symfony/dependency-injection:${{ matrix.symfony }}" \
-                                         "symfony/http-kernel:${{ matrix.symfony }}" \
-                                         "symfony/translation:${{ matrix.symfony }}" \
-                                         "symfony/framework-bundle:${{ matrix.symfony }}" \
-                                         "symfony/twig-bundle:${{ matrix.symfony }}" \
-                                         "phpunit/phpunit:${{ matrix.phpunit }}" \
-                                         "monolog/monolog" --no-interaction --no-update
-                    else
-                        composer require "symfony/symfony:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" "monolog/monolog" --no-interaction --no-update
-                    fi
+            -   name: 🧹 Run PHP CS Fixer (Code Style)
+                run: vendor/bin/php-cs-fixer fix --dry-run
 
-                    composer update --prefer-stable --prefer-dist
+            -   name: 🔍 Run PHPStan (Static Analysis)
+                run: vendor/bin/phpstan analyse
 
-            -   name: Execute tests
-                run: vendor/bin/phpunit --configuration=phpunit-symfony.xml
+            -   name: 🚀 Run PHPLint (Syntax Check)
+                run: vendor/bin/phplint
 
-    laravel-test:
-        runs-on: ${{ matrix.os }}
+    prime-test:
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
-                os: [ubuntu-latest]
-                laravel: [ 11.*, 10.*, 9.*, 8.*, 7.*, 6.*, 5.8.*, 5.7.*, 5.6.*, 5.5.*, 5.4.*, 5.3.*, 5.2.*, 5.1.*, 5.0.*, 4.2.*, 4.1.*, 4.0.* ]
                 include:
-                    - { laravel: 11.*,  testbench: 9.*,   php: 8.3, phpunit: 10.5.* }
-                    - { laravel: 11.*,  testbench: 9.*,   php: 8.2, phpunit: 10.5.* }
-                    - { laravel: 10.*,  testbench: 8.*,   php: 8.2, phpunit: 10.2.* }
-                    - { laravel: 9.*,   testbench: 7.*,   php: 8.1, phpunit: 9.5.*  }
-                    - { laravel: 8.*,   testbench: 6.*,   php: 7.3, phpunit: 9.3.*  }
-                    - { laravel: 7.*,   testbench: 5.*,   php: 7.3, phpunit: 8.4.*  }
-                    - { laravel: 6.*,   testbench: 4.*,   php: 7.2, phpunit: 8.3.*  }
-                    - { laravel: 5.8.*, testbench: 3.8.*, php: 7.1, phpunit: 7.5.*  }
-                    - { laravel: 5.7.*, testbench: 3.7.*, php: 7.1, phpunit: 7.0.*  }
-                    - { laravel: 5.6.*, testbench: 3.6.*, php: 7.1, phpunit: 7.0.*  }
-                    - { laravel: 5.5.*, testbench: 3.5.*, php: 7.0, phpunit: 6.0.*  }
-                    - { laravel: 5.4.*, testbench: 3.4.*, php: 5.6, phpunit: 5.7.*  }
-                    - { laravel: 5.3.*, testbench: 3.3.*, php: 5.6, phpunit: 4.8.*  }
-                    - { laravel: 5.2.*, testbench: 3.2.*, php: 5.5, phpunit: 4.8.*  }
-                    - { laravel: 5.1.*, testbench: 3.1.*, php: 5.5, phpunit: 4.8.*  }
-                    - { laravel: 5.0.*, testbench: 3.0.*, php: 5.4, phpunit: 4.8.*  }
-                    - { laravel: 4.2.*, testbench: 2.2.*, php: 5.4, phpunit: 4.8.*  }
-                    - { laravel: 4.1.*, testbench: 2.1.*, php: 5.4, phpunit: 4.8.*  }
-                    - { laravel: 4.0.*, testbench: 2.0.*, php: 5.4, phpunit: 4.8.*  }
+                    - { php: 8.4, phpunit: 10.5.* }
+                    - { php: 8.3, phpunit: 10.5.* }
+                    - { php: 8.2, phpunit: 10.5.* }
 
-        name: laravel[${{ matrix.laravel }}] php[${{ matrix.php }}] - ${{ matrix.os }}
+        name: 🐘 PHP ${{ matrix.php }}
 
         steps:
-            -   name: Checkout code
+            -   name: 📥 Checkout code
                 uses: actions/checkout@v4
 
-            -   name: Setup PHP
+            -   name: 🔧 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: 🚚 Cache dependencies
+                uses: actions/cache@v4
+                with:
+                    path: ~/.composer/cache
+                    key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-
+
+            -   name: 📦 Install dependencies
+                run: |
+                    sed -i '/"require": {/,/},/d; /"require-dev": {/,/},/d' composer.json
+                    composer config --global allow-plugins true
+                    composer require "phpunit/phpunit:${{ matrix.phpunit }}" "mockery/mockery" "psr/container" --no-interaction --no-update
+                    composer update --prefer-lowest -W
+
+            -   name: ✅ Execute tests
+                run: vendor/bin/phpunit --testsuite prime
+
+    symfony-test:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - { symfony: 7.1.*, php: 8.4, phpunit: 10.5.* }
+                    - { symfony: 7.1.*, php: 8.3, phpunit: 10.5.* }
+                    - { symfony: 7.0.*, php: 8.2, phpunit: 10.5.* }
+
+        name: 🌉 Symfony ${{ matrix.symfony }} PHP ${{ matrix.php }}
+
+        steps:
+            -   name: 📥 Checkout code
+                uses: actions/checkout@v4
+
+            -   name: 🔧 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: 🚚 Cache dependencies
+                uses: actions/cache@v4
+                with:
+                    path: ~/.composer/cache
+                    key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-${{ matrix.php }}-
+
+            -   name: 📦 Install dependencies
+                run: |
+                    sed -i '/"require": {/,/},/d; /"require-dev": {/,/},/d' composer.json
+                    composer config --global allow-plugins true
+                    composer config extra.symfony.require "${{ matrix.symfony }}"
+                    composer require "symfony/config:${{ matrix.symfony }}" "symfony/console:${{ matrix.symfony }}" "symfony/dependency-injection:${{ matrix.symfony }}" "symfony/framework-bundle:${{ matrix.symfony }}" "symfony/http-kernel:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/twig-bundle:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" "mockery/mockery" "psr/container" "monolog/monolog" --no-interaction --no-update
+                    composer update --prefer-lowest -W
+
+            -   name: ✅ Execute tests
+                run: vendor/bin/phpunit --testsuite symfony
+
+    laravel-test:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - { laravel: 11.*,  testbench: 9.*, php: 8.3, phpunit: 10.5.* }
+                    - { laravel: 11.*,  testbench: 9.*, php: 8.2, phpunit: 10.5.* }
+
+        name: 🏗 Laravel ${{ matrix.laravel }} PHP ${{ matrix.php }}
+
+        steps:
+            -   name: 📥 Checkout code
+                uses: actions/checkout@v4
+
+            -   name: 🔧 Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
                     extensions: fileinfo
                     coverage: none
 
-            -   name: Cache dependencies
-                uses: actions/cache@v3
+            -   name: 🚚 Cache dependencies
+                uses: actions/cache@v4
                 with:
                     path: ~/.composer/cache
-                    key: ${{ runner.os }}-composer-${{ hashFiles('composer.json') }}
-                    restore-keys: ${{ runner.os }}-composer
+                    key: ${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+                    restore-keys: ${{ matrix.php }}-composer
 
-            -   name: Install dependencies
+            -   name: 📦 Install dependencies
                 run: |
                     sed -i '/\"require\": {/,/},/d; /\"require-dev\": {/,/},/d' composer.json
                     composer config --global allow-plugins true
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                    composer update --prefer-stable --prefer-dist
+                    composer update --prefer-lowest -W
 
-            -   name: Execute tests
-                run: vendor/bin/phpunit --configuration=phpunit-laravel.xml
+            -   name: ✅ Execute tests
+                run: vendor/bin/phpunit --testsuite laravel

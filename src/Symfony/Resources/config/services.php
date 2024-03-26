@@ -1,90 +1,149 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
-use Flasher\Symfony\Bridge\Bridge;
-use Symfony\Component\DependencyInjection\Reference;
+use Flasher\Prime\Asset\AssetManager;
+use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\NotificationLoggerListener;
+use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
+use Flasher\Prime\Factory\NotificationFactory;
+use Flasher\Prime\Flasher;
+use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandler;
+use Flasher\Prime\Http\Csp\NonceGenerator;
+use Flasher\Prime\Http\RequestExtension;
+use Flasher\Prime\Http\ResponseExtension;
+use Flasher\Prime\Response\Resource\ResourceManager;
+use Flasher\Prime\Response\ResponseManager;
+use Flasher\Prime\Storage\Filter\FilterFactory;
+use Flasher\Prime\Storage\Storage;
+use Flasher\Prime\Storage\StorageManager;
+use Flasher\Symfony\Command\InstallCommand;
+use Flasher\Symfony\Component\FlasherComponent;
+use Flasher\Symfony\EventListener\FlasherListener;
+use Flasher\Symfony\EventListener\SessionListener;
+use Flasher\Symfony\Factory\NotificationFactoryLocator;
+use Flasher\Symfony\Storage\SessionBag;
+use Flasher\Symfony\Template\TwigTemplateEngine;
+use Flasher\Symfony\Translation\Translator;
+use Flasher\Symfony\Twig\FlasherTwigExtension;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-if (!isset($container)) {
-    return;
-}
+use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
 
-$container->register('flasher.config', 'Flasher\Prime\Config\Config')
-    ->setPublic(false)
-    ->addArgument(array());
+return static function (ContainerConfigurator $container): void {
+    $container->services()
+        ->set('flasher', Flasher::class)
+            ->public()
+            ->args([
+                param('flasher.default'),
+                inline_service(NotificationFactoryLocator::class)
+                    ->args([tagged_locator('flasher.factory', indexAttribute: 'alias')]),
+                service('flasher.response_manager'),
+                service('flasher.storage_manager'),
+            ])
+            ->alias(FlasherInterface::class, 'flasher')
 
-$storage = Bridge::versionCompare('5.3', '>=')
-    ? new Reference('request_stack')
-    : new Reference('session');
+        ->set('flasher.flasher_listener', FlasherListener::class)
+            ->args([
+                inline_service(ResponseExtension::class)
+                    ->args([
+                        service('flasher'),
+                        service('flasher.csp_handler'),
+                    ]),
+            ])
+            ->tag('kernel.event_subscriber')
 
-$container->register('flasher.storage_bag', 'Flasher\Symfony\Storage\SessionBag')
-    ->setPublic(false)
-    ->addArgument($storage);
+        ->set('flasher.twig_extension', FlasherTwigExtension::class)
+            ->args([service('flasher')])
+            ->tag('twig.extension')
 
-$container->register('flasher.storage', 'Flasher\Prime\Storage\StorageBag')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.storage_bag'));
+        ->set('flasher.session_listener', SessionListener::class)
+            ->args([
+                inline_service(RequestExtension::class)
+                    ->args([
+                        service('flasher'),
+                        param('flasher.flash_bag'),
+                    ]),
+            ])
+            ->tag('kernel.event_subscriber')
 
-$container->register('flasher.event_dispatcher', 'Flasher\Prime\EventDispatcher\EventDispatcher')
-    ->setPublic(false);
+        ->set('flasher.notification_logger_listener', NotificationLoggerListener::class)
+            ->tag('flasher.event_dispatcher')
+            ->tag('kernel.reset', ['method' => 'reset'])
 
-$container->register('flasher.storage_manager', 'Flasher\Prime\Storage\StorageManager')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.storage'))
-    ->addArgument(new Reference('flasher.event_dispatcher'))
-    ->addArgument(array());
+        ->set('flasher.translation_listener', TranslationListener::class)
+            ->args([service('flasher.translator')->nullOnInvalid()])
+            ->tag('kernel.event_listener')
 
-$container->register('flasher.twig.extension', 'Flasher\Symfony\Twig\FlasherTwigExtension')
-    ->setPublic(false)
-    ->addTag('twig.extension', array());
+        ->set('flasher.preset_listener', ApplyPresetListener::class)
+            ->args([param('flasher.presets')])
+            ->tag('kernel.event_listener')
 
-$container->register('flasher.template_engine', 'Flasher\Symfony\Template\TwigTemplateEngine')
-    ->setPublic(false)
-    ->addArgument(new Reference('twig'));
+        ->set('flasher.install_command', InstallCommand::class)
+            ->args([service('flasher.asset_manager')])
+            ->tag('console.command')
 
-$container->register('flasher.resource_manager', 'Flasher\Prime\Response\Resource\ResourceManager')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.config'))
-    ->addArgument(new Reference('flasher.template_engine'));
+        ->set('flasher.flasher_component', FlasherComponent::class)
+            ->tag('twig.component', [
+                'key' => 'flasher',
+                'template' => '@Flasher/components/flasher.html.twig',
+                'attributesVar' => 'attributes',
+            ])
 
-$container->register('flasher.response_manager', 'Flasher\Prime\Response\ResponseManager')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.resource_manager'))
-    ->addArgument(new Reference('flasher.storage_manager'))
-    ->addArgument(new Reference('flasher.event_dispatcher'));
+        ->set('flasher.notification_factory', NotificationFactory::class)
+            ->args([service('flasher.storage_manager')])
 
-$container->register('flasher', 'Flasher\Prime\Flasher')
-    ->setPublic(true)
-    ->addArgument(null)
-    ->addArgument(new Reference('flasher.response_manager'))
-    ->addArgument(new Reference('flasher.storage_manager'));
+        ->set('flasher.storage', Storage::class)
+            ->args([service('flasher.storage_bag')])
 
-$container->register('flasher.notification_factory', 'Flasher\Prime\Factory\NotificationFactory')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.storage_manager'));
+        ->set('flasher.storage_bag', SessionBag::class)
+            ->args([service('request_stack')])
 
-$container->register('flasher.translator', 'Flasher\Symfony\Translation\Translator')
-    ->setPublic(false)
-    ->addArgument(new Reference('translator'));
+        ->set('flasher.event_dispatcher', EventDispatcher::class)
 
-$container->register('flasher.translation_listener', 'Flasher\Prime\EventDispatcher\EventListener\TranslationListener')
-    ->setPublic(false)
-    ->addArgument(new Reference('flasher.translator'))
-    ->addArgument(true)
-    ->addTag('flasher.event_subscriber');
+        ->set('flasher.filter_factory', FilterFactory::class)
 
-$container->register('flasher.preset_listener', 'Flasher\Prime\EventDispatcher\EventListener\PresetListener')
-    ->setPublic(false)
-    ->addArgument(array())
-    ->addTag('flasher.event_subscriber');
+        ->set('flasher.storage_manager', StorageManager::class)
+            ->args([
+                service('flasher.storage'),
+                service('flasher.event_dispatcher'),
+                service('flasher.filter_factory'),
+                param('flasher.filter'),
+            ])
 
-$container->register('flasher.install_command', 'Flasher\Symfony\Command\InstallCommand')
-    ->addTag('console.command');
+        ->set('flasher.template_engine', TwigTemplateEngine::class)
+            ->args([service('twig')->nullOnInvalid()])
 
-if (Bridge::canLoadAliases()) {
-    $container->setAlias('Flasher\Prime\Flasher', 'flasher');
-    $container->setAlias('Flasher\Prime\FlasherInterface', 'flasher');
-}
+        ->set('flasher.resource_manager', ResourceManager::class)
+            ->args([
+                service('flasher.template_engine'),
+                service('flasher.asset_manager'),
+                param('flasher.main_script'),
+                param('flasher.plugins'),
+            ])
+
+        ->set('flasher.response_manager', ResponseManager::class)
+            ->args([
+                service('flasher.resource_manager'),
+                service('flasher.storage_manager'),
+                service('flasher.event_dispatcher'),
+            ])
+
+        ->set('flasher.translator', Translator::class)
+            ->args([service('translator')->nullOnInvalid()])
+
+        ->set('flasher.csp_handler', ContentSecurityPolicyHandler::class)
+            ->args([inline_service(NonceGenerator::class)])
+
+        ->set('flasher.asset_manager', AssetManager::class)
+            ->args([
+                param('flasher.public_dir'),
+                param('flasher.json_manifest_path'),
+            ])
+    ;
+};

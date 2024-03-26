@@ -1,29 +1,24 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
-use Flasher\Prime\Stamp\UuidStamp;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\StampInterface;
+use PHPUnit\Framework\TestCase;
 
 final class UuidStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testUuidStamp()
+    public function testUuidStamp(): void
     {
-        $stamp = new UuidStamp();
+        $stamp = new IdStamp();
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertNotEmpty($stamp->getUuid());
+        $this->assertInstanceOf(StampInterface::class, $stamp);
+        $this->assertNotEmpty($stamp->getId());
 
-        $stamp = new UuidStamp('aaaa-bbbb-cccc');
-        $this->assertEquals('aaaa-bbbb-cccc', $stamp->getUuid());
-        $this->assertEquals(array('uuid' => 'aaaa-bbbb-cccc'), $stamp->toArray());
+        $stamp = new IdStamp('aaaa-bbbb-cccc');
+        $this->assertSame('aaaa-bbbb-cccc', $stamp->getId());
+        $this->assertSame(['id' => 'aaaa-bbbb-cccc'], $stamp->toArray());
     }
 }

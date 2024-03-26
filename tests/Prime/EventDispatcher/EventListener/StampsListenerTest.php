@@ -1,45 +1,45 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
 use Flasher\Prime\EventDispatcher\Event\PersistEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
+use Flasher\Prime\EventDispatcher\EventListener\AttachDefaultStampsListener;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Stamp\CreatedAtStamp;
+use Flasher\Prime\Stamp\DelayStamp;
+use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\PriorityStamp;
+use Flasher\Tests\Prime\Helper\ObjectInvader;
+use PHPUnit\Framework\TestCase;
 
-class StampsListenerTest extends TestCase
+final class StampsListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testStampsListener()
+    public function testStampsListener(): void
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        ObjectInvader::from($eventDispatcher)->set('listeners', []);
 
-        $listener = new StampsListener();
-        $eventDispatcher->addSubscriber($listener);
+        $listener = new AttachDefaultStampsListener();
+        $eventDispatcher->addListener($listener);
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
-        );
+        ];
         $event = new PersistEvent($envelopes);
 
         $eventDispatcher->dispatch($event);
 
         $envelopes = $event->getEnvelopes();
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\CreatedAtStamp', $envelopes[0]->get('Flasher\Prime\Stamp\CreatedAtStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\UuidStamp', $envelopes[0]->get('Flasher\Prime\Stamp\UuidStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\DelayStamp', $envelopes[0]->get('Flasher\Prime\Stamp\DelayStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $envelopes[0]->get('Flasher\Prime\Stamp\HopsStamp'));
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp', $envelopes[0]->get('Flasher\Prime\Stamp\PriorityStamp'));
+        $this->assertInstanceOf(CreatedAtStamp::class, $envelopes[0]->get(CreatedAtStamp::class));
+        $this->assertInstanceOf(IdStamp::class, $envelopes[0]->get(IdStamp::class));
+        $this->assertInstanceOf(DelayStamp::class, $envelopes[0]->get(DelayStamp::class));
+        $this->assertInstanceOf(HopsStamp::class, $envelopes[0]->get(HopsStamp::class));
+        $this->assertInstanceOf(PriorityStamp::class, $envelopes[0]->get(PriorityStamp::class));
     }
 }

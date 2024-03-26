@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Storage;
 
@@ -14,114 +11,78 @@ use Flasher\Prime\EventDispatcher\Event\PostRemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\PostUpdateEvent;
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
-use Flasher\Prime\EventDispatcher\EventDispatcher;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Exception\CriteriaNotRegisteredException;
+use Flasher\Prime\Notification\Envelope;
+use Flasher\Prime\Storage\Filter\FilterFactoryInterface;
 
-final class StorageManager implements StorageManagerInterface
+final readonly class StorageManager implements StorageManagerInterface
 {
     /**
-     * @var StorageInterface
+     * @param array<string, mixed> $criteria
      */
-    private $storage;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var mixed[]
-     */
-    private $criteria = array();
-
-    /**
-     * @param mixed[] $criteria
-     */
-    public function __construct(StorageInterface $storage = null, EventDispatcherInterface $eventDispatcher = null, array $criteria = array())
-    {
-        $this->storage = $storage ?: new StorageBag();
-        $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
-        $this->criteria = $criteria;
+    public function __construct(
+        private StorageInterface $storage,
+        private EventDispatcherInterface $eventDispatcher,
+        private FilterFactoryInterface $filterFactory,
+        private array $criteria = [],
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function all()
+    public function all(): array
     {
         return $this->storage->all();
     }
 
     /**
-     * {@inheritdoc}
+     * @throws CriteriaNotRegisteredException
      */
-    public function filter(array $criteria = array())
+    public function filter(array $criteria = []): array
     {
-        $criteria = array_merge($this->criteria, $criteria);
+        $criteria = [...$this->criteria, ...$criteria];
+        $filter = $this->filterFactory->createFilter($criteria);
 
-        $criteria['delay'] = 0;
-        // @phpstan-ignore-next-line
-        $criteria['hops']['min'] = 1;
-
-        $event = new FilterEvent($this->all(), $criteria);
+        $event = new FilterEvent($filter, $this->all(), $criteria);
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getEnvelopes();
+        return $event->getFilter()->apply($event->getEnvelopes());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function add($envelopes)
+    public function add(Envelope ...$envelopes): void
     {
-        $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
-
         $event = new PersistEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->add($event->getEnvelopes());
+        $this->storage->add(...$event->getEnvelopes());
 
         $event = new PostPersistEvent($event->getEnvelopes());
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function update($envelopes)
+    public function update(Envelope ...$envelopes): void
     {
-        $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
-
         $event = new UpdateEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->update($event->getEnvelopes());
+        $this->storage->update(...$event->getEnvelopes());
 
         $event = new PostUpdateEvent($event->getEnvelopes());
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function remove($envelopes)
+    public function remove(Envelope ...$envelopes): void
     {
-        $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
-
         $event = new RemoveEvent($envelopes);
         $this->eventDispatcher->dispatch($event);
 
-        $this->storage->update($event->getEnvelopesToKeep());
-        $this->storage->remove($event->getEnvelopesToRemove());
+        $this->storage->update(...$event->getEnvelopesToKeep());
+        $this->storage->remove(...$event->getEnvelopesToRemove());
 
         $event = new PostRemoveEvent($event->getEnvelopesToRemove(), $event->getEnvelopesToKeep());
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->storage->clear();
     }

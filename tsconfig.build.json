@@ -1,0 +1,27 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "declarationMap": false,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "module": "es6",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "removeComments": true,
+        "skipLibCheck": true,
+        "sourceMap": false,
+        "strict": true,
+        "target": "es6"
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "public"
+    ]
+}

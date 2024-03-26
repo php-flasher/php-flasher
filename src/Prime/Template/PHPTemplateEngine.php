@@ -1,19 +1,17 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Template;
 
 final class PHPTemplateEngine implements TemplateEngineInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function render($name, array $context = array())
+    public function render(string $name, array $context = []): string
     {
+        if (!file_exists($name) || !is_readable($name)) {
+            throw new \InvalidArgumentException(sprintf('Template file "%s" does not exist or is not readable.', $name));
+        }
+
         ob_start();
 
         extract($context, \EXTR_SKIP);
@@ -21,6 +19,7 @@ final class PHPTemplateEngine implements TemplateEngineInterface
         include $name;
 
         $output = ob_get_clean();
+
         if (false === $output) {
             return '';
         }

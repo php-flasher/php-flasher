@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Response\Presenter;
 
@@ -11,8 +8,5 @@ use Flasher\Prime\Response\Response;
 
 interface PresenterInterface
 {
-    /**
-     * @return mixed
-     */
-    public function render(Response $response);
+    public function render(Response $response): mixed;
 }

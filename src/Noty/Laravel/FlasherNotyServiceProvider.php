@@ -1,21 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Noty\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Noty\Prime\NotyPlugin;
 
-final class FlasherNotyServiceProvider extends ServiceProvider
+final class FlasherNotyServiceProvider extends PluginServiceProvider
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function createPlugin()
+    public function createPlugin(): NotyPlugin
     {
         return new NotyPlugin();
     }

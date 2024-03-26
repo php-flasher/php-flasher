@@ -1,0 +1,3 @@
+**/node_modules
+src/**/Resources/public/**
+src/**/Resources/dist/**

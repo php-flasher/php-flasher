@@ -1,26 +1,20 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Translation;
 
-final class EchoTranslator implements TranslatorInterface
+/**
+ * In this implementation, it simply returns the identifier as is, without performing any actual translation.
+ */
+final readonly class EchoTranslator implements TranslatorInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function translate($id, $parameters = array(), $locale = null)
+    public function translate(string $id, array $parameters = [], ?string $locale = null): string
     {
         return $id;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return 'en';
     }

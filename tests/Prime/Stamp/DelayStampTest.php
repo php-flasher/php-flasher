@@ -1,25 +1,27 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\DelayStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class DelayStampTest extends TestCase
+final class DelayStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testDelayStamp()
-    {
-        $stamp = new DelayStamp(2);
+    private int $testDelay;
+    private DelayStamp $instance;
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertEquals(2, $stamp->getDelay());
+    protected function setUp(): void
+    {
+        $this->testDelay = 100;
+        $this->instance = new DelayStamp($this->testDelay);
+    }
+
+    public function testGetDelay(): void
+    {
+        $delay = $this->instance->getDelay();
+
+        $this->assertSame($this->testDelay, $delay);
     }
 }

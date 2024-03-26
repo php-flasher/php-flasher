@@ -1,0 +1,20 @@
+{
+    "name": "@flasher/flasher-sweetalert",
+    "version": "2.0.0",
+    "type": "module",
+    "license": "MIT",
+    "main": "dist/flasher-sweetalert.js",
+    "browser": "dist/flasher-sweetalert.min.js",
+    "types": "dist/sweetalert.d.ts",
+    "scripts": {
+        "dev": "rollup -c",
+        "watch": "rollup -c -w",
+        "build": "cross-env NODE_ENV=production rollup -c"
+    },
+    "dependencies": {
+        "@flasher/flasher": "workspace:*"
+    },
+    "peerDependencies": {
+        "sweetalert2": "^11.10.4"
+    }
+}

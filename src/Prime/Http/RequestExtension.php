@@ -1,57 +1,33 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Http;
 
 use Flasher\Prime\FlasherInterface;
 
-final class RequestExtension
+final readonly class RequestExtension implements RequestExtensionInterface
 {
-    /**
-     * @var FlasherInterface
-     */
-    private $flasher;
-
     /**
      * @var array<string, string>
      */
-    private $mapping;
+    private array $mapping;
 
     /**
      * @param array<string, string[]> $mapping
      */
-    public function __construct(FlasherInterface $flasher, array $mapping = array())
+    public function __construct(private FlasherInterface $flasher, array $mapping = [])
     {
-        $this->flasher = $flasher;
         $this->mapping = $this->flatMapping($mapping);
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function flash(RequestInterface $request, ResponseInterface $response)
+    public function flash(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         if (!$request->hasSession()) {
             return $response;
         }
 
-        foreach ($this->mapping as $alias => $type) {
-            if (false === $request->hasType($alias)) {
-                continue;
-            }
-
-            $messages = (array) $request->getType($alias);
-
-            foreach ($messages as $message) {
-                $this->flasher->addFlash($type, $message);
-            }
-
-            $request->forgetType($alias);
-        }
+        $this->processRequest($request);
 
         return $response;
     }
@@ -61,9 +37,9 @@ final class RequestExtension
      *
      * @return array<string, string>
      */
-    private function flatMapping(array $mapping)
+    private function flatMapping(array $mapping): array
     {
-        $flatMapping = array();
+        $flatMapping = [];
 
         foreach ($mapping as $type => $aliases) {
             foreach ($aliases as $alias) {
@@ -72,5 +48,25 @@ final class RequestExtension
         }
 
         return $flatMapping;
+    }
+
+    /**
+     * Process the request and flash messages.
+     */
+    private function processRequest(RequestInterface $request): void
+    {
+        foreach ($this->mapping as $alias => $type) {
+            if (!$request->hasType($alias)) {
+                continue;
+            }
+
+            $messages = (array) $request->getType($alias);
+
+            foreach ($messages as $message) {
+                $this->flasher->flash($type, $message);
+            }
+
+            $request->forgetType($alias);
+        }
     }
 }

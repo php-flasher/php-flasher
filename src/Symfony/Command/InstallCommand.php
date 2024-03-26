@@ -1,40 +1,39 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Command;
 
+use Flasher\Prime\Asset\AssetManagerInterface;
 use Flasher\Prime\Plugin\PluginInterface;
-use Flasher\Symfony\Bridge\Bridge;
-use Flasher\Symfony\Bridge\Command\FlasherCommand;
-use Flasher\Symfony\Support\Bundle;
+use Flasher\Symfony\Support\PluginBundleInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class InstallCommand extends FlasherCommand
+final class InstallCommand extends Command
 {
-    /**
-     * @return void
-     */
-    protected function configure()
+    public function __construct(private readonly AssetManagerInterface $assetManager)
+    {
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('flasher:install')
             ->setDescription('Installs all <fg=blue;options=bold>PHPFlasher</> resources to the <comment>public</comment> and <comment>config</comment> directories.')
-            ->setHelp('The command copies <fg=blue;options=bold>PHPFlasher</> assets to <comment>public/vendor/flasher/</comment> directory and config files to the <comment>config/packages/</comment> directory without overwriting any existing config files.');
+            ->setHelp('The command copies <fg=blue;options=bold>PHPFlasher</> assets to <comment>public/vendor/flasher/</comment> directory and config files to the <comment>config/packages/</comment> directory without overwriting any existing config files.')
+            ->addOption('config', 'c', InputOption::VALUE_NONE, 'Publish all config files to the <comment>config/packages/</comment> directory.')
+            ->addOption('symlink', 's', InputOption::VALUE_NONE, 'Symlink <fg=blue;options=bold>PHPFlasher</> assets instead of copying them.');
     }
 
-    /**
-     * @return int
-     */
-    protected function flasherExecute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('');
         $output->writeln('<fg=blue;options=bold>
@@ -51,14 +50,36 @@ class InstallCommand extends FlasherCommand
         $output->writeln('<bg=blue;options=bold> INFO </> Copying <fg=blue;options=bold>PHPFlasher</> resources...');
         $output->writeln('');
 
+        $application = $this->getApplication();
+        if (!$application instanceof Application) {
+            return self::SUCCESS;
+        }
+
+        $useSymlinks = (bool) $input->getOption('symlink');
+        if ($useSymlinks) {
+            $output->writeln('<info>Using symlinks to publish assets.</info>');
+        } else {
+            $output->writeln('<info>Copying assets to the public directory.</info>');
+        }
+
+        $publishConfig = (bool) $input->getOption('config');
+        if ($publishConfig) {
+            $output->writeln('<info>Publishing configuration files.</info>');
+        }
+
         $publicDir = $this->getPublicDir().'/vendor/flasher/';
         $configDir = $this->getConfigDir();
-        $exitCode = 0;
 
-        /** @var KernelInterface $kernel */
-        $kernel = $this->getApplication()->getKernel();
+        $filesystem = new Filesystem();
+        $filesystem->remove($publicDir);
+        $filesystem->mkdir($publicDir);
+
+        $files = [];
+        $exitCode = self::SUCCESS;
+
+        $kernel = $application->getKernel();
         foreach ($kernel->getBundles() as $bundle) {
-            if (!$bundle instanceof Bundle) {
+            if (!$bundle instanceof PluginBundleInterface) {
                 continue;
             }
 
@@ -66,13 +87,16 @@ class InstallCommand extends FlasherCommand
             $configFile = $bundle->getConfigurationFile();
 
             try {
-                $this->publishAssets($plugin, $publicDir);
-                $this->publishConfig($plugin, $configDir, $configFile);
+                $files[] = $this->publishAssets($plugin, $publicDir, $useSymlinks);
+
+                if ($publishConfig) {
+                    $this->publishConfig($plugin, $configDir, $configFile);
+                }
 
                 $status = sprintf('<fg=green;options=bold>%s</>', '\\' === \DIRECTORY_SEPARATOR ? 'OK' : "\xE2\x9C\x94" /* HEAVY CHECK MARK (U+2714) */);
                 $output->writeln(sprintf(' %s <fg=blue;options=bold>%s</>', $status, $plugin->getAlias()));
             } catch (\Exception $e) {
-                $exitCode = 1;
+                $exitCode = self::FAILURE;
                 $status = sprintf('<fg=red;options=bold>%s</>', '\\' === \DIRECTORY_SEPARATOR ? 'ERROR' : "\xE2\x9C\x98" /* HEAVY BALLOT X (U+2718) */);
                 $output->writeln(sprintf(' %s <fg=blue;options=bold>%s</> <error>%s</error>', $status, $plugin->getAlias(), $e->getMessage()));
             }
@@ -80,11 +104,20 @@ class InstallCommand extends FlasherCommand
 
         $output->writeln('');
 
-        if (0 === $exitCode) {
-            $output->writeln('<bg=green;options=bold> SUCCESS </> <fg=blue;options=bold>PHPFlasher</> resources have been successfully installed.');
+        if (self::SUCCESS === $exitCode) {
+            $message = '<fg=blue;options=bold>PHPFlasher</> resources have been successfully installed.';
+            if ($publishConfig) {
+                $message .= ' Configuration files have been published.';
+            }
+            if ($useSymlinks) {
+                $message .= ' Assets were symlinked.';
+            }
+            $output->writeln("<bg=green;options=bold> SUCCESS </> <fg=blue;options=bold>$message</>");
         } else {
             $output->writeln('<bg=red;options=bold> ERROR </> An error occurred during the installation of <fg=blue;options=bold>PHPFlasher</> resources.');
         }
+
+        $this->assetManager->createManifest(array_merge([], ...$files));
 
         $output->writeln('');
 
@@ -92,34 +125,39 @@ class InstallCommand extends FlasherCommand
     }
 
     /**
-     * @param string|null $publicDir
-     *
-     * @return void
+     * @return string[]
      */
-    private function publishAssets(PluginInterface $plugin, $publicDir)
+    private function publishAssets(PluginInterface $plugin, string $publicDir, bool $useSymlinks): array
     {
-        if (null === $publicDir) {
-            return;
-        }
-
         $originDir = $plugin->getAssetsDir();
 
         if (!is_dir($originDir)) {
-            return;
+            return [];
         }
 
         $filesystem = new Filesystem();
-        $filesystem->mkdir($originDir, 0777);
-        $filesystem->mirror($originDir, $publicDir, Finder::create()->ignoreDotFiles(false)->in($originDir));
+        $finder = new Finder();
+        $finder->files()->in($originDir);
+
+        $files = [];
+
+        foreach ($finder as $file) {
+            $relativePath = trim(str_replace($originDir, '', $file->getRealPath()), \DIRECTORY_SEPARATOR);
+            $targetPath = $publicDir.$relativePath;
+
+            if ($useSymlinks) {
+                $filesystem->symlink($file->getRealPath(), $targetPath);
+            } else {
+                $filesystem->copy($file->getRealPath(), $targetPath, true);
+            }
+
+            $files[] = $targetPath;
+        }
+
+        return $files;
     }
 
-    /**
-     * @param string|null $configDir
-     * @param string      $configFile
-     *
-     * @return void
-     */
-    private function publishConfig(PluginInterface $plugin, $configDir, $configFile)
+    private function publishConfig(PluginInterface $plugin, ?string $configDir, string $configFile): void
     {
         if (null === $configDir || !file_exists($configFile)) {
             return;
@@ -134,15 +172,14 @@ class InstallCommand extends FlasherCommand
         $filesystem->copy($configFile, $target);
     }
 
-    /**
-     * @return string|null
-     */
-    private function getPublicDir()
+    private function getPublicDir(): ?string
     {
         $projectDir = $this->getProjectDir();
+        if (null === $projectDir) {
+            return null;
+        }
 
-        $publicDir = Bridge::versionCompare('4', '>=') ? '/public' : '/web';
-        $publicDir = rtrim($projectDir, '/').$publicDir;
+        $publicDir = rtrim($projectDir, '/').'/public';
 
         if (is_dir($publicDir)) {
             return $publicDir;
@@ -151,15 +188,15 @@ class InstallCommand extends FlasherCommand
         return $this->getComposerDir('public-dir');
     }
 
-    /**
-     * @return string|null
-     */
-    private function getConfigDir()
+    private function getConfigDir(): ?string
     {
         $projectDir = $this->getProjectDir();
 
-        $configDir = Bridge::versionCompare('4', '>=') ? '/config/packages/' : '/config';
-        $configDir = rtrim($projectDir, '/').$configDir;
+        if (null === $projectDir) {
+            return null;
+        }
+
+        $configDir = rtrim($projectDir, '/').'/config/packages/';
 
         if (is_dir($configDir)) {
             return $configDir;
@@ -168,25 +205,28 @@ class InstallCommand extends FlasherCommand
         return $this->getComposerDir('config-dir');
     }
 
-    /**
-     * @return string
-     */
-    private function getProjectDir()
+    private function getProjectDir(): ?string
     {
-        /** @var Container $container */
-        $container = $this->getApplication()->getKernel()->getContainer();
+        $kernel = $this->getKernel();
 
-        return $container->hasParameter('kernel.project_dir')
-            ? $container->getParameter('kernel.project_dir')
-            : $container->getParameter('kernel.root_dir').'/../';
+        if (null === $kernel) {
+            return null;
+        }
+
+        $container = $kernel->getContainer();
+
+        $projectDir = $container->getParameter('kernel.project_dir');
+
+        return \is_string($projectDir) ? $projectDir : null;
     }
 
-    /**
-     * @return string|null
-     */
-    private function getComposerDir($dir)
+    private function getComposerDir(string $dir): ?string
     {
         $projectDir = $this->getProjectDir();
+
+        if (null === $projectDir) {
+            return null;
+        }
 
         $composerFilePath = $projectDir.'/composer.json';
 
@@ -194,8 +234,20 @@ class InstallCommand extends FlasherCommand
             return null;
         }
 
-        $composerConfig = json_decode(file_get_contents($composerFilePath), true);
+        /** @var array{extra: array{string, string}} $composerConfig */
+        $composerConfig = json_decode(file_get_contents($composerFilePath) ?: '', true);
 
-        return isset($composerConfig['extra'][$dir]) ? $composerConfig['extra'][$dir] : null;
+        return $composerConfig['extra'][$dir] ?? null;
+    }
+
+    private function getKernel(): ?KernelInterface
+    {
+        $application = $this->getApplication();
+
+        if (!$application instanceof Application) {
+            return null;
+        }
+
+        return $application->getKernel();
     }
 }
