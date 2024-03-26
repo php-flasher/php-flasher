@@ -1,24 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Toastr\Laravel\Facade;
 
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Toastr\Prime\ToastrBuilder;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static ToastrBuilder addSuccess(string $message, array $options = array())
- * @method static ToastrBuilder addError(string $message, array $options = array())
- * @method static ToastrBuilder addWarning(string $message, array $options = array())
- * @method static ToastrBuilder addInfo(string $message, array $options = array())
- * @method static ToastrBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
  * @method static ToastrBuilder flash(StampInterface[] $stamps = array())
  * @method static ToastrBuilder type(string $type, string $message = null, array $options = array())
  * @method static ToastrBuilder message(string $message)
@@ -72,9 +63,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static ToastrBuilder toastClass(string $toastClass)
  * @method static ToastrBuilder persistent()
  */
-class Toastr extends Facade
+final class Toastr extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher.toastr';
     }

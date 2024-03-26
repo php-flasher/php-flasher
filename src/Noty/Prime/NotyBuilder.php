@@ -1,52 +1,45 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Noty\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
-/**
- * @SuppressWarnings(PHPMD.TooManyMethods)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 final class NotyBuilder extends NotificationBuilder
 {
     /**
      * This string can contain HTML too. But be careful and don't pass user inputs to this parameter.
-     *
-     * @param string $text
-     *
-     * @return static
      */
-    public function text($text)
+    public function text(string $text): self
     {
         return $this->message($text);
     }
 
     /**
-     * @param string               $message
      * @param array<string, mixed> $options
-     *
-     * @return static
      */
-    public function alert($message = null, array $options = array())
+    public function alert(?string $message = null, array $options = []): self
     {
-        return $this->type('alert', $message, $options);
+        $this->type('alert');
+
+        if ($message) {
+            $this->message($message);
+        }
+
+        if ([] !== $options) {
+            $this->options($options);
+        }
+
+        return $this;
     }
 
     /**
-     * top, topLeft, topCenter, topRight, center, centerLeft, centerRight, bottom, bottomLeft, bottomCenter, bottomRight
-     * - ClassName generator uses this value → noty_layout__${layout}.
+     * @param "top"|"topLeft"|"topCenter"|"topRight"|"center"|"centerLeft"|"centerRight"|"bottom"|"bottomLeft"|"bottomCenter"|"bottomRight" $layout
      *
-     * @param string $layout
-     *
-     * @return static
+     * - ClassName generator uses this value → noty_layout__${layout}
      */
-    public function layout($layout)
+    public function layout(string $layout): self
     {
         $this->option('layout', $layout);
 
@@ -54,13 +47,11 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * relax, mint, metroui - ClassName generator uses this value → noty_theme__${theme}.
+     * @param "relax"|"mint"|"metroui" $theme
      *
-     * @param string $theme
-     *
-     * @return static
+     * ClassName generator uses this value → noty_theme__${theme}
      */
-    public function theme($theme)
+    public function theme(string $theme): self
     {
         $this->option('theme', $theme);
 
@@ -69,12 +60,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * false, 1000, 3000, 3500, etc. Delay for closing event in milliseconds (ms). Set 'false' for sticky notifications.
-     *
-     * @param bool|int $timeout
-     *
-     * @return static
      */
-    public function timeout($timeout)
+    public function timeout(bool|int $timeout): self
     {
         $this->option('timeout', $timeout);
 
@@ -83,12 +70,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * true, false - Displays a progress bar if timeout is not false.
-     *
-     * @param bool $progressBar
-     *
-     * @return static
      */
-    public function progressBar($progressBar = false)
+    public function progressBar(bool $progressBar = false): self
     {
         $this->option('progressBar', $progressBar);
 
@@ -98,11 +81,9 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * click, button.
      *
-     * @param array<string>|string $closeWith
-     *
-     * @return static
+     * @param string|string[] $closeWith
      */
-    public function closeWith($closeWith)
+    public function closeWith(string|array $closeWith): self
     {
         $this->option('closeWith', (array) $closeWith);
 
@@ -112,51 +93,29 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * If string, assumed to be CSS class name. If null, no animation at all. If function, runs the function. (v3.0.1+)
      * You can use animate.css class names or your custom css animations as well.
-     *
-     * @param string $animation
-     * @param string $effect
-     *
-     * @return static
      */
-    public function animation($animation, $effect)
+    public function animation(string $animation, string $effect): self
     {
         $this->option('animation.'.$animation, $effect);
 
         return $this;
     }
 
-    /**
-     * @param string $option
-     * @param mixed  $value
-     *
-     * @return static
-     */
-    public function sounds($option, $value)
+    public function sounds(string $option, mixed $value): self
     {
         $this->option('sounds.'.$option, $value);
 
         return $this;
     }
 
-    /**
-     * @param string $option
-     * @param mixed  $docTitle
-     *
-     * @return static
-     */
-    public function docTitle($option, $docTitle)
+    public function docTitle(string $option, string $docTitle): self
     {
         $this->option('docTitle'.$option, $docTitle);
 
         return $this;
     }
 
-    /**
-     * @param bool $modal
-     *
-     * @return static
-     */
-    public function modal($modal = true)
+    public function modal(bool $modal = true): self
     {
         $this->option('modal', $modal);
 
@@ -165,15 +124,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * You can use this id with querySelectors. Generated automatically if false.
-     *
-     * @param bool|string $id
-     *
-     * @return static
-     *
-     * @SuppressWarnings(PHPMD.ShortMethodName)
-     * @SuppressWarnings(PHPMD.ShortVariable)
      */
-    public function id($id)
+    public function id(bool|string $id): self
     {
         $this->option('id', $id);
 
@@ -182,24 +134,15 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * DOM insert method depends on this parameter. If false uses append, if true uses prepend.
-     *
-     * @param bool $force
-     *
-     * @return static
      */
-    public function force($force = true)
+    public function force(bool $force = true): self
     {
         $this->option('force', $force);
 
         return $this;
     }
 
-    /**
-     * @param string $queue
-     *
-     * @return static
-     */
-    public function queue($queue)
+    public function queue(string $queue): self
     {
         $this->option('queue', $queue);
 
@@ -209,12 +152,8 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * If true closes all visible notifications and shows itself. If string(queueName) closes all visible notification
      * on this queue and shows itself.
-     *
-     * @param bool|string $killer
-     *
-     * @return static
      */
-    public function killer($killer)
+    public function killer(bool|string $killer): self
     {
         $this->option('killer', $killer);
 
@@ -223,12 +162,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * Custom container selector string. Like '.my-custom-container'. Layout parameter will be ignored.
-     *
-     * @param bool|string $container
-     *
-     * @return static
      */
-    public function container($container)
+    public function container(bool|string $container): self
     {
         $this->option('container', $container);
 
@@ -238,11 +173,9 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * An array of Noty.button, for creating confirmation dialogs.
      *
-     * @param array<string> $buttons
-     *
-     * @return static
+     * @param string[] $buttons
      */
-    public function buttons($buttons)
+    public function buttons(array $buttons): self
     {
         $this->option('buttons', $buttons);
 
@@ -251,12 +184,8 @@ final class NotyBuilder extends NotificationBuilder
 
     /**
      * If true Noty uses PageVisibility API to handle timeout. To ensure that users do not miss their notifications.
-     *
-     * @param bool $visibilityControl
-     *
-     * @return static
      */
-    public function visibilityControl($visibilityControl)
+    public function visibilityControl(bool $visibilityControl): self
     {
         $this->option('visibilityControl', $visibilityControl);
 

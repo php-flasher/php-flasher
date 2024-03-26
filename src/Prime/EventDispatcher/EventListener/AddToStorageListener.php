@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
@@ -12,47 +9,36 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 
-final class AddToStorageListener implements EventSubscriberInterface
+final readonly class AddToStorageListener implements EventListenerInterface
 {
-    /**
-     * @return void
-     */
-    public function __invoke(PersistEvent $event)
+    public function __invoke(PersistEvent $event): void
     {
-        $envelopesToKeep = array();
+        $envelopes = array_filter($event->getEnvelopes(), $this->isEligibleForStorage(...));
 
-        foreach ($event->getEnvelopes() as $envelope) {
-            if ($this->shouldKeep($envelope)) {
-                $envelopesToKeep[] = $envelope;
-            }
-        }
-
-        $event->setEnvelopes($envelopesToKeep);
+        $event->setEnvelopes($envelopes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public function getSubscribedEvents(): string
     {
-        return 'Flasher\Prime\EventDispatcher\Event\PersistEvent';
+        return PersistEvent::class;
     }
 
-    /**
-     * @return bool
-     */
-    private function shouldKeep(Envelope $envelope)
+    private function isEligibleForStorage(Envelope $envelope): bool
     {
-        $stamp = $envelope->get('Flasher\Prime\Stamp\WhenStamp');
-        if ($stamp instanceof WhenStamp && false === $stamp->getCondition()) {
-            return false;
-        }
+        return $this->whenCondition($envelope) && $this->unlessCondition($envelope);
+    }
 
-        $stamp = $envelope->get('Flasher\Prime\Stamp\UnlessStamp');
-        if ($stamp instanceof UnlessStamp && true === $stamp->getCondition()) {
-            return false;
-        }
+    private function whenCondition(Envelope $envelope): bool
+    {
+        $whenStamp = $envelope->get(WhenStamp::class);
 
-        return true;
+        return !($whenStamp instanceof WhenStamp && !$whenStamp->getCondition());
+    }
+
+    private function unlessCondition(Envelope $envelope): bool
+    {
+        $unlessStamp = $envelope->get(UnlessStamp::class);
+
+        return !($unlessStamp instanceof UnlessStamp && $unlessStamp->getCondition());
     }
 }

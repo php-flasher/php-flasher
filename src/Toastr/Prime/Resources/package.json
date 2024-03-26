@@ -1,0 +1,23 @@
+{
+    "name": "@flasher/flasher-toastr",
+    "version": "2.0.0",
+    "type": "module",
+    "license": "MIT",
+    "main": "dist/flasher-toastr.js",
+    "browser": "dist/flasher-toastr.min.js",
+    "types": "dist/toastr.d.ts",
+    "scripts": {
+        "dev": "rollup -c",
+        "watch": "rollup -c -w",
+        "build": "cross-env NODE_ENV=production rollup -c"
+    },
+    "dependencies": {
+        "@flasher/flasher": "workspace:*"
+    },
+    "peerDependencies": {
+        "toastr": "^2.1.4"
+    },
+    "devDependencies": {
+        "@types/toastr": "^2.1.43"
+    }
+}

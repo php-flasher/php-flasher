@@ -1,16 +1,10 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
 interface StoppableEventInterface
 {
-    /**
-     * @return bool
-     */
-    public function isPropagationStopped();
+    public function isPropagationStopped(): bool;
 }

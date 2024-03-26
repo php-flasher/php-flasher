@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Noty\Laravel\Facade;
 
@@ -56,9 +53,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotyBuilder buttons(array $buttons)
  * @method static NotyBuilder visibilityControl(bool $visibilityControl)
  */
-class Noty extends Facade
+final class Noty extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher.noty';
     }

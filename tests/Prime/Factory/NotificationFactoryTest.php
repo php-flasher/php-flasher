@@ -1,48 +1,48 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Factory;
 
 use Flasher\Prime\Factory\NotificationFactory;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
+use Flasher\Prime\Storage\StorageManagerInterface;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 
-class NotificationFactoryTest extends TestCase
+final class NotificationFactoryTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testCreateNotificationBuilder()
+    use MockeryPHPUnitIntegration;
+
+    public function testCreateNotificationBuilder(): void
     {
-        $factory = new NotificationFactory();
+        $storageManager = \Mockery::mock(StorageManagerInterface::class);
+        $factory = new NotificationFactory($storageManager);
+
         $builder = $factory->createNotificationBuilder();
 
-        $this->assertInstanceOf('Flasher\Prime\Notification\NotificationBuilderInterface', $builder);
+        $this->assertInstanceOf(NotificationBuilderInterface::class, $builder);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetStorageManager()
+    public function testStorageManagerForwardsAnyMethodCall(): void
     {
-        $factory = new NotificationFactory();
-        $manager = $factory->getStorageManager();
+        $method = 'test_method';
+        $arguments = ['test_argument'];
 
-        $this->assertInstanceOf('Flasher\Prime\Storage\StorageManagerInterface', $manager);
-    }
+        $mockedInterface = \Mockery::mock(NotificationBuilderInterface::class);
+        $mockedInterface->allows($method)
+            ->withArgs($arguments)
+            ->andReturnTrue();
 
-    /**
-     * @return void
-     */
-    public function testDynamicCallToNotificationBuilder()
-    {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
-        $storageManager->expects($this->once())->method('add');
+        $storageManager = \Mockery::mock(StorageManagerInterface::class);
+        $factory = \Mockery::mock(NotificationFactory::class, [$storageManager]) // @phpstan-ignore-line
+            ->makePartial()
+            ->allows('createNotificationBuilder')
+            ->andReturns($mockedInterface)
+            ->getMock();
 
-        $factory = new NotificationFactory($storageManager);
-        $factory->addCreated();
+        $result = $factory->__call($method, $arguments); // @phpstan-ignore-line
+
+        $this->assertTrue($result);
     }
 }

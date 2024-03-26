@@ -1,23 +1,25 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Component;
 
 use Illuminate\View\Component;
 
-class FlasherComponent extends Component
+final class FlasherComponent extends Component
 {
-    /**
-     * {@inheritdoc}
-     */
+    public function __construct(public string $criteria = '', public string $context = '')
+    {
+    }
+
     public function render()
     {
-        @trigger_error('Since php-flasher/flasher-laravel v1.6.0: Using flasher blade component is deprecated and will be removed in v2.0. PHPFlasher will render notification automatically', \E_USER_DEPRECATED);
+        /** @var array<string, mixed> $criteria */
+        $criteria = json_decode($this->criteria, true, 512, \JSON_THROW_ON_ERROR) ?: [];
 
-        return '';
+        /** @var array<string, mixed> $context */
+        $context = json_decode($this->context, true, 512, \JSON_THROW_ON_ERROR) ?: [];
+
+        return app('flasher')->render('html', $criteria, $context);
     }
 }

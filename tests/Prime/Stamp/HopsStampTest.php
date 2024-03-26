@@ -1,25 +1,23 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
 final class HopsStampTest extends TestCase
 {
-    /**
-     * @return void
+    /*
+     * Test to verify that calling getAmount on a HopsStamp instance
+     * with a certain initial amount correctly returns that amount.
      */
-    public function testHopsStamp()
+    public function testGetAmount(): void
     {
-        $stamp = new HopsStamp(5);
+        $initialAmount = 5;
+        $hopsStamp = new HopsStamp($initialAmount);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertEquals(5, $stamp->getAmount());
+        $this->assertSame($initialAmount, $hopsStamp->getAmount());
     }
 }

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Default to the current directory if no directory is provided
+dir=${1:-.}
+
+# Optional: A list of file extensions to filter by, e.g., "txt md". Leave empty to include all files.
+extensions=($2)
+
+# Temporary file to store results
+temp_file=$(mktemp)
+
+# Function to print file details (now inline within find command)
+print_file_details() {
+    echo "File Path: $1"
+    echo "Contents:"
+    cat "$1"
+    echo
+}
+
+# Finding and processing files
+if [ ${#extensions[@]} -eq 0 ]; then
+    # If no extensions are specified, process all files
+    find "$dir" -type f -exec bash -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' bash {} \; >> "$temp_file"
+else
+    # Process only files with specified extensions
+    for ext in "${extensions[@]}"; do
+        find "$dir" -type f -name "*.$ext" -exec bash -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' bash {} \; >> "$temp_file"
+    done
+fi
+
+# Copy results to clipboard and remove the temporary file
+cat "$temp_file" | pbcopy
+rm "$temp_file"
+
+echo "Results copied to clipboard."

@@ -1,32 +1,35 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Twig;
 
-use Flasher\Symfony\Bridge\Twig\FlasherTwigExtension as BaseFlasherTwigExtension;
+use Flasher\Prime\FlasherInterface;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-final class FlasherTwigExtension extends BaseFlasherTwigExtension
+final class FlasherTwigExtension extends AbstractExtension
 {
-    /**
-     * @return TwigFunction[]
-     */
-    public function getFlasherFunctions()
+    public function __construct(private readonly FlasherInterface $flasher)
     {
-        return array(
-            new TwigFunction('flasher_render', array($this, 'render')),
-        );
+    }
+
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('flasher_render', $this->render(...), ['is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * @return string
+     * Renders the flash notifications based on the specified criteria, presenter, and context.
+     *
+     * @param array<string, mixed> $criteria  the criteria to filter the notifications
+     * @param "html"|"json"|string $presenter The presenter format for rendering the notifications (e.g., 'html', 'json').
+     * @param array<string, mixed> $context   additional context or options for rendering
      */
-    public function render()
+    public function render(array $criteria = [], string $presenter = 'html', array $context = []): mixed
     {
-        return '';
+        return $this->flasher->render($presenter, $criteria, $context);
     }
 }

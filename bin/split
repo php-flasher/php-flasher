@@ -28,21 +28,9 @@ REMOTES=(
     'src/SweetAlert/Laravel:flasher-sweetalert-laravel'
     'src/SweetAlert/Symfony:flasher-sweetalert-symfony'
 
-    'src/Pnotify/Prime:flasher-pnotify'
-    'src/Pnotify/Laravel:flasher-pnotify-laravel'
-    'src/Pnotify/Symfony:flasher-pnotify-symfony'
-
     'src/Noty/Prime:flasher-noty'
     'src/Noty/Laravel:flasher-noty-laravel'
     'src/Noty/Symfony:flasher-noty-symfony'
-
-    'src/Cli/Prime:flasher-cli'
-    'src/Cli/Laravel:flasher-cli-laravel'
-    'src/Cli/Symfony:flasher-cli-symfony'
-
-    'packs/laravel-pack:laravel-pack'
-    'packs/php-pack:php-pack'
-    'packs/symfony-pack:symfony-pack'
 )
 
 # Define a function to split and push code to a remote repository

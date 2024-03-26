@@ -1,139 +1,133 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\DependencyInjection;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
-use Flasher\Symfony\Bridge\DependencyInjection\FlasherConfiguration;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-final class Configuration extends FlasherConfiguration
+final readonly class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getFlasherConfigTreeBuilder()
+    public function __construct(private FlasherPlugin $plugin)
     {
-        $plugin = new FlasherPlugin();
+    }
 
-        $treeBuilder = new TreeBuilder($plugin->getName());
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder($this->plugin->getName());
+        $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode = method_exists($treeBuilder, 'getRootNode')
-            ? $treeBuilder->getRootNode()
-            : $treeBuilder->root($plugin->getName()); // @phpstan-ignore-line
+        $this->normalizeConfig($rootNode);
 
-        $rootNode
-             ->beforeNormalization()
-                ->always(function ($v) use ($plugin) {
-                    return $plugin->normalizeConfig($v);
-                })
-            ->end()
-            ->children()
-                ->scalarNode('default')
-                    ->cannotBeEmpty()
-                    ->defaultValue($plugin->getDefault())
-                ->end()
-                ->arrayNode('root_script')
-                    ->prototype('scalar')->end()
-                    ->defaultValue($plugin->getRootScript())
-                ->end()
-                ->arrayNode('scripts')
-                    ->prototype('variable')->end()
-                ->end()
-                ->arrayNode('styles')
-                    ->prototype('variable')->end()
-                    ->defaultValue($plugin->getStyles())
-                ->end()
-                ->arrayNode('options')
-                    ->prototype('scalar')->end()
-                ->end()
-                ->booleanNode('use_cdn')->defaultTrue()->end()
-                ->booleanNode('auto_translate')->defaultTrue()->end()
-                ->booleanNode('auto_render')->defaultTrue()->end()
-                ->arrayNode('filter_criteria')
-                    ->prototype('scalar')->end()
-                ->end()
-            ->end()
-        ;
-
-        $this->addThemesSection($rootNode);
-        $this->addFlashBagSection($rootNode, $plugin);
+        $this->addGeneralSection($rootNode);
+        $this->addFlashBagSection($rootNode);
         $this->addPresetsSection($rootNode);
+        $this->addPluginsSection($rootNode);
 
         return $treeBuilder;
     }
 
-    /**
-     * @return void
-     */
-    private function addThemesSection(ArrayNodeDefinition $rootNode)
+    private function normalizeConfig(ArrayNodeDefinition $rootNode): void
     {
-        $rootNode // @phpstan-ignore-line
-            ->children()
-                ->arrayNode('themes')
-                    ->ignoreExtraKeys()
-                    ->prototype('variable')->end()
-                    ->children()
-                        ->scalarNode('view')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                        ->end()
-                        ->arrayNode('styles')->end()
-                        ->arrayNode('scripts')->end()
-                        ->arrayNode('options')->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
+        $rootNode
+            ->beforeNormalization()
+                ->always(fn ($v): array => $this->plugin->normalizeConfig($v))
+            ->end();
     }
 
-    /**
-     * @return void
-     */
-    private function addFlashBagSection(ArrayNodeDefinition $rootNode, FlasherPlugin $plugin)
+    private function addGeneralSection(ArrayNodeDefinition $rootNode): void
     {
-        $rootNode // @phpstan-ignore-line
+        $rootNode
             ->children()
-                ->arrayNode('flash_bag')
-                    ->canBeUnset()
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->booleanNode('enabled')->defaultTrue()->end()
-                        ->arrayNode('mapping')
-                            ->prototype('variable')->end()
-                            ->defaultValue($plugin->getFlashBagMapping())
-                        ->end()
-                    ->end()
+                ->scalarNode('default')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                    ->defaultValue($this->plugin->getDefault())
                 ->end()
-            ->end()
-        ;
+                ->scalarNode('main_script')
+                    ->defaultValue($this->plugin->getRootScript())
+                ->end()
+                ->booleanNode('translate')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('inject_assets')
+                    ->defaultTrue()
+                ->end()
+                ->arrayNode('filter')
+                    ->variablePrototype()->end()
+                ->end()
+                ->arrayNode('scripts')
+                    ->performNoDeepMerging()
+                    ->scalarPrototype()->end()
+                ->end()
+                ->arrayNode('styles')
+                    ->performNoDeepMerging()
+                    ->scalarPrototype()->end()
+                ->end()
+                ->arrayNode('options')
+                    ->variablePrototype()->end()
+                ->end()
+            ->end();
     }
 
-    /**
-     * @return void
-     */
-    private function addPresetsSection(ArrayNodeDefinition $rootNode)
+    private function addFlashBagSection(ArrayNodeDefinition $rootNode): void
     {
-        $rootNode // @phpstan-ignore-line
+        $rootNode
+            ->children()
+                ->variableNode('flash_bag')
+                    ->defaultTrue()
+                ->end()
+            ->end();
+    }
+
+    private function addPresetsSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->fixXmlConfig('preset')
             ->children()
                 ->arrayNode('presets')
-                    ->prototype('array')
-                    ->children()
-                        ->scalarNode('type')->end()
-                        ->scalarNode('title')->end()
-                        ->scalarNode('message')->end()
-                        ->arrayNode('options')
-                            ->useAttributeAsKey('name')
-                            ->prototype('variable')->end()
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('type')->end()
+                            ->scalarNode('title')->end()
+                            ->scalarNode('message')->end()
+                            ->arrayNode('options')
+                                ->variablePrototype()->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
+    }
+
+    private function addPluginsSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->fixXmlConfig('plugin')
+            ->children()
+                ->arrayNode('plugins')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('view')->end()
+                            ->arrayNode('styles')
+                                ->performNoDeepMerging()
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('scripts')
+                                ->performNoDeepMerging()
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('options')
+                                ->variablePrototype()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

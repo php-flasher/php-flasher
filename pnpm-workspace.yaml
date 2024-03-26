@@ -1,0 +1,8 @@
+prefer-workspace-packages: true
+
+packages:
+    - src/Prime/Resources
+    - src/Noty/Prime/Resources
+    - src/Notyf/Prime/Resources
+    - src/SweetAlert/Prime/Resources
+    - src/Toastr/Prime/Resources

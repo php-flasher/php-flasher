@@ -1,21 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Factory;
 
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
- * @mixin NotificationBuilderInterface
+ * @mixin \Flasher\Prime\Notification\NotificationBuilderInterface
  */
 interface NotificationFactoryInterface
 {
-    /**
-     * @return NotificationBuilderInterface
-     */
-    public function createNotificationBuilder();
+    public function createNotificationBuilder(): NotificationBuilderInterface;
 }

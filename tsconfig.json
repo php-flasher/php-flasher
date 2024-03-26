@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.build.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@flasher/flasher": [
+                "src/Prime/Resources/assets"
+            ]
+        }
+    }
+}

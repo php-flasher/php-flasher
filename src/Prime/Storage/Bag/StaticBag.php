@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Storage\Bag;
 
@@ -14,20 +11,14 @@ final class StaticBag implements BagInterface
     /**
      * @var Envelope[]
      */
-    private static $envelopes = array();
+    private static array $envelopes = [];
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get()
+    public function get(): array
     {
         return self::$envelopes;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function set(array $envelopes)
+    public function set(array $envelopes): void
     {
         self::$envelopes = $envelopes;
     }

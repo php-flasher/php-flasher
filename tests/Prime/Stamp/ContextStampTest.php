@@ -1,27 +1,63 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\ContextStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContextStampTest extends TestCase
+final class ContextStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testContextStamp()
+    public function testGetContextReturnsTheCorrectArray(): void
     {
-        $stamp = new ContextStamp(array('component' => 'livewire'));
+        $contextArray = ['key1' => 'value1', 'key2' => 'value2'];
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
-        $this->assertEquals(array('component' => 'livewire'), $stamp->getContext());
-        $this->assertEquals(array('context' => array('component' => 'livewire')), $stamp->toArray());
+        $contextStamp = new ContextStamp($contextArray);
+
+        $this->assertSame(
+            $contextArray,
+            $contextStamp->getContext(),
+            'The getContext method did not return the expected array.'
+        );
+    }
+
+    public function testGetContextWithEmptyArray(): void
+    {
+        $contextArray = [];
+
+        $contextStamp = new ContextStamp($contextArray);
+
+        $this->assertSame(
+            $contextArray,
+            $contextStamp->getContext(),
+            'The getContext method did not return an empty array with empty context.'
+        );
+    }
+
+    public function testToArrayReturnsContextInArray(): void
+    {
+        $contextArray = ['key1' => 'value1', 'key2' => 'value2'];
+
+        $contextStamp = new ContextStamp($contextArray);
+
+        $this->assertSame(
+            ['context' => $contextArray],
+            $contextStamp->toArray(),
+            'The toArray method did not return the expected array.'
+        );
+    }
+
+    public function testToArrayWithEmptyArray(): void
+    {
+        $contextArray = [];
+
+        $contextStamp = new ContextStamp($contextArray);
+
+        $this->assertSame(
+            ['context' => $contextArray],
+            $contextStamp->toArray(),
+            'The toArray method did not return an array with empty context as expected.'
+        );
     }
 }

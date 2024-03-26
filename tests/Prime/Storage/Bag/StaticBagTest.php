@@ -1,33 +1,34 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Storage\Bag;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Storage\Bag\StaticBag;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class StaticBagTest extends TestCase
+final class StaticBagTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testStaticBag()
+    private StaticBag $staticBag;
+
+    protected function setUp(): void
     {
-        $bag = new StaticBag();
+        $this->staticBag = new StaticBag();
+    }
 
-        $envelopes = array(
+    public function testGetAndSetMethods(): void
+    {
+        $this->assertSame([], $this->staticBag->get());
+
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $bag->set($envelopes);
+        $this->staticBag->set($envelopes);
 
-        $this->assertEquals($envelopes, $bag->get());
+        $this->assertEquals($envelopes, $this->staticBag->get());
     }
 }

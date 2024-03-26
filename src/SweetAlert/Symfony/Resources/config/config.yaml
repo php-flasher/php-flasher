@@ -1,6 +1,0 @@
-flasher_sweetalert:
-    scripts:
-        cdn:
-            - 'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.2/dist/flasher-sweetalert.min.js'
-        local:
-            - '/vendor/flasher/flasher-sweetalert.min.js'

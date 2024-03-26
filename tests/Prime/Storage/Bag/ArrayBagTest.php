@@ -1,33 +1,47 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Storage\Bag;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Storage\Bag\ArrayBag;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ArrayBagTest extends TestCase
+final class ArrayBagTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testArrayBag()
+    private ArrayBag $bag;
+
+    protected function setUp(): void
     {
-        $bag = new ArrayBag();
+        $this->bag = new ArrayBag();
+    }
 
-        $envelopes = array(
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        );
+    /**
+     * Test the `get` method of the `ArrayBag` class.
+     * It should return an array of envelopes that have been set.
+     */
+    public function testGet(): void
+    {
+        $this->assertSame([], $this->bag->get());
 
-        $bag->set($envelopes);
+        $envelope = new Envelope(new Notification());
+        $this->bag->set([$envelope]);
+        $this->assertSame([$envelope], $this->bag->get());
+    }
 
-        $this->assertEquals($envelopes, $bag->get());
+    /**
+     * Test the `set` method of the `ArrayBag` class.
+     * It should set the envelopes in the bag.
+     */
+    public function testSet(): void
+    {
+        $envelope = new Envelope(new Notification());
+
+        $this->bag->set([$envelope]);
+
+        $envelopes = $this->bag->get();
+        $this->assertSame([$envelope], $envelopes);
     }
 }

@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Response;
 
@@ -12,19 +9,10 @@ use Flasher\Prime\Response\Presenter\PresenterInterface;
 interface ResponseManagerInterface
 {
     /**
-     * @param mixed[] $criteria
-     * @param string  $presenter
-     * @param mixed[] $context
-     *
-     * @return mixed
+     * @param array<string, mixed> $criteria
+     * @param array<string, mixed> $context
      */
-    public function render(array $criteria = array(), $presenter = 'html', array $context = array());
+    public function render(string $presenter = 'html', array $criteria = [], array $context = []): mixed;
 
-    /**
-     * @param string                      $alias
-     * @param callable|PresenterInterface $presenter
-     *
-     * @return void
-     */
-    public function addPresenter($alias, $presenter);
+    public function addPresenter(string $alias, callable|PresenterInterface $presenter): void;
 }

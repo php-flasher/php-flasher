@@ -1,27 +1,23 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
-use Flasher\Prime\Stamp\HandlerStamp;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Stamp\PluginStamp;
+use Flasher\Prime\Stamp\PresentableStampInterface;
+use Flasher\Prime\Stamp\StampInterface;
+use PHPUnit\Framework\TestCase;
 
 final class HandlerStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testHandlerStamp()
+    public function testHandlerStamp(): void
     {
-        $stamp = new HandlerStamp('toastr');
+        $stamp = new PluginStamp('toastr');
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
-        $this->assertEquals('toastr', $stamp->getHandler());
-        $this->assertEquals(array('handler' => 'toastr'), $stamp->toArray());
+        $this->assertInstanceOf(StampInterface::class, $stamp);
+        $this->assertInstanceOf(PresentableStampInterface::class, $stamp);
+        $this->assertSame('toastr', $stamp->getPlugin());
+        $this->assertSame(['plugin' => 'toastr'], $stamp->toArray());
     }
 }

@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
@@ -12,32 +9,24 @@ use Flasher\Prime\Notification\Envelope;
 final class UpdateEvent
 {
     /**
-     * @var Envelope[]
-     */
-    private $envelopes;
-
-    /**
      * @param Envelope[] $envelopes
      */
-    public function __construct(array $envelopes)
+    public function __construct(private array $envelopes)
     {
-        $this->envelopes = $envelopes;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->envelopes;
     }
 
     /**
      * @param Envelope[] $envelopes
-     *
-     * @return void
      */
-    public function setEnvelopes(array $envelopes)
+    public function setEnvelopes(array $envelopes): void
     {
         $this->envelopes = $envelopes;
     }

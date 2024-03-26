@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Http;
 
@@ -11,38 +8,23 @@ use Flasher\Prime\Http\ResponseInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-final class Response implements ResponseInterface
+final readonly class Response implements ResponseInterface
 {
-    /**
-     * @var SymfonyResponse
-     */
-    private $response;
-
-    public function __construct(SymfonyResponse $response)
+    public function __construct(private SymfonyResponse $response)
     {
-        $this->response = $response;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isRedirection()
+    public function isRedirection(): bool
     {
         return $this->response->isRedirection();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isJson()
+    public function isJson(): bool
     {
         return $this->response instanceof JsonResponse;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isHtml()
+    public function isHtml(): bool
     {
         $contentType = $this->response->headers->get('Content-Type');
 
@@ -53,10 +35,7 @@ final class Response implements ResponseInterface
         return false !== stripos($contentType, 'html');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isAttachment()
+    public function isAttachment(): bool
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
@@ -67,21 +46,38 @@ final class Response implements ResponseInterface
         return false !== stripos($contentDisposition, 'attachment;');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getContent()
+    public function isSuccessful(): bool
     {
-        $content = $this->response->getContent();
-
-        return \is_string($content) ? $content : '';
+        return $this->response->isSuccessful();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setContent($content)
+    public function getContent(): string
+    {
+        return $this->response->getContent() ?: '';
+    }
+
+    public function setContent(string $content): void
     {
         $this->response->setContent($content);
+    }
+
+    public function hasHeader(string $key): bool
+    {
+        return $this->response->headers->has($key);
+    }
+
+    public function getHeader(string $key): ?string
+    {
+        return $this->response->headers->get($key);
+    }
+
+    public function setHeader(string $key, array|string|null $values): void
+    {
+        $this->response->headers->set($key, $values);
+    }
+
+    public function removeHeader(string $key): void
+    {
+        $this->response->headers->remove($key);
     }
 }

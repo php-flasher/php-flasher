@@ -1,77 +1,76 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response\Resource;
 
-use Flasher\Prime\Config\Config;
+use Flasher\Prime\Asset\AssetManagerInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\Response;
 use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\HandlerStamp;
-use Flasher\Prime\Stamp\UuidStamp;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Stamp\PluginStamp;
+use Flasher\Prime\Template\TemplateEngineInterface;
+use PHPUnit\Framework\TestCase;
 
-class ResourceManagerTest extends TestCase
+final class ResourceManagerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testItPopulateResponseFromResources()
+    public function testItPopulateResponseFromResources(): void
     {
-        $config = new Config(array(
-            'default' => 'flasher',
-            'root_script' => 'root_script.min.js',
-        ));
-        $resourceManager = new ResourceManager($config);
+        $templateEngine = $this->createMock(TemplateEngineInterface::class);
 
-        $resourceManager->addScripts('flasher', array('flasher.min.js'));
-        $resourceManager->addStyles('flasher', array('flasher.min.css'));
-        $resourceManager->addOptions('flasher', array('timeout' => 2500, 'position' => 'center'));
+        $assetManager = $this->createMock(AssetManagerInterface::class);
+        $assetManager->method('getPath')->willReturnArgument(0);
+        $assetManager->method('getPaths')->willReturnArgument(0);
 
-        $resourceManager->addScripts('toastr', array('toastr.min.js', 'jquery.min.js'));
-        $resourceManager->addStyles('toastr', array('toastr.min.css'));
-        $resourceManager->addOptions('toastr', array('sounds' => false));
+        $resourceManager = new ResourceManager($templateEngine, $assetManager, 'main_script.min.js', [
+            'flasher' => [
+                'scripts' => ['flasher.min.js'],
+                'styles' => ['flasher.min.css'],
+                'options' => ['timeout' => 2500, 'position' => 'center'],
+            ],
+            'toastr' => [
+                'scripts' => ['toastr.min.js', 'jquery.min.js'],
+                'styles' => ['toastr.min.css'],
+                'options' => ['sounds' => false],
+            ],
+        ]);
 
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
-        $envelopes[] = new Envelope($notification, array(
-            new HandlerStamp('flasher'),
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('1111'),
-        ));
+        $envelopes[] = new Envelope($notification, [
+            new PluginStamp('flasher'),
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-05 16:22:50')),
+            new IdStamp('1111'),
+        ]);
 
         $notification = new Notification();
         $notification->setMessage('warning message');
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
-        $envelopes[] = new Envelope($notification, array(
-            new HandlerStamp('toastr'),
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('2222'),
-        ));
+        $envelopes[] = new Envelope($notification, [
+            new PluginStamp('toastr'),
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-05 16:22:50')),
+            new IdStamp('2222'),
+        ]);
 
-        $response = new Response($envelopes, array());
+        $response = new Response($envelopes, []);
 
-        $response = $resourceManager->buildResponse($response);
+        $response = $resourceManager->populateResponse($response);
 
         $this->assertEquals($envelopes, $response->getEnvelopes());
-        $this->assertEquals('root_script.min.js', $response->getRootScript());
-        $this->assertEquals(array('flasher.min.js', 'toastr.min.js', 'jquery.min.js'), $response->getScripts());
-        $this->assertEquals(array('flasher.min.css', 'toastr.min.css'), $response->getStyles());
-        $this->assertEquals(array(
-            'theme.flasher' => array('timeout' => 2500, 'position' => 'center'),
-            'toastr' => array('sounds' => false),
-        ), $response->getOptions());
-        $this->assertEquals($config, $resourceManager->getConfig());
+        $this->assertSame('main_script.min.js', $response->getMainScript());
+        $this->assertSame(['flasher.min.js', 'toastr.min.js', 'jquery.min.js'], $response->getScripts());
+        $this->assertSame(['flasher.min.css', 'toastr.min.css'], $response->getStyles());
+        $this->assertEquals([
+            'toastr' => ['sounds' => false],
+            'flasher' => ['timeout' => 2500, 'position' => 'center'],
+        ], $response->getOptions());
     }
 }

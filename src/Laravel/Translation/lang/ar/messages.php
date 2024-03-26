@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
-use Flasher\Prime\Translation\Messages;
-
-return Messages::$ar;
+return Flasher\Prime\Translation\Messages::get('ar');

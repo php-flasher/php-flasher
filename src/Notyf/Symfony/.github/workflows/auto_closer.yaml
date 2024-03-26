@@ -2,21 +2,22 @@ name: Auto Closer PR
 
 on:
   pull_request_target:
-    types: [opened]
+    types: [ opened ]
 
 jobs:
   run:
+    name: 🤖 PR Auto-Closure
     runs-on: ubuntu-latest
     steps:
-    - uses: superbrothers/close-pull-request@v3
-      with:
-        comment: |
-          Hi, thank you for your contribution.
+      - uses: superbrothers/close-pull-request@v3
+        with:
+          comment: |
+            Hi there 👋,
 
-          Unfortunately, this repository is read-only. It's a split from our main monorepo repository.
+            First off, thanks for your effort! 🎉 Unfortunately, this repository is read-only because it's split from our primary monorepo repository.
 
-          We'd like to kindly ask you to move the contribution there - https://github.com/php-flasher/php-flasher.
+            🙏 We kindly ask if you could direct your valuable contribution to our main repository at https://github.com/php-flasher/php-flasher.
 
-          We'll check it, review it and give you feed back right way.
+            Once you've moved your contribution there, we'll review it and provide feedback. 🕵️‍♂️
 
-          Thank you.
+            Thanks again for your understanding and cooperation. We really appreciate it! 🙌

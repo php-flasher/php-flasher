@@ -1,40 +1,34 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\FilterEvent;
-use Flasher\Prime\Filter\Filter;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Storage\Filter\Filter;
+use PHPUnit\Framework\TestCase;
 
-class FilterEventTest extends TestCase
+final class FilterEventTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testFilterEvent()
+    public function testFilterEvent(): void
     {
-        $envelopes = array(
+        $filter = new Filter();
+
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $event = new FilterEvent($envelopes, array('limit' => 2));
+        $criteria = ['limit' => 2];
 
-        $this->assertInstanceOf('Flasher\Prime\Filter\Filter', $event->getFilter());
-        $this->assertEquals(array($envelopes[0], $envelopes[1]), $event->getEnvelopes());
+        $event = new FilterEvent($filter, $envelopes, $criteria);
 
-        $filter = new Filter($envelopes, array());
-        $event->setFilter($filter);
-
-        $this->assertEquals($envelopes, $event->getEnvelopes());
+        $this->assertSame($filter, $event->getFilter());
+        $this->assertSame($envelopes, $event->getEnvelopes());
+        $this->assertSame($criteria, $event->getCriteria());
     }
 }

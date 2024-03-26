@@ -1,9 +1,0 @@
-parameters:
-    level: 9
-    paths:
-        - src
-    excludePaths:
-        - src/Symfony/Bridge/
-        - src/Laravel/Middleware/HttpKernelFlasherMiddleware.php
-        - src/Laravel/Middleware/HttpKernelSessionMiddleware.php
-        - src/*/Symfony/Flasher*SymfonyBundle.php

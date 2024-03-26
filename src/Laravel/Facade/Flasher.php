@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Facade;
 
@@ -38,9 +35,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotificationBuilder handler(string $handler)
  * @method static Envelope            getEnvelope()
  */
-class Flasher extends Facade
+final class Flasher extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher';
     }

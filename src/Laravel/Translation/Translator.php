@@ -1,37 +1,20 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Translation;
 
-use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\TranslatorInterface;
 use Illuminate\Translation\Translator as LaravelTranslator;
 
-final class Translator implements TranslatorInterface
+final readonly class Translator implements TranslatorInterface
 {
-    /**
-     * @var LaravelTranslator
-     */
-    private $translator;
-
-    public function __construct(LaravelTranslator $translator)
+    public function __construct(private LaravelTranslator $translator)
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function translate($id, $parameters = array(), $locale = null)
+    public function translate(string $id, array $parameters = [], ?string $locale = null): string
     {
-        $order = TranslationStamp::parametersOrder($parameters, $locale);
-        $parameters = $order['parameters'];
-        $locale = $order['locale'];
-
         $translation = $this->translator->has('flasher::messages.'.$id, $locale)
             ? $this->translator->get('flasher::messages.'.$id, $parameters, $locale)
             : ($this->translator->has('messages.'.$id, $locale)
@@ -45,10 +28,7 @@ final class Translator implements TranslatorInterface
         return $translation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->translator->getLocale();
     }
