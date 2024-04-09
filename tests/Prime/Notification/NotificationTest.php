@@ -1,77 +1,59 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Notification;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class NotificationTest extends TestCase
+final class NotificationTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testType()
+    public function testType(): void
     {
         $notification = new Notification();
 
-        $this->assertNull($notification->getType());
+        $this->assertSame('', $notification->getType());
 
         $notification->setType('success');
 
-        $this->assertEquals('success', $notification->getType());
+        $this->assertSame('success', $notification->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testMessage()
+    public function testMessage(): void
     {
         $notification = new Notification();
 
-        $this->assertNull($notification->getMessage());
+        $this->assertSame('', $notification->getMessage());
 
         $notification->setMessage('success message');
 
-        $this->assertEquals('success message', $notification->getMessage());
+        $this->assertSame('success message', $notification->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testTitle()
+    public function testTitle(): void
     {
         $notification = new Notification();
 
-        $this->assertNull($notification->getTitle());
+        $this->assertSame('', $notification->getTitle());
 
         $notification->setTitle('success title');
 
-        $this->assertEquals('success title', $notification->getTitle());
+        $this->assertSame('success title', $notification->getTitle());
     }
 
-    /**
-     * @return void
-     */
-    public function testOptions()
+    public function testOptions(): void
     {
         $notification = new Notification();
 
-        $this->assertEquals(array(), $notification->getOptions());
+        $this->assertSame([], $notification->getOptions());
 
-        $notification->setOptions(array('timeout' => 2500));
+        $notification->setOptions(['timeout' => 2500]);
 
-        $this->assertEquals(array('timeout' => 2500), $notification->getOptions());
+        $this->assertSame(['timeout' => 2500], $notification->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testOption()
+    public function testOption(): void
     {
         $notification = new Notification();
 
@@ -79,40 +61,34 @@ class NotificationTest extends TestCase
 
         $notification->setOption('timeout', 2500);
 
-        $this->assertEquals(2500, $notification->getOption('timeout'));
+        $this->assertSame(2500, $notification->getOption('timeout'));
     }
 
-    /**
-     * @return void
-     */
-    public function testUnsetOption()
+    public function testUnsetOption(): void
     {
         $notification = new Notification();
-        $notification->setOptions(array('timeout' => 2500, 'position' => 'center'));
+        $notification->setOptions(['timeout' => 2500, 'position' => 'center']);
 
-        $this->assertEquals(array('timeout' => 2500, 'position' => 'center'), $notification->getOptions());
+        $this->assertSame(['timeout' => 2500, 'position' => 'center'], $notification->getOptions());
 
         $notification->unsetOption('timeout');
 
-        $this->assertEquals(array('position' => 'center'), $notification->getOptions());
+        $this->assertSame(['position' => 'center'], $notification->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testToArray()
+    public function testToArray(): void
     {
         $notification = new Notification();
         $notification->setType('success');
         $notification->setTitle('PHPFlasher');
         $notification->setMessage('success message');
-        $notification->setOptions(array('timeout' => 2500, 'position' => 'center'));
+        $notification->setOptions(['timeout' => 2500, 'position' => 'center']);
 
-        $this->assertEquals(array(
-            'type' => 'success',
+        $this->assertSame([
             'title' => 'PHPFlasher',
             'message' => 'success message',
-            'options' => array('timeout' => 2500, 'position' => 'center'),
-        ), $notification->toArray());
+            'type' => 'success',
+            'options' => ['timeout' => 2500, 'position' => 'center'],
+        ], $notification->toArray());
     }
 }

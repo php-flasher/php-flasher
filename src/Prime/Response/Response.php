@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Response;
 
@@ -11,123 +8,101 @@ use Flasher\Prime\Notification\Envelope;
 
 final class Response
 {
-    /**
-     * @var Envelope[]
-     */
-    private $envelopes;
-
-    /**
-     * @var string|null
-     */
-    private $rootScript;
+    private string $mainScript = '';
 
     /**
      * @var string[]
      */
-    private $scripts = array();
+    private array $scripts = [];
 
     /**
      * @var string[]
      */
-    private $styles = array();
+    private array $styles = [];
 
     /**
      * @var array<string, array<string, mixed>>
      */
-    private $options = array();
+    private array $options = [];
 
     /**
-     * @var array<string, mixed>
+     * @param Envelope[]           $envelopes the array of notification envelopes
+     * @param array<string, mixed> $context   additional context for the response
      */
-    private $context;
-
-    /**
-     * @param Envelope[]           $envelopes
-     * @param array<string, mixed> $context
-     */
-    public function __construct(array $envelopes, array $context)
+    public function __construct(private readonly array $envelopes, private readonly array $context)
     {
-        $this->envelopes = $envelopes;
-        $this->context = $context;
     }
 
     /**
-     * @param string[] $scripts
+     * Add scripts to the response.
      *
-     * @return void
+     * @param string[] $scripts the scripts to add
      */
-    public function addScripts(array $scripts)
+    public function addScripts(array $scripts): void
     {
-        $this->scripts = array_merge($this->scripts, $scripts);
+        $this->scripts = $this->addItems($this->scripts, $scripts);
     }
 
     /**
-     * @param string[] $styles
+     * Add styles to the response.
      *
-     * @return void
+     * @param string[] $styles the styles to add
      */
-    public function addStyles(array $styles)
+    public function addStyles(array $styles): void
     {
-        $this->styles = array_merge($this->styles, $styles);
+        $this->styles = $this->addItems($this->styles, $styles);
     }
 
     /**
-     * @param string               $alias
-     * @param array<string, mixed> $options
+     * Add or merge options for a specific alias.
      *
-     * @return void
+     * @param string               $alias   the alias for the options
+     * @param array<string, mixed> $options the options to add or merge
      */
-    public function addOptions($alias, array $options)
+    public function addOptions(string $alias, array $options): void
     {
+        $options = array_merge($this->options[$alias] ?? [], $options);
         $this->options[$alias] = $options;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->envelopes;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRootScript()
+    public function getMainScript(): string
     {
-        return $this->rootScript;
+        return $this->mainScript;
     }
 
-    /**
-     * @param string|null $rootScript
-     *
-     * @return void
-     */
-    public function setRootScript($rootScript)
+    public function setMainScript(string $mainScript): void
     {
-        $this->rootScript = $rootScript;
+        $this->mainScript = $mainScript;
     }
 
     /**
      * @return string[]
      */
-    public function getStyles()
+    public function getStyles(): array
     {
-        return array_values(array_filter(array_unique($this->styles)));
+        return $this->styles;
     }
 
     /**
      * @return string[]
      */
-    public function getScripts()
+    public function getScripts(): array
     {
-        return array_values(array_filter(array_unique($this->scripts)));
+        return $this->scripts;
     }
 
     /**
      * @return array<string, array<string, mixed>>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -135,33 +110,50 @@ final class Response
     /**
      * @return array<string, mixed>
      */
-    public function getContext()
+    public function getContext(): array
     {
         return $this->context;
     }
 
     /**
-     * @param mixed $filter
-     *
-     * @return array<string, mixed>
+     * @return array{
+     *     envelopes: array<array{
+     *         title: string,
+     *         message: string,
+     *         type: string,
+     *         options: array<string, mixed>,
+     *         metadata: array<string, mixed>,
+     *     }>,
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, array<string, mixed>>,
+     *     context: array<string, mixed>,
+     * }
      */
-    public function toArray($filter = false)
+    public function toArray(): array
     {
-        $envelopes = array_map(function (Envelope $envelope) {
-            return $envelope->toArray();
-        }, $this->getEnvelopes());
+        $envelopes = array_map(static fn (Envelope $envelope): array => $envelope->toArray(), $this->envelopes);
 
-        $response = array(
+        return [
             'envelopes' => $envelopes,
-            'scripts' => $this->getScripts(),
-            'styles' => $this->getStyles(),
-            'options' => $this->getOptions(),
-        );
+            'scripts' => $this->scripts,
+            'styles' => $this->styles,
+            'options' => $this->options,
+            'context' => $this->context,
+        ];
+    }
 
-        if (false === $filter) {
-            return $response;
-        }
+    /**
+     * @param string[] $existingItems
+     * @param string[] $newItems
+     *
+     * @return string[]
+     */
+    private function addItems(array $existingItems, array $newItems): array
+    {
+        $items = array_merge($existingItems, $newItems);
+        $items = array_filter(array_unique($items));
 
-        return array_filter($response);
+        return array_values($items);
     }
 }

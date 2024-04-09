@@ -1,56 +1,28 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
 final class ResponseEvent
 {
-    /**
-     * @var mixed
-     */
-    private $response;
-
-    /**
-     * @var string
-     */
-    private $presenter;
-
-    /**
-     * @param mixed  $response
-     * @param string $presenter
-     */
-    public function __construct($response, $presenter)
-    {
-        $this->response = $response;
-        $this->presenter = $presenter;
+    public function __construct(
+        private mixed $response,
+        private readonly string $presenter,
+    ) {
     }
 
-    /**
-     * @return mixed
-     */
-    public function getResponse()
+    public function getResponse(): mixed
     {
         return $this->response;
     }
 
-    /**
-     * @param mixed $response
-     *
-     * @return void
-     */
-    public function setResponse($response)
+    public function setResponse(mixed $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return string
-     */
-    public function getPresenter()
+    public function getPresenter(): string
     {
         return $this->presenter;
     }

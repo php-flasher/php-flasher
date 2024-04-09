@@ -1,78 +1,88 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Http;
 
 use Flasher\Prime\Http\RequestInterface;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request as LaravelRequest;
 
-final class Request implements RequestInterface
+final readonly class Request implements RequestInterface
 {
-    /**
-     * @var LaravelRequest
-     */
-    private $request;
-
-    public function __construct(LaravelRequest $request)
+    public function __construct(private LaravelRequest $request)
     {
-        $this->request = $request;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isXmlHttpRequest()
+    public function isXmlHttpRequest(): bool
     {
         return $this->request->ajax();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isHtmlRequestFormat()
+    public function isHtmlRequestFormat(): bool
     {
-        return 'html' === $this->request->getRequestFormat();
+        return $this->request->acceptsHtml();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasSession()
+    public function hasSession(): bool
     {
         return $this->request->hasSession();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasType($type)
+    public function isSessionStarted(): bool
     {
-        $session = $this->request->session();
+        $session = $this->getSession();
 
-        return $session->has($type);
+        return $session?->isStarted() ?: false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getType($type)
+    public function hasType(string $type): bool
     {
-        $session = $this->request->session();
+        if (!$this->hasSession() || !$this->isSessionStarted()) {
+            return false;
+        }
 
-        return $session->get($type); // @phpstan-ignore-line
+        $session = $this->getSession();
+
+        return $session?->has($type) ?: false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function forgetType($type)
+    public function getType(string $type): string|array
     {
-        $session = $this->request->session();
+        $session = $this->getSession();
 
-        $session->forget($type);
+        $type = $session?->get($type);
+
+        if (!\is_string($type) && !\is_array($type)) {
+            return [];
+        }
+
+        return $type;
+    }
+
+    public function forgetType(string $type): void
+    {
+        $session = $this->getSession();
+
+        $session?->forget($type);
+    }
+
+    private function getSession(): ?Session
+    {
+        try {
+            return $this->request->session();
+        } catch (\RuntimeException) {
+            return null;
+        }
+    }
+
+    public function hasHeader(string $key): bool
+    {
+        return $this->request->headers->has($key);
+    }
+
+    public function getHeader(string $key): ?string
+    {
+        return $this->request->headers->get($key);
     }
 }

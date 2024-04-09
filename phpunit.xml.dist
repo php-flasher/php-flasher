@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    stopOnFailure="true"
+    cacheDirectory=".cache/phpunit/"
+    displayDetailsOnTestsThatTriggerDeprecations="false"
+>
+    <php>
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+        <server name="KERNEL_CLASS" value="Flasher\Tests\Symfony\Fixtures\FlasherKernel"/>
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+        <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="10.5"/>
+        <server name="SYMFONY_DEPRECATIONS_HELPER" value="verbose"/>
+        <server name="RAY_ENABLED" value="(false)"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="prime">
+            <directory>tests/Prime</directory>
+            <directory>tests/Noty/Prime</directory>
+            <directory>tests/Notyf/Prime</directory>
+            <directory>tests/SweetAlert/Prime</directory>
+            <directory>tests/Toastr/Prime</directory>
+        </testsuite>
+
+        <testsuite name="laravel">
+            <directory>tests/Laravel</directory>
+            <directory>tests/Noty/Laravel</directory>
+            <directory>tests/Notyf/Laravel</directory>
+            <directory>tests/SweetAlert/Laravel</directory>
+            <directory>tests/Toastr/Laravel</directory>
+        </testsuite>
+
+        <testsuite name="symfony">
+            <directory>tests/Symfony</directory>
+            <directory>tests/Noty/Symfony</directory>
+            <directory>tests/Notyf/Symfony</directory>
+            <directory>tests/SweetAlert/Symfony</directory>
+            <directory>tests/Toastr/Symfony</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage/>
+
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+</phpunit>

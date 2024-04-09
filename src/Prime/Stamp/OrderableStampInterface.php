@@ -1,18 +1,10 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
 interface OrderableStampInterface
 {
-    /**
-     * @param mixed $orderable
-     *
-     * @return int
-     */
-    public function compare($orderable);
+    public function compare(StampInterface $orderable): int;
 }

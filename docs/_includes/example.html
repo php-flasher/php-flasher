@@ -1,0 +1,15 @@
+{% assign defaultId = 'PHPFlasher' %}
+{% assign defaultHandler = 'flasher' %}
+{% assign defaultType = site.data.messages.types | sample %}
+{% assign defaultMessage = site.data.messages[type] | sample %}
+{% assign defaultOptions = '{}' %}
+
+<script type="text/javascript">
+    messages["{{ id | default: defaultId }}"] = {
+        handler: "{{ page.handler | defaultHandler }}",
+        type: "{{ type | default: defaultType }}",
+        message: "{{ message | default: defaultMessage }}",
+        title: "{{ title }}",
+        options: JSON.parse('{{ options | default: defaultOptions }}'),
+    };
+</script>

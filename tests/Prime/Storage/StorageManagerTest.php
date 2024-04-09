@@ -1,138 +1,125 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Storage;
 
+use Flasher\Prime\EventDispatcher\Event\FilterEvent;
+use Flasher\Prime\EventDispatcher\Event\PersistEvent;
+use Flasher\Prime\EventDispatcher\Event\PostPersistEvent;
+use Flasher\Prime\EventDispatcher\Event\PostRemoveEvent;
+use Flasher\Prime\EventDispatcher\Event\PostUpdateEvent;
+use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
+use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Prime\Stamp\UuidStamp;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Storage\Filter\Filter;
+use Flasher\Prime\Storage\Filter\FilterFactoryInterface;
+use Flasher\Prime\Storage\StorageInterface;
 use Flasher\Prime\Storage\StorageManager;
-use Flasher\Tests\Prime\TestCase;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 
-class StorageManagerTest extends TestCase
+final class StorageManagerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testGetAllStoredEnvelopes()
+    use MockeryPHPUnitIntegration;
+
+    private MockInterface&StorageInterface $storageMock;
+    private MockInterface&FilterFactoryInterface $filterFactoryMock;
+    private MockInterface&EventDispatcherInterface $eventDispatcherMock;
+    private StorageManager $storageManager;
+
+    protected function setUp(): void
     {
-        $envelopes = array(
-            new Envelope(new Notification(), new UuidStamp('1111')),
-            new Envelope(new Notification(), new UuidStamp('2222')),
-            new Envelope(new Notification(), new UuidStamp('3333')),
-            new Envelope(new Notification(), new UuidStamp('4444')),
-        );
+        $this->storageMock = \Mockery::mock(StorageInterface::class);
+        $this->filterFactoryMock = \Mockery::mock(FilterFactoryInterface::class);
+        $this->eventDispatcherMock = \Mockery::mock(EventDispatcherInterface::class);
 
-        $storage = $this->getMockBuilder('Flasher\Prime\Storage\StorageInterface')->getMock();
-        $storage->expects($this->once())->method('all')->willReturn($envelopes);
-
-        $storageManager = new StorageManager($storage);
-
-        $this->assertEquals($envelopes, $storageManager->all());
+        $this->storageManager = new StorageManager($this->storageMock, $this->eventDispatcherMock, $this->filterFactoryMock);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetFilteredEnvelopes()
+    public function testAll(): void
     {
-        $envelopes = array(
-            new Envelope(new Notification(), new UuidStamp('1111')),
-            new Envelope(new Notification(), new UuidStamp('2222'), new HopsStamp(1), new DelayStamp(0)),
-            new Envelope(new Notification(), new UuidStamp('3333')),
-            new Envelope(new Notification(), new UuidStamp('4444')),
-        );
+        $envelopes = [
+            new Envelope(new Notification(), new IdStamp('1111')),
+            new Envelope(new Notification(), new IdStamp('2222')),
+            new Envelope(new Notification(), new IdStamp('3333')),
+            new Envelope(new Notification(), new IdStamp('4444')),
+        ];
 
-        $storage = $this->getMockBuilder('Flasher\Prime\Storage\StorageInterface')->getMock();
-        $storage->expects($this->once())->method('all')->willReturn($envelopes);
+        $this->storageMock->expects()->all()->once()->andReturns($envelopes);
 
-        $storageManager = new StorageManager($storage);
-
-        $this->assertEquals(array($envelopes[1]), $storageManager->filter());
+        $this->assertSame($envelopes, $this->storageManager->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddEnvelopes()
+    public function testGetFilteredEnvelopes(): void
     {
-        $envelopes = array(
-             new Envelope(new Notification()),
-             new Envelope(new Notification()),
-             new Envelope(new Notification()),
-             new Envelope(new Notification()),
-         );
+        $envelopes = [
+            new Envelope(new Notification(), new IdStamp('1111')),
+            new Envelope(new Notification(), [new IdStamp('2222'), new HopsStamp(1), new DelayStamp(0)]),
+            new Envelope(new Notification(), new IdStamp('3333')),
+            new Envelope(new Notification(), new IdStamp('4444')),
+        ];
 
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
+        $this->storageMock->expects()->all()->once()->andReturns($envelopes);
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(FilterEvent::class))->once();
+        $this->filterFactoryMock->expects()->createFilter([])->andReturns(new Filter());
 
-        $this->assertEquals($envelopes, $storageManager->all());
+        $this->assertSame($envelopes, $this->storageManager->filter());
     }
 
-    /**
-     * @return void
-     */
-    public function testUpdateEnvelopes()
+    public function testAdd(): void
     {
-        $envelopes = array(
-             new Envelope(new Notification()),
-             new Envelope(new Notification()),
-             new Envelope(new Notification()),
-             new Envelope(new Notification()),
-         );
+        $envelopes = [
+            new Envelope(new Notification(), new IdStamp('1111')),
+            new Envelope(new Notification(), new IdStamp('2222')),
+        ];
 
-        $storageManager = new StorageManager();
-        $storageManager->update($envelopes);
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(PersistEvent::class))->once();
+        $this->storageMock->expects()->add(...$envelopes)->once();
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(PostPersistEvent::class))->once();
 
-        $this->assertEquals($envelopes, $storageManager->all());
+        $this->storageManager->add(...$envelopes);
     }
 
-    /**
-     * @return void
-     */
-    public function testRemoveEnvelopes()
+    public function testUpdate(): void
     {
-        $envelopes = array(
-             new Envelope(new Notification(), new UuidStamp('1111')),
-             new Envelope(new Notification(), new UuidStamp('2222')),
-             new Envelope(new Notification(), new UuidStamp('3333')),
-             new Envelope(new Notification(), new UuidStamp('4444')),
-         );
+        $envelopes = [
+            new Envelope(new Notification(), new IdStamp('5555')),
+            new Envelope(new Notification(), new IdStamp('6666')),
+        ];
 
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(UpdateEvent::class))->once();
+        $this->storageMock->expects()->update(...$envelopes)->once();
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(PostUpdateEvent::class))->once();
 
-        $storageManager->remove(array(
-            new Envelope(new Notification(), new UuidStamp('2222')),
-            new Envelope(new Notification(), new UuidStamp('3333')),
-        ));
-
-        $this->assertEquals(array($envelopes[0], $envelopes[3]), $storageManager->all());
+        $this->storageManager->update(...$envelopes);
     }
 
-    /**
-     * @return void
-     */
-    public function testClearEnvelopes()
+    public function testRemove(): void
     {
-        $envelopes = array(
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        );
+        $envelopesToRemove = [
+            new Envelope(new Notification(), new IdStamp('7777')),
+            new Envelope(new Notification(), new IdStamp('8888')),
+        ];
 
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(RemoveEvent::class))->once();
+        $this->storageMock->expects()->remove(...$envelopesToRemove)->once();
+        $this->storageMock->expects()->update()->once();
+        $this->eventDispatcherMock->expects()->dispatch(\Mockery::type(PostRemoveEvent::class))->once();
 
-        $storageManager->clear();
+        $this->storageManager->remove(...$envelopesToRemove);
+    }
 
-        $this->assertEquals(array(), $storageManager->all());
+    public function testClear(): void
+    {
+        $this->storageMock->expects()->clear()->once();
+
+        $this->storageManager->clear();
     }
 }

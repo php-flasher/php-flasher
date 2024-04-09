@@ -1,0 +1,12 @@
+<i class="fa-duotone fa-rocket"></i> Getting Started:
+    <i class="fa-duotone fa-book text-indigo-900 mr-1 fa-lg"></i> Introduction: '/'
+    <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony: '/symfony/'
+    <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel: '/laravel/'
+    <i class="fa-duotone fa-ghost fa-lg text-pink-800 mr-1"></i> Livewire: '/livewire/'
+    <i class="fa-duotone fa-angles-right fa-lg text-indigo-900 mr-1"></i> Inertia: '/inertia/'
+
+<i class="fa-duotone fa-plug"></i> libraries:
+    <i class="fa-duotone fa-info-circle text-indigo-900 mr-1 fa-lg"></i> Notyf: '/library/notyf/'
+    <i class="fa-duotone fa-bell text-indigo-900 mr-1 fa-lg"></i> Noty: '/library/noty/'
+    <i class="fa-duotone fa-bread-loaf text-indigo-900 mr-1 fa-lg"></i> Toastr: '/library/toastr/'
+    <i class="fa-duotone fa-exclamation-circle text-indigo-900 mr-1 fa-lg"></i> Sweetalert: '/library/sweetalert/'

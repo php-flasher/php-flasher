@@ -1,43 +1,41 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Noty\Prime;
 
 use Flasher\Prime\Plugin\Plugin;
 
-class NotyPlugin extends Plugin
+final class NotyPlugin extends Plugin
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getScripts()
+    public function getAlias(): string
     {
-        return array(
-            'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.3.2/dist/flasher-noty.min.js',
-            ),
-            'local' => array(
-                '/vendor/flasher/flasher-noty.min.js',
-            ),
-        );
+        return 'noty';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getStyles()
+    public function getFactory(): string
     {
-        return array(
-            'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-noty@1.3.2/dist/flasher-noty.min.css',
-            ),
-            'local' => array(
-                '/vendor/flasher/flasher-noty.min.css',
-            ),
-        );
+        return Noty::class;
+    }
+
+    public function getServiceAliases(): string
+    {
+        return NotyInterface::class;
+    }
+
+    public function getScripts(): string|array
+    {
+        return [
+            '/vendor/flasher/noty.min.js',
+            '/vendor/flasher/flasher-noty.min.js',
+        ];
+    }
+
+    public function getStyles(): string|array
+    {
+        return [
+            '/vendor/flasher/noty.css',
+            '/vendor/flasher/mint.css',
+        ];
     }
 }

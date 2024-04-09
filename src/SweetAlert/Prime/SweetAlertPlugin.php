@@ -1,48 +1,40 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\SweetAlert\Prime;
 
 use Flasher\Prime\Plugin\Plugin;
 
-class SweetAlertPlugin extends Plugin
+final class SweetAlertPlugin extends Plugin
 {
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'sweetalert';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getScripts()
+    public function getFactory(): string
     {
-        return array(
-            'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.2/dist/flasher-sweetalert.min.js',
-            ),
-            'local' => array(
-                '/vendor/flasher/flasher-sweetalert.min.js',
-            ),
-        );
+        return SweetAlert::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getStyles()
+    public function getServiceAliases(): string
     {
-        return array(
-            'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-sweetalert@1.3.2/dist/flasher-sweetalert.min.css',
-            ),
-            'local' => array(
-                '/vendor/flasher/flasher-sweetalert.min.css',
-            ),
-        );
+        return SweetAlertInterface::class;
+    }
+
+    public function getScripts(): string|array
+    {
+        return [
+            '/vendor/flasher/sweetalert2.min.js',
+            '/vendor/flasher/flasher-sweetalert.min.js',
+        ];
+    }
+
+    public function getStyles(): string|array
+    {
+        return [
+            '/vendor/flasher/sweetalert2.min.css',
+        ];
     }
 }

@@ -1,192 +1,113 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher;
 
-use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
+use Flasher\Tests\Prime\Fixtures\EventDispatcher\Event\InvokeableEvent;
+use Flasher\Tests\Prime\Fixtures\EventDispatcher\Event\StoppableEvent;
+use Flasher\Tests\Prime\Fixtures\EventDispatcher\EventListener\InvokeableEventListener;
+use Flasher\Tests\Prime\Fixtures\EventDispatcher\EventListener\NonCallableListener;
+use Flasher\Tests\Prime\Fixtures\EventDispatcher\EventListener\StoppableEventListener;
+use PHPUnit\Framework\TestCase;
 
-class EventDispatcherTest extends TestCase
+final class EventDispatcherTest extends TestCase
 {
-    // Some pseudo events
-    const preFoo = 'pre.foo';
+    private EventDispatcher $dispatcher;
 
-    const postFoo = 'post.foo';
+    protected function setUp(): void
+    {
+        $this->dispatcher = new EventDispatcher();
+    }
 
-    const preBar = 'pre.bar';
-
-    const postBar = 'post.bar';
-
-    /**
-     * @return void
-     */
-    public function testInitialState()
+    public function testInitialState(): void
     {
         $dispatcher = new EventDispatcher();
-        $this->assertEquals(array(), $dispatcher->getListeners('fake_event'));
+        $this->assertSame([], $dispatcher->getListeners('fake_event'));
     }
 
-    /**
-     * @return void
-     */
-    public function testAddListener()
+    public function testAddAndRetrieveListeners(): void
     {
-        $dispatcher = new EventDispatcher();
-        $listener = new TestEventListener();
+        $listener = $this->createMock(EventListenerInterface::class);
+        $listener->method('getSubscribedEvents')
+            ->willReturn(['some_event']);
 
-        $dispatcher->addListener('pre.foo', array($listener, 'preFoo'));
-        $dispatcher->addListener('post.foo', array($listener, 'postFoo'));
-        $this->assertCount(1, $dispatcher->getListeners(self::preFoo));
-        $this->assertCount(1, $dispatcher->getListeners(self::postFoo));
+        $this->dispatcher->addListener($listener);
+
+        $listeners = $this->dispatcher->getListeners('some_event');
+        $this->assertCount(1, $listeners);
+        $this->assertSame($listener, $listeners[0]);
     }
 
-    /**
-     * @return void
-     */
-    public function testDispatch()
+    public function testDispatchCallsListeners(): void
     {
-        $dispatcher = new EventDispatcher();
-        $listener = new TestEventListener();
+        $event = new InvokeableEvent();
+        $listener = new InvokeableEventListener();
 
-        $event = new Event();
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', array($listener, 'preFoo'));
-        $dispatcher->addListener('NotFoundEvent', array($listener, 'postFoo'));
+        $this->dispatcher->addListener($listener);
+        $this->dispatcher->dispatch($event);
 
-        $return = $dispatcher->dispatch($event);
-
-        $this->assertTrue($listener->preFooInvoked);
-        $this->assertFalse($listener->postFooInvoked);
-
-        $this->assertInstanceOf('Flasher\Tests\Prime\EventDispatcher\Event', $return);
-        $this->assertEquals($event, $return);
+        $this->assertTrue($event->isInvoked());
     }
 
-    /**
-     * @return void
-     */
-    public function testDispatchForClosure()
+    public function testDispatchWithStoppableEvent(): void
     {
-        $dispatcher = new EventDispatcher();
+        $event = new StoppableEvent();
+        $listener = new StoppableEventListener();
 
-        $invoked = 0;
-        $listener = function () use (&$invoked) {
-            ++$invoked;
-        };
+        $this->dispatcher->addListener($listener);
+        $this->dispatcher->dispatch($event);
 
-        $event = new Event();
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', $listener);
-        $dispatcher->addListener('AnotherEvent', $listener);
-        $dispatcher->dispatch($event);
-        $this->assertEquals(1, $invoked);
+        $this->assertTrue($event->isPropagationStopped());
     }
 
-    /**
-     * @return void
-     */
-    public function testStopEventPropagation()
+    public function testDispatchWithNonCallableListener(): void
     {
-        $dispatcher = new EventDispatcher();
-        $listener = new TestEventListener();
+        $event = new class() {};
+        $eventName = $event::class;
 
-        $otherListener = new TestEventListener();
+        $listener = new NonCallableListener($eventName);
 
-        $event = new Event();
-        // postFoo() stops the propagation, so only one listener should
-        // be executed
-        // Manually set priority to enforce $listener to be called first
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', array($listener, 'postFoo'), 10);
-        $dispatcher->addListener('Flasher\Tests\Prime\EventDispatcher\Event', array($otherListener, 'preFoo'));
-        $dispatcher->dispatch($event);
-        $this->assertTrue($listener->postFooInvoked);
-        $this->assertFalse($otherListener->postFooInvoked);
-    }
-}
+        $this->dispatcher->addListener($listener);
 
-class Event implements StoppableEventInterface
-{
-    private $propagationStopped = false;
-
-    private $data;
-
-    public function __construct($data = null)
-    {
-        $this->data = $data;
+        $this->expectException(\InvalidArgumentException::class);
+        $this->dispatcher->dispatch($event);
     }
 
-    public function isPropagationStopped()
+    public function testMultipleListenersForSingleEvent(): void
     {
-        return $this->propagationStopped;
+        $event = new InvokeableEvent();
+        $listener1 = new InvokeableEventListener();
+        $listener2 = new InvokeableEventListener();
+
+        $this->dispatcher->addListener($listener1);
+        $this->dispatcher->addListener($listener2);
+        $this->dispatcher->dispatch($event);
+
+        $this->assertSame(2, $event->getInvokeCount());
     }
 
-    public function stopPropagation()
+    public function testMultipleListenersForStoppableEvent(): void
     {
-        $this->propagationStopped = true;
-    }
-}
+        $event = new InvokeableEvent();
+        $listener1 = new StoppableEventListener();
+        $listener2 = new InvokeableEventListener();
 
-class CallableClass
-{
-    public function __invoke()
-    {
-    }
-}
+        $this->dispatcher->addListener($listener1);
+        $this->dispatcher->addListener($listener2);
+        $this->dispatcher->dispatch($event);
 
-class TestEventListener
-{
-    public $preFooInvoked = false;
-
-    public $postFooInvoked = false;
-
-    public function preFoo(Event $e)
-    {
-        $this->preFooInvoked = true;
+        $this->assertTrue($event->isInvoked());
+        $this->assertSame(1, $event->getInvokeCount());
     }
 
-    public function postFoo(Event $e)
+    public function testDispatchEventWithNoListeners(): void
     {
-        $this->postFooInvoked = true;
+        $event = new InvokeableEvent();
+        $this->dispatcher->dispatch($event);
 
-        $e->stopPropagation();
-    }
-}
-
-class TestEventSubscriber implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'pre.foo' => 'preFoo',
-            'post.foo' => 'postFoo',
-        );
-    }
-}
-
-class TestEventSubscriberWithPriorities implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'pre.foo' => array('preFoo', 10),
-            'post.foo' => array('postFoo'),
-        );
-    }
-}
-
-class TestEventSubscriberWithMultipleListeners implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'pre.foo' => array(
-                array('preFoo1'),
-                array('preFoo2', 10),
-            ),
-        );
+        $this->assertFalse($event->isInvoked());
     }
 }

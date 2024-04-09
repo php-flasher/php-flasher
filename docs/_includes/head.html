@@ -1,0 +1,65 @@
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>{% if page.title %}{{ page.title }} | {% endif %}PHPFlasher</title>
+
+<meta property="og:title" content="{{ site.data.project.title }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://php-flasher.io">
+<meta property="og:image" content="https://php-flasher.io/static/images/php-flasher-social-card.jpg">
+<meta property="og:image:alt" content="{{ site.data.project.title }}" />
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="512">
+<meta property="og:description" content="{{ site.data.project.description }}">
+<meta property="og:site_name" content="PHPFlasher">
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@yoeunes">
+<meta name="twitter:site" content="@phpflasher" />
+<meta name="twitter:image:src" content="https://php-flasher.io/static/images/php-flasher-social-card.jpg" />
+<meta name="twitter:image:alt" content="{{ site.data.project.description }}" />
+<meta name="twitter:title" content="{{ site.data.project.title }}">
+<meta name="twitter:description" content="{{ site.data.project.description }}">
+
+<meta name="publish_date" property="og:publish_date" content="2023-01-10">
+
+<meta name="author" content="Younes ENNAJI">
+<meta name="description" content="{{ page.description }}" />
+<meta name="theme-color" content="#4052B5">
+
+<link rel="icon" type="image/png" href="/static/images/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+<link rel="mask-icon" href="/static/images/safari-pinned-tab.svg" color="#5bbad5">
+
+<link href="https://fonts.googleapis.com/css?family=Raleway|Varela+Round" rel="stylesheet"/>
+<link href="{{ site.data.manifest['dist/main.css'] }}" rel="stylesheet"/>
+<script defer src="{{ site.data.manifest['dist/main.js'] }}"></script>
+
+<link rel="stylesheet" href="/static/css/fontawesome.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script>
+    var messages = {};
+</script>
+
+{% unless site.data.dev.dev_mode %}
+<script src="https://cdn.counter.dev/script.js" data-id="3772fc72-0949-47c9-b4e3-6e1da76a2095" data-utcoffset="1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T4D78SM7TC"></script>
+<script defer>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-T4D78SM7TC');
+</script>
+{% endunless %}

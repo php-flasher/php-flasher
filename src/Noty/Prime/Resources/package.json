@@ -1,0 +1,17 @@
+{
+    "name": "@flasher/flasher-noty",
+    "version": "2.0.0",
+    "type": "module",
+    "license": "MIT",
+    "main": "dist/flasher-noty.cjs.js",
+    "module": "dist/flasher-noty.esm.js",
+    "browser": "dist/flasher-noty.umd.js",
+    "types": "dist/noty.d.ts",
+    "scripts": {
+        "ncu": "ncu -u"
+    },
+    "peerDependencies": {
+        "@flasher/flasher": "^2.0.0",
+        "noty": "^3.2.0-beta-deprecated"
+    }
+}

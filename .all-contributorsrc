@@ -1,1 +1,90 @@
-undefined
+{
+    "projectName": "php-flasher",
+    "projectOwner": "php-flasher",
+    "repoType": "github",
+    "repoHost": "https://github.com",
+    "files": [
+        "README.md"
+    ],
+    "imageSize": 100,
+    "commit": false,
+    "commitConvention": "angular",
+    "contributorsPerLine": 7,
+    "linkToUsage": false,
+    "contributors": [
+        {
+            "login": "yoeunes",
+            "name": "Younes ENNAJI",
+            "avatar_url": "https://avatars.githubusercontent.com/u/10859693?v=4",
+            "profile": "https://www.linkedin.com/in/younes--ennaji/",
+            "contributions": [
+                "code",
+                "doc",
+                "maintenance"
+            ]
+        },
+        {
+            "login": "salmayno",
+            "name": "Salma Mourad",
+            "avatar_url": "https://avatars.githubusercontent.com/u/27933199?v=4",
+            "profile": "https://github.com/salmayno",
+            "contributions": [
+                "financial"
+            ]
+        },
+        {
+            "login": "codenashwan",
+            "name": "Nashwan Abdullah",
+            "avatar_url": "https://avatars.githubusercontent.com/u/35005761?v=4",
+            "profile": "https://www.youtube.com/rstacode",
+            "contributions": [
+                "financial"
+            ]
+        },
+        {
+            "login": "darviscommerce",
+            "name": "Arvid de Jong",
+            "avatar_url": "https://avatars.githubusercontent.com/u/7394837?v=4",
+            "profile": "https://darvis.nl/",
+            "contributions": [
+                "financial"
+            ]
+        },
+        {
+            "login": "ash-jc-allen",
+            "name": "Ash Allen",
+            "avatar_url": "https://avatars.githubusercontent.com/u/39652331?v=4",
+            "profile": "https://ashallendesign.co.uk/",
+            "contributions": [
+                "design"
+            ]
+        },
+        {
+            "login": "murrant",
+            "name": "Tony Murray",
+            "avatar_url": "https://avatars.githubusercontent.com/u/39462?v=4",
+            "profile": "https://about.me/murrant",
+            "contributions": [
+                "code"
+            ]
+        },
+        {
+            "login": "n3wborn",
+            "name": "Stéphane P",
+            "avatar_url": "https://avatars.githubusercontent.com/u/10246722?v=4",
+            "profile": "https://github.com/n3wborn",
+            "contributions": [
+                "doc"
+            ]
+        },
+        {
+            "login": "LucasStorm",
+            "name": "Lucas Maciel",
+            "avatar_url": "https://avatars.githubusercontent.com/u/80225404?v=4",
+            "profile": "https://www.instagram.com/lucas.maciel_z",
+            "contributions": [
+                "design"
+            ]
+        }
+    ]
+}

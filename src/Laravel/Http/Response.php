@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Http;
 
@@ -11,72 +8,58 @@ use Flasher\Prime\Http\ResponseInterface;
 use Illuminate\Http\JsonResponse as LaravelJsonResponse;
 use Illuminate\Http\Response as LaravelResponse;
 
-final class Response implements ResponseInterface
+final readonly class Response implements ResponseInterface
 {
-    /**
-     * @var LaravelJsonResponse|LaravelResponse
-     */
-    private $response;
-
-    /**
-     * @param LaravelJsonResponse|LaravelResponse $response
-     */
-    public function __construct($response)
+    public function __construct(private LaravelJsonResponse|LaravelResponse $response)
     {
-        $this->response = $response;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isRedirection()
+    public function isRedirection(): bool
     {
         return $this->response->isRedirection();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isJson()
+    public function isJson(): bool
     {
         return $this->response instanceof LaravelJsonResponse;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isHtml()
+    public function isHtml(): bool
     {
         $contentType = $this->response->headers->get('Content-Type');
 
-        return false !== stripos($contentType, 'html'); // @phpstan-ignore-line
+        if (!\is_string($contentType)) {
+            return false;
+        }
+
+        return false !== stripos($contentType, 'html');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isAttachment()
+    public function isAttachment(): bool
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
-        return false !== stripos($contentDisposition, 'attachment;'); // @phpstan-ignore-line
+        if (!\is_string($contentDisposition)) {
+            return false;
+        }
+
+        return false !== stripos($contentDisposition, 'attachment;');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getContent()
+    public function isSuccessful(): bool
     {
-        return $this->response->getContent(); // @phpstan-ignore-line
+        return $this->response->isSuccessful();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setContent($content)
+    public function getContent(): string
+    {
+        return $this->response->getContent() ?: '';
+    }
+
+    public function setContent(string $content): void
     {
         $original = null;
-        if ($this->response instanceof \Illuminate\Http\Response && $this->response->getOriginalContent()) {
+        if ($this->response instanceof LaravelResponse && $this->response->getOriginalContent()) {
             $original = $this->response->getOriginalContent();
         }
 
@@ -86,5 +69,25 @@ final class Response implements ResponseInterface
         if ($original) {
             $this->response->original = $original;
         }
+    }
+
+    public function hasHeader(string $key): bool
+    {
+        return $this->response->headers->has($key);
+    }
+
+    public function getHeader(string $key): ?string
+    {
+        return $this->response->headers->get($key);
+    }
+
+    public function setHeader(string $key, array|string|null $values): void
+    {
+        $this->response->headers->set($key, $values);
+    }
+
+    public function removeHeader(string $key): void
+    {
+        $this->response->headers->remove($key);
     }
 }

@@ -1,0 +1,4 @@
+--ignore-dir=vendor
+--ignore-dir=yoeunes
+--ignore-dir=node_modules
+

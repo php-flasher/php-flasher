@@ -1,0 +1,10 @@
+node_modules/
+vendor/
+
+_site/
+
+.jekyll-cache/
+
+.idea/
+
+/npm-debug.log

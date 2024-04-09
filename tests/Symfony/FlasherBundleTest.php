@@ -1,36 +1,69 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Symfony;
 
-use Flasher\Symfony\Bridge\Bridge;
+use Flasher\Prime\Plugin\FlasherPlugin;
+use Flasher\Symfony\FlasherBundle;
+use Flasher\Tests\Symfony\Fixtures\FlasherKernel;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-class FlasherBundleTest extends TestCase
+final class FlasherBundleTest extends TestCase
 {
-    public function testFlasherIntegration()
-    {
-        if (Bridge::versionCompare('2.1', '<')) {
-            self::markTestSkipped('ErrorException: 8192: preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead in vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Compiler/RegisterKernelListenersPass.php line 39');
-        }
+    use MockeryPHPUnitIntegration;
 
-        $container = $this->getContainer();
+    private FlasherBundle $flasherBundle;
+
+    protected function setUp(): void
+    {
+        $this->flasherBundle = new FlasherBundle();
+    }
+
+    public function testFlasherIntegration(): void
+    {
+        $kernel = new FlasherKernel();
+        $kernel->boot();
+
+        $container = $kernel->getContainer();
 
         $this->assertTrue($container->has('flasher'));
         $this->assertTrue($container->has('flasher.noty'));
         $this->assertTrue($container->has('flasher.notyf'));
-        $this->assertTrue($container->has('flasher.pnotify'));
         $this->assertTrue($container->has('flasher.sweetalert'));
         $this->assertTrue($container->has('flasher.toastr'));
 
-        $this->assertInstanceOf('Flasher\Prime\Flasher', $container->get('flasher'));
-        $this->assertInstanceOf('Flasher\Noty\Prime\NotyFactory', $container->get('flasher.noty'));
-        $this->assertInstanceOf('Flasher\Notyf\Prime\NotyfFactory', $container->get('flasher.notyf'));
-        $this->assertInstanceOf('Flasher\Pnotify\Prime\PnotifyFactory', $container->get('flasher.pnotify'));
-        $this->assertInstanceOf('Flasher\SweetAlert\Prime\SweetAlertFactory', $container->get('flasher.sweetalert'));
-        $this->assertInstanceOf('Flasher\Toastr\Prime\ToastrFactory', $container->get('flasher.toastr'));
+        $this->assertInstanceOf(\Flasher\Prime\FlasherInterface::class, $container->get('flasher'));
+        $this->assertInstanceOf(\Flasher\Noty\Prime\NotyInterface::class, $container->get('flasher.noty'));
+        $this->assertInstanceOf(\Flasher\Notyf\Prime\NotyfInterface::class, $container->get('flasher.notyf'));
+        $this->assertInstanceOf(\Flasher\SweetAlert\Prime\SweetAlertInterface::class, $container->get('flasher.sweetalert'));
+        $this->assertInstanceOf(\Flasher\Toastr\Prime\ToastrInterface::class, $container->get('flasher.toastr'));
+    }
+
+    public function testBuild(): void
+    {
+        $containerBuilder = \Mockery::mock(ContainerBuilder::class);
+        $containerBuilder->expects('addCompilerPass')
+            ->twice()
+            ->andReturns($containerBuilder);
+
+        $this->flasherBundle->build($containerBuilder);
+    }
+
+    public function testGetContainerExtension(): void
+    {
+        $containerExtension = $this->flasherBundle->getContainerExtension();
+
+        $this->assertInstanceOf(ExtensionInterface::class, $containerExtension);
+    }
+
+    public function testCreatePlugin(): void
+    {
+        $flasherPlugin = $this->flasherBundle->createPlugin();
+
+        $this->assertInstanceOf(FlasherPlugin::class, $flasherPlugin);
     }
 }

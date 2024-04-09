@@ -1,48 +1,35 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
 
-final class PresentationEvent
+final readonly class PresentationEvent
 {
     /**
-     * @var Envelope[]
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $context
      */
-    private $envelopes;
-
-    /**
-     * @var mixed[]
-     */
-    private $context;
-
-    /**
-     * @param Envelope[] $envelopes
-     * @param mixed[]    $context
-     */
-    public function __construct(array $envelopes, array $context)
-    {
-        $this->envelopes = $envelopes;
-        $this->context = $context;
+    public function __construct(
+        private array $envelopes,
+        private array $context,
+    ) {
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopes()
+    public function getEnvelopes(): array
     {
         return $this->envelopes;
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
-    public function getContext()
+    public function getContext(): array
     {
         return $this->context;
     }

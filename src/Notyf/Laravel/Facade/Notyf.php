@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Notyf\Laravel\Facade;
 
@@ -42,9 +39,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotyfBuilder position(string $position, string $value)
  * @method static NotyfBuilder dismissible(bool $dismissible)
  */
-class Notyf extends Facade
+final class Notyf extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'flasher.notyf';
     }

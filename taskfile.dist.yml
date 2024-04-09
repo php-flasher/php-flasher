@@ -1,0 +1,47 @@
+version: '3'
+
+tasks:
+    install:
+        desc: "📦 Install project dependencies using Composer."
+        cmds:
+            - composer install
+        aliases:
+            - i
+            - in
+
+    update:
+        desc: "🔄 Update project dependencies to the lowest possible versions within the specified version constraints, ensuring compatibility."
+        cmds:
+            - composer update --prefer-lowest -W
+            - npm run ncu && npm install --force
+        aliases:
+            - u
+            - up
+
+    require:
+        desc: "➕ Require a project dependency using Composer."
+        cmds:
+            - composer require {{ .CLI_ARGS }}
+        aliases:
+            - req
+
+    lint:
+        desc: "🔍 Run various linting tools to ensure code quality, including PHP-CS-Fixer, PHPStan, Composer validation, and PHPLint."
+        cmds:
+            - vendor/bin/php-cs-fixer fix
+            - vendor/bin/phpstan analyse
+            - composer validate --strict
+            - vendor/bin/phplint
+        aliases:
+            - pint
+            - check
+            - validate
+
+    test:
+        desc: "✅ Run PHPUnit tests to verify the correctness of the codebase."
+        cmds:
+            - vendor/bin/phpunit
+        aliases:
+            - tests
+            - phpunit
+            - unit

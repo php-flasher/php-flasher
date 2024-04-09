@@ -1,43 +1,74 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\HopsStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
 final class CreatedAtStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testCreatedAtStamp()
-    {
-        $createdAt = new \DateTime('2023-01-30 23:33:51');
-        $stamp = new CreatedAtStamp($createdAt, 'Y-m-d H:i:s');
+    private \DateTimeImmutable $time;
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresentableStampInterface', $stamp);
-        $this->assertInstanceOf('Flasher\Prime\Stamp\OrderableStampInterface', $stamp);
-        $this->assertInstanceOf('DateTime', $stamp->getCreatedAt());
-        $this->assertEquals('2023-01-30 23:33:51', $stamp->getCreatedAt()->format('Y-m-d H:i:s'));
-        $this->assertEquals(array('created_at' => '2023-01-30 23:33:51'), $stamp->toArray());
+    private CreatedAtStamp $createdAtStamp;
+
+    private string $format;
+
+    protected function setUp(): void
+    {
+        $this->time = new \DateTimeImmutable('2023-01-01 12:00:00');
+        $this->format = 'Y-m-d H:i:s';
+        $this->createdAtStamp = new CreatedAtStamp($this->time, $this->format);
     }
 
     /**
-     * @return void
+     * Test getCreatedAt method to ensure it returns correct DateTimeImmutable object.
      */
-    public function testCompare()
+    public function testGetCreatedAt(): void
     {
-        $createdAt1 = new CreatedAtStamp(new \DateTime('2023-01-30 23:35:49'));
-        $createdAt2 = new CreatedAtStamp(new \DateTime('2023-01-30 23:36:06'));
+        $createdAt = $this->createdAtStamp->getCreatedAt();
+        $this->assertInstanceOf(\DateTimeImmutable::class, $createdAt);
+    }
 
-        $this->assertEquals(-17, $createdAt1->compare($createdAt2));
-        $this->assertEquals(1, $createdAt1->compare(new HopsStamp(1)));
+    /**
+     * Test if the format of the datetime object returned by getCreatedAt matches the expected format.
+     */
+    public function testGetCreatedAtFormat(): void
+    {
+        $createdAt = $this->createdAtStamp->getCreatedAt();
+        $formattedDate = $createdAt->format($this->format);
+        $expectedDate = $this->time->format($this->format);
+        $this->assertSame($expectedDate, $formattedDate);
+    }
+
+    /**
+     * Test compare method to compare timestamps correctly.
+     */
+    public function testCompare(): void
+    {
+        // Testing with a time exactly 1 second later
+        $laterTime = $this->time->modify('+1 second');
+        $laterStamp = new CreatedAtStamp($laterTime, $this->format);
+
+        // Testing with the same time
+        $sameStamp = new CreatedAtStamp($this->time, $this->format);
+
+        // laterStamp should be "greater" than createdAtStamp
+        $this->assertSame(-1, $this->createdAtStamp->compare($laterStamp));
+        $this->assertSame(1, $laterStamp->compare($this->createdAtStamp));
+
+        // Comparing with the same time should result in 0
+        $this->assertSame(0, $this->createdAtStamp->compare($sameStamp));
+    }
+
+    /**
+     * Test toArray method to return correct array format.
+     */
+    public function testToArray(): void
+    {
+        $arrayForm = $this->createdAtStamp->toArray();
+        $this->assertArrayHasKey('created_at', $arrayForm);
+        $this->assertSame($this->time->format($this->format), $arrayForm['created_at']);
     }
 }

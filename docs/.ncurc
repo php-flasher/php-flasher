@@ -1,0 +1,4 @@
+{
+  "upgrade": false,
+  "target": "semver"
+}

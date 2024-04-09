@@ -1,0 +1,16 @@
+{
+    "name": "@flasher/flasher",
+    "version": "2.0.0",
+    "type": "module",
+    "license": "MIT",
+    "main": "dist/flasher.cjs.js",
+    "module": "dist/flasher.esm.js",
+    "browser": "dist/flasher.umd.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "ncu": "ncu -u"
+    },
+    "devDependencies": {
+        "csstype": "^3.1.3"
+    }
+}

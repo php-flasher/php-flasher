@@ -1,595 +1,479 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Notification;
 
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
-use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Notification\Type;
+use Flasher\Prime\Stamp\ContextStamp;
+use Flasher\Prime\Stamp\DelayStamp;
 use Flasher\Prime\Stamp\HopsStamp;
+use Flasher\Prime\Stamp\PluginStamp;
+use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
+use Flasher\Prime\Stamp\StampInterface;
+use Flasher\Prime\Stamp\TranslationStamp;
+use Flasher\Prime\Stamp\UnlessStamp;
+use Flasher\Prime\Stamp\WhenStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
-use Flasher\Tests\Prime\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class NotificationBuilderTest extends TestCase
+final class NotificationBuilderTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testAddSuccessMessage()
+    public function testAddSuccessMessage(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addSuccess('success message');
+        $builder->success('success message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
-        $this->assertEquals('success message', $envelope->getMessage());
+        $this->assertSame(Type::SUCCESS, $envelope->getType());
+        $this->assertSame('success message', $envelope->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddErrorMessage()
+    public function testAddErrorMessage(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addError('error message');
+        $builder->error('error message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::ERROR, $envelope->getType());
-        $this->assertEquals('error message', $envelope->getMessage());
+        $this->assertSame(Type::ERROR, $envelope->getType());
+        $this->assertSame('error message', $envelope->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddWarningMessage()
+    public function testAddWarningMessage(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addWarning('warning message');
+        $builder->warning('warning message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::WARNING, $envelope->getType());
-        $this->assertEquals('warning message', $envelope->getMessage());
+        $this->assertSame(Type::WARNING, $envelope->getType());
+        $this->assertSame('warning message', $envelope->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddInfoMessage()
+    public function testAddInfoMessage(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addInfo('info message');
+        $builder->info('info message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::INFO, $envelope->getType());
-        $this->assertEquals('info message', $envelope->getMessage());
+        $this->assertSame(Type::INFO, $envelope->getType());
+        $this->assertSame('info message', $envelope->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddFlashMessage()
+    public function testAddFlashMessage(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addFlash('success', 'success message');
+        $builder->flash('success', 'success message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
-        $this->assertEquals('success message', $envelope->getMessage());
+        $this->assertSame(Type::SUCCESS, $envelope->getType());
+        $this->assertSame('success message', $envelope->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testPushToStorage()
+    public function testPushToStorage(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
         $builder->push();
     }
 
-    /**
-     * @return void
-     */
-    public function testNotificationType()
+    public function testNotificationType(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->type('success');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
+        $this->assertSame(Type::SUCCESS, $envelope->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testNotificationMessage()
+    public function testNotificationMessage(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->message('some message');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals('some message', $envelope->getMessage());
+        $this->assertSame('some message', $envelope->getMessage());
     }
 
-    /**
-     * @return void
-     */
-    public function testNotificationTitle()
+    public function testNotificationTitle(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->title('some title');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals('some title', $envelope->getTitle());
+        $this->assertSame('some title', $envelope->getTitle());
     }
 
-    /**
-     * @return void
-     */
-    public function testNotificationOptions()
+    public function testNotificationOptions(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->options(array('timeout' => 2000));
+        $builder->options(['timeout' => 2000]);
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(array('timeout' => 2000), $envelope->getOptions());
+        $this->assertSame(['timeout' => 2000], $envelope->getOptions());
     }
 
-    /**
-     * @return void
-     */
-    public function testNotificationOption()
+    public function testNotificationOption(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->option('timeout', 2000);
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(2000, $envelope->getOption('timeout'));
+        $this->assertSame(2000, $envelope->getOption('timeout'));
     }
 
-    /**
-     * @return void
-     */
-    public function testSuccessType()
+    public function testSuccessType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->success();
+        $builder->type('success');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::SUCCESS, $envelope->getType());
+        $this->assertSame(Type::SUCCESS, $envelope->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testErrorType()
+    public function testErrorType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->error();
+        $builder->type('error');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::ERROR, $envelope->getType());
+        $this->assertSame(Type::ERROR, $envelope->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testInfoType()
+    public function testInfoType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->info();
+        $builder->type('info');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::INFO, $envelope->getType());
+        $this->assertSame(Type::INFO, $envelope->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testWarningType()
+    public function testWarningType(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->warning();
+        $builder->type('warning');
 
         $envelope = $builder->getEnvelope();
 
-        $this->assertEquals(NotificationInterface::WARNING, $envelope->getType());
+        $this->assertSame(Type::WARNING, $envelope->getType());
     }
 
-    /**
-     * @return void
-     */
-    public function testWhenCondition()
+    public function testWhenCondition(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->when(true);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\WhenStamp');
+        $stamp = $envelope->get(WhenStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\WhenStamp', $stamp);
-        $this->assertEquals(true, $stamp->getCondition());
+        $this->assertInstanceOf(WhenStamp::class, $stamp);
+        $this->assertTrue($stamp->getCondition());
     }
 
-    /**
-     * @return void
-     */
-    public function testUnlessCondition()
+    public function testUnlessCondition(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->unless(true);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\UnlessStamp');
+        $stamp = $envelope->get(UnlessStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\UnlessStamp', $stamp);
-        $this->assertEquals(true, $stamp->getCondition());
+        $this->assertInstanceOf(UnlessStamp::class, $stamp);
+        $this->assertTrue($stamp->getCondition());
     }
 
-    /**
-     * @return void
-     */
-    public function testPriority()
+    public function testPriority(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->priority(2);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PriorityStamp');
+        $stamp = $envelope->get(PriorityStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PriorityStamp', $stamp);
-        $this->assertEquals(2, $stamp->getPriority());
+        $this->assertInstanceOf(PriorityStamp::class, $stamp);
+        $this->assertSame(2, $stamp->getPriority());
     }
 
-    /**
-     * @return void
-     */
-    public function testHops()
+    public function testHops(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->hops(3);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
+        $stamp = $envelope->get(HopsStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $stamp);
-        $this->assertEquals(3, $stamp->getAmount());
+        $this->assertInstanceOf(HopsStamp::class, $stamp);
+        $this->assertSame(3, $stamp->getAmount());
     }
 
-    /**
-     * @return void
-     */
-    public function testKeep()
+    public function testKeep(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->keep();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
+        $stamp = $envelope->get(HopsStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\HopsStamp', $stamp);
-        $this->assertEquals(2, $stamp->getAmount());
+        $this->assertInstanceOf(HopsStamp::class, $stamp);
+        $this->assertSame(2, $stamp->getAmount());
     }
 
-    /**
-     * @return void
-     */
-    public function testDelay()
+    public function testDelay(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->delay(3);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\DelayStamp');
+        $stamp = $envelope->get(DelayStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\DelayStamp', $stamp);
-        $this->assertEquals(3, $stamp->getDelay());
+        $this->assertInstanceOf(DelayStamp::class, $stamp);
+        $this->assertSame(3, $stamp->getDelay());
     }
 
-    /**
-     * @return void
-     */
-    public function testNow()
+    public function testTranslate(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->now();
+        $builder->translate(['foo' => 'bar'], 'ar');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\DelayStamp');
+        $stamp = $envelope->get(TranslationStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\DelayStamp', $stamp);
-        $this->assertEquals(0, $stamp->getDelay());
+        $this->assertInstanceOf(TranslationStamp::class, $stamp);
+        $this->assertSame('ar', $stamp->getLocale());
+        $this->assertSame(['foo' => 'bar'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testTranslate()
+    public function testAddPreset(): void
     {
-        $builder = $this->getNotificationBuilder();
-        $builder->translate(array('foo' => 'bar'), 'ar');
-
-        $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\TranslationStamp');
-
-        $this->assertInstanceOf('Flasher\Prime\Stamp\TranslationStamp', $stamp);
-        $this->assertEquals('ar', $stamp->getLocale());
-        $this->assertEquals(array('foo' => 'bar'), $stamp->getParameters());
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddPreset()
-    {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addPreset('entity_saved');
+        $builder->preset('entity_saved');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('entity_saved', $stamp->getPreset());
-        $this->assertEquals(array(), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('entity_saved', $stamp->getPreset());
+        $this->assertSame([], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddOperation()
+    public function testAddOperation(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addPreset('saved');
+        $builder->preset('saved');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('saved', $stamp->getPreset());
-        $this->assertEquals(array(), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('saved', $stamp->getPreset());
+        $this->assertSame([], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddCreated()
+    public function testAddCreated(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addCreated();
+        $builder->created();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('created', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('created', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddUpdated()
+    public function testAddUpdated(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addUpdated();
+        $builder->updated();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('updated', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('updated', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddSaved()
+    public function testAddSaved(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addSaved();
+        $builder->saved();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('saved', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('saved', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testAddDeleted()
+    public function testAddDeleted(): void
     {
-        $storageManager = $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
         $storageManager->expects($this->once())->method('add');
 
         $builder = $this->getNotificationBuilder($storageManager);
-        $builder->addDeleted();
+        $builder->deleted();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('deleted', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('deleted', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testPreset()
+    public function testPreset(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->preset('entity_saved');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('entity_saved', $stamp->getPreset());
-        $this->assertEquals(array(), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('entity_saved', $stamp->getPreset());
+        $this->assertSame([], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testOperation()
+    public function testOperation(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->operation('someOperation');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('someOperation', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('someOperation', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testCreated()
+    public function testCreated(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->created();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('created', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('created', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testUpdated()
+    public function testUpdated(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->updated();
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $envelope->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('updated', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('updated', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testSaved()
+    public function testSaved(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->saved();
 
-        $stamp = $builder->getEnvelope()->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $builder->getEnvelope()->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('saved', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('saved', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testDeleted()
+    public function testDeleted(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->deleted();
 
-        $stamp = $builder->getEnvelope()->get('Flasher\Prime\Stamp\PresetStamp');
+        $stamp = $builder->getEnvelope()->get(PresetStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\PresetStamp', $stamp);
-        $this->assertEquals('deleted', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $this->assertInstanceOf(PresetStamp::class, $stamp);
+        $this->assertSame('deleted', $stamp->getPreset());
+        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
     }
 
-    /**
-     * @return void
-     */
-    public function testWithStamps()
+    public function testWithStamps(): void
     {
         $builder = $this->getNotificationBuilder();
 
-        $stamps = array(
+        $stamps = [
             new PriorityStamp(1),
             new HopsStamp(0),
-        );
+        ];
         $builder->with($stamps);
 
         $envelope = $builder->getEnvelope();
         $all = $envelope->all();
 
+        array_unshift($stamps, new PluginStamp('flasher'));
+
         $this->assertEquals($stamps, array_values($all));
     }
 
-    /**
-     * @return void
-     */
-    public function testWithStamp()
+    public function testWithStamp(): void
     {
         $builder = $this->getNotificationBuilder();
 
-        $stamp = $this->getMockBuilder('Flasher\Prime\Stamp\StampInterface')->getMock();
-        $builder->withStamp($stamp);
+        $stamp = $this->createMock(StampInterface::class);
+        $builder->with($stamp);
 
         $envelope = $builder->getEnvelope();
         $stamps = $envelope->all();
@@ -597,66 +481,51 @@ class NotificationBuilderTest extends TestCase
         $this->assertContains($stamp, $stamps);
     }
 
-    /**
-     * @return void
-     */
-    public function testHandler()
+    public function testHandler(): void
     {
         $builder = $this->getNotificationBuilder();
         $builder->handler('flasher');
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\HandlerStamp');
+        $stamp = $envelope->get(PluginStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\HandlerStamp', $stamp);
-        $this->assertEquals('flasher', $stamp->getHandler());
+        $this->assertInstanceOf(PluginStamp::class, $stamp);
+        $this->assertSame('flasher', $stamp->getPlugin());
     }
 
-    /**
-     * @return void
-     */
-    public function testContext()
+    public function testContext(): void
     {
         $builder = $this->getNotificationBuilder();
-        $builder->context(array('foo' => 'bar'));
+        $builder->context(['foo' => 'bar']);
 
         $envelope = $builder->getEnvelope();
-        $stamp = $envelope->get('Flasher\Prime\Stamp\ContextStamp');
+        $stamp = $envelope->get(ContextStamp::class);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\ContextStamp', $stamp);
-        $this->assertEquals(array('foo' => 'bar'), $stamp->getContext());
+        $this->assertInstanceOf(ContextStamp::class, $stamp);
+        $this->assertSame(['foo' => 'bar'], $stamp->getContext());
     }
 
-    /**
-     * @return void
-     */
-    public function testMacro()
+    public function testMacro(): void
     {
-        if (version_compare(PHP_VERSION, '5.4', '<')) {
-            $this->markTestSkipped('Not working for PHP 5.3');
-        }
-
-        NotificationBuilder::macro('foo', function () {
-            return 'Called from a macro';
-        });
+        NotificationBuilder::macro('foo', fn (): string => 'Called from a macro');
 
         $builder = $this->getNotificationBuilder();
-        $response = $builder->foo();
+        $response = $builder->foo(); // @phpstan-ignore-line
 
         $this->assertTrue(NotificationBuilder::hasMacro('foo'));
-        $this->assertEquals('Called from a macro', $response);
+        $this->assertSame('Called from a macro', $response);
     }
 
     /**
      * @phpstan-param MockObject|StorageManagerInterface $storageManager
      *
-     * @return NotificationBuilderInterface
+     * @phpstan-ignore-next-line
      */
-    private function getNotificationBuilder(StorageManagerInterface $storageManager = null)
+    private function getNotificationBuilder(?StorageManagerInterface $storageManager = null): NotificationBuilderInterface
     {
         /** @var StorageManagerInterface $storageManager */
-        $storageManager = $storageManager ?: $this->getMockBuilder('Flasher\Prime\Storage\StorageManagerInterface')->getMock();
+        $storageManager = $storageManager ?: $this->createMock(StorageManagerInterface::class);
 
-        return new NotificationBuilder($storageManager, new Notification());
+        return new NotificationBuilder(new Notification(), $storageManager);
     }
 }

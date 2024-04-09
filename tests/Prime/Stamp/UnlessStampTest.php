@@ -1,25 +1,27 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\UnlessStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UnlessStampTest extends TestCase
+final class UnlessStampTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testUnlessStamp()
+    // Test case for getCondition() method
+    public function testGetCondition(): void
     {
-        $stamp = new UnlessStamp(true);
+        // Create a testable instance of UnlessStamp class
+        $unlessStamp = new UnlessStamp(true);
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertTrue($stamp->getCondition());
+        // Assert that getCondition correctly returns the value passed in the constructor
+        $this->assertTrue($unlessStamp->getCondition());
+
+        // Create another testable instance of UnlessStamp class
+        $unlessStamp = new UnlessStamp(false);
+
+        // Again assert that getCondition correctly returns the value passed in the constructor
+        $this->assertFalse($unlessStamp->getCondition());
     }
 }

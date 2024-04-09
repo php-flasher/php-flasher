@@ -1,39 +1,21 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class PriorityStamp implements StampInterface, OrderableStampInterface, PresentableStampInterface
+final readonly class PriorityStamp implements OrderableStampInterface, PresentableStampInterface, StampInterface
 {
-    /**
-     * @var int
-     */
-    private $priority;
-
-    /**
-     * @param int $priority
-     */
-    public function __construct($priority)
+    public function __construct(private int $priority)
     {
-        $this->priority = $priority;
     }
 
-    /**
-     * @return int
-     */
-    public function getPriority()
+    public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function compare($orderable)
+    public function compare(StampInterface $orderable): int
     {
         if (!$orderable instanceof self) {
             return 1;
@@ -43,10 +25,10 @@ final class PriorityStamp implements StampInterface, OrderableStampInterface, Pr
     }
 
     /**
-     * {@inheritdoc}
+     * @return array{priority: int}
      */
-    public function toArray()
+    public function toArray(): array
     {
-        return array('priority' => $this->getPriority());
+        return ['priority' => $this->priority];
     }
 }

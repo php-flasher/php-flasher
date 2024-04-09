@@ -1,29 +1,24 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Template;
 
 use Flasher\Prime\Template\TemplateEngineInterface;
 use Twig\Environment;
 
-final class TwigTemplateEngine implements TemplateEngineInterface
+final readonly class TwigTemplateEngine implements TemplateEngineInterface
 {
-    /**
-     * @var Environment
-     */
-    private $engine;
-
-    public function __construct(Environment $engine)
+    public function __construct(private ?Environment $twig = null)
     {
-        $this->engine = $engine;
     }
 
-    public function render($name, array $context = array())
+    public function render(string $name, array $context = []): string
     {
-        return $this->engine->render($name, $context);
+        if (null === $this->twig) {
+            throw new \LogicException('The TwigBundle is not registered in your application. Try running "composer require symfony/twig-bundle".');
+        }
+
+        return $this->twig->render($name, $context);
     }
 }

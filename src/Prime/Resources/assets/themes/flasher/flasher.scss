@@ -1,0 +1,100 @@
+body.fl-dark .fl-flasher,
+html.fl-dark .fl-flasher {
+    --background-color: var(--dark-background-color);
+    --text-color: var(--dark-text-color);
+}
+
+.fl-flasher {
+    line-height: 1.5;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    word-break: break-word;
+    padding: 0.75em;
+    margin: 0.75em 0;
+    position: relative;
+
+    &.fl-rtl {
+        border-radius: 0 0.375em 0.375em 0;
+    }
+
+    &:not(.fl-rtl) {
+        border-radius: 0.375em 0 0 0.375em;
+    }
+
+    .fl-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .fl-icon {
+        font-size: 2.5em;
+    }
+
+    .fl-title,
+    .fl-message {
+        display: block;
+        margin-left: 1em;
+        margin-right: 1em;
+        line-height: 1.25em;
+    }
+
+    .fl-title {
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    .fl-message {
+        margin-top: 0.25em;
+        font-size: 0.875em;
+    }
+
+    .fl-close {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        position: absolute;
+        top: 1rem;
+        right: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        margin: -0.5rem;
+        font-size: 25px;
+        line-height: 0;
+        color: #a8aaab;
+        transition: color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            color: darken(#a8aaab, 10%);
+            transform: scale(1.1);
+        }
+    }
+
+    &.fl-rtl .fl-close {
+        right: auto;
+        left: 0.5rem;
+    }
+
+
+    @each $type in success, info, warning, error {
+        &.fl-#{$type} {
+            border-left: 0.8em solid var(--#{$type}-color);
+
+            &.fl-rtl {
+                border-right: 0.8em solid var(--#{$type}-color);
+                border-left: none;
+            }
+
+            &:not(.fl-rtl) {
+                border-right: none;
+                border-left: 0.8em solid var(--#{$type}-color);
+            }
+
+            .fl-title {
+                color: var(--#{$type}-color);
+            }
+        }
+    }
+}

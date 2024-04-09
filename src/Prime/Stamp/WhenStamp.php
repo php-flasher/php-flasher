@@ -1,31 +1,16 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-final class WhenStamp implements StampInterface
+final readonly class WhenStamp implements StampInterface
 {
-    /**
-     * @var bool
-     */
-    private $condition;
-
-    /**
-     * @param bool $condition
-     */
-    public function __construct($condition)
+    public function __construct(private bool $condition)
     {
-        $this->condition = $condition;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCondition()
+    public function getCondition(): bool
     {
         return $this->condition;
     }

@@ -1,0 +1,12 @@
+exclude:
+    - vendor/
+    - demo/
+    - docs/
+    - node_modules/
+
+jobs: 10
+
+extensions:
+    - php
+
+cache: .cache/phplint/

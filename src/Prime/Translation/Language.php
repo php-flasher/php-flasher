@@ -1,62 +1,67 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Translation;
 
-final class Language
+/**
+ * Provides utilities for determining the text direction (Left-to-Right or Right-to-Left)
+ * based on a given locale. This can be particularly useful for handling languages
+ * with different writing directions in internationalized applications.
+ */
+final readonly class Language
 {
-    const LTR = 'ltr';
-    const RTL = 'rtl';
+    public const LTR = 'ltr';
+
+    public const RTL = 'rtl';
 
     /**
-     * @param string $locale
+     * Determines the text direction for a given locale.
      *
-     * @return string
+     * It uses the 'intl' PHP extension to get text direction from the ICU data.
+     * Defaults to Left-to-Right (LTR) if the 'intl' extension is not available,
+     * the locale is not found, or the text direction data is not available.
+     *
+     * @param string $locale the locale to check the text direction for
+     *
+     * @return string returns 'ltr' for Left-to-Right or 'rtl' for Right-to-Left text direction
      */
-    public static function direction($locale)
+    public static function direction(string $locale): string
     {
         if (!\extension_loaded('intl')) {
             return self::LTR;
         }
 
-        $resource = \ResourceBundle::create($locale, 'ICUDATA', true);
-        if (null === $resource) {
-            return self::LTR;
-        }
+        $resource = \ResourceBundle::create($locale, 'ICUDATA', false);
+        $layout = $resource?->get('layout');
 
-        $layout = $resource->get('layout');
         if (!$layout instanceof \ResourceBundle) {
             return self::LTR;
         }
 
-        $characters = $layout->get('characters');
-        if (!\is_string($characters)) {
-            return self::LTR;
-        }
-
-        return 'right-to-left' === $characters ? self::RTL : self::LTR;
+        return 'right-to-left' === $layout->get('characters') ? self::RTL : self::LTR;
     }
 
     /**
-     * @param string $locale
+     * Checks if the given locale is Right-to-Left (RTL).
      *
-     * @return bool
+     * @param string $locale the locale to check
+     *
+     * @return bool returns true if the locale is RTL, false otherwise
      */
-    public static function isRTL($locale)
+    public static function isRTL(string $locale): bool
     {
         return self::RTL === self::direction($locale);
     }
 
     /**
-     * @param string $locale
+     * Checks if the given locale is Left-to-Right (LTR).
      *
-     * @return bool
+     * @param string $locale the locale to check
+     *
+     * @return bool returns true if the locale is LTR, false otherwise
      */
-    public static function isLTR($locale)
+    public static function isLTR(string $locale): bool
     {
         return self::LTR === self::direction($locale);
     }

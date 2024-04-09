@@ -1,0 +1,20 @@
+{
+    "name": "@flasher/flasher-toastr",
+    "version": "2.0.0",
+    "type": "module",
+    "license": "MIT",
+    "main": "dist/flasher-toastr.cjs.js",
+    "module": "dist/flasher-toastr.esm.js",
+    "browser": "dist/flasher-toastr.umd.js",
+    "types": "dist/toastr.d.ts",
+    "scripts": {
+        "ncu": "ncu -u"
+    },
+    "peerDependencies": {
+        "toastr": "^2.1.4",
+        "@flasher/flasher": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/toastr": "^2.1.43"
+    }
+}

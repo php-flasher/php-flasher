@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
@@ -14,35 +11,27 @@ final class RemoveEvent
     /**
      * @var Envelope[]
      */
-    private $envelopesToRemove = array();
-
-    /**
-     * @var Envelope[]
-     */
-    private $envelopesToKeep = array();
+    private array $envelopesToKeep = [];
 
     /**
      * @param Envelope[] $envelopesToRemove
      */
-    public function __construct(array $envelopesToRemove)
+    public function __construct(private array $envelopesToRemove)
     {
-        $this->envelopesToRemove = $envelopesToRemove;
     }
 
     /**
      * @return Envelope[]
      */
-    public function getEnvelopesToRemove()
+    public function getEnvelopesToRemove(): array
     {
         return $this->envelopesToRemove;
     }
 
     /**
      * @param Envelope[] $envelopesToRemove
-     *
-     * @return void
      */
-    public function setEnvelopesToRemove($envelopesToRemove)
+    public function setEnvelopesToRemove(array $envelopesToRemove): void
     {
         $this->envelopesToRemove = $envelopesToRemove;
     }
@@ -50,17 +39,15 @@ final class RemoveEvent
     /**
      * @return Envelope[]
      */
-    public function getEnvelopesToKeep()
+    public function getEnvelopesToKeep(): array
     {
         return $this->envelopesToKeep;
     }
 
     /**
      * @param Envelope[] $envelopesToKeep
-     *
-     * @return void
      */
-    public function setEnvelopesToKeep($envelopesToKeep)
+    public function setEnvelopesToKeep(array $envelopesToKeep): void
     {
         $this->envelopesToKeep = $envelopesToKeep;
     }

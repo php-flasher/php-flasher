@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
@@ -15,71 +12,66 @@ use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\EchoTranslator;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Tests\Prime\Helper\ObjectInvader;
+use PHPUnit\Framework\TestCase;
 
-class TranslationListenerTest extends TestCase
+final class TranslationListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testTranslationListenerWithAutoTranslateEnabled()
+    public function testTranslationListenerWithAutoTranslateEnabled(): void
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        ObjectInvader::from($eventDispatcher)->set('listeners', []);
 
-        $listener = new TranslationListener(new EchoTranslator(), true);
-        $eventDispatcher->addSubscriber($listener);
+        $listener = new TranslationListener(new EchoTranslator());
+        $eventDispatcher->addListener($listener);
 
         $notification = new Notification();
         $notification->setTitle('PHPFlasher');
         $notification->setMessage('success message');
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope($notification),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $envelopes[0]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[0]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[0]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[0]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $envelopes[1]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[1]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[1]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[1]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $event = new PresentationEvent($envelopes, array());
+        $event = new PresentationEvent($envelopes, []);
         $eventDispatcher->dispatch($event);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());
     }
 
-    /**
-     * @return void
-     */
-    public function testTranslationListenerWithAutoTranslateDisabled()
+    public function testTranslationListenerWithAutoTranslateDisabled(): void
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+        ObjectInvader::from($eventDispatcher)->set('listeners', []);
 
-        $listener = new TranslationListener(new EchoTranslator(), false);
-        $eventDispatcher->addSubscriber($listener);
+        $listener = new TranslationListener(new EchoTranslator());
+        $eventDispatcher->addListener($listener);
 
         $notification = new Notification();
         $notification->setTitle('PHPFlasher');
         $notification->setMessage('success message');
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope($notification),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
-        $envelopes[0]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[0]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[0]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[0]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $envelopes[1]->withStamp(new TranslationStamp(array('resource' => 'resource'), 'ar'));
-        $envelopes[1]->withStamp(new PresetStamp('entity_saved', array('resource' => 'resource')));
+        $envelopes[1]->withStamp(new TranslationStamp(['resource' => 'resource'], 'ar'));
+        $envelopes[1]->withStamp(new PresetStamp('entity_saved', ['resource' => 'resource']));
 
-        $event = new PresentationEvent($envelopes, array());
+        $event = new PresentationEvent($envelopes, []);
         $eventDispatcher->dispatch($event);
 
         $this->assertEquals($envelopes, $event->getEnvelopes());

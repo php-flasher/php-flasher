@@ -1,26 +1,41 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Stamp;
 
 use Flasher\Prime\Stamp\PresetStamp;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PresetStampTest extends TestCase
+final class PresetStampTest extends TestCase
 {
     /**
-     * @return void
+     * getPreset method test.
+     *
+     * This test case focuses on the proper retrieval of the preset value from the PresetStamp class.
      */
-    public function testPresetStamp()
+    public function testGetPreset(): void
     {
-        $stamp = new PresetStamp('entity_saved', array('resource' => 'resource'));
+        $preset = 'preset_value';
+        $parameters = ['parameter1' => 'value1'];
 
-        $this->assertInstanceOf('Flasher\Prime\Stamp\StampInterface', $stamp);
-        $this->assertEquals('entity_saved', $stamp->getPreset());
-        $this->assertEquals(array('resource' => 'resource'), $stamp->getParameters());
+        $presetStamp = new PresetStamp($preset, $parameters);
+
+        $this->assertSame($preset, $presetStamp->getPreset());
+    }
+
+    /**
+     * getParameters method test.
+     *
+     * This test case focuses on the proper retrieval of parameters from the PresetStamp class.
+     */
+    public function testGetParameters(): void
+    {
+        $preset = 'preset_value';
+        $parameters = ['parameter1' => 'value1'];
+
+        $presetStamp = new PresetStamp($preset, $parameters);
+
+        $this->assertSame($parameters, $presetStamp->getParameters());
     }
 }

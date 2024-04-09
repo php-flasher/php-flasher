@@ -1,29 +1,23 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ResponseEventTest extends TestCase
+final class ResponseEventTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testResponseEvent()
+    public function testResponseEvent(): void
     {
         $event = new ResponseEvent('{"foo": "bar"}', 'json');
 
-        $this->assertEquals('{"foo": "bar"}', $event->getResponse());
-        $this->assertEquals('json', $event->getPresenter());
+        $this->assertSame('{"foo": "bar"}', $event->getResponse());
+        $this->assertSame('json', $event->getPresenter());
 
         $event->setResponse('{"foo": "baz"}');
 
-        $this->assertEquals('{"foo": "baz"}', $event->getResponse());
+        $this->assertSame('{"foo": "baz"}', $event->getResponse());
     }
 }

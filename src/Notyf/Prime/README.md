@@ -36,7 +36,7 @@ Shining stars of our community:
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/younes-khoubza/"><img src="https://avatars.githubusercontent.com/u/10859693?v=4?s=100" width="100px;" alt="Younes KHOUBZA"/><br /><sub><b>Younes KHOUBZA</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Code">💻</a> <a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Documentation">📖</a> <a href="#maintenance-yoeunes" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/younes--ennaji//"><img src="https://avatars.githubusercontent.com/u/10859693?v=4?s=100" width="100px;" alt="Younes ENNAJI"/><br /><sub><b>Younes ENNAJI</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Code">💻</a> <a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Documentation">📖</a> <a href="#maintenance-yoeunes" title="Maintenance">🚧</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/salmayno"><img src="https://avatars.githubusercontent.com/u/27933199?v=4?s=100" width="100px;" alt="Salma Mourad"/><br /><sub><b>Salma Mourad</b></sub></a><br /><a href="#financial-salmayno" title="Financial">💵</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.youtube.com/rstacode"><img src="https://avatars.githubusercontent.com/u/35005761?v=4?s=100" width="100px;" alt="Nashwan Abdullah"/><br /><sub><b>Nashwan Abdullah</b></sub></a><br /><a href="#financial-codenashwan" title="Financial">💵</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://darvis.nl/"><img src="https://avatars.githubusercontent.com/u/7394837?v=4?s=100" width="100px;" alt="Arvid de Jong"/><br /><sub><b>Arvid de Jong</b></sub></a><br /><a href="#financial-darviscommerce" title="Financial">💵</a></td>
@@ -64,11 +64,11 @@ You can reach out with questions, bug reports, or feature requests on any of the
 - [Github Issues](https://github.com/php-flasher/php-flasher/issues) 
 - [Github](https://github.com/yoeunes)
 - [Twitter](https://twitter.com/yoeunes)
-- [Linkedin](https://www.linkedin.com/in/younes-khoubza/)
-- [Email me directly](mailto:younes.khoubza@gmail.com)
+- [Linkedin](https://www.linkedin.com/in/younes--ennaji//)
+- [Email me directly](mailto:younes.ennaji.pro@gmail.com)
 
 ## License
 
 PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-khoubza/">Younes KHOUBZA</a> </b> </p>
+<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes--ennaji//">Younes ENNAJI</a> </b> </p>

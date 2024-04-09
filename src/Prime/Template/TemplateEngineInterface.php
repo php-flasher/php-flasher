@@ -1,19 +1,13 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Template;
 
 interface TemplateEngineInterface
 {
     /**
-     * @param string               $name
      * @param array<string, mixed> $context
-     *
-     * @return string
      */
-    public function render($name, array $context = array());
+    public function render(string $name, array $context = []): string;
 }

@@ -1,39 +1,29 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Middleware;
 
 use Flasher\Laravel\Http\Request;
 use Flasher\Laravel\Http\Response;
-use Flasher\Prime\Http\ResponseExtension;
+use Flasher\Prime\Http\ResponseExtensionInterface;
+use Illuminate\Http\JsonResponse as LaravelJsonResponse;
 use Illuminate\Http\Request as LaravelRequest;
 use Illuminate\Http\Response as LaravelResponse;
 
-final class FlasherMiddleware
+final readonly class FlasherMiddleware
 {
-    /**
-     * @var ResponseExtension
-     */
-    private $responseExtension;
-
-    public function __construct(ResponseExtension $responseExtension)
+    public function __construct(private ResponseExtensionInterface $responseExtension)
     {
-        $this->responseExtension = $responseExtension;
     }
 
-    /**
-     * @return LaravelResponse
-     */
-    public function handle(LaravelRequest $request, \Closure $next)
+    public function handle(LaravelRequest $request, \Closure $next): mixed
     {
-        /** @var LaravelResponse $response */
         $response = $next($request);
 
-        $this->responseExtension->render(new Request($request), new Response($response));
+        if ($response instanceof LaravelJsonResponse || $response instanceof LaravelResponse) {
+            $this->responseExtension->render(new Request($request), new Response($response));
+        }
 
         return $response;
     }

@@ -1,21 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\SweetAlert\Laravel;
 
 use Flasher\Prime\EventDispatcher\Event\ResponseEvent;
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 
-final class LivewireListener implements EventSubscriberInterface
+final readonly class LivewireListener implements EventListenerInterface
 {
-    /**
-     * @return void
-     */
-    public function __invoke(ResponseEvent $event)
+    public function __invoke(ResponseEvent $event): void
     {
         if ('html' !== $event->getPresenter()) {
             return;
@@ -26,37 +20,46 @@ final class LivewireListener implements EventSubscriberInterface
             return;
         }
 
-        if (false === strripos($response, '<script type="text/javascript" class="flasher-js">')) {
+        if (false === strripos($response, '<script type="text/javascript" class="flasher-js"')) {
+            return;
+        }
+
+        if (strripos($response, '<script type="text/javascript" class="flasher-sweetalert-promise-js"')) {
             return;
         }
 
         $response .= <<<'JAVASCRIPT'
-<script type="text/javascript">
+<script type="text/javascript" class="flasher-sweetalert-promise-js">
     window.addEventListener('flasher:sweetalert:promise', function (event) {
-        var envelope = event.detail.envelope;
-        var context = envelope.context;
-
-        if (!context.livewire || !context.livewire.id) {
+        if (typeof Livewire === 'undefined') {
+            console.error('Livewire is not defined.');
             return;
         }
 
-        var params = event.detail;
-        var componentId = context.livewire.id;
+        const { detail } = event;
+        const { envelope, promise } = detail;
+        const { context } = envelope;
 
-        Livewire.components.emitSelf(componentId, 'sweetalertEvent', params);
-
-        var promise = event.detail.promise;
-        if (promise.isConfirmed) {
-            Livewire.components.emitSelf(componentId, 'sweetalertConfirmed', params);
+        if (!context.livewire?.id) {
+            return;
         }
 
-        if (promise.isDenied) {
-            Livewire.components.emitSelf(componentId, 'sweetalertDenied', params);
+        const { livewire: { id: componentId } } = context;
+        const component = Livewire.all().find(c => c.id === componentId);
+
+        if (!component) {
+            console.error('Livewire component not found');
+            return;
         }
 
-        if (promise.isDismissed) {
-            Livewire.components.emitSelf(componentId, 'sweetalertDismissed', params);
+        const dispatchToLivewire = (eventName) => {
+            Livewire.dispatchTo(component.name, eventName, { payload: detail });
         }
+
+        dispatchToLivewire('sweetalert:event');
+        promise.isConfirmed && dispatchToLivewire('sweetalert:confirmed');
+        promise.isDenied && dispatchToLivewire('sweetalert:denied');
+        promise.isDismissed && dispatchToLivewire('sweetalert:dismissed');
     }, false);
 </script>
 JAVASCRIPT;
@@ -64,8 +67,8 @@ JAVASCRIPT;
         $event->setResponse($response);
     }
 
-    public static function getSubscribedEvents()
+    public function getSubscribedEvents(): string|array
     {
-        return 'Flasher\Prime\EventDispatcher\Event\ResponseEvent';
+        return ResponseEvent::class;
     }
 }

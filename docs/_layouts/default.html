@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        {% include head.html %}
+    </head>
+    <body class="min-h-screen min-w-full leading-normal bg-gray-50 overflow-x-hidden" data-controller="anchor clipboard navigation tryit {{ page.data-controller }}">
+        {% include size-helper.html %}
+
+        {% if site.data.dev.dev_mode %}
+            <div data-controller="ray"></div>
+        {% endif %}
+
+        <div class="h-16 z-10 top-0 w-screen bg-white border-b border-indigo-200 shadow">
+            <div id="header-logo" class="lg:container lg:mx-auto px-4 py-2">
+                <div class="flex items-center flex-no-shrink pt-1">
+                    <a href="/" class="flex items-center">
+                        <span class="pr-2 font-normal font-normal leading-none text-3xl text-indigo-900 hidden sm:block">
+                            <img class="fill-current h-8 mr-2" src="{{ '/static/images/php-flasher-logo.svg'|absolute_url }}" />
+                            <sup class="text-xs relative text-grey-dark" style="top: -20px;">{{ site.data.project.version }}</sup>
+                        </span>
+                    </a>
+                    <div class="flex-grow"></div>
+                    <a href="#" id="menu-toggle" class="block lg:hidden h-8 w-8 border p-1 border-transparent text-gray-200 hover:text-grey menu-closed">
+                        <svg class="menu-closed:shown fill-current h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+                        </svg>
+                        <svg class="menu-closed:hidden fill-current h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <main class="lg:container lg:mx-auto lg:px-6 flex">
+            <nav id="main-navigation" class="sticky top-4 hidden lg:block h-full w-full mx-10 lg:w-40">
+                {% for section in site.data.menu %}
+                    <h4 class="text-sm leading-loose tracking-wide text-indigo-400 uppercase mt-4">{{ section[0] }}</h4>
+                    <ul class="list-reset mb-8">
+                        {% for link in section[1] %}
+                            <li class="{% if page.url == link[1] %}bg-indigo-500 {% endif %}px-6 rounded">
+                                <a class="leading-loose text-md inline-block w-full {% if page.url == link[1] %}text-white{% else %}text-gray-900{% endif %}" href="{{ link[1] }}">{{ link[0] }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </nav>
+            <article id="main-article" class="flex-1 px-2 lg:px-10 py-5 w-full overflow-x-auto">
+                <div class="border-b border-grey-lighter py-3 mb-3 hidden sm:block">
+                    {% include prev-next.html %}
+                </div>
+
+                <blockquote>
+                  <p>
+                      If you find <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> useful,
+                      we would greatly appreciate your support in the form of a <strong>star</strong> rating ⭐
+                      on <a href="https://github.com/php-flasher/php-flasher"><i class="fab fa-github text-black"></i> GitHub</a>
+                      or by sharing the project on Twitter <a href="http://twitter.com/share?text=I%20really%20like%20this%20nice%20PHP%20package%2C%20that%20allows%20you%20to%20implement%20flash%20notifications%20in%20your%20app%20fast%20%F0%9F%9A%80%0A%0A%E2%86%92%20https%3A%2F%2Fphp-flasher.io%20by%20%40yoeunes%0A%0A%23php%20%23laravel%20%23symfony%20%23opensource"><i class="fab fa-twitter"></i> click here</a>.
+                      Your feedback helps us keep the package up-to-date and well-maintained. <strong>Thank you</strong> <i class="fa-solid fa-heart text-red-600"></i>
+                  </p>
+                </blockquote>
+
+                <hr>
+
+                {{ content }}
+
+                <div class="border-t border-grey-lighter py-3 mb-3 hidden sm:block">
+                    {% include prev-next.html %}
+                </div>
+            </article>
+            <nav id="anchor-navigation" class="js-sticky hidden sticky top-4 h-full w-56">
+                <h4 class="text-sm leading-loose tracking-wide text-indigo-400 uppercase mt-4">
+                    <i class="fa-duotone fa-bars-sort"></i> Jump to
+                </h4>
+                <ul class="list-reset mb-8"></ul>
+            </nav>
+        </main>
+
+        {% include footer.html %}
+    </body>
+</html>

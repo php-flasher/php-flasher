@@ -1,158 +1,72 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Plugin;
 
 abstract class Plugin implements PluginInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getAlias()
-    {
-        $alias = basename(str_replace('\\', '/', \get_class($this)));
-        $alias = str_replace('Plugin', '', $alias);
-        /** @var string $alias */
-        $alias = preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $alias);
-
-        return strtolower($alias);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'flasher_'.$this->getAlias();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceID()
+    public function getServiceId(): string
     {
         return 'flasher.'.$this->getAlias();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFactory()
+    public function getServiceAliases(): string|array
     {
-        return str_replace('Plugin', 'Factory', \get_class($this)); // @phpstan-ignore-line
+        return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getScripts()
+    public function getScripts(): string|array
     {
-        return array();
+        return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getStyles()
+    public function getStyles(): string|array
     {
-        return array();
+        return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOptions()
+    public function getOptions(): array
     {
-        return array();
+        return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getAssetsDir()
+    public function getAssetsDir(): string
     {
         $resourcesDir = $this->getResourcesDir();
-        $assetsDir = rtrim($resourcesDir, '/').'/assets/';
+        $assetsDir = rtrim($resourcesDir, '/').'/public/';
 
         return realpath($assetsDir) ?: '';
     }
 
-    /**
-     * @return string
-     */
-    public function getResourcesDir()
+    public function getResourcesDir(): string
     {
-        $r = new \ReflectionClass($this);
-        $fileName = pathinfo($r->getFileName() ?: '', PATHINFO_DIRNAME).'/Resources/';
+        $reflection = new \ReflectionClass($this);
+        $pluginDir = pathinfo($reflection->getFileName() ?: '', \PATHINFO_DIRNAME);
+        $resourcesDir = is_dir($pluginDir.'/Resources/')
+            ? $pluginDir.'/Resources/'
+            : $pluginDir.'/../Resources/';
 
-        return realpath($fileName) ?: '';
+        return realpath($resourcesDir) ?: '';
     }
 
-    /**
-     * @param array{
-     *     scripts?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     styles?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     options?: array<string, mixed>,
-     * } $config
-     *
-     * @return array{
-     *  scripts: array{cdn: string[], local: string[]},
-     *  styles: array{cdn: string[], local: string[]},
-     *  options: array<string, mixed>,
-     * }
-     */
-    public function normalizeConfig(array $config)
+    public function normalizeConfig(array $config): array
     {
-        $config = $this->processConfiguration($config);
-
-        $config['styles'] = $this->normalizeAssets($config['styles']);
-        $config['scripts'] = $this->normalizeAssets($config['scripts']);
-
-        return $config;
-    }
-
-    /**
-     * @param array{
-     *     scripts?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     styles?: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *     options?: array<string, mixed>,
-     * } $options
-     *
-     * @return array{
-     *    scripts: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *    styles: string|string[]|array{cdn?: string|string[], local?: string|string[]},
-     *    options: array<string, mixed>,
-     * }
-     */
-    public function processConfiguration(array $options = array())
-    {
-        return array_merge(array(
+        $config = [
             'scripts' => $this->getScripts(),
             'styles' => $this->getStyles(),
             'options' => $this->getOptions(),
-        ), $options);
-    }
+            ...$config,
+        ];
 
-    /**
-     * @param string|array{cdn?: string|string[], local?: string|string[]} $assets
-     *
-     * @return array{cdn: string[], local: string[]}
-     */
-    protected function normalizeAssets($assets = array())
-    {
-        if (is_string($assets)) {
-            $assets = array('cdn' => $assets, 'local' => $assets);
-        }
+        $config['styles'] = (array) $config['styles'];
+        $config['scripts'] = (array) $config['scripts'];
 
-        $assets = array_merge(array('cdn' => null, 'local' => null), $assets);
-
-        $assets['cdn'] = (array) $assets['cdn'];
-        $assets['local'] = (array) $assets['local'];
-
-        return $assets;
+        return $config;
     }
 }

@@ -1,0 +1,4 @@
+parameters:
+    stubFiles:
+        - Phpstan/stubs/Repository.stub
+        - Phpstan/stubs/ApplicationTestingHooks.stub

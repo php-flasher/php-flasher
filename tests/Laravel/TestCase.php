@@ -1,93 +1,49 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Laravel;
 
-use Flasher\Laravel\Support\Laravel;
-use Illuminate\Config\Repository as Config;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Testbench\TestCase as Orchestra;
+use Illuminate\Support\ServiceProvider;
 
-class TestCase extends Orchestra
+class TestCase extends \Orchestra\Testbench\TestCase
 {
-    public function createApplication()
+    /**
+     * @return array<class-string<ServiceProvider>>
+     */
+    protected function getPackageProviders($app): array
     {
-        if (0 !== strpos(Application::VERSION, '4.0')) {
-            return parent::createApplication();
-        }
-
-        $app = new Application();
-
-        $app->detectEnvironment(array(
-            'local' => array('your-machine-name'),
-        ));
-
-        $app->bindInstallPaths($this->getApplicationPaths());
-
-        $app['env'] = 'testing';
-
-        $app->instance('app', $app);
-
-        Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($app);
-
-        $config = new Config($app->getConfigLoader(), $app['env']);
-        $app->instance('config', $config);
-        $app->startExceptionHandling();
-
-        if ($app->runningInConsole()) {
-            $app->setRequestForConsoleEnvironment();
-        }
-
-        date_default_timezone_set($this->getApplicationTimezone());
-
-        $aliases = array_merge($this->getApplicationAliases(), $this->getPackageAliases());
-        AliasLoader::getInstance($aliases)->register();
-
-        Request::enableHttpMethodParameterOverride();
-
-        $providers = array_merge($this->getApplicationProviders(), $this->getPackageProviders());
-        $app->getProviderRepository()->load($app, $providers);
-
-        $this->getEnvironmentSetUp($app);
-
-        $app->boot();
-
-        return $app;
+        return [
+            \Flasher\Laravel\FlasherServiceProvider::class,
+            \Flasher\Noty\Laravel\FlasherNotyServiceProvider::class,
+            \Flasher\Notyf\Laravel\FlasherNotyfServiceProvider::class,
+            \Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider::class,
+            \Flasher\Toastr\Laravel\FlasherToastrServiceProvider::class,
+        ];
     }
 
     /**
-     * @param Application|null $app
+     * Override application aliases.
      *
-     * @return string[]
+     * @return array<string, class-string<Facade>>
      */
-    protected function getPackageProviders($app = null)
+    protected function getPackageAliases($app): array
     {
-        return array(
-            'Flasher\Laravel\FlasherServiceProvider',
-            'Flasher\Noty\Laravel\FlasherNotyServiceProvider',
-            'Flasher\Notyf\Laravel\FlasherNotyfServiceProvider',
-            'Flasher\Pnotify\Laravel\FlasherPnotifyServiceProvider',
-            'Flasher\SweetAlert\Laravel\FlasherSweetAlertServiceProvider',
-            'Flasher\Toastr\Laravel\FlasherToastrServiceProvider',
-        );
+        return [
+            'Flasher' => \Flasher\Laravel\Facade\Flasher::class,
+            'Noty' => \Flasher\Noty\Laravel\Facade\Noty::class,
+            'Notyf' => \Flasher\Notyf\Laravel\Facade\Notyf::class,
+            'SweetAlert' => \Flasher\SweetAlert\Laravel\Facade\SweetAlert::class,
+            'Toastr' => \Flasher\Toastr\Laravel\Facade\Toastr::class,
+        ];
     }
 
-    /**
-     * @param Application $app
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app): void
     {
-        $separator = Laravel::isVersion('4') ? '::config' : '';
-
-        $app->make('config')->set('session.driver', 'array');
-        $app->make('config')->set('session'.$separator.'.driver', 'array');
+        tap($app['config'], function (Repository $config) {
+            $config->set('session.driver', 'array');
+        });
     }
 }

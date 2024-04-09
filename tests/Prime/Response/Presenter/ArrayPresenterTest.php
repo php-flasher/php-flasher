@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response\Presenter;
 
@@ -11,16 +8,13 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Presenter\ArrayPresenter;
 use Flasher\Prime\Response\Response;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ArrayPresenterTest extends TestCase
+final class ArrayPresenterTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testArrayPresenter()
+    public function testArrayPresenter(): void
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -34,32 +28,31 @@ class ArrayPresenterTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification);
 
-        $response = array(
-            'envelopes' => array(
-                array(
-                    'notification' => array(
-                        'type' => 'success',
-                        'title' => 'PHPFlasher',
-                        'message' => 'success message',
-                        'options' => array(),
-                    ),
-                ),
-                array(
-                    'notification' => array(
-                        'type' => 'warning',
-                        'title' => 'yoeunes/toastr',
-                        'message' => 'warning message',
-                        'options' => array(),
-                    ),
-                ),
-            ),
-            'scripts' => array(),
-            'styles' => array(),
-            'options' => array(),
-        );
+        $response = [
+            'envelopes' => [
+                [
+                    'title' => 'PHPFlasher',
+                    'message' => 'success message',
+                    'type' => 'success',
+                    'options' => [],
+                    'metadata' => [],
+                ],
+                [
+                    'title' => 'yoeunes/toastr',
+                    'message' => 'warning message',
+                    'type' => 'warning',
+                    'options' => [],
+                    'metadata' => [],
+                ],
+            ],
+            'scripts' => [],
+            'styles' => [],
+            'options' => [],
+            'context' => [],
+        ];
 
         $presenter = new ArrayPresenter();
 
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array())));
+        $this->assertSame($response, $presenter->render(new Response($envelopes, [])));
     }
 }

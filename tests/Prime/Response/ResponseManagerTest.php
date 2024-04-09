@@ -1,159 +1,169 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response;
 
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
+use Flasher\Prime\Exception\PresenterNotFoundException;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
+use Flasher\Prime\Response\Resource\ResourceManagerInterface;
 use Flasher\Prime\Response\ResponseManager;
 use Flasher\Prime\Stamp\CreatedAtStamp;
-use Flasher\Prime\Stamp\UuidStamp;
-use Flasher\Prime\Storage\StorageManager;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Storage\StorageManagerInterface;
+use Livewire\LivewireManager;
+use PHPUnit\Framework\TestCase;
 
-class ResponseManagerTest extends TestCase
+final class ResponseManagerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testRenderSavedNotifications()
+    public function testRenderSavedNotifications(): void
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
         $notification->setTitle('PHPFlasher');
         $notification->setType('success');
-        $envelopes[] = new Envelope($notification, array(
-            new CreatedAtStamp(new \DateTime('2023-02-05 16:22:50')),
-            new UuidStamp('1111'),
-        ));
+        $envelopes[] = new Envelope($notification, [
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-05 16:22:50')),
+            new IdStamp('1111'),
+        ]);
 
         $notification = new Notification();
         $notification->setMessage('warning message');
         $notification->setTitle('yoeunes/toastr');
         $notification->setType('warning');
-        $envelopes[] = new Envelope($notification, array(
-            new CreatedAtStamp(new \DateTime('2023-02-06 16:22:50')),
-            new UuidStamp('2222'),
-        ));
+        $envelopes[] = new Envelope($notification, [
+            new CreatedAtStamp(new \DateTimeImmutable('2023-02-06 16:22:50')),
+            new IdStamp('2222'),
+        ]);
 
-        $storageManager = new StorageManager();
-        $storageManager->add($envelopes);
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
 
-        $responseManager = new ResponseManager(null, $storageManager);
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
+        $scriptTagWithNonce = '';
         $livewireListener = $this->getLivewireListenerScript();
 
         $response = <<<JAVASCRIPT
-<script type="text/javascript" class="flasher-js">
-(function() {
-    var rootScript = '';
-    var FLASHER_FLASH_BAG_PLACE_HOLDER = {};
-    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]},"created_at":"2023-02-05 16:22:50","uuid":"1111","priority":0},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]},"created_at":"2023-02-06 16:22:50","uuid":"2222","priority":0}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
+            <script type="text/javascript" class="flasher-js">
+                (function(window, document) {
+                    const merge = (first, second) => {
+                        if (Array.isArray(first) && Array.isArray(second)) {
+                            return [...first, ...second.filter(item => !first.includes(item))];
+                        }
 
-    function mergeOptions(first, second) {
-        return {
-            context: merge(first.context || {}, second.context || {}),
-            envelopes: merge(first.envelopes || [], second.envelopes || []),
-            options: merge(first.options || {}, second.options || {}),
-            scripts: merge(first.scripts || [], second.scripts || []),
-            styles: merge(first.styles || [], second.styles || []),
-        };
+                        if (typeof first === 'object' && typeof second === 'object') {
+                            for (const [key, value] of Object.entries(second)) {
+                                first[key] = key in first ? { ...first[key], ...value } : value;
+                            }
+                            return first;
+                        }
+
+                        return undefined;
+                    };
+
+                    const mergeOptions = (...options) => {
+                        const result = {};
+
+                        options.forEach(option => {
+                            Object.entries(option).forEach(([key, value]) => {
+                                result[key] = key in result ? merge(result[key], value) : value;
+                            });
+                        });
+
+                        return result;
+                    };
+
+                    const renderCallback = (options) => {
+                        if(!window.flasher) {
+                            throw new Error('Flasher is not loaded');
+                        }
+
+                        window.flasher.render(options);
+                    };
+
+                    const render = (options) => {
+                        if (options instanceof Event) {
+                            options = options.detail;
+                        }
+
+                        if (['interactive', 'complete'].includes(document.readyState)) {
+                            renderCallback(options);
+                        } else {
+                            document.addEventListener('DOMContentLoaded', () => renderCallback(options));
+                        }
+                    };
+
+                    const addScriptAndRender = (options) => {
+                        const mainScript = '';
+
+                        if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
+                            render(options);
+                        } else {
+                            const tag = document.createElement('script');
+                            tag.src = mainScript;
+                            tag.type = 'text/javascript';
+                            {$scriptTagWithNonce}
+                            tag.onload = () => render(options);
+
+                            document.head.appendChild(tag);
+                        }
+                    };
+
+                    const addRenderListener = () => {
+                        if (1 === document.querySelectorAll('script.flasher-js').length) {
+                            document.addEventListener('flasher:render', render);
+                        }
+
+                        {$livewireListener}
+                    };
+
+                    const options = [];
+                    options.push({"envelopes":[],"scripts":[],"styles":[],"options":[],"context":[]});
+                    /** {--FLASHER_REPLACE_ME--} **/
+                    addScriptAndRender(mergeOptions(...options));
+                    addRenderListener();
+                })(window, document);
+            </script>
+        JAVASCRIPT;
+
+        $this->assertSame($response, $responseManager->render('html'));
     }
 
-    function merge(first, second) {
-        if (Array.isArray(first) && Array.isArray(second)) {
-            return first.concat(second).filter(function(item, index, array) {
-                return array.indexOf(item) === index;
-            });
-        }
-
-        return Object.assign({}, first, second);
-    }
-
-    function renderOptions(options) {
-        if(!window.hasOwnProperty('flasher')) {
-            console.error('Flasher is not loaded');
-            return;
-        }
-
-        requestAnimationFrame(function () {
-            window.flasher.render(options);
-        });
-    }
-
-    function render(options) {
-        if ('loading' !== document.readyState) {
-            renderOptions(options);
-
-            return;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            renderOptions(options);
-        });
-    }
-
-    if (1 === document.querySelectorAll('script.flasher-js').length) {
-        document.addEventListener('flasher:render', function (event) {
-            render(event.detail);
-        });
-
-        {$livewireListener}
-    }
-
-    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
-        render(options);
-    } else {
-        var tag = document.createElement('script');
-        tag.setAttribute('src', rootScript);
-        tag.setAttribute('type', 'text/javascript');
-        tag.onload = function () {
-            render(options);
-        };
-
-        document.head.appendChild(tag);
-    }
-})();
-</script>
-JAVASCRIPT;
-
-        $this->assertEquals($response, $responseManager->render());
-    }
-
-    /**
-     * @return void
-     */
-    public function testItThrowsExceptionIfPresenterNotFound()
+    public function testItThrowsExceptionIfPresenterNotFound(): void
     {
-        $this->setExpectedException('\InvalidArgumentException', 'Presenter [xml] not supported.');
+        $this->expectException(PresenterNotFoundException::class);
+        $this->expectExceptionMessage('Presenter "xml" not found, did you forget to register it? Available presenters: [html, json, array]');
 
-        $responseManager = new ResponseManager();
-        $responseManager->render(array(), 'xml');
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
+
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
+        $responseManager->render('xml');
     }
 
     /**
      * Generate the script for Livewire event handling.
-     *
-     * @return string
      */
-    private function getLivewireListenerScript()
+    private function getLivewireListenerScript(): string
     {
-        if (!class_exists('Livewire\LivewireManager')) {
+        if (!class_exists(LivewireManager::class)) {
             return '';
         }
 
         return <<<JAVASCRIPT
-document.addEventListener('livewire:navigating', function () {
-    var elements = document.querySelectorAll('.fl-no-cache');
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].remove();
-    }
-});
-JAVASCRIPT;
+            document.addEventListener('livewire:navigating', () => {
+              document.querySelectorAll('.fl-no-cache').forEach(el => el.remove());
+            });
+        JAVASCRIPT;
     }
 }

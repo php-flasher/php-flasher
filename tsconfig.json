@@ -1,0 +1,35 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@flasher/flasher": ["src/Prime/Resources"],
+            "@flasher/flasher-noty": ["src/Noty/Prime/Resources"],
+            "@flasher/flasher-notyf": ["src/Notyf/Prime/Resources"],
+            "@flasher/flasher-sweetalert": ["src/SweetAlert/Prime/Resources"],
+            "@flasher/flasher-toastr": ["src/Toastr/Prime/Resources"],
+        },
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "declarationMap": false,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "module": "es6",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "removeComments": true,
+        "skipLibCheck": true,
+        "sourceMap": false,
+        "strict": true,
+        "target": "es6"
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "public"
+    ]
+}

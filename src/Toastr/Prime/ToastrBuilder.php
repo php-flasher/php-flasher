@@ -1,66 +1,38 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Toastr\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
-/**
- * @SuppressWarnings(PHPMD.TooManyMethods)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 final class ToastrBuilder extends NotificationBuilder
 {
     /**
      * Enable a close button.
-     *
-     * @param bool $closeButton
-     *
-     * @return static
      */
-    public function closeButton($closeButton = true)
+    public function closeButton(bool $closeButton = true): self
     {
         $this->option('closeButton', $closeButton);
 
         return $this;
     }
 
-    /**
-     * @param string $closeClass
-     *
-     * @return static
-     */
-    public function closeClass($closeClass)
+    public function closeClass(string $closeClass): self
     {
-        $this->closeButton();
-
         $this->option('closeClass', $closeClass);
 
         return $this;
     }
 
-    /**
-     * @param int $closeDuration
-     *
-     * @return static
-     */
-    public function closeDuration($closeDuration)
+    public function closeDuration(int $closeDuration): self
     {
         $this->option('closeDuration', $closeDuration);
 
         return $this;
     }
 
-    /**
-     * @param string $closeEasing
-     *
-     * @return static
-     */
-    public function closeEasing($closeEasing)
+    public function closeEasing(string $closeEasing): self
     {
         $this->option('closeEasing', $closeEasing);
 
@@ -69,60 +41,36 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Override the close button's HTML.
-     *
-     * @param string $closeHtml
-     *
-     * @return static
      */
-    public function closeHtml($closeHtml)
+    public function closeHtml(string $closeHtml): self
     {
         $this->option('closeHtml', $closeHtml);
 
         return $this;
     }
 
-    /**
-     * @param string $closeMethod
-     *
-     * @return static
-     */
-    public function closeMethod($closeMethod)
+    public function closeMethod(string $closeMethod): self
     {
         $this->option('closeMethod', $closeMethod);
 
         return $this;
     }
 
-    /**
-     * @param bool $closeOnHover
-     *
-     * @return static
-     */
-    public function closeOnHover($closeOnHover = true)
+    public function closeOnHover(bool $closeOnHover = true): self
     {
         $this->option('closeOnHover', $closeOnHover);
 
         return $this;
     }
 
-    /**
-     * @param string $containerId
-     *
-     * @return static
-     */
-    public function containerId($containerId)
+    public function containerId(string $containerId): self
     {
         $this->option('containerId', $containerId);
 
         return $this;
     }
 
-    /**
-     * @param bool $debug
-     *
-     * @return static
-     */
-    public function debug($debug = true)
+    public function debug(bool $debug = true): self
     {
         $this->option('debug', $debug);
 
@@ -131,12 +79,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * In case you want to escape HTML characters in title and message.
-     *
-     * @param bool $escapeHtml
-     *
-     * @return static
      */
-    public function escapeHtml($escapeHtml = true)
+    public function escapeHtml(bool $escapeHtml = true): self
     {
         $this->option('escapeHtml', $escapeHtml);
 
@@ -145,12 +89,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * How long the toast will display after a user hovers over it.
-     *
-     * @param int $extendedTimeOut
-     *
-     * @return static
      */
-    public function extendedTimeOut($extendedTimeOut)
+    public function extendedTimeOut(int $extendedTimeOut): self
     {
         $this->option('extendedTimeOut', $extendedTimeOut);
 
@@ -159,12 +99,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Specifies the time during which the pop-up closes in ms.
-     *
-     * @param int $hideDuration
-     *
-     * @return static
      */
-    public function hideDuration($hideDuration)
+    public function hideDuration(int $hideDuration): self
     {
         $this->option('hideDuration', $hideDuration);
 
@@ -173,12 +109,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Indicates the entry transition of the pop-up.
-     *
-     * @param string $hideEasing
-     *
-     * @return static
      */
-    public function hideEasing($hideEasing)
+    public function hideEasing(string $hideEasing): self
     {
         $this->option('hideEasing', $hideEasing);
 
@@ -187,36 +119,22 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Indicates the opening animation of the pop-up.
-     *
-     * @param string $hideMethod
-     *
-     * @return static
      */
-    public function hideMethod($hideMethod)
+    public function hideMethod(string $hideMethod): self
     {
         $this->option('hideMethod', $hideMethod);
 
         return $this;
     }
 
-    /**
-     * @param string $iconClass
-     *
-     * @return static
-     */
-    public function iconClass($iconClass)
+    public function iconClass(string $iconClass): self
     {
         $this->option('iconClass', $iconClass);
 
         return $this;
     }
 
-    /**
-     * @param string $messageClass
-     *
-     * @return static
-     */
-    public function messageClass($messageClass)
+    public function messageClass(string $messageClass): self
     {
         $this->option('messageClass', $messageClass);
 
@@ -225,48 +143,29 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Show newest toast at bottom (top is default).
-     *
-     * @param bool $newestOnTop
-     *
-     * @return static
      */
-    public function newestOnTop($newestOnTop = true)
+    public function newestOnTop(bool $newestOnTop = true): self
     {
         $this->option('newestOnTop', $newestOnTop);
 
         return $this;
     }
 
-    /**
-     * @param string $onHidden
-     *
-     * @return static
-     */
-    public function onHidden($onHidden)
+    public function onHidden(string $onHidden): self
     {
         $this->option('onHidden', $onHidden);
 
         return $this;
     }
 
-    /**
-     * @param string $onShown
-     *
-     * @return static
-     */
-    public function onShown($onShown)
+    public function onShown(string $onShown): self
     {
         $this->option('onShown', $onShown);
 
         return $this;
     }
 
-    /**
-     * @param string $positionClass
-     *
-     * @return static
-     */
-    public function positionClass($positionClass)
+    public function positionClass(string $positionClass): self
     {
         $this->option('positionClass', $positionClass);
 
@@ -276,12 +175,8 @@ final class ToastrBuilder extends NotificationBuilder
     /**
      * Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to
      * the previous toast based on their message content.
-     *
-     * @param bool $preventDuplicates
-     *
-     * @return static
      */
-    public function preventDuplicates($preventDuplicates = true)
+    public function preventDuplicates(bool $preventDuplicates = true): self
     {
         $this->option('preventDuplicates', $preventDuplicates);
 
@@ -290,24 +185,15 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Visually indicate how long before a toast expires.
-     *
-     * @param bool $progressBar
-     *
-     * @return static
      */
-    public function progressBar($progressBar = true)
+    public function progressBar(bool $progressBar = true): self
     {
         $this->option('progressBar', $progressBar);
 
         return $this;
     }
 
-    /**
-     * @param string $progressClass
-     *
-     * @return static
-     */
-    public function progressClass($progressClass)
+    public function progressClass(string $progressClass): self
     {
         $this->option('progressClass', $progressClass);
 
@@ -316,12 +202,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Flip the toastr to be displayed properly for right-to-left languages.
-     *
-     * @param bool $rtl
-     *
-     * @return static
      */
-    public function rtl($rtl = true)
+    public function rtl(bool $rtl = true): self
     {
         $this->option('rtl', $rtl);
 
@@ -330,12 +212,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Specifies the time during which the pop-up opens in ms.
-     *
-     * @param int $showDuration
-     *
-     * @return static
      */
-    public function showDuration($showDuration)
+    public function showDuration(int $showDuration): self
     {
         $this->option('showDuration', $showDuration);
 
@@ -344,12 +222,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Indicates the entry transition of the pop-up.
-     *
-     * @param string $showEasing
-     *
-     * @return static
      */
-    public function showEasing($showEasing)
+    public function showEasing(string $showEasing): self
     {
         $this->option('showEasing', $showEasing);
 
@@ -358,12 +232,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Indicates the opening animation of the pop-up.
-     *
-     * @param string $showMethod
-     *
-     * @return static
      */
-    public function showMethod($showMethod)
+    public function showMethod(string $showMethod): self
     {
         $this->option('showMethod', $showMethod);
 
@@ -372,24 +242,15 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Forces the user to validate the pop-up before closing.
-     *
-     * @param bool $tapToDismiss
-     *
-     * @return static
      */
-    public function tapToDismiss($tapToDismiss = true)
+    public function tapToDismiss(bool $tapToDismiss = true): self
     {
         $this->option('tapToDismiss', $tapToDismiss);
 
         return $this;
     }
 
-    /**
-     * @param string $target
-     *
-     * @return static
-     */
-    public function target($target)
+    public function target(string $target): self
     {
         $this->option('target', $target);
 
@@ -398,13 +259,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * How long the toast will display without user interaction.
-     *
-     * @param int $timeOut
-     * @param int $extendedTimeOut
-     *
-     * @return static
      */
-    public function timeOut($timeOut, $extendedTimeOut = null)
+    public function timeOut(int $timeOut, ?int $extendedTimeOut = null): self
     {
         $this->option('timeOut', $timeOut);
 
@@ -415,24 +271,14 @@ final class ToastrBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * @param string $titleClass
-     *
-     * @return static
-     */
-    public function titleClass($titleClass)
+    public function titleClass(string $titleClass): self
     {
         $this->option('titleClass', $titleClass);
 
         return $this;
     }
 
-    /**
-     * @param string $toastClass
-     *
-     * @return static
-     */
-    public function toastClass($toastClass)
+    public function toastClass(string $toastClass): self
     {
         $this->option('toastClass', $toastClass);
 
@@ -441,10 +287,8 @@ final class ToastrBuilder extends NotificationBuilder
 
     /**
      * Prevent from Auto Hiding.
-     *
-     * @return static
      */
-    public function persistent()
+    public function persistent(): self
     {
         $this->timeOut(0);
         $this->extendedTimeOut(0);

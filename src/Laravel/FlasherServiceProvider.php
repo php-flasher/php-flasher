@@ -1,408 +1,300 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel;
 
-use Flasher\Laravel\Container\LaravelContainer;
+use Flasher\Laravel\Command\InstallCommand;
+use Flasher\Laravel\Component\FlasherComponent;
+use Flasher\Laravel\EventListener\LivewireListener;
+use Flasher\Laravel\EventListener\OctaneListener;
 use Flasher\Laravel\Middleware\FlasherMiddleware;
-use Flasher\Laravel\Middleware\HttpKernelFlasherMiddleware;
-use Flasher\Laravel\Middleware\HttpKernelSessionMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
-use Flasher\Laravel\Support\Laravel;
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Laravel\Template\BladeTemplateEngine;
 use Flasher\Laravel\Translation\Translator;
-use Flasher\Prime\Config\Config;
-use Flasher\Prime\Config\ConfigInterface;
+use Flasher\Prime\Asset\AssetManager;
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
-use Flasher\Prime\EventDispatcher\EventListener\PresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
+use Flasher\Prime\EventDispatcher\EventListener\NotificationLoggerListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
+use Flasher\Prime\Factory\NotificationFactoryLocator;
 use Flasher\Prime\Flasher;
 use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandler;
+use Flasher\Prime\Http\Csp\NonceGenerator;
 use Flasher\Prime\Http\RequestExtension;
 use Flasher\Prime\Http\ResponseExtension;
-use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Plugin\FlasherPlugin;
 use Flasher\Prime\Response\Resource\ResourceManager;
 use Flasher\Prime\Response\ResponseManager;
-use Flasher\Prime\Storage\StorageBag;
+use Flasher\Prime\Storage\Filter\FilterFactory;
+use Flasher\Prime\Storage\Storage;
 use Flasher\Prime\Storage\StorageManager;
-use Illuminate\Contracts\Config\Repository;
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Http\Kernel;
-use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Blade;
-use Livewire\Component;
+use Illuminate\Foundation\Console\AboutCommand;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\View\Compilers\BladeCompiler;
+use Laravel\Octane\Events\RequestReceived;
 use Livewire\LivewireManager;
-use Livewire\Mechanisms\HandleComponents\ComponentContext;
-use Livewire\Response;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
-final class FlasherServiceProvider extends ServiceProvider
+final class FlasherServiceProvider extends PluginServiceProvider
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function afterBoot()
+    public function register(): void
     {
-        FlasherContainer::init(new LaravelContainer());
+        $this->plugin = $this->createPlugin();
 
-        $this->registerCommands();
-        $this->registerBladeDirective();
-        $this->registerBladeComponent();
-        $this->registerLivewire();
-        $this->registerTranslations();
-        $this->registerMiddlewares();
+        $this->registerConfiguration();
+        $this->registerFlasher();
+        $this->registerFactoryLocator();
+        $this->registerResponseManager();
+        $this->registerTemplateEngine();
+        $this->registerResourceManager();
+        $this->registerStorageManager();
+        $this->registerEventDispatcher();
+        $this->registerCspHandler();
+        $this->registerAssetManager();
     }
 
-    /**
-     * @{@inheritdoc}
-     */
-    public function createPlugin()
+    public function boot(): void
+    {
+        FlasherContainer::from(static fn () => Container::getInstance());
+
+        $this->registerCommands();
+        $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
+        $this->registerMiddlewares();
+        $this->callAfterResolving('blade.compiler', $this->registerBladeDirectives(...));
+        $this->registerLivewire();
+    }
+
+    public function createPlugin(): FlasherPlugin
     {
         return new FlasherPlugin();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function afterRegister()
+    private function registerFlasher(): void
     {
-        $this->registerConfig();
-        $this->registerFlasher();
-        $this->registerResourceManager();
-        $this->registerResponseManager();
-        $this->registerStorageManager();
-        $this->registerEventDispatcher();
-    }
-
-    /**
-     * @return void
-     */
-    private function registerCommands()
-    {
-        if (!in_array(\PHP_SAPI, array('cli', 'phpdbg'))) {
-            return;
-        }
-
-        $this->commands(array(
-            'Flasher\Laravel\Command\InstallCommand', // flasher:install
-        ));
-    }
-
-    /**
-     * @return void
-     */
-    private function registerConfig()
-    {
-        $this->app->singleton('flasher.config', function (Application $app) {
-            /** @var Repository $config */
+        $this->app->singleton('flasher', static function (Application $app) {
             $config = $app->make('config');
 
-            return new Config($config->get('flasher', array())); // @phpstan-ignore-line
-        });
-    }
-
-    /**
-     * @return void
-     */
-    private function registerFlasher()
-    {
-        $this->app->singleton('flasher', function (Application $app) {
-            $config = $app->make('flasher.config');
+            $default = $config->get('flasher.default');
+            $factoryLocator = $app->make('flasher.factory_locator');
             $responseManager = $app->make('flasher.response_manager');
             $storageManager = $app->make('flasher.storage_manager');
 
-            return new Flasher($config->get('default'), $responseManager, $storageManager); // @phpstan-ignore-line
+            return new Flasher($default, $factoryLocator, $responseManager, $storageManager);
         });
-        $this->app->alias('flasher', 'Flasher\Prime\Flasher');
-        $this->app->bind('Flasher\Prime\FlasherInterface', 'flasher');
+
+        $this->app->alias('flasher', Flasher::class);
+        $this->app->bind(FlasherInterface::class, 'flasher');
     }
 
-    /**
-     * @return void
-     */
-    private function registerResourceManager()
+    private function registerFactoryLocator(): void
     {
-        $this->app->singleton('flasher.resource_manager', function (Application $app) {
-            $config = $app->make('flasher.config');
-            $view = $app->make('view');
-
-            return new ResourceManager($config, new BladeTemplateEngine($view)); // @phpstan-ignore-line
+        $this->app->singleton('flasher.factory_locator', static function () {
+            return new NotificationFactoryLocator();
         });
     }
 
-    /**
-     * @return void
-     */
-    private function registerResponseManager()
+    private function registerResponseManager(): void
     {
-        $this->app->singleton('flasher.response_manager', function (Application $app) {
+        $this->app->singleton('flasher.response_manager', static function (Application $app) {
             $resourceManager = $app->make('flasher.resource_manager');
             $storageManager = $app->make('flasher.storage_manager');
             $eventDispatcher = $app->make('flasher.event_dispatcher');
 
-            return new ResponseManager($resourceManager, $storageManager, $eventDispatcher); // @phpstan-ignore-line
+            return new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
         });
     }
 
-    /**
-     * @return void
-     */
-    private function registerStorageManager()
+    private function registerTemplateEngine(): void
     {
-        $this->app->singleton('flasher.storage_manager', function (Application $app) {
-            $config = $app->make('flasher.config');
+        $this->app->singleton('flasher.template_engine', static function (Application $app) {
+            $viewFactory = $app->make('view');
+
+            return new BladeTemplateEngine($viewFactory);
+        });
+    }
+
+    private function registerResourceManager(): void
+    {
+        $this->app->singleton('flasher.resource_manager', static function (Application $app) {
+            $config = $app->make('config');
+
+            $templateEngine = $app->make('flasher.template_engine');
+            $assetManager = $app->make('flasher.asset_manager');
+            $mainScript = $config->get('flasher.main_script');
+            $resources = $config->get('flasher.plugins');
+
+            return new ResourceManager($templateEngine, $assetManager, $mainScript, $resources);
+        });
+    }
+
+    private function registerStorageManager(): void
+    {
+        $this->app->singleton('flasher.storage_manager', static function (Application $app) {
+            $config = $app->make('config');
+
+            $storageBag = new Storage(new SessionBag($app->make('session')));
             $eventDispatcher = $app->make('flasher.event_dispatcher');
-            $session = $app->make('session');
+            $filterFactory = new FilterFactory();
+            $criteria = $config->get('flasher.filter');
 
-            /** @phpstan-ignore-next-line */
-            $storageBag = new StorageBag(new SessionBag($session));
-
-            $criteria = $config->get('filter_criteria', array()); // @phpstan-ignore-line
-
-            return new StorageManager($storageBag, $eventDispatcher, $criteria); // @phpstan-ignore-line
+            return new StorageManager($storageBag, $eventDispatcher, $filterFactory, $criteria);
         });
     }
 
-    /**
-     * @return void
-     */
-    private function registerEventDispatcher()
+    private function registerEventDispatcher(): void
     {
-        $this->app->singleton('flasher.event_dispatcher', function (Application $app) {
+        $this->app->singleton('flasher.notification_logger_listener', fn () => new NotificationLoggerListener());
+
+        $this->app->singleton('flasher.event_dispatcher', static function (Application $app) {
+            $config = $app->make('config');
+
             $eventDispatcher = new EventDispatcher();
-            $config = $app->make('flasher.config');
 
-            /** @phpstan-ignore-next-line */
-            $translator = new Translator($app->make('translator'));
+            $translatorListener = new TranslationListener(new Translator($app->make('translator')));
+            $eventDispatcher->addListener($translatorListener);
 
-            /** @phpstan-ignore-next-line */
-            $autoTranslate = $config->get('auto_translate', true);
+            $presetListener = new ApplyPresetListener($config->get('flasher.presets'));
+            $eventDispatcher->addListener($presetListener);
 
-            $translatorListener = new TranslationListener($translator, $autoTranslate);
-            $eventDispatcher->addSubscriber($translatorListener);
-
-            $presetListener = new PresetListener($config->get('presets', array())); // @phpstan-ignore-line
-            $eventDispatcher->addSubscriber($presetListener);
+            $eventDispatcher->addListener($app->make('flasher.notification_logger_listener'));
 
             return $eventDispatcher;
         });
-    }
 
-    /**
-     * @return void
-     */
-    private function registerTranslations()
-    {
-        /** @var \Illuminate\Translation\Translator $translator */
-        $translator = $this->app->make('translator');
-        $translator->addNamespace('flasher', __DIR__.'/Translation/lang');
-    }
-
-    /**
-     * @return void
-     */
-    private function registerLivewire()
-    {
-        if (!$this->app->bound('livewire')) {
-            return;
-        }
-
-        $livewire = $this->app->make('livewire');
-        if (!$livewire instanceof LivewireManager) {
-            return;
-        }
-
-        // Livewire v3
-        if (method_exists($livewire, 'componentHook')) {
-            $livewire->listen('dehydrate', function (Component $component, ComponentContext $context) {
-                if ($context->mounting || isset($context->effects['redirect'])) {
-                    return;
-                }
-
-                /** @var FlasherInterface $flasher */
-                $flasher = app('flasher');
-
-                /** @var array{envelopes: Envelope[]} $data */
-                $data = $flasher->render(array(), 'array');
-
-                if (\count($data['envelopes']) > 0) {
-                    $data['context']['livewire'] = array(
-                        'id' => $component->getId(),
-                        'name' => $component->getName(),
-                    );
-
-                    $dispatches = isset($context->effects['dispatches']) ? $context->effects['dispatches'] : [];
-                    $dispatches[] = array('name' => 'flasher:render', 'params' => $data);
-
-                    $context->addEffect('dispatches', $dispatches);
-                }
-            });
-
-            return;
-        }
-
-        $livewire->listen('component.dehydrate.subsequent', function (Component $component, Response $response) {
-            if (isset($response->effects['redirect'])) {
-                return;
-            }
-
-            /** @var FlasherInterface $flasher */
-            $flasher = app('flasher');
-
-            /** @var array{envelopes: Envelope[]} $data */
-            $data = $flasher->render(array(), 'array');
-
-            if (\count($data['envelopes']) > 0) {
-                $data['context']['livewire'] = array(
-                    'id' => $component->id,
-                    'name' => $response->fingerprint['name'],
-                );
-
-                $response->effects['dispatches'][] = array(
-                    'event' => 'flasher:render',
-                    'data' => $data,
-                );
-            }
+        $this->callAfterResolving(Dispatcher::class, function (Dispatcher $dispatcher) {
+            $dispatcher->listen(RequestReceived::class, OctaneListener::class);
         });
     }
 
-    /**
-     * @return void
-     */
-    private function registerBladeDirective()
+    private function registerCommands(): void
     {
-        Blade::extend(function ($view) {
-            $pattern = '/(?<!\w)(\s*)@flasher_(livewire_)?render(\(.*?\))?/';
-
-            if (!preg_match($pattern, $view)) {
-                return $view;
-            }
-
-            @trigger_error('Since php-flasher/flasher-laravel v1.6.0: Using @flasher_render or @flasher_livewire_render is deprecated and will be removed in v2.0. PHPFlasher will render notification automatically', \E_USER_DEPRECATED);
-
-            return preg_replace($pattern, '', $view);
-        });
-    }
-
-    /**
-     * @return void
-     */
-    private function registerBladeComponent()
-    {
-        if (Laravel::isVersion('7.0', '<=')) {
+        if (!$this->app->runningInConsole()) {
             return;
         }
 
-        Blade::component('flasher', 'Flasher\Laravel\Component\FlasherComponent');
+        $this->registerAboutCommand();
+
+        $this->app->singleton(InstallCommand::class, static function (Application $app) {
+            $assetManager = $app->make('flasher.asset_manager');
+
+            return new InstallCommand($assetManager);
+        });
+
+        $this->commands(InstallCommand::class);
     }
 
-    /**
-     * @return void
-     */
-    private function registerMiddlewares()
+    private function registerAboutCommand(): void
+    {
+        if (!class_exists(AboutCommand::class)) {
+            return;
+        }
+
+        $pluginServiceProviders = array_filter(array_keys($this->app->getLoadedProviders()), function ($provider) {
+            return is_a($provider, PluginServiceProvider::class, true);
+        });
+
+        $factories = array_map(function ($providerClass) {
+            /** @var PluginServiceProvider $provider */
+            $provider = $this->app->getProvider($providerClass);
+            $plugin = $provider->createPlugin();
+
+            return $plugin->getAlias();
+        }, $pluginServiceProviders);
+
+        AboutCommand::add('PHPFlasher', [
+            'Version' => Flasher::VERSION,
+            'Factories' => implode(' <fg=gray;options=bold>/</> ', array_map(fn ($factory) => sprintf('<fg=yellow;options=bold>%s</>', $factory), $factories)),
+        ]);
+    }
+
+    private function registerMiddlewares(): void
     {
         $this->registerSessionMiddleware();
         $this->registerFlasherMiddleware();
     }
 
-    /**
-     * @return void
-     */
-    private function registerFlasherMiddleware()
+    private function registerFlasherMiddleware(): void
     {
-        /** @var ConfigInterface $config */
-        $config = $this->app->make('flasher.config');
-
-        if (!$config->get('auto_render', true)) {
-            return;
-        }
-
-        $this->app->singleton('Flasher\Laravel\Middleware\FlasherMiddleware', function (Application $app) {
-            /** @var FlasherInterface $flasher */
+        $this->app->singleton(FlasherMiddleware::class, static function (Application $app) {
             $flasher = $app->make('flasher');
+            $cspHandler = $app->make('flasher.csp_handler');
 
-            return new FlasherMiddleware(new ResponseExtension($flasher));
+            return new FlasherMiddleware(new ResponseExtension($flasher, $cspHandler));
         });
 
-        $this->appendMiddlewareToWebGroup('Flasher\Laravel\Middleware\FlasherMiddleware');
-
-        if (method_exists($this->app, 'middleware')) {
-            $this->app->middleware(new HttpKernelFlasherMiddleware($this->app)); // @phpstan-ignore-line
-        }
+        $this->pushMiddlewareToGroup(FlasherMiddleware::class);
     }
 
-    /**
-     * @return void
-     */
-    private function registerSessionMiddleware()
+    private function registerCspHandler(): void
     {
-        /** @var ConfigInterface $config */
-        $config = $this->app->make('flasher.config');
+        $this->app->singleton('flasher.csp_handler', static function () {
+            return new ContentSecurityPolicyHandler(new NonceGenerator());
+        });
+    }
 
-        if (!$config->get('flash_bag.enabled', true)) {
-            return;
-        }
+    private function registerAssetManager(): void
+    {
+        $this->app->singleton('flasher.asset_manager', static function () {
+            $publicDir = public_path('/');
+            $manifestPath = public_path('vendor'.\DIRECTORY_SEPARATOR.'flasher'.\DIRECTORY_SEPARATOR.'manifest.json');
 
-        $this->app->singleton('Flasher\Laravel\Middleware\SessionMiddleware', function (Application $app) {
-            /** @var ConfigInterface $config */
-            $config = $app->make('flasher.config');
-            $mapping = $config->get('flash_bag.mapping', array());
+            return new AssetManager($publicDir, $manifestPath);
+        });
+    }
+
+    private function registerSessionMiddleware(): void
+    {
+        $this->app->singleton(SessionMiddleware::class, static function (Application $app) {
+            $config = $app->make('config');
+
             $flasher = $app->make('flasher');
+            $mapping = $config->get('flasher.flash_bag', []);
 
-            return new SessionMiddleware(new RequestExtension($flasher, $mapping)); // @phpstan-ignore-line
+            return new SessionMiddleware(new RequestExtension($flasher, $mapping));
         });
 
-        $this->appendMiddlewareToWebGroup('Flasher\Laravel\Middleware\SessionMiddleware');
-
-        if (method_exists($this->app, 'middleware')) {
-            $this->app->middleware(new HttpKernelSessionMiddleware($this->app)); // @phpstan-ignore-line
-        }
+        $this->pushMiddlewareToGroup(SessionMiddleware::class);
     }
 
-    /**
-     * @param string $middleware
-     *
-     * @return void
-     */
-    private function appendMiddlewareToWebGroup($middleware)
+    private function pushMiddlewareToGroup(string $middleware): void
     {
-        if (!$this->app->bound($middleware)) {
-            return;
-        }
-
-        /** @var Router $router */
-        $router = $this->app->make('router');
-        if (method_exists($router, 'pushMiddlewareToGroup')) {
-            $router->pushMiddlewareToGroup('web', $middleware);
-
-            return;
-        }
-
-        if (!$this->app->bound('Illuminate\Contracts\Http\Kernel')) {
-            return;
-        }
-
-        /** @var Kernel $kernel */
-        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
-
-        if (method_exists($kernel, 'appendMiddlewareToGroup')) {
+        $this->callAfterResolving(HttpKernel::class, function (HttpKernel $kernel) use ($middleware) {
             $kernel->appendMiddlewareToGroup('web', $middleware);
+        });
+    }
 
+    private function registerBladeDirectives(BladeCompiler $blade): void
+    {
+        $blade->directive('flasher_render', function (string $expression = '') {
+            if (!empty($expression) && str_starts_with($expression, '(') && str_ends_with($expression, ')')) {
+                $expression = substr($expression, 1, -1);
+            }
+
+            return "<?php app('flasher')->render('html', $expression); ?>";
+        });
+
+        $blade->component(FlasherComponent::class, 'flasher');
+    }
+
+    private function registerLivewire(): void
+    {
+        if (class_exists(LivewireManager::class) && !$this->app->bound('livewire')) {
             return;
         }
 
-        if (method_exists($kernel, 'pushMiddleware')) {
-            $kernel->pushMiddleware($middleware);
-        }
+        $this->callAfterResolving('livewire', function (LivewireManager $livewire, Application $app) {
+            $flasher = $app->make('flasher');
+            $cspHandler = $app->make('flasher.csp_handler');
+            $request = fn () => $app->make('request');
+
+            $livewire->listen('dehydrate', new LivewireListener($livewire, $flasher, $cspHandler, $request));
+        });
     }
 }

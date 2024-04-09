@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+**/node_modules
+src/**/Resources/public/**
+src/**/Resources/dist/**

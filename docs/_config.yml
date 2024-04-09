@@ -1,0 +1,58 @@
+url: https://php-flasher.io
+
+title: PHPFlasher
+
+logo: https://php-flasher.io/static/images/php-flasher-social-card.png
+
+author:
+    name: Younes ENNAJI
+    twitter: yoeunes
+    url: https://www.linkedin.com/in/younes--ennaji/
+    picture: https://php-flasher.io/static/images/php-flasher-social-card.png
+
+image:
+    path: https://php-flasher.io/static/images/php-flasher-social-card.png
+    alt: PHPFlasher
+
+twitter:
+    username: phpflasher
+    image: https://php-flasher.io/static/images/php-flasher-social-card.png
+    card: summary_large_image
+
+social:
+    name: phpflasher
+    links:
+        - https://twitter.com/phpflasher
+        - https://github.com/php-flasher
+        - https://twitter.com/yoeunes
+        - https://github.com/yoeunes
+        - https://www.linkedin.com/in/younes--ennaji/
+
+highlighter: none
+
+plugins:
+    - jekyll-sitemap
+    - jekyll-redirect-from
+    - jekyll-seo-tag
+
+defaults:
+    -   scope:
+            path: ""
+            type: "pages"
+        values:
+            layout: "default"
+            title:
+            description:
+            image: https://php-flasher.io/static/images/php-flasher-social-card.png
+            published_at: "2019-12-01"
+            updated_at: "2024-03-29"
+
+exclude:
+    - "*.config.js"
+    - "package*.json"
+    - assets
+    - _data/manifest.json
+    - node_modules
+    - CNAME
+    - "Gemfile*"
+    - ".idea"

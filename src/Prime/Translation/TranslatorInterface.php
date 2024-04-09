@@ -1,25 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Translation;
 
 interface TranslatorInterface
 {
     /**
-     * @param string               $id
      * @param array<string, mixed> $parameters
-     * @param string|null          $locale
-     *
-     * @return string
      */
-    public function translate($id, $parameters = array(), $locale = null);
+    public function translate(string $id, array $parameters = [], ?string $locale = null): string;
 
-    /**
-     * @return string
-     */
-    public function getLocale();
+    public function getLocale(): string;
 }

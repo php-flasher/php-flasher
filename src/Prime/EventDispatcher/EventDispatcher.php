@@ -1,89 +1,60 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher;
 
 use Flasher\Prime\EventDispatcher\Event\StoppableEventInterface;
 use Flasher\Prime\EventDispatcher\EventListener\AddToStorageListener;
-use Flasher\Prime\EventDispatcher\EventListener\EventSubscriberInterface;
-use Flasher\Prime\EventDispatcher\EventListener\RemoveListener;
-use Flasher\Prime\EventDispatcher\EventListener\StampsListener;
+use Flasher\Prime\EventDispatcher\EventListener\AttachDefaultStampsListener;
+use Flasher\Prime\EventDispatcher\EventListener\EnvelopeRemovalListener;
+use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
     /**
-     * @var array<string, EventSubscriberInterface[]>
+     * @var array<string, EventListenerInterface[]>
      */
-    private $listeners = array();
+    private array $listeners = [];
 
     public function __construct()
     {
-        $this->addSubscriber(new RemoveListener());
-        $this->addSubscriber(new StampsListener());
-        $this->addSubscriber(new AddToStorageListener());
+        $this->addListener(new EnvelopeRemovalListener());
+        $this->addListener(new AttachDefaultStampsListener());
+        $this->addListener(new AddToStorageListener());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function dispatch($event)
+    public function dispatch(object $event): object
     {
-        $listeners = $this->getListeners(\get_class($event));
+        $listeners = $this->getListeners($event::class);
 
-        $this->callListeners($listeners, $event); // @phpstan-ignore-line
-
-        return $event;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addListener($eventName, $listener)
-    {
-        $this->listeners[$eventName][] = $listener; // @phpstan-ignore-line
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addSubscriber(EventSubscriberInterface $subscriber)
-    {
-        foreach ((array) $subscriber->getSubscribedEvents() as $eventName) {
-            $this->addListener($eventName, array($subscriber, '__invoke')); // @phpstan-ignore-line
-        }
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @return array<int, EventSubscriberInterface[]>
-     */
-    public function getListeners($eventName)
-    {
-        if (\array_key_exists($eventName, $this->listeners)) {
-            return $this->listeners[$eventName]; // @phpstan-ignore-line
-        }
-
-        return array();
-    }
-
-    /**
-     * @param callable[] $listeners
-     * @param object     $event
-     *
-     * @return void
-     */
-    private function callListeners(array $listeners, $event)
-    {
         foreach ($listeners as $listener) {
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 break;
             }
-            \call_user_func($listener, $event);
+
+            if (!\is_callable($listener)) {
+                throw new \InvalidArgumentException(sprintf('Listener "%s" is not callable. Listeners must implement __invoke method.', $listener::class));
+            }
+
+            $listener($event);
         }
+
+        return $event;
+    }
+
+    public function addListener(EventListenerInterface $listener): void
+    {
+        foreach ((array) $listener->getSubscribedEvents() as $eventName) {
+            $this->listeners[$eventName][] = $listener;
+        }
+    }
+
+    /**
+     * @return EventListenerInterface[]
+     */
+    public function getListeners(string $eventName): array
+    {
+        return $this->listeners[$eventName] ?? [];
     }
 }

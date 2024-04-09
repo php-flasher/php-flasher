@@ -1,0 +1,109 @@
+.fl-icon {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 1em;
+    min-width: 1em;
+    height: 1em;
+    min-height: 1em;
+    margin: 0;
+    color: white;
+    border-radius: 50%;
+    transition: all 1s;
+
+    &::before,
+    &::after {
+        position: absolute;
+        box-sizing: border-box;
+        content: "";
+        border-width: 0;
+        transition: all 1s;
+    }
+}
+
+.fl-success .fl-icon {
+    &::before,
+    &::after {
+        top: 0.6em;
+        left: 0.35em;
+        width: 0.16em;
+        height: 0.6em;
+        background-color: currentcolor;
+        border-radius: 0.1em;
+        transform: rotate(-135deg);
+        transform-origin: 0.08em 0.08em;
+    }
+
+    &::after {
+        width: 0.4em;
+        height: 0.16em;
+    }
+}
+
+.fl-info .fl-icon {
+    &::before,
+    &::after {
+        left: 50%;
+        width: 0.15em;
+        background-color: currentcolor;
+        border-radius: 0.03em;
+        transform: translateX(-50%);
+    }
+
+    &::before {
+        top: 0.4em;
+        height: 0.38em;
+    }
+
+    &::after {
+        top: 0.21em;
+        height: 0.13em;
+        box-shadow: -0.06em 0.19em, -0.06em 0.44em, 0.06em 0.44em;
+    }
+}
+
+.fl-warning .fl-icon {
+    &::before,
+    &::after {
+        left: 50%;
+        width: 0.15em;
+        background-color: currentcolor;
+        border-radius: 0.03em;
+        transform: translateX(-50%);
+    }
+
+    &::before {
+        top: 0.21em;
+        height: 0.38em;
+    }
+
+    &::after {
+        top: 0.65em;
+        height: 0.13em;
+    }
+}
+
+.fl-error .fl-icon {
+    &::before,
+    &::after {
+        top: 50%;
+        left: 50%;
+        width: 0.16em;
+        height: 0.7em;
+        background-color: currentcolor;
+        border-radius: 0.1em;
+        transform: translate(-50%, -50%) rotate(-135deg);
+    }
+
+    &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}
+
+@each $type in success, info, warning, error {
+    .fl-#{$type} {
+        .fl-icon {
+            background-color: var(--#{$type}-color);
+        }
+    }
+}

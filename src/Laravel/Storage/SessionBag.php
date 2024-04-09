@@ -1,44 +1,30 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Laravel\Storage;
 
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
-use Illuminate\Session\Store;
+use Illuminate\Session\SessionManager;
 
-final class SessionBag implements BagInterface
+final readonly class SessionBag implements BagInterface
 {
-    const ENVELOPES_NAMESPACE = 'flasher::envelopes';
+    public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    /**
-     * @var Store
-     */
-    private $session;
-
-    /**
-     * @param Store $session
-     */
-    public function __construct($session)
+    public function __construct(private SessionManager $session)
     {
-        $this->session = $session;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get()
+    public function get(): array
     {
-        return $this->session->get(self::ENVELOPES_NAMESPACE, array()); // @phpstan-ignore-line
+        /** @var Envelope[] $envelopes */
+        $envelopes = $this->session->get(self::ENVELOPES_NAMESPACE, []);
+
+        return $envelopes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function set(array $envelopes)
+    public function set(array $envelopes): void
     {
         $this->session->put(self::ENVELOPES_NAMESPACE, $envelopes);
     }

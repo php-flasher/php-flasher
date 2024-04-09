@@ -1,40 +1,34 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class RemoveEventTest extends TestCase
+final class RemoveEventTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testRemoveEvent()
+    public function testRemoveEvent(): void
     {
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
             new Envelope(new Notification()),
-        );
+        ];
 
         $event = new RemoveEvent($envelopes);
 
         $this->assertEquals($envelopes, $event->getEnvelopesToRemove());
-        $this->assertEquals(array(), $event->getEnvelopesToKeep());
+        $this->assertSame([], $event->getEnvelopesToKeep());
 
-        $event->setEnvelopesToKeep(array($envelopes[0], $envelopes[1]));
-        $event->setEnvelopesToRemove(array($envelopes[2], $envelopes[3]));
+        $event->setEnvelopesToKeep([$envelopes[0], $envelopes[1]]);
+        $event->setEnvelopesToRemove([$envelopes[2], $envelopes[3]]);
 
-        $this->assertEquals(array($envelopes[2], $envelopes[3]), $event->getEnvelopesToRemove());
-        $this->assertEquals(array($envelopes[0], $envelopes[1]), $event->getEnvelopesToKeep());
+        $this->assertEquals([$envelopes[2], $envelopes[3]], $event->getEnvelopesToRemove());
+        $this->assertEquals([$envelopes[0], $envelopes[1]], $event->getEnvelopesToKeep());
     }
 }

@@ -1,209 +1,96 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Plugin;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
-use Flasher\Tests\Prime\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FlasherPluginTest extends TestCase
+final class FlasherPluginTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testGetName()
+    public function testGetName(): void
     {
         $plugin = new FlasherPlugin();
-        $this->assertEquals('flasher', $plugin->getName());
+        $this->assertSame('flasher', $plugin->getName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetServiceID()
+    public function testGetServiceID(): void
     {
         $plugin = new FlasherPlugin();
-        $this->assertEquals('flasher', $plugin->getServiceID());
+        $this->assertSame('flasher', $plugin->getServiceId());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetDefault()
+    public function testGetDefault(): void
     {
         $plugin = new FlasherPlugin();
-        $this->assertEquals('flasher', $plugin->getDefault());
+        $this->assertSame('flasher', $plugin->getDefault());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetRootScript()
+    public function testGetRootScript(): void
     {
         $plugin = new FlasherPlugin();
-        $rootScript = array(
-            'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.js',
-            'local' => '/vendor/flasher/flasher.min.js',
-        );
+        $rootScript = '/vendor/flasher/flasher.min.js';
 
-        $this->assertEquals($rootScript, $plugin->getRootScript());
+        $this->assertSame($rootScript, $plugin->getRootScript());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetScripts()
+    public function testGetScripts(): void
     {
         $plugin = new FlasherPlugin();
-        $scripts = array(
-            'cdn' => array('https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.js'),
-            'local' => array('/vendor/flasher/flasher.min.js'),
-        );
 
-        $this->assertEquals($scripts, $plugin->getScripts());
+        $this->assertSame([], $plugin->getScripts());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetResourcesDir()
+    public function testProcessConfiguration(): void
     {
         $plugin = new FlasherPlugin();
-        $resourceDir = realpath(__DIR__.'/../../../src/Prime/Resources');
-
-        $this->assertEquals($resourceDir, $plugin->getResourcesDir());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetFlashBagMapping()
-    {
-        $plugin = new FlasherPlugin();
-        $mapping = array(
-            'success' => array('success'),
-            'error' => array('error', 'danger'),
-            'warning' => array('warning', 'alarm'),
-            'info' => array('info', 'notice', 'alert'),
-        );
-
-        $this->assertEquals($mapping, $plugin->getFlashBagMapping());
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessConfiguration()
-    {
-        $plugin = new FlasherPlugin();
-        $config = array(
+        $config = [
             'default' => 'flasher',
-            'root_script' => array(
-                'cdn' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.js',
-                'local' => '/vendor/flasher/flasher.min.js',
-            ),
-            'scripts' => array(),
-            'styles' => array(
-                'cdn' => array('https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.css'),
-                'local' => array('/vendor/flasher/flasher.min.css'),
-            ),
-            'options' => array(),
-            'use_cdn' => true,
-            'auto_translate' => true,
-            'auto_render' => true,
-            'flash_bag' => array(
-                'enabled' => true,
-                'mapping' => array(
-                    'success' => array('success'),
-                    'error' => array('error', 'danger'),
-                    'warning' => array('warning', 'alarm'),
-                    'info' => array('info', 'notice', 'alert'),
-                ),
-            ),
-            'filter_criteria' => array(),
-            'presets' => array(
-                'created' => array(
+            'main_script' => '/vendor/flasher/flasher.min.js',
+            'scripts' => [],
+            'styles' => ['/vendor/flasher/flasher.min.css'],
+            'options' => [],
+            'translate' => true,
+            'inject_assets' => true,
+            'flash_bag' => [
+                'success' => ['success'],
+                'error' => ['error', 'danger'],
+                'warning' => ['warning', 'alarm'],
+                'info' => ['info', 'notice', 'alert'],
+            ],
+            'presets' => [
+                'created' => [
                     'type' => 'success',
                     'message' => 'The resource was created',
-                ),
-                'updated' => array(
+                    'options' => [],
+                ],
+                'updated' => [
                     'type' => 'success',
                     'message' => 'The resource was updated',
-                ),
-                'saved' => array(
+                    'options' => [],
+                ],
+                'saved' => [
                     'type' => 'success',
                     'message' => 'The resource was saved',
-                ),
-                'deleted' => array(
+                    'options' => [],
+                ],
+                'deleted' => [
                     'type' => 'success',
                     'message' => 'The resource was deleted',
-                ),
-            ),
-        );
+                    'options' => [],
+                ],
+            ],
+            'plugins' => [
+                'flasher' => [
+                    'scripts' => [],
+                    'styles' => ['/vendor/flasher/flasher.min.css'],
+                    'options' => [],
+                ],
+            ],
+            'filter' => [],
+        ];
 
-        $this->assertEquals($config, $plugin->processConfiguration());
-    }
-
-    /**
-     * @return void
-     */
-    public function testNormalizeConfig()
-    {
-        $plugin = new FlasherPlugin();
-
-        $inputConfig = array(
-            'template_factory' => array(
-                'default' => 'flasher',
-                'templates' => array(
-                    'flasher' => array(
-                        'options' => array(),
-                        'styles' => array(),
-                    ),
-                ),
-            ),
-            'auto_create_from_session' => true,
-            'types_mapping' => array(),
-            'observer_events' => array(),
-            'translate_by_default' => true,
-            'flash_bag' => array(),
-        );
-
-        $outputConfig = array(
-            'options' => array(),
-            'themes' => array(
-                'flasher' => array(
-                    'styles' => array(),
-                ),
-            ),
-            'flash_bag' => array(
-                'enabled' => true,
-                'mapping' => array(),
-            ),
-            'auto_translate' => true,
-            'presets' => array(
-                'created' => array(
-                    'type' => 'success',
-                    'message' => 'The resource was created',
-                ),
-                'updated' => array(
-                    'type' => 'success',
-                    'message' => 'The resource was updated',
-                ),
-                'saved' => array(
-                    'type' => 'success',
-                    'message' => 'The resource was saved',
-                ),
-                'deleted' => array(
-                    'type' => 'success',
-                    'message' => 'The resource was deleted',
-                ),
-            ),
-        );
-
-        $this->assertEquals($outputConfig, $plugin->normalizeConfig($inputConfig));
+        $this->assertEquals($config, $plugin->normalizeConfig());
     }
 }

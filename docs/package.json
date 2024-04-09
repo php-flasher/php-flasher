@@ -1,0 +1,38 @@
+{
+    "name": "@flasher/docs",
+    "version": "2.0.0",
+    "license": "MIT",
+    "scripts": {
+        "build": "cross-env NODE_ENV=production encore production --progress",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "serve": "jekyll serve --livereload",
+        "deploy": "JEKYLL_ENV=production bundle exec jekyll build"
+    },
+    "dependencies": {
+        "@flasher/flasher": "file:../src/Prime/Resources",
+        "@flasher/flasher-noty": "file:../src/Noty/Prime/Resources",
+        "@flasher/flasher-notyf": "file:../src/Notyf/Prime/Resources",
+        "@flasher/flasher-sweetalert": "file:../src/SweetAlert/Prime/Resources",
+        "@flasher/flasher-toastr": "file:../src/Toastr/Prime/Resources",
+        "@hotwired/stimulus": "^3.2.2",
+        "@symfony/stimulus-bridge": "^3.2.2",
+        "@symfony/webpack-encore": "^4.6.1",
+        "noty": "^3.2.0-beta-deprecated",
+        "notyf": "^3.10.0",
+        "sweetalert2": "^11.10.7",
+        "toastr": "^2.1.4"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "file-loader": "^6.2.0",
+        "node-ray": "^2.1.2",
+        "postcss-import": "^16.1.0",
+        "postcss-loader": "^7.3.4",
+        "tailwindcss": "^3.4.3",
+        "webpack-notifier": "^1.15.0"
+    },
+    "browserslist": [
+        "defaults"
+    ]
+}

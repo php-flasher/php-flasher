@@ -1,21 +1,15 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Toastr\Laravel;
 
-use Flasher\Laravel\Support\ServiceProvider;
+use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Toastr\Prime\ToastrPlugin;
 
-final class FlasherToastrServiceProvider extends ServiceProvider
+final class FlasherToastrServiceProvider extends PluginServiceProvider
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function createPlugin()
+    public function createPlugin(): ToastrPlugin
     {
         return new ToastrPlugin();
     }

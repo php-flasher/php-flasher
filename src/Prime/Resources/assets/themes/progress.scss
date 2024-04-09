@@ -1,0 +1,20 @@
+.fl-progress-bar {
+    display: flex;
+    height: 0.125em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+@each $type in success, info, warning, error {
+    .fl-#{$type} {
+        .fl-progress-bar {
+            background-color: var(--#{$type}-color-light);
+
+            .fl-progress {
+                background-color: var(--#{$type}-color);
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+pre.tryable {
+    position: relative;
+}
+
+pre.tryable .tryit {
+    position: absolute;
+    right: 4rem;
+    top: 0.85rem;
+}
+
+pre.tryable:hover .tryit {
+    display: inline-block;
+}
+
+pre.tryable .tryit i {
+    font-size: 1.5rem;
+}
+
+pre.tryable .tryit:active {
+    transform: translateY(3px);
+}
+
+@media (max-width: 768px) {
+    pre.tryable:hover .tryit {
+        display: none;
+    }
+}
+
+pre.tryable .spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

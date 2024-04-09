@@ -1,0 +1,49 @@
+.fl-wrapper {
+    position: fixed;
+    z-index: 10;
+    width: 24em;
+    transition: all 1s ease-in-out;
+
+    @media only screen and (width <= 480px) {
+        width: 90%;
+        left: 5%;
+        right: 5%;
+    }
+
+    &[data-position^="top-"] {
+        top: 0.5em;
+    }
+
+    &[data-position^="bottom-"] {
+        bottom: 0.5em;
+    }
+
+    &[data-position$="-right"] {
+        right: 0.5em;
+
+        .fl-container {
+            transform: translateX(110%);
+        }
+    }
+
+    &[data-position$="-left"] {
+        left: 0.5em;
+
+        .fl-container {
+            transform: translateX(-110%);
+        }
+    }
+
+    &[data-position$="-center"] {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &[data-position="top-center"] .fl-container {
+        transform: translateY(-100vh);
+    }
+
+    &[data-position="bottom-center"] .fl-container {
+        transform: translateY(100vh);
+    }
+}

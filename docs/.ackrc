@@ -1,0 +1,6 @@
+--ignore-dir=vendor
+--ignore-dir=yoeunes
+--ignore-dir=node_modules
+--ignore-dir=.jekyll-cache
+--ignore-dir=_site
+--ignore-dir=dist

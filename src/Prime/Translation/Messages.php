@@ -1,62 +1,40 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Translation;
 
-final class Messages
+use Flasher\Prime\Translation\Language\Arabic;
+use Flasher\Prime\Translation\Language\Chinese;
+use Flasher\Prime\Translation\Language\English;
+use Flasher\Prime\Translation\Language\French;
+use Flasher\Prime\Translation\Language\German;
+use Flasher\Prime\Translation\Language\Portuguese;
+use Flasher\Prime\Translation\Language\Russian;
+use Flasher\Prime\Translation\Language\Spanish;
+
+/**
+ * This class provides a set of predefined message translations in various languages.
+ * It holds arrays of key-value pairs where keys are message identifiers and values
+ * are their respective translations.
+ */
+final readonly class Messages
 {
     /**
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    public static $ar = array(
-        'success' => 'نجاح',
-        'error' => 'خطأ',
-        'warning' => 'تحذير',
-        'info' => 'معلومة',
-
-        'The resource was created' => 'تم إنشاء :resource',
-        'The resource was updated' => 'تم تعديل :resource',
-        'The resource was saved' => 'تم حفظ :resource',
-        'The resource was deleted' => 'تم حذف :resource',
-
-        'resource' => 'الملف',
-    );
-
-    /**
-     * @var array<string, string>
-     */
-    public static $en = array(
-        'success' => 'Success',
-        'error' => 'Error',
-        'warning' => 'Warning',
-        'info' => 'Info',
-
-        'The resource was created' => 'The :resource was created',
-        'The resource was updated' => 'The :resource was updated',
-        'The resource was saved' => 'The :resource was saved',
-        'The resource was deleted' => 'The :resource was deleted',
-
-        'resource' => 'resource',
-    );
-
-    /**
-     * @var array<string, string>
-     */
-    public static $fr = array(
-        'success' => 'Succès',
-        'error' => 'Erreur',
-        'warning' => 'Avertissement',
-        'info' => 'Information',
-
-        'The resource was created' => 'La ressource :resource a été ajoutée',
-        'The resource was updated' => 'La ressource :resource a été mise à jour',
-        'The resource was saved' => 'La ressource :resource a été enregistrée',
-        'The resource was deleted' => 'La ressource :resource a été supprimée',
-
-        'resource' => '',
-    );
+    public static function get(string $language): array
+    {
+        return match ($language) {
+            'ar' => Arabic::translations(),
+            'de' => German::translations(),
+            'en' => English::translations(),
+            'es' => Spanish::translations(),
+            'fr' => French::translations(),
+            'pt' => Portuguese::translations(),
+            'ru' => Russian::translations(),
+            'zh' => Chinese::translations(),
+            default => [],
+        };
+    }
 }

@@ -1,47 +1,37 @@
 {
     "name": "php-flasher/flasher-toastr-laravel",
-    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
-    "license": "MIT",
     "type": "library",
+    "license": "MIT",
+    "homepage": "https://php-flasher.io",
+    "description": "PHPFlasher Toastr for Laravel - A Laravel-specific extension of PHPFlasher for Toastr notifications, enhancing user interactions with aesthetically pleasing and responsive toast messages.",
     "keywords": [
         "php-flasher",
+        "laravel",
+        "toastr",
         "flash-messages",
         "notification-system",
-        "user-feedback",
-        "toastr",
-        "sweetalert",
-        "pnotify",
-        "noty",
-        "notyf",
-        "desktop-notifications",
-        "php",
-        "laravel",
-        "symfony",
-        "javascript",
-        "yoeunes",
-        "framework-agnostic",
-        "phpstorm-auto-complete",
-        "custom-adapter",
         "user-experience",
-        "rtl",
-        "dark-mode"
+        "laravel-package"
     ],
+    "support": {
+        "issues": "https://github.com/php-flasher/php-flasher/issues",
+        "source": "https://github.com/php-flasher/php-flasher"
+    },
     "authors": [
         {
-            "name": "Younes KHOUBZA",
-            "email": "younes.khoubza@gmail.com",
-            "homepage": "https://www.linkedin.com/in/younes-khoubza",
+            "name": "Younes ENNAJI",
+            "email": "younes.ennaji.pro@gmail.com",
+            "homepage": "https://www.linkedin.com/in/younes--ennaji/",
             "role": "Developer"
         }
     ],
-    "homepage": "https://php-flasher.io",
-    "require": {
-        "php": ">=5.3",
-        "php-flasher/flasher-laravel": "^1.15.14",
-        "php-flasher/flasher-toastr": "^1.15.14"
-    },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
+    "require": {
+        "php": ">=8.2",
+        "php-flasher/flasher-laravel": "^2.0",
+        "php-flasher/flasher-toastr": "^2.0"
+    },
     "autoload": {
         "psr-4": {
             "Flasher\\Toastr\\Laravel\\": ""
@@ -53,12 +43,12 @@
     },
     "extra": {
         "laravel": {
-            "aliases": {
-                "Toastr": "Flasher\\Toastr\\Laravel\\Facade\\Toastr"
-            },
             "providers": [
                 "Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Toastr": "Flasher\\Toastr\\Laravel\\Facade\\Toastr"
+            }
         }
     }
 }

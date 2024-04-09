@@ -1,39 +1,33 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\EventListener;
 
-use Flasher\Prime\Http\RequestExtension;
+use Flasher\Prime\Http\RequestExtensionInterface;
 use Flasher\Symfony\Http\Request;
 use Flasher\Symfony\Http\Response;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-final class SessionListener
+final readonly class SessionListener implements EventSubscriberInterface
 {
-    /**
-     * @var RequestExtension
-     */
-    private $requestExtension;
-
-    public function __construct(RequestExtension $requestExtension)
+    public function __construct(private RequestExtensionInterface $requestExtension)
     {
-        $this->requestExtension = $requestExtension;
     }
 
-    /**
-     * @param ResponseEvent $event
-     *
-     * @return void
-     */
-    public function onKernelResponse($event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $request = new Request($event->getRequest());
         $response = new Response($event->getResponse());
 
         $this->requestExtension->flash($request, $response);
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ResponseEvent::class => ['onKernelResponse', 0],
+        ];
     }
 }

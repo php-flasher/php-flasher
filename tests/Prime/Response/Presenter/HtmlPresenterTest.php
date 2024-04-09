@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response\Presenter;
 
@@ -11,16 +8,14 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Response\Presenter\HtmlPresenter;
 use Flasher\Prime\Response\Response;
-use Flasher\Tests\Prime\TestCase;
+use Livewire\LivewireManager;
+use PHPUnit\Framework\TestCase;
 
-class HtmlPresenterTest extends TestCase
+final class HtmlPresenterTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testArrayPresenter()
+    public function testArrayPresenter(): void
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -34,93 +29,100 @@ class HtmlPresenterTest extends TestCase
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification);
 
+        $scriptTagWithNonce = '';
         $livewireListener = $this->getLivewireListenerScript();
 
         $response = <<<JAVASCRIPT
-<script type="text/javascript" class="flasher-js">
-(function() {
-    var rootScript = '';
-    var FLASHER_FLASH_BAG_PLACE_HOLDER = {};
-    var options = mergeOptions({"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]}},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]}}]}, FLASHER_FLASH_BAG_PLACE_HOLDER);
+            <script type="text/javascript" class="flasher-js">
+                (function(window, document) {
+                    const merge = (first, second) => {
+                        if (Array.isArray(first) && Array.isArray(second)) {
+                            return [...first, ...second.filter(item => !first.includes(item))];
+                        }
 
-    function mergeOptions(first, second) {
-        return {
-            context: merge(first.context || {}, second.context || {}),
-            envelopes: merge(first.envelopes || [], second.envelopes || []),
-            options: merge(first.options || {}, second.options || {}),
-            scripts: merge(first.scripts || [], second.scripts || []),
-            styles: merge(first.styles || [], second.styles || []),
-        };
-    }
+                        if (typeof first === 'object' && typeof second === 'object') {
+                            for (const [key, value] of Object.entries(second)) {
+                                first[key] = key in first ? { ...first[key], ...value } : value;
+                            }
+                            return first;
+                        }
 
-    function merge(first, second) {
-        if (Array.isArray(first) && Array.isArray(second)) {
-            return first.concat(second).filter(function(item, index, array) {
-                return array.indexOf(item) === index;
-            });
-        }
+                        return undefined;
+                    };
 
-        return Object.assign({}, first, second);
-    }
+                    const mergeOptions = (...options) => {
+                        const result = {};
 
-    function renderOptions(options) {
-        if(!window.hasOwnProperty('flasher')) {
-            console.error('Flasher is not loaded');
-            return;
-        }
+                        options.forEach(option => {
+                            Object.entries(option).forEach(([key, value]) => {
+                                result[key] = key in result ? merge(result[key], value) : value;
+                            });
+                        });
 
-        requestAnimationFrame(function () {
-            window.flasher.render(options);
-        });
-    }
+                        return result;
+                    };
 
-    function render(options) {
-        if ('loading' !== document.readyState) {
-            renderOptions(options);
+                    const renderCallback = (options) => {
+                        if(!window.flasher) {
+                            throw new Error('Flasher is not loaded');
+                        }
 
-            return;
-        }
+                        window.flasher.render(options);
+                    };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            renderOptions(options);
-        });
-    }
+                    const render = (options) => {
+                        if (options instanceof Event) {
+                            options = options.detail;
+                        }
 
-    if (1 === document.querySelectorAll('script.flasher-js').length) {
-        document.addEventListener('flasher:render', function (event) {
-            render(event.detail);
-        });
+                        if (['interactive', 'complete'].includes(document.readyState)) {
+                            renderCallback(options);
+                        } else {
+                            document.addEventListener('DOMContentLoaded', () => renderCallback(options));
+                        }
+                    };
 
-        {$livewireListener}
-    }
+                    const addScriptAndRender = (options) => {
+                        const mainScript = '';
 
-    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {
-        render(options);
-    } else {
-        var tag = document.createElement('script');
-        tag.setAttribute('src', rootScript);
-        tag.setAttribute('type', 'text/javascript');
-        tag.onload = function () {
-            render(options);
-        };
+                        if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
+                            render(options);
+                        } else {
+                            const tag = document.createElement('script');
+                            tag.src = mainScript;
+                            tag.type = 'text/javascript';
+                            {$scriptTagWithNonce}
+                            tag.onload = () => render(options);
 
-        document.head.appendChild(tag);
-    }
-})();
-</script>
-JAVASCRIPT;
+                            document.head.appendChild(tag);
+                        }
+                    };
+
+                    const addRenderListener = () => {
+                        if (1 === document.querySelectorAll('script.flasher-js').length) {
+                            document.addEventListener('flasher:render', render);
+                        }
+
+                        {$livewireListener}
+                    };
+
+                    const options = [];
+                    options.push({"envelopes":[{"title":"PHPFlasher","message":"success message","type":"success","options":[],"metadata":[]},{"title":"yoeunes\/toastr","message":"warning message","type":"warning","options":[],"metadata":[]}],"scripts":[],"styles":[],"options":[],"context":[]});
+                    /** {--FLASHER_REPLACE_ME--} **/
+                    addScriptAndRender(mergeOptions(...options));
+                    addRenderListener();
+                })(window, document);
+            </script>
+        JAVASCRIPT;
 
         $presenter = new HtmlPresenter();
 
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array())));
+        $this->assertSame($response, $presenter->render(new Response($envelopes, [])));
     }
 
-    /**
-     * @return void
-     */
-    public function testItRenderOnlyEnvelopesAsJsonObject()
+    public function testItRenderOnlyEnvelopesAsJsonObject(): void
     {
-        $envelopes = array();
+        $envelopes = [];
 
         $notification = new Notification();
         $notification->setMessage('success message');
@@ -134,31 +136,26 @@ JAVASCRIPT;
         $notification->setType('warning');
         $envelopes[] = new Envelope($notification);
 
-        $response = '{"envelopes":[{"notification":{"type":"success","message":"success message","title":"PHPFlasher","options":[]}},{"notification":{"type":"warning","message":"warning message","title":"yoeunes\/toastr","options":[]}}]}';
+        $response = '{"envelopes":[{"title":"PHPFlasher","message":"success message","type":"success","options":[],"metadata":[]},{"title":"yoeunes\/toastr","message":"warning message","type":"warning","options":[],"metadata":[]}],"scripts":[],"styles":[],"options":[],"context":{"envelopes_only":true}}';
 
         $presenter = new HtmlPresenter();
 
-        $this->assertEquals($response, $presenter->render(new Response($envelopes, array('envelopes_only' => true))));
+        $this->assertSame($response, $presenter->render(new Response($envelopes, ['envelopes_only' => true])));
     }
 
     /**
      * Generate the script for Livewire event handling.
-     *
-     * @return string
      */
-    private function getLivewireListenerScript()
+    private function getLivewireListenerScript(): string
     {
-        if (!class_exists('Livewire\LivewireManager')) {
+        if (!class_exists(LivewireManager::class)) {
             return '';
         }
 
         return <<<JAVASCRIPT
-document.addEventListener('livewire:navigating', function () {
-    var elements = document.querySelectorAll('.fl-no-cache');
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].remove();
-    }
-});
-JAVASCRIPT;
+            document.addEventListener('livewire:navigating', () => {
+              document.querySelectorAll('.fl-no-cache').forEach(el => el.remove());
+            });
+        JAVASCRIPT;
     }
 }

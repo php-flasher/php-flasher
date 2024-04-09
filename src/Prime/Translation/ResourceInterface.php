@@ -1,21 +1,12 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Translation;
 
 interface ResourceInterface
 {
-    /**
-     * @return string
-     */
-    public function getResourceType();
+    public function getResourceType(): string;
 
-    /**
-     * @return string
-     */
-    public function getResourceName();
+    public function getResourceName(): string;
 }

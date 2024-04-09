@@ -1,48 +1,28 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Symfony\Translation;
 
-use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
-final class Translator implements TranslatorInterface
+final readonly class Translator implements TranslatorInterface
 {
-    /**
-     * @var SymfonyTranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param SymfonyTranslatorInterface $translator
-     */
-    public function __construct($translator)
+    public function __construct(private SymfonyTranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function translate($id, $parameters = array(), $locale = null)
+    public function translate(string $id, array $parameters = [], ?string $locale = null): string
     {
-        $order = TranslationStamp::parametersOrder($parameters, $locale);
-        $parameters = $this->addPrefixedParams($order['parameters']);
-        $locale = $order['locale'];
-
         if (!$this->translator instanceof TranslatorBagInterface) {
             return $this->translator->trans($id, $parameters, 'flasher', $locale);
         }
 
         $catalogue = $this->translator->getCatalogue($locale);
 
-        foreach (array('flasher', 'messages') as $domain) {
+        foreach (['flasher', 'messages'] as $domain) {
             if ($catalogue->has($id, $domain)) {
                 return $this->translator->trans($id, $parameters, $domain, $locale);
             }
@@ -51,27 +31,12 @@ final class Translator implements TranslatorInterface
         return $id;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
-        return $this->translator->getLocale();
-    }
-
-    /**
-     * @param array<string, mixed> $parameters
-     *
-     * @return array<string, mixed>
-     */
-    private function addPrefixedParams(array $parameters)
-    {
-        foreach ($parameters as $key => $value) {
-            if (0 !== strpos($key, ':')) {
-                $parameters[':'.$key] = $value;
-            }
+        if (method_exists($this->translator, 'getLocale')) {
+            return $this->translator->getLocale();
         }
 
-        return $parameters;
+        return class_exists(\Locale::class) ? \Locale::getDefault() : 'en';
     }
 }

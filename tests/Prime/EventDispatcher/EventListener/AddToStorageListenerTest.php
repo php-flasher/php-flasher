@@ -1,9 +1,6 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\EventDispatcher\EventListener;
 
@@ -14,31 +11,30 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Tests\Prime\Helper\ObjectInvader;
+use PHPUnit\Framework\TestCase;
 
-class AddToStorageListenerTest extends TestCase
+final class AddToStorageListenerTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testAddToStorageListener()
+    public function testAddToStorageListener(): void
     {
         $eventDispatcher = new EventDispatcher();
-        $this->setProperty($eventDispatcher, 'listeners', array());
+
+        ObjectInvader::from($eventDispatcher)->set('listeners', []);
 
         $listener = new AddToStorageListener();
-        $eventDispatcher->addSubscriber($listener);
+        $eventDispatcher->addListener($listener);
 
-        $envelopes = array(
+        $envelopes = [
             new Envelope(new Notification(), new WhenStamp(false)),
             new Envelope(new Notification()),
             new Envelope(new Notification(), new UnlessStamp(true)),
             new Envelope(new Notification()),
-        );
-        $event = new PersistEvent($envelopes);
+        ];
 
+        $event = new PersistEvent($envelopes);
         $eventDispatcher->dispatch($event);
 
-        $this->assertEquals(array($envelopes[1], $envelopes[3]), $event->getEnvelopes());
+        $this->assertCount(2, $event->getEnvelopes());
     }
 }

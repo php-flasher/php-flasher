@@ -1,65 +1,35 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Prime\Factory;
 
-use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
-use Flasher\Prime\Storage\StorageManager;
+use Flasher\Prime\Notification\NotificationBuilderInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
+use Flasher\Prime\Support\Traits\ForwardsCalls;
 
+/**
+ * @mixin \Flasher\Prime\Notification\NotificationBuilderInterface
+ */
 class NotificationFactory implements NotificationFactoryInterface
 {
-    /**
-     * @var StorageManagerInterface
-     */
-    protected $storageManager;
+    use ForwardsCalls;
 
-    /**
-     * @var string|null
-     */
-    protected $handler;
-
-    /**
-     * @param string|null $handler
-     */
-    public function __construct(StorageManagerInterface $storageManager = null, $handler = null)
+    public function __construct(protected StorageManagerInterface $storageManager, protected ?string $plugin = null)
     {
-        $this->storageManager = $storageManager ?: new StorageManager();
-        $this->handler = $handler;
+    }
+
+    public function createNotificationBuilder(): NotificationBuilderInterface
+    {
+        return new NotificationBuilder($this->plugin ?: 'flasher', $this->storageManager);
     }
 
     /**
-     * @param string  $method
      * @param mixed[] $parameters
-     *
-     * @return mixed
      */
-    public function __call($method, array $parameters)
+    public function __call(string $method, array $parameters): mixed
     {
-        /** @var callable $callback */
-        $callback = array($this->createNotificationBuilder(), $method);
-
-        return \call_user_func_array($callback, $parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createNotificationBuilder()
-    {
-        return new NotificationBuilder($this->getStorageManager(), new Notification(), $this->handler);
-    }
-
-    /**
-     * @return StorageManagerInterface
-     */
-    public function getStorageManager()
-    {
-        return $this->storageManager;
+        return $this->forwardCallTo($this->createNotificationBuilder(), $method, $parameters);
     }
 }

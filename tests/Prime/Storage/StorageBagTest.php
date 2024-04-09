@@ -1,84 +1,71 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Storage;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
-use Flasher\Prime\Stamp\UuidStamp;
-use Flasher\Prime\Storage\StorageBag;
-use Flasher\Tests\Prime\TestCase;
+use Flasher\Prime\Stamp\IdStamp;
+use Flasher\Prime\Storage\Bag\ArrayBag;
+use Flasher\Prime\Storage\Storage;
+use PHPUnit\Framework\TestCase;
 
-class StorageBagTest extends TestCase
+final class StorageBagTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testAddEnvelopes()
+    public function testAddEnvelopes(): void
     {
-        $envelopes = array(
-            array(
-                new Envelope(new Notification(), new UuidStamp('1111')),
-                new Envelope(new Notification(), new UuidStamp('2222')),
-            ),
-            array(
-                new Envelope(new Notification(), new UuidStamp('3333')),
-                new Envelope(new Notification(), new UuidStamp('4444')),
-            ),
-        );
+        $envelopes = [
+            [
+                new Envelope(new Notification(), new IdStamp('1111')),
+                new Envelope(new Notification(), new IdStamp('2222')),
+            ],
+            [
+                new Envelope(new Notification(), new IdStamp('3333')),
+                new Envelope(new Notification(), new IdStamp('4444')),
+            ],
+        ];
 
-        $storageBag = new StorageBag();
-        $storageBag->add($envelopes[0]);
-        $storageBag->add($envelopes[1]);
+        $storageBag = new Storage(new ArrayBag());
+        $storageBag->add(...$envelopes[0]);
+        $storageBag->add(...$envelopes[1]);
 
-        $this->assertEquals(array_merge($envelopes[0], $envelopes[1]), $storageBag->all());
+        $this->assertEquals([...$envelopes[0], ...$envelopes[1]], $storageBag->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testUpdateEnvelopes()
+    public function testUpdateEnvelopes(): void
     {
-        $envelopes = array(
-            array(
-                new Envelope(new Notification(), new UuidStamp('1111')),
-                new Envelope(new Notification(), new UuidStamp('2222')),
-            ),
-            array(
-                new Envelope(new Notification(), new UuidStamp('3333')),
-                new Envelope(new Notification(), new UuidStamp('4444')),
-            ),
-        );
+        $envelopes = [
+            [
+                new Envelope(new Notification(), new IdStamp('1111')),
+                new Envelope(new Notification(), new IdStamp('2222')),
+            ],
+            [
+                new Envelope(new Notification(), new IdStamp('3333')),
+                new Envelope(new Notification(), new IdStamp('4444')),
+            ],
+        ];
 
-        $storageBag = new StorageBag();
-        $storageBag->update($envelopes[0]);
-        $storageBag->update($envelopes[1]);
+        $storageBag = new Storage(new ArrayBag());
+        $storageBag->update(...$envelopes[0]);
+        $storageBag->update(...$envelopes[1]);
 
-        $this->assertEquals(array_merge($envelopes[0], $envelopes[1]), $storageBag->all());
+        $this->assertEquals([...$envelopes[0], ...$envelopes[1]], $storageBag->all());
     }
 
-    /**
-     * @return void
-     */
-    public function testRemoveEnvelopes()
+    public function testRemoveEnvelopes(): void
     {
-        $envelopes = array(
-            new Envelope(new Notification(), new UuidStamp('1111')),
-            new Envelope(new Notification(), new UuidStamp('2222')),
-            new Envelope(new Notification(), new UuidStamp('3333')),
-            new Envelope(new Notification(), new UuidStamp('4444')),
-        );
+        $envelopes = [
+            new Envelope(new Notification(), new IdStamp('1111')),
+            new Envelope(new Notification(), new IdStamp('2222')),
+            new Envelope(new Notification(), new IdStamp('3333')),
+            new Envelope(new Notification(), new IdStamp('4444')),
+        ];
 
-        $storageBag = new StorageBag();
-        $storageBag->add($envelopes);
+        $storageBag = new Storage(new ArrayBag());
+        $storageBag->add(...$envelopes);
 
-        $storageBag->remove(array(
-            new Envelope(new Notification(), new UuidStamp('2222')),
-        ));
+        $storageBag->remove(new Envelope(new Notification(), new IdStamp('2222')));
 
         unset($envelopes[1]);
 

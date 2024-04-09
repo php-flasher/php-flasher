@@ -1,54 +1,48 @@
 {
     "name": "php-flasher/flasher-symfony",
-    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
-    "license": "MIT",
     "type": "symfony-bundle",
+    "license": "MIT",
+    "homepage": "https://php-flasher.io",
+    "description": "PHPFlasher Symfony Bundle: Supercharge your Symfony projects with this robust flash message package. Enhance user engagement with intuitive, easy-to-integrate flash messaging. Tailored for developers, PHPFlasher provides a powerful solution for managing user feedback in Symfony applications.",
     "keywords": [
-        "php-flasher",
         "flash-messages",
-        "notification-system",
-        "user-feedback",
-        "toastr",
-        "sweetalert",
-        "pnotify",
-        "noty",
-        "notyf",
-        "desktop-notifications",
-        "php",
-        "laravel",
-        "symfony",
-        "javascript",
-        "yoeunes",
-        "framework-agnostic",
-        "phpstorm-auto-complete",
-        "custom-adapter",
-        "user-experience",
-        "rtl",
-        "dark-mode"
+        "php-notification-system",
+        "laravel-notification",
+        "symfony-notification",
+        "user-feedback-tools",
+        "web-application-notifications",
+        "php-user-interface",
+        "customizable-alerts-php",
+        "interactive-web-notifications",
+        "php-messaging-library",
+        "user-engagement-php"
     ],
+    "support": {
+        "issues": "https://github.com/php-flasher/php-flasher/issues",
+        "source": "https://github.com/php-flasher/php-flasher"
+    },
     "authors": [
         {
-            "name": "Younes KHOUBZA",
-            "email": "younes.khoubza@gmail.com",
-            "homepage": "https://www.linkedin.com/in/younes-khoubza",
+            "name": "Younes ENNAJI",
+            "email": "younes.ennaji.pro@gmail.com",
+            "homepage": "https://www.linkedin.com/in/younes--ennaji/",
             "role": "Developer"
         }
     ],
-    "homepage": "https://php-flasher.io",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": ">=5.3",
-        "php-flasher/flasher": "^1.15.14",
-        "symfony/config": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
-        "symfony/console": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
-        "symfony/dependency-injection": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
-        "symfony/http-kernel": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0"
+        "php": ">=8.2",
+        "php-flasher/flasher": "^2.0",
+        "symfony/config": "^7.0",
+        "symfony/console": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/http-kernel": "^7.0"
     },
     "suggest": {
         "symfony/translation": "To translate flash messages, title and presets",
-        "symfony/twig-bundle": "To create custom themes using twig templates"
+        "symfony/ux-twig-component": "To utilize and interact with flash messages components in Twig templates"
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Flasher\\Symfony\\": ""

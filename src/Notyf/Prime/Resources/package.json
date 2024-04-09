@@ -1,0 +1,17 @@
+{
+    "name": "@flasher/flasher-notyf",
+    "version": "2.0.0",
+    "type": "module",
+    "license": "MIT",
+    "main": "dist/flasher-notyf.cjs.js",
+    "module": "dist/flasher-notyf.esm.js",
+    "browser": "dist/flasher-notyf.umd.js",
+    "types": "dist/notyf.d.ts",
+    "scripts": {
+        "ncu": "ncu -u"
+    },
+    "peerDependencies": {
+        "@flasher/flasher": "^2.0.0",
+        "notyf": "^3.10.0"
+    }
+}

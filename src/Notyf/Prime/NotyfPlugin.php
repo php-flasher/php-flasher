@@ -1,43 +1,39 @@
 <?php
 
-/*
- * This file is part of the PHPFlasher package.
- * (c) Younes KHOUBZA <younes.khoubza@gmail.com>
- */
+declare(strict_types=1);
 
 namespace Flasher\Notyf\Prime;
 
 use Flasher\Prime\Plugin\Plugin;
 
-class NotyfPlugin extends Plugin
+final class NotyfPlugin extends Plugin
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getScripts()
+    public function getAlias(): string
     {
-        return array(
-            'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.2/dist/flasher-notyf.min.js',
-            ),
-            'local' => array(
-                '/vendor/flasher/flasher-notyf.min.js',
-            ),
-        );
+        return 'notyf';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getStyles()
+    public function getFactory(): string
     {
-        return array(
-            'cdn' => array(
-                'https://cdn.jsdelivr.net/npm/@flasher/flasher-notyf@1.3.2/dist/flasher-notyf.min.css',
-            ),
-            'local' => array(
-                '/vendor/flasher/flasher-notyf.min.css',
-            ),
-        );
+        return Notyf::class;
+    }
+
+    public function getServiceAliases(): string
+    {
+        return NotyfInterface::class;
+    }
+
+    public function getScripts(): string|array
+    {
+        return [
+            '/vendor/flasher/flasher-notyf.min.js',
+        ];
+    }
+
+    public function getStyles(): string|array
+    {
+        return [
+            '/vendor/flasher/flasher-notyf.min.css',
+        ];
     }
 }
