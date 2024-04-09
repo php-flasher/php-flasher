@@ -10,6 +10,34 @@ NC='\033[0m' # No Color
 CHECK_MARK="✅"
 CROSS_MARK="❌"
 
+# Initialize global flags
+DEBUG=0
+DRY_RUN=0
+
+# Process command-line arguments
+for arg in "$@"; do
+    case $arg in
+        --debug)
+        DEBUG=1
+        shift
+        ;;
+        --dry-run)
+        DRY_RUN=1
+        shift
+        ;;
+        *)
+        # Unknown option
+        ;;
+    esac
+done
+
+# Debug message function
+debug_msg() {
+    if [ "$DEBUG" -eq 1 ]; then
+        echo -e "${INDIGO}Debug: $*${NC}"
+    fi
+}
+
 # Define remotes
 REMOTES=(
     'src/Prime:flasher'
@@ -33,27 +61,44 @@ REMOTES=(
     'src/Noty/Symfony:flasher-noty-symfony'
 )
 
+# Function to get the current git branch name
+function current_branch() {
+    git rev-parse --abbrev-ref HEAD
+}
+
 # Define a function to split and push code to a remote repository
 function split() {
     local prefix_and_remote="$1"
     local prefix="${prefix_and_remote%:*}"
     local remote="${prefix_and_remote#*:}"
+    local current_branch=$(current_branch)
 
     # Add remote if it does not exist (ignoring errors silently)
     if git remote add "$remote" "git@github.com:php-flasher/$remote.git" 2>/dev/null; then
         echo -e "${GREEN}Added remote ${INDIGO}$remote${NC} ${CHECK_MARK}"
+    else
+        debug_msg "Remote $remote already exists or could not be added."
     fi
 
     # Split the code using the splitsh-lite utility
     SHA1=$(./bin/splitsh-lite --prefix="$prefix")
+    debug_msg "SHA1 for $prefix is $SHA1."
 
-    # Push the code to the specified remote repository
-    git push "$remote" "$SHA1:refs/heads/main" -f
+    # Push the code to the remote repository on the same branch as the current branch
+    if [ "$DRY_RUN" -eq 0 ]; then
+        git push "$remote" "$SHA1:refs/heads/$current_branch" -f
+    else
+        echo -e "${INDIGO}Dry run: Would push $SHA1 to $remote on branch $current_branch${NC}"
+    fi
 }
 
 # Pull the latest code from the origin repository
-echo -e "${INDIGO}Pulling the latest code from the origin repository...${NC}"
-git fetch origin main
+if [ "$DRY_RUN" -eq 0 ]; then
+    echo -e "${INDIGO}Pulling the latest code from the origin repository on branch ${current_branch}...${NC}"
+    git fetch origin "$current_branch"
+else
+    echo -e "${INDIGO}Dry run: Would fetch latest code for branch $current_branch from the origin repository.${NC}"
+fi
 
 # Iterate over the remotes and split and push the code
 for remote in "${REMOTES[@]}"; do
