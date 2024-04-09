@@ -20,11 +20,11 @@ final class FlasherKernel extends Kernel
         return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Flasher\Symfony\FlasherBundle(),
-            new \Flasher\Noty\Symfony\FlasherNotyBundle(),
-            new \Flasher\Notyf\Symfony\FlasherNotyfBundle(),
-            new \Flasher\SweetAlert\Symfony\FlasherSweetAlertBundle(),
-            new \Flasher\Toastr\Symfony\FlasherToastrBundle(),
+            new \Flasher\Symfony\FlasherSymfonyBundle(),
+            new \Flasher\Noty\Symfony\FlasherNotySymfonyBundle(),
+            new \Flasher\Notyf\Symfony\FlasherNotyfSymfonyBundle(),
+            new \Flasher\SweetAlert\Symfony\FlasherSweetAlertSymfonyBundle(),
+            new \Flasher\Toastr\Symfony\FlasherToastrSymfonyBundle(),
         ];
     }
 

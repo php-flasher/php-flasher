@@ -6,19 +6,19 @@ namespace Flasher\Tests\Toastr\Symfony;
 
 use Flasher\Symfony\Support\PluginBundle;
 use Flasher\Toastr\Prime\ToastrPlugin;
-use Flasher\Toastr\Symfony\FlasherToastrBundle;
+use Flasher\Toastr\Symfony\FlasherToastrSymfonyBundle;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
-final class FlasherToastrBundleTest extends TestCase
+final class FlasherToastrSymfonyBundleTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    private FlasherToastrBundle $flasherToastrBundle;
+    private FlasherToastrSymfonyBundle $flasherToastrBundle;
 
     protected function setUp(): void
     {
-        $this->flasherToastrBundle = new FlasherToastrBundle();
+        $this->flasherToastrBundle = new FlasherToastrSymfonyBundle();
     }
 
     public function testInstance(): void

@@ -8,7 +8,7 @@ use Flasher\Noty\Prime\NotyPlugin;
 use Flasher\Prime\Plugin\PluginInterface;
 use Flasher\Symfony\Support\PluginBundle;
 
-final class FlasherNotyBundle extends PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+final class FlasherNotySymfonyBundle extends PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     public function createPlugin(): PluginInterface
     {

@@ -8,7 +8,7 @@ use Flasher\Prime\Plugin\PluginInterface;
 use Flasher\SweetAlert\Prime\SweetAlertPlugin;
 use Flasher\Symfony\Support\PluginBundle;
 
-final class FlasherSweetAlertBundle extends PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+final class FlasherSweetAlertSymfonyBundle extends PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     public function createPlugin(): PluginInterface
     {

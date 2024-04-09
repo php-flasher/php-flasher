@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Flasher\Symfony\Support;
 
 use Flasher\Prime\Plugin\PluginInterface;
-use Flasher\Symfony\FlasherBundle;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -19,7 +19,7 @@ abstract class PluginBundle extends AbstractBundle implements PluginBundleInterf
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        if ($this instanceof FlasherBundle) {
+        if ($this instanceof FlasherSymfonyBundle) {
             return;
         }
 
@@ -40,7 +40,7 @@ abstract class PluginBundle extends AbstractBundle implements PluginBundleInterf
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        if ($this instanceof FlasherBundle) {
+        if ($this instanceof FlasherSymfonyBundle) {
             return;
         }
 

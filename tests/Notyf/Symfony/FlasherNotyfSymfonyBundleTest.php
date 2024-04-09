@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Flasher\Tests\Notyf\Symfony;
 
 use Flasher\Notyf\Prime\NotyfPlugin;
-use Flasher\Notyf\Symfony\FlasherNotyfBundle;
+use Flasher\Notyf\Symfony\FlasherNotyfSymfonyBundle;
 use Flasher\Symfony\Support\PluginBundle;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
-final class FlasherNotyfBundleTest extends TestCase
+final class FlasherNotyfSymfonyBundleTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    private FlasherNotyfBundle $flasherNotyfBundle;
+    private FlasherNotyfSymfonyBundle $flasherNotyfBundle;
 
     protected function setUp(): void
     {
-        $this->flasherNotyfBundle = new FlasherNotyfBundle();
+        $this->flasherNotyfBundle = new FlasherNotyfSymfonyBundle();
     }
 
     public function testInstance(): void

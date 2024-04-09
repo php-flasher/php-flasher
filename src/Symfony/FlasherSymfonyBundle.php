@@ -13,7 +13,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-final class FlasherBundle extends Support\PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
+final class FlasherSymfonyBundle extends Support\PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     public function boot(): void
     {

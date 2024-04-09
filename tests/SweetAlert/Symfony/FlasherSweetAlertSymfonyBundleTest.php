@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Flasher\Tests\SweetAlert\Symfony;
 
 use Flasher\SweetAlert\Prime\SweetAlertPlugin;
-use Flasher\SweetAlert\Symfony\FlasherSweetAlertBundle;
+use Flasher\SweetAlert\Symfony\FlasherSweetAlertSymfonyBundle;
 use Flasher\Symfony\Support\PluginBundle;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
-final class FlasherSweetAlertBundleTest extends TestCase
+final class FlasherSweetAlertSymfonyBundleTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    private FlasherSweetAlertBundle $flasherSweetAlertBundle;
+    private FlasherSweetAlertSymfonyBundle $flasherSweetAlertBundle;
 
     protected function setUp(): void
     {
-        $this->flasherSweetAlertBundle = new FlasherSweetAlertBundle();
+        $this->flasherSweetAlertBundle = new FlasherSweetAlertSymfonyBundle();
     }
 
     public function testInstance(): void

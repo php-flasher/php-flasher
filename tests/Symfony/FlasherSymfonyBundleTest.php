@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Flasher\Tests\Symfony;
 
 use Flasher\Prime\Plugin\FlasherPlugin;
-use Flasher\Symfony\FlasherBundle;
+use Flasher\Symfony\FlasherSymfonyBundle;
 use Flasher\Tests\Symfony\Fixtures\FlasherKernel;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-final class FlasherBundleTest extends TestCase
+final class FlasherSymfonyBundleTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    private FlasherBundle $flasherBundle;
+    private FlasherSymfonyBundle $flasherBundle;
 
     protected function setUp(): void
     {
-        $this->flasherBundle = new FlasherBundle();
+        $this->flasherBundle = new FlasherSymfonyBundle();
     }
 
     public function testFlasherIntegration(): void
