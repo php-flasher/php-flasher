@@ -8,7 +8,7 @@ use Flasher\Notyf\Prime\NotyfPlugin;
 use Flasher\Prime\Plugin\PluginInterface;
 use Flasher\Symfony\Support\PluginBundle;
 
-final class FlasherNotyfBundle extends PluginBundle
+final class FlasherNotyfBundle extends PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     public function createPlugin(): PluginInterface
     {

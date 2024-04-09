@@ -8,7 +8,7 @@ use Flasher\Prime\Plugin\PluginInterface;
 use Flasher\Symfony\Support\PluginBundle;
 use Flasher\Toastr\Prime\ToastrPlugin;
 
-final class FlasherToastrBundle extends PluginBundle
+final class FlasherToastrBundle extends PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     public function createPlugin(): PluginInterface
     {
