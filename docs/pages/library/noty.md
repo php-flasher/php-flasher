@@ -13,6 +13,9 @@ data-controller: noty
 ```shell
 composer require php-flasher/flasher-noty-laravel
 ```
+```shell
+php artisan flasher:install
+```
 
 <br />
 
@@ -20,6 +23,9 @@ composer require php-flasher/flasher-noty-laravel
 
 ```shell
 composer require php-flasher/flasher-noty-symfony
+```
+```shell
+php bin/console flasher:install
 ```
 
 ---

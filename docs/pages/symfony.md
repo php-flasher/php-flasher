@@ -28,6 +28,12 @@ allowing users to install and use only the specific components they need for the
 composer require php-flasher/flasher-symfony
 ```
 
+After installation, you need to run another command to set up the necessary assets for {% PHPFlasher %}:
+
+```shell
+php bin/console flasher:install
+```
+
 ---
 
 {% PHPFlasher %} includes a default notification style <i class="fa-duotone fa-comment-captions text-yellow-600"></i>, but users can also install and use additional adapters to customize the appearance of notifications within their projects such as :

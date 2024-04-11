@@ -13,6 +13,9 @@ data-controller: toastr
 ```shell
 composer require php-flasher/flasher-toastr-laravel
 ```
+```shell
+php artisan flasher:install
+```
 
 <br />
 
@@ -20,6 +23,9 @@ composer require php-flasher/flasher-toastr-laravel
 
 ```shell
 composer require php-flasher/flasher-toastr-symfony
+```
+```shell
+php bin/console flasher:install
 ```
 
 ---
