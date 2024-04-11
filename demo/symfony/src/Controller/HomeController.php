@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     {
         $this->addFlash('success', 'welcome from php-flasher');
 
-        flash()->info('hello from Home Controller', ['timeout' => 5000000]);
+        flash()->info('hello from Home Controller', ['timeout' => 60000]);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
