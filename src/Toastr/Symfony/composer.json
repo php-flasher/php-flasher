@@ -3,20 +3,8 @@
     "type": "symfony-bundle",
     "license": "MIT",
     "homepage": "https://php-flasher.io",
-    "description": "PHPFlasher Toastr Symfony Bundle - Leverages PHPFlasher for integrating Toastr notifications in Symfony projects. Offers a rich set of features for enhanced user notifications.",
-    "keywords": [
-        "flash-messages",
-        "php-notification-system",
-        "laravel-notification",
-        "symfony-notification",
-        "user-feedback-tools",
-        "web-application-notifications",
-        "php-user-interface",
-        "customizable-alerts-php",
-        "interactive-web-notifications",
-        "php-messaging-library",
-        "user-engagement-php"
-    ],
+    "description": "Integrate Toastr's smooth toast notifications into Symfony projects using PHPFlasher. Enhance Symfony applications with Toastr's refined visuals.",
+    "keywords": ["laravel", "toastr", "flash-notifications", "dynamic-notifications", "phpflasher", "user-feedback", "open-source"],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

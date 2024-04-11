@@ -3,16 +3,8 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://php-flasher.io",
-    "description": "PHPFlasher Toastr for Laravel - A Laravel-specific extension of PHPFlasher for Toastr notifications, enhancing user interactions with aesthetically pleasing and responsive toast messages.",
-    "keywords": [
-        "php-flasher",
-        "laravel",
-        "toastr",
-        "flash-messages",
-        "notification-system",
-        "user-experience",
-        "laravel-package"
-    ],
+    "description": "Leverage Toastr for stylish toast notifications in Laravel with PHPFlasher. Add Toastr's sleek notifications to your Laravel projects effortlessly.",
+    "keywords": ["laravel", "toastr", "flash-notifications", "dynamic-notifications", "phpflasher", "user-feedback", "open-source"],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

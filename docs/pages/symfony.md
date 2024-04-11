@@ -1,28 +1,24 @@
 ---
 permalink: /symfony/
 title: Symfony
-description: Easily add flash notification messages to your Symfony application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
+description: Integrate PHPFlasher in your Symfony application to enhance user experience with flash notifications. This open-source package simplifies the addition of engaging messages following user actions.
 framework: symfony
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> {% PHPFlasher %} Symfony
+## <i class="fa-duotone fa-list-radio"></i> {% PHPFlasher %} for Symfony
 
-{% PHPFlasher %} is a trusted and well-supported package 
-that allows you to easily integrate flash notification messages into your <i class="fa-brands fa-symfony text-black fa-xl"></i> **Symfony** projects.
+{% PHPFlasher %} offers a seamless way to incorporate flash notifications in {% Symfony %} projects, enhancing user feedback with minimal setup.
 
-To use {% PHPFlasher %} in a **Symfony** application, you need :
+Requirements for using {% PHPFlasher %} with Symfony:
 
-> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** >= 8.2
-> <i class="fa-brands fa-symfony fa-2xl text-black mr-1 ml-4"></i> **Symfony** >= 7.0
+> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** v8.2 or higher
+> <i class="fa-brands fa-symfony fa-2xl text-black mr-1 ml-4"></i> **Symfony** v7.0 or higher
 
 ---
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-{% PHPFlasher %} is modular and consists of multiple libraries, 
-allowing users to install and use only the specific components they need for their project.
-
-{% PHPFlasher %} can be installed using composer :
+{% PHPFlasher %}'s modular design lets you select and install only the components your project needs.
 
 ```shell
 composer require php-flasher/flasher-symfony
@@ -54,7 +50,7 @@ php bin/console flasher:install
 As optional, if you want to modify the default configuration, you can publish the configuration file:
 
 ```bash
-php bin/console flasher:install
+php bin/console flasher:install --config
 ```
 
 The configuration file will be located at `config/packages/flasher.yaml` and will have the following content:
@@ -270,33 +266,33 @@ resource: ''
 {% assign infoMessage = 'سيتم تحديث هذه الصفحة في غضون 10 دقائق.' %}
 
 <script type="text/javascript">
-    messages["{{ id }}"] = [
+    messages['{{ id }}'] = [
         {
-            handler: "flasher",
-            type: "success",
-            message: "{{ successMessage }}",
-            title: "نجاح",
+            handler: 'flasher',
+            type: 'success',
+            message: '{{ successMessage }}',
+            title: 'نجاح',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "error",
-            message: "{{ errorMessage }}",
-            title: "خطأ",
+            handler: 'flasher',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            title: 'خطأ',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            title: "تحذير",
+            handler: 'flasher',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            title: 'تحذير',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "info",
-            message: "{{ infoMessage }}",
-            title: "معلومة",
+            handler: 'flasher',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            title: 'معلومة',
             options: {},
         },
         
@@ -321,33 +317,33 @@ flash()->info('{{ infoMessage }}');
 {% assign infoMessage = "Cette page sera mise à jour dans 10 minutes."%}
 
 <script type="text/javascript">
-    messages["{{ id }}"] = [
+    messages['{{ id }}'] = [
         {
-            handler: "flasher",
-            type: "success",
-            message: "{{ successMessage }}",
-            title: "Succès",
+            handler: 'flasher',
+            type: 'success',
+            message: '{{ successMessage }}',
+            title: 'Succès',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "error",
-            message: "{{ errorMessage }}",
-            title: "Erreur",
+            handler: 'flasher',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            title: 'Erreur',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            title: "Avertissement",
+            handler: 'flasher',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            title: 'Avertissement',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "info",
-            message: "{{ infoMessage }}",
-            title: "Information",
+            handler: 'flasher',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            title: 'Information',
             options: {},
         },
         

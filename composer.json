@@ -3,20 +3,8 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://php-flasher.io",
-    "description": "Elevate user engagement in Laravel and Symfony projects with PHPFlasher, a comprehensive flash messaging toolkit. This library facilitates streamlined user feedback management and supports a variety of popular notification styles including Noty, Notyf, SweetAlert, and Toastr. PHPFlasher is designed for ease of use, making it accessible to both beginners and experienced developers seeking to enhance the interactive elements of their web applications.",
-    "keywords": [
-        "flash-messages",
-        "php-notification-system",
-        "laravel-notification",
-        "symfony-notification",
-        "user-feedback-tools",
-        "web-application-notifications",
-        "php-user-interface",
-        "customizable-alerts-php",
-        "interactive-web-notifications",
-        "php-messaging-library",
-        "user-engagement-php"
-    ],
+    "description": "The core repository for PHPFlasher, hosting the source code, contributions, issue tracking, and discussions for the PHPFlasher project. This mono-repo serves as the hub for development and community engagement.",
+    "keywords": ["php", "flash-messages", "notifications", "phpflasher", "user-feedback", "open-source", "contributions", "discussions", "issue-tracking"],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

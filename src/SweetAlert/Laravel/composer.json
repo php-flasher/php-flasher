@@ -3,20 +3,8 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://php-flasher.io",
-    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
-    "keywords": [
-        "flash-messages",
-        "php-notification-system",
-        "laravel-notification",
-        "symfony-notification",
-        "user-feedback-tools",
-        "web-application-notifications",
-        "php-user-interface",
-        "customizable-alerts-php",
-        "interactive-web-notifications",
-        "php-messaging-library",
-        "user-engagement-php"
-    ],
+    "description": "Incorporate SweetAlert's interactive notifications into Laravel applications with PHPFlasher. Enhance user dialogs with SweetAlert and Laravel.",
+    "keywords": ["laravel", "sweetalert", "sweetalert 2", "flash-notifications", "dynamic-notifications", "phpflasher", "user-feedback", "open-source"],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

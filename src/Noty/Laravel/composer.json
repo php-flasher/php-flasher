@@ -3,20 +3,8 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://php-flasher.io",
-    "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
-    "keywords": [
-        "flash-messages",
-        "php-notification-system",
-        "laravel-notification",
-        "symfony-notification",
-        "user-feedback-tools",
-        "web-application-notifications",
-        "php-user-interface",
-        "customizable-alerts-php",
-        "interactive-web-notifications",
-        "php-messaging-library",
-        "user-engagement-php"
-    ],
+    "description": "Use Noty.js for engaging flash notifications in Laravel with PHPFlasher. Combine the power of Noty.js and Laravel for rich, interactive user notifications.",
+    "keywords": ["laravel", "noty.js", "flash-notifications", "phpflasher", "user-feedback", "open-source"],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"
