@@ -21,6 +21,10 @@ To integrate {% PHPFlasher %} with Livewire, follow the same installation steps 
 ```shell
 composer require php-flasher/flasher-laravel
 ```
+Then, run:
+```shell
+php artisan flasher:install
+```
 
 ---
 

@@ -13,6 +13,7 @@ data-controller: sweetalert
 ```shell
 composer require php-flasher/flasher-sweetalert-laravel
 ```
+Then, run:
 ```shell
 php artisan flasher:install
 ```
@@ -24,6 +25,7 @@ php artisan flasher:install
 ```shell
 composer require php-flasher/flasher-sweetalert-symfony
 ```
+Then, run:
 ```shell
 php bin/console flasher:install
 ```
