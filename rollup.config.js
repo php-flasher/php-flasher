@@ -32,8 +32,8 @@ const postcssPlugins = [
 function commonPlugins(path) {
     return [
         resolve(),
-        typescript({ compilerOptions: { outDir: `${path}/dist` }, include: [`${path}/assets/**/**`] }),
-        // babel({ babelHelpers: 'bundled' }),
+        typescript({ compilerOptions: { outDir: `${path}/dist` }, include: [`${path}/assets/**/*.ts`] }),
+        babel({ babelHelpers: 'bundled' }),
     ]
 }
 

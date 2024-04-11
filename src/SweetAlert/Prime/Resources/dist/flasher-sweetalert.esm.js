@@ -2,63 +2,79 @@ import flasher from '@flasher/flasher';
 import Swal from 'sweetalert2';
 
 function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
     });
+  }
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
 }
 typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-    var e = new Error(message);
-    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
 class AbstractPlugin {
-    success(message, title, options) {
-        this.flash('success', message, title, options);
+  success(message, title, options) {
+    this.flash('success', message, title, options);
+  }
+  error(message, title, options) {
+    this.flash('error', message, title, options);
+  }
+  info(message, title, options) {
+    this.flash('info', message, title, options);
+  }
+  warning(message, title, options) {
+    this.flash('warning', message, title, options);
+  }
+  flash(type, message, title, options) {
+    if (typeof type === 'object') {
+      options = type;
+      type = options.type;
+      message = options.message;
+      title = options.title;
+    } else if (typeof message === 'object') {
+      options = message;
+      message = options.message;
+      title = options.title;
+    } else if (typeof title === 'object') {
+      options = title;
+      title = options.title;
     }
-    error(message, title, options) {
-        this.flash('error', message, title, options);
+    if (undefined === message) {
+      throw new Error('message option is required');
     }
-    info(message, title, options) {
-        this.flash('info', message, title, options);
-    }
-    warning(message, title, options) {
-        this.flash('warning', message, title, options);
-    }
-    flash(type, message, title, options) {
-        if (typeof type === 'object') {
-            options = type;
-            type = options.type;
-            message = options.message;
-            title = options.title;
-        }
-        else if (typeof message === 'object') {
-            options = message;
-            message = options.message;
-            title = options.title;
-        }
-        else if (typeof title === 'object') {
-            options = title;
-            title = options.title;
-        }
-        if (undefined === message) {
-            throw new Error('message option is required');
-        }
-        const envelope = {
-            type,
-            message,
-            title: title || type,
-            options: options || {},
-            metadata: {
-                plugin: '',
-            },
-        };
-        this.renderOptions(options || {});
-        this.renderEnvelopes([envelope]);
-    }
+    const envelope = {
+      type,
+      message,
+      title: title || type,
+      options: options || {},
+      metadata: {
+        plugin: ''
+      }
+    };
+    this.renderOptions(options || {});
+    this.renderEnvelopes([envelope]);
+  }
 }
 
 class SweetAlertPlugin extends AbstractPlugin {
