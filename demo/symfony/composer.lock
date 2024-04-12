@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb0e17fba246ce83629721be9a51827f",
+    "content-hash": "9354bb44b6ee822835a32d7bdc0258dc",
     "packages": [
         {
             "name": "php-flasher/php-flasher",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../..",
-                "reference": "2c4db56b2ea3487f0b0635b73514026d0e0b251c"
+                "reference": "14646df9e5bba5ca45b53815ea28228f2e6b9720"
             },
             "require": {
                 "ext-intl": "*",
@@ -102,20 +102,18 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Elevate user engagement in Laravel and Symfony projects with PHPFlasher, a comprehensive flash messaging toolkit. This library facilitates streamlined user feedback management and supports a variety of popular notification styles including Noty, Notyf, SweetAlert, and Toastr. PHPFlasher is designed for ease of use, making it accessible to both beginners and experienced developers seeking to enhance the interactive elements of their web applications.",
+            "description": "The core repository for PHPFlasher, hosting the source code, contributions, issue tracking, and discussions for the PHPFlasher project. This mono-repo serves as the hub for development and community engagement.",
             "homepage": "https://php-flasher.io",
             "keywords": [
-                "customizable-alerts-php",
+                "contributions",
+                "discussions",
                 "flash-messages",
-                "interactive-web-notifications",
-                "laravel-notification",
-                "php-messaging-library",
-                "php-notification-system",
-                "php-user-interface",
-                "symfony-notification",
-                "user-engagement-php",
-                "user-feedback-tools",
-                "web-application-notifications"
+                "issue-tracking",
+                "notifications",
+                "open-source",
+                "php",
+                "phpflasher",
+                "user-feedback"
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/php-flasher/issues",
@@ -125,6 +123,140 @@
                 "symlink": true,
                 "relative": true
             }
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "1.10.66",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "94779c987e4ebd620025d9e5fdd23323903950bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/94779c987e4ebd620025d9e5fdd23323903950bd",
+                "reference": "94779c987e4ebd620025d9e5fdd23323903950bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-03-28T16:17:31+00:00"
+        },
+        {
+            "name": "phpstan/phpstan-symfony",
+            "version": "1.3.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-symfony.git",
+                "reference": "a32bc86da24495025d7aafd1ba62444d4a364a98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/a32bc86da24495025d7aafd1ba62444d4a364a98",
+                "reference": "a32bc86da24495025d7aafd1ba62444d4a364a98",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpstan": "^1.10.62"
+            },
+            "conflict": {
+                "symfony/framework-bundle": "<3.0"
+            },
+            "require-dev": {
+                "nikic/php-parser": "^4.13.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.3.11",
+                "phpstan/phpstan-strict-rules": "^1.5.1",
+                "phpunit/phpunit": "^8.5.29 || ^9.5",
+                "psr/container": "1.0 || 1.1.1",
+                "symfony/config": "^5.4 || ^6.1",
+                "symfony/console": "^5.4 || ^6.1",
+                "symfony/dependency-injection": "^5.4 || ^6.1",
+                "symfony/form": "^5.4 || ^6.1",
+                "symfony/framework-bundle": "^5.4 || ^6.1",
+                "symfony/http-foundation": "^5.4 || ^6.1",
+                "symfony/messenger": "^5.4",
+                "symfony/polyfill-php80": "^1.24",
+                "symfony/serializer": "^5.4",
+                "symfony/service-contracts": "^2.2.0"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon",
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukáš Unger",
+                    "email": "looky.msc@gmail.com",
+                    "homepage": "https://lookyman.net"
+                }
+            ],
+            "description": "Symfony Framework extensions and rules for PHPStan",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan-symfony/issues",
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.3.9"
+            },
+            "time": "2024-03-16T16:50:20+00:00"
         },
         {
             "name": "psr/cache",

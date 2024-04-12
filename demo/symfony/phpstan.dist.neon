@@ -1,0 +1,9 @@
+includes:
+    - vendor/php-flasher/php-flasher/src/Prime/extension.neon
+parameters:
+    level: 9
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
