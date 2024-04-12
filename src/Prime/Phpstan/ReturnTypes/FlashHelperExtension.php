@@ -23,10 +23,15 @@ final class FlashHelperExtension implements DynamicFunctionReturnTypeExtension
 {
     private const MAPPING = [
         'flash' => [FlasherInterface::class, NotificationFactoryInterface::class],
+        'Flasher\Prime\flash' => [FlasherInterface::class, NotificationFactoryInterface::class],
         'noty' => NotyInterface::class,
+        'Flasher\Noty\Prime\noty' => NotyInterface::class,
         'notyf' => NotyfInterface::class,
+        'Flasher\Notyf\Prime\notyf' => NotyfInterface::class,
         'sweetalert' => SweetAlertInterface::class,
+        'Flasher\SweetAlert\Prime\sweetalert' => SweetAlertInterface::class,
         'toastr' => ToastrInterface::class,
+        'Flasher\Toastr\Prime\toastr' => ToastrInterface::class,
     ];
 
     public function isFunctionSupported(FunctionReflection $functionReflection): bool
