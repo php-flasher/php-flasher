@@ -32,8 +32,13 @@
             </div>
         </div>
 
+        <div class="bg-green-700 text-white text-center p-1 leading-tight shadow-lg sticky top-0 z-10">
+            <span class="text-xl font-bold">🇵🇸 Solidarity with Palestine.</span>
+            <span class="inline text-xs sm:text-sm md:text-base">We seek justice and peace, and we strongly oppose all forms of injustice and genocide. Together, we support the rights and freedom of the Palestinian people.</span>
+        </div>
+
         <main class="lg:container lg:mx-auto lg:px-6 flex">
-            <nav id="main-navigation" class="sticky top-4 hidden lg:block h-full w-full mx-10 lg:w-40">
+            <nav id="main-navigation" class="sticky top-8 hidden lg:block h-full w-full mx-10 lg:w-40">
                 {% for section in site.data.menu %}
                     <h4 class="text-sm leading-loose tracking-wide text-indigo-400 uppercase mt-4">{{ section[0] }}</h4>
                     <ul class="list-reset mb-8">
@@ -68,7 +73,7 @@
                     {% include prev-next.html %}
                 </div>
             </article>
-            <nav id="anchor-navigation" class="js-sticky hidden sticky top-4 h-full w-56">
+            <nav id="anchor-navigation" class="js-sticky hidden sticky top-8 h-full w-56">
                 <h4 class="text-sm leading-loose tracking-wide text-indigo-400 uppercase mt-4">
                     <i class="fa-duotone fa-bars-sort"></i> Jump to
                 </h4>
