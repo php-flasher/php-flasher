@@ -15,7 +15,6 @@ description: Seamlessly integrate PHPFlasher with PHPStan to validate dynamic me
 Add the {% PHPFlasher %} extension to your PHPStan setup by updating your project's `phpstan.neon` file:
 
 ```neon
-# phpstan.neon
 includes:
     - vendor/php-flasher/flasher/extension.neon
 ```
