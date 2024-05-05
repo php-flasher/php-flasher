@@ -12,16 +12,18 @@ Then, before returning a view or redirecting, call the `success()` method and pa
 ```php
 {{ id }}
 
+use Flasher\Prime\FlasherInterface;
+
 class BookController
 {
     public function saveBook()
     {
         // ...
 
-        flash('{{ message }}');
-        
         flash()->success('{{ site.data.messages["success"] | sample }}');
-            
+
+        flash('{{ message }}');
+
         // ... redirect or render the view
     }
     
@@ -31,9 +33,9 @@ class BookController
     public function register(FlasherInterface $flasher)
     {
         // ...
-        
+
         $flasher->success('{{ site.data.messages["success"] | sample }}');
-        
+
         // ... redirect or render the view
     }
 }
@@ -116,31 +118,27 @@ flash()->flash(string $type, string $message, string $title = null, array $optio
 flash()->flash('{{ type }}', '{{ message }}');
 ```
 
-| param      | description                                                                                                                                                                                                                                                                                                         |
-|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `$type`    | Notification type : <span class="text-white bg-green-600 px-2 py-1 rounded">success</span>, <span class="text-white bg-red-600 px-2 py-1 rounded">error</span>, <span class="text-white bg-yellow-600 px-2 py-1 rounded">warning</span>, <span class="text-white bg-blue-600 px-2 py-1 rounded">info</span> ....etc |
-| `$message` | The body of the message you want to deliver to your user. This may contain HTML. If you add links, be sure to add the appropriate classes for the framework you are using.                                                                                                                                          |
-| `$title`   | The notification title, Can also include HTML                                                                                                                                                                                                                                                                       |
-| `$options` | Custom options for javascript libraries (toastr, noty, notyf ...etc)                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                       |
+| param      | description                                                                                                                                                                                                                                                                                                 |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `$type`    | Notification type : <span class="text-white bg-green-600 px-2 py-1 rounded">success</span>, <span class="text-white bg-red-600 px-2 py-1 rounded">error</span>, <span class="text-white bg-yellow-600 px-2 py-1 rounded">warning</span>, <span class="text-white bg-blue-600 px-2 py-1 rounded">info</span> |
+| `$message` | The body of the message you want to deliver to your user. This may contain HTML. If you add links, be sure to add the appropriate classes for the framework you are using.                                                                                                                                  |
+| `$title`   | The notification title, Can also include HTML                                                                                                                                                                                                                                                               |
+| `$options` | Custom options for javascript libraries (toastr, noty, notyf ...etc)                                                                                                                                                                                                                                        |
 
 
 --- 
 
-## <i class="fa-duotone fa-list-radio"></i> Modifiers
-
 <p id="method-options"><a href="#method-options" class="anchor"><i class="fa-duotone fa-link"></i> options</a></p>
 
-You can specify **custom options** for the flash messages when using a JavaScript library like `toastr`, `noty`, or `notyf`. <br /><br />
 The `options()` method allows you to set multiple options at once by passing an array of `key-value` pairs, 
 while the `option()` method allows you to set a single option by specifying its name and value as separate arguments. <br /><br />
-The optional `$merge` argument for the `options()` method can be used to specify whether the new options should be merged with any existing options, 
+The optional `$append` argument for the `options()` method can be used to specify whether the new options should be appended to any existing options, 
 or whether they should overwrite them.
 
 ```php
-flash()->options(array $options, bool $merge = true);
+flash()->options(array $options, bool $append = true);
 ```
 
-> Refer to the documentation for your chosen JavaScript library to see which options are available and how they should be formatted.
 
 {% assign id = '#/ usage options' %}
 {% assign type = site.data.messages.types | sample %}
@@ -158,12 +156,6 @@ flash()
     ])
     ->{{ type }}('{{ message }}');
 ```
-
-| param      | description                                                                          |
-|------------|--------------------------------------------------------------------------------------|
-| `$options` | Custom options to be passed to the javascript libraries (toastr, noty, notyf ...etc) |
-| `$merge`   | Merge options if you call the options method multiple times                          |
-
 ---
 
 <p id="method-option"><a href="#method-option" class="anchor"><i class="fa-duotone fa-link"></i> option</a></p>
@@ -188,11 +180,6 @@ flash()
     ->option('timeout', 3000)
     ->{{ type }}('{{ message }}');
 ```
-
-| param     | description  |
-|-----------|--------------|
-| `$option` | Option key   |
-| `$value`  | Option value |
 
 ---
 

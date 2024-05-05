@@ -59,7 +59,7 @@ export default class FlasherPlugin extends AbstractPlugin {
             document.body.appendChild(container)
         }
 
-        container.dataset.turboCache = 'false'
+        container.dataset.turboTemporary = ''
 
         return container
     }

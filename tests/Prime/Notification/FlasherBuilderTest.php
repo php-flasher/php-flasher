@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Notification;
 
+use Flasher\Prime\Notification\FlasherBuilder;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
@@ -22,7 +23,7 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-final class NotificationBuilderTest extends TestCase
+final class FlasherBuilderTest extends TestCase
 {
     public function testAddSuccessMessage(): void
     {
@@ -323,7 +324,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('created', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testAddUpdated(): void
@@ -339,7 +340,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('updated', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testAddSaved(): void
@@ -355,7 +356,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('saved', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testAddDeleted(): void
@@ -371,7 +372,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('deleted', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testPreset(): void
@@ -397,7 +398,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('someOperation', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testCreated(): void
@@ -410,7 +411,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('created', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testUpdated(): void
@@ -423,7 +424,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('updated', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testSaved(): void
@@ -435,7 +436,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('saved', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testDeleted(): void
@@ -447,7 +448,7 @@ final class NotificationBuilderTest extends TestCase
 
         $this->assertInstanceOf(PresetStamp::class, $stamp);
         $this->assertSame('deleted', $stamp->getPreset());
-        $this->assertSame(['resource' => 'resource'], $stamp->getParameters());
+        $this->assertSame([':resource' => 'resource'], $stamp->getParameters());
     }
 
     public function testWithStamps(): void
@@ -526,6 +527,6 @@ final class NotificationBuilderTest extends TestCase
         /** @var StorageManagerInterface $storageManager */
         $storageManager = $storageManager ?: $this->createMock(StorageManagerInterface::class);
 
-        return new NotificationBuilder(new Notification(), $storageManager);
+        return new FlasherBuilder(new Notification(), $storageManager);
     }
 }

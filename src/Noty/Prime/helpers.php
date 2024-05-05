@@ -23,6 +23,8 @@ if (!function_exists('noty')) {
      * @return Envelope|NotyInterface Returns an Envelope containing the notification details when arguments are provided.
      *                                Returns an instance of NotyInterface when no arguments are provided.
      *
+     * @phpstan-return ($message is empty ? NotyInterface : Envelope)
+     *
      * Usage:
      * 1. Without arguments - Get the Noty factory: $noty = noty();
      * 2. With arguments - Create and return a Noty notification:

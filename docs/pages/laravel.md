@@ -6,44 +6,30 @@ description: Easily add flash notification messages to your Laravel application 
 framework: laravel
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> {% PHPFlasher %} Laravel
+## <i class="fa-duotone fa-list-radio"></i> Requirements
 
-{% PHPFlasher %} is a trusted and well-supported package 
-that allows you to easily integrate flash notification messages into your <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> **Laravel** projects.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> offers a seamless way to incorporate flash notifications in <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> <strong>Laravel</strong> projects, enhancing user feedback with minimal setup.
 
-To use {% PHPFlasher %} in a **Laravel** application, you need :
+Requirements for using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Laravel:
 
-> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** >= 8.2
-> <i class="fa-brands fa-laravel fa-2xl text-red-900 mr-1 ml-4"></i> **Laravel** >= 11.0
+> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** v8.2 or higher
+> <i class="fa-brands fa-laravel fa-2xl text-red-900 mr-1 ml-4"></i> **Laravel** v11.0 or higher
 
 ---
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-{% PHPFlasher %} is modular and consists of multiple libraries, 
-allowing users to install and use only the specific components they need for their project.
-
-{% PHPFlasher %} can be installed using composer :
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s modular design lets you select and install only the components your project needs.
 
 ```shell
 composer require php-flasher/flasher-laravel
 ```
 
-After installation, you need to run another command to set up the necessary assets for {% PHPFlasher %}:
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
 
 ```shell
 php artisan flasher:install
 ```
-
-
----
-
-{% PHPFlasher %} includes a default notification style <i class="fa-duotone fa-comment-captions text-yellow-600"></i>, but users can also install additional adapters to customize the appearance of notifications within their projects such as :
-
-* **[Toastr](/library/toastr/)**
-* **[Noty](/library/noty/)**
-* **[Notyf](/library/notyf/)**
-* **[Sweet Alert](/library/sweetalert/)**
 
 ---
 
@@ -56,7 +42,7 @@ php artisan flasher:install
 As optional, if you want to modify the default configuration, you can publish the configuration file:
 
 ```bash
-php artisan flasher:install
+php artisan flasher:install --config
 ```
 
 The configuration file will be located at `config/flasher.php` and will have the following content:
@@ -76,10 +62,10 @@ return [
         '/vendor/flasher/flasher.min.css',
     ],
 
-    // Whether to translate PHPFlasher messages using Laravel's translation service
+    // Enable translation of PHPFlasher messages using Laravel's translator service
     'translate' => true,
 
-    // Automatically inject PHPFlasher assets into HTML response
+    // Automatically inject PHPFlasher assets in HTML response
     'inject_assets' => true,
 
     // Configuration for the flash bag (converting Laravel flash messages)
@@ -194,10 +180,10 @@ class BookController
 
 ## <i class="fa-duotone fa-list-radio"></i> RTL support
 
-{% PHPFlasher %} makes it easy to incorporate <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`. 
-it automatically detects the text direction and handles the necessary adjustments for you. 
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> makes it easy to incorporate <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`.
+it automatically detects the text direction and handles the necessary adjustments for you.
 
-Simply make sure the translation service is enabled and let {% PHPFlasher %} handle the rest.
+Simply make sure the translation service is enabled and let <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> handle the rest.
 
 {% assign id = '#/ phpflasher rtl' %}
 {% assign type = 'success' %}
@@ -218,14 +204,14 @@ flash()
 
 ## <i class="fa-duotone fa-list-radio"></i> Translation
 
-{% PHPFlasher %} allows you to translate your notification `messages`, `presets`, it comes with `Arabic`, `English` and `French` translations out of the box, but you can easily add your own translations.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> allows you to translate your notification `messages` and `presets`, it comes with `Arabic`, `English`, `French`, `German`, `Spanish`, `Portuguese`, `Russian`, and `Chinese` translations out of the box. but you can easily add your own translations.
 
-For example, if you need to override the `English` translation strings for {% PHPFlasher %},  you can create a language file at the following location:
+For example, to override the `English` translation strings for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>, you can create a language file at the following location:
 **`/resources/lang/vendor/flasher/en/messages.php`**. 
 
-In this file, you should **only** define the translation strings you want to override. Any translation strings that you don't override will still be loaded from {% PHPFlasher %}'s original language files.
+In this file, you should **only** define the translation strings you want to override. Any translation strings that you don't override will still be loaded from <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s original language files.
 
-Here is a list of the default translation keys for {% PHPFlasher %}:
+Here are examples of the default translation keys for `Arabic`, `English`, and `French` in <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
 
 ```php
 <?php // /resources/lang/vendor/flasher/ar/messages.php
@@ -280,6 +266,8 @@ return [
         'resource' => '',
 ];
 ```
+
+> These translation files facilitate localizing notifications to match user preferences and ensure that your applications can communicate effectively across different linguistic contexts.
 
 {% assign id = '#/ laravel arabic translations' %}
 {% assign successMessage = 'تم إنشاء الملف' %}

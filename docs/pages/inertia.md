@@ -4,11 +4,11 @@ title: Inertia
 description: Easily add flash notification messages to your Inertia application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
 ---
 
-{% PHPFlasher %} offers a solid integration with Inertia.js
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> offers a solid integration with Inertia.js
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-To integrate {% PHPFlasher %} with Inertia.js, follow the same installation steps as for the [Laravel Installation](/laravel) package.
+To integrate <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Inertia.js, follow the same installation steps as for the [Laravel Installation](/laravel) package.
 
 Additionally, include `@flasher/flasher` in your package.json by adding the following line:
 

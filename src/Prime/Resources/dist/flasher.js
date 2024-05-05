@@ -122,7 +122,7 @@
                 Object.entries(options.style).forEach(([key, value]) => container.style.setProperty(key, value));
                 document.body.appendChild(container);
             }
-            container.dataset.turboCache = 'false';
+            container.dataset.turboTemporary = '';
             return container;
         }
         addToContainer(container, envelope, options) {

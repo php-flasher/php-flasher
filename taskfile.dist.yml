@@ -13,7 +13,8 @@ tasks:
         desc: "🔄 Update project dependencies to the lowest possible versions within the specified version constraints, ensuring compatibility."
         cmds:
             - composer update --prefer-lowest -W
-            - npm run ncu && npm install --force
+            - npm run ncu
+            - npm install --force
         aliases:
             - u
             - up
@@ -26,16 +27,24 @@ tasks:
             - req
 
     lint:
-        desc: "🔍 Run various linting tools to ensure code quality, including PHP-CS-Fixer, PHPStan, Composer validation, and PHPLint."
+        desc: "🔍 Run various linting tools to ensure code quality."
         cmds:
-            - vendor/bin/php-cs-fixer fix
+            - vendor/bin/php-cs-fixer fix --dry-run
             - vendor/bin/phpstan analyse
             - composer validate --strict
             - vendor/bin/phplint
+            - find src/ -name "composer.json" -exec composer validate --strict {} \;
         aliases:
             - pint
             - check
             - validate
+
+    fix:
+        desc: "🛠️ Automatically fix coding standards issues."
+        cmds:
+            - vendor/bin/php-cs-fixer fix
+        aliases:
+            - lintf
 
     test:
         desc: "✅ Run PHPUnit tests to verify the correctness of the codebase."
@@ -45,3 +54,10 @@ tasks:
             - tests
             - phpunit
             - unit
+
+    security:
+        desc: "🔐 Check for security vulnerabilities in the project dependencies."
+        cmds:
+            - symfony security:check
+        aliases:
+            - seccheck

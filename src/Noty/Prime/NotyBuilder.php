@@ -19,12 +19,16 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * @param array<string, mixed> $options
      */
-    public function alert(?string $message = null, array $options = []): self
+    public function alert(?string $message = null, ?string $title = null, array $options = []): self
     {
         $this->type('alert');
 
         if ($message) {
             $this->message($message);
+        }
+
+        if ($title) {
+            $this->title($title);
         }
 
         if ([] !== $options) {
@@ -91,6 +95,9 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * @param "open"|"close"                                  $animation
+     * @param "noty_effects_open"|"noty_effects_close"|string $effect
+     *
      * If string, assumed to be CSS class name. If null, no animation at all. If function, runs the function. (v3.0.1+)
      * You can use animate.css class names or your custom css animations as well.
      */
@@ -101,6 +108,9 @@ final class NotyBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * @param "sources"|"volume"|"conditions" $option
+     */
     public function sounds(string $option, mixed $value): self
     {
         $this->option('sounds.'.$option, $value);
@@ -108,6 +118,9 @@ final class NotyBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * @param "conditions"|string $option
+     */
     public function docTitle(string $option, string $docTitle): self
     {
         $this->option('docTitle'.$option, $docTitle);

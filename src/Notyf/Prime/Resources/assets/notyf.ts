@@ -15,9 +15,9 @@ export default class NotyfPlugin extends AbstractPlugin {
         })
 
         // @ts-expect-error
-        this.notyf.view.container.dataset.turboCache = 'false'
+        this.notyf.view.container.dataset.turboTemporary = ''
         // @ts-expect-error
-        this.notyf.view.a11yContainer.dataset.turboCache = 'false'
+        this.notyf.view.a11yContainer.dataset.turboTemporary = ''
     }
 
     public renderOptions(options: Options): void {

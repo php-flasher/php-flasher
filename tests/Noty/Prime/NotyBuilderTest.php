@@ -102,12 +102,12 @@ final class NotyBuilderTest extends TestCase
 
     public function testSounds(): void
     {
-        $this->notyBuilder->sounds('open', 'sound.mp3');
+        $this->notyBuilder->sounds('sources', 'sound.mp3');
 
         $envelope = $this->notyBuilder->getEnvelope();
         $options = $envelope->getNotification()->getOptions();
 
-        $this->assertSame(['sounds.open' => 'sound.mp3'], $options);
+        $this->assertSame(['sounds.sources' => 'sound.mp3'], $options);
     }
 
     public function testDocTitle(): void

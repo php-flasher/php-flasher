@@ -38,13 +38,12 @@ final readonly class TranslationListener implements EventListenerInterface
 
     private function translateEnvelope(Envelope $envelope): void
     {
-        $stamp = $envelope->get(TranslationStamp::class);
-        if (!$stamp instanceof TranslationStamp) {
-            return;
-        }
+        $translationStamp = $envelope->get(TranslationStamp::class);
 
-        $locale = $stamp->getLocale() ?: $this->translator->getLocale();
-        $parameters = $stamp->getParameters() ?: $this->getParameters($envelope, $locale);
+        $locale = $translationStamp?->getLocale() ?: $this->translator->getLocale();
+
+        $parameters = $translationStamp?->getParameters() ?: [];
+        $parameters = array_merge($parameters, $this->getParameters($envelope, $locale));
 
         $this->applyTranslations($envelope, $locale, $parameters);
 

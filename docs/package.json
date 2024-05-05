@@ -20,7 +20,8 @@
         "@symfony/webpack-encore": "^4.6.1",
         "noty": "^3.2.0-beta-deprecated",
         "notyf": "^3.10.0",
-        "sweetalert2": "^11.10.7",
+        "prismjs": "^1.29.0",
+        "sweetalert2": "^11.10.8",
         "toastr": "^2.1.4"
     },
     "devDependencies": {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Prime;
 
-use Flasher\Prime\Factory\NotificationFactory;
+use Flasher\Prime\Factory\FlasherFactory;
 use Flasher\Prime\Factory\NotificationFactoryInterface;
 use Flasher\Prime\Factory\NotificationFactoryLocatorInterface;
 use Flasher\Prime\Response\ResponseManagerInterface;
@@ -37,7 +37,7 @@ final readonly class Flasher implements FlasherInterface
             return $this->factoryLocator->get($alias);
         }
 
-        return new NotificationFactory($this->storageManager, $alias);
+        return new FlasherFactory($this->storageManager, $alias);
     }
 
     public function create(?string $alias): NotificationFactoryInterface

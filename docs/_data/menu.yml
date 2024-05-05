@@ -4,7 +4,6 @@
     <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel: '/laravel/'
     <i class="fa-duotone fa-ghost fa-lg text-pink-800 mr-1"></i> Livewire: '/livewire/'
     <i class="fa-duotone fa-angles-right fa-lg text-indigo-900 mr-1"></i> Inertia: '/inertia/'
-    <i class="fa-duotone fa-magnifying-glass fa-lg text-indigo-900 mr-1"></i> PHPstan: '/phpstan/'
 
 <i class="fa-duotone fa-plug"></i> libraries:
     <i class="fa-duotone fa-bell text-indigo-900 mr-1 fa-lg"></i> Noty: '/library/noty/'

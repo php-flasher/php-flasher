@@ -50,7 +50,7 @@ class ToastrPlugin extends AbstractPlugin {
         envelopes.forEach((envelope) => {
             const { message, title, type, options } = envelope;
             const instance = toastr$1[type](message, title, options);
-            instance && instance.parent().attr('data-turbo-cache', 'false');
+            instance && instance.parent().attr('data-turbo-temporary', '');
         });
     }
     renderOptions(options) {

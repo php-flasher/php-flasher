@@ -6,36 +6,92 @@ handler: notyf
 data-controller: notyf
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> Installation
+## <i class="fa-duotone fa-list-radio"></i> Laravel
 
-**<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel**:
+<p id="laravel-installation"><a href="#laravel-installation" class="anchor"><i class="fa-duotone fa-link"></i> Installation</a></p>
 
 ```shell
 composer require php-flasher/flasher-notyf-laravel
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
+
 ```shell
 php artisan flasher:install
 ```
 
-<br />
+<p id="laravel-configuration"><a href="#laravel-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
 
-**<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony**:
+```php
+<?php // config/flasher.php
+
+return [
+    'plugins' => [
+        'notyf' => [
+            'scripts' => [
+                '/vendor/flasher/flasher-notyf.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/flasher-notyf.min.css',
+            ],
+            'options' => [
+                // Optional: Add global options here
+                'dismissible' => true,
+            ],
+        ],
+    ],
+];
+```
+
+## <i class="fa-duotone fa-list-radio"></i> Symfony
+
+<p id="symfony-installation"><a href="#symfony-installation" class="anchor"><i class="fa-duotone fa-link"></i> Installation</a></p>
 
 ```shell
 composer require php-flasher/flasher-notyf-symfony
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
 ```shell
 php bin/console flasher:install
+```
+
+<p id="symfony-configuration"><a href="#symfony-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    plugins:
+        notyf:
+            scripts:
+                - '/vendor/flasher/flasher-notyf.min.js'
+            styles:
+                - '/vendor/flasher/flasher-notyf.min.css'
+            options:
+            # Optional: Add global options here
+                dismissible: true
 ```
 
 ---
 
 ## <i class="fa-duotone fa-list-radio"></i> Usage
 
-{% assign id = '#/ notyf' %}
-{% assign type = site.data.messages.types | sample %}
+---
+
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+
+---
+
+To display a notification message, you can either use the `notyf()` helper method or obtain an instance of `notyf` from the service container.
+Then, before returning a view or redirecting, call the `success()` method and pass in the desired message to be displayed.
+
+<p id="method-success"><a href="#method-success" class="anchor"><i class="fa-duotone fa-link"></i> success</a></p>
+
+{% assign id = '#/ noty' %}
+{% assign type = 'success' %}
 {% assign message = site.data.messages[type] | sample %}
 {% assign options = '{}' %}
 {% include example.html %}
@@ -43,26 +99,82 @@ php bin/console flasher:install
 ```php
 {{ id }}
 
-namespace App\Controller;
+use Flasher\Notyf\Prime\NotyfInterface;
 
-class AppController
+class BookController
 {
-    public function save()
+    public function saveBook()
     {        
-        notyf()->{{ type }}('{{ message }}');
+        notyf()->success('{{ message }}');
+        
+        // or simply 
+        
+        notyf('{{ message }}');
     }
-} 
+    
+    /**
+     * if you prefer to use dependency injection 
+     */
+    public function register(NotyfInterface $notyf)
+    {
+        // ...
+
+        $notyf->success('{{ site.data.messages["success"] | sample }}');
+
+        // ... redirect or render the view
+    }
+}
+```
+
+<p id="method-info"><a href="#method-info" class="anchor"><i class="fa-duotone fa-link"></i> info</a></p>
+
+{% assign id = '#/ usage info' %}
+{% assign type = 'info' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+notyf()->{{ type }}('{{ message }}');
+```
+
+<p id="method-warning"><a href="#method-warning" class="anchor"><i class="fa-duotone fa-link"></i> warning</a></p>
+
+{% assign id = '#/ usage warning' %}
+{% assign type = 'warning' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+notyf()->{{ type }}('{{ message }}');
+```
+
+<p id="method-error"><a href="#method-error" class="anchor"><i class="fa-duotone fa-link"></i> error</a></p>
+
+{% assign id = '#/ usage error' %}
+{% assign type = 'error' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+notyf()->{{ type }}('{{ message }}');
 ```
 
 ---
-
-## <i class="fa-duotone fa-list-radio"></i> Modifiers
 
 For more information on Notyf options and usage, please refer to the original documentation at [https://github.com/caroso1222/notyf](https://github.com/caroso1222/notyf)
 
 ---
 
-> The methods described in the **[Usage](/installation/#-modifiers)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
 
 ---
 

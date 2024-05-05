@@ -16,7 +16,7 @@ export default class NotyPlugin extends AbstractPlugin {
             const noty = new Noty(options)
             noty.show()
             // @ts-expect-error
-            noty.layoutDom?.dataset.turboCache = 'false'
+            noty.layoutDom?.dataset.turboTemporary = ''
         })
     }
 

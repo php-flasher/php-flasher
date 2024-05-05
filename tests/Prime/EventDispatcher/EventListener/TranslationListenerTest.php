@@ -76,4 +76,21 @@ final class TranslationListenerTest extends TestCase
 
         $this->assertEquals($envelopes, $event->getEnvelopes());
     }
+
+    public function testTranslationThrowExceptionWithInvalidParams(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $eventDispatcher = new EventDispatcher();
+
+        $listener = new TranslationListener(new EchoTranslator());
+        $eventDispatcher->addListener($listener);
+
+        $envelopes[] = new Envelope(new Notification(), new PresetStamp('created', ['resource' => new Notification()]));
+
+        $event = new PresentationEvent($envelopes, []);
+        $eventDispatcher->dispatch($event);
+
+        $this->assertEquals($envelopes, $event->getEnvelopes());
+    }
 }

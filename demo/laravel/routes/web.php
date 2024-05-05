@@ -1,42 +1,17 @@
 <?php
 
-use Flasher\Prime\FlasherInterface;
+use App\Entity\Book;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    session()->flash('success', 'Hello from default Symfony');
+    // sweetalert()->timerProgressBar()->success('hello from Home Controller');
+    // noty()->layout('topCenter')->success('hello from Home Controller');
+    // notyf()->ripple(false)->warning('hello from Home Controller');
+    // toastr()->positionClass('toast-bottom-left')->error('hello from Home Controller');
+    // flash()->use('flasher')->success('hello from flasher factory');
 
-    return <<<HTML
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="UTF-8">
-                <title>flash</title>
-            </head>
-            <body>
-                <ul>
-                    <li><a href="/">/</a></li>
-                    <li><a href="/adapter/flasher">/adapter/flasher</a></li>
-                    <li><a href="/adapter/noty">/adapter/noty</a></li>
-                    <li><a href="/adapter/notyf">/adapter/notyf</a></li>
-                    <li><a href="/adapter/sweetalert">/adapter/sweetalert</a></li>
-                    <li><a href="/adapter/toastr">/adapter/toastr</a></li>
-                </ul>
-            </body>
-        </html>
-    HTML;
-})->name('app_home');
-
-Route::get('/adapter/{adapter}', function (FlasherInterface $flasher, string $adapter) {
-    $factory = $flasher->create($adapter);
-
-    $factory->success('Operation completed successfully.');
-    $factory->info('Please note that some information has been updated.');
-    $factory->warning('This action could have potential consequences.');
-    $factory->error('An error occurred while processing your request.');
+    flash()->created(new Book('lord of the rings'));
+    flash()->saved(new Book('harry potter'));
 
     return view('welcome');
-})->name('app_adapter');
-
-Route::get('/livewire/counter', \App\Livewire\Counter::class);
-Route::get('/livewire/eventous', \App\Livewire\Eventous::class);
+})->name('app_home');

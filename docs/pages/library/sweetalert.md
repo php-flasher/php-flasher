@@ -6,36 +6,94 @@ handler: sweetalert
 data-controller: sweetalert
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> Installation
+## <i class="fa-duotone fa-list-radio"></i> Laravel
 
-**<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel**:
+<p id="laravel-installation"><a href="#laravel-installation" class="anchor"><i class="fa-duotone fa-link"></i> Installation</a></p>
 
 ```shell
 composer require php-flasher/flasher-sweetalert-laravel
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
 ```shell
 php artisan flasher:install
 ```
 
+<p id="laravel-configuration"><a href="#laravel-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
+
+```php
+<?php // config/flasher.php
+
+return [
+    'plugins' => [
+        'sweetalert' => [
+            'scripts' => [
+                '/vendor/flasher/sweetalert2.min.js',
+                '/vendor/flasher/flasher-sweetalert.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/sweetalert2.min.css',
+            ],
+            'options' => [
+                // Optional: Add global options here
+                'position' => 'center'
+            ],
+        ],
+    ],
+];
+```
 <br />
 
-**<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony**:
+## <i class="fa-duotone fa-list-radio"></i> Symfony
+
+<p id="symfony-installation"><a href="#symfony-installation" class="anchor"><i class="fa-duotone fa-link"></i> Installation</a></p>
 
 ```shell
 composer require php-flasher/flasher-sweetalert-symfony
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
 ```shell
 php bin/console flasher:install
 ```
 
---- 
+<p id="symfony-configuration"><a href="#symfony-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    plugins:
+        sweetalert:
+            scripts:
+                - '/vendor/flasher/sweetalert2.min.js'
+                - '/vendor/flasher/flasher-sweetalert.min.js'
+            styles:
+                - '/vendor/flasher/sweetalert2.min.css'
+            options:
+            # Optional: Add global options here
+                position: center
+```
+
+---
 
 ## <i class="fa-duotone fa-list-radio"></i> Usage
 
-{% assign id = '#/ sweetalert' %}
-{% assign type = site.data.messages.types | sample %}
+---
+
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+
+---
+
+To display a notification message, you can either use the `sweetalert()` helper method or obtain an instance of `sweetalert` from the service container.
+Then, before returning a view or redirecting, call the `success()` method and pass in the desired message to be displayed.
+
+<p id="method-success"><a href="#method-success" class="anchor"><i class="fa-duotone fa-link"></i> success</a></p>
+
+{% assign id = '#/ noty' %}
+{% assign type = 'success' %}
 {% assign message = site.data.messages[type] | sample %}
 {% assign options = '{}' %}
 {% include example.html %}
@@ -43,26 +101,82 @@ php bin/console flasher:install
 ```php
 {{ id }}
 
-namespace App\Controller;
+use Flasher\SweetAlert\Prime\SweetAlertInterface;
 
-class AppController
+class BookController
 {
-    public function save()
+    public function saveBook()
     {        
-        sweetalert()->{{ type }}('{{ message }}');
+        sweetalert()->success('{{ message }}');
+        
+        // or simply 
+        
+        sweetalert('{{ message }}');
     }
-} 
+    
+    /**
+     * if you prefer to use dependency injection 
+     */
+    public function register(SweetAlertInterface $sweetalert)
+    {
+        // ...
+
+        $sweetalert->success('{{ site.data.messages["success"] | sample }}');
+
+        // ... redirect or render the view
+    }
+}
 ```
 
---- 
+<p id="method-info"><a href="#method-info" class="anchor"><i class="fa-duotone fa-link"></i> info</a></p>
 
-## <i class="fa-duotone fa-list-radio"></i> Modifiers
+{% assign id = '#/ usage info' %}
+{% assign type = 'info' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+sweetalert()->{{ type }}('{{ message }}');
+```
+
+<p id="method-warning"><a href="#method-warning" class="anchor"><i class="fa-duotone fa-link"></i> warning</a></p>
+
+{% assign id = '#/ usage warning' %}
+{% assign type = 'warning' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+sweetalert()->{{ type }}('{{ message }}');
+```
+
+<p id="method-error"><a href="#method-error" class="anchor"><i class="fa-duotone fa-link"></i> error</a></p>
+
+{% assign id = '#/ usage error' %}
+{% assign type = 'error' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+sweetalert()->{{ type }}('{{ message }}');
+```
+
+---
 
 For more information on Sweetalert2 alert  options and usage, please refer to the original documentation at [https://sweetalert2.github.io](https://sweetalert2.github.io)
 
 ---
 
-> The methods described in the **[Usage](/installation/#-modifiers)** section can also be used with the `sweetalert` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
 
 ---
 

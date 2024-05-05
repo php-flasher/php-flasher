@@ -5,23 +5,25 @@ description: Learn how to seamlessly integrate flash notification messages into 
 adapter: flasher
 ---
 
-{% PHPFlasher %} provides a seamless integration with Livewire v3.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> provides a seamless integration with Livewire v3.
 
 ## <i class="fa-duotone fa-list-radio"></i> Requirements
 
-> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** >= 8.2
-> <i class="fa-brands fa-laravel fa-2xl text-red-900 mr-1 ml-4"></i> **Laravel** >= 11
+> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** v8.2 or higher
+> <i class="fa-brands fa-laravel fa-2xl text-red-900 mr-1 ml-4"></i> **Laravel** v11.0 or higher
 
 ---
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-To integrate {% PHPFlasher %} with Livewire, follow the same installation steps as for the [Laravel Installation](/laravel) package.
+To integrate <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Livewire, follow the same installation steps as for the [Laravel Installation](/laravel) package.
 
 ```shell
 composer require php-flasher/flasher-laravel
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
 ```shell
 php artisan flasher:install
 ```

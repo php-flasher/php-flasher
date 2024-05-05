@@ -52,7 +52,7 @@ class NotyPlugin extends AbstractPlugin {
             const options = Object.assign({ text: envelope.message, type: envelope.type }, envelope.options);
             const noty = new Noty(options);
             noty.show();
-            (_a = noty.layoutDom) === null || _a === void 0 ? void 0 : _a.dataset.turboCache = 'false';
+            (_a = noty.layoutDom) === null || _a === void 0 ? void 0 : _a.dataset.turboTemporary = '';
         });
     }
     renderOptions(options) {

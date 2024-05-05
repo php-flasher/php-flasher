@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Flasher\Prime\FlasherInterface;
+use App\Entity\Book;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,19 +10,19 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(FlasherInterface $flasher): Response
+    public function index(): Response
     {
-        $this->addFlash('success', 'welcome from php-flasher');
+        sweetalert()->timerProgressBar()->success('hello from Home Controller');
+        noty()->layout('topCenter')->success('hello from Home Controller');
+        notyf()->ripple(false)->warning('hello from Home Controller');
+        toastr()->positionClass('toast-bottom-left')->error('hello from Home Controller');
+        flash()->use('flasher')->success('hello from flasher factory');
 
-        flash()->info('hello from Home Controller', ['timeout' => 60000]);
-        $flasher->info('hello from Home Controller', ['timeout' => 60000]);
+        flash()->created(new Book('lord of the rings'));
+        flash()->saved(new Book('harry potter'));
 
-        sweetalert()->success('hello from Home Controller', ['timeout' => 60000]);
-        noty()->success('hello from Home Controller', ['timeout' => 60000]);
-        notyf()->warning('hello from Home Controller', ['timeout' => 60000]);
-
-        toastr()->error('hello from Home Controller', ['timeout' => 60000]);
-        \Flasher\Toastr\Prime\toastr()->error('hello from Home Controller', ['timeout' => 60000]);
+        // flash()->updated();
+        // flash()->deleted();
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

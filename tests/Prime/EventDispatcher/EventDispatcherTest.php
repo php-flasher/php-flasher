@@ -58,6 +58,7 @@ final class EventDispatcherTest extends TestCase
         $listener = new StoppableEventListener();
 
         $this->dispatcher->addListener($listener);
+        $this->dispatcher->addListener($listener);
         $this->dispatcher->dispatch($event);
 
         $this->assertTrue($event->isPropagationStopped());

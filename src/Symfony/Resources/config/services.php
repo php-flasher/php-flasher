@@ -78,11 +78,11 @@ return static function (ContainerConfigurator $container): void {
 
         ->set('flasher.translation_listener', TranslationListener::class)
             ->args([service('flasher.translator')->nullOnInvalid()])
-            ->tag('kernel.event_listener')
+            ->tag('flasher.event_listener')
 
         ->set('flasher.preset_listener', ApplyPresetListener::class)
             ->args([param('flasher.presets')])
-            ->tag('kernel.event_listener')
+            ->tag('flasher.event_listener')
 
         ->set('flasher.install_command', InstallCommand::class)
             ->args([service('flasher.asset_manager')])
@@ -96,6 +96,7 @@ return static function (ContainerConfigurator $container): void {
             ])
 
         ->set('flasher.notification_factory', NotificationFactory::class)
+            ->abstract()
             ->args([service('flasher.storage_manager')])
 
         ->set('flasher.storage', Storage::class)

@@ -161,6 +161,8 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
+     * @param "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end" $position
+     *
      * Whether or not an alert should be treated as a toast notification. This option is normally coupled with the
      * position parameter and a timer. Toasts are NEVER autofocused.
      */
@@ -188,8 +190,10 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
+     * @param "text"|"email"|"password"|"number"|"tel"|"range"|"textarea"|"search"|"url"|"select"|"radio"|"checkbox"|"file"|"date"|"datetime-local"|"time"|"week"|"month" $input
+     *
      * Input field type, can be text, email, password, number, tel, range, textarea, select, radio, checkbox, file and
-     * url.
+     * url
      */
     public function input(string $input): self
     {
@@ -229,8 +233,10 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
+     * @param "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end" $position
+     *
      * Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom',
-     * 'bottom-start', or 'bottom-end'.
+     * 'bottom-start', or 'bottom-end'
      */
     public function position(string $position): self
     {
@@ -240,8 +246,10 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
+     * @param "row"|"column"|"fullscreen"|false $grow
+     *
      * Paired with window position, sets the direction the popup should grow in, can be set to 'row', 'column',
-     * 'fullscreen', or false.
+     * 'fullscreen', or false
      */
     public function grow(bool|string $grow): self
     {
@@ -251,7 +259,9 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * A custom CSS class for the popup.
+     * @param "container"|"popup"|"header"|"title"|"closeButton"|"icon"|"image"|"content"|"input"|"inputLabel"|"validationMessage"|"actions"|"confirmButton"|"denyButton"|"cancelButton"|"loader"|"footer" $customClass
+     *
+     * A custom CSS class for the popup
      */
     public function customClass(string $customClass, string $value): self
     {

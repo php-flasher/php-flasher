@@ -6,36 +6,96 @@ handler: noty
 data-controller: noty
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> Installation
+## <i class="fa-duotone fa-list-radio"></i> Laravel
 
-**<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel**:
+<p id="laravel-installation"><a href="#laravel-installation" class="anchor"><i class="fa-duotone fa-link"></i> Installation</a></p>
 
 ```shell
 composer require php-flasher/flasher-noty-laravel
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
 ```shell
 php artisan flasher:install
 ```
 
+<p id="laravel-configuration"><a href="#laravel-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
+
+```php
+<?php // config/flasher.php
+
+return [
+    'plugins' => [
+        'noty' => [
+            'scripts' => [
+                '/vendor/flasher/noty.min.js',
+                '/vendor/flasher/flasher-noty.min.js'
+            ],
+            'styles' => [
+                '/vendor/flasher/noty.css',
+                '/vendor/flasher/mint.css'
+            ],
+            'options' => [
+                // Optional: Add global options here
+                'layout' => 'topRight'
+            ],
+        ],
+    ],
+];
+```
 <br />
 
-**<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony**:
+## <i class="fa-duotone fa-list-radio"></i> Symfony
+
+<p id="symfony-installation"><a href="#symfony-installation" class="anchor"><i class="fa-duotone fa-link"></i> Installation</a></p>
 
 ```shell
 composer require php-flasher/flasher-noty-symfony
 ```
-Then, run:
+
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+
 ```shell
 php bin/console flasher:install
+```
+
+<p id="symfony-configuration"><a href="#symfony-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    plugins:
+        noty:
+            scripts:
+                - '/vendor/flasher/noty.min.js'
+                - '/vendor/flasher/flasher-noty.min.js'
+            styles:
+                - '/vendor/flasher/noty.css'
+                - '/vendor/flasher/mint.css'
+            options:
+            # Optional: Add global options here
+                layout: topRight
 ```
 
 ---
 
 ## <i class="fa-duotone fa-list-radio"></i> Usage
 
+---
+
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+
+---
+
+To display a notification message, you can either use the `noty()` helper method or obtain an instance of `noty` from the service container.
+Then, before returning a view or redirecting, call the `success()` method and pass in the desired message to be displayed.
+
+<p id="method-success"><a href="#method-success" class="anchor"><i class="fa-duotone fa-link"></i> success</a></p>
+
 {% assign id = '#/ noty' %}
-{% assign type = site.data.messages.types | sample %}
+{% assign type = 'success' %}
 {% assign message = site.data.messages[type] | sample %}
 {% assign options = '{}' %}
 {% include example.html %}
@@ -43,26 +103,82 @@ php bin/console flasher:install
 ```php
 {{ id }}
 
-namespace App\Controller;
+use Flasher\Noty\Prime\NotyInterface;
 
-class AppController
+class BookController
 {
-    public function save()
+    public function saveBook()
     {        
-        noty()->{{ type }}('{{ message }}');
+        noty()->success('{{ message }}');
+        
+        // or simply 
+        
+        noty('{{ message }}');
+    }
+    
+    /**
+     * if you prefer to use dependency injection 
+     */
+    public function register(NotyInterface $noty)
+    {
+        // ...
+
+        $noty->success('{{ site.data.messages["success"] | sample }}');
+
+        // ... redirect or render the view
     }
 }
 ```
 
----
+<p id="method-info"><a href="#method-info" class="anchor"><i class="fa-duotone fa-link"></i> info</a></p>
 
-## <i class="fa-duotone fa-list-radio"></i> Modifiers
+{% assign id = '#/ usage info' %}
+{% assign type = 'info' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+noty()->{{ type }}('{{ message }}');
+```
+
+<p id="method-warning"><a href="#method-warning" class="anchor"><i class="fa-duotone fa-link"></i> warning</a></p>
+
+{% assign id = '#/ usage warning' %}
+{% assign type = 'warning' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+noty()->{{ type }}('{{ message }}');
+```
+
+<p id="method-error"><a href="#method-error" class="anchor"><i class="fa-duotone fa-link"></i> error</a></p>
+
+{% assign id = '#/ usage error' %}
+{% assign type = 'error' %}
+{% assign message = site.data.messages[type] | sample %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+noty()->{{ type }}('{{ message }}');
+```
+
+---
 
 For more information on Noty options and usage, please refer to the original documentation at [https://ned.im/noty/](https://ned.im/noty/)
 
 ---
 
-> The methods described in the **[Usage](/installation/#-modifiers)** section can also be used with the `noty` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
 
 ---
 
@@ -112,30 +228,30 @@ noty()->theme(string $theme);
 {% assign infoMessage = site.data.messages['info'] | sample %}
 
 <script type="text/javascript">
-    messages["#/ noty theme mint"] = [
+    messages['#/ noty theme mint'] = [
         {
-            handler: "{{ page.handler }}",
-            type: "success",
-            message: "{{ successMessage }}",
-            options: { theme: "mint"},
+            handler: '{{ page.handler }}',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'mint'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "error",
-            message: "{{ errorMessage }}",
-            options: { theme: "mint"},
+            handler: '{{ page.handler }}',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'mint'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            options: { theme: "mint"},
+            handler: '{{ page.handler }}',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'mint'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "info",
-            message: "{{ infoMessage }}",
-            options: { theme: "mint"},
+            handler: '{{ page.handler }}',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'mint'},
         }
     ];
 </script>
@@ -166,30 +282,30 @@ noty()
 {% assign infoMessage = site.data.messages['info'] | sample %}
 
 <script type="text/javascript">
-    messages["#/ noty theme relax"] = [
+    messages['#/ noty theme relax'] = [
         {
-            handler: "{{ page.handler }}",
-            type: "success",
-            message: "{{ successMessage }}",
-            options: { theme: "relax"},
+            handler: '{{ page.handler }}',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'relax'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "error",
-            message: "{{ errorMessage }}",
-            options: { theme: "relax"},
+            handler: '{{ page.handler }}',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'relax'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            options: { theme: "relax"},
+            handler: '{{ page.handler }}',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'relax'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "info",
-            message: "{{ infoMessage }}",
-            options: { theme: "relax"},
+            handler: '{{ page.handler }}',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'relax'},
         }
     ];
 </script>
@@ -222,30 +338,30 @@ noty()
 {% assign infoMessage = site.data.messages['info'] | sample %}
 
 <script type="text/javascript">
-    messages["#/ noty theme metroui"] = [
+    messages['#/ noty theme metroui'] = [
         {
-            handler: "{{ page.handler }}",
-            type: "success",
-            message: "{{ successMessage }}",
-            options: { theme: "metroui"},
+            handler: '{{ page.handler }}',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'metroui'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "error",
-            message: "{{ errorMessage }}",
-            options: { theme: "metroui"},
+            handler: '{{ page.handler }}',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'metroui'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            options: { theme: "metroui"},
+            handler: '{{ page.handler }}',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'metroui'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "info",
-            message: "{{ infoMessage }}",
-            options: { theme: "metroui"},
+            handler: '{{ page.handler }}',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'metroui'},
         }
     ];
 </script>
@@ -278,30 +394,30 @@ noty()
 {% assign infoMessage = site.data.messages['info'] | sample %}
 
 <script type="text/javascript">
-    messages["#/ noty theme light"] = [
+    messages['#/ noty theme light'] = [
         {
-            handler: "{{ page.handler }}",
-            type: "success",
-            message: "{{ successMessage }}",
-            options: { theme: "light"},
+            handler: '{{ page.handler }}',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'light'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "error",
-            message: "{{ errorMessage }}",
-            options: { theme: "light"},
+            handler: '{{ page.handler }}',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'light'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            options: { theme: "light"},
+            handler: '{{ page.handler }}',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'light'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "info",
-            message: "{{ infoMessage }}",
-            options: { theme: "light"},
+            handler: '{{ page.handler }}',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'light'},
         }
     ];
 </script>
@@ -334,30 +450,30 @@ noty()
 {% assign infoMessage = site.data.messages['info'] | sample %}
 
 <script type="text/javascript">
-    messages["#/ noty theme sunset"] = [
+    messages['#/ noty theme sunset'] = [
         {
-            handler: "{{ page.handler }}",
-            type: "success",
-            message: "{{ successMessage }}",
-            options: { theme: "sunset"},
+            handler: '{{ page.handler }}',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'sunset'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "error",
-            message: "{{ errorMessage }}",
-            options: { theme: "sunset"},
+            handler: '{{ page.handler }}',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'sunset'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            options: { theme: "sunset"},
+            handler: '{{ page.handler }}',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'sunset'},
         },
         {
-            handler: "{{ page.handler }}",
-            type: "info",
-            message: "{{ infoMessage }}",
-            options: { theme: "sunset"},
+            handler: '{{ page.handler }}',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'sunset'},
         }
     ];
 </script>

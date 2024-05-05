@@ -8,7 +8,7 @@ export default class ToastrPlugin extends AbstractPlugin {
         envelopes.forEach((envelope) => {
             const { message, title, type, options } = envelope
             const instance = toastr[type as ToastrType](message, title, options as ToastrOptions)
-            instance && instance.parent().attr('data-turbo-cache', 'false')
+            instance && instance.parent().attr('data-turbo-temporary', '')
         })
     }
 

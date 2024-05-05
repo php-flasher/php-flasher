@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\StampInterface;
-use Flasher\Prime\Translation\ResourceInterface;
 
 interface NotificationBuilderInterface
 {
@@ -83,15 +82,15 @@ interface NotificationBuilderInterface
      */
     public function preset(string $preset, array $parameters = []): Envelope;
 
-    public function operation(string $operation, string|ResourceInterface|null $resource = null): Envelope;
+    public function operation(string $operation, string|object|null $resource = null): Envelope;
 
-    public function created(string|ResourceInterface|null $resource = null): Envelope;
+    public function created(string|object|null $resource = null): Envelope;
 
-    public function updated(string|ResourceInterface|null $resource = null): Envelope;
+    public function updated(string|object|null $resource = null): Envelope;
 
-    public function saved(string|ResourceInterface|null $resource = null): Envelope;
+    public function saved(string|object|null $resource = null): Envelope;
 
-    public function deleted(string|ResourceInterface|null $resource = null): Envelope;
+    public function deleted(string|object|null $resource = null): Envelope;
 
     public function push(): Envelope;
 

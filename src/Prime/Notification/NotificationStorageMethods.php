@@ -6,7 +6,6 @@ namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\PresetStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
-use Flasher\Prime\Translation\ResourceInterface;
 
 trait NotificationStorageMethods
 {
@@ -82,22 +81,13 @@ trait NotificationStorageMethods
 
     public function operation(string $operation, string|object|null $resource = null): Envelope
     {
-        if ($resource instanceof ResourceInterface) {
-            $type = $resource->getResourceType();
-            $name = $resource->getResourceName();
+        $resource = match (true) {
+            \is_string($resource) => $resource,
+            \is_object($resource) => $this->resolveResourceName($resource),
+            default => null,
+        };
 
-            $resource = sprintf(
-                '%s %s',
-                $type,
-                '' === $name ? '' : sprintf('"%s"', $name)
-            );
-        }
-
-        $parameters = [
-            'resource' => $resource ?: 'resource',
-        ];
-
-        return $this->preset($operation, $parameters);
+        return $this->preset($operation, [':resource' => $resource ?: 'resource']);
     }
 
     public function push(): Envelope
@@ -107,5 +97,12 @@ trait NotificationStorageMethods
         $this->storageManager->add($envelope);
 
         return $envelope;
+    }
+
+    private function resolveResourceName(object $object): ?string
+    {
+        $displayName = \is_callable([$object, 'getFlashIdentifier']) ? $object->getFlashIdentifier() : null;
+
+        return $displayName ?: basename(str_replace('\\', '/', $object::class));
     }
 }

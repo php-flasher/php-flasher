@@ -24,6 +24,8 @@ if (!\function_exists('Flasher\Notyf\Prime\notyf')) {
      * @return Envelope|NotyfInterface Returns an Envelope containing the notification details when arguments are provided.
      *                                 Returns an instance of NotyfInterface when no arguments are provided.
      *
+     * @phpstan-return ($message is empty ? NotyfInterface : Envelope)
+     *
      * Usage:
      * 1. Without arguments - Get the Notyf factory: $notyf = notyf();
      * 2. With arguments - Create and return a Notyf notification:

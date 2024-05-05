@@ -1,4 +1,10 @@
 --ignore-dir=vendor
 --ignore-dir=yoeunes
 --ignore-dir=node_modules
-
+--ignore-dir=demo/laravel/vendor
+--ignore-dir=demo/symfony/vendor
+--ignore-dir=.cache
+--ignore-dir=docs/.jekyll-cache
+--ignore-dir=docs/_site
+--ignore-dir=docs/node_modules
+--ignore-dir=docs/dist

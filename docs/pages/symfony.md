@@ -5,11 +5,11 @@ description: Integrate PHPFlasher in your Symfony application to enhance user ex
 framework: symfony
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> {% PHPFlasher %} for Symfony
+## <i class="fa-duotone fa-list-radio"></i> Requirements
 
-{% PHPFlasher %} offers a seamless way to incorporate flash notifications in {% Symfony %} projects, enhancing user feedback with minimal setup.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> offers a seamless way to incorporate flash notifications in <i class="fa-brands fa-symfony text-black fa-xl"></i> <strong>Symfony</strong> projects, enhancing user feedback with minimal setup.
 
-Requirements for using {% PHPFlasher %} with Symfony:
+Requirements for using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Symfony:
 
 > <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** v8.2 or higher
 > <i class="fa-brands fa-symfony fa-2xl text-black mr-1 ml-4"></i> **Symfony** v7.0 or higher
@@ -18,26 +18,17 @@ Requirements for using {% PHPFlasher %} with Symfony:
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-{% PHPFlasher %}'s modular design lets you select and install only the components your project needs.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s modular design lets you select and install only the components your project needs.
 
 ```shell
 composer require php-flasher/flasher-symfony
 ```
 
-After installation, you need to run another command to set up the necessary assets for {% PHPFlasher %}:
+After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
 
 ```shell
 php bin/console flasher:install
 ```
-
----
-
-{% PHPFlasher %} includes a default notification style <i class="fa-duotone fa-comment-captions text-yellow-600"></i>, but users can also install and use additional adapters to customize the appearance of notifications within their projects such as :
-
-* **[Toastr](/library/toastr/)**
-* **[Noty](/library/noty/)**
-* **[Notyf](/library/notyf/)**
-* **[Sweet Alert](/library/sweetalert/)**
 
 ---
 
@@ -69,7 +60,7 @@ flasher:
     styles:
         - '/vendor/flasher/flasher.min.css'
 
-    # Enable translation of PHPFlasher messages using Symfony's service
+    # Enable translation of PHPFlasher messages using Symfony's translator service
     translate: true
 
     # Automatically inject PHPFlasher assets in HTML response
@@ -178,10 +169,10 @@ class BookController
 
 ## <i class="fa-duotone fa-list-radio"></i> RTL support
 
-{% PHPFlasher %} makes it easy to incorporate <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`. 
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> makes it easy to incorporate <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`. 
 it automatically detects the text direction and handles the necessary adjustments for you. 
 
-Simply make sure the translation service is enabled and let {% PHPFlasher %} handle the rest.
+Simply make sure the translation service is enabled and let <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> handle the rest.
 
 {% assign id = '#/ phpflasher rtl' %}
 {% assign type = 'success' %}
@@ -202,14 +193,14 @@ flash()
 
 ## <i class="fa-duotone fa-list-radio"></i> Translation
 
-{% PHPFlasher %} allows you to translate your notification `messages`, `presets`, it comes with `Arabic`, `English` and `French` translations out of the box, but you can easily add your own translations.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> allows you to translate your notification `messages` and `presets`, it comes with `Arabic`, `English`, `French`, `German`, `Spanish`, `Portuguese`, `Russian`, and `Chinese` translations out of the box. but you can easily add your own translations.
 
-For example, if you need to override the `English` translation strings for {% PHPFlasher %},  you can create a language file at the following location:
+For example, to override the `English` translation strings for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>, you can create a language file at the following location:
 **`translations/flasher.en.yaml`**. 
 
-In this file, you should **only** define the translation strings you want to override. Any translation strings that you don't override will still be loaded from {% PHPFlasher %}'s original language files.
+In this file, you should **only** define the translation strings you want to override. Any translation strings that you don't override will still be loaded from <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s original language files.
 
-Here is a list of the default translation keys for {% PHPFlasher %}:
+Here are examples of the default translation keys for `Arabic`, `English`, and `French` in <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
 
 ```yaml
 # translations/flasher.ar.yaml
@@ -258,6 +249,8 @@ The resource was deleted: 'La ressource :resource a été supprimée'
 
 resource: ''
 ```
+
+> These translation files facilitate localizing notifications to match user preferences and ensure that your applications can communicate effectively across different linguistic contexts.
 
 {% assign id = '#/ symfony arabic translations' %}
 {% assign successMessage = 'تم إنشاء الملف' %}

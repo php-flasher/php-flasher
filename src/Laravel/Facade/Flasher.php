@@ -7,7 +7,6 @@ namespace Flasher\Laravel\Facade;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 use Flasher\Prime\Stamp\StampInterface;
-use Flasher\Prime\Translation\ResourceInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -33,11 +32,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static Envelope            warning(string $message, array $options = [], ?string $title = null)
  * @method static Envelope            flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null)
  * @method static Envelope            preset(string $preset, array $parameters = [])
- * @method static Envelope            operation(string $operation, string|ResourceInterface|null $resource = null)
- * @method static Envelope            created(string|ResourceInterface|null $resource = null)
- * @method static Envelope            updated(string|ResourceInterface|null $resource = null)
- * @method static Envelope            saved(string|ResourceInterface|null $resource = null)
- * @method static Envelope            deleted(string|ResourceInterface|null $resource = null)
+ * @method static Envelope            operation(string $operation, string|object|null $resource = null)
+ * @method static Envelope            created(string|object|null $resource = null)
+ * @method static Envelope            updated(string|object|null $resource = null)
+ * @method static Envelope            saved(string|object|null $resource = null)
+ * @method static Envelope            deleted(string|object|null $resource = null)
  * @method static Envelope            push()
  * @method static Envelope            addSuccess(string $message, array $options = [], ?string $title = null)
  * @method static Envelope            addError(string $message, array $options = [], ?string $title = null)

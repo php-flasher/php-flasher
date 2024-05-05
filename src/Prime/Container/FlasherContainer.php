@@ -47,7 +47,12 @@ final class FlasherContainer
      *
      * @param string $id the service identifier
      *
-     * @return FlasherInterface|NotificationFactoryInterface the service instance
+     * @phpstan-return ($id is 'flasher' ? \Flasher\Prime\FlasherInterface :
+     *          ($id is 'flasher.noty' ? \Flasher\Noty\Prime\NotyInterface :
+     *          ($id is 'flasher.notyf' ? \Flasher\Notyf\Prime\NotyfInterface :
+     *          ($id is 'flasher.sweetalert' ? \Flasher\SweetAlert\Prime\SweetAlertInterface :
+     *          ($id is 'flasher.toastr' ? \Flasher\Toastr\Prime\ToastrInterface :
+     *                  \Flasher\Prime\Factory\NotificationFactoryInterface)))))
      */
     public static function create(string $id): FlasherInterface|NotificationFactoryInterface
     {

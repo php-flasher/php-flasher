@@ -8,7 +8,7 @@ use Flasher\Prime\Stamp\PluginStamp;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\Macroable;
 
-class NotificationBuilder implements NotificationBuilderInterface
+abstract class NotificationBuilder implements NotificationBuilderInterface
 {
     use Macroable;
     use NotificationBuilderMethods;

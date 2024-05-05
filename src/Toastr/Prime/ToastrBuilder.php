@@ -108,7 +108,9 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * Indicates the entry transition of the pop-up.
+     * @param string $hideEasing
+     *
+     * Indicates the entry transition of the pop-up
      */
     public function hideEasing(string $hideEasing): self
     {
@@ -118,7 +120,9 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * Indicates the opening animation of the pop-up.
+     * @param string $hideMethod
+     *
+     * Indicates the opening animation of the pop-up
      */
     public function hideMethod(string $hideMethod): self
     {
@@ -165,6 +169,9 @@ final class ToastrBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * @param "toast-top-right"|"toast-top-center"|"toast-bottom-center"|"toast-top-full-width"|"toast-bottom-full-width"|"toast-top-left"|"toast-bottom-right"|"toast-bottom-left" $positionClass
+     */
     public function positionClass(string $positionClass): self
     {
         $this->option('positionClass', $positionClass);
@@ -221,7 +228,9 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * Indicates the entry transition of the pop-up.
+     * @param string $showEasing
+     *
+     * Indicates the entry transition of the pop-up
      */
     public function showEasing(string $showEasing): self
     {
@@ -231,7 +240,9 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * Indicates the opening animation of the pop-up.
+     * @param string $showMethod
+     *
+     * Indicates the opening animation of the pop-up
      */
     public function showMethod(string $showMethod): self
     {

@@ -23,6 +23,8 @@ if (!function_exists('sweetalert')) {
      * @return Envelope|SweetAlertInterface Returns an Envelope containing the notification details when arguments are provided.
      *                                      Returns an instance of SweetAlertInterface when no arguments are provided.
      *
+     * @phpstan-return ($message is empty ? SweetAlertInterface : Envelope)
+     *
      * Usage:
      * 1. Without arguments - Get the Sweetalert factory: $sweetalert = sweetalert();
      * 2. With arguments - Create and return a Sweetalert notification:

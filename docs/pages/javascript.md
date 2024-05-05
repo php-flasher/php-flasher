@@ -5,16 +5,16 @@ title: JavaScript
 description: Easily add flash notification messages to your JavaScript application with PHPFlasher. Follow our step-by-step guide to install the library using npm or include it in your project using CDN links, and start engaging and informing your users with powerful flash messages.
 ---
 
-{% PHPFlasher %} assets can be installed from a cdn or using npm
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> assets can be installed from a cdn or using npm
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
-Quick start guide for installing the {% PHPFlasher %} from cdn or npm.
+Quick start guide for installing the <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> from cdn or npm.
 
 ---
 
 ### <i class="fa-duotone fa-list-radio"></i> cdn
 
-To pull in the {% PHPFlasher %} via CDN, grab the latest version from [jsdelivr](https://www.jsdelivr.com/package/npm/@flasher/flasher)
+To pull in the <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> via CDN, grab the latest version from [jsdelivr](https://www.jsdelivr.com/package/npm/@flasher/flasher)
 
 <span>
     <a href="https://cdn.jsdelivr.net/npm/@flasher/flasher/dist/flasher.min.js" target="_blank">
@@ -33,7 +33,7 @@ To pull in the {% PHPFlasher %} via CDN, grab the latest version from [jsdelivr]
 
 ### <i class="fa-duotone fa-list-radio"></i> npm
 
-To install {% PHPFlasher %} from npm use the following command:
+To install <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> from npm use the following command:
 
 ```shell
 npm i @flasher/flasher
@@ -68,7 +68,7 @@ or if you are using a cdn like this:
 
 ### <i class="fa-duotone fa-list-radio"></i> Other adapters
 
-First grad the cdn for any js library adapter supported by {% PHPFlasher %} or install it with npm
+First grad the cdn for any js library adapter supported by <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> or install it with npm
 and then call the `create()` method on flasher object :
 
 ```html

@@ -2,18 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>flash</title>
+    <title>PHPFlasher</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 </head>
 <body>
-<ul>
-    <li><a href="/">/</a></li>
-    <li><a href="/adapter/flasher">/adapter/flasher</a></li>
-    <li><a href="/adapter/noty">/adapter/noty</a></li>
-    <li><a href="/adapter/notyf">/adapter/notyf</a></li>
-    <li><a href="/adapter/sweetalert">/adapter/sweetalert</a></li>
-    <li><a href="/adapter/toastr">/adapter/toastr</a></li>
-    <li><a href="/livewire/counter">/adapter/livewire/counter</a></li>
-    <li><a href="/livewire/eventous">/adapter/livewire/eventous</a></li>
-</ul>
+
 </body>
 </html>

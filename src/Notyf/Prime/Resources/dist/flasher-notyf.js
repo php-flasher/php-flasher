@@ -478,8 +478,8 @@
                 const options = Object.assign(Object.assign({}, envelope), envelope.options);
                 (_a = this.notyf) === null || _a === void 0 ? void 0 : _a.open(options);
             });
-            this.notyf.view.container.dataset.turboCache = 'false';
-            this.notyf.view.a11yContainer.dataset.turboCache = 'false';
+            this.notyf.view.container.dataset.turboTemporary = '';
+            this.notyf.view.a11yContainer.dataset.turboTemporary = '';
         }
         renderOptions(options) {
             const nOptions = Object.assign({ duration: options.duration || 5000 }, options);

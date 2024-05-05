@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Factory;
 
+use Flasher\Prime\Factory\FlasherFactory;
 use Flasher\Prime\Factory\NotificationFactory;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 use Flasher\Prime\Storage\StorageManagerInterface;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
-final class NotificationFactoryTest extends TestCase
+final class FlasherFactoryTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
     public function testCreateNotificationBuilder(): void
     {
         $storageManager = \Mockery::mock(StorageManagerInterface::class);
-        $factory = new NotificationFactory($storageManager);
+        $factory = new FlasherFactory($storageManager);
 
         $builder = $factory->createNotificationBuilder();
 
@@ -35,7 +36,7 @@ final class NotificationFactoryTest extends TestCase
             ->andReturnTrue();
 
         $storageManager = \Mockery::mock(StorageManagerInterface::class);
-        $factory = \Mockery::mock(NotificationFactory::class, [$storageManager]) // @phpstan-ignore-line
+        $factory = \Mockery::mock(NotificationFactory::class, [$storageManager])
             ->makePartial()
             ->allows('createNotificationBuilder')
             ->andReturns($mockedInterface)

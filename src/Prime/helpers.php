@@ -23,15 +23,17 @@ if (!function_exists('flash')) {
      * @param array<string, mixed> $options additional options for the flash message
      * @param string|null          $title   the title of the flash message
      *
-     * @return Envelope|FlasherInterface|NotificationFactoryInterface Returns an Envelope containing the message details when arguments are provided.
-     *                                                                Returns an instance of FlasherInterface or NotificationFactoryInterface when no arguments are provided.
+     * @return Envelope|FlasherInterface Returns an Envelope containing the message details when arguments are provided.
+     *                                   Returns an instance of FlasherInterface or NotificationFactoryInterface when no arguments are provided.
+     *
+     * @phpstan-return ($message is empty ? FlasherInterface : Envelope)
      *
      * Usage:
      * 1. Without arguments - Get the Flasher factory: $flasher = flash();
      * 2. With arguments - Create and return a flash message:
      *    flash('Message', Type::SUCCESS, ['option' => 'value'], 'Title');
      */
-    function flash(?string $message = null, string $type = Type::SUCCESS, array $options = [], ?string $title = null): Envelope|FlasherInterface|NotificationFactoryInterface
+    function flash(?string $message = null, string $type = Type::SUCCESS, array $options = [], ?string $title = null): Envelope|FlasherInterface
     {
         $factory = FlasherContainer::create('flasher');
 

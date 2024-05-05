@@ -81,7 +81,7 @@ final class FlasherTest extends MockeryTestCase
             ->get('alias')
             ->andReturns(\Mockery::mock(NotificationFactoryInterface::class));
 
-        $result = $this->flasher->create('alias');
+        $result = $this->flasher->use('alias');
 
         $this->assertInstanceOf(NotificationFactoryInterface::class, $result);
     }

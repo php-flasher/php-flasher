@@ -23,6 +23,8 @@ if (!function_exists('toastr')) {
      * @return Envelope|ToastrInterface Returns an Envelope containing the notification details when arguments are provided.
      *                                  Returns an instance of ToastrInterface when no arguments are provided.
      *
+     * @phpstan-return ($message is empty ? ToastrInterface : Envelope)
+     *
      * Usage:
      * 1. Without arguments - Get the Toastr factory: $toastr = toastr();
      * 2. With arguments - Create and return a Toastr notification:

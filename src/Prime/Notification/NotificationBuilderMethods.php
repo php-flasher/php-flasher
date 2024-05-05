@@ -39,9 +39,9 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    public function options(array $options, bool $merge = true): static
+    public function options(array $options, bool $append = true): static
     {
-        if ($merge) {
+        if ($append) {
             $options = array_merge($this->envelope->getOptions(), $options);
         }
 
