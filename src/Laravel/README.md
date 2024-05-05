@@ -5,30 +5,102 @@
     </picture>
 </p>
 
-## About PHPFlasher
+# PHPFlasher for Laravel
 
-PHPFlasher is a powerful and easy-to-use package that allows you to quickly and easily add flash messages to your Laravel or Symfony projects. 
-Whether you need to alert users of a successful form submission, an error, or any other important information, flash messages are a simple and effective solution for providing feedback to your users. 
-
-With PHPFlasher, you can easily record and store messages within the session, making it simple to retrieve and display them on the current or next page. 
-This improves user engagement and enhances the overall user experience on your website or application. 
-
-Whether you're a beginner or an experienced developer, PHPFlasher's intuitive and straightforward design makes it easy to integrate into your projects. 
-So, if you're looking for a reliable, flexible and easy to use flash messages solution, PHPFlasher is the perfect choice.
-
+PHPFlasher provides a powerful and intuitive way to add flash notifications to your Laravel applications. With PHPFlasher, you can enhance user feedback efficiently and elegantly.
 
 ## Official Documentation
 
-Documentation for PHPFlasher can be found on the [https://php-flasher.io](https://php-flasher.io).
+For more comprehensive documentation, please visit [PHPFlasher's Official Documentation](https://php-flasher.io).
 
-## Contributors and sponsors
+## Requirements
 
-Join our team of contributors and make a lasting impact on our project!
+- **PHP** v8.2 or higher
+- **Laravel** v11.0 or higher
 
-We are always looking for passionate individuals who want to contribute their skills and ideas.
-Whether you're a developer, designer, or simply have a great idea, we welcome your participation and collaboration.
+## Installation
 
-Shining stars of our community:
+To install PHPFlasher for Laravel, use Composer:
+
+```bash
+composer require php-flasher/flasher-laravel
+```
+
+After installation, publish the assets using:
+
+```bash
+php artisan flasher:install
+```
+
+## Usage
+
+Quickly integrate flash notifications in your Laravel project using the simple methods provided by PHPFlasher.
+
+- Display a success message.
+
+```php
+flash()->success('Operation completed successfully.');
+```
+
+- Display an error message.
+
+```php
+flash()->error('Oops, something went wrong.');
+```
+
+- Display a warning message.
+
+```php
+flash()->warning('Your account may have been compromised.');
+```
+
+- Display an informational message.
+
+```php
+flash()->info('This may take some time. Do not refresh the page.');
+```
+
+- Set multiple options at once.
+
+```php
+flash()
+    ->options(['timeout' => 5000, 'position' => 'top-right'])
+    ->success('Your profile has been updated.');
+```
+
+- Set a single option.
+
+```php
+flash()
+    ->option('timer', 5000)
+    ->success('Your reservation has been confirmed.');
+```
+
+- Set the priority of the message.
+
+```php
+flash()
+    ->priority(1)
+    ->success('Your subscription has been activated.');
+```
+
+- Set how many requests a message should persist through.
+
+```php
+flash()
+    ->hops(2)
+    ->info('Your account has been created, but requires verification.');
+```
+
+- Translate a message into the specified language.
+
+```php
+flash()
+    ->translate('ar')
+    ->success('Your message has been sent.');
+```
+
+## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 <!-- prettier-ignore-start -->
@@ -36,7 +108,7 @@ Shining stars of our community:
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/younes--ennaji//"><img src="https://avatars.githubusercontent.com/u/10859693?v=4?s=100" width="100px;" alt="Younes ENNAJI"/><br /><sub><b>Younes ENNAJI</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Code">💻</a> <a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Documentation">📖</a> <a href="#maintenance-yoeunes" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/younes-ennaji/"><img src="https://avatars.githubusercontent.com/u/10859693?v=4?s=100" width="100px;" alt="Younes ENNAJI"/><br /><sub><b>Younes ENNAJI</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Code">💻</a> <a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Documentation">📖</a> <a href="#maintenance-yoeunes" title="Maintenance">🚧</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/salmayno"><img src="https://avatars.githubusercontent.com/u/27933199?v=4?s=100" width="100px;" alt="Salma Mourad"/><br /><sub><b>Salma Mourad</b></sub></a><br /><a href="#financial-salmayno" title="Financial">💵</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.youtube.com/rstacode"><img src="https://avatars.githubusercontent.com/u/35005761?v=4?s=100" width="100px;" alt="Nashwan Abdullah"/><br /><sub><b>Nashwan Abdullah</b></sub></a><br /><a href="#financial-codenashwan" title="Financial">💵</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://darvis.nl/"><img src="https://avatars.githubusercontent.com/u/7394837?v=4?s=100" width="100px;" alt="Arvid de Jong"/><br /><sub><b>Arvid de Jong</b></sub></a><br /><a href="#financial-darviscommerce" title="Financial">💵</a></td>
@@ -58,17 +130,15 @@ Shining stars of our community:
 
 ## Contact
 
-PHPFlasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. 
-You can reach out with questions, bug reports, or feature requests on any of the following:
+For support, feature requests, or contributions, reach out via:
 
-- [Github Issues](https://github.com/php-flasher/php-flasher/issues) 
-- [Github](https://github.com/yoeunes)
+- [GitHub Issues](https://github.com/php-flasher/php-flasher/issues)
 - [Twitter](https://twitter.com/yoeunes)
-- [Linkedin](https://www.linkedin.com/in/younes--ennaji//)
-- [Email me directly](mailto:younes.ennaji.pro@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/younes--ennaji//)
+- [Email](mailto:younes.ennaji.pro@gmail.com)
 
 ## License
 
-PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+PHPFlasher is licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 <p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes--ennaji//">Younes ENNAJI</a> </b> </p>
