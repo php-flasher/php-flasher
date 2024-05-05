@@ -4,7 +4,16 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Utilize SweetAlert for dynamic notifications in Symfony with PHPFlasher. Bring engaging user alerts and confirmations to Symfony apps.",
-    "keywords": ["symfony", "sweetalert", "sweetalert 2", "flash-notifications", "dynamic-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "symfony",
+        "sweetalert",
+        "sweetalert 2",
+        "flash-notifications",
+        "dynamic-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

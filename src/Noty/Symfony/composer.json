@@ -4,7 +4,14 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Bring Noty.js flash notifications to Symfony projects using PHPFlasher. Leverage Noty.js within Symfony to elevate user notifications.",
-    "keywords": ["symfony", "noty.js", "flash-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "symfony",
+        "noty.js",
+        "flash-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

@@ -4,7 +4,16 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Incorporate SweetAlert's interactive notifications into Laravel applications with PHPFlasher. Enhance user dialogs with SweetAlert and Laravel.",
-    "keywords": ["laravel", "sweetalert", "sweetalert 2", "flash-notifications", "dynamic-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "laravel",
+        "sweetalert",
+        "sweetalert 2",
+        "flash-notifications",
+        "dynamic-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

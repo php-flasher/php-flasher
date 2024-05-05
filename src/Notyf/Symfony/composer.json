@@ -4,7 +4,15 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Adopt Notyf's simple flash notifications in Symfony projects with PHPFlasher. Streamline user notifications in Symfony with Notyf's elegant simplicity.",
-    "keywords": ["symfony", "notyf", "flash-notifications", "minimalist-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "symfony",
+        "notyf",
+        "flash-notifications",
+        "minimalist-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

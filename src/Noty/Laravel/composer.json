@@ -4,7 +4,14 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Use Noty.js for engaging flash notifications in Laravel with PHPFlasher. Combine the power of Noty.js and Laravel for rich, interactive user notifications.",
-    "keywords": ["laravel", "noty.js", "flash-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "laravel",
+        "noty.js",
+        "flash-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

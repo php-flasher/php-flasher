@@ -4,7 +4,15 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Integrate Notyf's minimalist flash notifications with Laravel via PHPFlasher. Enhance your Laravel apps with sleek, concise user notifications.",
-    "keywords": ["laravel", "notyf", "flash-notifications", "minimalist-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "laravel",
+        "notyf",
+        "flash-notifications",
+        "minimalist-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

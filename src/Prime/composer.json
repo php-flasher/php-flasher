@@ -4,7 +4,14 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "The foundational PHP library for PHPFlasher, enabling the creation of framework-agnostic flash notifications. Ideal for building custom integrations or for use in PHP projects.",
-    "keywords": ["php", "flasher-core", "framework-agnostic", "custom-integrations", "flash-notifications", "open-source"],
+    "keywords": [
+        "php",
+        "flasher-core",
+        "framework-agnostic",
+        "custom-integrations",
+        "flash-notifications",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

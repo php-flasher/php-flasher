@@ -4,7 +4,14 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Integrate flash notifications into Symfony projects effortlessly with PHPFlasher. Improve user experience and application feedback loops easily.",
-    "keywords": ["symfony", "php", "flash-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "symfony",
+        "php",
+        "flash-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"

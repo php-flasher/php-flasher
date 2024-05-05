@@ -4,7 +4,15 @@
     "license": "MIT",
     "homepage": "https://php-flasher.io",
     "description": "Integrate Toastr's smooth toast notifications into Symfony projects using PHPFlasher. Enhance Symfony applications with Toastr's refined visuals.",
-    "keywords": ["laravel", "toastr", "flash-notifications", "dynamic-notifications", "phpflasher", "user-feedback", "open-source"],
+    "keywords": [
+        "laravel",
+        "toastr",
+        "flash-notifications",
+        "dynamic-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
     "support": {
         "issues": "https://github.com/php-flasher/php-flasher/issues",
         "source": "https://github.com/php-flasher/php-flasher"
