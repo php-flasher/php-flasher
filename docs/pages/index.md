@@ -5,7 +5,7 @@ data-controller: flasher
 ---
 
 <div class="text-center mb-24">
-    <img id="logo" src="{{ '/static/images/php-flasher-logo.svg'|absolute_url }}" class="h-20 my-8" alt="PHPFlasher">
+    <img id="logo" src="/static/images/php-flasher-logo.svg" class="h-20 my-8" alt="PHPFlasher">
     <p class="pt-4 mt-4 text-center">
         <a href="https://www.linkedin.com/in/younes--ennaji/">
             <img src="https://img.shields.io/badge/author-@yoeunes-blue.svg" alt="Author Badge" />
