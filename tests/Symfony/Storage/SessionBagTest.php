@@ -48,7 +48,6 @@ final class SessionBagTest extends TestCase
 
         $result = $this->sessionBag->get();
 
-        $this->assertIsArray($result);
         $this->assertInstanceOf(Envelope::class, $result[0]);
     }
 
@@ -78,7 +77,6 @@ final class SessionBagTest extends TestCase
 
         $result = $this->sessionBag->get();
 
-        $this->assertIsArray($result);
         $this->assertInstanceOf(Envelope::class, $result[0]);
     }
 }

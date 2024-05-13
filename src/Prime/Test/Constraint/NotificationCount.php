@@ -21,7 +21,7 @@ final class NotificationCount extends Constraint
     /**
      * Evaluates if the given NotificationEvents object matches the expected notification count.
      *
-     * @param NotificationEvents $other an instance of NotificationEvents to evaluate
+     * @param NotificationEvents|mixed $other an instance of NotificationEvents to evaluate
      *
      * @return bool returns true if the actual notification count matches the expected count
      */

@@ -67,7 +67,7 @@ JAVASCRIPT;
         $event->setResponse($response);
     }
 
-    public function getSubscribedEvents(): string|array
+    public function getSubscribedEvents(): string
     {
         return ResponseEvent::class;
     }

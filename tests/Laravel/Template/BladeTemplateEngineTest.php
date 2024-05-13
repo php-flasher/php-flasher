@@ -29,7 +29,6 @@ final class BladeTemplateEngineTest extends TestCase
 
         $result = $bladeTemplateEngine->render($name, $context);
 
-        $this->assertIsString($result);
         $this->assertSame('rendered data', $result);
     }
 }

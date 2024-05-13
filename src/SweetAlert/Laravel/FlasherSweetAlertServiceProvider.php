@@ -7,7 +7,6 @@ namespace Flasher\SweetAlert\Laravel;
 use Flasher\Laravel\Support\PluginServiceProvider;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\SweetAlert\Prime\SweetAlertPlugin;
-use Livewire\LivewireManager;
 
 final class FlasherSweetAlertServiceProvider extends PluginServiceProvider
 {
@@ -24,11 +23,6 @@ final class FlasherSweetAlertServiceProvider extends PluginServiceProvider
     private function registerLivewireListener(): void
     {
         if (!$this->app->bound('livewire')) {
-            return;
-        }
-
-        $livewire = $this->app->make('livewire');
-        if (!$livewire instanceof LivewireManager) {
             return;
         }
 

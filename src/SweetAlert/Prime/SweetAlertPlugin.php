@@ -23,7 +23,10 @@ final class SweetAlertPlugin extends Plugin
         return SweetAlertInterface::class;
     }
 
-    public function getScripts(): string|array
+    /**
+     * @return string[]
+     */
+    public function getScripts(): array
     {
         return [
             '/vendor/flasher/sweetalert2.min.js',
@@ -31,7 +34,10 @@ final class SweetAlertPlugin extends Plugin
         ];
     }
 
-    public function getStyles(): string|array
+    /**
+     * @return string[]
+     */
+    public function getStyles(): array
     {
         return [
             '/vendor/flasher/sweetalert2.min.css',

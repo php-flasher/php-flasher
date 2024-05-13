@@ -38,7 +38,6 @@ final class FlasherTwigExtensionTest extends MockeryTestCase
     {
         $functions = $this->extension->getFunctions();
 
-        $this->assertIsArray($functions);
         $this->assertCount(1, $functions);
         $this->assertInstanceOf(TwigFunction::class, $functions[0]);
         $this->assertSame('flasher_render', $functions[0]->getName());

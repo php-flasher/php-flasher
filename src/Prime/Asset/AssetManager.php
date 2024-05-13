@@ -70,7 +70,7 @@ final class AssetManager implements AssetManagerInterface
             throw new \InvalidArgumentException(sprintf('There was a problem JSON decoding the "%s" file.', $this->manifestPath));
         }
 
-        return $this->entries = $entries;
+        return $this->entries = $entries; // @phpstan-ignore-line
     }
 
     private function computeHash(string $path): string

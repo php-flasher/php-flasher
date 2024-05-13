@@ -69,7 +69,10 @@ final class FlasherPlugin extends Plugin
         return '/vendor/flasher/flasher.min.js';
     }
 
-    public function getScripts(): string|array
+    /**
+     * @return string[]
+     */
+    public function getScripts(): array
     {
         return [];
     }

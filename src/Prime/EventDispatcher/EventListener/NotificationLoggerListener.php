@@ -31,7 +31,7 @@ final class NotificationLoggerListener implements EventListenerInterface
         return $this->events;
     }
 
-    public function getSubscribedEvents(): string|array
+    public function getSubscribedEvents(): string
     {
         return PresentationEvent::class;
     }

@@ -27,7 +27,7 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^11.1.6",
-        "@types/node": "^20.12.8",
+        "@types/node": "^20.12.11",
         "@typescript-eslint/eslint-plugin": "7.5.0",
         "@typescript-eslint/parser": "^7.8.0",
         "autoprefixer": "^10.4.19",
@@ -49,7 +49,7 @@
         "rollup-plugin-copy": "3.5.0",
         "rollup-plugin-filesize": "^10.0.0",
         "rollup-plugin-postcss": "^4.0.2",
-        "sass": "^1.76.0",
+        "sass": "^1.77.1",
         "ts-node": "^10.9.2",
         "tslib": "^2.6.2",
         "typescript": "^5.4.5"

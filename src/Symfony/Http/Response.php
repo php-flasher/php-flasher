@@ -39,7 +39,7 @@ final readonly class Response implements ResponseInterface
     {
         $contentDisposition = $this->response->headers->get('Content-Disposition', '');
 
-        if (!\is_string($contentDisposition)) {
+        if (!$contentDisposition) {
             return false;
         }
 

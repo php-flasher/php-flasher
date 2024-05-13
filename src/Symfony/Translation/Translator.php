@@ -33,7 +33,7 @@ final readonly class Translator implements TranslatorInterface
 
     public function getLocale(): string
     {
-        if (method_exists($this->translator, 'getLocale')) {
+        if (method_exists($this->translator, 'getLocale')) { // @phpstan-ignore-line
             return $this->translator->getLocale();
         }
 

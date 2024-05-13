@@ -21,7 +21,6 @@ final class IdStampTest extends TestCase
     {
         // Test with null ID
         $ifStamp = new IdStamp();
-        $this->assertIsString($ifStamp->getId());
 
         // Test with known ID
         $knownId = 'KnownID123';
@@ -37,7 +36,6 @@ final class IdStampTest extends TestCase
     {
         $ifStamp = new IdStamp();
         $arrayRepresentation = $ifStamp->toArray();
-        $this->assertIsArray($arrayRepresentation);
         $this->assertArrayHasKey('id', $arrayRepresentation);
         $this->assertSame($arrayRepresentation['id'], $ifStamp->getId());
     }

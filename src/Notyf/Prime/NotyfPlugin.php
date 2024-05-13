@@ -23,14 +23,20 @@ final class NotyfPlugin extends Plugin
         return NotyfInterface::class;
     }
 
-    public function getScripts(): string|array
+    /**
+     * @return string[]
+     */
+    public function getScripts(): array
     {
         return [
             '/vendor/flasher/flasher-notyf.min.js',
         ];
     }
 
-    public function getStyles(): string|array
+    /**
+     * @return string[]
+     */
+    public function getStyles(): array
     {
         return [
             '/vendor/flasher/flasher-notyf.min.css',

@@ -17,7 +17,6 @@ final class MessagesTest extends TestCase
     public function testGet(string $language, bool $empty): void
     {
         $actual = Messages::get($language);
-        $this->assertIsArray($actual);
         $this->assertSame($empty, empty($actual));
     }
 

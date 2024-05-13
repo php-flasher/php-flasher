@@ -51,7 +51,7 @@ final class Notification extends Constraint
     }
 
     /**
-     * @param NotificationEvents $other
+     * @param NotificationEvents|mixed $other
      */
     protected function matches(mixed $other): bool
     {

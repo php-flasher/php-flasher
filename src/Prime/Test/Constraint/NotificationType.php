@@ -30,7 +30,7 @@ final class NotificationType extends Constraint
      * Evaluates the constraint for the parameter $other.
      * If $other is not an instance of NotificationEvents, the method will return false.
      *
-     * @param NotificationEvents $other value or object to evaluate
+     * @param NotificationEvents|mixed $other value or object to evaluate
      *
      * @return bool true if the constraint is met, false otherwise
      */

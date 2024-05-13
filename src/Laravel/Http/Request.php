@@ -51,6 +51,7 @@ final readonly class Request implements RequestInterface
     {
         $session = $this->getSession();
 
+        /** @var false|string|string[] $type */
         $type = $session?->get($type);
 
         if (!\is_string($type) && !\is_array($type)) {

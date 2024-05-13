@@ -23,7 +23,10 @@ final class NotyPlugin extends Plugin
         return NotyInterface::class;
     }
 
-    public function getScripts(): string|array
+    /**
+     * @return string[]
+     */
+    public function getScripts(): array
     {
         return [
             '/vendor/flasher/noty.min.js',
@@ -31,7 +34,10 @@ final class NotyPlugin extends Plugin
         ];
     }
 
-    public function getStyles(): string|array
+    /**
+     * @return string[]
+     */
+    public function getStyles(): array
     {
         return [
             '/vendor/flasher/noty.css',

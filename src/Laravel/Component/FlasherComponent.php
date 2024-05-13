@@ -12,7 +12,7 @@ final class FlasherComponent extends Component
     {
     }
 
-    public function render()
+    public function render(): string
     {
         /** @var array<string, mixed> $criteria */
         $criteria = json_decode($this->criteria, true, 512, \JSON_THROW_ON_ERROR) ?: [];

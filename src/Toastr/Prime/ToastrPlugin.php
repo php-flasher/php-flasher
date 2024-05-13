@@ -23,7 +23,10 @@ final class ToastrPlugin extends Plugin
         return ToastrInterface::class;
     }
 
-    public function getScripts(): string|array
+    /**
+     * @return string[]
+     */
+    public function getScripts(): array
     {
         return [
             '/vendor/flasher/jquery.min.js',
@@ -32,7 +35,10 @@ final class ToastrPlugin extends Plugin
         ];
     }
 
-    public function getStyles(): string|array
+    /**
+     * @return string[]
+     */
+    public function getStyles(): array
     {
         return [
             '/vendor/flasher/toastr.min.css',

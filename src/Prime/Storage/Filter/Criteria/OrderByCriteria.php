@@ -62,7 +62,11 @@ final class OrderByCriteria implements CriteriaInterface
                 throw new \InvalidArgumentException(sprintf('Invalid Field value, must be "string", got "%s".', get_debug_type($field)));
             }
 
-            $direction = strtoupper((string) $direction);
+            if (!\is_string($direction)) {
+                throw new \InvalidArgumentException(sprintf('Invalid Direction value, must be "string", got "%s".', get_debug_type($direction)));
+            }
+
+            $direction = strtoupper($direction);
 
             if (!\in_array($direction, [self::ASC, self::DESC], true)) {
                 throw new \InvalidArgumentException(sprintf('Invalid ordering direction: must be "ASC" or "DESC", got "%s".', $direction));

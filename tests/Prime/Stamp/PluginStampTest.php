@@ -34,7 +34,6 @@ final class PluginStampTest extends TestCase
 
         $result = $pluginStamp->toArray();
 
-        $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertArrayHasKey('plugin', $result);
         $this->assertSame($plugin, $result['plugin']);
