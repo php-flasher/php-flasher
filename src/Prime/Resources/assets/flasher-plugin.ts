@@ -7,7 +7,7 @@ import { AbstractPlugin } from './plugin'
 export default class FlasherPlugin extends AbstractPlugin {
     private theme: Theme
     private options = {
-        timeout: 5000,
+        timeout: null,
         timeouts: {
             success: 5000,
             info: 5000,
@@ -31,7 +31,7 @@ export default class FlasherPlugin extends AbstractPlugin {
         const render = () =>
             envelopes.forEach((envelope) => {
                 // @ts-expect-error
-                const typeTimeout = this.options.timeouts[envelope.type] ?? this.options.timeout
+                const typeTimeout = this.options.timeout ?? this.options.timeouts[envelope.type] ?? 5000;
                 const options = {
                     ...this.options,
                     ...envelope.options,

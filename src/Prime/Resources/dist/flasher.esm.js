@@ -80,7 +80,7 @@ class FlasherPlugin extends AbstractPlugin {
     constructor(theme) {
         super();
         this.options = {
-            timeout: 5000,
+            timeout: null,
             timeouts: {
                 success: 5000,
                 info: 5000,
@@ -97,9 +97,9 @@ class FlasherPlugin extends AbstractPlugin {
     }
     renderEnvelopes(envelopes) {
         const render = () => envelopes.forEach((envelope) => {
-            var _a, _b;
-            const typeTimeout = (_a = this.options.timeouts[envelope.type]) !== null && _a !== void 0 ? _a : this.options.timeout;
-            const options = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_b = envelope.options.timeout) !== null && _b !== void 0 ? _b : typeTimeout });
+            var _a, _b, _c;
+            const typeTimeout = (_b = (_a = this.options.timeout) !== null && _a !== void 0 ? _a : this.options.timeouts[envelope.type]) !== null && _b !== void 0 ? _b : 5000;
+            const options = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_c = envelope.options.timeout) !== null && _c !== void 0 ? _c : typeTimeout });
             this.addToContainer(this.createContainer(options), envelope, options);
         });
         document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', render) : render();
