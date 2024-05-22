@@ -6,6 +6,7 @@ namespace Flasher\Laravel\Support;
 
 use Flasher\Prime\Factory\NotificationFactoryLocator;
 use Flasher\Prime\Plugin\PluginInterface;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Foundation\CachesConfiguration;
 use Illuminate\Support\ServiceProvider;
@@ -33,6 +34,14 @@ abstract class PluginServiceProvider extends ServiceProvider
     public function getConfigurationFile(): string
     {
         return rtrim($this->getResourcesDir(), '/').'/config.php';
+    }
+
+    protected function getConfig(string $key = null, mixed $default = null): mixed
+    {
+        /** @var Repository $config */
+        $config = $this->app->make('config');
+
+        return $key ? $config->get('flasher.'.$key, $default) : $config;
     }
 
     protected function getResourcesDir(): string
