@@ -270,11 +270,7 @@ final class FlasherPlugin extends Plugin
             return $config;
         }
 
-        foreach ($config['flash_bag'] as $key => $value) {
-            $config['flash_bag'][$key] = array_values(array_unique(array_merge($mapping[$key] ?? [], (array) $value)));
-        }
-
-        $config['flash_bag'] += $mapping;
+        $config['flash_bag'] += array_merge($mapping, $config['flash_bag']);
 
         return $config;
     }
