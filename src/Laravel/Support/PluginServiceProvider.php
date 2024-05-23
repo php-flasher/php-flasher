@@ -41,7 +41,7 @@ abstract class PluginServiceProvider extends ServiceProvider
         /** @var Repository $config */
         $config = $this->app->make('config');
 
-        return $key ? $config->get('flasher.'.$key, $default) : $config;
+        return $key ? $config->get('flasher.'.$key, $default) : $config->get('flasher');
     }
 
     protected function getResourcesDir(): string

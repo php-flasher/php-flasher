@@ -256,11 +256,15 @@ final class FlasherServiceProvider extends PluginServiceProvider
 
     private function registerSessionMiddleware(): void
     {
+        if (!$this->getConfig('flash_bag')) {
+            return;
+        }
+
         $this->app->singleton(SessionMiddleware::class, static function (Application $app) {
             $config = $app->make('config');
 
             $flasher = $app->make('flasher');
-            $mapping = $config->get('flasher.flash_bag', []);
+            $mapping = $config->get('flasher.flash_bag', []) ?: [];
 
             return new SessionMiddleware(new RequestExtension($flasher, $mapping));
         });
