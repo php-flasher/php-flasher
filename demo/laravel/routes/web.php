@@ -15,5 +15,9 @@ Route::get('/', function () {
 
     session()->flash('success', 'this from laravel session flash');
 
-    return view('welcome');
+    return redirect('/redirect');
 })->name('app_home');
+
+Route::get('/redirect', function () {
+    return view('welcome');
+});
