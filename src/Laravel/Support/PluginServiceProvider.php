@@ -36,7 +36,7 @@ abstract class PluginServiceProvider extends ServiceProvider
         return rtrim($this->getResourcesDir(), '/').'/config.php';
     }
 
-    protected function getConfig(string $key = null, mixed $default = null): mixed
+    protected function getConfig(?string $key = null, mixed $default = null): mixed
     {
         /** @var Repository $config */
         $config = $this->app->make('config');

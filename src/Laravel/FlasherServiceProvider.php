@@ -34,7 +34,6 @@ use Flasher\Prime\Storage\Filter\FilterFactory;
 use Flasher\Prime\Storage\Storage;
 use Flasher\Prime\Storage\StorageManager;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\AboutCommand;
@@ -223,7 +222,7 @@ final class FlasherServiceProvider extends PluginServiceProvider
 
     private function registerFlasherMiddleware(): void
     {
-        if(!$this->getConfig('inject_assets')) {
+        if (!$this->getConfig('inject_assets')) {
             return;
         }
 
