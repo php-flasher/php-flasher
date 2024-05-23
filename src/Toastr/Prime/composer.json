@@ -33,7 +33,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "php-flasher/flasher": "^2.0"
+        "php-flasher/flasher": "^2.0.1"
     },
     "autoload": {
         "psr-4": {
