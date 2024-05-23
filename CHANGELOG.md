@@ -5,3 +5,4 @@
 * bug [#176](https://github.com/php-flasher/php-flasher/issues/176) [Laravel] Correctly disable FlasherMiddleware when inject_assets is set to false in https://github.com/php-flasher/php-flasher/pull/177
 * bug [#176](https://github.com/php-flasher/php-flasher/issues/176) [Flasher] Ensure global timeout setting applies to all requests in https://github.com/php-flasher/php-flasher/pull/180
 * bug [#176](https://github.com/php-flasher/php-flasher/issues/176) [Laravel] Allow disabling of default flash replacement by setting flash_bag to false in https://github.com/php-flasher/php-flasher/pull/181
+* bug [#176](https://github.com/php-flasher/php-flasher/issues/176) [Flasher] Ensure flash_bag config overrides default values instead of appending in https://github.com/php-flasher/php-flasher/pull/182
