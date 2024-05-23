@@ -10,8 +10,10 @@ Route::get('/', function () {
     // toastr()->positionClass('toast-bottom-left')->error('hello from Home Controller');
     // flash()->use('flasher')->success('hello from flasher factory');
 
-    flash()->created(new Book('lord of the rings'));
-    flash()->saved(new Book('harry potter'));
+    // flash()->created(new Book('lord of the rings'));
+    // flash()->saved(new Book('harry potter'));
+
+    session()->flash('success', 'this from laravel session flash');
 
     return view('welcome');
 })->name('app_home');
