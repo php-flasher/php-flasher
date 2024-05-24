@@ -19,8 +19,8 @@
     },
     "devDependencies": {
         "@antfu/eslint-config": "2.12.2",
-        "@babel/core": "^7.24.5",
-        "@babel/preset-env": "^7.24.5",
+        "@babel/core": "^7.24.6",
+        "@babel/preset-env": "^7.24.6",
         "@rollup/plugin-babel": "^6.0.4",
         "@rollup/plugin-commonjs": "^25.0.8",
         "@rollup/plugin-eslint": "^9.0.5",
