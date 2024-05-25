@@ -18,12 +18,14 @@
         <div class="h-16 z-10 top-0 w-screen bg-white border-b border-indigo-200 shadow">
             <div id="header-logo" class="lg:container lg:mx-auto px-4 py-2">
                 <div class="flex items-center flex-no-shrink pt-1">
-                    <a href="/" class="flex items-center">
-                        <span class="pr-2 font-normal font-normal leading-none text-3xl text-indigo-900 hidden sm:block">
+                    <div class="flex items-center">
+                        <span class="pr-2 font-normal leading-none text-3xl text-indigo-900 hidden sm:block">
                             <img class="fill-current h-8 mr-2" src="/static/images/php-flasher-logo.svg" />
-                            <sup class="text-xs relative text-grey-dark" style="top: -20px;">{{ site.data.project.version }}</sup>
+                            {% for version in site.data.project.versions %}
+                                <a href="{{ version[1] }}" class="{% if forloop.first %}text-white bg-indigo-500{% else %}text-indigo-600{% endif %} p-1 rounded text-xs relative text-grey-dark hover:bg-indigo-500 hover:scale-110 hover:text-white" style="top: -20px;">{{ version[0] }}</a>
+                            {% endfor %}
                         </span>
-                    </a>
+                    </div>
                     <div class="flex-grow"></div>
                     <a href="#" id="menu-toggle" class="block lg:hidden h-8 w-8 border p-1 border-transparent text-gray-200 hover:text-grey menu-closed">
                         <svg class="menu-closed:shown fill-current h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
