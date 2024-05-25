@@ -66,6 +66,12 @@ flasher:
     # Automatically inject PHPFlasher assets in HTML response
     inject_assets: true
 
+    # Global options
+    options:
+        # timeout in milliseconds
+        timeout: 5000
+        position: 'top-right'
+
     # Map Symfony session keys to PHPFlasher notification types
     flash_bag:
         success: ['success']
