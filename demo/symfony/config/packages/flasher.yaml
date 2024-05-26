@@ -1,3 +1,4 @@
+
 flasher:
     # Default notification library (e.g., 'flasher', 'toastr', 'noty', etc.)
     default: flasher
@@ -9,7 +10,7 @@ flasher:
     styles:
         - '/vendor/flasher/flasher.min.css'
 
-    # Enable translation of PHPFlasher messages using Symfony's service
+    # Enable translation of PHPFlasher messages using Symfony's translator service
     translate: true
 
     # Automatically inject PHPFlasher assets in HTML response
@@ -29,6 +30,6 @@ flasher:
         info: ['info', 'notice', 'alert']
 
     # Criteria to filter displayed notifications (limit, types)
-    filter_criteria:
+    filter:
         # Limit number of displayed notifications
         limit: 5

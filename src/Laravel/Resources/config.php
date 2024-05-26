@@ -22,6 +22,12 @@ return [
     // Automatically inject PHPFlasher assets into HTML response
     'inject_assets' => true,
 
+    // Global options
+    'options' => [
+        'timeout' => 5000, // in milliseconds
+        'position' => 'top-right',
+    ],
+
     // Configuration for the flash bag (converting Laravel flash messages)
     // Map Laravel session keys to PHPFlasher types
     'flash_bag' => [

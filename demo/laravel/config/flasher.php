@@ -4,7 +4,8 @@ return [
     'inject_assets' => true,
 
     'options' => [
-        'timeout' => 5_000,
+        'timeout' => 5000, // in milliseconds
+        'position' => 'top-right',
     ],
 
     'flash_bag' => [
