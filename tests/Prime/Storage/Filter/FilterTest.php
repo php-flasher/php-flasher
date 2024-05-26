@@ -17,6 +17,8 @@ final class FilterTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->filter = new Filter();
     }
 

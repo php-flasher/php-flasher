@@ -18,6 +18,8 @@ final class NonceGeneratorTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->nonceGenerator = new NonceGenerator();
     }
 

@@ -18,6 +18,8 @@ final class FlasherNotySymfonyBundleTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->flasherNotyBundle = new FlasherNotySymfonyBundle();
     }
 

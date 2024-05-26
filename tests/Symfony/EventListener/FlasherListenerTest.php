@@ -25,6 +25,8 @@ final class FlasherListenerTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->responseExtensionMock = \Mockery::mock(ResponseExtensionInterface::class);
         $this->flasherListener = new FlasherListener($this->responseExtensionMock);
     }

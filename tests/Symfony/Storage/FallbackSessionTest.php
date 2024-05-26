@@ -17,6 +17,8 @@ final class FallbackSessionTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->session = new FallbackSession();
     }
 

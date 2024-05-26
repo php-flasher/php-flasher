@@ -15,6 +15,8 @@ final class NotyPluginTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->notyPlugin = new NotyPlugin();
     }
 

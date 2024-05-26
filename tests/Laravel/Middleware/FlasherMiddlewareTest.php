@@ -24,6 +24,8 @@ final class FlasherMiddlewareTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->responseExtensionMock = \Mockery::mock(ResponseExtensionInterface::class);
         $this->middleware = new FlasherMiddleware($this->responseExtensionMock);
     }

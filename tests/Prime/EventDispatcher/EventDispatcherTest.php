@@ -19,6 +19,8 @@ final class EventDispatcherTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->dispatcher = new EventDispatcher();
     }
 

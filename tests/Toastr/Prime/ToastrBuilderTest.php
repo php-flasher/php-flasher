@@ -14,6 +14,8 @@ final class ToastrBuilderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
         $this->toastrBuilder = new ToastrBuilder('toastr', $storageManagerMock);
     }

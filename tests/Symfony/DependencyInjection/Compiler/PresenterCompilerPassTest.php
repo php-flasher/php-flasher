@@ -17,6 +17,8 @@ final class PresenterCompilerPassTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->compilerPass = new PresenterCompilerPass();
         $this->container = new ContainerBuilder();
     }

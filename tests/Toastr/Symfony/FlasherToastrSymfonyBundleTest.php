@@ -18,6 +18,8 @@ final class FlasherToastrSymfonyBundleTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->flasherToastrBundle = new FlasherToastrSymfonyBundle();
     }
 

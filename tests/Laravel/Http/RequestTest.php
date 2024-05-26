@@ -19,6 +19,8 @@ final class RequestTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->laravelRequestMock = \Mockery::mock(LaravelRequest::class);
     }
 

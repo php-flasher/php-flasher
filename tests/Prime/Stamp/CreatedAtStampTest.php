@@ -17,6 +17,8 @@ final class CreatedAtStampTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->time = new \DateTimeImmutable('2023-01-01 12:00:00');
         $this->format = 'Y-m-d H:i:s';
         $this->createdAtStamp = new CreatedAtStamp($this->time, $this->format);

@@ -16,6 +16,8 @@ final class InstallCommandTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $kernel = new FlasherKernel();
         $kernel->boot();
 

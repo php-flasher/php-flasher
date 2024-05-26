@@ -30,6 +30,8 @@ final class SessionMiddlewareTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->requestExtensionMock = \Mockery::mock(RequestExtensionInterface::class);
         $this->sessionMiddleware = new SessionMiddleware($this->requestExtensionMock);
     }

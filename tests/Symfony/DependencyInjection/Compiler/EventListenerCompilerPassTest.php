@@ -21,6 +21,8 @@ final class EventListenerCompilerPassTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->compilerPass = new EventListenerCompilerPass();
         $this->container = new ContainerBuilder();
     }

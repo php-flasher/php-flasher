@@ -26,6 +26,8 @@ final class RequestTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->symfonyRequestMock = \Mockery::mock(SymfonyRequest::class);
     }
 

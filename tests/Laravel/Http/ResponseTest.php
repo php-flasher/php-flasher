@@ -21,6 +21,8 @@ final class ResponseTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->responseHeaderBagMock = \Mockery::mock(ResponseHeaderBag::class);
 
         $this->responseMock = \Mockery::mock(LaravelResponse::class);

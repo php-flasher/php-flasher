@@ -5,6 +5,8 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
     - vendor/larastan/larastan/extension.neon
     - vendor/phpstan/phpstan-mockery/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
 
 parameters:
     level: 9
@@ -14,3 +16,6 @@ parameters:
         - tests/
 
     tmpDir: .cache/phpstan
+
+    ignoreErrors:
+        - '#Call to method .+ with .+ will always evaluate to true.#'

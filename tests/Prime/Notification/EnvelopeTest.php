@@ -259,6 +259,7 @@ final class EnvelopeTest extends TestCase
 
         $envelope = new Envelope($notification, new PluginStamp('flasher'));
 
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'title' => 'PHPFlasher',
             'message' => 'success message',

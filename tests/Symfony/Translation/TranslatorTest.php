@@ -20,6 +20,8 @@ final class TranslatorTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class);
         if (interface_exists(TranslatorBagInterface::class)) {
             $this->symfonyTranslatorMock->allows('getCatalogue')->andReturnUndefined();

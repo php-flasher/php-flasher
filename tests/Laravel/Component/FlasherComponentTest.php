@@ -21,6 +21,8 @@ final class FlasherComponentTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $flasherServiceMock = \Mockery::mock(FlasherInterface::class);
         $flasherServiceMock->allows('render')
                            ->andReturns('Your expected result');

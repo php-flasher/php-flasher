@@ -17,6 +17,8 @@ final class FlasherExtensionTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->container = new ContainerBuilder();
         $this->extension = new FlasherExtension(new FlasherPlugin());
 

@@ -14,6 +14,8 @@ final class FlasherContainerTest extends TestCase
 {
     protected function setUp(): void
     {
+        parent::setUp();
+
         // Reset the FlasherContainer instance to ensure isolation between tests
         FlasherContainer::reset();
     }

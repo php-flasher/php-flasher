@@ -27,6 +27,8 @@ final class SessionBagTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->requestStackMock = \Mockery::mock(RequestStack::class);
         $this->fallbackSessionMock = \Mockery::mock(FallbackSessionInterface::class);
         $this->sessionBag = new SessionBag($this->requestStackMock, $this->fallbackSessionMock);

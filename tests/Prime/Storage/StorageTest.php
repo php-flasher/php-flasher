@@ -17,6 +17,8 @@ final class StorageTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->storage = new Storage(new ArrayBag());
     }
 

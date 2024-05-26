@@ -36,6 +36,8 @@ final class StorageManagerTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->storageMock = \Mockery::mock(StorageInterface::class);
         $this->filterFactoryMock = \Mockery::mock(FilterFactoryInterface::class);
         $this->eventDispatcherMock = \Mockery::mock(EventDispatcherInterface::class);

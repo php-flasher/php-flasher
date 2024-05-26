@@ -18,6 +18,8 @@ final class TranslatorTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->laravelTranslatorMock = \Mockery::mock(LaravelTranslator::class);
     }
 

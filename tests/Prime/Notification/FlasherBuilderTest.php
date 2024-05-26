@@ -519,8 +519,6 @@ final class FlasherBuilderTest extends TestCase
 
     /**
      * @phpstan-param MockObject|StorageManagerInterface $storageManager
-     *
-     * @phpstan-ignore-next-line
      */
     private function getNotificationBuilder(?StorageManagerInterface $storageManager = null): NotificationBuilderInterface
     {

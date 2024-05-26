@@ -15,6 +15,8 @@ final class NotyfPluginTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->notyfPlugin = new NotyfPlugin();
     }
 

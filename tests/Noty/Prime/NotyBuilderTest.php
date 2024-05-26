@@ -14,6 +14,8 @@ final class NotyBuilderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
         $this->notyBuilder = new NotyBuilder('noty', $storageManagerMock);
     }

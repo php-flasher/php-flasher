@@ -14,6 +14,8 @@ final class DelayStampTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->testDelay = 100;
         $this->instance = new DelayStamp($this->testDelay);
     }

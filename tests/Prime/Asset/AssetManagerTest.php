@@ -14,12 +14,16 @@ final class AssetManagerTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->publicDir = __DIR__.'/../Fixtures/Asset';
         $this->manifestPath = __DIR__.'/../Fixtures/Asset/manifest.json';
     }
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         if (file_exists($this->manifestPath)) {
             unlink($this->manifestPath);
         }

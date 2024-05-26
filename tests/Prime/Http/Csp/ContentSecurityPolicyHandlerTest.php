@@ -26,6 +26,8 @@ final class ContentSecurityPolicyHandlerTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->nonceGeneratorMock = $this->createMock(NonceGeneratorInterface::class);
         $this->requestMock = $this->createMock(RequestInterface::class);
         $this->responseMock = $this->createMock(ResponseInterface::class);

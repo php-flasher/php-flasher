@@ -30,6 +30,8 @@ final class RequestExtensionTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->flasher = \Mockery::mock(FlasherInterface::class);
         $this->request = \Mockery::mock(RequestInterface::class);
         $this->response = \Mockery::mock(ResponseInterface::class);

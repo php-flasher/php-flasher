@@ -15,6 +15,8 @@ final class SweetAlertPluginTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->sweetAlertPlugin = new SweetAlertPlugin();
     }
 

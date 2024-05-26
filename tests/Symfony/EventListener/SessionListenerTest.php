@@ -25,6 +25,8 @@ final class SessionListenerTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->requestExtensionMock = \Mockery::mock(RequestExtensionInterface::class);
         $this->sessionListener = new SessionListener($this->requestExtensionMock);
     }

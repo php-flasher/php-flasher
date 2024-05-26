@@ -14,6 +14,8 @@ final class NotyfBuilderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
         $this->notyfBuilder = new NotyfBuilder('notyf', $storageManagerMock);
     }

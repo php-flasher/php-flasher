@@ -13,6 +13,8 @@ final class PHPTemplateEngineTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->templateEngine = new PHPTemplateEngine();
     }
 

@@ -20,6 +20,8 @@ final class FlasherSymfonyBundleTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->flasherBundle = new FlasherSymfonyBundle();
     }
 

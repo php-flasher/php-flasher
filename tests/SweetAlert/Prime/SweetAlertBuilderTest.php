@@ -16,6 +16,8 @@ final class SweetAlertBuilderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
         $this->sweetAlertBuilder = new SweetAlertBuilder('sweetAlert', $this->storageManagerMock);
     }

@@ -15,6 +15,8 @@ final class ToastrPluginTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->toastrPlugin = new ToastrPlugin();
     }
 

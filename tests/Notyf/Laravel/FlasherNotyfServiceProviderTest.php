@@ -21,6 +21,8 @@ final class FlasherNotyfServiceProviderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->app = \Mockery::mock(Application::class);
         $this->serviceProvider = new FlasherNotyfServiceProvider($this->app);
     }

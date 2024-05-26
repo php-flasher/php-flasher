@@ -23,6 +23,8 @@ final class SessionBagTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->sessionManagerMock = \Mockery::mock(SessionManager::class);
         $this->sessionBag = new SessionBag($this->sessionManagerMock);
     }

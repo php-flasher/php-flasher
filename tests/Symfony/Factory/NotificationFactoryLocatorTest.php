@@ -22,6 +22,8 @@ final class NotificationFactoryLocatorTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->serviceLocatorMock = \Mockery::mock(ServiceLocator::class);
         $this->notificationFactoryLocator = new NotificationFactoryLocator($this->serviceLocatorMock);
     }

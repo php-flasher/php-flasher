@@ -14,6 +14,8 @@ final class HtmlStampTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->htmlString = '<div>Hello World</div>';
         $this->htmlStamp = new HtmlStamp($this->htmlString);
     }

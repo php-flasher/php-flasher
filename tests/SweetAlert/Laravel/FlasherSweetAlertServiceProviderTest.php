@@ -21,6 +21,8 @@ final class FlasherSweetAlertServiceProviderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->app = \Mockery::mock(Application::class);
         $this->serviceProvider = new FlasherSweetAlertServiceProvider($this->app);
     }

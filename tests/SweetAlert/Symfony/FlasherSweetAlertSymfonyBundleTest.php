@@ -18,6 +18,8 @@ final class FlasherSweetAlertSymfonyBundleTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->flasherSweetAlertBundle = new FlasherSweetAlertSymfonyBundle();
     }
 

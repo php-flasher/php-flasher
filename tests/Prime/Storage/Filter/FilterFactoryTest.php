@@ -17,6 +17,8 @@ final class FilterFactoryTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->filterFactory = new FilterFactory();
     }
 

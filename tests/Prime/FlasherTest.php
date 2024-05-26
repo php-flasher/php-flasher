@@ -26,6 +26,8 @@ final class FlasherTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->factoryLocatorMock = \Mockery::mock(NotificationFactoryLocatorInterface::class);
         $this->responseManagerMock = \Mockery::mock(ResponseManagerInterface::class);
         $this->storageManagerMock = \Mockery::mock(StorageManagerInterface::class);

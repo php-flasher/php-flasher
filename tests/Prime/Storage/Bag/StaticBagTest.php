@@ -15,6 +15,8 @@ final class StaticBagTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->staticBag = new StaticBag();
     }
 

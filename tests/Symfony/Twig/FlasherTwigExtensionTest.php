@@ -21,12 +21,16 @@ final class FlasherTwigExtensionTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->flasher = \Mockery::mock(FlasherInterface::class);
         $this->extension = new FlasherTwigExtension($this->flasher);
     }
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         \Mockery::close();
     }
 
