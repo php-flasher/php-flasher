@@ -69,7 +69,7 @@ final class SessionMiddlewareTest extends TestCase
         $requestMock = \Mockery::mock(LaravelRequest::class);
         $responseMock = \Mockery::mock(\Symfony\Component\HttpFoundation\Response::class);
 
-        $this->requestExtensionMock->allows('flash')->never();
+        $this->requestExtensionMock->allows('flash')->once();
 
         $handle = $this->sessionMiddleware->handle($requestMock, fn () => $responseMock);
 
