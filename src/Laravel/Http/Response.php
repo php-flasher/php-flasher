@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Flasher\Laravel\Http;
 
 use Flasher\Prime\Http\ResponseInterface;
-use Illuminate\Http\JsonResponse as LaravelJsonResponse;
 use Illuminate\Http\Response as LaravelResponse;
+use Symfony\Component\HttpFoundation\JsonResponse as SymfonyJsonResponse;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 final readonly class Response implements ResponseInterface
 {
-    public function __construct(private LaravelJsonResponse|LaravelResponse $response)
+    public function __construct(private SymfonyResponse $response)
     {
     }
 
@@ -21,7 +22,7 @@ final readonly class Response implements ResponseInterface
 
     public function isJson(): bool
     {
-        return $this->response instanceof LaravelJsonResponse;
+        return $this->response instanceof SymfonyJsonResponse;
     }
 
     public function isHtml(): bool
@@ -66,7 +67,7 @@ final readonly class Response implements ResponseInterface
         $this->response->setContent($content);
 
         // Restore original response (eg. the View or Ajax data)
-        if ($original) {
+        if ($original && $this->response instanceof LaravelResponse) {
             $this->response->original = $original;
         }
     }

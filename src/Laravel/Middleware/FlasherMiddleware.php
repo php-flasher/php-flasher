@@ -7,9 +7,8 @@ namespace Flasher\Laravel\Middleware;
 use Flasher\Laravel\Http\Request;
 use Flasher\Laravel\Http\Response;
 use Flasher\Prime\Http\ResponseExtensionInterface;
-use Illuminate\Http\JsonResponse as LaravelJsonResponse;
 use Illuminate\Http\Request as LaravelRequest;
-use Illuminate\Http\Response as LaravelResponse;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 final readonly class FlasherMiddleware
 {
@@ -21,7 +20,7 @@ final readonly class FlasherMiddleware
     {
         $response = $next($request);
 
-        if ($response instanceof LaravelJsonResponse || $response instanceof LaravelResponse) {
+        if ($response instanceof SymfonyResponse) {
             $this->responseExtension->render(new Request($request), new Response($response));
         }
 
