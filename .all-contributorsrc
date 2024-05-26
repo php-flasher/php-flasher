@@ -85,6 +85,16 @@
             "contributions": [
                 "design"
             ]
+        },
+        {
+            "login": "AhmedGamal",
+            "name": "Ahmed Gamal",
+            "avatar_url": "https://avatars.githubusercontent.com/u/11786167?v=4",
+            "profile": "https://github.com/AhmedGamal",
+            "contributions": [
+                "code",
+                "doc"
+            ]
         }
     ]
 }
