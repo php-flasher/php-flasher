@@ -33,7 +33,7 @@
         "orchestra/testbench": "^9.0.4",
         "overtrue/phplint": "^9.3.1",
         "php-cs-fixer/shim": "^3.58.1",
-        "phpstan/phpstan": "^1.11.2",
+        "phpstan/phpstan": "^1.11.3",
         "phpstan/phpstan-mockery": "^1.1.2",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-symfony": "^1.4.3",
