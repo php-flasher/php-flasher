@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-$finder = PhpCsFixer\Finder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
+
+$finder = Finder::create()
     ->in([
         __DIR__.'/src',
         __DIR__.'/tests',
@@ -11,7 +15,8 @@ $finder = PhpCsFixer\Finder::create()
     ->append([__FILE__])
 ;
 
-return (new PhpCsFixer\Config())
+return (new Config())
+    ->setParallelConfig(ParallelConfigFactory::detect())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12' => true,
