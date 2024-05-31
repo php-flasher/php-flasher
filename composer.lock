@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6277b51593db73ef534b68b04ddc8f13",
+    "content-hash": "e596bb646f7c1354d818a9f4892b3527",
     "packages": [],
     "packages-dev": [
         {
@@ -1307,16 +1307,16 @@
         },
         {
             "name": "larastan/larastan",
-            "version": "v2.9.6",
+            "version": "v2.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/larastan/larastan.git",
-                "reference": "93d5b95d2e29cdb8203363d44abfdbc0bc7ef57f"
+                "reference": "5c805f636095cc2e0b659e3954775cf8f1dad1bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/larastan/larastan/zipball/93d5b95d2e29cdb8203363d44abfdbc0bc7ef57f",
-                "reference": "93d5b95d2e29cdb8203363d44abfdbc0bc7ef57f",
+                "url": "https://api.github.com/repos/larastan/larastan/zipball/5c805f636095cc2e0b659e3954775cf8f1dad1bb",
+                "reference": "5c805f636095cc2e0b659e3954775cf8f1dad1bb",
                 "shasum": ""
             },
             "require": {
@@ -1330,7 +1330,7 @@
                 "illuminate/support": "^9.52.16 || ^10.28.0 || ^11.0",
                 "php": "^8.0.2",
                 "phpmyadmin/sql-parser": "^5.9.0",
-                "phpstan/phpstan": "^1.10.66"
+                "phpstan/phpstan": "^1.11.1"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^12.0",
@@ -1385,7 +1385,7 @@
             ],
             "support": {
                 "issues": "https://github.com/larastan/larastan/issues",
-                "source": "https://github.com/larastan/larastan/tree/v2.9.6"
+                "source": "https://github.com/larastan/larastan/tree/v2.9.7"
             },
             "funding": [
                 {
@@ -1405,7 +1405,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2024-05-09T11:53:26+00:00"
+            "time": "2024-05-27T18:33:26+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3537,16 +3537,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.57.2",
+            "version": "v3.58.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "2141067497145f224111eee89a0b4a0d0f3fe487"
+                "reference": "a6af3df8516033b450a220003c673b9393d68f55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/2141067497145f224111eee89a0b4a0d0f3fe487",
-                "reference": "2141067497145f224111eee89a0b4a0d0f3fe487",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/a6af3df8516033b450a220003c673b9393d68f55",
+                "reference": "a6af3df8516033b450a220003c673b9393d68f55",
                 "shasum": ""
             },
             "require": {
@@ -3583,9 +3583,9 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/shim/issues",
-                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.57.2"
+                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.58.1"
             },
-            "time": "2024-05-20T20:42:23+00:00"
+            "time": "2024-05-29T16:39:49+00:00"
         },
         {
             "name": "phpmyadmin/sql-parser",
@@ -3906,16 +3906,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.4.1",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "d530cfebba55763732bc2421f79d2576d9d7942f"
+                "reference": "af6ae0f4b91bc080265e80776af26da3e5befb28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/d530cfebba55763732bc2421f79d2576d9d7942f",
-                "reference": "d530cfebba55763732bc2421f79d2576d9d7942f",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/af6ae0f4b91bc080265e80776af26da3e5befb28",
+                "reference": "af6ae0f4b91bc080265e80776af26da3e5befb28",
                 "shasum": ""
             },
             "require": {
@@ -3972,9 +3972,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.4.1"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.4.3"
             },
-            "time": "2024-05-24T14:00:29+00:00"
+            "time": "2024-05-30T15:01:27+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5212,16 +5212,16 @@
         },
         {
             "name": "rector/swiss-knife",
-            "version": "0.2.6",
+            "version": "0.2.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/swiss-knife.git",
-                "reference": "aa076d88df0020266502d014f8b414e43b4b5da4"
+                "reference": "abcb520551ecf233a827263563a0c5817f35cc42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/swiss-knife/zipball/aa076d88df0020266502d014f8b414e43b4b5da4",
-                "reference": "aa076d88df0020266502d014f8b414e43b4b5da4",
+                "url": "https://api.github.com/repos/rectorphp/swiss-knife/zipball/abcb520551ecf233a827263563a0c5817f35cc42",
+                "reference": "abcb520551ecf233a827263563a0c5817f35cc42",
                 "shasum": ""
             },
             "require": {
@@ -5238,7 +5238,7 @@
             "description": "Swiss knife in pocket of every upgrade architect",
             "support": {
                 "issues": "https://github.com/rectorphp/swiss-knife/issues",
-                "source": "https://github.com/rectorphp/swiss-knife/tree/0.2.6"
+                "source": "https://github.com/rectorphp/swiss-knife/tree/0.2.16"
             },
             "funding": [
                 {
@@ -5250,7 +5250,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-26T02:44:18+00:00"
+            "time": "2024-05-31T08:55:34+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -10808,7 +10808,7 @@
     "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
-    "prefer-lowest": false,
+    "prefer-lowest": true,
     "platform": {
         "php": ">=8.2",
         "ext-intl": "*"
