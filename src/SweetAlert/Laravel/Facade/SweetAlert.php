@@ -5,26 +5,19 @@ declare(strict_types=1);
 namespace Flasher\SweetAlert\Laravel\Facade;
 
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\SweetAlert\Prime\SweetAlertBuilder;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static SweetAlertBuilder addSuccess(string $message, array $options = array())
- * @method static SweetAlertBuilder addError(string $message, array $options = array())
- * @method static SweetAlertBuilder addWarning(string $message, array $options = array())
- * @method static SweetAlertBuilder addInfo(string $message, array $options = array())
- * @method static SweetAlertBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
+ * @method static SweetAlertBuilder success(string $message, array<string, mixed> $options = array())
+ * @method static SweetAlertBuilder error(string $message, array<string, mixed> $options = array())
+ * @method static SweetAlertBuilder warning(string $message, array<string, mixed> $options = array())
+ * @method static SweetAlertBuilder info(string $message, array<string, mixed> $options = array())
  * @method static SweetAlertBuilder flash(StampInterface[] $stamps = array())
- * @method static SweetAlertBuilder type(string $type, string $message = null, array $options = array())
  * @method static SweetAlertBuilder message(string $message)
- * @method static SweetAlertBuilder options(array $options, bool $merge = true)
+ * @method static SweetAlertBuilder options(array<string, mixed> $options, bool $merge = true)
  * @method static SweetAlertBuilder option(string $name, string $value)
- * @method static SweetAlertBuilder success(string $message = null, array $options = array())
- * @method static SweetAlertBuilder error(string $message = null, array $options = array())
- * @method static SweetAlertBuilder info(string $message = null, array $options = array())
- * @method static SweetAlertBuilder warning(string $message = null, array $options = array())
  * @method static SweetAlertBuilder priority(int $priority)
  * @method static SweetAlertBuilder hops(int $amount)
  * @method static SweetAlertBuilder keep()
@@ -34,7 +27,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static SweetAlertBuilder withStamp(StampInterface $stamp)
  * @method static SweetAlertBuilder handler(string $handler)
  * @method static Envelope          getEnvelope()
- * @method static SweetAlertBuilder question(string $message = null, array $options = array())
+ * @method static SweetAlertBuilder question(string $message = null, array<string, mixed> $options = array())
  * @method static SweetAlertBuilder title(string $title)
  * @method static SweetAlertBuilder titleText(string $titleText)
  * @method static SweetAlertBuilder html(string $html)

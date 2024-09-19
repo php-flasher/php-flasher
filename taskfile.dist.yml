@@ -29,7 +29,7 @@ tasks:
     lint:
         desc: "🔍 Run various linting tools to ensure code quality."
         cmds:
-            - vendor/bin/php-cs-fixer fix --dry-run
+            - vendor/bin/php-cs-fixer fix
             - vendor/bin/phpstan analyse --memory-limit=-1
             - composer validate --strict
             - vendor/bin/phplint

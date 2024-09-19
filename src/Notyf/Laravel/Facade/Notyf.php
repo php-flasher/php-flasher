@@ -6,25 +6,18 @@ namespace Flasher\Notyf\Laravel\Facade;
 
 use Flasher\Notyf\Prime\NotyfBuilder;
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Notification\NotificationInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static NotyfBuilder addSuccess(string $message, array $options = array())
- * @method static NotyfBuilder addError(string $message, array $options = array())
- * @method static NotyfBuilder addWarning(string $message, array $options = array())
- * @method static NotyfBuilder addInfo(string $message, array $options = array())
- * @method static NotyfBuilder addFlash(NotificationInterface|string $type, string $message = null, array $options = array())
+ * @method static NotyfBuilder success(string $message, array<string, mixed> $options = array())
+ * @method static NotyfBuilder error(string $message, array<string, mixed> $options = array())
+ * @method static NotyfBuilder warning(string $message, array<string, mixed> $options = array())
+ * @method static NotyfBuilder info(string $message, array<string, mixed> $options = array())
  * @method static NotyfBuilder flash(StampInterface[] $stamps = array())
- * @method static NotyfBuilder type(string $type, string $message = null, array $options = array())
  * @method static NotyfBuilder message(string $message)
- * @method static NotyfBuilder options(array $options, bool $merge = true)
+ * @method static NotyfBuilder options(array<string, mixed> $options, bool $merge = true)
  * @method static NotyfBuilder option(string $name, string $value)
- * @method static NotyfBuilder success(string $message = null, array $options = array())
- * @method static NotyfBuilder error(string $message = null, array $options = array())
- * @method static NotyfBuilder info(string $message = null, array $options = array())
- * @method static NotyfBuilder warning(string $message = null, array $options = array())
  * @method static NotyfBuilder priority(int $priority)
  * @method static NotyfBuilder hops(int $amount)
  * @method static NotyfBuilder keep()

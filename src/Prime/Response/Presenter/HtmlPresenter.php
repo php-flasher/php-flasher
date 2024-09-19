@@ -21,6 +21,7 @@ final class HtmlPresenter implements PresenterInterface
         /** @var array{csp_script_nonce?: ?string, envelopes_only?: bool} $context */
         $context = $response->getContext();
 
+        /** @var array{envelopes: array<int, array{metadata: array{html?: string}}>} $options */
         $options = $response->toArray();
         $html = '';
 

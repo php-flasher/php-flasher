@@ -100,7 +100,11 @@ final class FlasherPlugin extends Plugin
      *     scripts: string[],
      *     styles: string[],
      *     options: array<string, mixed>,
-     *     plugins?: array<string, array<string, mixed>>,
+     *     plugins?: array<string, array{
+     *         scripts?: string[],
+     *         styles?: string[],
+     *         options?: array<string, mixed>,
+     *     }>,
      * } $config
      *
      * @return array{
