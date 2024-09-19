@@ -1,6 +1,8 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.0.1...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.0.2...2.x)
+
+## [v2.0.2](https://github.com/php-flasher/php-flasher/compare/v2.0.1...v2.0.2) - 2024-09-19
 
 * feature [Flasher] add escapeHtml option for secure HTML escaping in notifications. See [PR #196](https://github.com/php-flasher/php-flasher/pull/196) by [yoeunes](https://github.com/yoeunes)
 * feature [Flasher] add Default configuration options. See [PR #183](https://github.com/php-flasher/php-flasher/pull/183) by [AhmedGamal](https://github.com/AhmedGamal)
