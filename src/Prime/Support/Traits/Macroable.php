@@ -56,7 +56,7 @@ trait Macroable
             $macro = $method->invoke($mixin);
 
             if (!\is_callable($macro) && !\is_object($macro)) {
-                throw new \InvalidArgumentException(sprintf('Expect the result of method %s::%s from the mixin object to be be a callable or an object, got "%s".', $mixin::class, $method->name, get_debug_type($macro)));
+                throw new \InvalidArgumentException(\sprintf('Expect the result of method %s::%s from the mixin object to be be a callable or an object, got "%s".', $mixin::class, $method->name, get_debug_type($macro)));
             }
 
             if ($replace || !static::hasMacro($method->name)) {
@@ -83,7 +83,7 @@ trait Macroable
     public static function __callStatic(string $method, array $parameters): mixed
     {
         if (!static::hasMacro($method)) {
-            throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $method));
+            throw new \BadMethodCallException(\sprintf('Method %s::%s does not exist.', static::class, $method));
         }
 
         $macro = static::$macros[$method];
@@ -93,7 +93,7 @@ trait Macroable
         }
 
         if (!\is_callable($macro)) {
-            throw new \BadMethodCallException(sprintf('Macro %s is not callable.', $method));
+            throw new \BadMethodCallException(\sprintf('Macro %s is not callable.', $method));
         }
 
         return $macro(...$parameters);
@@ -109,7 +109,7 @@ trait Macroable
     public function __call(string $method, array $parameters): mixed
     {
         if (!static::hasMacro($method)) {
-            throw new \BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $method));
+            throw new \BadMethodCallException(\sprintf('Method %s::%s does not exist.', static::class, $method));
         }
 
         $macro = static::$macros[$method];
@@ -119,7 +119,7 @@ trait Macroable
         }
 
         if (!\is_callable($macro)) {
-            throw new \BadMethodCallException(sprintf('Macro %s is not callable.', $method));
+            throw new \BadMethodCallException(\sprintf('Macro %s is not callable.', $method));
         }
 
         return $macro(...$parameters);

@@ -70,7 +70,7 @@ final class FilterFactoryTest extends TestCase
         $reflect = new \ReflectionClass(FilterFactory::class);
         $reflectValue = $reflect->getProperty('criteria');
 
-        $this->filterFactory->addCriteria('custom_criteria', fn () => new class() implements CriteriaInterface {
+        $this->filterFactory->addCriteria('custom_criteria', fn () => new class implements CriteriaInterface {
             public function apply(array $envelopes): array
             {
                 return $envelopes;

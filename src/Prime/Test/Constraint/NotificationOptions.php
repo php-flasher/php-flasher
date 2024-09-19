@@ -50,7 +50,7 @@ final class NotificationOptions extends Constraint
 
         $actualOptionsString = implode('; ', $actualOptions) ?: 'none found';
 
-        return sprintf(
+        return \sprintf(
             'Failed asserting that NotificationEvents %s. Actual options in notifications: [%s].',
             $this->toString(),
             $actualOptionsString

@@ -160,7 +160,7 @@ trait NotificationBuilderMethods
         if (!\is_bool($condition)) {
             $type = \gettype($condition);
 
-            throw new \InvalidArgumentException(sprintf('The condition must be a boolean or a closure that returns a boolean. Got: %s', $type));
+            throw new \InvalidArgumentException(\sprintf('The condition must be a boolean or a closure that returns a boolean. Got: %s', $type));
         }
 
         return $condition;

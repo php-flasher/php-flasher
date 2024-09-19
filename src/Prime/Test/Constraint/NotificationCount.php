@@ -15,7 +15,7 @@ final class NotificationCount extends Constraint
 
     public function toString(): string
     {
-        return sprintf('matches the expected notification count of %d.', $this->expectedValue);
+        return \sprintf('matches the expected notification count of %d.', $this->expectedValue);
     }
 
     /**
@@ -45,7 +45,7 @@ final class NotificationCount extends Constraint
     {
         $actualCount = $this->countNotifications($other);
 
-        return sprintf('Expected the notification count to be %d, but got %d instead.', $this->expectedValue, $actualCount);
+        return \sprintf('Expected the notification count to be %d, but got %d instead.', $this->expectedValue, $actualCount);
     }
 
     /**

@@ -23,7 +23,7 @@ final class NotificationType extends Constraint
 
     public function toString(): string
     {
-        return sprintf('contains a notification of type "%s".', $this->expectedType);
+        return \sprintf('contains a notification of type "%s".', $this->expectedType);
     }
 
     /**
@@ -65,7 +65,7 @@ final class NotificationType extends Constraint
         $uniqueTypes = array_unique($actualTypes);
         $typesList = implode(', ', $uniqueTypes);
 
-        return sprintf(
+        return \sprintf(
             'Expected the NotificationEvents to contain a notification of type "%s", but found types: %s.',
             $this->expectedType,
             $typesList ?: 'none'

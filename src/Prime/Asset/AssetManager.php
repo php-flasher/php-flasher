@@ -44,7 +44,7 @@ final class AssetManager implements AssetManagerInterface
         }
 
         if (false === file_put_contents($this->manifestPath, json_encode($this->entries, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES))) {
-            throw new \RuntimeException(sprintf('Failed to write manifest file to "%s"', $this->manifestPath));
+            throw new \RuntimeException(\sprintf('Failed to write manifest file to "%s"', $this->manifestPath));
         }
     }
 
@@ -67,7 +67,7 @@ final class AssetManager implements AssetManagerInterface
         $entries = json_decode($content ?: '', true);
 
         if (!\is_array($entries)) {
-            throw new \InvalidArgumentException(sprintf('There was a problem JSON decoding the "%s" file.', $this->manifestPath));
+            throw new \InvalidArgumentException(\sprintf('There was a problem JSON decoding the "%s" file.', $this->manifestPath));
         }
 
         return $this->entries = $entries; // @phpstan-ignore-line

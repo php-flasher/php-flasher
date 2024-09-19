@@ -11,11 +11,11 @@ final class ForwardsCallsTest extends TestCase
 {
     public function testSuccessfulMethodForwarding(): void
     {
-        $testable = new class() {
+        $testable = new class {
             use ForwardsCalls;
         };
 
-        $secondary = new class() {
+        $secondary = new class {
             public function someMethod(): string
             {
                 return 'method result';
@@ -31,11 +31,11 @@ final class ForwardsCallsTest extends TestCase
 
     public function testForwardingAndReturningThis(): void
     {
-        $testable = new class() {
+        $testable = new class {
             use ForwardsCalls;
         };
 
-        $secondary = new class() {
+        $secondary = new class {
             public function selfReturningMethod(): self
             {
                 return $this;
@@ -52,11 +52,11 @@ final class ForwardsCallsTest extends TestCase
 
     public function testUndefinedMethodCall(): void
     {
-        $testable = new class() {
+        $testable = new class {
             use ForwardsCalls;
         };
 
-        $secondary = new class() {
+        $secondary = new class {
             // This class intentionally left blank to simulate an undefined method call.
         };
 

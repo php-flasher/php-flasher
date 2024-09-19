@@ -68,7 +68,7 @@ final class EventDispatcherTest extends TestCase
 
     public function testDispatchWithNonCallableListener(): void
     {
-        $event = new class() {};
+        $event = new class {};
         $eventName = $event::class;
 
         $listener = new NonCallableListener($eventName);

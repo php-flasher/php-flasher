@@ -32,15 +32,15 @@ final class Notification extends Constraint
     public function toString(): string
     {
         $details = [
-            sprintf('type: "%s"', $this->expectedType),
+            \sprintf('type: "%s"', $this->expectedType),
         ];
 
         if (null !== $this->expectedMessage) {
-            $details[] = sprintf('message: "%s"', $this->expectedMessage);
+            $details[] = \sprintf('message: "%s"', $this->expectedMessage);
         }
 
         if (null !== $this->expectedTitle) {
-            $details[] = sprintf('title: "%s"', $this->expectedTitle);
+            $details[] = \sprintf('title: "%s"', $this->expectedTitle);
         }
 
         if (!empty($this->expectedOptions)) {
@@ -82,7 +82,7 @@ final class Notification extends Constraint
     protected function failureDescription(mixed $other): string
     {
         $foundNotifications = array_map(function (NotificationInterface $notification) {
-            return sprintf(
+            return \sprintf(
                 'type: "%s", title: "%s", message: "%s", options: [%s]',
                 $notification->getType(),
                 $notification->getTitle(),
@@ -95,7 +95,7 @@ final class Notification extends Constraint
             $foundNotifications[] = 'No notifications found';
         }
 
-        return sprintf(
+        return \sprintf(
             'Failed asserting that NotificationEvents %s. Found: [%s].',
             $this->toString(),
             implode('; ', $foundNotifications)

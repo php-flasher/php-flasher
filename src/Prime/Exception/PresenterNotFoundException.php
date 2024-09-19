@@ -11,10 +11,10 @@ final class PresenterNotFoundException extends \Exception
      */
     public static function create(string $alias, array $availablePresenters = []): self
     {
-        $message = sprintf('Presenter "%s" not found, did you forget to register it?', $alias);
+        $message = \sprintf('Presenter "%s" not found, did you forget to register it?', $alias);
 
         if ([] !== $availablePresenters) {
-            $message .= sprintf(' Available presenters: [%s]', implode(', ', $availablePresenters));
+            $message .= \sprintf(' Available presenters: [%s]', implode(', ', $availablePresenters));
         }
 
         return new self($message);

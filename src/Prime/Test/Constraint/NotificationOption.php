@@ -23,10 +23,10 @@ final class NotificationOption extends Constraint
 
     public function toString(): string
     {
-        $description = sprintf('contains a notification with an option "%s"', $this->expectedKey);
+        $description = \sprintf('contains a notification with an option "%s"', $this->expectedKey);
 
         if ($this->expectedValue) {
-            $description .= sprintf(' having the value "%s"', json_encode($this->expectedValue));
+            $description .= \sprintf(' having the value "%s"', json_encode($this->expectedValue));
         }
 
         return $description;

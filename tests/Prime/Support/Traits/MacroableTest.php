@@ -11,7 +11,7 @@ final class MacroableTest extends TestCase
 {
     public function testMacroRegistrationAndExecution(): void
     {
-        $macroableClass = new class() {
+        $macroableClass = new class {
             use Macroable;
         };
 
@@ -25,11 +25,11 @@ final class MacroableTest extends TestCase
 
     public function testMixin(): void
     {
-        $macroableClass = new class() {
+        $macroableClass = new class {
             use Macroable;
         };
 
-        $mixin = new class() {
+        $mixin = new class {
             public function mixedInMethod(): callable
             {
                 return static function () {
@@ -46,7 +46,7 @@ final class MacroableTest extends TestCase
 
     public function testExceptionForNonExistingMacro(): void
     {
-        $macroableClass = new class() {
+        $macroableClass = new class {
             use Macroable;
         };
 
@@ -56,7 +56,7 @@ final class MacroableTest extends TestCase
 
     public function testExceptionForNonCallableMacro(): void
     {
-        $macroableClass = new class() {
+        $macroableClass = new class {
             use Macroable;
         };
 

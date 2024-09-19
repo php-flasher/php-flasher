@@ -9,7 +9,7 @@ final class PHPTemplateEngine implements TemplateEngineInterface
     public function render(string $name, array $context = []): string
     {
         if (!file_exists($name) || !is_readable($name)) {
-            throw new \InvalidArgumentException(sprintf('Template file "%s" does not exist or is not readable.', $name));
+            throw new \InvalidArgumentException(\sprintf('Template file "%s" does not exist or is not readable.', $name));
         }
 
         ob_start();

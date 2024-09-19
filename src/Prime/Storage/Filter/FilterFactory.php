@@ -71,7 +71,7 @@ final class FilterFactory implements FilterFactoryInterface
         $criteria = \is_callable($criteria) ? $criteria($value) : $criteria;
 
         if (!$criteria instanceof CriteriaInterface) {
-            throw new \UnexpectedValueException(sprintf('Expected an instance of "%s", got "%s" instead.', CriteriaInterface::class, get_debug_type($criteria)));
+            throw new \UnexpectedValueException(\sprintf('Expected an instance of "%s", got "%s" instead.', CriteriaInterface::class, get_debug_type($criteria)));
         }
 
         return $criteria;

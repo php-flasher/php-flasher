@@ -210,7 +210,7 @@ final class FlasherServiceProvider extends PluginServiceProvider
 
         AboutCommand::add('PHPFlasher', [
             'Version' => Flasher::VERSION,
-            'Factories' => implode(' <fg=gray;options=bold>/</> ', array_map(fn ($factory) => sprintf('<fg=yellow;options=bold>%s</>', $factory), $factories)),
+            'Factories' => implode(' <fg=gray;options=bold>/</> ', array_map(fn ($factory) => \sprintf('<fg=yellow;options=bold>%s</>', $factory), $factories)),
         ]);
     }
 

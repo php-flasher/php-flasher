@@ -19,7 +19,7 @@ trait RangeExtractor
     private function extractRange(string $name, mixed $criteria): array
     {
         if (!\is_int($criteria) && !\is_array($criteria)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type for criteria "%s". Expected int or array, got "%s".', $name, get_debug_type($criteria)));
+            throw new \InvalidArgumentException(\sprintf('Invalid type for criteria "%s". Expected int or array, got "%s".', $name, get_debug_type($criteria)));
         }
 
         if (\is_int($criteria)) {
@@ -30,11 +30,11 @@ trait RangeExtractor
         $max = $criteria['max'] ?? null;
 
         if (null !== $min && !\is_int($min)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type for "min" in criteria "%s". Expected int, got "%s".', $name, get_debug_type($min)));
+            throw new \InvalidArgumentException(\sprintf('Invalid type for "min" in criteria "%s". Expected int, got "%s".', $name, get_debug_type($min)));
         }
 
         if (null !== $max && !\is_int($max)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type for "max" in criteria "%s". Expected int, got "%s".', $name, get_debug_type($max)));
+            throw new \InvalidArgumentException(\sprintf('Invalid type for "max" in criteria "%s". Expected int, got "%s".', $name, get_debug_type($max)));
         }
 
         return ['min' => $min, 'max' => $max];

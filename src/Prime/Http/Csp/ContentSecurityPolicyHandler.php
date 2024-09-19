@@ -136,7 +136,7 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
                 if (!\in_array('\'unsafe-inline\'', $headers[$header][$type], true)) {
                     $headers[$header][$type][] = '\'unsafe-inline\'';
                 }
-                $headers[$header][$type][] = sprintf('\'nonce-%s\'', $nonces[$tokenName]);
+                $headers[$header][$type][] = \sprintf('\'nonce-%s\'', $nonces[$tokenName]);
             }
         }
 
@@ -166,7 +166,7 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
      */
     private function generateCspHeader(array $directives): string
     {
-        return array_reduce(array_keys($directives), fn ($res, $name) => ('' !== $res ? $res.'; ' : '').sprintf('%s %s', $name, implode(' ', $directives[$name])), '');
+        return array_reduce(array_keys($directives), fn ($res, $name) => ('' !== $res ? $res.'; ' : '').\sprintf('%s %s', $name, implode(' ', $directives[$name])), '');
     }
 
     /**

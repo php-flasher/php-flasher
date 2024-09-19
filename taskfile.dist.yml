@@ -30,7 +30,7 @@ tasks:
         desc: "🔍 Run various linting tools to ensure code quality."
         cmds:
             - vendor/bin/php-cs-fixer fix --dry-run
-            - vendor/bin/phpstan analyse
+            - vendor/bin/phpstan analyse --memory-limit=-1
             - composer validate --strict
             - vendor/bin/phplint
             - find src/ -name "composer.json" -exec composer validate --strict {} \;

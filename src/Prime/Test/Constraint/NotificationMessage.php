@@ -19,7 +19,7 @@ final class NotificationMessage extends Constraint
 
     public function toString(): string
     {
-        return sprintf('contains a notification with message "%s"', $this->expectedMessage);
+        return \sprintf('contains a notification with message "%s"', $this->expectedMessage);
     }
 
     protected function matches(mixed $other): bool
@@ -44,17 +44,17 @@ final class NotificationMessage extends Constraint
         }
 
         $foundMessages = array_map(function (NotificationInterface $notification) {
-            return sprintf('"%s"', $notification->getMessage());
+            return \sprintf('"%s"', $notification->getMessage());
         }, $other->getNotifications());
 
         if (empty($foundMessages)) {
-            return sprintf(
+            return \sprintf(
                 'Expected to find a notification with a message containing "%s", but no notifications were found.',
                 $this->expectedMessage
             );
         }
 
-        return sprintf(
+        return \sprintf(
             'Expected to find a notification with a message containing "%s". Found messages: %s.',
             $this->expectedMessage,
             implode(', ', $foundMessages)

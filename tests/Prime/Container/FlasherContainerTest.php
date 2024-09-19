@@ -55,7 +55,7 @@ final class FlasherContainerTest extends TestCase
         $container->method('get')->willReturn($invalidService);
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Expected an instance of "%s" or "%s", got "%s".', FlasherInterface::class, NotificationFactoryInterface::class, get_debug_type($invalidService)));
+        $this->expectExceptionMessage(\sprintf('Expected an instance of "%s" or "%s", got "%s".', FlasherInterface::class, NotificationFactoryInterface::class, get_debug_type($invalidService)));
 
         FlasherContainer::from($container);
         FlasherContainer::create('invalid_service');

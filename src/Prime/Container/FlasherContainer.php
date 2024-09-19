@@ -57,13 +57,13 @@ final class FlasherContainer
     public static function create(string $id): FlasherInterface|NotificationFactoryInterface
     {
         if (!self::has($id)) {
-            throw new \InvalidArgumentException(sprintf('The container does not have the requested service "%s".', $id));
+            throw new \InvalidArgumentException(\sprintf('The container does not have the requested service "%s".', $id));
         }
 
         $factory = self::getContainer()->get($id);
 
         if (!$factory instanceof FlasherInterface && !$factory instanceof NotificationFactoryInterface) {
-            throw new \InvalidArgumentException(sprintf('Expected an instance of "%s" or "%s", got "%s".', FlasherInterface::class, NotificationFactoryInterface::class, get_debug_type($factory)));
+            throw new \InvalidArgumentException(\sprintf('Expected an instance of "%s" or "%s", got "%s".', FlasherInterface::class, NotificationFactoryInterface::class, get_debug_type($factory)));
         }
 
         return $factory;
@@ -93,7 +93,7 @@ final class FlasherContainer
         $resolved = $container instanceof \Closure || \is_callable($container) ? $container() : $container;
 
         if (!$resolved instanceof ContainerInterface) {
-            throw new \InvalidArgumentException(sprintf('Expected an instance of "%s", got "%s".', ContainerInterface::class, get_debug_type($resolved)));
+            throw new \InvalidArgumentException(\sprintf('Expected an instance of "%s", got "%s".', ContainerInterface::class, get_debug_type($resolved)));
         }
 
         return $resolved;

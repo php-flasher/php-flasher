@@ -66,7 +66,7 @@ final readonly class TranslationListener implements EventListenerInterface
 
         foreach ($preset->getParameters() as $key => $value) {
             if (!\is_string($value)) {
-                throw new \InvalidArgumentException(sprintf('Value must be "string", got "%s".', get_debug_type($value)));
+                throw new \InvalidArgumentException(\sprintf('Value must be "string", got "%s".', get_debug_type($value)));
             }
 
             $parameters[$key] = $this->translator->translate($value, $parameters, $locale);

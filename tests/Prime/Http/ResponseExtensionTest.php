@@ -149,7 +149,7 @@ final class ResponseExtensionTest extends TestCase
         $responseExtension = new ResponseExtension($flasher, $cspHandler);
         $responseExtension->render($request, $response);
 
-        $htmlInjection = HtmlPresenter::FLASHER_REPLACE_ME === $placeholder ? sprintf('options.push(%s);', $htmlResponse) : $htmlResponse;
+        $htmlInjection = HtmlPresenter::FLASHER_REPLACE_ME === $placeholder ? \sprintf('options.push(%s);', $htmlResponse) : $htmlResponse;
         $expectedContent = str_replace($placeholder, "{$htmlInjection}\n{$placeholder}", $contentBefore);
 
         $response->shouldHaveReceived('setContent')->with($expectedContent)->once();
