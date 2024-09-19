@@ -1,3 +1,5 @@
+@use "sass:color";
+
 body.fl-dark .fl-flasher,
 html.fl-dark .fl-flasher {
     --background-color: var(--dark-background-color);
@@ -69,7 +71,7 @@ html.fl-dark .fl-flasher {
         transition: color 0.3s ease, transform 0.3s ease;
 
         &:hover {
-            color: darken(#a8aaab, 10%);
+            color: color.adjust(#a8aaab, $lightness: -10%);
             transform: scale(1.1);
         }
     }
