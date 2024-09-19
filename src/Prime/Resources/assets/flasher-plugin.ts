@@ -19,6 +19,7 @@ export default class FlasherPlugin extends AbstractPlugin {
         direction: 'top',
         rtl: false,
         style: {} as Properties,
+        escapeHtml: false,
     }
 
     constructor(theme: Theme) {
@@ -31,11 +32,12 @@ export default class FlasherPlugin extends AbstractPlugin {
         const render = () =>
             envelopes.forEach((envelope) => {
                 // @ts-expect-error
-                const typeTimeout = this.options.timeout ?? this.options.timeouts[envelope.type] ?? 5000;
+                const typeTimeout = this.options.timeout ?? this.options.timeouts[envelope.type] ?? 5000
                 const options = {
                     ...this.options,
                     ...envelope.options,
                     timeout: envelope.options.timeout ?? typeTimeout,
+                    escapeHtml: (envelope.options.escapeHtml ?? this.options.escapeHtml) as boolean,
                 }
 
                 this.addToContainer(this.createContainer(options), envelope, options)
@@ -64,7 +66,12 @@ export default class FlasherPlugin extends AbstractPlugin {
         return container
     }
 
-    private addToContainer(container: HTMLDivElement, envelope: Envelope, options: { direction: string, timeout: number, fps: number, rtl: boolean }): void {
+    private addToContainer(container: HTMLDivElement, envelope: Envelope, options: { direction: string, timeout: number, fps: number, rtl: boolean, escapeHtml: boolean }): void {
+        if (options.escapeHtml) {
+            envelope.title = this.escapeHtml(envelope.title)
+            envelope.message = this.escapeHtml(envelope.message)
+        }
+
         const notification = this.stringToHTML(this.theme.render(envelope))
 
         notification.classList.add(...`fl-container${options.rtl ? ' fl-rtl' : ''}`.split(' '))
@@ -125,5 +132,24 @@ export default class FlasherPlugin extends AbstractPlugin {
         const template = document.createElement('template')
         template.innerHTML = str.trim()
         return template.content.firstElementChild as HTMLElement
+    }
+
+    private escapeHtml(str: string | null | undefined): string {
+        if (str == null) {
+            return ''
+        }
+
+        return str.replace(/[&<>"'`=\/]/g, (char) => {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                '\'': '&#39;',
+                '`': '&#96;',
+                '=': '&#61;',
+                '/': '&#47;',
+            }[char] as string
+        })
     }
 }

@@ -92,14 +92,15 @@ class FlasherPlugin extends AbstractPlugin {
             direction: 'top',
             rtl: false,
             style: {},
+            escapeHtml: false,
         };
         this.theme = theme;
     }
     renderEnvelopes(envelopes) {
         const render = () => envelopes.forEach((envelope) => {
-            var _a, _b, _c;
+            var _a, _b, _c, _d;
             const typeTimeout = (_b = (_a = this.options.timeout) !== null && _a !== void 0 ? _a : this.options.timeouts[envelope.type]) !== null && _b !== void 0 ? _b : 5000;
-            const options = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_c = envelope.options.timeout) !== null && _c !== void 0 ? _c : typeTimeout });
+            const options = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_c = envelope.options.timeout) !== null && _c !== void 0 ? _c : typeTimeout, escapeHtml: ((_d = envelope.options.escapeHtml) !== null && _d !== void 0 ? _d : this.options.escapeHtml) });
             this.addToContainer(this.createContainer(options), envelope, options);
         });
         document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', render) : render();
@@ -121,6 +122,10 @@ class FlasherPlugin extends AbstractPlugin {
     }
     addToContainer(container, envelope, options) {
         var _a;
+        if (options.escapeHtml) {
+            envelope.title = this.escapeHtml(envelope.title);
+            envelope.message = this.escapeHtml(envelope.message);
+        }
         const notification = this.stringToHTML(this.theme.render(envelope));
         notification.classList.add(...`fl-container${options.rtl ? ' fl-rtl' : ''}`.split(' '));
         options.direction === 'bottom' ? container.append(notification) : container.prepend(notification);
@@ -169,6 +174,23 @@ class FlasherPlugin extends AbstractPlugin {
         const template = document.createElement('template');
         template.innerHTML = str.trim();
         return template.content.firstElementChild;
+    }
+    escapeHtml(str) {
+        if (str == null) {
+            return '';
+        }
+        return str.replace(/[&<>"'`=\/]/g, (char) => {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                '\'': '&#39;',
+                '`': '&#96;',
+                '=': '&#61;',
+                '/': '&#47;',
+            }[char];
+        });
     }
 }
 
