@@ -50,6 +50,7 @@
         "rollup-plugin-copy": "3.5.0",
         "rollup-plugin-filesize": "^10.0.0",
         "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-progress": "^1.1.2",
         "sass": "^1.79.1",
         "ts-node": "^10.9.2",
         "tslib": "^2.7.0",

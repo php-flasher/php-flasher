@@ -12,6 +12,7 @@ import postcss from 'rollup-plugin-postcss'
 import cssnano from 'cssnano'
 import autoprefixer from 'autoprefixer'
 import discardComments from 'postcss-discard-comments'
+import progress from 'rollup-plugin-progress'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -68,6 +69,7 @@ function createPlugins({ name, path, assets }) {
         : []
 
     return [
+        progress(),
         ...(isProduction ? [clear({ targets: [`${path}/dist`, `${path}/public`] })] : []),
         postcss({ extract: filename, plugins: isProduction ? postcssPlugins : [] }),
         ...commonPlugins(path),
