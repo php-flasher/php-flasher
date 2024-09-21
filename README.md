@@ -1,4 +1,4 @@
-[![ReadMeSupportPalestine](https://raw.githubusercontent.com/php-flasher/php-flasher/2.x/palestine-banner.svg)](https://github.com/php-flasher/php-flasher/docs/palestine.md)
+[![ReadMeSupportPalestine](https://raw.githubusercontent.com/php-flasher/art/main/palestine-banner-support.svg)](./docs/palestine.md)
 
 <p align="center">
     <picture>
