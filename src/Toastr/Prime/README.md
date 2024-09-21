@@ -1,3 +1,9 @@
+<div align="center">
+    <a href="https://github.com/php-flasher/php-flasher/blob/2.x/docs/palestine.md">
+        <img src="https://raw.githubusercontent.com/php-flasher/art/main/palestine-banner-support.svg" width="800px"  alt="Help Palestine"/>
+    </a>
+</div>
+
 <p align="center">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-github-dark.png">
