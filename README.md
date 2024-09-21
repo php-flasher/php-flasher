@@ -1,4 +1,8 @@
-[![ReadMeSupportPalestine](https://raw.githubusercontent.com/php-flasher/art/main/palestine-banner-support.svg)](./docs/palestine.md)
+<div align="center">
+    <a href="https://github.com/php-flasher/php-flasher/blob/2.x/docs/palestine.md">
+        <img src="https://raw.githubusercontent.com/php-flasher/art/main/palestine-banner-support.svg" width="800px"  alt="Help Palestine"/>
+    </a>
+</div>
 
 <p align="center">
     <picture>
