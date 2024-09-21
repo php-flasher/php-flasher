@@ -8,6 +8,9 @@ includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
 
+rules:
+    - Spatie\Ray\PHPStan\RemainingRayCallRule
+
 parameters:
     level: 9
 

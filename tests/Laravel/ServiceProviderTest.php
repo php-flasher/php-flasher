@@ -65,32 +65,28 @@ final class ServiceProviderTest extends TestCase
     }
 
     /**
-     * @return array<array<string>>
+     * @return iterable<int, array<string>>
      */
-    public static function servicesDataProvider(): array
+    public static function servicesDataProvider(): iterable
     {
-        return [
-            ['flasher', \Flasher\Prime\Flasher::class],
-            ['flasher.noty', \Flasher\Noty\Prime\Noty::class],
-            ['flasher.notyf', \Flasher\Notyf\Prime\Notyf::class],
-            ['flasher.sweetalert', \Flasher\SweetAlert\Prime\SweetAlert::class],
-            ['flasher.toastr', \Flasher\Toastr\Prime\Toastr::class],
-            [FlasherMiddleware::class, FlasherMiddleware::class],
-            [SessionMiddleware::class, SessionMiddleware::class],
-        ];
+        yield ['flasher', \Flasher\Prime\Flasher::class];
+        yield ['flasher.noty', \Flasher\Noty\Prime\Noty::class];
+        yield ['flasher.notyf', \Flasher\Notyf\Prime\Notyf::class];
+        yield ['flasher.sweetalert', \Flasher\SweetAlert\Prime\SweetAlert::class];
+        yield ['flasher.toastr', \Flasher\Toastr\Prime\Toastr::class];
+        yield [FlasherMiddleware::class, FlasherMiddleware::class];
+        yield [SessionMiddleware::class, SessionMiddleware::class];
     }
 
     /**
-     * @return array<array<string>>
+     * @return iterable<int, array<string>>
      */
-    public static function flasherAdapterProvider(): array
+    public static function flasherAdapterProvider(): iterable
     {
-        return [
-            ['noty', \Flasher\Noty\Prime\Noty::class],
-            ['notyf', \Flasher\Notyf\Prime\Notyf::class],
-            ['sweetalert', \Flasher\SweetAlert\Prime\SweetAlert::class],
-            ['toastr', \Flasher\Toastr\Prime\Toastr::class],
-        ];
+        yield ['noty', \Flasher\Noty\Prime\Noty::class];
+        yield ['notyf', \Flasher\Notyf\Prime\Notyf::class];
+        yield ['sweetalert', \Flasher\SweetAlert\Prime\SweetAlert::class];
+        yield ['toastr', \Flasher\Toastr\Prime\Toastr::class];
     }
 
     protected function disableInjectAssets(Application $app): void
