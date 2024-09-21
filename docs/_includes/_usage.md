@@ -1,7 +1,6 @@
 ## <i class="fa-duotone fa-list-radio"></i> Usage
 
-To display a notification message, you can either use the `flash()` helper method or obtain an instance of `flasher` from the service container. 
-Then, before returning a view or redirecting, call the `success()` method and pass in the desired message to be displayed.
+To show a notification message, you can use the `flash()` helper function or get an instance of `flasher` from the service container. Before you return a view or redirect, call one of the notification methods like `success()` and pass in the message you want to display.
 
 {% assign id = '#/ PHPFlasher' %}
 {% assign type = 'success' %}
@@ -24,7 +23,7 @@ class BookController
 
         flash('{{ message }}');
 
-        // ... redirect or render the view
+        // ... redirect or render a view
     }
     
     /**
@@ -36,18 +35,16 @@ class BookController
 
         $flasher->success('{{ site.data.messages["success"] | sample }}');
 
-        // ... redirect or render the view
+        // ... redirect or render a view
     }
 }
 ```
 
 <br />
 
-It's important to choose a message that is clear and concise, and that accurately reflects the outcome of the operation. <br />
-In this case, `"Book has been created successfully!"` is already a good message,
-but you may want to tailor it to fit the specific context and language of your application.
+Choose a message that is clear and tells the user what happened. For example, `"Book has been created successfully!"` is a good message, but you can adjust it to fit your application's context and language.
 
-> Using this package is actually pretty easy. Adding notifications to your application actually require only one line of code.
+> Using this package is easy. You can add notifications to your application with just one line of code.
 
 {% assign id = '#/ usage success' %}
 {% assign type = 'success' %}
@@ -99,8 +96,7 @@ flash()->{{ type }}('{{ message }}');
 
 ---
 
-These four methods `success()`, `error()`, `warning()`, `info()` are simply convenience shortcuts for the `flash()` method, 
-allowing you to specify the `type` and `message` in a single method call rather than having to pass both as separate arguments to the `flash()` method. 
+These four methods — `success()`, `error()`, `warning()`, and `info()` — are shortcuts for the `flash()` method. They let you specify the `type` and `message` in one method call instead of passing them separately to `flash()`.
 
 ```php
 flash()->flash(string $type, string $message, string $title = null, array $options = [])
@@ -118,22 +114,19 @@ flash()->flash(string $type, string $message, string $title = null, array $optio
 flash()->flash('{{ type }}', '{{ message }}');
 ```
 
-| param      | description                                                                                                                                                                                                                                                                                                 |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `$type`    | Notification type : <span class="text-white bg-green-600 px-2 py-1 rounded">success</span>, <span class="text-white bg-red-600 px-2 py-1 rounded">error</span>, <span class="text-white bg-yellow-600 px-2 py-1 rounded">warning</span>, <span class="text-white bg-blue-600 px-2 py-1 rounded">info</span> |
-| `$message` | The body of the message you want to deliver to your user. This may contain HTML. If you add links, be sure to add the appropriate classes for the framework you are using.                                                                                                                                  |
-| `$title`   | The notification title, Can also include HTML                                                                                                                                                                                                                                                               |
-| `$options` | Custom options for javascript libraries (toastr, noty, notyf ...etc)                                                                                                                                                                                                                                        |
 
+| Parameter  | Description                                                                                                                                                                                                                                                                                                |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `$type`    | Notification type: <span class="text-white bg-green-600 px-2 py-1 rounded">success</span>, <span class="text-white bg-red-600 px-2 py-1 rounded">error</span>, <span class="text-white bg-yellow-600 px-2 py-1 rounded">warning</span>, <span class="text-white bg-blue-600 px-2 py-1 rounded">info</span> |
+| `$message` | The message you want to show to the user. This can include HTML. If you add links, make sure to add the right classes for your framework.                                                                                                                                                                  |
+| `$title`   | The notification title. Can also include HTML.                                                                                                                                                                                                                                                             |
+| `$options` | Custom options for JavaScript libraries (toastr, noty, notyf, etc.).                                                                                                                                                                                                                                       |
 
 --- 
 
 <p id="method-options"><a href="#method-options" class="anchor"><i class="fa-duotone fa-link"></i> options</a></p>
 
-The `options()` method allows you to set multiple options at once by passing an array of `key-value` pairs, 
-while the `option()` method allows you to set a single option by specifying its name and value as separate arguments. <br /><br />
-The optional `$append` argument for the `options()` method can be used to specify whether the new options should be appended to any existing options, 
-or whether they should overwrite them.
+The `options()` method lets you set multiple options at once by passing an array of key-value pairs. The `option()` method lets you set a single option by specifying its name and value. The `$append` argument for `options()` decides whether the new options should be added to existing ones (`true`) or replace them (`false`).
 
 ```php
 flash()->options(array $options, bool $append = true);
@@ -160,7 +153,7 @@ flash()
 
 <p id="method-option"><a href="#method-option" class="anchor"><i class="fa-duotone fa-link"></i> option</a></p>
 
-Set a single option by specifying its name and value as separate arguments.
+To set a single option:
 
 ```php
 flash()->option(string $option, mixed $value);
@@ -185,7 +178,7 @@ flash()
 
 <p id="method-priority"><a href="#method-priority" class="anchor"><i class="fa-duotone fa-link"></i> priority</a></p>
 
-Sets the priority of a flash message, the highest priority will be displayed first.
+Set the priority of a flash message. Messages with higher priority appear first.
 
 ```php
 flash()->priority(int $priority);
@@ -246,17 +239,17 @@ flash()
     ->info('{{ infoMessage }}');
 ```
 
-| param       | description                                                                                |
-|-------------|--------------------------------------------------------------------------------------------|
-| `$priority` | The priority of the notification, the higher the priority, the sooner it will be displayed |
+| param       | description                                                       |
+|-------------|-------------------------------------------------------------------|
+| `$priority` | The priority of the notification. Higher numbers are shown first. |
 
 ---
 
 <p id="method-hops"><a href="#method-hops" class="anchor"><i class="fa-duotone fa-link"></i> hops</a></p>
 
-This method sets the number of requests that the flash message should persist for. By default, flash messages are only displayed for a single request and are then discarded. By setting the number of hops, the flash message will be persisted for multiple requests.
+The `hops()` method sets how many requests the flash message should last for. By default, flash messages show for one request. Setting the number of hops makes the message stay for multiple requests.
 
-As an example, with a multi-page form, you may want to store messages until all pages have been filled.
+For example, in a multi-page form, you might want to keep messages until all pages are completed.
 
 {% assign id = '#/ usage hops' %}
 {% assign type = site.data.messages.types | sample %}
@@ -274,16 +267,15 @@ flash()
     ->{{ type }}('{{ message }}');
 ```
 
-| param   | description                                                   |
-|---------|---------------------------------------------------------------|
-| `$hops` | indicate how many requests the flash message will persist for |
+| param   | description                                           |
+|---------|-------------------------------------------------------|
+| `$hops` | Number of requests the flash message will persist for |
 
 ---
 
 <p id="method-translate"><a href="#method-translate" class="anchor"><i class="fa-duotone fa-link"></i> translate</a></p>
 
-This method sets the `locale` to be used for the translation of the flash message. If a non-null value is provided, 
-the flash message will be translated into the specified language. If null is provided, the **default** `locale` will be used.
+The `translate()` method sets the `locale` for translating the flash message. If you provide a locale, the message will be translated to that language. If you pass `null`, it uses the default locale.
 
 ```php
 flash()->translate(string $locale = null);
@@ -320,18 +312,17 @@ flash()
     ->{{ type }}('Your request was processed successfully.', 'Congratulations!');
 ```
 
-| param     | description                                                                  |
-|-----------|------------------------------------------------------------------------------|
-| `$locale` | The locale to be used for the translation, or null to use the default locale |
+| param     | description                                                  |
+|-----------|--------------------------------------------------------------|
+| `$locale` | The locale to use for translation, or `null` for the default |
 
-It is **important** to note that the `translate()` method only sets the locale to be used for the translation of the flash message. 
-It does not actually perform the translation itself.
+**Note:** The `translate()` method only sets the locale. It doesn't translate the message by itself.
 
-In order to translate the flash message, you will need to provide the appropriate translation keys in your translation files.
+To translate the message, you need to add the translation keys in your translation files.
 
 {% if page.framework == 'laravel' %}
 
-In the above example, to translate the flash message into `Arabic`, you will need to add the following keys to the `resources/lang/ar/messages.php` file:
+For example, to translate the message into Arabic, add these keys to `resources/lang/ar/messages.php`:
 
 ```php
 return [
@@ -342,7 +333,7 @@ return [
 
 {% elsif page.framework == 'symfony' %}
 
-In the above example, to translate the flash message into `Arabic`, you will need to add the following keys to the `translations/messages.ar.yaml` file:
+For example, to translate the message into Arabic, add these keys to `translations/messages.ar.yaml`:
 
 ```yaml
 Your request was processed successfully.: 'تمت العملية بنجاح.'
