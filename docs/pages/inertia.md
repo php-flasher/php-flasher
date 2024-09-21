@@ -4,13 +4,13 @@ title: Inertia
 description: Easily add flash notification messages to your Inertia application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
 ---
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> offers a solid integration with Inertia.js
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> works well with Inertia.js.
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-To integrate <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Inertia.js, follow the same installation steps as for the [Laravel Installation](/laravel) package.
+To use **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** with Inertia.js, install it the same way as in the [Laravel Installation](/laravel) guide.
 
-Additionally, include `@flasher/flasher` in your package.json by adding the following line:
+Also, add `@flasher/flasher` to your `package.json`:
 
 ```json
 "@flasher/flasher": "file:vendor/php-flasher/flasher/Resources"
@@ -26,7 +26,7 @@ npm install --force
 
 ## <i class="fa-duotone fa-list-radio"></i> Usage
 
-Dispatch `notifications` from your `HandleInertiaRequests` middleware shared data.
+Send `notifications` from your `HandleInertiaRequests` middleware.
 
 ```php
 <?php
@@ -45,7 +45,7 @@ class HandleInertiaRequests extends Middleware
 
 ---
 
-Then render your `notifications` from your `Layout.vue` file like the following:
+Then, display your `notifications` in your `Layout.vue` file:
 
 ```html
 // resources/js/Shared/Layout.vue
@@ -65,7 +65,7 @@ export default {
 </script>
 ```
 
-All you have to do now, is to trigger you notification from anywhere in your application.
+Now, you can trigger notifications from anywhere in your application.
 
 ```php
 <?php
