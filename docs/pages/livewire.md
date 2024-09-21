@@ -1,11 +1,11 @@
 ---
 permalink: /livewire/
 title: Livewire
-description: Learn how to seamlessly integrate flash notification messages into your Livewire application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
+description: Learn how to easily add flash notification messages to your Livewire application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
 adapter: flasher
 ---
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> provides a seamless integration with Livewire v3.
+**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** works seamlessly with Livewire v3.
 
 ## <i class="fa-duotone fa-list-radio"></i> Requirements
 
@@ -16,13 +16,13 @@ adapter: flasher
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-To integrate <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Livewire, follow the same installation steps as for the [Laravel Installation](/laravel) package.
+To use **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** with Livewire, follow the same installation steps as in the [Laravel Installation](/laravel) guide.
 
 ```shell
 composer require php-flasher/flasher-laravel
 ```
 
-After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+After installing, run this command to set up the required assets:
 
 ```shell
 php artisan flasher:install
@@ -64,7 +64,7 @@ class UserComponent extends Component
 
 ## <i class="fa-duotone fa-list-radio"></i> Events
 
-For sweetalert you can listen to  `sweetalert:confirmed`, `sweetalert:denied` and `sweetalert:dismissed` from withing you component
+For SweetAlert, you can listen to `sweetalert:confirmed`, `sweetalert:denied`, and `sweetalert:dismissed` events within your component.
 
 <script type="text/javascript">
     messages["#/ livewire events"] = {
@@ -125,7 +125,7 @@ class UserComponent extends Component
 
 ### <i class="fa-duotone fa-list-radio"></i> event handlers context
 
-Every listener method accept an **array $payload** parameter which contain the following data :
+Each listener method accepts an **array $payload** parameter, which contains:
 
 ```php
 public function sweetalertConfirmed(array $payload)
@@ -135,6 +135,5 @@ public function sweetalertConfirmed(array $payload)
 }
 ```
 
-> **promise** : the resolved promise from **sweetalert**.
-
-> **envelope** : the notification where the event happened.
+- **promise**: The resolved promise from **SweetAlert**.
+- **envelope**: The notification where the event happened.
