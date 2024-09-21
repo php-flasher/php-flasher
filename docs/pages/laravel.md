@@ -8,9 +8,9 @@ framework: laravel
 
 ## <i class="fa-duotone fa-list-radio"></i> Requirements
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> offers a seamless way to incorporate flash notifications in <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> <strong>Laravel</strong> projects, enhancing user feedback with minimal setup.
+**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** helps you easily add flash notifications to your **<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel** projects, improving user feedback with minimal setup.
 
-Requirements for using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Laravel:
+To use **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** with Laravel, you need:
 
 > <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** v8.2 or higher
 > <i class="fa-brands fa-laravel fa-2xl text-red-900 mr-1 ml-4"></i> **Laravel** v11.0 or higher
@@ -19,13 +19,15 @@ Requirements for using <strong><span class="text-indigo-900">PHP<span class="tex
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s modular design lets you select and install only the components your project needs.
+**PHPFlasher** is modular, so you can install only the parts you need.
+
+Run this command to install it:
 
 ```shell
 composer require php-flasher/flasher-laravel
 ```
 
-After installation, you need to run another command to set up the necessary assets for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+After installing, run this command to set up the required assets:
 
 ```shell
 php artisan flasher:install
@@ -39,13 +41,13 @@ php artisan flasher:install
 
 ## <i class="fa-duotone fa-list-radio"></i> Configuration
 
-As optional, if you want to modify the default configuration, you can publish the configuration file:
+If you want to change the default settings, you can publish the configuration file:
 
 ```bash
 php artisan flasher:install --config
 ```
 
-The configuration file will be located at `config/flasher.php` and will have the following content:
+This will create a file at `config/flasher.php` with the following content:
 
 ```php
 <?php // config/flasher.php
@@ -72,6 +74,7 @@ return [
     'options' => [
         'timeout' => 5000, // in milliseconds
         'position' => 'top-right',
+        'escapeHtml' => false,
     ],
 
     // Configuration for the flash bag (converting Laravel flash messages)
@@ -94,11 +97,11 @@ return [
 
 ## <i class="fa-duotone fa-list-radio"></i> Presets
 
-You can create a preset for a custom notification that you want to reuse in multiple places by adding a presets entry in the configuration file.
+You can create a preset for a custom notification that you want to reuse in multiple places by adding a `presets` entry in the configuration file.
 
-> You can think of a preset as a pre-defined message that you can use in multiple locations. <br>
+> A preset is like a pre-defined message you can use in many places.
 
-For example, you can create a preset named `entity_saved` in the configuration file and then use
+For example, create a preset named `entity_saved`:
 
 {% assign id = '#/ laravel preset' %}
 {% assign type = 'success' %}
@@ -121,7 +124,7 @@ return [
 ];
 ```
 
-To use the preset, you can call the `preset()` method and pass the name of the preset as the first argument:
+To use the preset, call the `preset()` method and pass the name of the preset:
 
 ```php
 {{ id }}
@@ -145,7 +148,7 @@ class BookController
 
 <p id="preset-variables"><a href="#preset-variables" class="anchor"><i class="fa-duotone fa-link"></i> Variables</a></p>
 
-Presets can also contain variables that can be substituted by using the translation system. Take the following example where you have a preset showing a personalised welcome message to the user.
+Presets can also have variables that you can replace using the translation system. For example, you can have a preset that shows a personalized welcome message.
 
 ```php
 <?php // config/flasher.php
@@ -160,7 +163,7 @@ return [
 ];
 ```
 
-In the translations file you can define `welcome_back_user` with the message containing the variable `:username`.
+In your translation file, define `welcome_back_user` with a message containing the variable `:username`.
 
 ```php
 <?php // /resources/lang/vendor/flasher/en/messages.php
@@ -170,7 +173,7 @@ return [
 ];
 ```
 
-If you want to substitute the `:username` in the above translation with a username in the controller, you can achieve this by passing an array of values to be substituted as the second argument.
+To replace `:username` with the actual username in your controller, pass an array with the values to substitute as the second argument:
 
 ```php
 class BookController
@@ -186,10 +189,9 @@ class BookController
 
 ## <i class="fa-duotone fa-list-radio"></i> RTL support
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> makes it easy to incorporate <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`.
-it automatically detects the text direction and handles the necessary adjustments for you.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> makes it easy to use <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`. It automatically detects the text direction and adjusts accordingly.
 
-Simply make sure the translation service is enabled and let <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> handle the rest.
+Just make sure the translation service is enabled, and <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> will handle the rest.
 
 {% assign id = '#/ phpflasher rtl' %}
 {% assign type = 'success' %}
@@ -210,14 +212,13 @@ flash()
 
 ## <i class="fa-duotone fa-list-radio"></i> Translation
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> allows you to translate your notification `messages` and `presets`, it comes with `Arabic`, `English`, `French`, `German`, `Spanish`, `Portuguese`, `Russian`, and `Chinese` translations out of the box. but you can easily add your own translations.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> lets you translate your notification `messages` and `presets`. It comes with translations for `Arabic`, `English`, `French`, `German`, `Spanish`, `Portuguese`, `Russian`, and `Chinese`. You can also add your own translations.
 
-For example, to override the `English` translation strings for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>, you can create a language file at the following location:
-**`/resources/lang/vendor/flasher/en/messages.php`**. 
+To override the `English` translations for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>, create a file at `/resources/lang/vendor/flasher/en/messages.php`.
 
-In this file, you should **only** define the translation strings you want to override. Any translation strings that you don't override will still be loaded from <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s original language files.
+In this file, define only the translation strings you want to change. Any strings you don't override will use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s default translations.
 
-Here are examples of the default translation keys for `Arabic`, `English`, and `French` in <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>:
+Here are examples of the default translation keys for `Arabic`, `English`, and `French`:
 
 ```php
 <?php // /resources/lang/vendor/flasher/ar/messages.php
@@ -273,7 +274,7 @@ return [
 ];
 ```
 
-> These translation files facilitate localizing notifications to match user preferences and ensure that your applications can communicate effectively across different linguistic contexts.
+> These translation files help you localize notifications to match user preferences, so your application can communicate effectively in different languages.
 
 {% assign id = '#/ laravel arabic translations' %}
 {% assign successMessage = 'تم إنشاء الملف' %}
@@ -282,33 +283,33 @@ return [
 {% assign infoMessage = 'سيتم تحديث هذه الصفحة في غضون 10 دقائق.' %}
 
 <script type="text/javascript">
-    messages["{{ id }}"] = [
+    messages['{{ id }}'] = [
         {
-            handler: "flasher",
-            type: "success",
-            message: "{{ successMessage }}",
-            title: "نجاح",
+            handler: 'flasher',
+            type: 'success',
+            message: '{{ successMessage }}',
+            title: 'نجاح',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "error",
-            message: "{{ errorMessage }}",
-            title: "خطأ",
+            handler: 'flasher',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            title: 'خطأ',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            title: "تحذير",
+            handler: 'flasher',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            title: 'تحذير',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "info",
-            message: "{{ infoMessage }}",
-            title: "معلومة",
+            handler: 'flasher',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            title: 'معلومة',
             options: {},
         },
         
@@ -338,33 +339,33 @@ flash()->info('{{ infoMessage }}');
 {% assign infoMessage = "Cette page sera mise à jour dans 10 minutes."%}
 
 <script type="text/javascript">
-    messages["{{ id }}"] = [
+    messages['{{ id }}'] = [
         {
-            handler: "flasher",
-            type: "success",
-            message: "{{ successMessage }}",
-            title: "Succès",
+            handler: 'flasher',
+            type: 'success',
+            message: '{{ successMessage }}',
+            title: 'Succès',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "error",
-            message: "{{ errorMessage }}",
-            title: "Erreur",
+            handler: 'flasher',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            title: 'Erreur',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "warning",
-            message: "{{ warningMessage }}",
-            title: "Avertissement",
+            handler: 'flasher',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            title: 'Avertissement',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "info",
-            message: "{{ infoMessage }}",
-            title: "Information",
+            handler: 'flasher',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            title: 'Information',
             options: {},
         },
         
