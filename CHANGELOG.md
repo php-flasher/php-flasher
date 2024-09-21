@@ -1,6 +1,10 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.0.2...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.0.3...2.x)
+
+## [v2.0.3](https://github.com/php-flasher/php-flasher/compare/v2.0.2...v2.0.3) - 2024-09-21
+
+* remove border from flasher container by [yoeunes](https://github.com/yoeunes) 
 
 ## [v2.0.2](https://github.com/php-flasher/php-flasher/compare/v2.0.1...v2.0.2) - 2024-09-19
 
