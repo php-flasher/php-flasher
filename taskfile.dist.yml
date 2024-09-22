@@ -1,32 +1,18 @@
 version: '3'
 
 tasks:
-    install:
-        desc: "📦 Install project dependencies using Composer."
-        cmds:
-            - composer install
-        aliases:
-            - i
-            - in
-
     update:
         desc: "🔄 Update project dependencies and rebuild assets."
         cmds:
             - composer update --prefer-lowest -W
             - npm run ncu
             - npm install --force
-            - task: build
+            - npm run build
             - task: lint
+            - task: docs:build
         aliases:
             - u
             - up
-
-    require:
-        desc: "➕ Add a new Composer dependency to the project."
-        cmds:
-            - composer require {{ .CLI_ARGS }}
-        aliases:
-            - req
 
     lint:
         desc: "🔍 Analyze code for potential errors and coding standards violations."
@@ -35,65 +21,28 @@ tasks:
             - php vendor/bin/php-cs-fixer fix
             - php vendor/bin/phpstan analyse --memory-limit=-1
             - composer validate --strict
-            - php vendor/bin/phplint
             - find src/ -name "composer.json" -exec composer validate --strict {} \;
-            - task: test
+            - php vendor/bin/phplint
+            - php vendor/bin/phpunit
         aliases:
             - pint
             - check
             - validate
 
-    test:
-        desc: "✅ Run PHPUnit tests to ensure code correctness."
+    docs:build:
+        desc: "📘 Build the documentation."
+        dir: docs/
         cmds:
-            - php vendor/bin/phpunit
-        aliases:
-            - tests
-            - phpunit
-            - unit
-
-    coverage:
-        desc: "📊 Generate code coverage reports."
-        cmds:
-            - vendor/bin/phpunit --coverage-html coverage
-        aliases:
-            - cov
-            - cover
+            - npm install --force
+            - npm run build
 
     security:
         desc: "🔐 Check for security vulnerabilities in dependencies."
         cmds:
             - symfony security:check
-        aliases:
-            - seccheck
-            - sec
-
-    clean:
-        desc: "🧹 Clean up generated files and reset the environment."
-        cmds:
-            - rm -rf vendor/ composer.lock node_modules/ package-lock.json
-        aliases:
-            - cl
-            - cleanup
-
-    build:
-        desc: "🏗️ Build project assets."
-        cmds:
-            - npm run build
-        aliases:
-            - b
-
-    watch:
-        desc: "👀 Watch for file changes and rebuild assets automatically."
-        cmds:
-            - npm run watch
-        aliases:
-            - w
 
     release:
         desc: "🏷️ Prepare and tag a new release."
         cmds:
             - php bin/split
             - php bin/release {{.CLI_ARGS}}
-        aliases:
-            - rel

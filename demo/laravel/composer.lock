@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a5eb94d553bf800816057a2f860bceb",
+    "content-hash": "880310cf6d0fbcbfccd6273a5a22b25b",
     "packages": [
         {
             "name": "brick/math",
@@ -2490,7 +2490,7 @@
             "dist": {
                 "type": "path",
                 "url": "../..",
-                "reference": "816529029b06b61897a4a0d482718be64319ddf8"
+                "reference": "8d0dff222474071fa534271bddd9e6f40a58ac93"
             },
             "require": {
                 "ext-intl": "*",
@@ -2499,20 +2499,23 @@
             "require-dev": {
                 "illuminate/routing": "^11.0",
                 "illuminate/support": "^11.0",
-                "larastan/larastan": "^2.9.5",
+                "larastan/larastan": "^2.9",
                 "laravel/octane": "^2.3",
-                "livewire/livewire": "^3.3",
-                "mockery/mockery": "^1.6.11",
-                "orchestra/testbench": "^9.0.4",
-                "overtrue/phplint": "^9.2.0",
-                "php-cs-fixer/shim": "^3.54.0",
-                "phpstan/phpstan": "^1.10.67",
-                "phpstan/phpstan-mockery": "^1.1.2",
-                "phpstan/phpstan-symfony": "^1.3.12",
-                "phpunit/phpunit": "^10.5.13",
+                "livewire/livewire": "^3.5",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^9.4",
+                "overtrue/phplint": "^9.4",
+                "paragonie/random_compat": "^2.0",
+                "php-cs-fixer/shim": "^3.64",
+                "phpstan/phpstan": "^1.12",
+                "phpstan/phpstan-mockery": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.4",
+                "phpstan/phpstan-symfony": "^1.4",
+                "phpunit/phpunit": "^10.5",
                 "psr/container": "^1.1|^2.0",
-                "rector/rector": "^1.0.4",
-                "rector/swiss-knife": "^0.2.2",
+                "rector/rector": "^1.2",
+                "rector/swiss-knife": "^0.2",
+                "spatie/ray": "^1.41",
                 "symfony/config": "^7.0",
                 "symfony/console": "^7.0",
                 "symfony/dependency-injection": "^7.0",
@@ -2520,8 +2523,8 @@
                 "symfony/http-kernel": "^7.0",
                 "symfony/translation": "^7.0",
                 "symfony/twig-bundle": "^7.0",
-                "symfony/ux-twig-component": "^2.14",
-                "symplify/monorepo-builder": "^11.2.20"
+                "symfony/ux-twig-component": "^2.19",
+                "symplify/monorepo-builder": "^11.2"
             },
             "type": "library",
             "extra": {
