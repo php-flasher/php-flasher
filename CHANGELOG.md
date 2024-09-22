@@ -1,6 +1,10 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.0.3...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.0.4...2.x)
+
+## [v2.0.4](https://github.com/php-flasher/php-flasher/compare/v2.0.3...v2.0.4) - 2024-09-22
+
+* bug [laravel] Changed HttpKernel import from `Illuminate\Foundation\Http\Kernel` to `Illuminate\Contracts\Http\Kernel` to use the contract interface instead of the concrete implementation. See [PR #197](https://github.com/php-flasher/php-flasher/pull/197) by [yoeunes](https://github.com/yoeunes)
 
 ## [v2.0.3](https://github.com/php-flasher/php-flasher/compare/v2.0.2...v2.0.3) - 2024-09-21
 
