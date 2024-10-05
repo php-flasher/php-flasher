@@ -24,6 +24,7 @@ use Flasher\Symfony\Component\FlasherComponent;
 use Flasher\Symfony\EventListener\FlasherListener;
 use Flasher\Symfony\EventListener\SessionListener;
 use Flasher\Symfony\Factory\NotificationFactoryLocator;
+use Flasher\Symfony\Profiler\FlasherDataCollector;
 use Flasher\Symfony\Storage\SessionBag;
 use Flasher\Symfony\Template\TwigTemplateEngine;
 use Flasher\Symfony\Translation\Translator;
@@ -54,6 +55,7 @@ return static function (ContainerConfigurator $container): void {
                     ->args([
                         service('flasher'),
                         service('flasher.csp_handler'),
+                        param('flasher.excluded_paths'),
                     ]),
             ])
             ->tag('kernel.event_subscriber')
@@ -73,7 +75,7 @@ return static function (ContainerConfigurator $container): void {
             ->tag('kernel.event_subscriber')
 
         ->set('flasher.notification_logger_listener', NotificationLoggerListener::class)
-            ->tag('flasher.event_dispatcher')
+            ->tag('flasher.event_listener')
             ->tag('kernel.reset', ['method' => 'reset'])
 
         ->set('flasher.translation_listener', TranslationListener::class)
@@ -91,7 +93,7 @@ return static function (ContainerConfigurator $container): void {
         ->set('flasher.flasher_component', FlasherComponent::class)
             ->tag('twig.component', [
                 'key' => 'flasher',
-                'template' => '@Flasher/components/flasher.html.twig',
+                'template' => '@FlasherSymfony/components/flasher.html.twig',
                 'attributesVar' => 'attributes',
             ])
 
@@ -146,5 +148,12 @@ return static function (ContainerConfigurator $container): void {
                 param('flasher.public_dir'),
                 param('flasher.json_manifest_path'),
             ])
+
+        ->set('flasher.data_collector', FlasherDataCollector::class)
+            ->args([
+                service('flasher.notification_logger_listener'),
+                param('flasher'),
+            ])
+            ->tag('data_collector', ['id' => 'flasher', 'template' => '@FlasherSymfony/profiler/flasher.html.twig', 'priority' => 0])
     ;
 };

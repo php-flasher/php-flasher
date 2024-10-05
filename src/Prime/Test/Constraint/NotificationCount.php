@@ -57,6 +57,6 @@ final class NotificationCount extends Constraint
      */
     private function countNotifications(NotificationEvents $events): int
     {
-        return \count($events->getNotifications());
+        return \count($events->getEnvelopes());
     }
 }

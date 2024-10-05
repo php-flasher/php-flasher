@@ -27,7 +27,7 @@ final readonly class FlasherListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ResponseEvent::class => ['onKernelResponse', -256],
+            ResponseEvent::class => ['onKernelResponse', -20],
         ];
     }
 }

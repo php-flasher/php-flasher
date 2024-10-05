@@ -10,8 +10,14 @@ use Flasher\Prime\Response\Presenter\HtmlPresenter;
 
 final readonly class ResponseExtension implements ResponseExtensionInterface
 {
-    public function __construct(private FlasherInterface $flasher, private ContentSecurityPolicyHandlerInterface $cspHandler)
-    {
+    /**
+     * @param list<non-empty-string> $excludedPaths
+     */
+    public function __construct(
+        private FlasherInterface $flasher,
+        private ContentSecurityPolicyHandlerInterface $cspHandler,
+        private array $excludedPaths = [],
+    ) {
     }
 
     public function render(RequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -69,12 +75,30 @@ final readonly class ResponseExtension implements ResponseExtensionInterface
 
     private function isRenderable(RequestInterface $request, ResponseInterface $response): bool
     {
-        return !$request->isXmlHttpRequest()
+        return !$this->isPathExcluded($request)
+            && !$request->isXmlHttpRequest()
             && $request->isHtmlRequestFormat()
             && $response->isHtml()
             && $response->isSuccessful()
             && !$response->isRedirection()
             && !$response->isAttachment()
             && !$response->isJson();
+    }
+
+    private function isPathExcluded(RequestInterface $request): bool
+    {
+        if (!method_exists($request, 'getUri')) { // @phpstan-ignore-line
+            return false;
+        }
+
+        $url = $request->getUri();
+
+        foreach ($this->excludedPaths as $regexPattern) {
+            if (preg_match($regexPattern, $url)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

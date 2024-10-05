@@ -38,7 +38,7 @@ final class NotificationOption extends Constraint
             return false;
         }
 
-        foreach ($other->getNotifications() as $notification) {
+        foreach ($other->getEnvelopes() as $notification) {
             if ($this->isOptionMatching($notification)) {
                 return true;
             }
@@ -58,7 +58,7 @@ final class NotificationOption extends Constraint
     {
         $actualOptions = [];
         if ($other instanceof NotificationEvents) {
-            foreach ($other->getNotifications() as $notification) {
+            foreach ($other->getEnvelopes() as $notification) {
                 $actualOptions[] = json_encode($notification->getOptions());
             }
         }

@@ -15,7 +15,7 @@ final readonly class Flasher implements FlasherInterface
 {
     use ForwardsCalls;
 
-    public const VERSION = '2.0.0';
+    public const VERSION = '2.1.0';
 
     public function __construct(
         private string $default,

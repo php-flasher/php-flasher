@@ -1,0 +1,184 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% macro logo() %}
+    <strong style="line-height: 1; display: inline-block; font-size: 0;">
+        <span style="
+            color: #FFFFFF;
+            background-color: #312E81;
+            padding: 2px 0 2px 4px;
+            display: inline-block;
+            font-size: 16px;
+        ">PHP</span><span style="
+            color: #FFFFFF;
+            background-color: #6366F1;
+            padding: 2px 4px 2px 0;
+            display: inline-block;
+            font-size: 16px;
+        ">Flasher</span>
+    </strong>
+{% endmacro %}
+
+{% block toolbar %}
+    {% import _self as macros %}
+
+    {% set displayedEnvelopes = collector.displayedEnvelopes %}
+    {% set dispatchedEnvelopes = collector.dispatchedEnvelopes %}
+
+    {% set totalDispatched = dispatchedEnvelopes|length %}
+    {% set totalDisplayed = displayedEnvelopes|length %}
+
+    {% if totalDisplayed > 0 %}
+        {# Initialize type counts #}
+        {% set typeCounts = {} %}
+        {% for envelope in displayedEnvelopes %}
+            {% set type = envelope.type|default('info')|lower %}
+            {% set typeCounts = typeCounts | merge({ (type): (typeCounts[type]|default(0) + 1) }) %}
+        {% endfor %}
+
+        {% set icon %}
+            {{ macros.logo() }}
+
+            {{ source('@FlasherSymfony/profiler/flasher.svg') }}
+            <span class="sf-toolbar-value">
+                {% if totalDisplayed == totalDispatched %}
+                    {{ totalDisplayed }}
+                {% else %}
+                    {{ totalDisplayed }}/{{ totalDispatched }}
+                {% endif %}
+            </span>
+        {% endset %}
+
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <b>Notifications Displayed</b>
+                <span class="sf-toolbar-status">{{ totalDisplayed }}</span>
+            </div>
+
+            {% if totalDispatched != totalDisplayed %}
+                <div class="sf-toolbar-info-piece">
+                    <b>Notifications Dispatched:</b>
+                    <span class="sf-toolbar-status">{{ totalDispatched }}</span>
+                </div>
+            {% endif %}
+
+            {% if totalDisplayed > totalDispatched %}
+                <div class="sf-toolbar-info-piece">
+                    <span>Note: Some notifications are from previous requests.</span>
+                </div>
+            {% endif %}
+
+            {% for type, count in typeCounts %}
+                <div class="sf-toolbar-info-piece">
+                    <b>{{ type|capitalize }}</b>
+                    <span class="sf-toolbar-status">{{ count }}</span>
+                </div>
+            {% endfor %}
+        {% endset %}
+
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url }) }}
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    {% import _self as macros %}
+
+    {% set totalDisplayed = collector.displayedEnvelopes|length %}
+    {% set totalDispatched = collector.dispatchedEnvelopes|length %}
+
+    <span class="label{% if totalDisplayed == 0 %} disabled{% endif %}">
+        <span class="icon">{{ source('@FlasherSymfony/profiler/flasher.svg') }}</span>
+        {{ macros.logo() }}
+        {% if totalDisplayed > 0 %}
+            <span class="count">
+                {% if totalDisplayed == totalDispatched %}
+                    <span>{{ totalDisplayed }}</span>
+                {% else %}
+                    <span>{{ totalDisplayed }}/{{ totalDispatched }}</span>
+                {% endif %}
+            </span>
+        {% endif %}
+    </span>
+{% endblock %}
+
+{% block panel %}
+    {% set displayedEnvelopes = collector.displayedEnvelopes %}
+    {% set dispatchedEnvelopes = collector.dispatchedEnvelopes %}
+    {% set totalNotifications = dispatchedEnvelopes|length %}
+    {% set displayedNotifications = displayedEnvelopes|length %}
+    {% set config = collector.config %}
+    {% set versions = collector.versions %}
+
+    <h2>PHPFlasher Notifications</h2>
+
+    {% if totalNotifications == 0 %}
+        <div class="empty">
+            <p>No notifications have been dispatched.</p>
+        </div>
+    {% else %}
+        <div class="sf-tabs">
+            <div class="tab">
+                <h3 class="tab-title">Notifications <span class="badge">{{ displayedNotifications }}/{{ totalNotifications }}</span></h3>
+                <div class="tab-content">
+                    {% if displayedNotifications > totalNotifications %}
+                        <div class="sf-callout">
+                            <p>The number of displayed notifications is greater than the number of dispatched notifications. This may happen if notifications are stored in the session from previous requests.</p>
+                        </div>
+                    {% endif %}
+
+                    <h4>Displayed Notifications</h4>
+                    {{ include('@FlasherSymfony/profiler/_notifications_table.html.twig', { 'envelopes': displayedEnvelopes }) }}
+
+                    {% if totalNotifications > displayedNotifications %}
+                        <h4>Remaining Notifications</h4>
+                        {% set remainingNotifications = dispatchedEnvelopes|slice(displayedNotifications) %}
+                        {{ include('@FlasherSymfony/profiler/_notifications_table.html.twig', { 'envelopes': remainingNotifications }) }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="tab">
+                <h3 class="tab-title">Debug</h3>
+                <div class="tab-content">
+                    <h4>Version Information</h4>
+                    <ul>
+                        <li><strong>PHPFlasher Version:</strong> {{ versions.php_flasher }}</li>
+                        <li><strong>PHP Version:</strong> {{ versions.php }}</li>
+                        <li><strong>Symfony Version:</strong> {{ versions.symfony }}</li>
+                    </ul>
+
+                    <h4>Configuration</h4>
+                    {{ profiler_dump(config, maxDepth=10) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        .sf-tabs .tab-content {
+            background-color: transparent;
+        }
+        .sf-tabs .tab-title {
+            cursor: pointer;
+        }
+        .notification-type-success { color: #10b981; }
+        .notification-type-error { color: #ef4444; }
+        .notification-type-info { color: #3b82f6; }
+        .notification-type-warning { color: #f59e0b; }
+        table.notifications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table.notifications-table th, table.notifications-table td {
+            padding: 8px;
+            vertical-align: top;
+        }
+        .metadata {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+{% endblock %}

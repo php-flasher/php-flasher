@@ -59,7 +59,7 @@ final class Notification extends Constraint
             return false;
         }
 
-        foreach ($other->getNotifications() as $notification) {
+        foreach ($other->getEnvelopes() as $notification) {
             if ($this->isNotificationMatching($notification)) {
                 return true;
             }
@@ -89,7 +89,7 @@ final class Notification extends Constraint
                 $notification->getMessage(),
                 json_encode($notification->getOptions()),
             );
-        }, $other->getNotifications());
+        }, $other->getEnvelopes());
 
         if (empty($foundNotifications)) {
             $foundNotifications[] = 'No notifications found';

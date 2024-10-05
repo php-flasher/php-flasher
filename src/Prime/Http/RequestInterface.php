@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Http;
 
+/**
+ * @method string getUri()
+ */
 interface RequestInterface
 {
+    // public function getUri(): string;
+
     public function isXmlHttpRequest(): bool;
 
     public function isHtmlRequestFormat(): bool;

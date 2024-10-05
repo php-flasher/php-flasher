@@ -28,7 +28,7 @@ final class NotificationMessage extends Constraint
             return false;
         }
 
-        foreach ($other->getNotifications() as $notification) {
+        foreach ($other->getEnvelopes() as $notification) {
             if (str_contains($notification->getMessage(), $this->expectedMessage)) {
                 return true;
             }
@@ -45,7 +45,7 @@ final class NotificationMessage extends Constraint
 
         $foundMessages = array_map(function (NotificationInterface $notification) {
             return \sprintf('"%s"', $notification->getMessage());
-        }, $other->getNotifications());
+        }, $other->getEnvelopes());
 
         if (empty($foundMessages)) {
             return \sprintf(

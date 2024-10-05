@@ -23,6 +23,8 @@
         "symfony/dotenv": "7.0.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.0.*",
+        "symfony/monolog-bundle": "^3.10",
+        "symfony/notifier": "7.0.*",
         "symfony/runtime": "7.0.*",
         "symfony/translation": "7.0.*",
         "symfony/twig-bundle": "7.0.*",
@@ -82,6 +84,8 @@
     },
     "require-dev": {
         "spatie/ray": "^1.41",
-        "symfony/maker-bundle": "^1.58"
+        "symfony/maker-bundle": "^1.58",
+        "symfony/stopwatch": "7.0.*",
+        "symfony/web-profiler-bundle": "7.0.*"
     }
 }

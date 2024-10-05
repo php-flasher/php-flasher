@@ -1,0 +1,30 @@
+<table class="notifications-table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Plugin</th>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Message</th>
+        <th>Options</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for envelope in envelopes %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ envelope.metadata.plugin }}</td>
+                <td class="notification-type-{{ envelope.type|lower }}">{{ envelope.type }}</td>
+                <td>{{ envelope.title }}</td>
+                <td>{{ envelope.message }}</td>
+                <td>
+                    {% if envelope.options is not empty %}
+                        {{ profiler_dump(envelope.options) }}
+                    {% else %}
+                        <em>No Options</em>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
