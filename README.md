@@ -70,11 +70,11 @@ You can reach out with questions, bug reports, or feature requests on any of the
 - [Github Issues](https://github.com/php-flasher/php-flasher/issues) 
 - [Github](https://github.com/yoeunes)
 - [Twitter](https://twitter.com/yoeunes)
-- [Linkedin](https://www.linkedin.com/in/younes-ennaji/)
+- [Linkedin](https://www.linkedin.com/in/younes--ennaji/)
 - [Email me directly](mailto:younes.ennaji.pro@gmail.com)
 
 ## License
 
 PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes-ennaji/">Younes ENNAJI</a> </b> </p>
+<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes--ennaji/">Younes ENNAJI</a> </b> </p>
