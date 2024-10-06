@@ -1,7 +1,7 @@
 ---
 permalink: /library/notyf/
 title: Notyf
-description: Add lightweight, customizable notification messages to your web projects with Notyf, a popular JavaScript library. With a focus on simplicity and accessibility, Notyf is easy to install and use, making it a great choice for any project that wants to engage and inform users.
+description: Add lightweight, customizable notifications to your web projects with Notyf. This guide shows you how to integrate Notyf with PHPFlasher to engage and inform your users effectively.
 handler: notyf
 data-controller: notyf
 ---

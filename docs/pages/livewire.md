@@ -1,7 +1,7 @@
 ---
 permalink: /livewire/
 title: Livewire
-description: Learn how to easily add flash notification messages to your Livewire application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
+description: Learn how to add flash notifications to your Livewire application using PHPFlasher. This guide walks you through installation and usage, so you can engage your users with informative messages.
 adapter: flasher
 ---
 

@@ -1,7 +1,7 @@
 ---
 permalink: /symfony/
 title: Symfony
-description: Integrate PHPFlasher in your Symfony application to enhance user experience with flash notifications. This open-source package simplifies the addition of engaging messages following user actions.
+description: Integrate PHPFlasher into your Symfony application to enhance user experience with flash notifications. This guide shows you how to add engaging messages after user actions using PHPFlasher in Symfony.
 framework: symfony
 ---
 

@@ -1,7 +1,7 @@
 ---
 permalink: /library/toastr/
 title: Toastr
-description: Easily add customizable, stylish notification messages to your web projects with Toastr, a popular JavaScript library. With a focus on simplicity and flexibility, Toastr is easy to install and use, making it a great choice for any project that wants to engage and inform users.
+description: Use Toastr with PHPFlasher to add stylish notifications to your web projects. Improve user engagement with easy-to-use, customizable notification messages.
 handler: toastr
 data-controller: toastr
 ---

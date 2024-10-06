@@ -1,7 +1,7 @@
 ---
 permalink: /inertia/
 title: Inertia
-description: Easily add flash notification messages to your Inertia application with PHPFlasher. Follow our step-by-step guide to install and use the library in your project, and start engaging and informing your users with powerful flash messages.
+description: Discover how to integrate flash notifications into your Inertia.js application with PHPFlasher. Follow this guide to set up the library and enhance your user interface with dynamic messages.
 ---
 
 <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> works well with Inertia.js.

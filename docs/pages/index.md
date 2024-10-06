@@ -1,6 +1,6 @@
 ---
 permalink: /
-description: PHPFlasher is an open-source tool for easily adding flash messages to Laravel or Symfony projects, improving user interaction with minimal effort.
+description: PHPFlasher is an open-source tool that makes it easy to add flash messages to your Laravel or Symfony projects. Improve user interaction with minimal effort using simple, customizable notifications.
 data-controller: flasher
 ---
 

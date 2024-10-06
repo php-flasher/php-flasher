@@ -1,7 +1,7 @@
 ---
 permalink: /library/noty/
 title: Noty
-description: Elevate your user experience with Noty, a popular JavaScript library for creating customizable, stylish notification messages. Easy to install and use, Noty is perfect for any project that wants to engage and inform users in a dynamic way.
+description: Enhance your user experience with Noty, a JavaScript library for creating customizable notification messages. Learn how to use Noty with PHPFlasher to display stylish notifications in your project.
 handler: noty
 data-controller: noty
 ---
