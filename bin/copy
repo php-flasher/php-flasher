@@ -1,50 +1,70 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+
+$filesystem = new Filesystem();
+
+// Define the shared resources
 $shared = realpath(__DIR__.'/../.shared');
 
-$resources = array(
+$resources = [
     $shared,
     __DIR__.'/../.github/FUNDING.yml',
     __DIR__.'/../README.md',
     __DIR__.'/../LICENSE',
-);
+];
 
-$dirs = array(__DIR__.'/../packs', __DIR__.'/../src');
+// Directories to search for packages
+$dirs = [__DIR__.'/../src'];
 
-$packages = array_reduce($dirs, function ($files, $dir) {
-    return array_merge($files, glob("$dir/*/composer.json"), glob("$dir/*/*/composer.json"));
-}, array());
+// Find all composer.json files within the specified directories
+$finder = new Finder();
+$finder->files()
+    ->in($dirs)
+    ->name('composer.json')
+    ->depth('< 3'); // Adjust depth as needed
 
-foreach ($packages as $package) {
-    $package = realpath(dirname($package));
+$packages = [];
+
+// Collect package directories
+foreach ($finder as $file) {
+    $packages[] = dirname($file->getRealPath());
+}
+
+foreach ($packages as $packageDir) {
     foreach ($resources as $resource) {
-        $resource = realpath($resource);
-        $dest = $package.str_replace(realpath(__DIR__.'/../'), '', $resource);
-
-        if (!is_dir($resource) && file_exists($resource)) {
-            copy($resource, $dest);
+        if (!is_string($resource)) {
             continue;
         }
 
-        $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($resource, FilesystemIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
+        $resourcePath = realpath($resource);
 
-        foreach ($files as $file) {
-            $target = $resource === $shared
-                ? $package.str_replace($resource, '', $file->getPathname())
-                : $dest .'/'. $file->getFilename();
+        if (!$resourcePath) {
+            continue; // Skip if the resource doesn't exist
+        }
 
-            if ($file->isDir()) {
-                system('rm -rf -- ' . escapeshellarg($dest));
-                @mkdir(dirname($target), 0777, true);
-                continue;
+        $relativePath = str_replace(realpath(__DIR__.'/../') ?: '', '', $resourcePath);
+        $destination = $packageDir.$relativePath;
+
+        if (is_file($resourcePath)) {
+            // Ensure the destination directory exists
+            $filesystem->mkdir(dirname($destination));
+            // Copy the file
+            $filesystem->copy($resourcePath, $destination, true);
+        } elseif (is_dir($resourcePath)) {
+            if ($resourcePath === $shared) {
+                // Copy contents of the shared directory into the package directory
+                $filesystem->mirror($shared, $packageDir, null, ['override' => true]);
+            } else {
+                // Copy the entire directory to the destination
+                $filesystem->mirror($resourcePath, $destination, null, ['override' => true]);
             }
-
-            @mkdir(dirname($target), 0777, true);
-            @copy($file->getPathname(), $target);
         }
     }
 }
