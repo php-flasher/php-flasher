@@ -71,7 +71,7 @@ You can reach out with questions, bug reports, or feature requests on any of the
 - [Github](https://github.com/yoeunes)
 - [Twitter](https://twitter.com/yoeunes)
 - [Linkedin](https://www.linkedin.com/in/younes-ennaji/)
-- [Email me directly](mailto:younes.ennaji@gmail.com)
+- [Email me directly](mailto:younes.ennaji.pro@gmail.com)
 
 ## License
 
