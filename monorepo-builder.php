@@ -8,4 +8,6 @@ return static function (MBConfig $config) {
     $config->packageDirectories([
         __DIR__.'/src',
     ]);
+
+    $config->packageAliasFormat('2.x-dev');
 };

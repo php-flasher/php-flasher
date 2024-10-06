@@ -83,6 +83,10 @@ final class ConfigurationTest extends TestCase
             ],
             'translate' => true,
             'inject_assets' => true,
+            'excluded_paths' => [
+                '/^\/_profiler/',
+                '/^\/_fragment/',
+            ],
             'filter' => [],
             'presets' => [
                 'created' => [

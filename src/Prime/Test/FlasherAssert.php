@@ -53,7 +53,7 @@ final class FlasherAssert
      */
     public static function hasNotifications(string $message = 'Expected at least one notification to exist.'): self
     {
-        return self::fluent(static fn () => Assert::assertNotEmpty(self::getNotificationEvents()->getNotifications(), $message));
+        return self::fluent(static fn () => Assert::assertNotEmpty(self::getNotificationEvents()->getEnvelopes(), $message));
     }
 
     /**
@@ -66,7 +66,7 @@ final class FlasherAssert
      */
     public static function noNotifications(string $message = 'Expected no notifications to exist.'): self
     {
-        return self::fluent(static fn () => Assert::assertEmpty(self::getNotificationEvents()->getNotifications(), $message));
+        return self::fluent(static fn () => Assert::assertEmpty(self::getNotificationEvents()->getEnvelopes(), $message));
     }
 
     /**
@@ -411,6 +411,6 @@ final class FlasherAssert
         /** @var NotificationLoggerListener $listener */
         $listener = $container->get('flasher.notification_logger_listener');
 
-        return $listener->getEvents();
+        return $listener->getDisplayedEnvelopes();
     }
 }

@@ -47,7 +47,7 @@ final class FlasherListenerTest extends TestCase
 
     public function testGetSubscribedEvents(): void
     {
-        $expectedEvents = [ResponseEvent::class => ['onKernelResponse', -256]];
+        $expectedEvents = [ResponseEvent::class => ['onKernelResponse', -20]];
         $subscribedEvents = FlasherListener::getSubscribedEvents();
 
         // Verify that the FlasherListener is subscribed to the correct event and priority.

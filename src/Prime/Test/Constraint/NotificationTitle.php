@@ -31,7 +31,7 @@ final class NotificationTitle extends Constraint
             return false;
         }
 
-        foreach ($other->getNotifications() as $notification) {
+        foreach ($other->getEnvelopes() as $notification) {
             if (str_contains($notification->getTitle(), $this->expectedTitle)) {
                 return true;
             }
@@ -48,7 +48,7 @@ final class NotificationTitle extends Constraint
 
         $foundTitles = array_map(function (NotificationInterface $notification) {
             return \sprintf('"%s"', $notification->getTitle());
-        }, $other->getNotifications());
+        }, $other->getEnvelopes());
 
         if (empty($foundTitles)) {
             return \sprintf(

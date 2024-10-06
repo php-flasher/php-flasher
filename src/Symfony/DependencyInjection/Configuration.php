@@ -56,6 +56,13 @@ final readonly class Configuration implements ConfigurationInterface
                 ->booleanNode('inject_assets')
                     ->defaultTrue()
                 ->end()
+                ->arrayNode('excluded_paths')
+                    ->defaultValue([
+                        '/^\/_profiler/',
+                        '/^\/_fragment/',
+                    ])
+                    ->scalarPrototype()->end()
+                ->end()
                 ->arrayNode('filter')
                     ->variablePrototype()->end()
                 ->end()

@@ -32,4 +32,4 @@ flasher:
     # Criteria to filter displayed notifications (limit, types)
     filter:
         # Limit number of displayed notifications
-        limit: 5
+        # limit: 5

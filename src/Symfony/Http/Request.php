@@ -16,6 +16,11 @@ final readonly class Request implements RequestInterface
     {
     }
 
+    public function getUri(): string
+    {
+        return $this->request->getRequestUri();
+    }
+
     public function isXmlHttpRequest(): bool
     {
         return $this->request->isXmlHttpRequest();

@@ -4,30 +4,33 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
-use Flasher\Prime\Notification\NotificationInterface;
+use Flasher\Prime\Notification\Envelope;
 
+/**
+ * @internal
+ */
 final class NotificationEvents
 {
-    /** @var NotificationInterface[] */
-    private array $notifications = [];
+    /** @var Envelope[] */
+    private array $envelopes = [];
 
-    public function add(NotificationInterface ...$notifications): void
+    public function add(Envelope ...$notifications): void
     {
         foreach ($notifications as $notification) {
-            $this->addNotification($notification);
+            $this->addEnvelope($notification);
         }
     }
 
-    public function addNotification(NotificationInterface $notification): void
+    public function addEnvelope(Envelope $notification): void
     {
-        $this->notifications[] = $notification;
+        $this->envelopes[] = $notification;
     }
 
     /**
-     * @return NotificationInterface[]
+     * @return Envelope[]
      */
-    public function getNotifications(): array
+    public function getEnvelopes(): array
     {
-        return $this->notifications;
+        return $this->envelopes;
     }
 }

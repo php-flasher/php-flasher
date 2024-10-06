@@ -3,6 +3,7 @@
 --ignore-dir=node_modules
 --ignore-dir=demo/laravel/vendor
 --ignore-dir=demo/symfony/vendor
+--ignore-dir=demo/symfony/var
 --ignore-dir=.cache
 --ignore-dir=docs/.jekyll-cache
 --ignore-dir=docs/_site

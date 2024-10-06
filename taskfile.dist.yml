@@ -8,8 +8,8 @@ tasks:
             - npm run ncu
             - npm install --force
             - npm run build
-            - task: lint
-            - task: docs:build
+          # - task: lint
+          # - task: docs:build
         aliases:
             - u
             - up
@@ -36,10 +36,13 @@ tasks:
             - npm install --force
             - npm run build
 
-    security:
+    audit:
         desc: "🔐 Check for security vulnerabilities in dependencies."
         cmds:
             - symfony security:check
+            - composer audit
+        aliases:
+            - security
 
     release:
         desc: "🏷️ Prepare and tag a new release."

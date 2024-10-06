@@ -21,11 +21,9 @@ class HomeController extends AbstractController
         flash()->created(new Book('lord of the rings'));
         flash()->saved(new Book('harry potter'));
 
-        // flash()->updated();
-        // flash()->deleted();
+        flash()->updated();
+        flash()->deleted();
 
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->render('home/index.html.twig');
     }
 }

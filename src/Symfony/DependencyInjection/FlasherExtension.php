@@ -40,6 +40,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
      *     default: string,
      *     main_script: string,
      *     inject_assets: bool,
+     *     excluded_paths: list<non-empty-string>,
      *     presets: array<string, mixed>,
      *     flash_bag: array<string, mixed>,
      *     filter: array<string, mixed>,
@@ -66,6 +67,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
      *     default: string,
      *     main_script: string,
      *     inject_assets: bool,
+     *     excluded_paths: list<non-empty-string>,
      *     presets: array<string, mixed>,
      *     flash_bag: array<string, mixed>,
      *     filter: array<string, mixed>,
@@ -88,6 +90,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
             ->set('flasher.default', $config['default'])
             ->set('flasher.main_script', $config['main_script'])
             ->set('flasher.inject_assets', $config['inject_assets'])
+            ->set('flasher.excluded_paths', $config['excluded_paths'])
             ->set('flasher.flash_bag', $config['flash_bag'])
             ->set('flasher.filter', $config['filter'])
             ->set('flasher.presets', $config['presets'])
