@@ -103,7 +103,10 @@ final class Envelope implements NotificationInterface
      */
     public function get(string $type): ?StampInterface
     {
-        return $this->stamps[$type] ?? null; // @phpstan-ignore-line
+        /** @var T|null $stamp */
+        $stamp = $this->stamps[$type] ?? null;
+
+        return $stamp;
     }
 
     /**

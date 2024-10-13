@@ -8,7 +8,7 @@ use Flasher\Prime\Factory\NotificationFactoryInterface;
 use Flasher\Prime\Response\Presenter\ArrayPresenter;
 
 /**
- * @mixin \Flasher\Prime\Notification\FlasherBuilder
+ * @mixin \Flasher\Prime\Notification\NotificationBuilder
  *
  * @phpstan-import-type ArrayPresenterType from ArrayPresenter
  */

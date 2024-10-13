@@ -4,10 +4,117 @@ declare(strict_types=1);
 
 namespace Flasher\Toastr\Prime;
 
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @phpstan-type NotificationType "success"|"info"|"warning"|"error"
+ * @phpstan-type OptionsType array{
+ *     closeButton?: bool,
+ *     closeClass?: string,
+ *     closeDuration?: int,
+ *     closeEasing?: string,
+ *     closeHtml?: string,
+ *     closeMethod?: string,
+ *     closeOnHover?: bool,
+ *     containerId?: string,
+ *     debug?: bool,
+ *     escapeHtml?: bool,
+ *     extendedTimeOut?: int,
+ *     hideDuration?: int,
+ *     hideEasing?: string,
+ *     hideMethod?: string,
+ *     iconClass?: string,
+ *     messageClass?: string,
+ *     newestOnTop?: bool,
+ *     onHidden?: string,
+ *     onShown?: string,
+ *     positionClass?: "toast-top-right"|"toast-top-center"|"toast-bottom-center"|"toast-top-full-width"|"toast-bottom-full-width"|"toast-top-left"|"toast-bottom-right"|"toast-bottom-left",
+ *     preventDuplicates?: bool,
+ *     progressBar?: bool,
+ *     progressClass?: string,
+ *     rtl?: bool,
+ *     showDuration?: int,
+ *     showEasing?: string,
+ *     showMethod?: string,
+ *     tapToDismiss?: bool,
+ *     target?: string,
+ *     timeOut?: int,
+ *     titleClass?: string,
+ *     toastClass?: string,
+ * }
+ */
 final class ToastrBuilder extends NotificationBuilder
 {
+    /**
+     * @phpstan-param NotificationType $type
+     */
+    public function type(string $type): static
+    {
+        return parent::type($type);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function success(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::success($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function error(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::error($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function info(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::info($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function warning(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::warning($message, $options, $title);
+    }
+
+    /**
+     * @phpstan-param NotificationType $type
+     * @phpstan-param OptionsType      $options
+     */
+    public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::flash($type, $message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function options(array $options, bool $append = true): static
+    {
+        return parent::options($options, $append);
+    }
+
+    /**
+     * @template T of OptionsType
+     * @template K of key-of<T>
+     *
+     * @phpstan-param K $name
+     * @phpstan-param T[K] $value
+     */
+    public function option(string $name, mixed $value): static
+    {
+        return parent::option($name, $value);
+    }
+
     /**
      * Enable a close button.
      */
@@ -170,7 +277,7 @@ final class ToastrBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "toast-top-right"|"toast-top-center"|"toast-bottom-center"|"toast-top-full-width"|"toast-bottom-full-width"|"toast-top-left"|"toast-bottom-right"|"toast-bottom-left" $positionClass
+     * @phpstan-param OptionsType['positionClass'] $positionClass
      */
     public function positionClass(string $positionClass): self
     {

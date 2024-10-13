@@ -16,10 +16,36 @@ if (!\function_exists('Flasher\Noty\Prime\noty')) {
      * When called with no arguments, it returns an instance of NotyInterface.
      * When called with arguments, it creates a Noty notification and returns an Envelope.
      *
-     * @param string|null          $message the message content of the notification
-     * @param string               $type    The type of the notification (e.g., success, error, warning, info).
-     * @param array<string, mixed> $options additional options for the Noty notification
-     * @param string|null          $title   the title of the notification
+     * @param string|null                                              $message the message content of the notification
+     * @param "success"|"info"|"warning"|"error"|"alert"|"information" $type    The type of the notification (e.g., success, error, warning, info).
+     * @param array{
+     *     layout?: "top"|"topLeft"|"topCenter"|"topRight"|"center"|"centerLeft"|"centerRight"|"bottom"|"bottomLeft"|"bottomCenter"|"bottomRight",
+     *     theme?: "relax"|"mint"|"metroui",
+     *     timeout?: false|int,
+     *     progressBar?: bool,
+     *     closeWith?: string[],
+     *     animation?: array{
+     *         open?: string|null,
+     *         close?: string|null,
+     *     },
+     *     sounds?: array{
+     *         sources?: string[],
+     *         volume?: int,
+     *         conditions?: string[],
+     *     },
+     *     docTitle?: array{
+     *         conditions?: string[],
+     *     },
+     *     modal?: bool,
+     *     id?: bool|string,
+     *     force?: bool,
+     *     queue?: string,
+     *     killer?: bool|string,
+     *     container?: false|string,
+     *     buttons?: string[],
+     *     visibilityControl?: bool,
+     * } $options additional options for the Noty notification
+     * @param string|null $title the title of the notification
      *
      * @return Envelope|NotyInterface Returns an Envelope containing the notification details when arguments are provided.
      *                                Returns an instance of NotyInterface when no arguments are provided.

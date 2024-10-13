@@ -99,17 +99,17 @@ final class NotyBuilderTest extends TestCase
         $envelope = $this->notyBuilder->getEnvelope();
         $options = $envelope->getNotification()->getOptions();
 
-        $this->assertSame(['animation.open' => 'fadeIn'], $options);
+        $this->assertSame(['animation' => ['open' => 'fadeIn']], $options);
     }
 
     public function testSounds(): void
     {
-        $this->notyBuilder->sounds('sources', 'sound.mp3');
+        $this->notyBuilder->sounds('sources', ['sound.mp3']);
 
         $envelope = $this->notyBuilder->getEnvelope();
         $options = $envelope->getNotification()->getOptions();
 
-        $this->assertSame(['sounds.sources' => 'sound.mp3'], $options);
+        $this->assertSame(['sounds' => ['sources' => ['sound.mp3']]], $options);
     }
 
     public function testDocTitle(): void
@@ -119,7 +119,7 @@ final class NotyBuilderTest extends TestCase
         $envelope = $this->notyBuilder->getEnvelope();
         $options = $envelope->getNotification()->getOptions();
 
-        $this->assertSame(['docTitleSuccess' => 'Title Changed'], $options);
+        $this->assertSame(['docTitle' => ['Success' => 'Title Changed']], $options);
     }
 
     public function testModal(): void
