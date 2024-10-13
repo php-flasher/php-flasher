@@ -54,14 +54,14 @@ This will create a file at `config/packages/flasher.yaml` with the following con
 flasher:
     # Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
     default: flasher
-  
+
     # Path to the main PHPFlasher JavaScript file
     main_script: '/vendor/flasher/flasher.min.js'
-  
+
     # List of CSS files to style your notifications
     styles:
         - '/vendor/flasher/flasher.min.css'
-  
+
     # Set global options for all notifications (optional)
     # options:
     #     # Time in milliseconds before the notification disappears
@@ -71,15 +71,15 @@ flasher:
   
     # Automatically inject JavaScript and CSS assets into your HTML pages
     inject_assets: true
-  
+
     # Enable message translation using Symfony's translation service
     translate: true
-  
+
     # URL patterns to exclude from asset injection and flash_bag conversion
     excluded_paths:
         - '/^\/_profiler/'
         - '/^\/_fragment/'
-  
+
     # Map Symfony flash message keys to notification types
     flash_bag:
       success: ['success']
@@ -91,7 +91,7 @@ flasher:
     # filter:
     #     # Maximum number of notifications to show at once
     #     limit: 5
-  
+
     # Define notification presets to simplify notification creation (optional)
     # presets:
     #     # Example preset:
