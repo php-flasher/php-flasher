@@ -52,40 +52,54 @@ This will create a file at `config/packages/flasher.yaml` with the following con
 # config/packages/flasher.yaml
 
 flasher:
-    # Default notification library (e.g., 'flasher', 'toastr', 'noty', etc.)
+    # Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
     default: flasher
-
-    # Path to the main JavaScript file of PHPFlasher
+  
+    # Path to the main PHPFlasher JavaScript file
     main_script: '/vendor/flasher/flasher.min.js'
-
-    # Path to the stylesheets for PHPFlasher notifications
+  
+    # List of CSS files to style your notifications
     styles:
         - '/vendor/flasher/flasher.min.css'
-
-    # Enable translation of PHPFlasher messages using Symfony's translator service
-    translate: true
-
-    # Automatically inject PHPFlasher assets in HTML response
+  
+    # Set global options for all notifications (optional)
+    # options:
+    #     # Time in milliseconds before the notification disappears
+    #     timeout: 5000
+    #     # Where the notification appears on the screen
+    #     position: 'top-right'
+  
+    # Automatically inject JavaScript and CSS assets into your HTML pages
     inject_assets: true
-
-    # Global options
-    options:
-        # timeout in milliseconds
-        timeout: 5000
-        position: 'top-right'
-        escapeHtml: false
-
-    # Map Symfony session keys to PHPFlasher notification types
+  
+    # Enable message translation using Symfony's translation service
+    translate: true
+  
+    # URL patterns to exclude from asset injection and flash_bag conversion
+    excluded_paths:
+        - '/^\/_profiler/'
+        - '/^\/_fragment/'
+  
+    # Map Symfony flash message keys to notification types
     flash_bag:
-        success: ['success']
-        error: ['error', 'danger']
-        warning: ['warning', 'alarm']
-        info: ['info', 'notice', 'alert']
+      success: ['success']
+      error: ['error', 'danger']
+      warning: ['warning', 'alarm']
+      info: ['info', 'notice', 'alert']
+  
+    # Set criteria to filter which notifications are displayed (optional)
+    # filter:
+    #     # Maximum number of notifications to show at once
+    #     limit: 5
+  
+    # Define notification presets to simplify notification creation (optional)
+    # presets:
+    #     # Example preset:
+    #     entity_saved:
+    #         type: 'success'
+    #         title: 'Entity saved'
+    #         message: 'Entity saved successfully'
 
-    # Criteria to filter displayed notifications (limit, types)
-    filter:
-        # Limit number of displayed notifications
-        limit: 5
 ```
 
 ---
