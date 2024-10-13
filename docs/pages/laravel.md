@@ -53,32 +53,30 @@ This will create a file at `config/flasher.php` with the following content:
 <?php // config/flasher.php
 
 return [
-    // Default notification library (e.g., 'flasher', 'toastr', 'noty', etc.)
+    // Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
     'default' => 'flasher',
 
-    // Path to the main JavaScript file of PHPFlasher
+    // Path to the main PHPFlasher JavaScript file
     'main_script' => '/vendor/flasher/flasher.min.js',
 
-    // Path to the stylesheets for PHPFlasher notifications
+    // List of CSS files to style your notifications
     'styles' => [
         '/vendor/flasher/flasher.min.css',
     ],
 
-    // Enable translation of PHPFlasher messages using Laravel's translator service
-    'translate' => true,
+    // Set global options for all notifications (optional)
+    // 'options' => [
+    //     'timeout' => 5000, // Time in milliseconds before the notification disappears
+    //     'position' => 'top-right', // Where the notification appears on the screen
+    // ],
 
-    // Automatically inject PHPFlasher assets in HTML response
+    // Automatically inject JavaScript and CSS assets into your HTML pages
     'inject_assets' => true,
 
-    // Global options
-    'options' => [
-        'timeout' => 5000, // in milliseconds
-        'position' => 'top-right',
-        'escapeHtml' => false,
-    ],
+    // Enable message translation using Laravel's translation service
+    'translate' => true,
 
-    // Configuration for the flash bag (converting Laravel flash messages)
-    // Map Laravel session keys to PHPFlasher types
+    // Map Laravel flash message keys to notification types
     'flash_bag' => [
         'success' => ['success'],
         'error' => ['error', 'danger'],
@@ -86,11 +84,22 @@ return [
         'info' => ['info', 'notice', 'alert'],
     ],
 
-    // Filter criteria for notifications (e.g., limit number, types)
-    'filter' => [
-        'limit' => 5, // Limit the number of displayed notifications
-    ],
+    // Set criteria to filter which notifications are displayed (optional)
+    // 'filter' => [
+    //     'limit' => 5, // Maximum number of notifications to show at once
+    // ],
+
+    // Define notification presets to simplify notification creation (optional)
+    // 'presets' => [
+    //     'entity_saved' => [
+    //         'type' => 'success',
+    //         'title' => 'Entity saved',
+    //         'message' => 'Entity saved successfully',
+    //     ],
+    // ],
 ];
+
+
 ```
 
 ---
