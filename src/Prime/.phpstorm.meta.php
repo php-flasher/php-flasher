@@ -20,3 +20,4 @@ expectedReturnValues(\Flasher\Prime\Notification\NotificationInterface::getType(
 expectedArguments(\Flasher\Prime\Notification\NotificationBuilderInterface::handler(), 0, 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert');
 
 expectedArguments(\Flasher\Prime\FlasherInterface::render(), 0, 'html', 'json', 'array');
+expectedArguments(\Flasher\Prime\Notification\FlasherBuilder::option(), 0, 'timeout', 'timeouts', 'fps', 'position', 'direction', 'rtl', 'style', 'escapeHtml');

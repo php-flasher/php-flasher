@@ -6,6 +6,19 @@ namespace Flasher\Notyf\Prime;
 
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @phpstan-type NotificationType "success"|"info"|"warning"|"error"
+ * @phpstan-type OptionsType array{
+ *     duration?: int,
+ *     ripple?: bool,
+ *     position?: array{
+ *         x: "left"|"center"|"right",
+ *         y: "top"|"center"|"bottom",
+ *     },
+ *     dismissible?: bool,
+ *     background?: string,
+ * }
+ */
 final class NotyfBuilder extends NotificationBuilder
 {
     /**

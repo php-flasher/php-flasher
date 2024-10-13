@@ -7,8 +7,150 @@ namespace Flasher\SweetAlert\Prime;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @phpstan-type NotificationType "success"|"info"|"warning"|"error"|"question"
+ * @phpstan-type CustomClassType "container"|"popup"|"header"|"title"|"closeButton"|"icon"|"image"|"content"|"input"|"inputLabel"|"validationMessage"|"actions"|"confirmButton"|"denyButton"|"cancelButton"|"loader"|"footer"
+ * @phpstan-type OptionsType array{
+ *     title?: string,
+ *     titleText?: string,
+ *     html?: string,
+ *     text?: string,
+ *     icon?: string,
+ *     iconColor?: string,
+ *     iconHtml?: string,
+ *     showClass?: mixed,
+ *     hideClass?: mixed,
+ *     footer?: string,
+ *     backdrop?: bool|string,
+ *     toast?: bool,
+ *     target?: string,
+ *     input?: "text"|"email"|"password"|"number"|"tel"|"range"|"textarea"|"search"|"url"|"select"|"radio"|"checkbox"|"file"|"date"|"datetime-local"|"time"|"week"|"month",
+ *     width?: string,
+ *     padding?: string,
+ *     background?: string,
+ *     position?: "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end",
+ *     grow?: "column"|"fullscreen"|"row"|false,
+ *     customClass?: array<CustomClassType, string>,
+ *     timer?: int,
+ *     timerProgressBar?: bool,
+ *     heightAuto?: bool,
+ *     allowOutsideClick?: bool|string,
+ *     allowEscapeKey?: bool|string,
+ *     allowEnterKey?: bool|string,
+ *     stopKeydownPropagation?: bool,
+ *     keydownListenerCapture?: bool,
+ *     showConfirmButton?: bool,
+ *     showDenyButton?: bool,
+ *     showCancelButton?: bool,
+ *     confirmButtonText?: string,
+ *     denyButtonText?: string,
+ *     cancelButtonText?: string,
+ *     confirmButtonColor?: string,
+ *     denyButtonColor?: string,
+ *     cancelButtonColor?: string,
+ *     confirmButtonAriaLabel?: string,
+ *     denyButtonAriaLabel?: string,
+ *     cancelButtonAriaLabel?: string,
+ *     buttonsStyling?: bool,
+ *     reverseButtons?: bool,
+ *     focusConfirm?: bool,
+ *     focusDeny?: bool,
+ *     focusCancel?: bool,
+ *     showCloseButton?: bool,
+ *     closeButtonHtml?: string,
+ *     closeButtonAriaLabel?: string,
+ *     loaderHtml?: string,
+ *     showLoaderOnConfirm?: bool,
+ *     scrollbarPadding?: bool,
+ *     preConfirm?: bool|string,
+ *     preDeny?: string,
+ *     returnInputValueOnDeny?: bool,
+ *     animation?: bool,
+ *     imageUrl?: string,
+ *     imageWidth?: int,
+ *     imageHeight?: int,
+ *     imageAlt?: string,
+ *     inputLabel?: string,
+ *     inputPlaceholder?: string,
+ *     inputValue?: string,
+ *     inputOptions?: string,
+ *     inputAutoTrim?: bool,
+ *     inputAttributes?: string,
+ *     inputValidator?: string,
+ *     validationMessage?: string,
+ * }
+ */
 final class SweetAlertBuilder extends NotificationBuilder
 {
+    /**
+     * @phpstan-param NotificationType $type
+     */
+    public function type(string $type): static
+    {
+        return parent::type($type);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function success(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::success($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function error(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::error($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function info(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::info($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function warning(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::warning($message, $options, $title);
+    }
+
+    /**
+     * @phpstan-param NotificationType $type
+     * @phpstan-param OptionsType      $options
+     */
+    public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::flash($type, $message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function options(array $options, bool $append = true): static
+    {
+        return parent::options($options, $append);
+    }
+
+    /**
+     * @template T of OptionsType
+     * @template K of key-of<T>
+     *
+     * @phpstan-param K $name
+     * @phpstan-param T[K] $value
+     */
+    public function option(string $name, mixed $value): static
+    {
+        return parent::option($name, $value);
+    }
+
     /**
      * Display a question typed alert message.
      *
@@ -190,7 +332,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "text"|"email"|"password"|"number"|"tel"|"range"|"textarea"|"search"|"url"|"select"|"radio"|"checkbox"|"file"|"date"|"datetime-local"|"time"|"week"|"month" $input
+     * @phpstan-param OptionsType['input'] $input
      *
      * Input field type, can be text, email, password, number, tel, range, textarea, select, radio, checkbox, file and
      * url
@@ -233,7 +375,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end" $position
+     * @phpstan-param OptionsType['position'] $position
      *
      * Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom',
      * 'bottom-start', or 'bottom-end'
@@ -246,12 +388,12 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "row"|"column"|"fullscreen"|false $grow
+     * @phpstan-param "column"|"fullscreen"|"row"|false $grow
      *
      * Paired with window position, sets the direction the popup should grow in, can be set to 'row', 'column',
      * 'fullscreen', or false
      */
-    public function grow(bool|string $grow): self
+    public function grow(string|false $grow): self
     {
         $this->option('grow', $grow);
 
@@ -259,14 +401,15 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "container"|"popup"|"header"|"title"|"closeButton"|"icon"|"image"|"content"|"input"|"inputLabel"|"validationMessage"|"actions"|"confirmButton"|"denyButton"|"cancelButton"|"loader"|"footer" $customClass
+     * @phpstan-param CustomClassType $customClass
      *
      * A custom CSS class for the popup
      */
     public function customClass(string $customClass, string $value): self
     {
+        /** @var OptionsType['customClass'] $option */
         $option = $this->getEnvelope()->getOption('customClass', []);
-        $option[$customClass] = $value; // @phpstan-ignore-line
+        $option[$customClass] = $value;
 
         $this->option('customClass', $option);
 

@@ -15,10 +15,19 @@ if (!function_exists('notyf')) {
      * When called with no arguments, it returns an instance of NotyfInterface.
      * When called with arguments, it creates a Notyf notification and returns an Envelope.
      *
-     * @param string|null          $message the message content of the notification
-     * @param string               $type    The type of the notification (e.g., success, error, warning, info).
-     * @param array<string, mixed> $options additional options for the Notyf notification
-     * @param string|null          $title   the title of the notification
+     * @param string|null                        $message the message content of the notification
+     * @param "success"|"info"|"warning"|"error" $type    The type of the notification (e.g., success, error, warning, info).
+     * @param array{
+     *     duration?: int,
+     *     ripple?: bool,
+     *     position?: array{
+     *         x: "left"|"center"|"right",
+     *         y: "top"|"center"|"bottom",
+     *     },
+     *     dismissible?: bool,
+     *     background?: string,
+     * } $options additional options for the Notyf notification
+     * @param string|null $title the title of the notification
      *
      * @return Envelope|NotyfInterface Returns an Envelope containing the notification details when arguments are provided.
      *                                 Returns an instance of NotyfInterface when no arguments are provided.

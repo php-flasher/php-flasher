@@ -4,10 +4,110 @@ declare(strict_types=1);
 
 namespace Flasher\Noty\Prime;
 
+use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 
+/**
+ * @phpstan-type NotificationType "success"|"info"|"warning"|"error"|"alert"|"information"
+ * @phpstan-type OptionsType array{
+ *     layout?: "top"|"topLeft"|"topCenter"|"topRight"|"center"|"centerLeft"|"centerRight"|"bottom"|"bottomLeft"|"bottomCenter"|"bottomRight",
+ *     theme?: "relax"|"mint"|"metroui",
+ *     timeout?: false|int,
+ *     progressBar?: bool,
+ *     closeWith?: string[],
+ *     animation?: array{
+ *         open?: string|null,
+ *         close?: string|null,
+ *     },
+ *     sounds?: array{
+ *         sources?: string[],
+ *         volume?: int,
+ *         conditions?: string[],
+ *     },
+ *     docTitle?: array{
+ *         conditions?: string[],
+ *     },
+ *     modal?: bool,
+ *     id?: bool|string,
+ *     force?: bool,
+ *     queue?: string,
+ *     killer?: bool|string,
+ *     container?: false|string,
+ *     buttons?: string[],
+ *     visibilityControl?: bool,
+ * }
+ */
 final class NotyBuilder extends NotificationBuilder
 {
+    /**
+     * @phpstan-param NotificationType $type
+     */
+    public function type(string $type): static
+    {
+        return parent::type($type);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function success(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::success($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function error(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::error($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function info(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::info($message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function warning(string $message, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::warning($message, $options, $title);
+    }
+
+    /**
+     * @phpstan-param NotificationType $type
+     * @phpstan-param OptionsType      $options
+     */
+    public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
+    {
+        return parent::flash($type, $message, $options, $title);
+    }
+
+    /**
+     * @param OptionsType $options
+     */
+    public function options(array $options, bool $append = true): static
+    {
+        return parent::options($options, $append);
+    }
+
+    /**
+     * @template T of OptionsType
+     * @template K of key-of<T>
+     *
+     * @phpstan-param K $name
+     * @phpstan-param T[K] $value
+     */
+    public function option(string $name, mixed $value): static
+    {
+        return parent::option($name, $value);
+    }
+
     /**
      * This string can contain HTML too. But be careful and don't pass user inputs to this parameter.
      */
@@ -17,7 +117,7 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param OptionsType $options
      */
     public function alert(?string $message = null, ?string $title = null, array $options = []): self
     {
@@ -39,7 +139,7 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "top"|"topLeft"|"topCenter"|"topRight"|"center"|"centerLeft"|"centerRight"|"bottom"|"bottomLeft"|"bottomCenter"|"bottomRight" $layout
+     * @phpstan-param OptionsType['layout'] $layout
      *
      * - ClassName generator uses this value → noty_layout__${layout}
      */
@@ -51,7 +151,7 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "relax"|"mint"|"metroui" $theme
+     * @phpstan-param OptionsType['theme'] $theme
      *
      * ClassName generator uses this value → noty_theme__${theme}
      */
@@ -65,7 +165,7 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * false, 1000, 3000, 3500, etc. Delay for closing event in milliseconds (ms). Set 'false' for sticky notifications.
      */
-    public function timeout(bool|int $timeout): self
+    public function timeout(false|int $timeout): self
     {
         $this->option('timeout', $timeout);
 
@@ -95,35 +195,52 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "open"|"close"                                  $animation
+     * @param "open"|"close"                                  $option
      * @param "noty_effects_open"|"noty_effects_close"|string $effect
      *
      * If string, assumed to be CSS class name. If null, no animation at all. If function, runs the function. (v3.0.1+)
      * You can use animate.css class names or your custom css animations as well.
      */
-    public function animation(string $animation, string $effect): self
+    public function animation(string $option, string $effect): self
     {
-        $this->option('animation.'.$animation, $effect);
+        /** @phpstan-var OptionsType['animation'] $animation */
+        $animation = $this->getEnvelope()->getOption('animation', []);
+        $animation[$option] = $effect;
+
+        $this->option('animation', $animation);
 
         return $this;
     }
 
     /**
-     * @param "sources"|"volume"|"conditions" $option
+     * @phpstan-param "sources"|"volume"|"conditions" $option
+     * @phpstan-param ($option is "sources" ? string[] :
+     *        ($option is "volume" ? int :
+     *        ($option is "conditions" ? string[] :
+     *        mixed))) $value
      */
     public function sounds(string $option, mixed $value): self
     {
-        $this->option('sounds.'.$option, $value);
+        /** @phpstan-var OptionsType['sounds'] $sounds */
+        $sounds = $this->getEnvelope()->getOption('sounds', []);
+        $sounds[$option] = $value;
+
+        $this->option('sounds', $sounds); // @phpstan-ignore-line
 
         return $this;
     }
 
     /**
-     * @param "conditions"|string $option
+     * @phpstan-param "conditions"|string $option
+     * @phpstan-param ($option is "conditions" ? string[] : mixed) $value
      */
-    public function docTitle(string $option, string $docTitle): self
+    public function docTitle(string $option, mixed $value): self
     {
-        $this->option('docTitle'.$option, $docTitle);
+        /** @phpstan-var OptionsType['docTitle'] $docTitle */
+        $docTitle = $this->getEnvelope()->getOption('docTitle', []);
+        $docTitle[$option] = $value;
+
+        $this->option('docTitle', $docTitle); // @phpstan-ignore-line
 
         return $this;
     }
@@ -176,7 +293,7 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Custom container selector string. Like '.my-custom-container'. Layout parameter will be ignored.
      */
-    public function container(bool|string $container): self
+    public function container(false|string $container): self
     {
         $this->option('container', $container);
 
