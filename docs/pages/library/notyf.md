@@ -39,7 +39,7 @@ return [
             ],
             'options' => [
                 // Optional: Add global options here
-                'dismissible' => true,
+                // 'dismissible' => true,
             ],
         ],
     ],
@@ -76,7 +76,7 @@ flasher:
                 - '/vendor/flasher/flasher-notyf.min.css'
             options:
             # Optional: Add global options here
-                dismissible: true
+            #    dismissible: true
 ```
 
 ---

@@ -40,7 +40,7 @@ return [
             ],
             'options' => [
                 // Optional: Add global options here
-                'layout' => 'topRight'
+                // 'layout' => 'topRight'
             ],
         ],
     ],
@@ -80,7 +80,7 @@ flasher:
                 - '/vendor/flasher/mint.css'
             options:
             # Optional: Add global options here
-                layout: topRight
+            #    layout: topRight
 ```
 
 ---

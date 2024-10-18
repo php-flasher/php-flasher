@@ -40,7 +40,7 @@ return [
             ],
             'options' => [
                 // Optional: Add global options here
-                'closeButton' => true
+                // 'closeButton' => true
             ],
         ],
     ],
@@ -81,7 +81,7 @@ flasher:
                 - '/vendor/flasher/toastr.min.css'
             options:
             # Optional: Add global options here
-                closeButton: true
+            #    closeButton: true
 ```
 
 ---

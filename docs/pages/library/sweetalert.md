@@ -39,7 +39,7 @@ return [
             ],
             'options' => [
                 // Optional: Add global options here
-                'position' => 'center'
+                // 'position' => 'center'
             ],
         ],
     ],
@@ -78,7 +78,7 @@ flasher:
                 - '/vendor/flasher/sweetalert2.min.css'
             options:
             # Optional: Add global options here
-                position: center
+            #    position: center
 ```
 
 ---
