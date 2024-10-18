@@ -22,6 +22,8 @@ php artisan flasher:install
 
 <p id="laravel-configuration"><a href="#laravel-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
 
+> <strong>Note:</strong> The configuration settings below are the default ones. You only need to change them if you want to customize the default behavior.
+
 ```php
 <?php // config/flasher.php
 
@@ -60,6 +62,8 @@ php bin/console flasher:install
 ```
 
 <p id="symfony-configuration"><a href="#symfony-configuration" class="anchor"><i class="fa-duotone fa-link"></i> Configuration</a></p>
+
+> <strong>Note:</strong> The configuration settings below are the default ones. You only need to change them if you want to customize the default behavior.
 
 ```yaml
 # config/packages/flasher.yaml
