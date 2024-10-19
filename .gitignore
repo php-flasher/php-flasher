@@ -1,22 +1,19 @@
-.idea/
-.DS_Store
+/.idea/
+/.DS_Store
 
-vendor/
-node_modules/
+/vendor/
+/node_modules/
 
-.cache/php-cs-fixer/
-.cache/phpunit/
-.cache/phpstan/
-.cache/phplint/
-.cache/nx/
-.nx/
+/.cache/php-cs-fixer/
+/.cache/phplint/
+/.cache/phpstan/
+/.cache/phpunit/
 
-.php-cs-fixer.php
-phpunit.xml
-taskfile.yml
-phpstan.neon
+/.php-cs-fixer.php
+/phpunit.xml
+/taskfile.yml
+/phpstan.neon
 
-lerna-debug.log
-npm-debug.log
+/npm-debug.log
 
-tests/Symfony/Fixtures/project/public/vendor/
+/tests/Symfony/Fixtures/project/public/vendor/
