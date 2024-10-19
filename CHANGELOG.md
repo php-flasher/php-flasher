@@ -4,8 +4,10 @@
 
 ## [v2.1.0](https://github.com/php-flasher/php-flasher/compare/v2.0.4...v2.1.0) - 2024-10-19
 
-* feature [Symfony] Add Symfony Profiler integration for PHPFlasher. See [PR #198](https://github.com/php-flasher/php-flasher/pull/198) by [yoeunes](https://github.com/yoeunes)
+* feature [Flasher] Update laravel and symfony configuration documentation . See [PR #201](https://github.com/php-flasher/php-flasher/pull/201) by [yoeunes](https://github.com/yoeunes)
+* feature [Flasher] Improve Type Safety and IDE Support with Enhanced PHPDoc Annotations and Stricter PHPStan Validations. See [PR #200](https://github.com/php-flasher/php-flasher/pull/200) by [yoeunes](https://github.com/yoeunes)
 * feature [Symfony] Improve configuration descriptions and add examples. See [PR #199](https://github.com/php-flasher/php-flasher/pull/199) by [yoeunes](https://github.com/yoeunes)
+* feature [Symfony] Add Symfony Profiler integration for PHPFlasher. See [PR #198](https://github.com/php-flasher/php-flasher/pull/198) by [yoeunes](https://github.com/yoeunes)
 
 ## [v2.0.4](https://github.com/php-flasher/php-flasher/compare/v2.0.3...v2.0.4) - 2024-09-22
 
