@@ -1,3 +1,4 @@
+@use "sass:meta";
 :root {
     --background-color: rgb(255, 255, 255);
     --text-color: rgb(75, 85, 99);
@@ -13,7 +14,7 @@
     --error-color-light: hsl(0deg, 75%, 90%);
 }
 
-@import "wrapper";
-@import "container";
-@import "icons";
-@import "progress";
+@include meta.load-css("wrapper");
+@include meta.load-css("container");
+@include meta.load-css("icons");
+@include meta.load-css("progress");

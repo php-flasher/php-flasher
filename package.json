@@ -27,7 +27,7 @@
         "@rollup/plugin-node-resolve": "^15.3.0",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^11.1.6",
-        "@types/node": "^20.16.11",
+        "@types/node": "^20.16.12",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
         "@typescript-eslint/parser": "^7.18.0",
         "all-contributors-cli": "^6.26.1",
@@ -51,9 +51,9 @@
         "rollup-plugin-filesize": "^10.0.0",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-progress": "^1.1.2",
-        "sass": "^1.79.5",
+        "sass": "^1.80.3",
         "ts-node": "^10.9.2",
-        "tslib": "^2.7.0",
+        "tslib": "^2.8.0",
         "typescript": "^5.6.3"
     }
 }
