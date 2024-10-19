@@ -55,6 +55,7 @@ final class Configuration
      *          options?: array<string, mixed>,
      *      }>,
      *  } $config
+     *
      * @phpstan-param ConfigType $config
      *
      * @return ConfigType
