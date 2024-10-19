@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-return [
+use Flasher\Prime\Configuration;
+
+return Configuration::from([
     // Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
     'default' => 'flasher',
 
@@ -50,4 +52,4 @@ return [
     //         'message' => 'Entity saved successfully',
     //     ],
     // ],
-];
+]);
