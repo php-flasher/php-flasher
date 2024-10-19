@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.1.0...2.x)
 
-## [v2.1.0](https://github.com/php-flasher/php-flasher/compare/v2.0.4...2.1.0)
+## [v2.1.0](https://github.com/php-flasher/php-flasher/compare/v2.0.4...v2.1.0)
 
 * feature [Symfony] Add Symfony Profiler integration for PHPFlasher. See [PR #198](https://github.com/php-flasher/php-flasher/pull/198) by [yoeunes](https://github.com/yoeunes)
 * feature [Symfony] Improve configuration descriptions and add examples. See [PR #199](https://github.com/php-flasher/php-flasher/pull/199) by [yoeunes](https://github.com/yoeunes)
