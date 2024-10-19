@@ -2,6 +2,7 @@
 /node_modules
 /public/build
 /public/hot
+/public/vendor/flasher
 /public/storage
 /storage/*.key
 /vendor
