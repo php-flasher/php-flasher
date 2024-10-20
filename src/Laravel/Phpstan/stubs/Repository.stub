@@ -46,7 +46,7 @@ interface Repository
      *            ($key is 'flasher.plugins' ? array<string, PluginType> :
      *            ($key is 'flasher.flash_bag' ? array<string, string[]> :
      *            ($key is 'flasher.excluded_paths' ? list<non-empty-string> :
-     *                  mixed)))))))
+     *                  mixed))))))))
      */
     public function get(string|array $key, mixed $default = null): mixed;
 }
