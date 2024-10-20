@@ -1,6 +1,10 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.1.0...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.1.1...2.x)
+
+## [v2.1.1](https://github.com/php-flasher/php-flasher/compare/v2.1.0...v2.1.1) - 2024-10-20
+
+* feature [Laravel] Add `excluded_paths` option. See [PR #203](https://github.com/php-flasher/php-flasher/pull/203) by [yoeunes](https://github.com/yoeunes)
 
 ## [v2.1.0](https://github.com/php-flasher/php-flasher/compare/v2.0.4...v2.1.0) - 2024-10-19
 

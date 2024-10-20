@@ -13,6 +13,7 @@ namespace Illuminate\Contracts\Config;
  *     scripts: string[],
  *     styles: string[],
  *     options: array<string, mixed>,
+ *     excluded_paths?: list<non-empty-string>,
  *     filter: array<string, mixed>,
  *     flash_bag: array<string, string[]>,
  *     presets: array<string, PresetType>,
@@ -44,7 +45,8 @@ interface Repository
      *            ($key is 'flasher.presets' ? array<string, PresetType> :
      *            ($key is 'flasher.plugins' ? array<string, PluginType> :
      *            ($key is 'flasher.flash_bag' ? array<string, string[]> :
-     *                  mixed)))))))
+     *            ($key is 'flasher.excluded_paths' ? list<non-empty-string> :
+     *                  mixed))))))))
      */
     public function get(string|array $key, mixed $default = null): mixed;
 }

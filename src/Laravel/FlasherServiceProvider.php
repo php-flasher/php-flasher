@@ -227,10 +227,13 @@ final class FlasherServiceProvider extends PluginServiceProvider
         }
 
         $this->app->singleton(FlasherMiddleware::class, static function (Application $app) {
+            $config = $app->make('config');
+
             $flasher = $app->make('flasher');
             $cspHandler = $app->make('flasher.csp_handler');
+            $excludedPaths = $config->get('flasher.excluded_paths', []) ?: [];
 
-            return new FlasherMiddleware(new ResponseExtension($flasher, $cspHandler));
+            return new FlasherMiddleware(new ResponseExtension($flasher, $cspHandler, $excludedPaths));
         });
 
         $this->pushMiddlewareToGroup(FlasherMiddleware::class);
