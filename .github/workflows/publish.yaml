@@ -1,0 +1,61 @@
+name: 🚀 Publish assets to NPM
+
+on:
+    release:
+        types: [ published ]
+
+jobs:
+    publish-prime:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./src/Prime/Resources
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/setup-node@v4
+                with:
+                    node-version: '20.x'
+                    registry-url: 'https://registry.npmjs.org'
+
+            -   name: Install dependencies
+                run: npm install
+
+            -   name: Publish to NPM
+                run: npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    publish-plugin:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        strategy:
+            fail-fast: false
+            matrix:
+                path:
+                    - ./src/Noty/Prime/Resources
+                    - ./src/Notyf/Prime/Resources
+                    - ./src/SweetAlert/Prime/Resources
+                    - ./src/Toastr/Prime/Resources
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/setup-node@v4
+                with:
+                    node-version: '20.x'
+                    registry-url: 'https://registry.npmjs.org'
+
+            -   name: Install dependencies
+                run: npm install
+                working-directory: ${{ matrix.path }}
+
+            -   name: Publish to NPM
+                run: npm publish --access public
+                working-directory: ${{ matrix.path }}
+                env:
+                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
