@@ -41,12 +41,5 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true
-    },
-    "extra": {
-        "phpstan": {
-            "includes": [
-                "extension.neon"
-            ]
-        }
     }
 }

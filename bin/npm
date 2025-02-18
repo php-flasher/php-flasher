@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+NPM_FOLDERS=(
+    "src/Prime/Resources"
+    "src/Noty/Prime/Resources"
+    "src/Notyf/Prime/Resources"
+    "src/SweetAlert/Prime/Resources"
+    "src/Toastr/Prime/Resources"
+)
+
+for folder in "${NPM_FOLDERS[@]}"; do
+    if [ -d "$folder" ]; then
+        echo ""
+        echo "Publishing $folder to npm..."
+        (
+            cd "$folder"
+            npm install
+            npm version "$VERSION" --no-git-tag-version || true
+            npm publish --access public
+        )
+    fi
+done
+
+echo "Release $VERSION complete – tagged repositories and published packages to npm."
