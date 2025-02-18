@@ -28,7 +28,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "illuminate/support": "^11.0",
+        "illuminate/support": "^11.0|^12.0",
         "php-flasher/flasher": "^2.1.4"
     },
     "autoload": {

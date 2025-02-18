@@ -22,9 +22,9 @@
     "require": {
         "php": ">=8.2",
         "ext-intl": "*",
-        "illuminate/contracts": "^11.0",
-        "illuminate/routing": "^11.0",
-        "illuminate/support": "^11.0",
+        "illuminate/contracts": "^11.0|^12.0",
+        "illuminate/routing": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0",
         "laravel/octane": "^2.3",
         "livewire/livewire": "^3.0",
         "paragonie/random_compat": "^2.0",
