@@ -1,6 +1,6 @@
 {
     "name": "@flasher/flasher-sweetalert",
-    "version": "2.1.3",
+    "version": "2.1.4",
     "type": "module",
     "license": "MIT",
     "main": "dist/flasher-sweetalert.cjs.js",
