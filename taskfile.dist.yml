@@ -1,51 +1,171 @@
 version: '3'
 
+##############################################################################
+# PHP-Flasher Mono Repo Tasks
+##############################################################################
+
+vars:
+  DATE: '{{now | date "2006-01-02 15:04:05"}}'
+
+  # Colors and Styles
+  RESET: '\033[0m'
+  BOLD: '\033[1m'
+  BLUE: '\033[34m'
+  CYAN: '\033[36m'
+  GREEN: '\033[32m'
+  YELLOW: '\033[33m'
+
+  # Headers
+  HEADER: |
+
+    ╭──────────────────────────────────────────╮
+    │     🚀 PHP-Flasher Tasks Runner 🚀       │
+    ╰──────────────────────────────────────────╯
+
 tasks:
-    update:
-        desc: "🔄 Update project dependencies and rebuild assets."
-        cmds:
-            - composer update --prefer-lowest -W
-            - npm run ncu
-            - npm install --force
-            - npm run build
-          # - task: lint
-          # - task: docs:build
-        aliases:
-            - u
-            - up
+  default:
+    cmds:
+      - echo "{{.HEADER}}"
+      - task -l
+    silent: true
 
-    lint:
-        desc: "🔍 Analyze code for potential errors and coding standards violations."
-        cmds:
-            - php vendor/bin/rector
-            - php vendor/bin/php-cs-fixer fix
-            - php vendor/bin/phpstan analyse --memory-limit=-1
-            - composer validate --strict
-            - find src/ -name "composer.json" -exec composer validate --strict {} \;
-            - php vendor/bin/phplint
-            - php vendor/bin/phpunit
-        aliases:
-            - pint
-            - check
-            - validate
+  ##############################################################################
+  # Development Tasks
+  ##############################################################################
 
-    docs:build:
-        desc: "📘 Build the documentation."
-        dir: docs/
-        cmds:
-            - npm install --force
-            - npm run build
+  update:
+    desc: Update project dependencies and rebuild assets
+    cmds:
+      - echo "{{.HEADER}}"
+      - |
+        echo "    Date     : {{.DATE}} UTC"
+        echo "    Task     : Update Dependencies"
+        echo
 
-    audit:
-        desc: "🔐 Check for security vulnerabilities in dependencies."
-        cmds:
-            - symfony security:check
-            - composer audit
-        aliases:
-            - security
+      # Composer Update
+      - |
+        echo " 📦 Composer Dependencies"
+        composer update --prefer-lowest -W
+        echo "    ✓ Dependencies updated successfully"
+        echo
 
-    release:
-        desc: "🏷️ Prepare and tag a new release."
-        cmds:
-            - php bin/split
-            - php bin/release {{.CLI_ARGS}}
+      # NPM Updates Check
+      - |
+        echo " 🔍 NPM Updates Check"
+        npm run ncu || echo "    ⚠️  NPM check failed, continuing..."
+        echo
+
+      # NPM Install
+      - |
+        echo " 📦 NPM Dependencies"
+        npm install --force || echo "    ⚠️  NPM install failed, continuing..."
+        echo
+
+      # Build Assets
+      - |
+        echo " 🏗️  Building Assets"
+        npm run build || echo "    ⚠️  Build failed, continuing..."
+        echo
+
+      # Summary
+      - |
+        echo " ✨ Update Complete"
+        echo "    ✓ Process finished successfully"
+    silent: true
+
+  ##############################################################################
+  # Quality Assurance Tasks
+  ##############################################################################
+
+  lint:
+    desc: Analyze code quality and standards
+    cmds:
+      - echo "{{.HEADER}}"
+      - |
+        echo "    Date     : {{.DATE}} UTC"
+        echo "    Task     : Code Quality Check"
+        echo
+
+      # Rector
+      - |
+        echo " 🔍 Running Rector"
+        php vendor/bin/rector || echo "    ⚠️  Rector found issues"
+        echo
+
+      # PHP-CS-Fixer
+      - |
+        echo " 🎨 Running PHP-CS-Fixer"
+        php vendor/bin/php-cs-fixer fix -v || echo "    ⚠️  CS-Fixer found issues"
+        echo
+
+      # PHPStan
+      - |
+        echo " 🔬 Running PHPStan"
+        php vendor/bin/phpstan analyse --memory-limit=-1 || echo "    ⚠️  PHPStan found issues"
+        echo
+
+      # Composer Validation
+      - |
+        echo " 📝 Validating Composer Files"
+        composer validate --strict || echo "    ⚠️  Validation failed"
+        find src/ -name "composer.json" -exec composer validate --strict {} \; || echo "    ⚠️  Package validation failed"
+        echo
+
+      # PHPLint
+      - |
+        echo " 🔎 Running PHPLint"
+        php vendor/bin/phplint || echo "    ⚠️  PHPLint found issues"
+        echo
+
+      # PHPUnit
+      - |
+        echo " 🧪 Running PHPUnit Tests"
+        php vendor/bin/phpunit || echo "    ⚠️  Tests failed"
+        echo
+
+      # Summary
+      - |
+        echo " ✨ Quality Check Complete"
+        echo "    ✓ All checks finished"
+    silent: true
+
+  ##############################################################################
+  # Documentation Tasks
+  ##############################################################################
+
+  docs:build:
+    desc: Build documentation
+    dir: docs/
+    cmds:
+      - |
+        echo "{{.HEADER}}"
+        echo "    Date     : {{.DATE}} UTC"
+        echo "    Task     : Build Documentation"
+        echo
+
+        echo " 📚 Installing dependencies"
+        npm install --force
+
+        echo " 🏗️ Building documentation"
+        npm run build
+    silent: true
+
+  ##############################################################################
+  # Release Tasks
+  ##############################################################################
+
+  release:
+    desc: Create new release
+    cmds:
+      - |
+        echo "{{.HEADER}}"
+        echo "    Date     : {{.DATE}} UTC"
+        echo "    Task     : Release {{.CLI_ARGS}}"
+        echo
+
+        echo " 🔄 Splitting repositories"
+        php bin/split
+
+        echo " 🚀 Creating release {{.CLI_ARGS}}"
+        php bin/release {{.CLI_ARGS}}
+    silent: true

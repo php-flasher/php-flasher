@@ -1,108 +1,204 @@
 #!/usr/bin/env bash
 
-# Set the "errexit" options
+# Set options
 set -o errexit
+set -o pipefail
 
-# Define colors and emoji for better visual feedback
-INDIGO='\033[0;94m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
-CHECK_MARK="✅"
-CROSS_MARK="❌"
+# Define colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly ITALIC='\033[3m'
+readonly UNDERLINE='\033[4m'
+readonly RED='\033[31m'
+readonly GREEN='\033[32m'
+readonly YELLOW='\033[33m'
+readonly BLUE='\033[34m'
+readonly MAGENTA='\033[35m'
+readonly CYAN='\033[36m'
+readonly WHITE='\033[37m'
+
+# Define emoji
+readonly CHECK_MARK="✓"
+readonly CROSS_MARK="✗"
+readonly INFO_MARK="ℹ"
+readonly ARROW_MARK="➜"
 
 # Initialize global flags
 DEBUG=0
 DRY_RUN=0
 
 # Process command-line arguments
-for arg in "$@"; do
-    case $arg in
+while [[ $# -gt 0 ]]; do
+    case $1 in
         --debug)
-        DEBUG=1
-        shift
-        ;;
+            DEBUG=1
+            shift
+            ;;
         --dry-run)
-        DRY_RUN=1
-        shift
-        ;;
+            DRY_RUN=1
+            shift
+            ;;
         *)
-        # Unknown option
-        ;;
+            shift
+            ;;
     esac
 done
+
+# Print header function
+print_header() {
+    echo -e "\n${BOLD}${BLUE}=== PHP-Flasher Split Tool ===${RESET}"
+    echo -e "${DIM}Running in: $(pwd)${RESET}"
+    echo -e "${DIM}Current branch: $(current_branch)${RESET}"
+    echo -e "${DIM}Date: $(date '+%Y-%m-%d %H:%M:%S')${RESET}\n"
+}
+
+# Print section header
+print_section() {
+    echo -e "\n${BOLD}${CYAN}$1${RESET}"
+    echo -e "${DIM}${CYAN}$(printf '%.s-' $(seq 1 ${#1}))${RESET}\n"
+}
 
 # Debug message function
 debug_msg() {
     if [ "$DEBUG" -eq 1 ]; then
-        echo -e "${INDIGO}Debug: $*${NC}"
+        echo -e "${DIM}${MAGENTA}${INFO_MARK} Debug: $*${RESET}"
     fi
 }
 
-# Define remotes
-REMOTES=(
-    'src/Prime:flasher'
-    'src/Laravel:flasher-laravel'
-    'src/Symfony:flasher-symfony'
+# Success message function
+success_msg() {
+    echo -e "${GREEN}${CHECK_MARK} $*${RESET}"
+}
 
-    'src/Toastr/Prime:flasher-toastr'
-    'src/Toastr/Laravel:flasher-toastr-laravel'
-    'src/Toastr/Symfony:flasher-toastr-symfony'
+# Error message function
+error_msg() {
+    echo -e "${RED}${CROSS_MARK} Error: $*${RESET}" >&2
+}
 
-    'src/Notyf/Prime:flasher-notyf'
-    'src/Notyf/Laravel:flasher-notyf-laravel'
-    'src/Notyf/Symfony:flasher-notyf-symfony'
-
-    'src/SweetAlert/Prime:flasher-sweetalert'
-    'src/SweetAlert/Laravel:flasher-sweetalert-laravel'
-    'src/SweetAlert/Symfony:flasher-sweetalert-symfony'
-
-    'src/Noty/Prime:flasher-noty'
-    'src/Noty/Laravel:flasher-noty-laravel'
-    'src/Noty/Symfony:flasher-noty-symfony'
-)
+# Info message function
+info_msg() {
+    echo -e "${BLUE}${INFO_MARK} $*${RESET}"
+}
 
 # Function to get the current git branch name
-function current_branch() {
+current_branch() {
     git rev-parse --abbrev-ref HEAD
 }
 
-# Define a function to split and push code to a remote repository
-function split() {
-    local prefix_and_remote="$1"
-    local prefix="${prefix_and_remote%:*}"
-    local remote="${prefix_and_remote#*:}"
-    local current_branch=$(current_branch)
+# Define remotes
+declare -A REMOTES=(
+    # Core packages
+    ["src/Prime"]="flasher"
+    ["src/Laravel"]="flasher-laravel"
+    ["src/Symfony"]="flasher-symfony"
 
-    # Add remote if it does not exist (ignoring errors silently)
+    # Toastr packages
+    ["src/Toastr/Prime"]="flasher-toastr"
+    ["src/Toastr/Laravel"]="flasher-toastr-laravel"
+    ["src/Toastr/Symfony"]="flasher-toastr-symfony"
+
+    # Notyf packages
+    ["src/Notyf/Prime"]="flasher-notyf"
+    ["src/Notyf/Laravel"]="flasher-notyf-laravel"
+    ["src/Notyf/Symfony"]="flasher-notyf-symfony"
+
+    # SweetAlert packages
+    ["src/SweetAlert/Prime"]="flasher-sweetalert"
+    ["src/SweetAlert/Laravel"]="flasher-sweetalert-laravel"
+    ["src/SweetAlert/Symfony"]="flasher-sweetalert-symfony"
+
+    # Noty packages
+    ["src/Noty/Prime"]="flasher-noty"
+    ["src/Noty/Laravel"]="flasher-noty-laravel"
+    ["src/Noty/Symfony"]="flasher-noty-symfony"
+)
+
+# Split function
+split() {
+    local prefix="$1"
+    local remote="${REMOTES[$prefix]}"
+    local current_branch=$(current_branch)
+    local start_time=$(date +%s)
+
+    info_msg "Processing ${BOLD}$remote${RESET} (prefix: ${ITALIC}$prefix${RESET})"
+
+    # Add remote if it doesn't exist
     if git remote add "$remote" "git@github.com:php-flasher/$remote.git" 2>/dev/null; then
-        echo -e "${GREEN}Added remote ${INDIGO}$remote${NC} ${CHECK_MARK}"
+        success_msg "Added remote ${BOLD}$remote${RESET}"
     else
-        debug_msg "Remote $remote already exists or could not be added."
+        debug_msg "Remote $remote already exists"
     fi
 
-    # Split the code using the splitsh-lite utility
-    SHA1=$(./bin/splitsh-lite --prefix="$prefix")
-    debug_msg "SHA1 for $prefix is $SHA1."
+    # Split the code using splitsh-lite
+    echo -en "${DIM}Splitting code... ${RESET}"
+    local SHA1=$(./bin/splitsh-lite --prefix="$prefix")
+    success_msg "Split complete (SHA: ${ITALIC}${SHA1:0:8}${RESET})"
 
-    # Push the code to the remote repository on the same branch as the current branch
+    # Push the code
     if [ "$DRY_RUN" -eq 0 ]; then
-        git push "$remote" "$SHA1:refs/heads/$current_branch" -f
+        echo -en "${DIM}Pushing to remote... ${RESET}"
+        if git push "$remote" "$SHA1:refs/heads/$current_branch" -f > /dev/null 2>&1; then
+            success_msg "Pushed to ${BOLD}$remote${RESET} (branch: ${ITALIC}$current_branch${RESET})"
+        else
+            error_msg "Failed to push to $remote"
+            return 1
+        fi
     else
-        echo -e "${INDIGO}Dry run: Would push $SHA1 to $remote on branch $current_branch${NC}"
+        info_msg "DRY RUN: Would push ${ITALIC}${SHA1:0:8}${RESET} to ${BOLD}$remote${RESET} (branch: ${ITALIC}$current_branch${RESET})"
+    fi
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+    echo -e "${DIM}Duration: ${duration}s${RESET}\n"
+}
+
+# Main execution
+main() {
+    print_header
+
+    # Pull latest code
+    print_section "Updating Repository"
+    if [ "$DRY_RUN" -eq 0 ]; then
+        info_msg "Pulling latest code from origin (branch: ${ITALIC}$(current_branch)${RESET})"
+        git fetch origin "$(current_branch)" > /dev/null 2>&1
+        success_msg "Repository updated"
+    else
+        info_msg "DRY RUN: Would fetch latest code for branch $(current_branch)"
+    fi
+
+    # Process splits
+    print_section "Processing Splits"
+    local total_start_time=$(date +%s)
+    local success_count=0
+    local failed_count=0
+
+    for prefix in "${!REMOTES[@]}"; do
+        if split "$prefix"; then
+            ((success_count++))
+        else
+            ((failed_count++))
+        fi
+    done
+
+    local total_end_time=$(date +%s)
+    local total_duration=$((total_end_time - total_start_time))
+
+    # Print summary
+    print_section "Summary"
+    echo -e "Total time: ${BOLD}${total_duration}s${RESET}"
+    echo -e "Successful splits: ${GREEN}${success_count}${RESET}"
+    if [ "$failed_count" -gt 0 ]; then
+        echo -e "Failed splits: ${RED}${failed_count}${RESET}"
+    fi
+
+    if [ "$failed_count" -eq 0 ]; then
+        success_msg "All splits completed successfully!"
+    else
+        error_msg "Some splits failed. Please check the output above."
+        exit 1
     fi
 }
 
-# Pull the latest code from the origin repository
-if [ "$DRY_RUN" -eq 0 ]; then
-    echo -e "${INDIGO}Pulling the latest code from the origin repository on branch ${current_branch}...${NC}"
-    git fetch origin "$current_branch"
-else
-    echo -e "${INDIGO}Dry run: Would fetch latest code for branch $current_branch from the origin repository.${NC}"
-fi
-
-# Iterate over the remotes and split and push the code
-for remote in "${REMOTES[@]}"; do
-    split "$remote"
-done
-
-echo -e "${GREEN}All done!${NC} ${CHECK_MARK}"
+# Execute main function
+main

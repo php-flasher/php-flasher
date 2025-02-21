@@ -1,26 +1,225 @@
 #!/usr/bin/env bash
 
-set -e
+# Set options
+set -o pipefail
 
-NPM_FOLDERS=(
-    "src/Prime/Resources"
-    "src/Noty/Prime/Resources"
-    "src/Notyf/Prime/Resources"
-    "src/SweetAlert/Prime/Resources"
-    "src/Toastr/Prime/Resources"
+# Define colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly GREEN='\033[32m'
+readonly BLUE='\033[34m'
+readonly CYAN='\033[36m'
+readonly YELLOW='\033[33m'
+readonly RED='\033[31m'
+
+# Define emoji
+readonly ROCKET="🚀"
+readonly NPM="📦"
+readonly CHECK="✓"
+readonly WARN="⚠️"
+readonly ERROR="❌"
+readonly LOADING="⏳"
+readonly SKIP="⏭️"
+
+# Configuration
+readonly NPM_PACKAGES=(
+    "src/Prime/Resources:@flasher/flasher"
+    "src/Noty/Prime/Resources:@flasher/flasher-noty"
+    "src/Notyf/Prime/Resources:@flasher/flasher-notyf"
+    "src/SweetAlert/Prime/Resources:@flasher/flasher-sweetalert"
+    "src/Toastr/Prime/Resources:@flasher/flasher-toastr"
 )
 
-for folder in "${NPM_FOLDERS[@]}"; do
-    if [ -d "$folder" ]; then
-        echo ""
-        echo "Publishing $folder to npm..."
-        (
-            cd "$folder"
-            npm install
-            npm version "$VERSION" --no-git-tag-version || true
-            npm publish --access public
-        )
-    fi
-done
+# Print functions
+print_header() {
+    echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
+    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher NPM Release ${ROCKET}        │${RESET}"
+    echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
+    echo -e "    ${DIM}Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "    ${DIM}User     : $(whoami)${RESET}"
+    echo -e "    ${DIM}Directory: $(pwd)${RESET}"
+}
 
-echo "Release $VERSION complete – tagged repositories and published packages to npm."
+print_section() {
+    echo -e "\n${BOLD}${CYAN}┌─ $1 ${2:-}${RESET}"
+}
+
+success_msg() {
+    echo -e "    ${GREEN}${CHECK} $*${RESET}"
+}
+
+info_msg() {
+    echo -e "    ${BLUE}${LOADING} $*${RESET}"
+}
+
+warning_msg() {
+    echo -e "    ${YELLOW}${WARN} $*${RESET}"
+}
+
+error_msg() {
+    echo -e "    ${RED}${ERROR} $*${RESET}"
+}
+
+skip_msg() {
+    echo -e "    ${YELLOW}${SKIP} $*${RESET}"
+}
+
+print_summary() {
+    local version=$1
+    local duration=$2
+    local success_count=$3
+    local skipped_count=$4
+    local failed_count=$5
+    local failed_packages=("${@:6}")
+
+    print_section "Release Summary"
+    echo -e "\n    ${DIM}Version   : ${BOLD}v${version}${RESET}"
+    echo -e "    ${DIM}Duration  : ${BOLD}${duration}s${RESET}"
+
+    if [ "$success_count" -gt 0 ]; then
+        echo -e "\n    ${DIM}Published : ${GREEN}${success_count}${RESET} packages"
+    fi
+
+    if [ "$skipped_count" -gt 0 ]; then
+        echo -e "\n    ${DIM}Skipped   : ${YELLOW}${skipped_count}${RESET} packages"
+    fi
+
+    if [ "$failed_count" -gt 0 ]; then
+        echo -e "\n    ${DIM}Failed    : ${RED}${failed_count}${RESET} packages"
+        echo -e "\n    ${DIM}Failed packages:${RESET}"
+        for package in "${failed_packages[@]}"; do
+            echo -e "        ${RED}• ${package}${RESET}"
+        done
+    fi
+
+    echo -e ""
+    if [ "$success_count" -eq 0 ] && [ "$skipped_count" -gt 0 ]; then
+        success_msg "All packages were already up to date! ${ROCKET}"
+    elif [ "$success_count" -gt 0 ]; then
+        success_msg "NPM release completed successfully! ${ROCKET}"
+    elif [ "$failed_count" -gt 0 ]; then
+        error_msg "NPM release completed with failures! ${ERROR}"
+    fi
+}
+
+# Check if version exists
+check_version_exists() {
+    local package=$1
+    local version=$2
+    npm view "${package}@${version}" version >/dev/null 2>&1
+}
+
+# Validate NPM is installed and logged in
+validate_npm() {
+    print_section "NPM Authentication Check"
+
+    if ! command -v npm >/dev/null 2>&1; then
+        error_msg "npm is not installed"
+        return 1
+    fi
+
+    if ! npm whoami >/dev/null 2>&1; then
+        error_msg "You are not logged in to npm. Please run 'npm login' first."
+        return 1
+    fi
+
+    success_msg "Authenticated as $(npm whoami)"
+    return 0
+}
+
+# Process a single package
+process_package() {
+    local path_and_name=$1
+    local version=$2
+    local path="${path_and_name%:*}"
+    local package="${path_and_name#*:}"
+
+    print_section "Processing ${package}"
+
+    if [ ! -d "$path" ]; then
+        warning_msg "Directory $path does not exist, skipping..."
+        return 2
+    fi
+
+    info_msg "Checking version ${version}..."
+    if check_version_exists "$package" "$version"; then
+        skip_msg "Version ${version} already exists for ${package}, skipping..."
+        return 2
+    fi
+
+    info_msg "Installing dependencies..."
+    (cd "$path" && npm install --silent) || {
+        error_msg "Failed to install dependencies"
+        return 1
+    }
+
+    info_msg "Updating package version..."
+    (cd "$path" && npm version "$version" --no-git-tag-version --allow-same-version >/dev/null 2>&1) || true
+
+    info_msg "Publishing ${package}@${version}..."
+    if (cd "$path" && npm publish --access public); then
+        success_msg "Successfully published ${package}@${version}"
+        return 0
+    else
+        error_msg "Failed to publish ${package}"
+        return 1
+    fi
+}
+
+# Main execution
+main() {
+    if [ "$#" -ne 1 ]; then
+        echo -e "\n${YELLOW}Usage: $0 <version>${RESET}"
+        echo -e "Example: $0 2.1.5\n"
+        exit 1
+    fi
+
+    local VERSION=$1
+    VERSION="${VERSION#v}"
+
+    print_header
+
+    # Validate npm authentication
+    validate_npm || exit 1
+
+    # Track statistics
+    local start_time=$(date +%s)
+    local success_count=0
+    local failed_count=0
+    local skipped_count=0
+    local failed_packages=()
+
+    # Process each package
+    for package_info in "${NPM_PACKAGES[@]}"; do
+        local package_name="${package_info#*:}"
+
+        process_package "$package_info" "$VERSION"
+        local status=$?
+
+        case $status in
+            0)
+                ((success_count++))
+                ;;
+            1)
+                ((failed_count++))
+                failed_packages+=("$package_name")
+                ;;
+            2)
+                ((skipped_count++))
+                ;;
+        esac
+    done
+
+    # Print summary
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    print_summary "$VERSION" "$duration" "$success_count" "$skipped_count" "$failed_count" "${failed_packages[@]}"
+
+    # Exit with failure if any package failed
+    [ "$failed_count" -gt 0 ] && exit 1 || exit 0
+}
+
+# Execute main function
+main "$@"
