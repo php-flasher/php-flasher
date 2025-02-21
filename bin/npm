@@ -33,36 +33,74 @@ readonly NPM_PACKAGES=(
 
 # Print functions
 print_header() {
-    echo -e "${BOLD}${BLUE}${ROCKET} PHP-Flasher NPM Release ${ROCKET}${RESET}"
-    echo -e "\n"
-    echo -e "${DIM}Generated on: $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${DIM}By: $(whoami)${RESET}"
-    echo -e "${DIM}Working Directory: $(pwd)${RESET}"
+    echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
+    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher NPM Release ${ROCKET}        │${RESET}"
+    echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
+    echo -e "    ${DIM}Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "    ${DIM}User     : $(whoami)${RESET}"
+    echo -e "    ${DIM}Directory: $(pwd)${RESET}"
 }
 
 print_section() {
-    echo -e "\n"
-    echo -e "${BOLD}${CYAN}$1 ${2:-}${RESET}"
+    echo -e "\n${BOLD}${CYAN}┌─ $1 ${2:-}${RESET}"
 }
 
 success_msg() {
-    echo -e "${GREEN}${CHECK} $*${RESET}"
+    echo -e "    ${GREEN}${CHECK} $*${RESET}"
 }
 
 info_msg() {
-    echo -e "${BLUE}${LOADING} $*${RESET}"
+    echo -e "    ${BLUE}${LOADING} $*${RESET}"
 }
 
 warning_msg() {
-    echo -e "${YELLOW}${WARN} $*${RESET}"
+    echo -e "    ${YELLOW}${WARN} $*${RESET}"
 }
 
 error_msg() {
-    echo -e "${RED}${ERROR} $*${RESET}"
+    echo -e "    ${RED}${ERROR} $*${RESET}"
 }
 
 skip_msg() {
-    echo -e "${YELLOW}${SKIP} $*${RESET}"
+    echo -e "    ${YELLOW}${SKIP} $*${RESET}"
+}
+
+print_summary() {
+    local version=$1
+    local duration=$2
+    local success_count=$3
+    local skipped_count=$4
+    local failed_count=$5
+    local failed_packages=("${@:6}")
+
+    print_section "Release Summary"
+    echo -e "\n    ${DIM}Version   : ${BOLD}v${version}${RESET}"
+    echo -e "    ${DIM}Duration  : ${BOLD}${duration}s${RESET}"
+
+    if [ "$success_count" -gt 0 ]; then
+        echo -e "\n    ${DIM}Published : ${GREEN}${success_count}${RESET} packages"
+    fi
+
+    if [ "$skipped_count" -gt 0 ]; then
+        echo -e "\n    ${DIM}Skipped   : ${YELLOW}${skipped_count}${RESET} packages"
+    fi
+
+    if [ "$failed_count" -gt 0 ]; then
+        echo -e "\n    ${DIM}Failed    : ${RED}${failed_count}${RESET} packages"
+        echo -e "\n    ${DIM}Failed packages:${RESET}"
+        for package in "${failed_packages[@]}"; do
+            echo -e "        ${RED}• ${package}${RESET}"
+        done
+    fi
+
+    echo -e ""
+    if [ "$success_count" -eq 0 ] && [ "$skipped_count" -gt 0 ]; then
+        success_msg "All packages were already up to date! ${ROCKET}"
+    elif [ "$success_count" -gt 0 ]; then
+        success_msg "NPM release completed successfully! ${ROCKET}"
+    elif [ "$failed_count" -gt 0 ]; then
+        error_msg "NPM release completed with failures! ${ERROR}"
+    fi
 }
 
 # Check if version exists
@@ -177,34 +215,10 @@ main() {
     local end_time=$(date +%s)
     local duration=$((end_time - start_time))
 
-    print_section "Release Summary"
-    echo -e "Version: ${BOLD}v${VERSION}${RESET}"
-    echo -e "Duration: ${BOLD}${duration}s${RESET}"
+    print_summary "$VERSION" "$duration" "$success_count" "$skipped_count" "$failed_count" "${failed_packages[@]}"
 
-    if [ "$success_count" -gt 0 ]; then
-        echo -e "Published: ${GREEN}${success_count}${RESET} packages"
-    fi
-
-    if [ "$skipped_count" -gt 0 ]; then
-        echo -e "Skipped: ${YELLOW}${skipped_count}${RESET} packages"
-    fi
-
-    if [ "$failed_count" -gt 0 ]; then
-        echo -e "Failed: ${RED}${failed_count}${RESET} packages"
-        echo -e "\nFailed packages:"
-        for package in "${failed_packages[@]}"; do
-            echo -e "${RED}  - ${package}${RESET}"
-        done
-    fi
-
-    if [ "$success_count" -eq 0 ] && [ "$skipped_count" -gt 0 ]; then
-        success_msg "\nAll packages were already up to date! ${ROCKET}"
-    elif [ "$success_count" -gt 0 ]; then
-        success_msg "\nNPM release completed successfully! ${ROCKET}"
-    elif [ "$failed_count" -gt 0 ]; then
-        error_msg "\nNPM release completed with failures! ${ERROR}"
-        exit 1
-    fi
+    # Exit with failure if any package failed
+    [ "$failed_count" -gt 0 ] && exit 1 || exit 0
 }
 
 # Execute main function
