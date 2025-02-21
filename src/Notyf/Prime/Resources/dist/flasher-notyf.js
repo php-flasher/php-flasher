@@ -221,11 +221,11 @@
       };
       NotyfView.prototype.getXPosition = function (options) {
         var _a;
-        return ((_a = options === null || options === undefined ? undefined : options.position) === null || _a === undefined ? undefined : _a.x) || 'right';
+        return ((_a = options === null || options === void 0 ? void 0 : options.position) === null || _a === void 0 ? void 0 : _a.x) || 'right';
       };
       NotyfView.prototype.getYPosition = function (options) {
         var _a;
-        return ((_a = options === null || options === undefined ? undefined : options.position) === null || _a === undefined ? undefined : _a.y) || 'bottom';
+        return ((_a = options === null || options === void 0 ? void 0 : options.position) === null || _a === void 0 ? void 0 : _a.y) || 'bottom';
       };
       NotyfView.prototype.adjustContainerAlignment = function (options) {
         var align = this.X_POSITION_FLEX_MAP[this.getXPosition(options)];
@@ -265,11 +265,11 @@
           if (typeof iconOpts === 'string' || iconOpts instanceof String) iconContainer.innerHTML = new String(iconOpts).valueOf();
           if (typeof iconOpts === 'object') {
             var _a = iconOpts.tagName,
-              tagName = _a === undefined ? 'i' : _a,
+              tagName = _a === void 0 ? 'i' : _a,
               className_1 = iconOpts.className,
               text = iconOpts.text,
               _b = iconOpts.color,
-              color = _b === undefined ? mainColor : _b;
+              color = _b === void 0 ? mainColor : _b;
             var iconElement = this._createHTMLElement({
               tagName: tagName,
               className: className_1,
@@ -304,7 +304,7 @@
           notificationElem.classList.add("notyf__toast--dismissible");
           dismissButton.addEventListener('click', function (event) {
             var _a, _b;
-            (_b = (_a = _this.events)[NotyfEvent.Dismiss]) === null || _b === undefined ? undefined : _b.call(_a, {
+            (_b = (_a = _this.events)[NotyfEvent.Dismiss]) === null || _b === void 0 ? void 0 : _b.call(_a, {
               target: notification,
               event: event
             });
@@ -313,7 +313,7 @@
         }
         notificationElem.addEventListener('click', function (event) {
           var _a, _b;
-          return (_b = (_a = _this.events)[NotyfEvent.Click]) === null || _b === undefined ? undefined : _b.call(_a, {
+          return (_b = (_a = _this.events)[NotyfEvent.Click]) === null || _b === void 0 ? void 0 : _b.call(_a, {
             target: notification,
             event: event
           });
@@ -476,7 +476,7 @@
             envelopes.forEach((envelope) => {
                 var _a;
                 const options = Object.assign(Object.assign({}, envelope), envelope.options);
-                (_a = this.notyf) === null || _a === undefined ? undefined : _a.open(options);
+                (_a = this.notyf) === null || _a === void 0 ? void 0 : _a.open(options);
             });
             this.notyf.view.container.dataset.turboTemporary = '';
             this.notyf.view.a11yContainer.dataset.turboTemporary = '';

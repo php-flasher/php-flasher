@@ -9,5 +9,5 @@ return static function (MBConfig $config) {
         __DIR__.'/src',
     ]);
 
-    $config->packageAliasFormat('2.x-dev');
+    // $config->packageAliasFormat('2.x-dev');
 };

@@ -82,7 +82,7 @@
 
     class SweetAlertPlugin extends AbstractPlugin {
         renderEnvelopes(envelopes) {
-            return __awaiter(this, undefined, undefined, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 for (const envelope of envelopes) {
                     yield this.renderEnvelope(envelope);
                 }
@@ -93,17 +93,17 @@
             document.addEventListener('turbo:before-cache', () => {
                 var _a;
                 if (Swal.isVisible()) {
-                    (_a = Swal.getPopup()) === null || _a === undefined ? undefined : _a.style.setProperty('animation-duration', '0ms');
+                    (_a = Swal.getPopup()) === null || _a === void 0 ? void 0 : _a.style.setProperty('animation-duration', '0ms');
                     Swal.close();
                 }
             });
         }
         renderEnvelope(envelope) {
-            return __awaiter(this, undefined, undefined, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 var _a;
                 let { options } = envelope;
-                options = Object.assign(Object.assign({}, options), { icon: ((options === null || options === undefined ? undefined : options.icon) || envelope.type), text: ((options === null || options === undefined ? undefined : options.text) || envelope.message) });
-                yield ((_a = this.sweetalert) === null || _a === undefined ? undefined : _a.fire(options).then((promise) => {
+                options = Object.assign(Object.assign({}, options), { icon: ((options === null || options === void 0 ? void 0 : options.icon) || envelope.type), text: ((options === null || options === void 0 ? void 0 : options.text) || envelope.message) });
+                yield ((_a = this.sweetalert) === null || _a === void 0 ? void 0 : _a.fire(options).then((promise) => {
                     window.dispatchEvent(new CustomEvent('flasher:sweetalert:promise', { detail: {
                             promise,
                             envelope,

@@ -1,6 +1,6 @@
 {
     "name": "@flasher/flasher-notyf",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "type": "module",
     "license": "MIT",
     "main": "dist/flasher-notyf.cjs.js",

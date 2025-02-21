@@ -99,8 +99,8 @@ class FlasherPlugin extends AbstractPlugin {
     renderEnvelopes(envelopes) {
         const render = () => envelopes.forEach((envelope) => {
             var _a, _b, _c, _d;
-            const typeTimeout = (_b = (_a = this.options.timeout) !== null && _a !== undefined ? _a : this.options.timeouts[envelope.type]) !== null && _b !== undefined ? _b : 5000;
-            const options = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_c = envelope.options.timeout) !== null && _c !== undefined ? _c : typeTimeout, escapeHtml: ((_d = envelope.options.escapeHtml) !== null && _d !== undefined ? _d : this.options.escapeHtml) });
+            const typeTimeout = (_b = (_a = this.options.timeout) !== null && _a !== void 0 ? _a : this.options.timeouts[envelope.type]) !== null && _b !== void 0 ? _b : 5000;
+            const options = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_c = envelope.options.timeout) !== null && _c !== void 0 ? _c : typeTimeout, escapeHtml: ((_d = envelope.options.escapeHtml) !== null && _d !== void 0 ? _d : this.options.escapeHtml) });
             this.addToContainer(this.createContainer(options), envelope, options);
         });
         document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', render) : render();
@@ -130,7 +130,7 @@ class FlasherPlugin extends AbstractPlugin {
         notification.classList.add(...`fl-container${options.rtl ? ' fl-rtl' : ''}`.split(' '));
         options.direction === 'bottom' ? container.append(notification) : container.prepend(notification);
         requestAnimationFrame(() => notification.classList.add('fl-show'));
-        (_a = notification.querySelector('.fl-close')) === null || _a === undefined ? undefined : _a.addEventListener('click', (event) => {
+        (_a = notification.querySelector('.fl-close')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (event) => {
             event.stopPropagation();
             this.removeNotification(notification);
         });
@@ -166,7 +166,7 @@ class FlasherPlugin extends AbstractPlugin {
         notification.classList.remove('fl-show');
         notification.ontransitionend = () => {
             var _a, _b;
-            !((_a = notification.parentElement) === null || _a === undefined ? undefined : _a.hasChildNodes()) && ((_b = notification.parentElement) === null || _b === undefined ? undefined : _b.remove());
+            !((_a = notification.parentElement) === null || _a === void 0 ? void 0 : _a.hasChildNodes()) && ((_b = notification.parentElement) === null || _b === void 0 ? void 0 : _b.remove());
             notification.remove();
         };
     }
@@ -202,7 +202,7 @@ class Flasher extends AbstractPlugin {
         this.themes = new Map();
     }
     render(response) {
-        return __awaiter(this, undefined, undefined, function* () {
+        return __awaiter(this, void 0, void 0, function* () {
             const resolved = this.resolveResponse(response);
             yield this.addAssets([
                 {
@@ -287,7 +287,7 @@ class Flasher extends AbstractPlugin {
         if (!match) {
             return func;
         }
-        const args = (_b = (_a = match[2]) === null || _a === undefined ? undefined : _a.split(',').map((arg) => arg.trim())) !== null && _b !== undefined ? _b : [];
+        const args = (_b = (_a = match[2]) === null || _a === void 0 ? void 0 : _a.split(',').map((arg) => arg.trim())) !== null && _b !== void 0 ? _b : [];
         let body = match[3].trim();
         if (!body.startsWith('{')) {
             body = `{ return ${body}; }`;
@@ -316,7 +316,7 @@ class Flasher extends AbstractPlugin {
         return alias === 'flasher' ? 'theme.flasher' : alias;
     }
     addAssets(assets) {
-        return __awaiter(this, undefined, undefined, function* () {
+        return __awaiter(this, void 0, void 0, function* () {
             for (const { urls, nonce, type } of assets) {
                 for (const url of urls) {
                     yield this.loadAsset(url, nonce, type);
@@ -325,7 +325,7 @@ class Flasher extends AbstractPlugin {
         });
     }
     loadAsset(url, nonce, type) {
-        return __awaiter(this, undefined, undefined, function* () {
+        return __awaiter(this, void 0, void 0, function* () {
             if (document.querySelector(`${type === 'style' ? 'link' : 'script'}[src="${url}"]`)) {
                 return;
             }
@@ -354,7 +354,7 @@ class Flasher extends AbstractPlugin {
             return;
         }
         plugin = plugin.replace('theme.', '');
-        const styles = ((_a = this.themes.get(plugin)) === null || _a === undefined ? undefined : _a.styles) || [];
+        const styles = ((_a = this.themes.get(plugin)) === null || _a === void 0 ? void 0 : _a.styles) || [];
         response.styles = Array.from(new Set([...response.styles, ...styles]));
     }
 }
