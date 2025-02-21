@@ -33,15 +33,16 @@ readonly NPM_PACKAGES=(
 
 # Print functions
 print_header() {
-    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher NPM Release ${ROCKET}${RESET}"
-    echo -e "${DIM}Generated at: $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}${BLUE}${ROCKET} PHP-Flasher NPM Release ${ROCKET}${RESET}"
+    echo -e "\n"
+    echo -e "${DIM}Generated on: $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
     echo -e "${DIM}By: $(whoami)${RESET}"
-    echo -e "${DIM}Working Directory: $(pwd)${RESET}\n"
+    echo -e "${DIM}Working Directory: $(pwd)${RESET}"
 }
 
 print_section() {
-    echo -e "\n${BOLD}${CYAN}$1 ${2:-}${RESET}"
-    echo -e "${DIM}${CYAN}$(printf '%.s─' $(seq 1 50))${RESET}"
+    echo -e "\n"
+    echo -e "${BOLD}${CYAN}$1 ${2:-}${RESET}"
 }
 
 success_msg() {
@@ -95,7 +96,6 @@ process_package() {
     local version=$2
     local path="${path_and_name%:*}"
     local package="${path_and_name#*:}"
-    local status=0
 
     print_section "Processing ${package}"
 
@@ -107,35 +107,26 @@ process_package() {
     info_msg "Checking version ${version}..."
     if check_version_exists "$package" "$version"; then
         skip_msg "Version ${version} already exists for ${package}, skipping..."
-        return 0
+        return 2
     fi
 
-    # Use a subshell to prevent directory changes from affecting other iterations
-    (
-        cd "$path" || {
-            error_msg "Failed to change to directory: $path"
-            exit 1
-        }
+    info_msg "Installing dependencies..."
+    (cd "$path" && npm install --silent) || {
+        error_msg "Failed to install dependencies"
+        return 1
+    }
 
-        info_msg "Installing dependencies..."
-        if ! npm install --silent; then
-            error_msg "Failed to install dependencies"
-            exit 1
-        fi
+    info_msg "Updating package version..."
+    (cd "$path" && npm version "$version" --no-git-tag-version --allow-same-version >/dev/null 2>&1) || true
 
-        info_msg "Updating package version to ${version}..."
-        npm version "$version" --no-git-tag-version --allow-same-version >/dev/null 2>&1 || true
-
-        info_msg "Publishing ${package}@${version}..."
-        if npm publish --access public; then
-            success_msg "Successfully published ${package}@${version}"
-            exit 0
-        else
-            error_msg "Failed to publish ${package}"
-            exit 1
-        fi
-    )
-    return $?
+    info_msg "Publishing ${package}@${version}..."
+    if (cd "$path" && npm publish --access public); then
+        success_msg "Successfully published ${package}@${version}"
+        return 0
+    else
+        error_msg "Failed to publish ${package}"
+        return 1
+    fi
 }
 
 # Main execution
@@ -152,10 +143,7 @@ main() {
     print_header
 
     # Validate npm authentication
-    if ! validate_npm; then
-        error_msg "NPM authentication failed"
-        exit 1
-    fi
+    validate_npm || exit 1
 
     # Track statistics
     local start_time=$(date +%s)
@@ -163,7 +151,6 @@ main() {
     local failed_count=0
     local skipped_count=0
     local failed_packages=()
-    local all_failed=true
 
     # Process each package
     for package_info in "${NPM_PACKAGES[@]}"; do
@@ -175,7 +162,6 @@ main() {
         case $status in
             0)
                 ((success_count++))
-                all_failed=false
                 ;;
             1)
                 ((failed_count++))
@@ -183,7 +169,6 @@ main() {
                 ;;
             2)
                 ((skipped_count++))
-                all_failed=false
                 ;;
         esac
     done
@@ -214,16 +199,12 @@ main() {
 
     if [ "$success_count" -eq 0 ] && [ "$skipped_count" -gt 0 ]; then
         success_msg "\nAll packages were already up to date! ${ROCKET}"
-    elif [ "$all_failed" = true ]; then
-        error_msg "\nAll package publications failed!"
+    elif [ "$success_count" -gt 0 ]; then
+        success_msg "\nNPM release completed successfully! ${ROCKET}"
+    elif [ "$failed_count" -gt 0 ]; then
+        error_msg "\nNPM release completed with failures! ${ERROR}"
         exit 1
-    else
-        success_msg "\nNPM release completed! ${ROCKET}"
-        [ "$failed_count" -gt 0 ] && warning_msg "Some packages failed to publish. Check the summary above."
     fi
-
-    # Exit with failure if any package failed
-    [ "$failed_count" -gt 0 ] && exit 1 || exit 0
 }
 
 # Execute main function
