@@ -21,7 +21,7 @@ readonly ERROR="❌"
 
 # Repository mappings
 declare -A REPOSITORIES=(
-     # Core packages
+    # Core packages
     ["src/Prime"]="flasher"
     ["src/Laravel"]="flasher-laravel"
     ["src/Symfony"]="flasher-symfony"
@@ -49,10 +49,10 @@ declare -A REPOSITORIES=(
 
 print_header() {
     echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Split ${ROCKET}${RESET}\n"
-    echo -e "${BOLD}Date      :${RESET} ${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${BOLD}User      :${RESET} ${MAGENTA}$(whoami)${RESET}"
-    echo -e "${BOLD}Branch    :${RESET} ${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
-    echo -e "${BOLD}Directory :${RESET} ${BLUE}$(pwd)${RESET}\n"
+    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}User      : ${RESET}${MAGENTA}$(whoami)${RESET}"
+    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
+    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
 }
 
 process_split() {
@@ -62,8 +62,7 @@ process_split() {
     local repo_url="https://github.com/php-flasher/${remote}"
     local packagist_url="https://packagist.org/packages/php-flasher/${remote}"
 
-    echo -e "\n\n"
-    echo -e "GitHub  : ${UNDERLINE}${BLUE}${repo_url}${RESET}"
+    echo -e "\nGitHub  : ${UNDERLINE}${BLUE}${repo_url}${RESET}"
     echo -e "Package : ${UNDERLINE}${BLUE}${packagist_url}${RESET}"
     echo -e "Prefix  : ${YELLOW}$prefix${RESET}"
     echo -e "Branch  : ${GREEN}$branch${RESET}\n"
@@ -90,8 +89,7 @@ process_split() {
 
 update_repository() {
     echo -e "\n${CYAN}Fetching latest changes...${RESET}"
-
-    if ! git fetch ''origin "$(git rev-parse --abbrev-ref HEAD)" > /dev/null 2>&1; then
+    if ! git fetch origin "$(git rev-parse --abbrev-ref HEAD)" > /dev/null 2>&1; then
         echo -e "${ERROR} ${RED}Failed to fetch latest changes, continuing...${RESET}"
     else
         echo -e "${CHECK} ${GREEN}Repository updated successfully${RESET}"
@@ -124,7 +122,7 @@ main() {
         local current_count=$((success_count + failed_count + 1))
         local percent=$((current_count * 100 / total_count))
 
-        echo -e "\n${BOLD}Progress: $current_count/$total_count${RESET}"
+        echo -e "\nProgress: ${BOLD}$current_count/$total_count${RESET}"
         draw_progress_bar $percent
 
         if process_split "$prefix"; then
