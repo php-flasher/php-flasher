@@ -23,7 +23,7 @@ readonly CHECK="✓"
 # Header
 print_header() {
     echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
-    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Version ${ROCKET}       │${RESET}"
+    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Version ${ROCKET}            │${RESET}"
     echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
     echo -e "    Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
     echo -e "    User     : $(whoami)"
