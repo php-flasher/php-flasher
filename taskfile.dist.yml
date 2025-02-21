@@ -5,117 +5,63 @@ vars:
     CURRENT_VERSION: '2.1.5'
     NEW_VERSION: '{{.CLI_ARGS | default ""}}'
 
-    HEADER: |
-        ╭──────────────────────────────────────────╮
-        │     🚀 PHP-Flasher Tasks Runner 🚀       │
-        ╰──────────────────────────────────────────╯
-
 tasks:
     default:
         desc: Show available tasks
         cmds:
-            - echo "{{.HEADER}}"
             - task -l
         silent: true
 
-    version:bump:
+    bump:
         desc: Bump version in all necessary files
-        summary: |
-            Update version numbers across the project
-            Usage: task version:bump 2.1.6
-        cmds:
-            - echo "{{.HEADER}}"
-            - |
-                if [ -z "{{.NEW_VERSION}}" ]; then
-                  echo "Error: Version number is required"
-                  echo "Usage: task version:bump 2.1.6"
-                  exit 1
-                fi
-
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : Version Bump ({{.CURRENT_VERSION}} -> {{.NEW_VERSION}})"
-                echo
-
-                # Update PHP class version
-                echo " 🔄 Updating Flasher class version..."
-                sed -i '' "s/const VERSION = '{{.CURRENT_VERSION}}'/const VERSION = '{{.NEW_VERSION}}'/" src/Prime/Flasher.php
-
-                # Update composer.json files
-                echo " 📦 Updating composer.json files..."
-                find . -name "composer.json" -not -path "./vendor/*" -exec sed -i '' "s/\"php-flasher\/.*\": \"^{{.CURRENT_VERSION}}\"/\"php-flasher\/.*\": \"^{{.NEW_VERSION}}\"/" {} \;
-
-                # Update package.json files
-                echo " 📦 Updating package.json files..."
-                find . -name "package.json" -not -path "./node_modules/*" -exec sed -i '' "s/\"version\": \"{{.CURRENT_VERSION}}\"/\"version\": \"{{.NEW_VERSION}}\"/" {} \;
-                find . -name "package.json" -not -path "./node_modules/*" -exec sed -i '' "s/\"@flasher\/.*\": \"^{{.CURRENT_VERSION}}\"/\"@flasher\/.*\": \"^{{.NEW_VERSION}}\"/" {} \;
-
-                echo " ✨ Version bump complete!"
-        silent: true
-
-    version:validate:
-        desc: Validate version number format
-        vars:
-            VERSION_REGEX: '^[0-9]+\.[0-9]+\.[0-9]+$'
         cmds:
             - |
-                if [[ ! "{{.NEW_VERSION}}" =~ {{.VERSION_REGEX}} ]]; then
-                  echo "Error: Invalid version format. Must be X.Y.Z (e.g., 2.1.6)"
-                  exit 1
+                if [ -f "bin/bump" ]; then
+                    chmod +x bin/bump
+                    ./bin/bump {{.NEW_VERSION}}
+                else
+                    echo " ❌ Bump script not found in bin/bump"
+                    exit 1
                 fi
-        silent: true
-
-    release:
-        desc: Create and publish a new release
-        cmds:
-            -   task: version:validate
-            -   task: version:bump
-            -   task: lint
-            -   task: split
-            -   task: npm:publish
-            -   task: git:tag
         silent: true
 
     split:
         desc: Split repositories
         cmds:
             - |
-                echo "{{.HEADER}}"
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : Repository Split"
-                echo
-
-                echo " 🔄 Splitting repositories..."
-                php bin/split
-                echo " ✨ Split complete!"
+                if [ -f "bin/split" ]; then
+                    chmod +x bin/split
+                    ./bin/split
+                else
+                    echo " ❌ Split script not found in bin/split"
+                    exit 1
+                fi
         silent: true
 
     npm:publish:
         desc: Publish NPM packages
         cmds:
             - |
-                echo "{{.HEADER}}"
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : NPM Package Publishing"
-                echo
-
-                echo " 📦 Publishing NPM packages..."
-                php bin/npm {{.NEW_VERSION}}
-                echo " ✨ NPM publish complete!"
+                if [ -f "bin/npm" ]; then
+                    chmod +x bin/npm
+                    ./bin/npm {{.NEW_VERSION}}
+                else
+                    echo " ❌ NPM script not found in bin/npm"
+                    exit 1
+                fi
         silent: true
 
     git:tag:
         desc: Create and push git tags
         cmds:
             - |
-                echo "{{.HEADER}}"
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : Git Tagging"
-                echo
-
-                echo " 🏷️  Creating git tag v{{.NEW_VERSION}}..."
-                git tag -a "v{{.NEW_VERSION}}" -m "Release v{{.NEW_VERSION}}"
-                git push origin "v{{.NEW_VERSION}}"
-                echo " ✨ Git tagging complete!"
+                if [ -f "bin/git-tag" ]; then
+                    chmod +x bin/git-tag
+                    ./bin/git-tag {{.NEW_VERSION}}
+                else
+                    echo " ❌ Git-tag script not found in bin/git-tag"
+                    exit 1
+                fi
         silent: true
 
     status:
@@ -123,95 +69,60 @@ tasks:
         cmds:
             - |
                 if [ -f "bin/status" ]; then
-                  chmod +x bin/status
-                  ./bin/status
+                    chmod +x bin/status
+                    ./bin/status
                 else
-                  echo " ❌ Status script not found in bin/status"
-                  exit 1
+                    echo " ❌ Status script not found in bin/status"
+                    exit 1
+                fi
+        silent: true
+
+    lint:
+        desc: Analyze code quality and standards
+        cmds:
+            - |
+                if [ -f "bin/lint" ]; then
+                    chmod +x bin/lint
+                    ./bin/lint
+                else
+                    echo " ❌ Lint script not found in bin/lint"
+                    exit 1
                 fi
         silent: true
 
     update:
         desc: Update project dependencies and rebuild assets
         cmds:
-            - echo "{{.HEADER}}"
             - |
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : Update Dependencies"
-                echo
-
-                echo " 📦 Composer Dependencies"
-                composer update --prefer-lowest -W
-                echo "    ✓ Dependencies updated successfully"
-                echo
-
-                echo " 🔍 NPM Updates Check"
-                npm run ncu || echo "    ⚠️  NPM check failed, continuing..."
-                echo
-
-                echo " 📦 NPM Dependencies"
-                npm install --force || echo "    ⚠️  NPM install failed, continuing..."
-                echo
-
-                echo " 🏗️  Building Assets"
-                npm run build || echo "    ⚠️  Build failed, continuing..."
-                echo
-
-                echo " ✨ Update Complete"
-                echo "    ✓ Process finished successfully"
-        silent: true
-
-    lint:
-        desc: Analyze code quality and standards
-        cmds:
-            - echo "{{.HEADER}}"
-            - |
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : Code Quality Check"
-                echo
-
-                echo " 🔍 Running Rector"
-                php vendor/bin/rector || echo "    ⚠️  Rector found issues"
-                echo
-
-                echo " 🎨 Running PHP-CS-Fixer"
-                php vendor/bin/php-cs-fixer fix -v || echo "    ⚠️  CS-Fixer found issues"
-                echo
-
-                echo " 🔬 Running PHPStan"
-                php vendor/bin/phpstan analyse --memory-limit=-1 || echo "    ⚠️  PHPStan found issues"
-                echo
-
-                echo " 📝 Validating Composer Files"
-                composer validate --strict || echo "    ⚠️  Validation failed"
-                find src/ -name "composer.json" -exec composer validate --strict {} \; || echo "    ⚠️  Package validation failed"
-                echo
-
-                echo " 🔎 Running PHPLint"
-                php vendor/bin/phplint || echo "    ⚠️  PHPLint found issues"
-                echo
-
-                echo " 🧪 Running PHPUnit Tests"
-                php vendor/bin/phpunit || echo "    ⚠️  Tests failed"
-                echo
-
-                echo " ✨ Quality Check Complete"
-                echo "    ✓ All checks finished"
+                if [ -f "bin/update" ]; then
+                    chmod +x bin/update
+                    ./bin/update
+                else
+                    echo " ❌ Update script not found in bin/update"
+                    exit 1
+                fi
         silent: true
 
     docs:build:
         desc: Build documentation
-        dir: docs/
         cmds:
             - |
-                echo "{{.HEADER}}"
-                echo "    Date     : {{.DATE}} UTC"
-                echo "    Task     : Build Documentation"
-                echo
+                if [ -f "bin/docs" ]; then
+                    chmod +x bin/docs
+                    ./bin/docs build
+                else
+                    echo " ❌ Docs script not found in bin/docs"
+                    exit 1
+                fi
+        silent: true
 
-                echo " 📚 Installing dependencies"
-                npm install --force
-
-                echo " 🏗️ Building documentation"
-                npm run build
+    release:
+        desc: Create and publish a new release
+        cmds:
+            -   task: validate
+            -   task: bump
+            -   task: lint
+            -   task: split
+            -   task: npm:publish
+            -   task: git:tag
         silent: true

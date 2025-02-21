@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+# Colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly BLUE='\033[34m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly YELLOW='\033[33m'
+
+# Emojis
+readonly ROCKET="🚀"
+readonly UPDATE="🔄"
+readonly PACKAGE="📦"
+readonly SUCCESS="✨"
+readonly ERROR="❌"
+readonly WARNING="⚠️"
+readonly CHECK="✓"
+
+# Header
+print_header() {
+    echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
+    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Version ${ROCKET}       │${RESET}"
+    echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
+    echo -e "    Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
+    echo -e "    User     : $(whoami)"
+    echo -e "    Directory: $(pwd)\n"
+}
+
+# Version validation
+validate_version() {
+    local version=$1
+    if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo -e "\n${RED}${ERROR} Invalid version format: $version${RESET}"
+        echo -e "    Version must be in format X.Y.Z (e.g., 2.1.6)\n"
+        exit 1
+    fi
+}
+
+# Get current version from Flasher class
+get_current_version() {
+    local file="src/Prime/Flasher.php"
+    if [ -f "$file" ]; then
+        local version=$(grep -o "const VERSION = '[0-9]\+\.[0-9]\+\.[0-9]\+'" "$file" | grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+")
+        echo "$version"
+    else
+        echo -e "${RED}${ERROR} Flasher.php not found in src/Prime/Flasher.php${RESET}"
+        exit 1
+    fi
+}
+
+# Update composer.json file
+update_composer_file() {
+    local file=$1
+    local current_version=$2
+    local new_version=$3
+
+    # Create a temporary file
+    local tmp_file="${file}.tmp"
+
+    # Use jq with 4-space indentation
+    if command -v jq >/dev/null 2>&1; then
+        jq --indent 4 --arg cv "^${current_version}" --arg nv "^${new_version}" '
+            walk(
+                if type == "object" and has("require") then
+                    .require |= with_entries(
+                        if .key | startswith("php-flasher/") then
+                            .value = $nv
+                        else
+                            .
+                        end
+                    )
+                else
+                    .
+                end
+            )
+        ' "$file" > "$tmp_file"
+    else
+        # Fallback to sed for simple replacement
+        sed -E "s/\"php-flasher\/[^\"]+\": \"\\^${current_version}\"/\"\\0\": \"^${new_version}\"/" "$file" > "$tmp_file"
+    fi
+
+    # Check if the temporary file exists and has content
+    if [ -s "$tmp_file" ]; then
+        mv "$tmp_file" "$file"
+        echo "    ${CHECK} Updated $file"
+    else
+        echo "    ${WARNING} Failed to update $file"
+        rm -f "$tmp_file"
+    fi
+}
+
+# Update package.json file
+update_package_file() {
+    local file=$1
+    local current_version=$2
+    local new_version=$3
+
+    # Create a temporary file
+    local tmp_file="${file}.tmp"
+
+    # Use jq with 4-space indentation
+    if command -v jq >/dev/null 2>&1; then
+        jq --indent 4 --arg cv "^${current_version}" --arg nv "^${new_version}" --arg v "${new_version}" '
+            .version = $v |
+            if has("peerDependencies") then
+                .peerDependencies |= with_entries(
+                    if .key | startswith("@flasher/") then
+                        .value = $nv
+                    else
+                        .
+                    end
+                )
+            else
+                .
+            end |
+            if has("dependencies") then
+                .dependencies |= with_entries(
+                    if .key | startswith("@flasher/") then
+                        .value = $nv
+                    else
+                        .
+                    end
+                )
+            else
+                .
+            end
+        ' "$file" > "$tmp_file"
+    else
+        # Fallback to sed for simple replacement
+        sed -E -e "s/\"version\": \"${current_version}\"/\"version\": \"${new_version}\"/" \
+               -e "s/\"@flasher\/[^\"]+\": \"\\^${current_version}\"/\"\\0\": \"^${new_version}\"/" \
+               "$file" > "$tmp_file"
+    fi
+
+    # Check if the temporary file exists and has content
+    if [ -s "$tmp_file" ]; then
+        mv "$tmp_file" "$file"
+        echo "    ${CHECK} Updated $file"
+    else
+        echo "    ${WARNING} Failed to update $file"
+        rm -f "$tmp_file"
+    fi
+}
+
+# Update version in files
+update_version() {
+    local current_version=$1
+    local new_version=$2
+
+    echo -e " ${UPDATE} Updating version numbers ($current_version → $new_version)\n"
+
+    # Update PHP class version
+    echo -e " ${PACKAGE} Updating Flasher class version..."
+    if [ -f "src/Prime/Flasher.php" ]; then
+        sed -i '' "s/const VERSION = '$current_version'/const VERSION = '$new_version'/" src/Prime/Flasher.php
+        echo -e "    ${CHECK} Updated src/Prime/Flasher.php"
+    fi
+
+    # Update composer.json files in src directory
+    echo -e "\n ${PACKAGE} Updating composer.json files..."
+    find src -name "composer.json" -type f | while read -r file; do
+        update_composer_file "$file" "$current_version" "$new_version"
+    done
+
+    # Update package.json files in src directory
+    echo -e "\n ${PACKAGE} Updating package.json files..."
+    find src -name "package.json" -type f | while read -r file; do
+        update_package_file "$file" "$current_version" "$new_version"
+    done
+
+    echo -e "\n ${SUCCESS} Version bump complete!\n"
+}
+
+# Main execution
+if [ -z "$1" ]; then
+    echo -e "${RED}${ERROR} Version number is required${RESET}"
+    echo -e "Usage: $0 <version>\n"
+    exit 1
+fi
+
+print_header
+new_version=$1
+current_version=$(get_current_version)
+validate_version "$new_version"
+update_version "$current_version" "$new_version"
