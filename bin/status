@@ -57,7 +57,7 @@ readonly REPOSITORIES=(
 # Print functions
 print_header() {
     echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
-    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Status ${ROCKET}        │${RESET}"
+    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Status ${ROCKET}             │${RESET}"
     echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
     echo -e "    ${DIM}Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
     echo -e "    ${DIM}User     : $(whoami)${RESET}"
