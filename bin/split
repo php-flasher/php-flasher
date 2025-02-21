@@ -1,94 +1,48 @@
 #!/usr/bin/env bash
 
-# Set options
-set -o errexit
+# Don't exit on error, we want to process all repositories
 set -o pipefail
 
-# Define colors and styles
+# Colors and styles
 readonly RESET='\033[0m'
 readonly BOLD='\033[1m'
 readonly DIM='\033[2m'
 readonly ITALIC='\033[3m'
 readonly UNDERLINE='\033[4m'
-readonly RED='\033[31m'
-readonly GREEN='\033[32m'
-readonly YELLOW='\033[33m'
 readonly BLUE='\033[34m'
-readonly MAGENTA='\033[35m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly YELLOW='\033[33m'
 readonly CYAN='\033[36m'
-readonly WHITE='\033[37m'
+readonly MAGENTA='\033[35m'
 
-# Define emoji
-readonly CHECK_MARK="✓"
-readonly CROSS_MARK="✗"
-readonly INFO_MARK="ℹ"
-readonly ARROW_MARK="➜"
+# Emojis
+readonly ROCKET="🚀"
+readonly SPLIT="✂️"
+readonly SYNC="🔄"
+readonly SUCCESS="✨"
+readonly ERROR="❌"
+readonly WARNING="⚠️"
+readonly CHECK="✓"
+readonly GITHUB="⭐"
+readonly CLOCK="🕐"
+readonly BRANCH="🌿"
+readonly FOLDER="📂"
 
-# Initialize global flags
-DEBUG=0
-DRY_RUN=0
-
-# Process command-line arguments
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --debug)
-            DEBUG=1
-            shift
-            ;;
-        --dry-run)
-            DRY_RUN=1
-            shift
-            ;;
-        *)
-            shift
-            ;;
-    esac
-done
-
-# Print header function
+# Header
 print_header() {
-    echo -e "\n${BOLD}${BLUE}=== PHP-Flasher Split Tool ===${RESET}"
-    echo -e "${DIM}Running in: $(pwd)${RESET}"
-    echo -e "${DIM}Current branch: $(current_branch)${RESET}"
-    echo -e "${DIM}Date: $(date '+%Y-%m-%d %H:%M:%S')${RESET}\n"
+    echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
+    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Split ${ROCKET}              │${RESET}"
+    echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
+    echo -e "${DIM}${CLOCK} Date     : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${DIM}${GITHUB} User     : ${RESET}${CYAN}$(whoami)${RESET}"
+    echo -e "${DIM}${BRANCH} Branch   : ${RESET}${MAGENTA}$(git rev-parse --abbrev-ref HEAD)${RESET}"
+    echo -e "${DIM}${FOLDER} Directory: ${RESET}${CYAN}$(pwd)${RESET}\n"
 }
 
-# Print section header
-print_section() {
-    echo -e "\n${BOLD}${CYAN}$1${RESET}"
-    echo -e "${DIM}${CYAN}$(printf '%.s-' $(seq 1 ${#1}))${RESET}\n"
-}
-
-# Debug message function
-debug_msg() {
-    if [ "$DEBUG" -eq 1 ]; then
-        echo -e "${DIM}${MAGENTA}${INFO_MARK} Debug: $*${RESET}"
-    fi
-}
-
-# Success message function
-success_msg() {
-    echo -e "${GREEN}${CHECK_MARK} $*${RESET}"
-}
-
-# Error message function
-error_msg() {
-    echo -e "${RED}${CROSS_MARK} Error: $*${RESET}" >&2
-}
-
-# Info message function
-info_msg() {
-    echo -e "${BLUE}${INFO_MARK} $*${RESET}"
-}
-
-# Function to get the current git branch name
-current_branch() {
-    git rev-parse --abbrev-ref HEAD
-}
-
-# Define remotes
-declare -A REMOTES=(
-    # Core packages
+# Repository mappings (same as before)
+declare -A REPOSITORIES=(
+     # Core packages
     ["src/Prime"]="flasher"
     ["src/Laravel"]="flasher-laravel"
     ["src/Symfony"]="flasher-symfony"
@@ -114,90 +68,102 @@ declare -A REMOTES=(
     ["src/Noty/Symfony"]="flasher-noty-symfony"
 )
 
-# Split function
-split() {
-    local prefix="$1"
-    local remote="${REMOTES[$prefix]}"
-    local current_branch=$(current_branch)
-    local start_time=$(date +%s)
+# Process split for a single repository
+process_split() {
+    local prefix=$1
+    local remote=${REPOSITORIES[$prefix]}
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    local repo_url="https://github.com/php-flasher/${remote}"
 
-    info_msg "Processing ${BOLD}$remote${RESET} (prefix: ${ITALIC}$prefix${RESET})"
+    echo -e "\n ${SPLIT} Processing ${BOLD}${CYAN}$remote${RESET}"
+    echo -e "    ${GITHUB} Repository: ${UNDERLINE}${BLUE}${repo_url}${RESET}"
+    echo -e "    ${SYNC} Prefix    : ${YELLOW}$prefix${RESET}"
+    echo -e "    ${BRANCH} Branch    : ${MAGENTA}$branch${RESET}"
 
     # Add remote if it doesn't exist
-    if git remote add "$remote" "git@github.com:php-flasher/$remote.git" 2>/dev/null; then
-        success_msg "Added remote ${BOLD}$remote${RESET}"
-    else
-        debug_msg "Remote $remote already exists"
-    fi
-
-    # Split the code using splitsh-lite
-    echo -en "${DIM}Splitting code... ${RESET}"
-    local SHA1=$(./bin/splitsh-lite --prefix="$prefix")
-    success_msg "Split complete (SHA: ${ITALIC}${SHA1:0:8}${RESET})"
-
-    # Push the code
-    if [ "$DRY_RUN" -eq 0 ]; then
-        echo -en "${DIM}Pushing to remote... ${RESET}"
-        if git push "$remote" "$SHA1:refs/heads/$current_branch" -f > /dev/null 2>&1; then
-            success_msg "Pushed to ${BOLD}$remote${RESET} (branch: ${ITALIC}$current_branch${RESET})"
-        else
-            error_msg "Failed to push to $remote"
-            return 1
+    if ! git remote | grep -q "^$remote$"; then
+        if ! git remote add "$remote" "git@github.com:php-flasher/$remote.git" 2>/dev/null; then
+            echo -e "    ${WARNING} ${YELLOW}Remote already exists${RESET}"
         fi
-    else
-        info_msg "DRY RUN: Would push ${ITALIC}${SHA1:0:8}${RESET} to ${BOLD}$remote${RESET} (branch: ${ITALIC}$current_branch${RESET})"
     fi
 
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-    echo -e "${DIM}Duration: ${duration}s${RESET}\n"
+    # Split the repository
+    echo -e "\n    ${SYNC} ${CYAN}Splitting code...${RESET}"
+    local sha1=""
+    if ! sha1=$(./bin/splitsh-lite --prefix="$prefix" 2>/dev/null); then
+        echo -e "    ${ERROR} ${RED}Split failed${RESET}"
+        return 1
+    fi
+
+    echo -e "    ${CHECK} Split complete ${DIM}(SHA: ${YELLOW}${sha1:0:8}${DIM})${RESET}"
+
+    # Push the changes
+    echo -e "    ${SYNC} ${CYAN}Pushing to remote...${RESET}"
+    if ! git push "$remote" "$sha1:refs/heads/$branch" -f > /dev/null 2>&1; then
+        echo -e "    ${ERROR} ${RED}Failed to push to $remote${RESET}"
+        return 1
+    fi
+
+    echo -e "    ${CHECK} ${GREEN}Pushed to ${BOLD}$remote${RESET}${GREEN} (branch: ${MAGENTA}$branch${GREEN})${RESET}"
+    return 0
+}
+
+# Update git repository
+update_repository() {
+    echo -e " ${SYNC} ${CYAN}Updating repository${RESET}"
+
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    echo -e "    ${SYNC} ${CYAN}Fetching latest changes...${RESET}"
+
+    if ! git fetch origin "$branch" > /dev/null 2>&1; then
+        echo -e "    ${WARNING} ${YELLOW}Failed to fetch latest changes, continuing...${RESET}"
+    else
+        echo -e "    ${CHECK} ${GREEN}Repository updated successfully${RESET}"
+    fi
+    echo
 }
 
 # Main execution
 main() {
     print_header
+    update_repository
 
-    # Pull latest code
-    print_section "Updating Repository"
-    if [ "$DRY_RUN" -eq 0 ]; then
-        info_msg "Pulling latest code from origin (branch: ${ITALIC}$(current_branch)${RESET})"
-        git fetch origin "$(current_branch)" > /dev/null 2>&1
-        success_msg "Repository updated"
-    else
-        info_msg "DRY RUN: Would fetch latest code for branch $(current_branch)"
-    fi
-
-    # Process splits
-    print_section "Processing Splits"
-    local total_start_time=$(date +%s)
     local success_count=0
     local failed_count=0
+    local total_count=${#REPOSITORIES[@]}
+    local start_time=$(date +%s)
+    local current=0
 
-    for prefix in "${!REMOTES[@]}"; do
-        if split "$prefix"; then
+    # Process all repositories
+    for prefix in "${!REPOSITORIES[@]}"; do
+        ((current++))
+        echo -e " ${SYNC} ${CYAN}Progress: ${BOLD}$current${RESET}${CYAN}/${BOLD}$total_count${RESET}${CYAN} repositories${RESET}"
+
+        if process_split "$prefix"; then
             ((success_count++))
         else
             ((failed_count++))
+            echo -e "    ${WARNING} ${YELLOW}Failed to process ${REPOSITORIES[$prefix]}, continuing...${RESET}"
         fi
     done
 
-    local total_end_time=$(date +%s)
-    local total_duration=$((total_end_time - total_start_time))
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
 
-    # Print summary
-    print_section "Summary"
-    echo -e "Total time: ${BOLD}${total_duration}s${RESET}"
-    echo -e "Successful splits: ${GREEN}${success_count}${RESET}"
-    if [ "$failed_count" -gt 0 ]; then
-        echo -e "Failed splits: ${RED}${failed_count}${RESET}"
-    fi
+    # Print final summary
+    echo -e "\n ${SUCCESS} ${BOLD}${CYAN}Split Summary${RESET}"
+    echo -e "    ${CHECK} Successful : ${GREEN}$success_count${RESET}"
+    [ $failed_count -gt 0 ] && echo -e "    ${ERROR} Failed     : ${RED}$failed_count${RESET}"
+    echo -e "    ${SYNC} Duration   : ${YELLOW}${duration}s${RESET}"
+    echo -e "    ${SYNC} Total repos: ${CYAN}$total_count${RESET}"
 
-    if [ "$failed_count" -eq 0 ]; then
-        success_msg "All splits completed successfully!"
-    else
-        error_msg "Some splits failed. Please check the output above."
-        exit 1
-    fi
+    # Add Packagist and NPM links
+    echo -e "\n ${GITHUB} ${BOLD}${CYAN}Quick Links${RESET}"
+    echo -e "    ${GITHUB} Packagist : ${UNDERLINE}${BLUE}https://packagist.org/packages/php-flasher/${RESET}"
+    echo -e "    ${GITHUB} NPM       : ${UNDERLINE}${BLUE}https://www.npmjs.com/org/flasher${RESET}"
+    echo -e "    ${GITHUB} GitHub    : ${UNDERLINE}${BLUE}https://github.com/php-flasher${RESET}\n"
+
+    [ $failed_count -gt 0 ] && exit 1 || exit 0
 }
 
 # Execute main function
