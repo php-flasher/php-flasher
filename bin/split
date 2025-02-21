@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-# Don't exit on error, we want to process all repositories
 set -o pipefail
 
 # Colors and styles
 readonly RESET='\033[0m'
 readonly BOLD='\033[1m'
 readonly DIM='\033[2m'
-readonly ITALIC='\033[3m'
 readonly UNDERLINE='\033[4m'
 readonly BLUE='\033[34m'
 readonly GREEN='\033[32m'
@@ -16,38 +14,10 @@ readonly YELLOW='\033[33m'
 readonly CYAN='\033[36m'
 readonly MAGENTA='\033[35m'
 
-# Emojis and symbols
+# Essential emojis
 readonly ROCKET="🚀"
-readonly SPLIT="✂️"
-readonly SYNC="🔄"
-readonly SUCCESS="✨"
-readonly ERROR="❌"
-readonly WARNING="⚠️"
 readonly CHECK="✓"
-readonly GITHUB="⭐"
-readonly CLOCK="🕐"
-readonly BRANCH="🌿"
-readonly FOLDER="📂"
-readonly PACKAGE="📦"
-readonly PROGRESS="📊"
-readonly LINK="🔗"
-
-# Header
-print_header() {
-    local width=46
-    local title="PHP-Flasher Split"
-    local padding=$(( (width - ${#title} - 4) / 2 ))
-
-    echo -e "\n${BOLD}${BLUE}╭$(printf '─%.0s' $(seq 1 $width))╮${RESET}"
-    echo -e "${BOLD}${BLUE}│$(printf ' %.0s' $(seq 1 $padding))${ROCKET} ${title} ${ROCKET}$(printf ' %.0s' $(seq 1 $padding))│${RESET}"
-    echo -e "${BOLD}${BLUE}╰$(printf '─%.0s' $(seq 1 $width))╯${RESET}\n"
-
-    # System information with colors
-    echo -e "${DIM}${CLOCK}${RESET} ${BOLD}Date     :${RESET} ${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${DIM}${GITHUB}${RESET} ${BOLD}User     :${RESET} ${MAGENTA}$(whoami)${RESET}"
-    echo -e "${DIM}${BRANCH}${RESET} ${BOLD}Branch   :${RESET} ${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
-    echo -e "${DIM}${FOLDER}${RESET} ${BOLD}Directory:${RESET} ${BLUE}$(pwd)${RESET}\n"
-}
+readonly ERROR="❌"
 
 # Repository mappings
 declare -A REPOSITORIES=(
@@ -77,7 +47,14 @@ declare -A REPOSITORIES=(
     ["src/Noty/Symfony"]="flasher-noty-symfony"
 )
 
-# Process split for a single repository
+print_header() {
+    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Split ${ROCKET}${RESET}\n"
+    echo -e "${BOLD}Date      :${RESET} ${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}User      :${RESET} ${MAGENTA}$(whoami)${RESET}"
+    echo -e "${BOLD}Branch    :${RESET} ${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
+    echo -e "${BOLD}Directory :${RESET} ${BLUE}$(pwd)${RESET}\n"
+}
+
 process_split() {
     local prefix=$1
     local remote=${REPOSITORIES[$prefix]}
@@ -85,61 +62,55 @@ process_split() {
     local repo_url="https://github.com/php-flasher/${remote}"
     local packagist_url="https://packagist.org/packages/php-flasher/${remote}"
 
-    # Repository header with box
-    echo -e "\n ${SPLIT} ${BOLD}${CYAN}Processing Repository${RESET}"
-    echo -e " ${DIM}┌──────────────────────────────────────┐${RESET}"
-    echo -e " ${DIM}│${RESET} ${BOLD}${CYAN}$remote${RESET}"
-    echo -e " ${DIM}│${RESET} ${LINK} GitHub   : ${UNDERLINE}${BLUE}${repo_url}${RESET}"
-    echo -e " ${DIM}│${RESET} ${PACKAGE} Package  : ${UNDERLINE}${BLUE}${packagist_url}${RESET}"
-    echo -e " ${DIM}│${RESET} ${FOLDER} Prefix   : ${YELLOW}$prefix${RESET}"
-    echo -e " ${DIM}│${RESET} ${BRANCH} Branch   : ${GREEN}$branch${RESET}"
-    echo -e " ${DIM}└──────────────────────────────────────┘${RESET}"
-
-    # Add remote if it doesn't exist
-    if ! git remote | grep -q "^$remote$"; then
-        if ! git remote add "$remote" "git@github.com:php-flasher/$remote.git" 2>/dev/null; then
-            echo -e "    ${WARNING} ${YELLOW}Remote already exists${RESET}"
-        fi
-    fi
+    echo -e "\n\n"
+    echo -e "GitHub  : ${UNDERLINE}${BLUE}${repo_url}${RESET}"
+    echo -e "Package : ${UNDERLINE}${BLUE}${packagist_url}${RESET}"
+    echo -e "Prefix  : ${YELLOW}$prefix${RESET}"
+    echo -e "Branch  : ${GREEN}$branch${RESET}\n"
 
     # Split the repository
-    echo -e "\n    ${SYNC} ${CYAN}Splitting code...${RESET}"
-    local sha1=""
+    echo -e "${CYAN}Splitting code...${RESET}"
+    local sha1
     if ! sha1=$(./bin/splitsh-lite --prefix="$prefix" 2>/dev/null); then
-        echo -e "    ${ERROR} ${RED}Split failed${RESET}"
+        echo -e "${ERROR} ${RED}Split failed${RESET}"
         return 1
     fi
 
-    echo -e "    ${CHECK} Split complete ${DIM}(SHA: ${YELLOW}${sha1:0:8}${DIM})${RESET}"
+    echo -e "${CHECK} Split complete (SHA: ${YELLOW}${sha1:0:8}${RESET})"
+    echo -e "${CYAN}Pushing to remote...${RESET}"
 
-    # Push the changes
-    echo -e "    ${SYNC} ${CYAN}Pushing to remote...${RESET}"
     if ! git push "$remote" "$sha1:refs/heads/$branch" -f > /dev/null 2>&1; then
-        echo -e "    ${ERROR} ${RED}Failed to push to $remote${RESET}"
+        echo -e "${ERROR} ${RED}Failed to push to $remote${RESET}"
         return 1
     fi
 
-    echo -e "    ${CHECK} ${GREEN}Pushed to ${BOLD}$remote${RESET}${GREEN} (branch: ${MAGENTA}$branch${GREEN})${RESET}"
+    echo -e "${CHECK} ${GREEN}Pushed to $remote (branch: $branch)${RESET}"
     return 0
 }
 
-# Update git repository
 update_repository() {
-    echo -e " ${SYNC} ${BOLD}${CYAN}Updating Repository${RESET}"
-    echo -e " ${DIM}┌──────────────────────────────────────┐${RESET}"
+    echo -e "\n${CYAN}Fetching latest changes...${RESET}"
 
-    local branch=$(git rev-parse --abbrev-ref HEAD)
-    echo -e " ${DIM}│${RESET} ${SYNC} Fetching latest changes for ${GREEN}$branch${RESET}..."
-
-    if ! git fetch origin "$branch" > /dev/null 2>&1; then
-        echo -e " ${DIM}│${RESET} ${WARNING} ${YELLOW}Failed to fetch latest changes, continuing...${RESET}"
+    if ! git fetch ''origin "$(git rev-parse --abbrev-ref HEAD)" > /dev/null 2>&1; then
+        echo -e "${ERROR} ${RED}Failed to fetch latest changes, continuing...${RESET}"
     else
-        echo -e " ${DIM}│${RESET} ${CHECK} ${GREEN}Repository updated successfully${RESET}"
+        echo -e "${CHECK} ${GREEN}Repository updated successfully${RESET}"
     fi
-    echo -e " ${DIM}└──────────────────────────────────────┘${RESET}\n"
+    echo
 }
 
-# Main execution
+draw_progress_bar() {
+    local percent=$1
+    local width=50
+    local filled=$(( (width * percent + 99) / 100 ))  # Rounded up division
+    local empty=$(( width - filled ))
+
+    echo -n "["
+    printf "${GREEN}█%.0s${RESET}" $(seq 1 $filled)
+    printf "${DIM}─%.0s${RESET}" $(seq 1 $empty)
+    echo -n "] ${percent}%"
+}
+
 main() {
     print_header
     update_repository
@@ -148,21 +119,13 @@ main() {
     local failed_count=0
     local total_count=${#REPOSITORIES[@]}
     local start_time=$(date +%s)
-    local current=0
 
-    # Show initial progress
-    echo -e " ${PROGRESS} ${BOLD}${CYAN}Overall Progress${RESET} (0/${total_count})"
-    echo -e " ${DIM}[$(printf '─%.0s' $(seq 1 50))] 0%${RESET}"
-
-    # Process all repositories
     for prefix in "${!REPOSITORIES[@]}"; do
-        ((current++))
-        local percent=$((current * 100 / total_count))
-        local filled=$((current * 50 / total_count))
-        local empty=$((50 - filled))
+        local current_count=$((success_count + failed_count + 1))
+        local percent=$((current_count * 100 / total_count))
 
-        echo -e "\n ${PROGRESS} ${BOLD}${CYAN}Progress: $current/$total_count${RESET} (${YELLOW}${percent}%${RESET})"
-        echo -e " ${DIM}[${GREEN}$(printf '█%.0s' $(seq 1 $filled))${DIM}$(printf '─%.0s' $(seq 1 $empty))] ${RESET}"
+        echo -e "\n${BOLD}Progress: $current_count/$total_count${RESET}"
+        draw_progress_bar $percent
 
         if process_split "$prefix"; then
             ((success_count++))
@@ -174,25 +137,20 @@ main() {
     local end_time=$(date +%s)
     local duration=$((end_time - start_time))
 
-    # Print final summary with box
-    echo -e "\n ${SUCCESS} ${BOLD}${CYAN}Split Summary${RESET}"
-    echo -e " ${DIM}┌──────────────────────────────────────┐${RESET}"
-    echo -e " ${DIM}│${RESET} ${CHECK} Successful : ${GREEN}$success_count${RESET}"
-    [ $failed_count -gt 0 ] && echo -e " ${DIM}│${RESET} ${ERROR} Failed     : ${RED}$failed_count${RESET}"
-    echo -e " ${DIM}│${RESET} ${CLOCK} Duration   : ${YELLOW}${duration}s${RESET}"
-    echo -e " ${DIM}│${RESET} ${PACKAGE} Total repos: ${CYAN}$total_count${RESET}"
-    echo -e " ${DIM}└──────────────────────────────────────┘${RESET}"
+    # Summary
+    echo -e "\n${BOLD}${CYAN}Split Summary${RESET}"
+    echo -e "Successful  : ${GREEN}$success_count${RESET}"
+    [ $failed_count -gt 0 ] && echo -e "Failed      : ${RED}$failed_count${RESET}"
+    echo -e "Duration    : ${YELLOW}${duration}s${RESET}"
+    echo -e "Total repos : ${CYAN}$total_count${RESET}"
 
-    # Quick links with box
-    echo -e "\n ${LINK} ${BOLD}${CYAN}Quick Links${RESET}"
-    echo -e " ${DIM}┌──────────────────────────────────────┐${RESET}"
-    echo -e " ${DIM}│${RESET} ${PACKAGE} Packagist : ${UNDERLINE}${BLUE}https://packagist.org/packages/php-flasher/${RESET}"
-    echo -e " ${DIM}│${RESET} ${PACKAGE} NPM       : ${UNDERLINE}${BLUE}https://www.npmjs.com/org/flasher${RESET}"
-    echo -e " ${DIM}│${RESET} ${GITHUB} GitHub    : ${UNDERLINE}${BLUE}https://github.com/php-flasher${RESET}"
-    echo -e " ${DIM}└──────────────────────────────────────┘${RESET}\n"
+    # Links
+    echo -e "\n${BOLD}${CYAN}Quick Links${RESET}"
+    echo -e "Packagist : ${UNDERLINE}${BLUE}https://packagist.org/packages/php-flasher/${RESET}"
+    echo -e "NPM       : ${UNDERLINE}${BLUE}https://www.npmjs.com/org/flasher${RESET}"
+    echo -e "GitHub    : ${UNDERLINE}${BLUE}https://github.com/php-flasher${RESET}\n"
 
     [ $failed_count -gt 0 ] && exit 1 || exit 0
 }
 
-# Execute main function
 main
