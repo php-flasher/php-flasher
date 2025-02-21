@@ -1,80 +1,199 @@
 #!/usr/bin/env bash
 
+# Set options
 set -e
+set -o pipefail
 
-# Make sure the release tag is provided.
-if (( "$#" != 1 ))
-then
-    echo "Tag has to be provided."
+# Define colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly ITALIC='\033[3m'
+readonly UNDERLINE='\033[4m'
+readonly RED='\033[31m'
+readonly GREEN='\033[32m'
+readonly YELLOW='\033[33m'
+readonly BLUE='\033[34m'
+readonly MAGENTA='\033[35m'
+readonly CYAN='\033[36m'
+readonly WHITE='\033[37m'
 
-    exit 1
-fi
+# Define emoji
+readonly CHECK_MARK="✓"
+readonly CROSS_MARK="✗"
+readonly INFO_MARK="ℹ"
+readonly ARROW_MARK="➜"
 
+# Configuration
 RELEASE_BRANCH="2.x"
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-VERSION=$1
+VERSION=""
+REPOSITORIES=(
+    "flasher"
+    "flasher-laravel"
+    "flasher-symfony"
+    "flasher-noty"
+    "flasher-noty-laravel"
+    "flasher-noty-symfony"
+    "flasher-notyf"
+    "flasher-notyf-laravel"
+    "flasher-notyf-symfony"
+    "flasher-sweetalert"
+    "flasher-sweetalert-laravel"
+    "flasher-sweetalert-symfony"
+    "flasher-toastr"
+    "flasher-toastr-laravel"
+    "flasher-toastr-symfony"
+)
 
-# Make sure current branch and release branch match.
-if [[ "$RELEASE_BRANCH" != "$CURRENT_BRANCH" ]]
-then
-    echo "Release branch ($RELEASE_BRANCH) does not match the current active branch ($CURRENT_BRANCH)."
+# Print functions
+print_header() {
+    echo -e "\n${BOLD}${BLUE}=== PHP-Flasher Release Tool ===${RESET}"
+    echo -e "${DIM}Running in: $(pwd)${RESET}"
+    echo -e "${DIM}Date: $(date '+%Y-%m-%d %H:%M:%S')${RESET}\n"
+}
 
-    exit 1
-fi
+print_section() {
+    echo -e "\n${BOLD}${CYAN}$1${RESET}"
+    echo -e "${DIM}${CYAN}$(printf '%.s-' $(seq 1 ${#1}))${RESET}\n"
+}
 
-# Make sure the working directory is clear.
-if [[ ! -z "$(git status --porcelain)" ]]
-then
-    echo "Your working directory is dirty. Did you forget to commit your changes?"
+success_msg() {
+    echo -e "${GREEN}${CHECK_MARK} $*${RESET}"
+}
 
-    exit 1
-fi
+error_msg() {
+    echo -e "${RED}${CROSS_MARK} Error: $*${RESET}" >&2
+}
 
-# Make sure latest changes are fetched first.
-git fetch origin
+info_msg() {
+    echo -e "${BLUE}${INFO_MARK} $*${RESET}"
+}
 
-# Make sure that release branch is in sync with origin.
-if [[ $(git rev-parse HEAD) != $(git rev-parse origin/$RELEASE_BRANCH) ]]
-then
-    echo "Your branch is out of date with its upstream. Did you forget to pull or push any changes before releasing?"
+# Validation functions
+validate_args() {
+    if [ "$#" -ne 1 ]; then
+        error_msg "Version tag must be provided"
+        echo -e "\nUsage: $0 <version>"
+        echo -e "Example: $0 2.1.5\n"
+        exit 1
+    fi
 
-    exit 1
-fi
+    VERSION=$1
+    if [[ $VERSION != v* ]]; then
+        VERSION="v$VERSION"
+    fi
+}
 
-# Always prepend with "v"
-if [[ $VERSION != v*  ]]
-then
-    VERSION="v$VERSION"
-fi
+validate_branch() {
+    local current_branch=$(git rev-parse --abbrev-ref HEAD)
+    if [[ "$RELEASE_BRANCH" != "$current_branch" ]]; then
+        error_msg "Release branch ($RELEASE_BRANCH) does not match the current branch ($current_branch)"
+        exit 1
+    fi
+}
 
-# Tag PHPFlasher
-git tag "$VERSION"
-git push origin --tags --force
+validate_working_directory() {
+    if [[ ! -z "$(git status --porcelain)" ]]; then
+        error_msg "Working directory is not clean. Please commit or stash your changes"
+        exit 1
+    fi
+}
 
-# Tag Repositories
-for REMOTE in flasher flasher-laravel flasher-symfony \
-              flasher-noty flasher-noty-laravel flasher-noty-symfony \
-              flasher-notyf flasher-notyf-laravel flasher-notyf-symfony \
-              flasher-sweetalert flasher-sweetalert-laravel flasher-sweetalert-symfony \
-              flasher-toastr flasher-toastr-laravel flasher-toastr-symfony
-do
-    echo ""
-    echo ""
-    echo "Releasing $REMOTE";
+validate_sync() {
+    git fetch origin > /dev/null 2>&1
+    if [[ $(git rev-parse HEAD) != $(git rev-parse origin/$RELEASE_BRANCH) ]]; then
+        error_msg "Branch is out of sync with origin/$RELEASE_BRANCH"
+        info_msg "Please pull or push your changes before releasing"
+        exit 1
+    fi
+}
 
-    TMP_DIR="/tmp/php-flasher"
-    REMOTE_URL="git@github.com:php-flasher/$REMOTE.git"
+# Release function
+release_repository() {
+    local repo=$1
+    local tmp_dir="/tmp/php-flasher"
+    local remote_url="git@github.com:php-flasher/$repo.git"
+    local start_time=$(date +%s)
 
-    rm -rf $TMP_DIR;
-    mkdir $TMP_DIR;
+    print_section "Releasing $repo"
 
+    # Clean and create temporary directory
+    rm -rf "$tmp_dir"
+    mkdir -p "$tmp_dir"
+
+    # Clone and tag repository
     (
-        cd $TMP_DIR;
+        cd "$tmp_dir"
+        info_msg "Cloning repository..."
+        git clone "$remote_url" . > /dev/null 2>&1
 
-        git clone $REMOTE_URL .
-        git checkout "$RELEASE_BRANCH";
+        info_msg "Checking out $RELEASE_BRANCH branch..."
+        git checkout "$RELEASE_BRANCH" > /dev/null 2>&1
 
+        info_msg "Creating tag $VERSION..."
         git tag "$VERSION"
-        git push origin --tags --force
+        git push origin --tags --force > /dev/null 2>&1
+        success_msg "Successfully tagged $repo with $VERSION"
     )
-done
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+    echo -e "${DIM}Duration: ${duration}s${RESET}\n"
+}
+
+# Main execution
+main() {
+    print_header
+
+    # Validate everything before starting
+    print_section "Validation"
+    validate_args "$@"
+    info_msg "Validating environment..."
+    validate_branch
+    validate_working_directory
+    validate_sync
+    success_msg "All validations passed"
+
+    # Tag main repository
+    print_section "Tagging Main Repository"
+    info_msg "Creating tag $VERSION on main repository..."
+    git tag "$VERSION"
+    git push origin --tags --force
+    success_msg "Main repository tagged successfully"
+
+    # Release all repositories
+    local total_start_time=$(date +%s)
+    local success_count=0
+    local failed_count=0
+
+    for repo in "${REPOSITORIES[@]}"; do
+        if release_repository "$repo"; then
+            ((success_count++))
+        else
+            ((failed_count++))
+            error_msg "Failed to release $repo"
+        fi
+    done
+
+    local total_end_time=$(date +%s)
+    local total_duration=$((total_end_time - total_start_time))
+
+    # Print summary
+    print_section "Release Summary"
+    echo -e "Version: ${BOLD}${VERSION}${RESET}"
+    echo -e "Total time: ${BOLD}${total_duration}s${RESET}"
+    echo -e "Successful releases: ${GREEN}${success_count}${RESET}"
+    if [ "$failed_count" -gt 0 ]; then
+        echo -e "Failed releases: ${RED}${failed_count}${RESET}"
+    fi
+
+    if [ "$failed_count" -eq 0 ]; then
+        success_msg "All repositories released successfully!"
+    else
+        error_msg "Some releases failed. Please check the output above."
+        exit 1
+    fi
+}
+
+# Execute main function
+main "$@"
