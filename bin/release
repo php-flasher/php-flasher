@@ -123,28 +123,68 @@ validate_version() {
 
 validate_environment() {
     echo -e "${CYAN}Validating environment...${RESET}"
+    local has_error=0
 
     # Check branch
     local current_branch=$(git rev-parse --abbrev-ref HEAD)
+    echo -ne "${CYAN}Checking branch...${RESET} "
     if [[ "$RELEASE_BRANCH" != "$current_branch" ]]; then
         echo -e "${ERROR} ${RED}Wrong branch: $current_branch (expected: $RELEASE_BRANCH)${RESET}"
-        exit 1
+        has_error=1
+    else
+        echo -e "${CHECK} ${GREEN}On correct branch: $current_branch${RESET}"
     fi
 
     # Check working directory
+    echo -ne "${CYAN}Checking working directory...${RESET} "
     if [[ ! -z "$(git status --porcelain)" ]]; then
         echo -e "${ERROR} ${RED}Working directory is not clean${RESET}"
-        exit 1
+        echo -e "${DIM}Hint: Commit or stash your changes first${RESET}"
+        has_error=1
+    else
+        echo -e "${CHECK} ${GREEN}Working directory is clean${RESET}"
     fi
 
     # Check sync with remote
-    git fetch origin >/dev/null 2>&1
-    if [[ $(git rev-parse HEAD) != $(git rev-parse origin/$RELEASE_BRANCH) ]]; then
+    echo -ne "${CYAN}Checking remote synchronization...${RESET} "
+    git fetch origin > /dev/null 2>&1
+    local local_sha=$(git rev-parse HEAD)
+    local remote_sha=$(git rev-parse origin/$RELEASE_BRANCH)
+
+    if [[ $local_sha != $remote_sha ]]; then
         echo -e "${ERROR} ${RED}Branch is not in sync with origin/$RELEASE_BRANCH${RESET}"
+        echo -e "\n${YELLOW}Local  SHA: ${local_sha}${RESET}"
+        echo -e "${YELLOW}Remote SHA: ${remote_sha}${RESET}"
+        echo -e "\n${DIM}To fix this, try:${RESET}"
+
+        # Check if we have unpushed commits
+        if git rev-list origin/$RELEASE_BRANCH..$RELEASE_BRANCH --count > /dev/null 2>&1; then
+            local ahead=$(git rev-list origin/$RELEASE_BRANCH..$RELEASE_BRANCH --count)
+            local behind=$(git rev-list $RELEASE_BRANCH..origin/$RELEASE_BRANCH --count)
+
+            if [[ $ahead -gt 0 && $behind -gt 0 ]]; then
+                echo -e "${YELLOW}Your branch is $ahead commits ahead and $behind commits behind origin/$RELEASE_BRANCH${RESET}"
+                echo -e "1. ${CYAN}git pull origin $RELEASE_BRANCH${RESET} (to get remote changes)"
+                echo -e "2. ${CYAN}git push origin $RELEASE_BRANCH${RESET} (to push your changes)"
+            elif [[ $ahead -gt 0 ]]; then
+                echo -e "${YELLOW}Your branch is $ahead commits ahead of origin/$RELEASE_BRANCH${RESET}"
+                echo -e "Run: ${CYAN}git push origin $RELEASE_BRANCH${RESET}"
+            elif [[ $behind -gt 0 ]]; then
+                echo -e "${YELLOW}Your branch is $behind commits behind origin/$RELEASE_BRANCH${RESET}"
+                echo -e "Run: ${CYAN}git pull origin $RELEASE_BRANCH${RESET}"
+            fi
+        fi
+        has_error=1
+    else
+        echo -e "${CHECK} ${GREEN}Branch is in sync with remote${RESET}"
+    fi
+
+    if [[ $has_error -eq 1 ]]; then
+        echo -e "\n${ERROR} ${RED}Environment validation failed${RESET}"
         exit 1
     fi
 
-    echo -e "${CHECK} ${GREEN}Environment validated${RESET}\n"
+    echo -e "\n${CHECK} ${GREEN}Environment validated successfully${RESET}\n"
 }
 
 main() {
