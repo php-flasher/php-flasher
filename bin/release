@@ -213,7 +213,7 @@ main() {
         local percent=$((current_count * 100 / total_count))
 
         echo -e "\nProgress: ${BOLD}$current_count/$total_count${RESET}"
-        draw_progress_bar $percent
+        # draw_progress_bar $percent
 
         if release_repository "$repo" "$version"; then
             if check_tag_exists "$repo" "$version"; then
