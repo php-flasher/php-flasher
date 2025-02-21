@@ -1,171 +1,217 @@
 version: '3'
 
-##############################################################################
-# PHP-Flasher Mono Repo Tasks
-##############################################################################
-
 vars:
-  DATE: '{{now | date "2006-01-02 15:04:05"}}'
+    DATE: '{{now | date "2006-01-02 15:04:05"}}'
+    CURRENT_VERSION: '2.1.5'
+    NEW_VERSION: '{{.CLI_ARGS | default ""}}'
 
-  # Colors and Styles
-  RESET: '\033[0m'
-  BOLD: '\033[1m'
-  BLUE: '\033[34m'
-  CYAN: '\033[36m'
-  GREEN: '\033[32m'
-  YELLOW: '\033[33m'
-
-  # Headers
-  HEADER: |
-
-    ╭──────────────────────────────────────────╮
-    │     🚀 PHP-Flasher Tasks Runner 🚀       │
-    ╰──────────────────────────────────────────╯
+    HEADER: |
+        ╭──────────────────────────────────────────╮
+        │     🚀 PHP-Flasher Tasks Runner 🚀       │
+        ╰──────────────────────────────────────────╯
 
 tasks:
-  default:
-    cmds:
-      - echo "{{.HEADER}}"
-      - task -l
-    silent: true
+    default:
+        desc: Show available tasks
+        cmds:
+            - echo "{{.HEADER}}"
+            - task -l
+        silent: true
 
-  ##############################################################################
-  # Development Tasks
-  ##############################################################################
+    version:bump:
+        desc: Bump version in all necessary files
+        summary: |
+            Update version numbers across the project
+            Usage: task version:bump 2.1.6
+        cmds:
+            - echo "{{.HEADER}}"
+            - |
+                if [ -z "{{.NEW_VERSION}}" ]; then
+                  echo "Error: Version number is required"
+                  echo "Usage: task version:bump 2.1.6"
+                  exit 1
+                fi
 
-  update:
-    desc: Update project dependencies and rebuild assets
-    cmds:
-      - echo "{{.HEADER}}"
-      - |
-        echo "    Date     : {{.DATE}} UTC"
-        echo "    Task     : Update Dependencies"
-        echo
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : Version Bump ({{.CURRENT_VERSION}} -> {{.NEW_VERSION}})"
+                echo
 
-      # Composer Update
-      - |
-        echo " 📦 Composer Dependencies"
-        composer update --prefer-lowest -W
-        echo "    ✓ Dependencies updated successfully"
-        echo
+                # Update PHP class version
+                echo " 🔄 Updating Flasher class version..."
+                sed -i '' "s/const VERSION = '{{.CURRENT_VERSION}}'/const VERSION = '{{.NEW_VERSION}}'/" src/Prime/Flasher.php
 
-      # NPM Updates Check
-      - |
-        echo " 🔍 NPM Updates Check"
-        npm run ncu || echo "    ⚠️  NPM check failed, continuing..."
-        echo
+                # Update composer.json files
+                echo " 📦 Updating composer.json files..."
+                find . -name "composer.json" -not -path "./vendor/*" -exec sed -i '' "s/\"php-flasher\/.*\": \"^{{.CURRENT_VERSION}}\"/\"php-flasher\/.*\": \"^{{.NEW_VERSION}}\"/" {} \;
 
-      # NPM Install
-      - |
-        echo " 📦 NPM Dependencies"
-        npm install --force || echo "    ⚠️  NPM install failed, continuing..."
-        echo
+                # Update package.json files
+                echo " 📦 Updating package.json files..."
+                find . -name "package.json" -not -path "./node_modules/*" -exec sed -i '' "s/\"version\": \"{{.CURRENT_VERSION}}\"/\"version\": \"{{.NEW_VERSION}}\"/" {} \;
+                find . -name "package.json" -not -path "./node_modules/*" -exec sed -i '' "s/\"@flasher\/.*\": \"^{{.CURRENT_VERSION}}\"/\"@flasher\/.*\": \"^{{.NEW_VERSION}}\"/" {} \;
 
-      # Build Assets
-      - |
-        echo " 🏗️  Building Assets"
-        npm run build || echo "    ⚠️  Build failed, continuing..."
-        echo
+                echo " ✨ Version bump complete!"
+        silent: true
 
-      # Summary
-      - |
-        echo " ✨ Update Complete"
-        echo "    ✓ Process finished successfully"
-    silent: true
+    version:validate:
+        desc: Validate version number format
+        vars:
+            VERSION_REGEX: '^[0-9]+\.[0-9]+\.[0-9]+$'
+        cmds:
+            - |
+                if [[ ! "{{.NEW_VERSION}}" =~ {{.VERSION_REGEX}} ]]; then
+                  echo "Error: Invalid version format. Must be X.Y.Z (e.g., 2.1.6)"
+                  exit 1
+                fi
+        silent: true
 
-  ##############################################################################
-  # Quality Assurance Tasks
-  ##############################################################################
+    release:
+        desc: Create and publish a new release
+        cmds:
+            -   task: version:validate
+            -   task: version:bump
+            -   task: lint
+            -   task: split
+            -   task: npm:publish
+            -   task: git:tag
+        silent: true
 
-  lint:
-    desc: Analyze code quality and standards
-    cmds:
-      - echo "{{.HEADER}}"
-      - |
-        echo "    Date     : {{.DATE}} UTC"
-        echo "    Task     : Code Quality Check"
-        echo
+    split:
+        desc: Split repositories
+        cmds:
+            - |
+                echo "{{.HEADER}}"
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : Repository Split"
+                echo
 
-      # Rector
-      - |
-        echo " 🔍 Running Rector"
-        php vendor/bin/rector || echo "    ⚠️  Rector found issues"
-        echo
+                echo " 🔄 Splitting repositories..."
+                php bin/split
+                echo " ✨ Split complete!"
+        silent: true
 
-      # PHP-CS-Fixer
-      - |
-        echo " 🎨 Running PHP-CS-Fixer"
-        php vendor/bin/php-cs-fixer fix -v || echo "    ⚠️  CS-Fixer found issues"
-        echo
+    npm:publish:
+        desc: Publish NPM packages
+        cmds:
+            - |
+                echo "{{.HEADER}}"
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : NPM Package Publishing"
+                echo
 
-      # PHPStan
-      - |
-        echo " 🔬 Running PHPStan"
-        php vendor/bin/phpstan analyse --memory-limit=-1 || echo "    ⚠️  PHPStan found issues"
-        echo
+                echo " 📦 Publishing NPM packages..."
+                php bin/npm {{.NEW_VERSION}}
+                echo " ✨ NPM publish complete!"
+        silent: true
 
-      # Composer Validation
-      - |
-        echo " 📝 Validating Composer Files"
-        composer validate --strict || echo "    ⚠️  Validation failed"
-        find src/ -name "composer.json" -exec composer validate --strict {} \; || echo "    ⚠️  Package validation failed"
-        echo
+    git:tag:
+        desc: Create and push git tags
+        cmds:
+            - |
+                echo "{{.HEADER}}"
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : Git Tagging"
+                echo
 
-      # PHPLint
-      - |
-        echo " 🔎 Running PHPLint"
-        php vendor/bin/phplint || echo "    ⚠️  PHPLint found issues"
-        echo
+                echo " 🏷️  Creating git tag v{{.NEW_VERSION}}..."
+                git tag -a "v{{.NEW_VERSION}}" -m "Release v{{.NEW_VERSION}}"
+                git push origin "v{{.NEW_VERSION}}"
+                echo " ✨ Git tagging complete!"
+        silent: true
 
-      # PHPUnit
-      - |
-        echo " 🧪 Running PHPUnit Tests"
-        php vendor/bin/phpunit || echo "    ⚠️  Tests failed"
-        echo
+    status:
+        desc: Show repository status
+        cmds:
+            - |
+                if [ -f "bin/status" ]; then
+                  chmod +x bin/status
+                  ./bin/status
+                else
+                  echo " ❌ Status script not found in bin/status"
+                  exit 1
+                fi
+        silent: true
 
-      # Summary
-      - |
-        echo " ✨ Quality Check Complete"
-        echo "    ✓ All checks finished"
-    silent: true
+    update:
+        desc: Update project dependencies and rebuild assets
+        cmds:
+            - echo "{{.HEADER}}"
+            - |
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : Update Dependencies"
+                echo
 
-  ##############################################################################
-  # Documentation Tasks
-  ##############################################################################
+                echo " 📦 Composer Dependencies"
+                composer update --prefer-lowest -W
+                echo "    ✓ Dependencies updated successfully"
+                echo
 
-  docs:build:
-    desc: Build documentation
-    dir: docs/
-    cmds:
-      - |
-        echo "{{.HEADER}}"
-        echo "    Date     : {{.DATE}} UTC"
-        echo "    Task     : Build Documentation"
-        echo
+                echo " 🔍 NPM Updates Check"
+                npm run ncu || echo "    ⚠️  NPM check failed, continuing..."
+                echo
 
-        echo " 📚 Installing dependencies"
-        npm install --force
+                echo " 📦 NPM Dependencies"
+                npm install --force || echo "    ⚠️  NPM install failed, continuing..."
+                echo
 
-        echo " 🏗️ Building documentation"
-        npm run build
-    silent: true
+                echo " 🏗️  Building Assets"
+                npm run build || echo "    ⚠️  Build failed, continuing..."
+                echo
 
-  ##############################################################################
-  # Release Tasks
-  ##############################################################################
+                echo " ✨ Update Complete"
+                echo "    ✓ Process finished successfully"
+        silent: true
 
-  release:
-    desc: Create new release
-    cmds:
-      - |
-        echo "{{.HEADER}}"
-        echo "    Date     : {{.DATE}} UTC"
-        echo "    Task     : Release {{.CLI_ARGS}}"
-        echo
+    lint:
+        desc: Analyze code quality and standards
+        cmds:
+            - echo "{{.HEADER}}"
+            - |
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : Code Quality Check"
+                echo
 
-        echo " 🔄 Splitting repositories"
-        php bin/split
+                echo " 🔍 Running Rector"
+                php vendor/bin/rector || echo "    ⚠️  Rector found issues"
+                echo
 
-        echo " 🚀 Creating release {{.CLI_ARGS}}"
-        php bin/release {{.CLI_ARGS}}
-    silent: true
+                echo " 🎨 Running PHP-CS-Fixer"
+                php vendor/bin/php-cs-fixer fix -v || echo "    ⚠️  CS-Fixer found issues"
+                echo
+
+                echo " 🔬 Running PHPStan"
+                php vendor/bin/phpstan analyse --memory-limit=-1 || echo "    ⚠️  PHPStan found issues"
+                echo
+
+                echo " 📝 Validating Composer Files"
+                composer validate --strict || echo "    ⚠️  Validation failed"
+                find src/ -name "composer.json" -exec composer validate --strict {} \; || echo "    ⚠️  Package validation failed"
+                echo
+
+                echo " 🔎 Running PHPLint"
+                php vendor/bin/phplint || echo "    ⚠️  PHPLint found issues"
+                echo
+
+                echo " 🧪 Running PHPUnit Tests"
+                php vendor/bin/phpunit || echo "    ⚠️  Tests failed"
+                echo
+
+                echo " ✨ Quality Check Complete"
+                echo "    ✓ All checks finished"
+        silent: true
+
+    docs:build:
+        desc: Build documentation
+        dir: docs/
+        cmds:
+            - |
+                echo "{{.HEADER}}"
+                echo "    Date     : {{.DATE}} UTC"
+                echo "    Task     : Build Documentation"
+                echo
+
+                echo " 📚 Installing dependencies"
+                npm install --force
+
+                echo " 🏗️ Building documentation"
+                npm run build
+        silent: true
