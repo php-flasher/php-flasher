@@ -102,7 +102,7 @@ jobs:
                     - { symfony: 7.1.*, php: 8.2, phpunit: 10.5.* }
                     - { symfony: 7.0.*, php: 8.2, phpunit: 10.5.* }
 
-        name: symfony v${{ matrix.symfony }} php v${{ matrix.php }}
+        name: symfony v${{ matrix.symfony }} x php v${{ matrix.php }}
 
         steps:
             -   name: 📥 Checkout code
@@ -142,7 +142,7 @@ jobs:
                     - { laravel: 11.*,  testbench: 9.*, php: 8.3, phpunit: 10.5.* }
                     - { laravel: 11.*,  testbench: 9.*, php: 8.2, phpunit: 10.5.* }
 
-        name: laravel v${{ matrix.laravel }} php v${{ matrix.php }}
+        name: laravel v${{ matrix.laravel }} x php v${{ matrix.php }}
 
         steps:
             -   name: 📥 Checkout code
