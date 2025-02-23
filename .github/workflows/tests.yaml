@@ -1,4 +1,4 @@
-name: 🧪 Run Tests & 🛠️ Static Analysis
+name: qa
 
 on:
     push:
@@ -17,7 +17,7 @@ jobs:
             matrix:
                 php: [ 8.2 ]
 
-        name: 🐘 PHP ${{ matrix.php }} Static Analysis
+        name: php v${{ matrix.php }}
 
         steps:
             -   name: 📥 Checkout Code
@@ -39,18 +39,19 @@ jobs:
             -   name: 📦 Install Dependencies
                 run: |
                     composer config --global allow-plugins true
-                    composer install
+                    composer install --no-interaction --prefer-dist --optimize-autoloader
 
             -   name: 🧹 Run PHP CS Fixer (Code Style)
-                run: vendor/bin/php-cs-fixer fix --dry-run
+                run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
             -   name: 🔍 Run PHPStan (Static Analysis)
-                run: vendor/bin/phpstan analyse
+                run: vendor/bin/phpstan analyse --no-progress
 
             -   name: 🚀 Run PHPLint (Syntax Check)
                 run: vendor/bin/phplint
 
     prime-test:
+        needs: static-analysis
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -60,7 +61,7 @@ jobs:
                     - { php: 8.3, phpunit: 10.5.* }
                     - { php: 8.2, phpunit: 10.5.* }
 
-        name: 🐘 PHP ${{ matrix.php }}
+        name: php v${{ matrix.php }}
 
         steps:
             -   name: 📥 Checkout code
@@ -84,7 +85,7 @@ jobs:
                     sed -i '/"require": {/,/},/d; /"require-dev": {/,/},/d' composer.json
                     composer config --global allow-plugins true
                     composer require "phpunit/phpunit:${{ matrix.phpunit }}" "mockery/mockery" "psr/container" --no-interaction --no-update
-                    composer update --prefer-lowest -W
+                    composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
 
             -   name: ✅ Execute tests
                 run: vendor/bin/phpunit --testsuite prime
@@ -101,7 +102,7 @@ jobs:
                     - { symfony: 7.1.*, php: 8.2, phpunit: 10.5.* }
                     - { symfony: 7.0.*, php: 8.2, phpunit: 10.5.* }
 
-        name: 🌉 Symfony ${{ matrix.symfony }} PHP ${{ matrix.php }}
+        name: symfony v${{ matrix.symfony }} x php v${{ matrix.php }}
 
         steps:
             -   name: 📥 Checkout code
@@ -126,7 +127,7 @@ jobs:
                     composer config --global allow-plugins true
                     composer config extra.symfony.require "${{ matrix.symfony }}"
                     composer require "symfony/config:${{ matrix.symfony }}" "symfony/console:${{ matrix.symfony }}" "symfony/dependency-injection:${{ matrix.symfony }}" "symfony/framework-bundle:${{ matrix.symfony }}" "symfony/http-kernel:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/twig-bundle:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" "mockery/mockery" "psr/container" "monolog/monolog" --no-interaction --no-update
-                    composer update --prefer-lowest -W
+                    composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
 
             -   name: ✅ Execute tests
                 run: vendor/bin/phpunit --testsuite symfony
@@ -141,7 +142,7 @@ jobs:
                     - { laravel: 11.*,  testbench: 9.*, php: 8.3, phpunit: 10.5.* }
                     - { laravel: 11.*,  testbench: 9.*, php: 8.2, phpunit: 10.5.* }
 
-        name: 🏗 Laravel ${{ matrix.laravel }} PHP ${{ matrix.php }}
+        name: laravel v${{ matrix.laravel }} x php v${{ matrix.php }}
 
         steps:
             -   name: 📥 Checkout code
@@ -166,7 +167,7 @@ jobs:
                     sed -i '/\"require\": {/,/},/d; /\"require-dev\": {/,/},/d' composer.json
                     composer config --global allow-plugins true
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                    composer update --prefer-lowest -W
+                    composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
 
             -   name: ✅ Execute tests
                 run: vendor/bin/phpunit --testsuite laravel
