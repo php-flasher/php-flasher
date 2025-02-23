@@ -37,7 +37,7 @@ data-controller: flasher
 
 ---
 
-### Quick Example
+<p id="quick-example"><a href="#quick-example" class="anchor"><i class="fa-duotone fa-link"></i> Quick Example</a></p>
 
 ```php
 // Show a success message
@@ -51,25 +51,29 @@ flash()->error('Oops! Something went wrong.');
 
 ## <i class="fa-duotone fa-list-radio"></i> Key Features
 
-### 1. <i class="fa-duotone fa-bolt"></i> Easy to Use
+<p id="easy-to-use"><a href="#easy-to-use" class="anchor"><i class="fa-duotone fa-link"></i> Easy</a></p>
+
 - Simple one-line code to show notifications
 - Works right out of the box
 - No complex configuration needed
 
-### 2. <i class="fa-duotone fa-wand-magic-sparkles"></i> Flexible & Powerful
+<p id="flexible-and-powerful"><a href="#flexible-and-powerful" class="anchor"><i class="fa-duotone fa-link"></i> Flexible</a></p>
+
 - Choose from multiple notification libraries:
   - [Toastr.js](/library/toastr/) - Classic toast notifications
   - [SweetAlert 2](/library/sweetalert/) - Beautiful alert dialogs
   - [Noty](/library/noty/) - Highly customizable notifications
   - [Notyf](/library/notyf/) - Minimalist toast notifications
 
-### 3. <i class="fa-duotone fa-rocket"></i> Framework Ready
+<p id="framework-ready"><a href="#framework-ready" class="anchor"><i class="fa-duotone fa-link"></i> Integration</a></p>
+
 - <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Native Laravel integration
 - <i class="fa-brands fa-symfony text-black fa-xl"></i> Seamless Symfony support
 - <i class="fa-duotone fa-plug"></i> Works with Livewire and Inertia
 - <i class="fa-duotone fa-wrench"></i> Framework-agnostic core
 
-### 4. <i class="fa-duotone fa-code"></i> Developer Friendly
+<p id="developer-friendly"><a href="#developer-friendly" class="anchor"><i class="fa-duotone fa-link"></i> DX</a></p>
+
 - Full IDE support with autocompletion
 - Clear documentation with examples
 - TypeScript support
@@ -77,7 +81,7 @@ flash()->error('Oops! Something went wrong.');
 
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> Get Started in 5 Minutes
+## <i class="fa-duotone fa-list-radio"></i> Get Started
 
 Choose your framework and follow our quick-start guide:
 
@@ -86,7 +90,7 @@ Choose your framework and follow our quick-start guide:
 - [<i class="fa-duotone fa-bolt"></i> Livewire Guide](/livewire/) - Real-time Laravel notifications
 - [<i class="fa-duotone fa-arrows-rotate"></i> Inertia Guide](/inertia/) - Modern SPA notifications
 
-### Quick Installation
+## <i class="fa-duotone fa-list-radio"></i> Quick Installation
 
 ```bash
 # Laravel
