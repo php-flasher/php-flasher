@@ -1,6 +1,6 @@
 ---
 permalink: /
-description: PHPFlasher is an open-source tool that makes it easy to add flash messages to your Laravel or Symfony projects. Improve user interaction with minimal effort using simple, customizable notifications.
+description: PHPFlasher is a powerful PHP notification library that makes it simple to add beautiful flash messages to your Laravel or Symfony applications. Perfect for form submissions, API responses, and user interactions.
 data-controller: flasher
 ---
 
@@ -31,48 +31,80 @@ data-controller: flasher
     </p>
 </div>
 
-## <i class="fa-duotone fa-list-radio"></i> Introduction
+## <i class="fa-duotone fa-list-radio"></i> What is PHPFlasher?
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> is an open-source tool that helps you add flash messages to your web applications. Flash messages are short messages that give feedback to users after they do something, like submitting a form or encountering an error. These messages improve the user experience by letting users know what happened.
-
-Flash messages are important for interactive applications. **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** makes it easy to add them to **<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel** or **<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony** projects. It uses sessions to store messages, so you can set a message on one page and show it on another, without complex setup.
+**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** helps you add beautiful notification messages to your PHP applications in minutes. Whether you're building a <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel or <i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony application, PHPFlasher makes it easy to:
 
 ---
 
-### <i class="fa-duotone fa-list-radio"></i> Notification Types
+<p id="quick-example"><a href="#quick-example" class="anchor"><i class="fa-duotone fa-link"></i> Quick Example</a></p>
 
-**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** supports different types of notifications:
+```php
+// Show a success message
+flash()->success('Your profile has been updated!');
 
-> <div class="mt-2"><span class="text-green-700"><i class="fa-solid fa-circle-check fa-xl"></i> Success</span>: Shows when something works well.</div>
-> <div class="mt-2"><span class="text-blue-600"><i class="fa-solid fa-circle-info fa-xl"></i> Info</span>: Gives information to the user.</div>
-> <div class="mt-2"><span class="text-yellow-600"><i class="fa-solid fa-circle-exclamation fa-xl"></i> Warning</span>: Alerts about potential issues.</div>
-> <div class="mt-2"><span class="text-red-600"><i class="fa-solid fa-circle-xmark fa-xl"></i> Error</span>: Tells the user about an error.</div>
-
----
-
-## <i class="fa-duotone fa-list-radio"></i> Why **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>**?
-
-- **Supports Many Libraries**: Works with popular notification libraries like [toastr.js](/library/toastr/), [SweetAlert 2](/library/sweetalert/), [Noty](/library/noty/), and [Notyf](/library/notyf/).
-- **Easy to Use**: Designed for all developers, from beginners to experts.
-- **Flexible**: You can customize how the notifications look and behave.
-- **Framework Compatibility**: Integrates smoothly with <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> <strong>Laravel</strong> and <i class="fa-brands fa-symfony text-black fa-xl"></i> <strong>Symfony</strong>. You can also create custom adapters.
-- **Developer-Friendly**: Features like autocomplete in PHPStorm make coding easier.
+// Show an error message
+flash()->error('Oops! Something went wrong.');
+```
 
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> Getting Started
+## <i class="fa-duotone fa-list-radio"></i> Key Features
 
-Start using **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** with our easy guides:
+<p id="easy-to-use"><a href="#easy-to-use" class="anchor"><i class="fa-duotone fa-link"></i> Easy</a></p>
 
-- [**Symfony Guide**](/symfony/)
-- [**Laravel Guide**](/laravel/)
-- [**Livewire Guide**](/livewire/)
-- [**Inertia Guide**](/inertia/)
-- [**Toastr Library**](/library/toastr/)
-- [**Noty Library**](/library/noty/)
-- [**Notyf Library**](/library/notyf/)
-- [**Sweet Alert Library**](/library/sweetalert/)
+- Simple one-line code to show notifications
+- Works right out of the box
+- No complex configuration needed
 
-## <i class="fa-duotone fa-list-radio"></i> Contributions
+<p id="flexible-and-powerful"><a href="#flexible-and-powerful" class="anchor"><i class="fa-duotone fa-link"></i> Flexible</a></p>
 
-**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** grows with help from the community. We welcome your feedback, code contributions, and ideas. Check out our [GitHub repository](https://github.com/php-flasher/php-flasher) to join the **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** community. Let's build something great together! <i class="fa-solid fa-heart text-red-600"></i>
+- Choose from multiple notification libraries:
+  - [Toastr.js](/library/toastr/) - Classic toast notifications
+  - [SweetAlert 2](/library/sweetalert/) - Beautiful alert dialogs
+  - [Noty](/library/noty/) - Highly customizable notifications
+  - [Notyf](/library/notyf/) - Minimalist toast notifications
+
+<p id="framework-ready"><a href="#framework-ready" class="anchor"><i class="fa-duotone fa-link"></i> Integration</a></p>
+
+- <i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Native Laravel integration
+- <i class="fa-brands fa-symfony text-black fa-xl"></i> Seamless Symfony support
+- <i class="fa-duotone fa-plug"></i> Works with Livewire and Inertia
+- <i class="fa-duotone fa-wrench"></i> Framework-agnostic core
+
+<p id="developer-friendly"><a href="#developer-friendly" class="anchor"><i class="fa-duotone fa-link"></i> DX</a></p>
+
+- Full IDE support with autocompletion
+- Clear documentation with examples
+- TypeScript support
+- Easy to customize and extend
+
+---
+
+## <i class="fa-duotone fa-list-radio"></i> Get Started
+
+Choose your framework and follow our quick-start guide:
+
+- [<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel Guide](/laravel/) - Perfect for Laravel applications
+- [<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony Guide](/symfony/) - Complete Symfony integration
+- [<i class="fa-duotone fa-bolt"></i> Livewire Guide](/livewire/) - Real-time Laravel notifications
+- [<i class="fa-duotone fa-arrows-rotate"></i> Inertia Guide](/inertia/) - Modern SPA notifications
+
+## <i class="fa-duotone fa-list-radio"></i> Quick Installation
+
+```bash
+# Laravel
+composer require php-flasher/flasher-laravel
+
+# Symfony
+composer require php-flasher/flasher-symfony
+```
+
+## <i class="fa-duotone fa-list-radio"></i> Join Our Community
+
+- <i class="fa-duotone fa-star"></i> Star us on [GitHub](https://github.com/php-flasher/php-flasher)
+- <i class="fa-duotone fa-bug"></i> Report issues or suggest features
+- <i class="fa-duotone fa-handshake"></i> Contribute to make PHPFlasher even better
+- <i class="fa-duotone fa-users"></i> Join our growing community of developers
+
+Help us improve PHPFlasher by sharing your feedback and ideas! <i class="fa-solid fa-heart text-red-600"></i>
