@@ -1,6 +1,6 @@
 ## <i class="fa-duotone fa-list-radio"></i> Usage
 
-To show a notification message, you can use the `flash()` helper function or get an instance of `flasher` from the service container. Before you return a view or redirect, call one of the notification methods like `success()` and pass in the message you want to display.
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> provides a simple and intuitive way to add notifications to your application. You can use either the `flash()` helper function or inject the `FlasherInterface` through dependency injection.
 
 {% assign id = '#/ PHPFlasher' %}
 {% assign type = 'success' %}
@@ -11,31 +11,20 @@ To show a notification message, you can use the `flash()` helper function or get
 ```php
 {{ id }}
 
+// Using the helper function
+flash()->success('{{ site.data.messages["success"] | sample }}');
+
+// Or using dependency injection
 use Flasher\Prime\FlasherInterface;
 
 class BookController
 {
-    public function saveBook()
+    public function store(FlasherInterface $flasher)
     {
-        // ...
-
-        flash()->success('{{ site.data.messages["success"] | sample }}');
-
-        flash('{{ message }}');
-
-        // ... redirect or render a view
-    }
-    
-    /**
-     * if you prefer to use dependency injection 
-     */
-    public function register(FlasherInterface $flasher)
-    {
-        // ...
-
-        $flasher->success('{{ site.data.messages["success"] | sample }}');
-
-        // ... redirect or render a view
+        // Save the book...
+        $flasher->success('{{ message }}');
+        
+        return redirect()->back();
     }
 }
 ```
@@ -178,7 +167,7 @@ flash()
 
 <p id="method-priority"><a href="#method-priority" class="anchor"><i class="fa-duotone fa-link"></i> priority</a></p>
 
-Set the priority of a flash message. Messages with higher priority appear first.
+Control the order of multiple notifications, messages with higher priority appear first.
 
 ```php
 flash()->priority(int $priority);
@@ -191,29 +180,29 @@ flash()->priority(int $priority);
 {% assign infoMessage = site.data.messages['info'] | sample | prepend: 'Priority 2 → ' %}
 
 <script type="text/javascript">
-    messages["{{ id }}"] = [
+    messages['{{ id }}'] = [
         {
-            handler: "flasher",
-            type: "warning",
-            message: "{{ warningMessage }}",
+            handler: 'flasher',
+            type: 'warning',
+            message: '{{ warningMessage }}',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "success",
-            message: "{{ successMessage }}",
+            handler: 'flasher',
+            type: 'success',
+            message: '{{ successMessage }}',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "info",
-            message: "{{ infoMessage }}",
+            handler: 'flasher',
+            type: 'info',
+            message: '{{ infoMessage }}',
             options: {},
         },
         {
-            handler: "flasher",
-            type: "error",
-            message: "{{ errorMessage }}",
+            handler: 'flasher',
+            type: 'error',
+            message: '{{ errorMessage }}',
             options: {},
         },
     ];
