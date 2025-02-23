@@ -1,3 +1,5 @@
+name: qa
+
 on:
     push:
         branches:
