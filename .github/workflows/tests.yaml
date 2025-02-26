@@ -138,8 +138,9 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - { laravel: 11.*,  testbench: 9.*, php: 8.4, phpunit: 10.5.* }
-                    - { laravel: 11.*,  testbench: 9.*, php: 8.3, phpunit: 10.5.* }
+                    - { laravel: 12.*,  testbench: 10.*, php: 8.4, phpunit: 11.5.* }
+                    - { laravel: 12.*,  testbench: 10.*, php: 8.3, phpunit: 11.5.* }
+                    - { laravel: 12.*,  testbench: 10.*, php: 8.2, phpunit: 11.5.* }
                     - { laravel: 11.*,  testbench: 9.*, php: 8.2, phpunit: 10.5.* }
 
         name: laravel v${{ matrix.laravel }} x php v${{ matrix.php }}
