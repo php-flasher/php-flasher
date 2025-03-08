@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\Book;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -12,17 +13,76 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        sweetalert()->timerProgressBar()->success('hello from Home Controller');
-        noty()->layout('topCenter')->success('hello from Home Controller');
-        notyf()->ripple(false)->warning('hello from Home Controller');
-        toastr()->positionClass('toast-bottom-left')->error('hello from Home Controller');
-        flash()->use('flasher')->success('hello from flasher factory');
+        $themes = [
+            // 'flasher',
+            // 'amber',
+            // 'sapphire',
+            // 'crystal',
 
-        flash()->created(new Book('lord of the rings'));
-        flash()->saved(new Book('harry potter'));
+            // 'emerald',
+            // 'ruby',
+            // 'onyx',
 
-        flash()->updated();
-        flash()->deleted();
+            'jade',
+            //,'aurora',
+            // 'neon',
+            // 'minimal',
+
+            // 'material',
+            // 'google',
+
+            // 'ios',
+            // 'slack',
+            // 'facebook',
+            // 'amazon',
+        ];
+
+        $positions = [
+            'top-left',
+            'top-right',
+            'bottom-left',
+            'bottom-right',
+            'top-center',
+            'bottom-center',
+            'center-left',
+            'center-right',
+            'center-center',
+        ];
+
+        $messages = [
+            'success' => 'Your profile has been updated successfully',
+            'info' => 'New: You can now export your reports in PDF format',
+            'warning' => 'Your premium subscription will expire in 3 days',
+            'error' => 'Payment failed: Your card has been declined',
+        ];
+
+        foreach ($themes as $index => $theme) {
+            foreach ($messages as $type => $message) {
+                $position = $positions[$index % \count($positions)];
+
+                // $message = \sprintf('%s: %s', $theme, $message);
+
+                // flash()
+                //     ->use("theme.$theme")
+                //     ->option('position', $position)
+                //     ->$type($message);
+            }
+        }
+
+        $plugins = [
+            // 'noty',
+            // 'notyf',
+            // 'sweetalert',
+            'toastr',
+        ];
+
+        foreach ($plugins as $plugin) {
+            foreach ($messages as $type => $message) {
+                flash()
+                    ->use($plugin)
+                    ->$type($message);
+            }
+        }
 
         return $this->render('home/index.html.twig');
     }

@@ -1,7 +1,7 @@
-
 flasher:
     # Default notification library (e.g., 'flasher', 'toastr', 'noty', etc.)
-    default: flasher
+    # themes: flasher, crystal, emerald, sapphire
+    default: theme.flasher
 
     # Path to the main JavaScript file of PHPFlasher
     main_script: '/vendor/flasher/flasher.min.js'
@@ -19,7 +19,7 @@ flasher:
     # Global options
     options:
         # timeout in milliseconds
-        timeout: 5000
+        timeout: 10000
         position: 'top-right'
 
     # Map Symfony session keys to PHPFlasher notification types
@@ -33,3 +33,10 @@ flasher:
     filter:
         # Limit number of displayed notifications
         # limit: 5
+
+    plugins:
+        theme.jade:
+            scripts: ['/vendor/flasher/themes/jade/jade.min.js']
+            styles:
+                # - '/vendor/flasher/flasher.min.css'
+                - '/vendor/flasher/themes/jade/jade.min.css'
