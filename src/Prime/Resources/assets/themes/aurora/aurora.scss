@@ -1,0 +1,237 @@
+/**
+ * @file PHPFlasher Aurora Theme Styles
+ * @description CSS styling for the elegant glass-morphism Aurora theme
+ * @author yoeunes
+ */
+
+/**
+ * PHPFlasher - Aurora Theme
+ *
+ * Elegant notifications with subtle gradients, backdrop blur, and soft edges.
+ * Features a modern "glass morphism" style with translucent backgrounds.
+ */
+.fl-aurora {
+    /* Theme variables - Defines the visual appearance of Aurora notifications */
+
+    /* Base colors and appearance */
+    --aurora-bg-light: rgba(255, 255, 255, 0.95);  /* Semi-transparent light background */
+    --aurora-bg-dark: rgba(20, 20, 28, 0.92);      /* Semi-transparent dark background */
+    --aurora-text-light: #1e293b;                  /* Light mode text color */
+    --aurora-text-dark: #f8fafc;                   /* Dark mode text color */
+    --aurora-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Light mode shadow */
+    --aurora-shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.16); /* Dark mode shadow */
+    --aurora-border-radius: 16px;                  /* Rounded corners radius */
+    --aurora-blur: 15px;                           /* Amount of backdrop blur */
+
+    /* Gradient overlays for each notification type - Light mode */
+    --aurora-success-gradient: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.2) 100%);
+    --aurora-info-gradient: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.2) 100%);
+    --aurora-warning-gradient: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.2) 100%);
+    --aurora-error-gradient: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.2) 100%);
+
+    /* Type-specific accent colors for progress bars */
+    --aurora-success: #10b981;                     /* Success color (green) */
+    --aurora-info: #3b82f6;                        /* Info color (blue) */
+    --aurora-warning: #f59e0b;                     /* Warning color (orange) */
+    --aurora-error: #ef4444;                       /* Error color (red) */
+}
+
+/**
+ * Entrance animation for Aurora theme
+ * Combines fade-in with a subtle scale effect
+ */
+@keyframes auroraFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.98);  /* Start slightly smaller */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);         /* End at full size */
+    }
+}
+
+/**
+ * Base Aurora theme styling
+ */
+.fl-aurora {
+    /* Core appearance */
+    background-color: var(--aurora-bg-light);
+    color: var(--aurora-text-light);
+    border-radius: var(--aurora-border-radius);
+    box-shadow: var(--aurora-shadow);
+    padding: 16px 18px;
+    margin: 10px 0;
+    position: relative;
+    animation: auroraFadeIn 0.35s cubic-bezier(0.21, 1.02, 0.73, 1); /* Custom easing */
+    font-family: var(--fl-font), sans-serif;
+    overflow: hidden;                              /* Prevents gradient from leaking */
+    will-change: transform, opacity;               /* Optimize for animation performance */
+
+    /* Glass morphism effect with backdrop blur */
+    backdrop-filter: blur(var(--aurora-blur));     /* Creates frosted glass look */
+    -webkit-backdrop-filter: blur(var(--aurora-blur)); /* Safari support */
+
+    /**
+     * Gradient overlay
+     * Creates a colored gradient based on notification type
+     */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;                                  /* Cover the entire notification */
+        z-index: 0;                                /* Place behind content */
+        opacity: 0.8;
+        border-radius: inherit;                    /* Match parent's border radius */
+    }
+
+    /**
+     * Content container
+     * Holds message and close button
+     */
+    .fl-content {
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 1;                                /* Place above gradient overlay */
+    }
+
+    /**
+     * Message styling
+     * The main notification text
+     */
+    .fl-message {
+        flex: 1;                                   /* Take available space */
+        font-size: 0.9375rem;                      /* 15px at default font size */
+        line-height: 1.5;
+        font-weight: 500;                          /* Medium weight for better readability */
+        margin-right: 10px;
+    }
+
+    /**
+     * Close button styling
+     * Circular button with hover effect
+     */
+    .fl-close {
+        flex-shrink: 0;                            /* Prevent shrinking */
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;                        /* Perfectly circular */
+        background: rgba(0, 0, 0, 0.05);           /* Subtle background */
+        border: none;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+        color: inherit;
+
+        &:hover, &:focus {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);        /* Darker on hover/focus */
+        }
+    }
+
+    /**
+     * Progress bar container
+     * Holds the animated progress indicator
+     */
+    .fl-progress-bar {
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 6px;                        /* Rounded ends */
+        opacity: 0.7;                              /* Slightly transparent */
+        z-index: 1;                                /* Above gradient, below content */
+    }
+
+    /**
+     * Progress indicator
+     * Animated by JavaScript to show remaining time
+     */
+    .fl-progress {
+        height: 100%;
+        width: 100%;
+    }
+
+    /**
+     * Type-specific styling
+     * Each notification type gets its own gradient and progress bar color
+     */
+    &.fl-success {
+        &::before { background: var(--aurora-success-gradient); }
+        .fl-progress { background-color: var(--aurora-success); }
+    }
+
+    &.fl-info {
+        &::before { background: var(--aurora-info-gradient); }
+        .fl-progress { background-color: var(--aurora-info); }
+    }
+
+    &.fl-warning {
+        &::before { background: var(--aurora-warning-gradient); }
+        .fl-progress { background-color: var(--aurora-warning); }
+    }
+
+    &.fl-error {
+        &::before { background: var(--aurora-error-gradient); }
+        .fl-progress { background-color: var(--aurora-error); }
+    }
+
+    /**
+     * RTL support
+     * Right-to-left language direction support
+     */
+    &.fl-rtl {
+        direction: rtl;
+
+        .fl-message {
+            margin-right: 0;
+            margin-left: 10px;                     /* Swap margins */
+        }
+
+        .fl-progress {
+            transform-origin: right center;        /* Animation starts from right */
+        }
+    }
+
+    /**
+     * Accessibility
+     * Respects reduced motion preferences
+     */
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;                           /* Disable animation */
+    }
+}
+
+/**
+ * Dark mode support
+ * Different styling when in dark mode
+ */
+body.fl-dark .fl-aurora,
+html.fl-dark .fl-aurora,
+.fl-aurora.fl-auto-dark {
+    background-color: var(--aurora-bg-dark);
+    color: var(--aurora-text-dark);
+    box-shadow: var(--aurora-shadow-dark);
+
+    /* Adjusted close button for dark mode */
+    .fl-close {
+        background: rgba(255, 255, 255, 0.1);      /* Lighter background in dark mode */
+
+        &:hover, &:focus {
+            background: rgba(255, 255, 255, 0.15); /* Lighter hover in dark mode */
+        }
+    }
+
+    /* Stronger gradients for better visibility in dark mode */
+    &.fl-success::before { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.25) 100%); }
+    &.fl-info::before { background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.25) 100%); }
+    &.fl-warning::before { background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.25) 100%); }
+    &.fl-error::before { background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.25) 100%); }
+}
