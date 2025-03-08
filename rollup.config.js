@@ -1,27 +1,46 @@
+import path from 'node:path'
 import process from 'node:process'
-import { defineConfig } from 'rollup'
-import clear from 'rollup-plugin-clear'
-import resolve from '@rollup/plugin-node-resolve'
-import cleanup from 'rollup-plugin-cleanup'
-import typescript from '@rollup/plugin-typescript'
+import { fileURLToPath } from 'node:url'
 import babel from '@rollup/plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
-import filesize from 'rollup-plugin-filesize'
-import copy from 'rollup-plugin-copy'
-import postcss from 'rollup-plugin-postcss'
-import cssnano from 'cssnano'
+import typescript from '@rollup/plugin-typescript'
+import strip from '@rollup/plugin-strip'
 import autoprefixer from 'autoprefixer'
+import cssnano from 'cssnano'
+import glob from 'glob'
 import discardComments from 'postcss-discard-comments'
+import { defineConfig } from 'rollup'
+import cleanup from 'rollup-plugin-cleanup'
+import clear from 'rollup-plugin-clear'
+import copy from 'rollup-plugin-copy'
+import filesize from 'rollup-plugin-filesize'
+import postcss from 'rollup-plugin-postcss'
 import progress from 'rollup-plugin-progress'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
 const modules = [
     { name: 'flasher', path: 'src/Prime/Resources' },
-    { name: 'noty', path: 'src/Noty/Prime/Resources', globals: { noty: 'Noty' }, assets: ['noty/lib/noty.min.js', 'noty/lib/noty.css', 'noty/lib/themes/mint.css'] },
+    {
+        name: 'noty',
+        path: 'src/Noty/Prime/Resources',
+        globals: { noty: 'Noty' },
+        assets: ['noty/lib/noty.min.js', 'noty/lib/noty.css', 'noty/lib/themes/mint.css'],
+    },
     { name: 'notyf', path: 'src/Notyf/Prime/Resources' },
-    { name: 'sweetalert', path: 'src/SweetAlert/Prime/Resources', globals: { sweetalert2: 'Swal' }, assets: ['sweetalert2/dist/sweetalert2.min.js', 'sweetalert2/dist/sweetalert2.min.css'] },
-    { name: 'toastr', path: 'src/Toastr/Prime/Resources', globals: { toastr: 'toastr' }, assets: ['jquery/dist/jquery.min.js', 'toastr/build/toastr.min.js', 'toastr/build/toastr.min.css'] },
+    {
+        name: 'sweetalert',
+        path: 'src/SweetAlert/Prime/Resources',
+        globals: { sweetalert2: 'Swal' },
+        assets: ['sweetalert2/dist/sweetalert2.min.js', 'sweetalert2/dist/sweetalert2.min.css'],
+    },
+    {
+        name: 'toastr',
+        path: 'src/Toastr/Prime/Resources',
+        globals: { toastr: 'toastr' },
+        assets: ['jquery/dist/jquery.min.js', 'toastr/build/toastr.min.js', 'toastr/build/toastr.min.css'],
+    },
 ]
 
 const postcssPlugins = [
@@ -29,6 +48,8 @@ const postcssPlugins = [
     discardComments({ removeAll: true }),
     autoprefixer({ overrideBrowserslist: ['> 0%'] }),
 ]
+
+const externalFlasherId = fileURLToPath(new URL('src/Prime/Resources/assets/index.ts', import.meta.url))
 
 function commonPlugins(path) {
     return [
@@ -63,16 +84,24 @@ function createPlugins({ name, path, assets }) {
     const filename = name === 'flasher' ? 'flasher.min.css' : `flasher-${name}.min.css`
 
     const copyAssets = assets
-        ? [copy({ targets: assets.map((asset) => ({
-                src: asset.startsWith('node_modules') ? asset : `node_modules/${asset}`,
-                dest: `${path}/public` })) })]
+        ? [copy({
+                targets: assets.map((asset) => ({
+                    src: asset.startsWith('node_modules') ? asset : `node_modules/${asset}`,
+                    dest: `${path}/public`,
+                })),
+            })]
         : []
 
     return [
         progress(),
         ...(isProduction ? [clear({ targets: [`${path}/dist`, `${path}/public`] })] : []),
-        postcss({ extract: filename, plugins: isProduction ? postcssPlugins : [] }),
+        postcss({
+            extract: filename,
+            plugins: isProduction ? postcssPlugins : [],
+            use: { sass: { silenceDeprecations: ['legacy-js-api'] } },
+        }),
         ...commonPlugins(path),
+        ...(isProduction ? [strip()] : []),
         ...(isProduction ? [cleanup({ comments: 'none' })] : []),
         ...copyAssets,
     ]
@@ -91,9 +120,11 @@ function createOutput({ name, path, globals }) {
 
     const plugins = [
         ...(isProduction ? [terser({ format: { comments: false } })] : []),
-        copy({ targets: [{ src: [`${distPath}/*.min.js`, `${distPath}/*.min.css`], dest: publicPath }], hook: 'writeBundle' }),
-        ...(isProduction ? [terser({ format: { comments: false } })] : []),
-        ...(isProduction ? [filesize()] : []),
+        copy({
+            targets: [{ src: [`${distPath}/*.min.js`, `${distPath}/*.min.css`], dest: publicPath }],
+            hook: 'writeBundle',
+        }),
+        ...(isProduction ? [filesize({ showBrotliSize: true })] : []),
     ]
 
     return [
@@ -111,7 +142,14 @@ function createPrimePlugin() {
 
     return defineConfig({
         input: `${path}/assets/plugin.ts`,
-        plugins: [resolve(), typescript({ compilerOptions: { outDir: `${path}/dist` }, include: [`${path}/assets/**/**`] })],
+        plugins: [
+            resolve(),
+            typescript({
+                compilerOptions: {
+                    outDir: `${path}/dist`,
+                },
+                include: [`${path}/assets/**/**`],
+            })],
         output: [
             { format: 'es', file: `${filename}.js` },
             // { format: 'cjs', file: `${filename}.cjs.js` },
@@ -119,7 +157,88 @@ function createPrimePlugin() {
     })
 }
 
+function createThemeConfig(file) {
+    const primePath = 'src/Prime/Resources'
+    const themeName = path.basename(path.dirname(file))
+
+    const globals = {
+        '@flasher/flasher': 'flasher',
+        [externalFlasherId]: 'flasher',
+    }
+
+    return defineConfig({
+        input: file,
+        external: Object.keys(globals),
+        plugins: [
+            resolve(),
+            postcss({
+                extract: `${themeName}.min.css`,
+                plugins: isProduction ? postcssPlugins : [],
+                use: { sass: { silenceDeprecations: ['legacy-js-api'] } },
+            }),
+            typescript({
+                compilerOptions: {
+                    outDir: `${primePath}/dist/themes/${themeName}`,
+                    declaration: false,
+                },
+                include: [
+                    `${primePath}/assets/**/*.ts`,
+                ],
+            }),
+            babel({ babelHelpers: 'bundled' }),
+            ...(isProduction ? [cleanup({ comments: 'none' })] : []),
+            ...(isProduction ? [strip()] : []),
+            ...(isProduction ? [filesize({ showBrotliSize: true })] : []),
+        ],
+        output: [
+            {
+                format: 'umd',
+                file: `${primePath}/dist/themes/${themeName}/${themeName}.min.js`,
+                name: `theme.${themeName}`,
+                globals,
+                plugins: [
+                    ...isProduction ? [terser({ format: { comments: false } })] : [],
+                    copy({
+                        targets: [
+                            {
+                                src: [
+                                    `${primePath}/dist/themes/${themeName}/${themeName}.min.js`,
+                                    `${primePath}/dist/themes/${themeName}/${themeName}.min.css`,
+                                ],
+                                dest: `${primePath}/public/themes/${themeName}`,
+                            },
+                        ],
+                        hook: 'writeBundle',
+                        verbose: false,
+                    }),
+                ],
+            },
+            {
+                format: 'umd',
+                file: `${primePath}/dist/themes/${themeName}/${themeName}.js`,
+                name: `theme.${themeName}`,
+                globals,
+            },
+            {
+                format: 'es',
+                file: `${primePath}/dist/themes/${themeName}/${themeName}.esm.js`,
+                globals,
+            },
+        ],
+    })
+}
+
+function createThemesConfigs() {
+    const primePath = 'src/Prime/Resources'
+    const themesDir = `${primePath}/assets/themes`
+
+    const themeFiles = glob.sync(`${themesDir}/**/index.ts`).filter((file) => file !== `${themesDir}/index.ts`)
+
+    return themeFiles.map(createThemeConfig)
+}
+
 export default [
     createPrimePlugin(),
     ...modules.map(createConfig),
+    ...createThemesConfigs(),
 ]

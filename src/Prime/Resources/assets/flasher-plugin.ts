@@ -1,155 +1,406 @@
+/**
+ * @file FlasherPlugin Implementation
+ * @description Default implementation for displaying notifications using custom themes
+ * @author yoeunes
+ */
 import './themes/index.scss'
 
 import type { Properties } from 'csstype'
-import type { Envelope, Options, Theme } from './types'
+import type { Envelope, FlasherPluginOptions, Options, Theme } from './types'
 import { AbstractPlugin } from './plugin'
 
+/**
+ * Default FlasherPlugin implementation using custom themes.
+ *
+ * FlasherPlugin is the built-in renderer for PHPFlasher that creates DOM-based
+ * notifications with a customizable appearance. It uses themes to determine
+ * the HTML structure and styling of notifications.
+ *
+ * Features:
+ * - Theme-based notification rendering
+ * - Container management for different positions
+ * - Auto-dismissal with progress bars
+ * - RTL language support
+ * - HTML escaping for security
+ * - Mouse-over pause of auto-dismissal
+ *
+ * @example
+ * ```typescript
+ * // Create a simple theme
+ * const myTheme: Theme = {
+ *   styles: ['my-theme.css'],
+ *   render: (envelope) => `
+ *     <div class="my-notification my-notification-${envelope.type}">
+ *       <h4>${envelope.title}</h4>
+ *       <p>${envelope.message}</p>
+ *       <button class="fl-close">&times;</button>
+ *       <div class="fl-progress-bar"></div>
+ *     </div>
+ *   `
+ * };
+ *
+ * // Create a plugin with the theme
+ * const plugin = new FlasherPlugin(myTheme);
+ *
+ * // Show a notification
+ * plugin.success('Operation completed');
+ * ```
+ */
 export default class FlasherPlugin extends AbstractPlugin {
+    /**
+     * Theme configuration used for rendering notifications.
+     * @private
+     */
     private theme: Theme
-    private options = {
+
+    /**
+     * Default configuration options for notifications.
+     * These can be overridden globally or per notification.
+     * @private
+     */
+    private options: FlasherPluginOptions = {
+        // Default or type-specific timeout (milliseconds, null = use type-specific)
         timeout: null,
+
+        // Type-specific timeout durations
         timeouts: {
-            success: 5000,
-            info: 5000,
-            error: 5000,
-            warning: 5000,
+            success: 10000,
+            info: 10000,
+            error: 10000,
+            warning: 10000,
         },
+
+        // Animation frames per second (higher = smoother but more CPU intensive)
         fps: 30,
+
+        // Default position on screen
         position: 'top-right',
+
+        // Stacking direction (top = newest first, bottom = newest last)
         direction: 'top',
+
+        // Right-to-left text direction
         rtl: false,
+
+        // Custom container styles
         style: {} as Properties,
+
+        // Whether to escape HTML in message content (security feature)
         escapeHtml: false,
     }
 
+    /**
+     * Creates a new FlasherPlugin with a specific theme.
+     *
+     * @param theme - Theme configuration to use for rendering notifications
+     * @throws {Error} If theme is missing or invalid
+     */
     constructor(theme: Theme) {
         super()
+
+        if (!theme) {
+            throw new Error('Theme is required')
+        }
+
+        if (typeof theme.render !== 'function') {
+            throw new TypeError('Theme must have a render function')
+        }
 
         this.theme = theme
     }
 
+    /**
+     * Renders notification envelopes using the configured theme.
+     *
+     * This method creates and displays notifications in the DOM based on
+     * the provided envelopes and the plugin's theme.
+     *
+     * @param envelopes - Array of notification envelopes to render
+     */
     public renderEnvelopes(envelopes: Envelope[]): void {
-        const render = () =>
+        if (!envelopes?.length) {
+            return
+        }
+
+        const render = () => {
             envelopes.forEach((envelope) => {
-                // @ts-expect-error
-                const typeTimeout = this.options.timeout ?? this.options.timeouts[envelope.type] ?? 5000
-                const options = {
-                    ...this.options,
-                    ...envelope.options,
-                    timeout: envelope.options.timeout ?? typeTimeout,
-                    escapeHtml: (envelope.options.escapeHtml ?? this.options.escapeHtml) as boolean,
+                try {
+                    // Get type-specific timeout or default
+                    const typeTimeout = this.options.timeout ?? this.options.timeouts[envelope.type] ?? 10000
+
+                    // Merge default options with envelope-specific options
+                    const mergedOptions = {
+                        ...this.options,
+                        ...envelope.options,
+                        timeout: envelope.options.timeout ?? typeTimeout,
+                        escapeHtml: (envelope.options.escapeHtml ?? this.options.escapeHtml) as boolean,
+                    }
+
+                    // Create or get the container for this notification position
+                    const container = this.createContainer(mergedOptions)
+
+                    // Extract only the properties that addToContainer expects
+                    const containerOptions = {
+                        direction: mergedOptions.direction,
+                        timeout: Number(mergedOptions.timeout || 0), // Convert null/undefined to 0
+                        fps: mergedOptions.fps,
+                        rtl: mergedOptions.rtl,
+                        escapeHtml: mergedOptions.escapeHtml,
+                    }
+
+                    // Add notification to the container
+                    this.addToContainer(container, envelope, containerOptions)
+                } catch (error) {
+                    console.error('PHPFlasher: Error rendering envelope', error, envelope)
                 }
-
-                this.addToContainer(this.createContainer(options), envelope, options)
             })
+        }
 
-        document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', render) : render()
+        // Wait for DOM to be ready if needed
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', render)
+        } else {
+            render()
+        }
     }
 
+    /**
+     * Updates the plugin options.
+     *
+     * @param options - New options to apply
+     */
     public renderOptions(options: Options): void {
+        if (!options) {
+            return
+        }
         this.options = { ...this.options, ...options }
     }
 
+    /**
+     * Creates or gets the container for notifications.
+     *
+     * This method ensures that each position has its own container for notifications.
+     * If a container for the specified position doesn't exist yet, it creates one.
+     *
+     * @param options - Options containing position and style information
+     * @returns The container element
+     * @private
+     */
     private createContainer(options: { position: string, style: Properties }): HTMLDivElement {
+        // Look for existing container for this position
         let container = document.querySelector(`.fl-wrapper[data-position="${options.position}"]`) as HTMLDivElement
 
         if (!container) {
+            // Create new container if none exists
             container = document.createElement('div')
             container.className = 'fl-wrapper'
             container.dataset.position = options.position
-            Object.entries(options.style).forEach(([key, value]) => container.style.setProperty(key, value))
+
+            // Apply custom styles
+            Object.entries(options.style).forEach(([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    container.style.setProperty(key, String(value))
+                }
+            })
+
             document.body.appendChild(container)
         }
 
+        // Mark for Turbo/Hotwire preservation if available
         container.dataset.turboTemporary = ''
 
         return container
     }
 
-    private addToContainer(container: HTMLDivElement, envelope: Envelope, options: { direction: string, timeout: number, fps: number, rtl: boolean, escapeHtml: boolean }): void {
+    /**
+     * Adds a notification to the container.
+     *
+     * This method:
+     * 1. Creates a notification element using the theme's render function
+     * 2. Adds necessary classes and event listeners
+     * 3. Appends it to the container in the right position
+     * 4. Sets up auto-dismissal if a timeout is specified
+     *
+     * @param container - Container to add the notification to
+     * @param envelope - Notification information
+     * @param options - Display options
+     * @private
+     */
+    private addToContainer(
+        container: HTMLDivElement,
+        envelope: Envelope,
+        options: {
+            direction: string
+            timeout: number
+            fps: number
+            rtl: boolean
+            escapeHtml: boolean
+        },
+    ): void {
+        // Sanitize content if needed
         if (options.escapeHtml) {
             envelope.title = this.escapeHtml(envelope.title)
             envelope.message = this.escapeHtml(envelope.message)
         }
 
+        // Create notification element from theme template
         const notification = this.stringToHTML(this.theme.render(envelope))
 
-        notification.classList.add(...`fl-container${options.rtl ? ' fl-rtl' : ''}`.split(' '))
-        options.direction === 'bottom' ? container.append(notification) : container.prepend(notification)
+        // Add standard classes
+        notification.classList.add('fl-container')
+        if (options.rtl) {
+            notification.classList.add('fl-rtl')
+        }
 
+        // Add to container in the right position (top or bottom)
+        if (options.direction === 'bottom') {
+            container.append(notification)
+        } else {
+            container.prepend(notification)
+        }
+
+        // Trigger animation on next frame for better performance
         requestAnimationFrame(() => notification.classList.add('fl-show'))
 
-        notification.querySelector('.fl-close')?.addEventListener('click', (event) => {
-            event.stopPropagation()
-            this.removeNotification(notification)
-        })
+        // Add close button functionality
+        const closeButton = notification.querySelector('.fl-close')
+        if (closeButton) {
+            closeButton.addEventListener('click', (event) => {
+                event.stopPropagation()
+                this.removeNotification(notification)
+            })
+        }
 
-        this.addProgressBar(notification, options)
+        // Add timer if timeout is specified
+        if (options.timeout > 0) {
+            this.addTimer(notification, options)
+        }
     }
 
-    addProgressBar(notification: HTMLElement, { timeout, fps }: { timeout: number, fps: number }) {
-        if (timeout <= 0 || fps <= 0) {
+    /**
+     * Adds a progress timer to the notification.
+     *
+     * This method creates a visual progress bar that shows the remaining time
+     * before auto-dismissal. The timer pauses when the user hovers over the notification.
+     *
+     * @param notification - Notification element
+     * @param options - Timer options
+     * @private
+     */
+    private addTimer(notification: HTMLElement, { timeout, fps }: { timeout: number, fps: number }): void {
+        if (timeout <= 0) {
             return
         }
-
-        const progressBarContainer = notification.querySelector('.fl-progress-bar')
-        if (!progressBarContainer) {
-            return
-        }
-
-        const progressBar = document.createElement('span')
-        progressBar.classList.add('fl-progress')
-        progressBarContainer.append(progressBar)
 
         const lapse = 1000 / fps
-        let width = 0
-        const updateProgress = () => {
-            width += 1
-            const percent = (1 - lapse * (width / timeout)) * 100
-            progressBar.style.width = `${percent}%`
+        let elapsed = 0
+        let intervalId: number
 
-            if (percent <= 0) {
-                // eslint-disable-next-line ts/no-use-before-define
+        const updateTimer = () => {
+            elapsed += lapse
+
+            const progressBarContainer = notification.querySelector('.fl-progress-bar')
+            if (progressBarContainer) {
+                // Create or get progress bar element
+                let progressBar = progressBarContainer.querySelector('.fl-progress')
+                if (!progressBar) {
+                    progressBar = document.createElement('span')
+                    progressBar.classList.add('fl-progress')
+                    progressBarContainer.append(progressBar)
+                }
+
+                // Calculate and set progress (decreasing from 100% to 0%)
+                const percent = (1 - elapsed / timeout) * 100;
+                (progressBar as HTMLElement).style.width = `${Math.max(0, percent)}%`
+            }
+
+            // Close notification when time is up
+            if (elapsed >= timeout) {
                 clearInterval(intervalId)
                 this.removeNotification(notification)
             }
         }
 
-        let intervalId: number = window.setInterval(updateProgress, lapse)
-        notification.addEventListener('mouseout', () => intervalId = window.setInterval(updateProgress, lapse))
+        // Start timer
+        intervalId = window.setInterval(updateTimer, lapse)
+
+        // Pause timer on hover
+        notification.addEventListener('mouseout', () => {
+            clearInterval(intervalId)
+            intervalId = window.setInterval(updateTimer, lapse)
+        })
         notification.addEventListener('mouseover', () => clearInterval(intervalId))
     }
 
-    private removeNotification(notification: HTMLElement) {
+    /**
+     * Removes a notification with animation.
+     *
+     * This method:
+     * 1. Removes the 'show' class to trigger the hide animation
+     * 2. Waits for the animation to complete
+     * 3. Removes the notification from the DOM
+     * 4. Cleans up the container if it's now empty
+     *
+     * @param notification - Notification element to remove
+     * @private
+     */
+    private removeNotification(notification: HTMLElement): void {
+        if (!notification) {
+            return
+        }
+
         notification.classList.remove('fl-show')
+
+        // Clean up empty containers after animation
         notification.ontransitionend = () => {
-            !notification.parentElement?.hasChildNodes() && notification.parentElement?.remove()
+            const parent = notification.parentElement
             notification.remove()
+
+            if (parent && !parent.hasChildNodes()) {
+                parent.remove()
+            }
         }
     }
 
+    /**
+     * Converts an HTML string to a DOM element.
+     *
+     * @param str - HTML string to convert
+     * @returns The created DOM element
+     * @private
+     */
     private stringToHTML(str: string): HTMLElement {
         const template = document.createElement('template')
         template.innerHTML = str.trim()
         return template.content.firstElementChild as HTMLElement
     }
 
+    /**
+     * Safely escapes HTML special characters.
+     *
+     * This method replaces special characters with their HTML entities
+     * to prevent XSS attacks when displaying user-provided content.
+     *
+     * @param str - String to escape
+     * @returns Escaped string
+     * @private
+     */
     private escapeHtml(str: string | null | undefined): string {
         if (str == null) {
             return ''
         }
 
-        return str.replace(/[&<>"'`=\/]/g, (char) => {
-            return {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                '\'': '&#39;',
-                '`': '&#96;',
-                '=': '&#61;',
-                '/': '&#47;',
-            }[char] as string
-        })
+        const htmlEscapes: Record<string, string> = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            '\'': '&#39;',
+            '`': '&#96;',
+            '=': '&#61;',
+            '/': '&#47;',
+        }
+
+        return str.replace(/[&<>"'`=/]/g, (char) => htmlEscapes[char] || char)
     }
 }
