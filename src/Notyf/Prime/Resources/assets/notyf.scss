@@ -1,4 +1,15 @@
+/**
+ * Notyf custom styles for PHPFlasher
+ *
+ * These styles define custom icons for additional notification types
+ * (info and warning) beyond the default success and error types
+ * provided by Notyf.
+ *
+ * @author yoeunes
+ */
+
 .notyf {
+    // Common styles for custom icons
     &__icon {
         &--warning,
         &--info {
@@ -21,6 +32,7 @@
             }
         }
 
+        // Info icon (i)
         &--info {
             &::before,
             &::after {
@@ -31,11 +43,13 @@
                 transform: translateX(-50%);
             }
 
+            // Vertical line
             &::before {
                 top: 0.4em;
                 height: 0.38em;
             }
 
+            // Dot and shadow
             &::after {
                 top: 0.21em;
                 height: 0.13em;
@@ -43,6 +57,7 @@
             }
         }
 
+        // Warning icon (!)
         &--warning {
             &::before,
             &::after {
@@ -53,11 +68,13 @@
                 transform: translateX(-50%);
             }
 
+            // Exclamation vertical line
             &::before {
                 top: 0.21em;
                 height: 0.38em;
             }
 
+            // Exclamation dot
             &::after {
                 top: 0.65em;
                 height: 0.13em;
