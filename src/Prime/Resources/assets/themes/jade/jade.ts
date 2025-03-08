@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Jade Theme Implementation
  * @description Minimalist notification theme with soft, natural aesthetics
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './jade.scss'
 import type { Envelope } from '../../types'

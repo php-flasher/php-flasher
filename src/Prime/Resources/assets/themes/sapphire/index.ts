@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Sapphire Theme Registration
  * @description Registers the Sapphire theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { sapphireTheme } from './sapphire'

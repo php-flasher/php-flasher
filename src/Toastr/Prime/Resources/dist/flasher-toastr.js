@@ -1,3 +1,8 @@
+/**
+ * @package PHPFlasher
+ * @author Younes ENNAJI
+ * @license MIT
+ */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@flasher/flasher'), require('toastr')) :
     typeof define === 'function' && define.amd ? define(['@flasher/flasher', 'toastr'], factory) :

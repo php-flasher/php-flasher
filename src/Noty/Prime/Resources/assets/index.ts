@@ -1,7 +1,7 @@
 /**
  * @file Noty Plugin Entry Point
  * @description Registers the Noty plugin with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '@flasher/flasher'
 import NotyPlugin from './noty'

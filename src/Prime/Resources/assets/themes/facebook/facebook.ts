@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Facebook Theme Implementation
  * @description Social media style notifications inspired by Facebook's interface
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './facebook.scss'
 import type { Envelope } from '../../types'

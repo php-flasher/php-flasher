@@ -1,7 +1,7 @@
 /**
  * @file TypeScript Global Declarations
  * @description Type definitions for global objects
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import type Flasher from './flasher'
 

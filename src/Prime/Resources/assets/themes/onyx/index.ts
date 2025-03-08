@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Onyx Theme Registration
  * @description Registers the Onyx theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { onyxTheme } from './onyx'

@@ -1,3 +1,8 @@
+/**
+ * @package PHPFlasher
+ * @author Younes ENNAJI
+ * @license MIT
+ */
 class AbstractPlugin {
     success(message, title, options) {
         this.flash('success', message, title, options);

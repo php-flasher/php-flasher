@@ -1,7 +1,7 @@
 /**
  * @file Toastr Plugin Entry Point
  * @description Registers the Toastr plugin with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '@flasher/flasher'
 import ToastrPlugin from './toastr'

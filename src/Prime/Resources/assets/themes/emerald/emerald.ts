@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Emerald Theme Implementation
  * @description Elegant glass-like notification theme with bounce animation
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './emerald.scss'
 import type { Envelope } from '../../types'

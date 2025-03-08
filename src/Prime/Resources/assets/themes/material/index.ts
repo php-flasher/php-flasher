@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Material Design Theme Registration
  * @description Registers the Material Design theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { materialTheme } from './material'

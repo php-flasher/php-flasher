@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Theme Exports
  * @description Exports all available notification themes
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 
 /**

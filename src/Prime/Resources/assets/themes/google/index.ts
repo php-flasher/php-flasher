@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Google Theme Registration
  * @description Registers the Google theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { googleTheme } from './google'

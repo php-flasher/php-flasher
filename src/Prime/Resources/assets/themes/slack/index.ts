@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Slack Theme Registration
  * @description Registers the Slack theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { slackTheme } from './slack'

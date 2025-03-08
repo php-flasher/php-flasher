@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Facebook Theme Registration
  * @description Registers the Facebook theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { facebookTheme } from './facebook'

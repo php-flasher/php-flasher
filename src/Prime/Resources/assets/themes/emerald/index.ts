@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Emerald Theme Registration
  * @description Registers the Emerald theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { emeraldTheme } from './emerald'

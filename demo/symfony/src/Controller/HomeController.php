@@ -14,7 +14,7 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $themes = [
-            // 'flasher',
+            'flasher',
             // 'amber',
             // 'sapphire',
             // 'crystal',
@@ -24,7 +24,7 @@ class HomeController extends AbstractController
             // 'onyx',
 
             'jade',
-            //,'aurora',
+            // 'aurora',
             // 'neon',
             // 'minimal',
 
@@ -60,12 +60,12 @@ class HomeController extends AbstractController
             foreach ($messages as $type => $message) {
                 $position = $positions[$index % \count($positions)];
 
-                // $message = \sprintf('%s: %s', $theme, $message);
+                $message = \sprintf('%s: %s', $theme, $message);
 
-                // flash()
-                //     ->use("theme.$theme")
-                //     ->option('position', $position)
-                //     ->$type($message);
+                flash()
+                    ->use("theme.$theme")
+                    ->option('position', $position)
+                    ->$type($message);
             }
         }
 
@@ -73,7 +73,7 @@ class HomeController extends AbstractController
             // 'noty',
             // 'notyf',
             // 'sweetalert',
-            'toastr',
+            // 'toastr',
         ];
 
         foreach ($plugins as $plugin) {

@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Amazon Theme Implementation
  * @description Notification style inspired by Amazon's e-commerce platform
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './amazon.scss'
 import type { Envelope } from '../../types'

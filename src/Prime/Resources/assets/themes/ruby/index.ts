@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Ruby Theme Registration
  * @description Registers the Ruby theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { rubyTheme } from './ruby'

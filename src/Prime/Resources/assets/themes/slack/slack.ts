@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Slack Theme Implementation
  * @description Notifications styled after Slack's messaging interface
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './slack.scss'
 import type { Envelope } from '../../types'

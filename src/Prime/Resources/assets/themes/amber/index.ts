@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Amber Theme Registration
  * @description Registers the Amber theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { amberTheme } from './amber'

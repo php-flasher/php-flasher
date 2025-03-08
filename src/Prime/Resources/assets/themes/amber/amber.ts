@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Amber Theme Implementation
  * @description Modern, elegant notification theme with refined aesthetics
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './amber.scss'
 import type { Envelope } from '../../types'

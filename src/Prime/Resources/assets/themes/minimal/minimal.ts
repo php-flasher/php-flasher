@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Minimal Theme Implementation
  * @description Ultra-clean notification design that stays out of the way
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './minimal.scss'
 import type { Envelope } from '../../types'

@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher iOS Theme Implementation
  * @description Apple iOS-style notification interface
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './ios.scss'
 import type { Envelope } from '../../types'

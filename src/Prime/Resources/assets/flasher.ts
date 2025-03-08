@@ -1,7 +1,7 @@
 /**
  * @file Flasher Core
  * @description Main orchestration class for the PHPFlasher notification system
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import type { Asset, Context, Envelope, Options, PluginInterface, Response, Theme } from './types'
 import { AbstractPlugin } from './plugin'

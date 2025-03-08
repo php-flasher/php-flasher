@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Aurora Theme Registration
  * @description Registers the Aurora theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { auroraTheme } from './aurora'
