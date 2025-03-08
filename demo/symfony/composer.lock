@@ -2844,11 +2844,11 @@
         },
         {
             "name": "php-flasher/php-flasher",
-            "version": "2.1.4.x-dev",
+            "version": "2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "../..",
-                "reference": "1b3b0bd08f88defc3195023741a3094a568a0b9e"
+                "reference": "2a3ff7beaf4b12fc03463bd5f1a838a019688a43"
             },
             "require": {
                 "ext-intl": "*",
