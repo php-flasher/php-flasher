@@ -14,6 +14,6 @@ final class FlasherFactory extends NotificationFactory implements FlasherFactory
 {
     public function createNotificationBuilder(): NotificationBuilderInterface
     {
-        return new FlasherBuilder('flasher', $this->storageManager);
+        return new FlasherBuilder($this->plugin ?? 'flasher', $this->storageManager);
     }
 }
