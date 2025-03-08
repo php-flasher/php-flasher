@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+# Colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly UNDERLINE='\033[4m'
+readonly BLUE='\033[34m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly YELLOW='\033[33m'
+readonly CYAN='\033[36m'
+readonly MAGENTA='\033[35m'
+
+# Essential emojis
+readonly ROCKET="🚀"
+readonly CHECK="✓"
+readonly ERROR="❌"
+readonly PACKAGE="📦"
+readonly SEARCH="🔍"
+readonly HAMMER="🏗️"
+readonly SPARKLES="✨"
+readonly WARNING="⚠️"
+
+print_header() {
+    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Update ${ROCKET}${RESET}\n"
+    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}User      : ${RESET}${MAGENTA}$(whoami)${RESET}"
+    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
+    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+}
+
+update_composer_dependencies() {
+    echo -e "${BOLD}${PACKAGE} Composer Dependencies${RESET}"
+
+    if composer update --prefer-lowest -W; then
+        echo -e "${CHECK} ${GREEN}Dependencies updated successfully${RESET}\n"
+        return 0
+    else
+        echo -e "${ERROR} ${RED}Failed to update Composer dependencies${RESET}\n"
+        return 1
+    fi
+}
+
+check_npm_updates() {
+    echo -e "${BOLD}${SEARCH} NPM Updates Check${RESET}"
+
+    if npm run ncu > /dev/null 2>&1; then
+        echo -e "${CHECK} ${GREEN}NPM check completed successfully${RESET}\n"
+    else
+        echo -e "${WARNING} ${YELLOW}NPM check failed, continuing...${RESET}\n"
+    fi
+
+    return 0  # Continue regardless of outcome
+}
+
+update_npm_dependencies() {
+    echo -e "${BOLD}${PACKAGE} NPM Dependencies${RESET}"
+
+    if npm install --force; then
+        echo -e "${CHECK} ${GREEN}NPM dependencies installed successfully${RESET}\n"
+        return 0
+    else
+        echo -e "${WARNING} ${YELLOW}NPM install failed, continuing...${RESET}\n"
+        return 0  # Continue despite failure
+    fi
+}
+
+build_assets() {
+    echo -e "${BOLD}${HAMMER} Building Assets${RESET}"
+
+    if npm run build; then
+        echo -e "${CHECK} ${GREEN}Assets built successfully${RESET}\n"
+        return 0
+    else
+        echo -e "${WARNING} ${YELLOW}Build failed, continuing...${RESET}\n"
+        return 0  # Continue despite failure
+    fi
+}
+
+main() {
+    local start_time=$(date +%s)
+    local success=true
+
+    print_header
+
+    # Update composer dependencies
+    update_composer_dependencies || success=false
+
+    # Check NPM updates
+    check_npm_updates
+
+    # Update NPM dependencies
+    update_npm_dependencies
+
+    # Build assets
+    build_assets
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    # Summary
+    echo -e "${BOLD}${CYAN}Update Summary${RESET}"
+    if [ "$success" = true ]; then
+        echo -e "${SPARKLES} ${GREEN}Update completed successfully${RESET}"
+    else
+        echo -e "${WARNING} ${YELLOW}Update completed with some issues${RESET}"
+    fi
+    echo -e "Duration    : ${YELLOW}${duration}s${RESET}\n"
+
+    [ "$success" = true ] && exit 0 || exit 1
+}
+
+main

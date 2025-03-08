@@ -1,70 +1,35 @@
-#!/usr/bin/env php
-<?php
+#!/bin/bash
 
-declare(strict_types=1);
+# Default to the current directory if no directory is provided
+dir=${1:-.}
 
-require __DIR__.'/../vendor/autoload.php';
+# Optional: A list of file extensions to filter by, e.g., "txt md". Leave empty to include all files.
+extensions=($2)
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
+# Temporary file to store results
+temp_file=$(mktemp)
 
-$filesystem = new Filesystem();
-
-// Define the shared resources
-$shared = realpath(__DIR__.'/../.shared');
-
-$resources = [
-    $shared,
-    __DIR__.'/../.github/FUNDING.yml',
-    __DIR__.'/../README.md',
-    __DIR__.'/../LICENSE',
-];
-
-// Directories to search for packages
-$dirs = [__DIR__.'/../src'];
-
-// Find all composer.json files within the specified directories
-$finder = new Finder();
-$finder->files()
-    ->in($dirs)
-    ->name('composer.json')
-    ->depth('< 3'); // Adjust depth as needed
-
-$packages = [];
-
-// Collect package directories
-foreach ($finder as $file) {
-    $packages[] = dirname($file->getRealPath());
+# Function to print file details (now inline within find command)
+print_file_details() {
+    echo "File Path: $1"
+    echo "Contents:"
+    cat "$1"
+    echo
 }
 
-foreach ($packages as $packageDir) {
-    foreach ($resources as $resource) {
-        if (!is_string($resource)) {
-            continue;
-        }
+# Finding and processing files
+if [ ${#extensions[@]} -eq 0 ]; then
+    # If no extensions are specified, process all files
+    find "$dir" -type f -exec bash -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' bash {} \; >> "$temp_file"
+else
+    # Process only files with specified extensions
+    for ext in "${extensions[@]}"; do
+        find "$dir" -type f -name "*.$ext" -exec bash -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' bash {} \; >> "$temp_file"
+    done
+fi
 
-        $resourcePath = realpath($resource);
+# Copy results to clipboard and remove the temporary file
+cat "$temp_file" | pbcopy
+rm "$temp_file"
 
-        if (!$resourcePath) {
-            continue; // Skip if the resource doesn't exist
-        }
-
-        $relativePath = str_replace(realpath(__DIR__.'/../') ?: '', '', $resourcePath);
-        $destination = $packageDir.$relativePath;
-
-        if (is_file($resourcePath)) {
-            // Ensure the destination directory exists
-            $filesystem->mkdir(dirname($destination));
-            // Copy the file
-            $filesystem->copy($resourcePath, $destination, true);
-        } elseif (is_dir($resourcePath)) {
-            if ($resourcePath === $shared) {
-                // Copy contents of the shared directory into the package directory
-                $filesystem->mirror($shared, $packageDir, null, ['override' => true]);
-            } else {
-                // Copy the entire directory to the destination
-                $filesystem->mirror($resourcePath, $destination, null, ['override' => true]);
-            }
-        }
-    }
-}
+echo "Results copied to clipboard."

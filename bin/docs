@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+# Colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly UNDERLINE='\033[4m'
+readonly BLUE='\033[34m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly YELLOW='\033[33m'
+readonly CYAN='\033[36m'
+readonly MAGENTA='\033[35m'
+
+# Essential emojis
+readonly ROCKET="🚀"
+readonly CHECK="✓"
+readonly ERROR="❌"
+readonly WARNING="⚠️"
+readonly BOOKS="📚"
+readonly HAMMER="🏗️"
+readonly SPARKLES="✨"
+
+print_header() {
+    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Documentation Builder ${ROCKET}${RESET}\n"
+    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}User      : ${RESET}${MAGENTA}yoeunes${RESET}"
+    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
+    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+}
+
+install_dependencies() {
+    echo -e "${BOLD}${BOOKS} Installing dependencies${RESET}"
+
+    if npm install --force; then
+        echo -e "${CHECK} ${GREEN}Dependencies installed successfully${RESET}\n"
+        return 0
+    else
+        echo -e "${WARNING} ${YELLOW}Dependency installation had issues${RESET}\n"
+        return 1
+    fi
+}
+
+build_documentation() {
+    echo -e "${BOLD}${HAMMER} Building documentation${RESET}"
+
+    if npm run build; then
+        echo -e "${CHECK} ${GREEN}Documentation built successfully${RESET}\n"
+        return 0
+    else
+        echo -e "${ERROR} ${RED}Documentation build failed${RESET}\n"
+        return 1
+    fi
+}
+
+main() {
+    local command=${1:-"build"}
+    local start_time=$(date +%s)
+    local success=true
+
+    # Change directory to docs/
+    if [[ ! -d "docs/" ]]; then
+        echo -e "${ERROR} ${RED}Documentation directory 'docs/' not found${RESET}\n"
+        exit 1
+    fi
+
+    cd docs/
+
+    print_header
+    echo -e "${BOLD}Command   : ${RESET}${CYAN}${command}${RESET}\n"
+
+    case $command in
+        "build")
+            install_dependencies || success=false
+            build_documentation || success=false
+            ;;
+        *)
+            echo -e "${ERROR} ${RED}Unknown command: ${command}${RESET}"
+            echo -e "Available commands: build"
+            exit 1
+            ;;
+    esac
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    # Summary
+    echo -e "${BOLD}${CYAN}Documentation ${command^} Summary${RESET}"
+    if [ "$success" = true ]; then
+        echo -e "${SPARKLES} ${GREEN}Documentation ${command} completed successfully${RESET}"
+    else
+        echo -e "${WARNING} ${YELLOW}Documentation ${command} completed with issues${RESET}"
+    fi
+    echo -e "Duration    : ${YELLOW}${duration}s${RESET}\n"
+
+    [ "$success" = true ] && exit 0 || exit 1
+}
+
+main "$@"
