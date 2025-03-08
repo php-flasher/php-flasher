@@ -1,3 +1,13 @@
+/**
+ * @file PHPFlasher Icon Styles
+ * @description Icon styling for different notification types
+ * @author yoeunes
+ */
+
+/**
+ * Base icon styling
+ * Shared properties for all notification icons
+ */
 .fl-icon {
     position: relative;
     box-sizing: border-box;
@@ -9,7 +19,7 @@
     margin: 0;
     color: white;
     border-radius: 50%;
-    transition: all 1s;
+    transition: transform 0.2s ease;
 
     &::before,
     &::after {
@@ -17,10 +27,14 @@
         box-sizing: border-box;
         content: "";
         border-width: 0;
-        transition: all 1s;
+        transition: inherit;
     }
 }
 
+/**
+ * Success checkmark icon
+ * Creates a checkmark (✓) symbol using CSS
+ */
 .fl-success .fl-icon {
     &::before,
     &::after {
@@ -40,6 +54,10 @@
     }
 }
 
+/**
+ * Info icon
+ * Creates an information (i) symbol using CSS
+ */
 .fl-info .fl-icon {
     &::before,
     &::after {
@@ -62,6 +80,10 @@
     }
 }
 
+/**
+ * Warning icon
+ * Creates an exclamation (!) symbol using CSS
+ */
 .fl-warning .fl-icon {
     &::before,
     &::after {
@@ -83,6 +105,10 @@
     }
 }
 
+/**
+ * Error X icon
+ * Creates an X symbol using CSS
+ */
 .fl-error .fl-icon {
     &::before,
     &::after {
@@ -100,10 +126,12 @@
     }
 }
 
+/**
+ * Icon background colors
+ * Sets the background color for each notification type's icon
+ */
 @each $type in success, info, warning, error {
-    .fl-#{$type} {
-        .fl-icon {
-            background-color: var(--#{$type}-color);
-        }
+    .fl-#{$type} .fl-icon {
+        background-color: var(--#{$type}-color, var(--fl-#{$type}));
     }
 }

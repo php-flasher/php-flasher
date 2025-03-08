@@ -1,49 +1,226 @@
+/**
+ * @file PHPFlasher Wrapper Styles
+ * @description Positioning and layout for notification containers
+ * @author yoeunes
+ */
+
+/**
+ * .fl-wrapper
+ *
+ * The main container that holds notifications.
+ * Controls position, stacking, and transition effects.
+ */
 .fl-wrapper {
     position: fixed;
-    z-index: 10;
+    z-index: 1000;
     width: 24em;
-    transition: all 1s ease-in-out;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
 
-    @media only screen and (width <= 480px) {
-        width: 90%;
-        left: 5%;
-        right: 5%;
-    }
+    /**
+     * Child notification containers
+     * Each notification inherits positioning from its wrapper
+     */
+    .fl-container {
+        pointer-events: auto; // Allow interactions with the notification
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                   opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        opacity: 0;
+        border-radius: var(--fl-border-radius, 4px);
 
-    &[data-position^="top-"] {
-        top: 0.5em;
-    }
-
-    &[data-position^="bottom-"] {
-        bottom: 0.5em;
-    }
-
-    &[data-position$="-right"] {
-        right: 0.5em;
-
-        .fl-container {
-            transform: translateX(110%);
+        &.fl-show {
+            opacity: 1;
+            transform: translate(0, 0) scale(1) !important;
         }
     }
 
+    /**
+     * Stacking behavior for multiple notifications
+     */
+    &.fl-stacked .fl-container:not(:last-child) {
+        margin-bottom: 0.5em;
+    }
+
+    // Position variations - vertical positioning
+    &[data-position^="top-"] {
+        top: 0.75em;
+    }
+
+    &[data-position^="bottom-"] {
+        bottom: 0.75em;
+    }
+
+    &[data-position^="center-"] {
+        top: 50%;
+    }
+
+    // Position variations - horizontal positioning
+    &[data-position$="-right"] {
+        right: 0.75em;
+    }
+
     &[data-position$="-left"] {
-        left: 0.5em;
+        left: 0.75em;
+    }
+
+    &[data-position$="-center"] {
+        left: 50%;
+    }
+
+    /**
+     * Complex positioning behaviors for different positions
+     */
+    // Compound transforms for center row
+    &[data-position="center-left"] {
+        transform: translateY(-50%);
 
         .fl-container {
             transform: translateX(-110%);
         }
     }
 
-    &[data-position$="-center"] {
-        left: 50%;
+    &[data-position="center-right"] {
+        transform: translateY(-50%);
+
+        .fl-container {
+            transform: translateX(110%);
+        }
+    }
+
+    &[data-position="center-center"] {
+        transform: translate(-50%, -50%);
+
+        .fl-container {
+            // Different initial state for center-center to avoid conflicts
+            transform: translate(0, 0) scale(0.5);
+            opacity: 0;
+            // Slightly longer transition for center-center
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                       opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+    }
+
+    // Standard positioning transforms
+    &[data-position="top-center"],
+    &[data-position="bottom-center"] {
         transform: translateX(-50%);
     }
 
     &[data-position="top-center"] .fl-container {
-        transform: translateY(-100vh);
+        transform: translateY(-150%);
     }
 
     &[data-position="bottom-center"] .fl-container {
-        transform: translateY(100vh);
+        transform: translateY(150%);
+    }
+
+    &[data-position="top-right"] .fl-container,
+    &[data-position="bottom-right"] .fl-container {
+        transform: translateX(110%);
+    }
+
+    &[data-position="top-left"] .fl-container,
+    &[data-position="bottom-left"] .fl-container {
+        transform: translateX(-110%);
+    }
+
+    /**
+     * Responsive adjustments
+     * Ensure notifications display well on all screen sizes
+     */
+    @media screen and (max-width: 768px) {
+        width: 85%;
+        left: 7.5%;
+        right: 7.5%;
+
+        &[data-position$="-right"],
+        &[data-position$="-left"],
+        &[data-position$="-center"] {
+            left: 50%;
+            right: auto;
+        }
+
+        // Keep vertical transforms but normalize horizontal ones
+        &[data-position^="top-"] {
+            transform: translateX(-50%);
+            top: 0.75em;
+        }
+
+        &[data-position^="bottom-"] {
+            transform: translateX(-50%);
+            bottom: 0.75em;
+        }
+
+        &[data-position^="center-"] {
+            transform: translate(-50%, -50%);
+            top: 50%;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        width: 90%;
+        left: 5%;
+        right: 5%;
+    }
+
+    /**
+     * Dark mode support
+     */
+    @media (prefers-color-scheme: dark) {
+        &.fl-auto-dark .fl-container {
+            box-shadow: var(--fl-shadow-dark, 0 4px 12px rgba(0, 0, 0, 0.35));
+        }
+    }
+}
+
+/**
+ * Dismissal animations
+ * Control how notifications animate out when closed
+ */
+.fl-wrapper .fl-container.fl-dismissing {
+    opacity: 0;
+    transition: all 0.3s ease-out;
+
+    &[data-position="top-right"],
+    &[data-position="bottom-right"] {
+        transform: translateX(110%);
+    }
+
+    &[data-position="top-left"],
+    &[data-position="bottom-left"] {
+        transform: translateX(-110%);
+    }
+
+    &[data-position="top-center"] {
+        transform: translateY(-150%);
+    }
+
+    &[data-position="center-center"] {
+        transform: scale(0.5);
+        // Slightly longer dismiss time for center-center
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+
+    &[data-position="bottom-center"] {
+        transform: translateY(150%);
+    }
+
+    &[data-position="center-left"] {
+        transform: translateX(-110%);
+    }
+
+    &[data-position="center-right"] {
+        transform: translateX(110%);
+    }
+}
+
+/**
+ * Accessibility support
+ * Respect reduced motion preferences
+ */
+@media (prefers-reduced-motion: reduce) {
+    .fl-wrapper,
+    .fl-wrapper .fl-container {
+        transition: none !important;
     }
 }

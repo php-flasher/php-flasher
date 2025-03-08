@@ -1,15 +1,37 @@
+/**
+ * @file PHPFlasher Container Styles
+ * @description Base styling for individual notification elements
+ * @author yoeunes
+ */
+
+/**
+ * .fl-container
+ *
+ * The base notification container that all themes build upon.
+ * Controls core animation behaviors and text color.
+ */
 .fl-container {
-    color: var(--text-color);
+    color: var(--text-color, var(--fl-text-light));
     opacity: 0;
     transform: translate(0, -20px);
-    transition: all 0.5s ease-in-out;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: opacity, transform;
 
+    /**
+     * Visible state
+     * Applied when notification is fully rendered
+     */
     &.fl-show {
         opacity: 1;
         transform: translate(0, 0) !important;
     }
 
+    /**
+     * Right-to-left support
+     * For languages that read from right to left
+     */
     &.fl-rtl {
         direction: rtl;
+        text-align: right;
     }
 }
