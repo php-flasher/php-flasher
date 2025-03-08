@@ -1,0 +1,213 @@
+/**
+ * @file PHPFlasher Minimal Theme Styles
+ * @description CSS styling for ultra-clean, distraction-free notifications
+ * @author yoeunes
+ */
+
+/**
+ * PHPFlasher - Minimal Theme
+ *
+ * Ultra-clean and minimal notifications that stay out of the way.
+ * Features semi-transparent backgrounds, subtle blur effects, and compact design.
+ */
+.fl-minimal {
+    /* Theme variables - Define the visual appearance of Minimal notifications */
+
+    /* Base colors and appearance */
+    --minimal-bg-light: rgba(255, 255, 255, 0.8);  /* Semi-transparent white in light mode */
+    --minimal-bg-dark: rgba(25, 25, 25, 0.8);      /* Semi-transparent dark in dark mode */
+    --minimal-text-light: #333333;                 /* Dark gray text in light mode */
+    --minimal-text-dark: #f5f5f5;                  /* Off-white text in dark mode */
+    --minimal-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Very subtle shadow */
+    --minimal-shadow-dark: 0 2px 8px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for dark mode */
+    --minimal-border-radius: 6px;                  /* Modest border radius */
+    --minimal-border-color: rgba(0, 0, 0, 0.05);   /* Nearly invisible border in light mode */
+    --minimal-border-color-dark: rgba(255, 255, 255, 0.1); /* Subtle border in dark mode */
+
+    /* Type-specific colors - semi-transparent for subtlety */
+    --minimal-success: rgba(34, 197, 94, 0.9);     /* Green with slight transparency */
+    --minimal-info: rgba(14, 165, 233, 0.9);       /* Blue with slight transparency */
+    --minimal-warning: rgba(245, 158, 11, 0.9);    /* Orange with slight transparency */
+    --minimal-error: rgba(239, 68, 68, 0.9);       /* Red with slight transparency */
+}
+
+/**
+ * Entrance animation for Minimal theme
+ * Quick, subtle slide-in from above
+ */
+@keyframes minimalIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);              /* Start slightly above final position */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);                 /* End at natural position */
+    }
+}
+
+/**
+ * Base Minimal theme styling
+ */
+.fl-minimal {
+    background-color: var(--minimal-bg-light);
+    color: var(--minimal-text-light);
+    padding: 0.75rem 1rem;                        /* Compact padding */
+    margin: 0.5rem 0;                             /* Modest vertical spacing */
+    position: relative;
+    box-shadow: var(--minimal-shadow);            /* Very subtle shadow */
+    border-radius: var(--minimal-border-radius);
+    animation: minimalIn 0.2s ease-out;           /* Quick, subtle animation */
+    font-family: -apple-system, BlinkMacSystemFont, var(--fl-font), sans-serif; /* System font stack */
+    will-change: transform, opacity;              /* Optimize for animation performance */
+    backdrop-filter: blur(8px);                   /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(8px);           /* Safari support */
+    border: 1px solid var(--minimal-border-color); /* Nearly invisible border */
+    max-width: 320px;                             /* Limit width for readability */
+
+    /**
+     * Remove margin from last notification in a stack
+     */
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    /**
+     * Content container
+     * Holds message and close button
+     */
+    .fl-content {
+        display: flex;
+        align-items: center;                      /* Vertically center content */
+        gap: 0.75rem;                             /* Space between elements */
+    }
+
+    /**
+     * Small colored dot indicator
+     * Used instead of large icons for minimal appearance
+     */
+    .fl-dot {
+        width: 8px;                               /* Small dot size */
+        height: 8px;
+        border-radius: 50%;                       /* Perfectly circular */
+        flex-shrink: 0;                           /* Prevent dot from shrinking */
+    }
+
+    /**
+     * Message styling
+     * Main notification text
+     */
+    .fl-message {
+        font-size: 0.875rem;                      /* 14px at default font size */
+        line-height: 1.4;                         /* Comfortable line height */
+        font-weight: 450;                         /* Slightly heavier than normal */
+        flex: 1;                                  /* Take available space */
+        margin: 0;
+    }
+
+    /**
+     * Close button styling
+     * Simple, minimal close button
+     */
+    .fl-close {
+        background: none;
+        border: none;
+        padding: 0.25rem;
+        cursor: pointer;
+        opacity: 0.5;                             /* Subtle appearance by default */
+        transition: opacity 0.15s;                /* Quick hover transition */
+        color: currentColor;                      /* Inherit color from parent */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;                            /* 24px clickable area */
+        height: 1.5rem;
+        font-size: 1rem;                          /* 16px × symbol */
+        flex-shrink: 0;                           /* Prevent button from shrinking */
+
+        &:hover, &:focus {
+            opacity: 0.8;                         /* More visible on hover/focus, but still subtle */
+        }
+    }
+
+    /**
+     * Progress bar container
+     * Holds the animated progress indicator
+     */
+    .fl-progress-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;                              /* Very thin progress bar */
+        overflow: hidden;
+        border-radius: 0 0 var(--minimal-border-radius) var(--minimal-border-radius); /* Match parent corners */
+        opacity: 0.7;                             /* Slightly transparent */
+
+        /**
+         * Progress indicator
+         * Animated by JavaScript to show remaining time
+         */
+        .fl-progress {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    /**
+     * Type-specific styling
+     * Each notification type gets its own color for the dot and progress bar
+     */
+    &.fl-success {
+        .fl-dot { background-color: var(--minimal-success); }
+        .fl-progress-bar .fl-progress { background-color: var(--minimal-success); }
+    }
+
+    &.fl-info {
+        .fl-dot { background-color: var(--minimal-info); }
+        .fl-progress-bar .fl-progress { background-color: var(--minimal-info); }
+    }
+
+    &.fl-warning {
+        .fl-dot { background-color: var(--minimal-warning); }
+        .fl-progress-bar .fl-progress { background-color: var(--minimal-warning); }
+    }
+
+    &.fl-error {
+        .fl-dot { background-color: var(--minimal-error); }
+        .fl-progress-bar .fl-progress { background-color: var(--minimal-error); }
+    }
+
+    /**
+     * RTL Support
+     * Right-to-left language direction support
+     */
+    &.fl-rtl {
+        direction: rtl;
+
+        .fl-progress .fl-progress {
+            transform-origin: right center;       /* Animation starts from right */
+        }
+    }
+
+    /**
+     * Accessibility
+     * Respects reduced motion preferences
+     */
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;                          /* Disable animation */
+    }
+}
+
+/**
+ * Dark mode support
+ * Different styling when in dark mode
+ */
+body.fl-dark .fl-minimal,
+html.fl-dark .fl-minimal,
+.fl-minimal.fl-auto-dark {
+    background-color: var(--minimal-bg-dark);     /* Dark, semi-transparent background */
+    color: var(--minimal-text-dark);              /* Light text */
+    box-shadow: var(--minimal-shadow-dark);       /* Slightly stronger shadow */
+    border-color: var(--minimal-border-color-dark); /* More visible border in dark mode */
+}
