@@ -21,214 +21,511 @@
     <a href="https://packagist.org/packages/php-flasher/flasher"><img src="https://img.shields.io/packagist/php-v/php-flasher/flasher.svg" alt="Supported PHP Version Badge"></a>
 </p>
 
-## Table of Contents
+# PHPFlasher: Beautiful Notifications Made Simple
 
-- [About PHPFlasher](#about-phpflasher)
-- [Features](#features)
-- [Supported Versions](#supported-versions)
-- [Installation](#installation)
-    - [Core Package](#core-package)
-    - [Adapters](#adapters)
-- [Quick Start](#quick-start)
-- [Usage Examples](#usage-examples)
-- [Adapters Overview](#adapters-overview)
-- [Official Documentation](#official-documentation)
-- [Contributors and Sponsors](#contributors-and-sponsors)
-- [Contact](#contact)
-- [License](#license)
+## 🚀 See It In Action
 
-## About PHPFlasher
+```php
+// In your controller
+public function updateProfile(Request $request)
+{
+    // Process form submission
+    $user = Auth::user();
+    $user->update($request->validated());
+    
+    // Show a beautiful notification to the user
+    flash()->success('Your profile has been updated successfully!');
+    
+    return redirect()->back();
+}
+```
 
-PHPFlasher is an open-source tool that helps you add flash messages to your web applications. Flash messages are short notifications that provide feedback to users after they perform actions, such as submitting a form or encountering an error. These messages enhance the user experience by informing users about the outcomes of their actions.
+That's it! PHPFlasher will display an elegant success notification to your user. No JavaScript to write, no frontend setup needed.
 
-PHPFlasher simplifies the process of integrating flash messages into **Laravel** and **Symfony** projects. It uses sessions to store messages, allowing you to set a message on one page and display it on another without complex setup.
+## 🔄 Compatibility
 
-## Features
+| Requirements | Version |
+|--------------|---------|
+| PHP          | ≥ 8.2   |
+| Laravel      | ≥ 11.0  |
+| Symfony      | ≥ 7.0   |
 
-- **Multiple Adapters**: Supports Laravel, Symfony, Toastr, Noty, SweetAlert, and more.
-- **Flexible Configuration**: Customize the appearance and behavior of flash messages.
-- **Extensible**: Easily integrate with various frontend libraries and frameworks.
-- **Intuitive API**: Simple functions to create and manage flash messages.
+## 📑 Table of Contents
 
-## Supported Versions
+- [Introduction](#-introduction)
+- [Features](#-key-features)
+- [Installation](#-installation)
+- [Usage Examples](#-usage-examples)
+- [Themes](#-themes)
+- [Adapters](#-adapters)
+- [Advanced Configuration](#-advanced-configuration)
+- [Adapter Documentation Example](#-adapter-documentation-example)
+- [Community & Support](#-community--support)
+- [Contributors](#-contributors-and-sponsors)
+- [License](#-license)
 
-| PHPFlasher Version | PHP Version | Symfony Version | Laravel Version |
-|--------------------|-------------|-----------------|-----------------|
-| **v2.x**           | ≥ 8.2       | ≥ 7.2           | ≥ 11            |
-| **v1.x**           | ≥ 5.3       | ≥ 2.0           | ≥ 4.0           |
+## 🌟 Introduction
 
-> **Note:** If your project uses PHP, Symfony, or Laravel versions below the requirements for PHPFlasher v2.x, please use [PHPFlasher v1.x](https://github.com/php-flasher/php-flasher/tree/1.x).
+PHPFlasher is a powerful, framework-agnostic library that makes it simple to add beautiful flash messages to your web applications. It provides a consistent API for displaying notifications across your PHP applications, whether you're using Laravel, Symfony, or any other PHP framework.
 
-## Installation
+Flash messages are short-lived notifications that appear after a user performs an action, such as submitting a form. PHPFlasher helps you create these notifications with minimal effort while ensuring they look great and behave consistently.
 
-### Core Package
+## ✨ Key Features
 
-Install the core PHPFlasher package via Composer:
+- **Zero JavaScript Required**: Write only PHP code - frontend functionality is handled automatically
+- **Framework Support**: First-class Laravel and Symfony integration
+- **Beautiful Themes**: Multiple built-in themes ready to use out of the box
+- **Multiple Notification Types**: Success, error, warning, and info notifications
+- **Highly Customizable**: Positions, timeouts, animations, and more
+- **Third-Party Adapters**: Integration with popular libraries like Toastr, SweetAlert, and more
+- **API Response Support**: Works with AJAX and API responses
+- **TypeScript Support**: Full TypeScript definitions for frontend customization
+- **Lightweight**: Minimal performance impact
 
-- **For Laravel:**
+## 📦 Installation
 
-    ```bash
-    composer require php-flasher/flasher-laravel
-    ```
+### For Laravel Projects
 
-  After installation, set up the necessary assets:
+```bash
+# Install the Laravel adapter
+composer require php-flasher/flasher-laravel
 
-    ```shell
-    php artisan flasher:install
-    ```
+# Set up assets automatically
+php artisan flasher:install
+```
 
-  > **Note:** PHPFlasher automatically injects the necessary JavaScript and CSS assets into your Blade templates. No additional steps are required for asset injection.
+PHPFlasher automatically injects the necessary JavaScript and CSS assets into your Blade templates. No additional setup required!
 
-- **For Symfony:**
+### For Symfony Projects
 
-    ```bash
-    composer require php-flasher/flasher-symfony
-    ```
+```bash
+# Install the Symfony adapter
+composer require php-flasher/flasher-symfony
 
-  After installation, set up the necessary assets:
+# Set up assets automatically
+php bin/console flasher:install
+```
 
-    ```shell
-    php bin/console flasher:install
-    ```
+PHPFlasher automatically injects the necessary JavaScript and CSS assets into your Twig templates.
 
-  > **Note:** PHPFlasher automatically injects the necessary JavaScript and CSS assets into your Twig templates. No additional steps are required for asset injection.
+## 📚 Usage Examples
 
-### Adapters
+### Basic Notifications
 
-PHPFlasher provides various adapters for different frameworks and notification libraries. Below is an overview of available adapters:
+```php
+// Success notification
+flash()->success('Operation completed successfully!');
+
+// Error notification
+flash()->error('An error occurred. Please try again.');
+
+// Info notification
+flash()->info('Your account will expire in 10 days.');
+
+// Warning notification
+flash()->warning('Please backup your data before continuing.');
+```
+
+### With Custom Titles
+
+```php
+flash()->success('Your changes have been saved!', 'Update Successful');
+flash()->error('Unable to connect to the server.', 'Connection Error');
+```
+
+### With Custom Options
+
+```php
+flash()->success('Profile updated successfully!', [
+    'timeout' => 10000,       // Display for 10 seconds
+    'position' => 'bottom-right',
+    'closeButton' => true,
+]);
+
+flash()->error('Failed to submit form.', 'Error', [
+    'timeout' => 0,           // No timeout (stay until dismissed)
+    'position' => 'center',
+]);
+```
+
+### In Controllers
+
+```php
+// Laravel
+public function store(Request $request)
+{
+    // Process form...
+    
+    flash()->success('Product created successfully!');
+    return redirect()->route('products.index');
+}
+
+// Symfony
+public function store(Request $request, FlasherInterface $flasher)
+{
+    // Process form...
+    
+    $flasher->success('Product created successfully!');
+    return $this->redirectToRoute('products.index');
+}
+```
+
+### Specific Use Cases
+
+```php
+// Form validation errors
+if ($validator->fails()) {
+    flash()->error('Please fix the errors in your form.');
+    return redirect()->back()->withErrors($validator);
+}
+
+// Multi-step process
+flash()->success('Step 1 completed!');
+flash()->info('Please complete step 2.');
+
+// With HTML content (must enable HTML option)
+flash()->success('Your <strong>account</strong> is ready!', [
+    'escapeHtml' => false
+]);
+```
+
+## 🎨 Themes
+
+PHPFlasher comes with beautiful built-in themes ready to use immediately:
+
+### Default Theme (Flasher)
+
+The default theme provides clean, elegant notifications that work well in any application:
+
+```php
+flash()->success('Operation completed!');
+```
+
+### Other Built-In Themes
+
+PHPFlasher includes multiple themes to match your application's design:
+
+```php
+// Set the theme in your configuration or per notification
+flash()->success('Operation completed!', [
+    'theme' => 'amazon'    // Amazon-inspired theme
+]);
+
+// Other available themes:
+// - amber: Warm amber styling
+// - aurora: Subtle gradient effects
+// - crystal: Clean, transparent design
+// - emerald: Green-focused modern look
+// - facebook: Facebook notification style
+// - google: Google Material Design inspired
+// - ios: iOS notification style
+// - jade: Soft jade color palette
+// - material: Material Design implementation
+// - minimal: Extremely clean and simple
+// - neon: Bright, attention-grabbing
+// - onyx: Dark mode sleek design
+// - ruby: Bold ruby red accents
+// - sapphire: Blue-focused elegant style
+// - slack: Slack-inspired notifications
+```
+
+### Theme Configuration
+
+You can configure theme defaults in your configuration file:
+
+```php
+// Laravel: config/flasher.php
+return [
+    'themes' => [
+        'flasher' => [
+            'options' => [
+                'timeout' => 5000,
+                'position' => 'top-right',
+            ],
+        ],
+        'amazon' => [
+            'options' => [
+                'timeout' => 3000,
+                'position' => 'bottom-right',
+            ],
+        ],
+    ],
+];
+```
+
+## 🧩 Adapters
+
+Beyond PHPFlasher's built-in themes, you can use third-party notification libraries:
+
+### Available Adapters
 
 #### Toastr
 
-- [flasher-toastr](https://github.com/php-flasher/flasher-toastr) - Core Toastr Adapter
-- [flasher-toastr-laravel](https://github.com/php-flasher/flasher-toastr-laravel) - Laravel Adapter
-- [flasher-toastr-symfony](https://github.com/php-flasher/flasher-toastr-symfony) - Symfony Adapter
+```bash
+composer require php-flasher/flasher-toastr-laravel # For Laravel
+composer require php-flasher/flasher-toastr-symfony # For Symfony
+```
 
-#### Noty
-
-- [flasher-noty](https://github.com/php-flasher/flasher-noty) - Core Noty Adapter
-- [flasher-noty-laravel](https://github.com/php-flasher/flasher-noty-laravel) - Laravel Adapter
-- [flasher-noty-symfony](https://github.com/php-flasher/flasher-noty-symfony) - Symfony Adapter
-
-#### Notyf
-
-- [flasher-notyf](https://github.com/php-flasher/flasher-notyf) - Core Notyf Adapter
-- [flasher-notyf-laravel](https://github.com/php-flasher/flasher-notyf-laravel) - Laravel Adapter
-- [flasher-notyf-symfony](https://github.com/php-flasher/flasher-notyf-symfony) - Symfony Adapter
+```php
+flash('toastr')->success('Message with Toastr!');
+```
 
 #### SweetAlert
 
-- [flasher-sweetalert](https://github.com/php-flasher/flasher-sweetalert) - Core SweetAlert Adapter
-- [flasher-sweetalert-laravel](https://github.com/php-flasher/flasher-sweetalert-laravel) - Laravel Adapter
-- [flasher-sweetalert-symfony](https://github.com/php-flasher/flasher-sweetalert-symfony) - Symfony Adapter
-
-For detailed installation and usage instructions for each adapter, refer to their respective [README.md](https://github.com/php-flasher/flasher-toastr).
-
-## Quick Start
-
-To display a notification message, you can either use the `flash()` helper function or obtain an instance of `flasher` from the service container. Then, before returning a view or redirecting, call the desired method (`success()`, `error()`, etc.) and pass in the message to be displayed.
-
-### Using the `flash()` Helper
+```bash
+composer require php-flasher/flasher-sweetalert-laravel # For Laravel
+composer require php-flasher/flasher-sweetalert-symfony # For Symfony
+```
 
 ```php
-class BookController
+flash('sweetalert')->success('Message with SweetAlert!');
+```
+
+#### Noty
+
+```bash
+composer require php-flasher/flasher-noty-laravel # For Laravel
+composer require php-flasher/flasher-noty-symfony # For Symfony
+```
+
+```php
+flash('noty')->success('Message with Noty!');
+```
+
+#### Notyf
+
+```bash
+composer require php-flasher/flasher-notyf-laravel # For Laravel
+composer require php-flasher/flasher-notyf-symfony # For Symfony
+```
+
+```php
+flash('notyf')->success('Message with Notyf!');
+```
+
+## ⚙️ Advanced Configuration
+
+### Laravel Configuration
+
+Publish and customize the configuration:
+
+```bash
+php artisan vendor:publish --tag=flasher-config
+```
+
+This creates `config/flasher.php` where you can configure:
+
+```php
+return [
+    // Default adapter to use
+    'default' => 'flasher',
+    
+    // Theme configuration
+    'themes' => [
+        'flasher' => [
+            'options' => [
+                'timeout' => 5000,
+                'position' => 'top-right',
+            ],
+        ],
+    ],
+    
+    // Auto-convert Laravel session flash messages
+    'auto_create_from_session' => true,
+    
+    // Automatically render notifications
+    'auto_render' => true,
+    
+    // Type mappings for Laravel notifications
+    'types_mapping' => [
+        'success' => 'success',
+        'error' => 'error',
+        'warning' => 'warning',
+        'info' => 'info',
+    ],
+];
+```
+
+### Symfony Configuration
+
+Create or edit `config/packages/flasher.yaml`:
+
+```yaml
+flasher:
+    default: flasher
+    
+    themes:
+        flasher:
+            options:
+                timeout: 5000
+                position: top-right
+    
+    auto_create_from_session: true
+    auto_render: true
+    
+    types_mapping:
+        success: success
+        error: error
+        warning: warning
+        info: info
+```
+
+### Notification Options
+
+Common options you can customize:
+
+```php
+flash()->success('Message', [
+    // Display duration in milliseconds (0 = until dismissed)
+    'timeout' => 5000,
+    
+    // Notification position
+    'position' => 'top-right', // top-right, top-left, bottom-right, bottom-left, top-center, bottom-center
+    
+    // Display a close button
+    'closeButton' => true,
+    
+    // Show progress bar during timeout
+    'progressBar' => true,
+    
+    // Right-to-left text direction
+    'rtl' => false,
+    
+    // Allow HTML content in notifications
+    'escapeHtml' => false,
+    
+    // Custom CSS class
+    'class' => 'my-custom-notification',
+]);
+```
+
+## 📘 Adapter Documentation Example
+
+Here's a detailed example of using the Toastr adapter with PHPFlasher:
+
+### Installation
+
+```bash
+composer require php-flasher/flasher-toastr
+```
+
+For Laravel:
+```bash
+composer require php-flasher/flasher-toastr-laravel
+```
+
+For Symfony:
+```bash
+composer require php-flasher/flasher-toastr-symfony
+```
+
+### Usage
+
+#### Basic Usage
+
+```php
+use Flasher\Toastr\Prime\ToastrFactory;
+
+// Inject the factory
+public function __construct(private ToastrFactory $toastr)
 {
-    public function saveBook()
-    {
-        // Your logic here
+}
 
-        flash('Your changes have been saved!');
-
-        return redirect()->back();
-    }
+public function index()
+{
+    $this->toastr->success('Toastr is working!');
+    
+    // Or using the global helper with the specified adapter
+    flash('toastr')->success('Toastr is awesome!');
 }
 ```
 
-### Using the `flasher` Service
+#### With Options
 
 ```php
-use Flasher\Prime\FlasherInterface;
-
-class AnotherController
-{
-    /**
-     * If you prefer to use dependency injection
-     */
-    public function register(FlasherInterface $flasher)
-    {
-        // Your logic here
-        
-        $flasher->success('Your changes have been saved!');
-
-        // ... redirect or render the view
-    }
-
-    public function update()
-    {
-        // Your logic here
-
-        app('flasher')->error('An error occurred while updating.'); // ony for laravel
-
-        return redirect()->back();
-    }
-}
+flash('toastr')->success('Success message', 'Success Title', [
+    'timeOut' => 5000,
+    'closeButton' => true,
+    'newestOnTop' => true,
+    'progressBar' => true,
+    'positionClass' => 'toast-top-right',
+]);
 ```
 
-## Usage Examples
-
-### Success Message
+#### Available Methods
 
 ```php
-flash()->success('Operation completed successfully!');
+// Standard notification types
+flash('toastr')->success('Success message');
+flash('toastr')->info('Information message');
+flash('toastr')->warning('Warning message');
+flash('toastr')->error('Error message');
+
+// Custom notification
+flash('toastr')->flash('custom-type', 'Custom message');
 ```
 
-### Error Message
+#### Toastr Specific Options
 
-```php
-flash()->error('An error occurred.');
+| Option           | Type    | Default         | Description                                |
+|------------------|---------|----------------|--------------------------------------------|
+| closeButton      | Boolean | false          | Display a close button                     |
+| closeClass       | String  | 'toast-close-button' | CSS class for close button           |
+| newestOnTop      | Boolean | true           | Add notifications to the top of the stack  |
+| progressBar      | Boolean | true           | Display progress bar                       |
+| positionClass    | String  | 'toast-top-right' | Position of the notification           |
+| preventDuplicates | Boolean | false         | Prevent duplicates                         |
+| showDuration     | Number  | 300            | Show animation duration in ms              |
+| hideDuration     | Number  | 1000           | Hide animation duration in ms              |
+| timeOut          | Number  | 5000           | Auto-close duration (0 = disable)          |
+| extendedTimeOut  | Number  | 1000           | Duration after hover                       |
+| showEasing       | String  | 'swing'        | Show animation easing                      |
+| hideEasing       | String  | 'linear'       | Hide animation easing                      |
+| showMethod       | String  | 'fadeIn'       | Show animation method                      |
+| hideMethod       | String  | 'fadeOut'      | Hide animation method                      |
+
+### Advanced Configuration
+
+#### Laravel Configuration
+
+Publish the configuration file:
+```bash
+php artisan vendor:publish --tag=flasher-toastr-config
 ```
 
-### Info Message
+#### Symfony Configuration
 
-```php
-flash()->info('This is an informational message.');
+Edit your `config/packages/flasher.yaml`:
+```yaml
+flasher:
+    toastr:
+        options:
+            timeOut: 5000
+            progressBar: true
 ```
 
-### Warning Message
+## Learn More
 
-```php
-flash()->warning('This is a warning message.');
-```
+For additional information, see the [PHPFlasher documentation](https://php-flasher.io).
 
-### Passing Options
+## 👥 Community & Support
 
-```php
-flash()->success('Custom message with options.', ['timeout' => 3000, 'position' => 'bottom-left']);
-```
+### Getting Help
 
-## Adapters Overview
+- **Documentation**: Visit [https://php-flasher.io](https://php-flasher.io)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/php-flasher/php-flasher/issues)
+- **Stack Overflow**: Ask questions with the `php-flasher` tag
 
-PHPFlasher supports various adapters to integrate seamlessly with different frameworks and frontend libraries. Below is an overview of available adapters:
+### Common Use Cases
 
-| Adapter Repository                                                                      | Description                    |
-|-----------------------------------------------------------------------------------------|--------------------------------|
-| [flasher-laravel](https://github.com/php-flasher/flasher-laravel)                       | Laravel framework adapter      |
-| [flasher-symfony](https://github.com/php-flasher/flasher-symfony)                       | Symfony framework adapter      |
-| [flasher-toastr-laravel](https://github.com/php-flasher/flasher-toastr-laravel)         | Toastr adapter for Laravel     |
-| [flasher-toastr-symfony](https://github.com/php-flasher/flasher-toastr-symfony)         | Toastr adapter for Symfony     |
-| [flasher-noty-laravel](https://github.com/php-flasher/flasher-noty-laravel)             | Noty adapter for Laravel       |
-| [flasher-noty-symfony](https://github.com/php-flasher/flasher-noty-symfony)             | Noty adapter for Symfony       |
-| [flasher-notyf-laravel](https://github.com/php-flasher/flasher-notyf-laravel)           | Notyf adapter for Laravel      |
-| [flasher-notyf-symfony](https://github.com/php-flasher/flasher-notyf-symfony)           | Notyf adapter for Symfony      |
-| [flasher-sweetalert-laravel](https://github.com/php-flasher/flasher-sweetalert-laravel) | SweetAlert adapter for Laravel |
-| [flasher-sweetalert-symfony](https://github.com/php-flasher/flasher-sweetalert-symfony) | SweetAlert adapter for Symfony |
+- Form submission feedback
+- AJAX request notifications
+- Authentication messages
+- Error reporting
+- Success confirmations
+- System alerts
 
-> **Note:** Each adapter has its own repository. For detailed installation and usage instructions, please refer to the [Official Documentation](https://php-flasher.io).
-
-## Official Documentation
-
-Comprehensive documentation for PHPFlasher is available at [https://php-flasher.io](https://php-flasher.io). Here you will find detailed guides, API references, and advanced usage examples to help you get the most out of PHPFlasher.
-
-## Contributors and sponsors
+## 🌟 Contributors and Sponsors
 
 Join our team of contributors and make a lasting impact on our project!
 
@@ -264,7 +561,7 @@ Shining stars of our community:
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Contact
+## 📬 Contact
 
 PHPFlasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. 
 You can reach out with questions, bug reports, or feature requests on any of the following:
@@ -275,8 +572,14 @@ You can reach out with questions, bug reports, or feature requests on any of the
 - [Linkedin](https://www.linkedin.com/in/younes--ennaji/)
 - [Email me directly](mailto:younes.ennaji.pro@gmail.com)
 
-## License
+## 📝 License
 
 PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 <p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes--ennaji/">Younes ENNAJI</a> </b> </p>
+
+<p align="center">
+   <a href="https://github.com/php-flasher/php-flasher/stargazers">
+      ⭐ Star if you found this useful ⭐
+   </a>
+</p>
