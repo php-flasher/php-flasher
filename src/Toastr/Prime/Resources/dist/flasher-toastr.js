@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@flasher/flasher'), require('toastr')) :
     typeof define === 'function' && define.amd ? define(['@flasher/flasher', 'toastr'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.toastr = factory(global.flasher, global.toastr));
-})(this, (function (flasher, toastr$1) { 'use strict';
+})(this, (function (flasher, toastr) { 'use strict';
 
     class AbstractPlugin {
       success(message, title, options) {
@@ -18,52 +18,110 @@
         this.flash('warning', message, title, options);
       }
       flash(type, message, title, options) {
+        let normalizedType;
+        let normalizedMessage;
+        let normalizedTitle;
+        let normalizedOptions = {};
         if (typeof type === 'object') {
-          options = type;
-          type = options.type;
-          message = options.message;
-          title = options.title;
+          normalizedOptions = Object.assign({}, type);
+          normalizedType = normalizedOptions.type;
+          normalizedMessage = normalizedOptions.message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.type;
+          delete normalizedOptions.message;
+          delete normalizedOptions.title;
         } else if (typeof message === 'object') {
-          options = message;
-          message = options.message;
-          title = options.title;
+          normalizedOptions = Object.assign({}, message);
+          normalizedType = type;
+          normalizedMessage = normalizedOptions.message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.message;
+          delete normalizedOptions.title;
         } else if (typeof title === 'object') {
-          options = title;
-          title = options.title;
+          normalizedOptions = Object.assign({}, title);
+          normalizedType = type;
+          normalizedMessage = message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.title;
+        } else {
+          normalizedType = type;
+          normalizedMessage = message;
+          normalizedTitle = title;
+          normalizedOptions = options || {};
         }
-        if (undefined === message) {
-          throw new Error('message option is required');
+        if (!normalizedType) {
+          throw new Error('Type is required for notifications');
+        }
+        if (normalizedMessage === undefined || normalizedMessage === null) {
+          throw new Error('Message is required for notifications');
         }
         const envelope = {
-          type,
-          message,
-          title: title || type,
-          options: options || {},
+          type: normalizedType,
+          message: normalizedMessage,
+          title: normalizedTitle || normalizedType,
+          options: normalizedOptions,
           metadata: {
             plugin: ''
           }
         };
-        this.renderOptions(options || {});
+        this.renderOptions(normalizedOptions);
         this.renderEnvelopes([envelope]);
       }
     }
 
     class ToastrPlugin extends AbstractPlugin {
         renderEnvelopes(envelopes) {
+            if (!(envelopes === null || envelopes === void 0 ? void 0 : envelopes.length)) {
+                return;
+            }
+            if (!this.isDependencyAvailable()) {
+                return;
+            }
             envelopes.forEach((envelope) => {
-                const { message, title, type, options } = envelope;
-                const instance = toastr$1[type](message, title, options);
-                instance && instance.parent().attr('data-turbo-temporary', '');
+                try {
+                    const { message, title, type, options } = envelope;
+                    const instance = toastr[type](message, title, options);
+                    if (instance && instance.parent) {
+                        try {
+                            const parent = instance.parent();
+                            if (parent && typeof parent.attr === 'function') {
+                                parent.attr('data-turbo-temporary', '');
+                            }
+                        }
+                        catch (error) {
+                            console.error('PHPFlasher Toastr: Error setting Turbo compatibility', error);
+                        }
+                    }
+                }
+                catch (error) {
+                    console.error('PHPFlasher Toastr: Error rendering notification', error, envelope);
+                }
             });
         }
         renderOptions(options) {
-            toastr$1.options = Object.assign({ timeOut: (options.timeOut || 5000), progressBar: (options.progressBar || true) }, options);
+            if (!this.isDependencyAvailable()) {
+                return;
+            }
+            try {
+                toastr.options = Object.assign({ timeOut: (options.timeOut || 10000), progressBar: (options.progressBar || true) }, options);
+            }
+            catch (error) {
+                console.error('PHPFlasher Toastr: Error applying options', error);
+            }
+        }
+        isDependencyAvailable() {
+            const jQuery = window.jQuery || window.$;
+            if (!jQuery) {
+                console.error('PHPFlasher Toastr: jQuery is required but not loaded. Make sure jQuery is loaded before using Toastr.');
+                return false;
+            }
+            return true;
         }
     }
 
-    const toastr = new ToastrPlugin();
-    flasher.addPlugin('toastr', toastr);
+    const toastrPlugin = new ToastrPlugin();
+    flasher.addPlugin('toastr', toastrPlugin);
 
-    return toastr;
+    return toastrPlugin;
 
 }));

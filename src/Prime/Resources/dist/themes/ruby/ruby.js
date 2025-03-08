@@ -1,0 +1,34 @@
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../../index.ts')) :
+    typeof define === 'function' && define.amd ? define(['../../index.ts'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.flasher));
+})(this, (function (flasher) { 'use strict';
+
+    const rubyTheme = {
+        render: (envelope) => {
+            const { type, message } = envelope;
+            const isAlert = type === 'error' || type === 'warning';
+            const role = isAlert ? 'alert' : 'status';
+            const ariaLive = isAlert ? 'assertive' : 'polite';
+            return `
+            <div class="fl-ruby fl-${type}" role="${role}" aria-live="${ariaLive}" aria-atomic="true">
+                <div class="fl-shine"></div>
+                <div class="fl-content">
+                    <div class="fl-icon-circle">
+                        <div class="fl-icon"></div>
+                    </div>
+                    <div class="fl-text">
+                        <div class="fl-message">${message}</div>
+                    </div>
+                    <button class="fl-close" aria-label="Close ${type} message">×</button>
+                </div>
+                <div class="fl-progress-bar">
+                    <div class="fl-progress"></div>
+                </div>
+            </div>`;
+        },
+    };
+
+    flasher.addTheme('ruby', rubyTheme);
+
+}));

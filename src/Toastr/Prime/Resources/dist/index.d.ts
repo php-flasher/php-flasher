@@ -1,3 +1,3 @@
 import ToastrPlugin from './toastr';
-declare const toastr: ToastrPlugin;
-export default toastr;
+declare const toastrPlugin: ToastrPlugin;
+export default toastrPlugin;

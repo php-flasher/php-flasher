@@ -50,32 +50,53 @@
         this.flash('warning', message, title, options);
       }
       flash(type, message, title, options) {
+        let normalizedType;
+        let normalizedMessage;
+        let normalizedTitle;
+        let normalizedOptions = {};
         if (typeof type === 'object') {
-          options = type;
-          type = options.type;
-          message = options.message;
-          title = options.title;
+          normalizedOptions = Object.assign({}, type);
+          normalizedType = normalizedOptions.type;
+          normalizedMessage = normalizedOptions.message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.type;
+          delete normalizedOptions.message;
+          delete normalizedOptions.title;
         } else if (typeof message === 'object') {
-          options = message;
-          message = options.message;
-          title = options.title;
+          normalizedOptions = Object.assign({}, message);
+          normalizedType = type;
+          normalizedMessage = normalizedOptions.message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.message;
+          delete normalizedOptions.title;
         } else if (typeof title === 'object') {
-          options = title;
-          title = options.title;
+          normalizedOptions = Object.assign({}, title);
+          normalizedType = type;
+          normalizedMessage = message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.title;
+        } else {
+          normalizedType = type;
+          normalizedMessage = message;
+          normalizedTitle = title;
+          normalizedOptions = options || {};
         }
-        if (undefined === message) {
-          throw new Error('message option is required');
+        if (!normalizedType) {
+          throw new Error('Type is required for notifications');
+        }
+        if (normalizedMessage === undefined || normalizedMessage === null) {
+          throw new Error('Message is required for notifications');
         }
         const envelope = {
-          type,
-          message,
-          title: title || type,
-          options: options || {},
+          type: normalizedType,
+          message: normalizedMessage,
+          title: normalizedTitle || normalizedType,
+          options: normalizedOptions,
           metadata: {
             plugin: ''
           }
         };
-        this.renderOptions(options || {});
+        this.renderOptions(normalizedOptions);
         this.renderEnvelopes([envelope]);
       }
     }
@@ -83,33 +104,70 @@
     class SweetAlertPlugin extends AbstractPlugin {
         renderEnvelopes(envelopes) {
             return __awaiter(this, void 0, void 0, function* () {
-                for (const envelope of envelopes) {
-                    yield this.renderEnvelope(envelope);
+                if (!this.sweetalert) {
+                    this.initializeSweetAlert();
+                }
+                try {
+                    for (const envelope of envelopes) {
+                        yield this.renderEnvelope(envelope);
+                    }
+                }
+                catch (error) {
+                    console.error('PHPFlasher SweetAlert: Error rendering envelopes', error);
                 }
             });
         }
         renderOptions(options) {
-            this.sweetalert = this.sweetalert || Swal.mixin(Object.assign({ timer: (options.timer || 5000), timerProgressBar: (options.timerProgressBar || true) }, options));
-            document.addEventListener('turbo:before-cache', () => {
-                var _a;
-                if (Swal.isVisible()) {
-                    (_a = Swal.getPopup()) === null || _a === void 0 ? void 0 : _a.style.setProperty('animation-duration', '0ms');
-                    Swal.close();
-                }
-            });
+            try {
+                this.sweetalert = this.sweetalert || Swal.mixin(Object.assign({ timer: (options.timer || 10000), timerProgressBar: (options.timerProgressBar || true) }, options));
+                this.setupTurboCompatibility();
+            }
+            catch (error) {
+                console.error('PHPFlasher SweetAlert: Error applying options', error);
+            }
         }
         renderEnvelope(envelope) {
             return __awaiter(this, void 0, void 0, function* () {
                 var _a;
-                let { options } = envelope;
-                options = Object.assign(Object.assign({}, options), { icon: ((options === null || options === void 0 ? void 0 : options.icon) || envelope.type), text: ((options === null || options === void 0 ? void 0 : options.text) || envelope.message) });
-                yield ((_a = this.sweetalert) === null || _a === void 0 ? void 0 : _a.fire(options).then((promise) => {
-                    window.dispatchEvent(new CustomEvent('flasher:sweetalert:promise', { detail: {
-                            promise,
-                            envelope,
-                        } }));
-                }));
+                try {
+                    let { options } = envelope;
+                    options = Object.assign(Object.assign({}, options), { icon: ((options === null || options === void 0 ? void 0 : options.icon) || envelope.type), text: ((options === null || options === void 0 ? void 0 : options.text) || envelope.message) });
+                    const promise = yield ((_a = this.sweetalert) === null || _a === void 0 ? void 0 : _a.fire(options));
+                    this.dispatchResultEvent(promise, envelope);
+                }
+                catch (error) {
+                    console.error('PHPFlasher SweetAlert: Error rendering envelope', error, envelope);
+                }
             });
+        }
+        initializeSweetAlert() {
+            if (!this.sweetalert) {
+                this.renderOptions({
+                    timer: 10000,
+                    timerProgressBar: true,
+                });
+            }
+        }
+        setupTurboCompatibility() {
+            document.addEventListener('turbo:before-cache', () => {
+                if (Swal.isVisible()) {
+                    const popup = Swal.getPopup();
+                    if (popup) {
+                        popup.style.setProperty('animation-duration', '0ms');
+                    }
+                    Swal.close();
+                }
+            });
+        }
+        dispatchResultEvent(promise, envelope) {
+            if (promise) {
+                window.dispatchEvent(new CustomEvent('flasher:sweetalert:promise', {
+                    detail: {
+                        promise,
+                        envelope,
+                    },
+                }));
+            }
         }
     }
 

@@ -4,6 +4,7 @@ export default class Flasher extends AbstractPlugin {
     private defaultPlugin;
     private plugins;
     private themes;
+    private loadedAssets;
     render(response: Partial<Response>): Promise<void>;
     renderEnvelopes(envelopes: Envelope[]): void;
     renderOptions(options: Options): void;
