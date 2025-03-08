@@ -18,32 +18,53 @@
         this.flash('warning', message, title, options);
       }
       flash(type, message, title, options) {
+        let normalizedType;
+        let normalizedMessage;
+        let normalizedTitle;
+        let normalizedOptions = {};
         if (typeof type === 'object') {
-          options = type;
-          type = options.type;
-          message = options.message;
-          title = options.title;
+          normalizedOptions = Object.assign({}, type);
+          normalizedType = normalizedOptions.type;
+          normalizedMessage = normalizedOptions.message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.type;
+          delete normalizedOptions.message;
+          delete normalizedOptions.title;
         } else if (typeof message === 'object') {
-          options = message;
-          message = options.message;
-          title = options.title;
+          normalizedOptions = Object.assign({}, message);
+          normalizedType = type;
+          normalizedMessage = normalizedOptions.message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.message;
+          delete normalizedOptions.title;
         } else if (typeof title === 'object') {
-          options = title;
-          title = options.title;
+          normalizedOptions = Object.assign({}, title);
+          normalizedType = type;
+          normalizedMessage = message;
+          normalizedTitle = normalizedOptions.title;
+          delete normalizedOptions.title;
+        } else {
+          normalizedType = type;
+          normalizedMessage = message;
+          normalizedTitle = title;
+          normalizedOptions = options || {};
         }
-        if (undefined === message) {
-          throw new Error('message option is required');
+        if (!normalizedType) {
+          throw new Error('Type is required for notifications');
+        }
+        if (normalizedMessage === undefined || normalizedMessage === null) {
+          throw new Error('Message is required for notifications');
         }
         const envelope = {
-          type,
-          message,
-          title: title || type,
-          options: options || {},
+          type: normalizedType,
+          message: normalizedMessage,
+          title: normalizedTitle || normalizedType,
+          options: normalizedOptions,
           metadata: {
             plugin: ''
           }
         };
-        this.renderOptions(options || {});
+        this.renderOptions(normalizedOptions);
         this.renderEnvelopes([envelope]);
       }
     }
@@ -473,18 +494,42 @@
 
     class NotyfPlugin extends AbstractPlugin {
         renderEnvelopes(envelopes) {
+            if (!this.notyf) {
+                this.initializeNotyf();
+            }
             envelopes.forEach((envelope) => {
                 var _a;
-                const options = Object.assign(Object.assign({}, envelope), envelope.options);
-                (_a = this.notyf) === null || _a === void 0 ? void 0 : _a.open(options);
+                try {
+                    const options = Object.assign(Object.assign({}, envelope), envelope.options);
+                    (_a = this.notyf) === null || _a === void 0 ? void 0 : _a.open(options);
+                }
+                catch (error) {
+                    console.error('PHPFlasher Notyf: Error rendering notification', error, envelope);
+                }
             });
-            this.notyf.view.container.dataset.turboTemporary = '';
-            this.notyf.view.a11yContainer.dataset.turboTemporary = '';
+            try {
+                if (this.notyf) {
+                    const container = this.notyf.view.container;
+                    const a11yContainer = this.notyf.view.a11yContainer;
+                    if (container && container.dataset) {
+                        container.dataset.turboTemporary = '';
+                    }
+                    if (a11yContainer && a11yContainer.dataset) {
+                        a11yContainer.dataset.turboTemporary = '';
+                    }
+                }
+            }
+            catch (error) {
+                console.error('PHPFlasher Notyf: Error setting Turbo compatibility', error);
+            }
         }
         renderOptions(options) {
-            const nOptions = Object.assign({ duration: options.duration || 5000 }, options);
-            nOptions.types = nOptions.types || [];
-            nOptions.types.push({
+            if (!options) {
+                return;
+            }
+            const notyfOptions = Object.assign({ duration: options.duration || 10000 }, options);
+            notyfOptions.types = notyfOptions.types || [];
+            this.addTypeIfNotExists(notyfOptions.types, {
                 type: 'info',
                 className: 'notyf__toast--info',
                 background: '#5784E5',
@@ -493,7 +538,7 @@
                     tagName: 'i',
                 },
             });
-            nOptions.types.push({
+            this.addTypeIfNotExists(notyfOptions.types, {
                 type: 'warning',
                 className: 'notyf__toast--warning',
                 background: '#E3A008',
@@ -502,7 +547,22 @@
                     tagName: 'i',
                 },
             });
-            this.notyf = this.notyf || new Notyf(nOptions);
+            this.notyf = this.notyf || new Notyf(notyfOptions);
+        }
+        initializeNotyf() {
+            if (!this.notyf) {
+                this.renderOptions({
+                    duration: 10000,
+                    position: { x: 'right', y: 'top' },
+                    dismissible: true,
+                });
+            }
+        }
+        addTypeIfNotExists(types, newType) {
+            const exists = types.some((type) => type.type === newType.type);
+            if (!exists) {
+                types.push(newType);
+            }
         }
     }
 
