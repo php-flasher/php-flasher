@@ -1,0 +1,263 @@
+/**
+ * @file PHPFlasher Slack Theme Styles
+ * @description CSS styling for Slack-inspired notifications
+ * @author yoeunes
+ */
+
+/**
+ * PHPFlasher - Slack Theme
+ *
+ * Familiar notifications inspired by Slack's popular messaging platform.
+ * Used by millions of professionals worldwide.
+ */
+.fl-slack {
+    /* Theme variables - Define the visual appearance of Slack notifications */
+
+    /* Base colors and appearance */
+    --slack-bg-light: #ffffff;                    /* White background in light mode */
+    --slack-bg-dark: #1a1d21;                     /* Dark background in dark mode (Slack dark) */
+    --slack-hover-light: #f8f8f8;                 /* Light hover state */
+    --slack-hover-dark: #222529;                  /* Dark hover state */
+    --slack-text-light: #1d1c1d;                  /* Dark text in light mode */
+    --slack-text-secondary-light: #616061;        /* Gray secondary text in light mode */
+    --slack-text-dark: #e0e0e0;                   /* Light text in dark mode */
+    --slack-text-secondary-dark: #ababad;         /* Gray secondary text in dark mode */
+    --slack-border-light: #e0e0e0;                /* Light border color */
+    --slack-border-dark: #393a3e;                 /* Dark border color */
+    --slack-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);   /* Subtle shadow in light mode */
+    --slack-shadow-dark: 0 1px 0 rgba(0, 0, 0, 0.2); /* Stronger shadow in dark mode */
+    --slack-avatar-size: 36px;                    /* Size of avatar/icon container */
+
+    /* Type-specific colors matching Slack's color scheme */
+    --slack-success: #2bac76;                     /* Green */
+    --slack-info: #1264a3;                        /* Blue */
+    --slack-warning: #e8912d;                     /* Orange */
+    --slack-error: #e01e5a;                       /* Red/Pink */
+
+    /* Animation timing */
+    --slack-animation-duration: 150ms;            /* Quick animation for responsive feel */
+}
+
+/**
+ * Simple fade in animation
+ * Quick and subtle to match Slack's responsive feel
+ */
+@keyframes slackFadeIn {
+    from {
+        opacity: 0;                               /* Start invisible */
+    }
+    to {
+        opacity: 1;                               /* End fully visible */
+    }
+}
+
+/**
+ * Base Slack theme styling
+ */
+.fl-slack {
+    position: relative;
+    margin: 4px 0;                                /* Minimal spacing between messages */
+    width: 100%;
+    max-width: 500px;                             /* Maximum width similar to Slack */
+    font-family: "Lato", "Slack-Lato", "Helvetica Neue", "Helvetica", sans-serif; /* Slack's font stack */
+    animation: slackFadeIn var(--slack-animation-duration) ease-out; /* Quick fade in */
+
+    /**
+     * Message bubble
+     * The main container that resembles a Slack message
+     */
+    .fl-slack-message {
+        background-color: var(--slack-bg-light);
+        color: var(--slack-text-light);
+        padding: 8px 20px 8px 8px;                /* More padding on right for close button */
+        border-radius: 4px;                       /* Slightly rounded corners */
+        display: flex;
+        align-items: flex-start;                  /* Align content to top */
+        transition: background-color 0.1s ease;   /* Smooth hover transition */
+        border: 1px solid var(--slack-border-light); /* Subtle border */
+        box-shadow: var(--slack-shadow);          /* Slight shadow for depth */
+
+        &:hover {
+            background-color: var(--slack-hover-light); /* Background change on hover */
+        }
+    }
+
+    /**
+     * Avatar container
+     * Colored square that holds the type icon
+     */
+    .fl-avatar {
+        width: var(--slack-avatar-size);          /* Fixed size avatar */
+        height: var(--slack-avatar-size);
+        border-radius: 4px;                       /* Slightly rounded corners */
+        margin-right: 8px;                        /* Space between avatar and text */
+        flex-shrink: 0;                           /* Prevent avatar from shrinking */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: currentColor;           /* Uses the type color */
+    }
+
+    /**
+     * Type icon
+     * Symbol within the colored avatar
+     */
+    .fl-type-icon {
+        color: white;                            /* White icon on colored background */
+        font-weight: bold;                       /* Bold symbol */
+        font-size: 16px;                         /* Icon size */
+    }
+
+    /**
+     * Message content container
+     * Holds the message text
+     */
+    .fl-message-content {
+        flex: 1;                                 /* Take available space */
+        min-width: 0;                            /* Allows text to wrap */
+    }
+
+    /**
+     * Message text styling
+     * Follows Slack's text appearance
+     */
+    .fl-message-text {
+        font-size: 15px;                         /* Slack's standard message size */
+        line-height: 1.46668;                    /* Slack's line height */
+        word-break: break-word;                  /* Allows breaking long words */
+    }
+
+    /**
+     * Actions container
+     * Holds the close button that appears on hover
+     */
+    .fl-actions {
+        visibility: hidden;                      /* Hidden by default */
+        position: absolute;
+        right: 6px;                              /* Positioned in top-right */
+        top: 8px;
+        opacity: 0;                              /* Transparent by default */
+        transition: opacity 0.1s ease;           /* Smooth fade in/out */
+    }
+
+    /**
+     * Show actions on hover
+     * Makes the close button appear when hovering the message
+     */
+    .fl-slack-message:hover .fl-actions {
+        visibility: visible;                     /* Show on hover */
+        opacity: 1;                              /* Fade in */
+    }
+
+    /**
+     * Close button styling
+     * Simple button with hover effect
+     */
+    .fl-close {
+        background: none;
+        border: none;
+        color: var(--slack-text-secondary-light); /* Gray icon by default */
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;                     /* Slightly rounded corners */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            color: var(--slack-text-light);     /* Darker on hover */
+            background-color: var(--slack-hover-light); /* Light background on hover */
+        }
+    }
+
+    /**
+     * Type-specific styling
+     * Each notification type gets its own colored avatar
+     */
+    &.fl-success {
+        .fl-avatar {
+            color: var(--slack-success);        /* Green avatar */
+        }
+    }
+
+    &.fl-info {
+        .fl-avatar {
+            color: var(--slack-info);           /* Blue avatar */
+        }
+    }
+
+    &.fl-warning {
+        .fl-avatar {
+            color: var(--slack-warning);        /* Orange avatar */
+        }
+    }
+
+    &.fl-error {
+        .fl-avatar {
+            color: var(--slack-error);          /* Red avatar */
+        }
+    }
+
+    /**
+     * RTL Support
+     * Right-to-left language direction support
+     */
+    &.fl-rtl {
+        direction: rtl;                         /* Right-to-left text */
+
+        .fl-avatar {
+            margin-right: 0;
+            margin-left: 8px;                   /* Swap margins */
+        }
+
+        .fl-username {
+            margin-right: 0;
+            margin-left: 4px;                   /* Swap margins */
+        }
+
+        .fl-actions {
+            right: auto;
+            left: 6px;                          /* Move to top-left */
+        }
+
+        .fl-slack-message {
+            padding: 8px 8px 8px 20px;          /* Swap padding */
+        }
+    }
+
+    /**
+     * Accessibility
+     * Respects reduced motion preferences
+     */
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;                        /* Disable animation */
+    }
+}
+
+/**
+ * Dark mode support
+ * Slack-like dark theme
+ */
+body.fl-dark .fl-slack,
+html.fl-dark .fl-slack,
+.fl-slack.fl-auto-dark {
+    .fl-slack-message {
+        background-color: var(--slack-bg-dark); /* Dark background */
+        color: var(--slack-text-dark);          /* Light text */
+        border-color: var(--slack-border-dark); /* Darker border */
+        box-shadow: var(--slack-shadow-dark);   /* Stronger shadow */
+
+        &:hover {
+            background-color: var(--slack-hover-dark); /* Dark hover state */
+        }
+    }
+
+    .fl-close {
+        color: var(--slack-text-secondary-dark); /* Lighter gray icon */
+
+        &:hover {
+            color: var(--slack-text-dark);      /* White on hover */
+            background-color: var(--slack-hover-dark); /* Dark background on hover */
+        }
+    }
+}
