@@ -1,0 +1,168 @@
+/**
+ * @file PHPFlasher Emerald Theme Styles
+ * @description CSS styling for the elegant glass-like Emerald theme
+ * @author yoeunes
+ */
+
+/**
+ * PHPFlasher - Emerald Theme
+ *
+ * An elegant, minimalist theme with glass-like appearance and bounce animation.
+ * Features translucent backgrounds with blur effects and colored text.
+ */
+
+/**
+ * Theme-specific variables
+ * Define the color palette and styling attributes for Emerald theme
+ */
+.fl-emerald {
+    /* Base colors and appearance */
+    --emerald-bg-light: rgba(255, 255, 255, 0.9);  /* Semi-transparent white background */
+    --emerald-bg-dark: rgba(30, 30, 30, 0.9);      /* Semi-transparent dark background */
+    --emerald-text-light: #333333;                 /* Dark text for light mode */
+    --emerald-text-dark: rgba(255, 255, 255, 0.9); /* Light text for dark mode */
+    --emerald-shadow: rgba(0, 0, 0, 0.1);          /* Subtle shadow */
+    --emerald-blur: 8px;                           /* Backdrop blur amount */
+
+    /* Type-specific colors */
+    --emerald-success: var(--success-color, #16a085); /* Teal green for success */
+    --emerald-error: var(--error-color, #e74c3c);     /* Bright red for errors */
+    --emerald-warning: var(--warning-color, #f39c12); /* Orange for warnings */
+    --emerald-info: var(--info-color, #3498db);       /* Blue for information */
+}
+
+/**
+ * Entrance animation with bounce effect
+ * Combines scaling and vertical movement for a dynamic entrance
+ */
+@keyframes emeraldIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);    /* Start small and below position */
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.1) translateY(-5px);    /* Overshoot final size and position */
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);         /* Settle at final size and position */
+    }
+}
+
+/**
+ * Base Emerald theme styling
+ */
+.fl-emerald {
+    position: relative;
+    background: var(--emerald-bg-light);          /* Semi-transparent background */
+    margin: 0 0 0.5rem 0;                         /* Space between stacked notifications */
+    font-family: 'Inter', var(--fl-font), serif;  /* Prefer Inter font for modern look */
+    animation: emeraldIn 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* Custom easing for bounce */
+    box-shadow: 0 10px 20px var(--emerald-shadow); /* Depth shadow */
+    overflow: hidden;                              /* Contain backdrop filter */
+    backdrop-filter: blur(var(--emerald-blur));    /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(var(--emerald-blur)); /* Safari support */
+    padding: 1rem 1.5rem 1rem 1rem;                /* Asymmetric padding for close button */
+    color: var(--emerald-text-light);              /* Default text color */
+    border-radius: 10px;                           /* Rounded corners */
+
+    /**
+     * Content container
+     * Holds message and close button in a flex layout
+     */
+    .fl-content {
+        display: flex;
+        align-items: center;                       /* Vertically center contents */
+    }
+
+    /**
+     * Message styling
+     * The primary notification text
+     */
+    .fl-message {
+        flex: 1;                                   /* Take available space */
+        font-size: 0.9rem;                         /* Slightly smaller text */
+        line-height: 1.4;                          /* Improved readability */
+        font-weight: 500;                          /* Medium weight for better visibility */
+    }
+
+    /**
+     * Close button styling
+     * Simple, transparent button with hover effect
+     */
+    .fl-close {
+        background: transparent;
+        border: none;
+        font-size: 1.3rem;                         /* Larger close icon */
+        margin-left: auto;                         /* Push to the right */
+        cursor: pointer;
+        opacity: 0.7;                              /* Subtle appearance by default */
+        transition: opacity 0.2s ease;             /* Smooth hover effect */
+        color: currentColor;                       /* Inherit color from parent */
+
+        &:hover, &:focus {
+            opacity: 1;                            /* Full opacity on interaction */
+        }
+    }
+
+    /**
+     * Type-specific styling
+     * Each notification type gets its own text color
+     */
+    &.fl-success {
+        color: var(--emerald-success);             /* Green text for success */
+    }
+
+    &.fl-error {
+        color: var(--emerald-error);               /* Red text for errors */
+    }
+
+    &.fl-warning {
+        color: var(--emerald-warning);             /* Orange text for warnings */
+    }
+
+    &.fl-info {
+        color: var(--emerald-info);                /* Blue text for info */
+    }
+
+    /**
+     * RTL support
+     * Right-to-left language direction support
+     */
+    &.fl-rtl {
+        direction: rtl;
+        padding: 1rem 1rem 1rem 1.5rem;            /* Swap padding for RTL */
+
+        .fl-content {
+            flex-direction: row-reverse;           /* Reverse flex direction */
+        }
+
+        .fl-close {
+            margin-left: 0;
+            margin-right: auto;                    /* Push to the left in RTL */
+        }
+    }
+
+    /**
+     * Accessibility
+     * Respects reduced motion preferences
+     */
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;                           /* Disable animation */
+    }
+}
+
+/**
+ * Dark mode support
+ * Different styling when in dark mode
+ */
+body.fl-dark .fl-emerald,
+html.fl-dark .fl-emerald,
+.fl-emerald.fl-auto-dark {
+    background: var(--emerald-bg-dark);            /* Dark, semi-transparent background */
+
+    .fl-message {
+        color: var(--emerald-text-dark);           /* Lighter text in dark mode */
+    }
+}
