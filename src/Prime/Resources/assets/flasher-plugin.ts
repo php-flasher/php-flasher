@@ -1,7 +1,7 @@
 /**
  * @file FlasherPlugin Implementation
  * @description Default implementation for displaying notifications using custom themes
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './themes/index.scss'
 

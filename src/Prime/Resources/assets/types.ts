@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Type Definitions
  * @description Core types and interfaces for the PHPFlasher notification system.
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import type { Properties } from 'csstype'
 

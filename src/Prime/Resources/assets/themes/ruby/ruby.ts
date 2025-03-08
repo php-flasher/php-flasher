@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Ruby Theme Implementation
  * @description Vibrant notifications with gradient backgrounds and gemstone effects
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './ruby.scss'
 import type { Envelope } from '../../types'

@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Main Entry Point
  * @description Creates and exports the default PHPFlasher instance
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import Flasher from './flasher'
 import { flasherTheme } from './themes'

@@ -1,7 +1,7 @@
 /**
  * @file TypeScript Global Declarations for Toastr
  * @description Type definitions for jQuery and Toastr globals
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 
 // Declare jQuery on the global window object

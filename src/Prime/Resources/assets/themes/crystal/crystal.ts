@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Crystal Theme Implementation
  * @description Clean, elegant notification theme with subtle animations
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './crystal.scss'
 import type { Envelope } from '../../types'

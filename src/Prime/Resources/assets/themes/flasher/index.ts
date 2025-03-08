@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Default Theme Registration
  * @description Registers the default theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { flasherTheme } from './flasher'

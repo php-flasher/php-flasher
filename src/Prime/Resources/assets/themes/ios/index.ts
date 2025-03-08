@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher iOS Theme Registration
  * @description Registers the iOS theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { iosTheme } from './ios'

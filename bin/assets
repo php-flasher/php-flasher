@@ -1,0 +1,675 @@
+#!/usr/bin/env bash
+
+# =========================================================================
+# Build System for PHP-Flasher
+# =========================================================================
+#
+# This script provides an elegant build process for PHP-Flasher assets
+# with comprehensive reporting and flexible configuration options.
+#
+# Author: Younes ENNAJI
+# =========================================================================
+
+# Strict error handling
+set -o pipefail
+
+# =========================================================================
+# CONSTANTS AND CONFIGURATION
+# =========================================================================
+
+# Colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly UNDERLINE='\033[4m'
+readonly BLUE='\033[34m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly YELLOW='\033[33m'
+readonly CYAN='\033[36m'
+readonly MAGENTA='\033[35m'
+readonly WHITE='\033[37m'
+
+# Emoji indicators
+readonly ROCKET="🚀"
+readonly PACKAGE="📦"
+readonly CHECK="✓"
+readonly ERROR="❌"
+readonly WARNING="⚠️"
+readonly HAMMER="🏗️"
+readonly CHART="📊"
+readonly SPARKLES="✨"
+readonly HOURGLASS="⏳"
+readonly PALETTE="🎨"
+
+# File paths
+readonly SRC_DIR="src"
+readonly PRIME_PATH="${SRC_DIR}/Prime/Resources"
+readonly TEMP_DIR="/tmp/php-flasher-build-$$"
+readonly BUILD_LOG="${TEMP_DIR}/build.log"
+readonly SIZE_DATA="${TEMP_DIR}/sizes.data"
+
+# Default configuration
+VERBOSE=false
+WATCH_MODE=false
+THEME_ONLY=false
+MODULE_ONLY=false
+ANALYZE=false
+DEEP_ANALYZE=false
+SKIP_CLEAR=false
+NODE_ENV="production"
+
+# =========================================================================
+# UTILITY FUNCTIONS
+# =========================================================================
+
+cleanup() {
+    # Clean up temporary files when the script exits
+    rm -rf "${TEMP_DIR}" 2>/dev/null
+}
+
+trap cleanup EXIT
+
+mkdir -p "${TEMP_DIR}"
+
+print_header() {
+    echo -e "\n${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}User      : ${RESET}${MAGENTA}$(whoami)${RESET}"
+    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")${RESET}"
+    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}"
+
+    if [ "$NODE_ENV" != "production" ]; then
+        echo -e "${BOLD}Mode      : ${RESET}${YELLOW}${NODE_ENV}${RESET}"
+    fi
+
+    if [ "$WATCH_MODE" = true ]; then
+        echo -e "${BOLD}Watch     : ${RESET}${CYAN}enabled${RESET}"
+    fi
+
+    if [ "$THEME_ONLY" = true ]; then
+        echo -e "${BOLD}Scope     : ${RESET}${MAGENTA}themes only${RESET}"
+    elif [ "$MODULE_ONLY" = true ]; then
+        echo -e "${BOLD}Scope     : ${RESET}${MAGENTA}modules only${RESET}"
+    fi
+
+    echo
+}
+
+print_section() {
+    echo -e "\n${BOLD}${CYAN}┌─ $1 ${2:-}${RESET}"
+}
+
+success_msg() {
+    echo -e "${GREEN}${CHECK} $*${RESET}"
+}
+
+error_msg() {
+    echo -e "${RED}${ERROR} $*${RESET}"
+}
+
+warning_msg() {
+    echo -e "${YELLOW}${WARNING} $*${RESET}"
+}
+
+info_msg() {
+    echo -e "${BLUE}${HOURGLASS} $*${RESET}"
+}
+
+print_usage() {
+    echo -e "${BOLD}Usage:${RESET} $0 [options]"
+    echo
+    echo -e "${BOLD}Options:${RESET}"
+    echo -e "  ${GREEN}-h, --help${RESET}        Show this help message"
+    echo -e "  ${GREEN}-v, --verbose${RESET}     Display detailed build output"
+    echo -e "  ${GREEN}-w, --watch${RESET}       Run in watch mode"
+    echo -e "  ${GREEN}-d, --development${RESET} Build in development mode (unminified)"
+    echo -e "  ${GREEN}-t, --themes-only${RESET} Build only themes"
+    echo -e "  ${GREEN}-m, --modules-only${RESET} Build only modules (core and plugins)"
+    echo -e "  ${GREEN}-a, --analyze${RESET}     Show detailed size analysis in table format"
+    echo -e "  ${GREEN}-D, --deep-analyze${RESET} Perform deep analysis of files (checksums, content inspection)"
+    echo -e "  ${GREEN}--skip-clear${RESET}      Skip clearing output directories"
+    echo
+}
+
+parse_args() {
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            -h|--help)
+                print_usage
+                exit 0
+                ;;
+            -v|--verbose)
+                VERBOSE=true
+                ;;
+            -w|--watch)
+                WATCH_MODE=true
+                NODE_ENV="development"
+                ;;
+            -d|--development)
+                NODE_ENV="development"
+                ;;
+            -t|--themes-only)
+                THEME_ONLY=true
+                ;;
+            -m|--modules-only)
+                MODULE_ONLY=true
+                ;;
+            -a|--analyze)
+                ANALYZE=true
+                ;;
+            -D|--deep-analyze)
+                ANALYZE=true
+                DEEP_ANALYZE=true
+                ;;
+            --skip-clear)
+                SKIP_CLEAR=true
+                ;;
+            *)
+                warning_msg "Unknown option: $1"
+                print_usage
+                exit 1
+                ;;
+        esac
+        shift
+    done
+
+    # Validate conflicting options
+    if [ "$THEME_ONLY" = true ] && [ "$MODULE_ONLY" = true ]; then
+        error_msg "Cannot specify both --themes-only and --modules-only"
+        exit 1
+    fi
+
+    # Configure build mode
+    if [ "$WATCH_MODE" = true ]; then
+        ROLLUP_ARGS="-c -w"
+    else
+        ROLLUP_ARGS="-c"
+    fi
+
+    # When analyzing, we turn off verbosity for rollup
+    if [ "$ANALYZE" = true ]; then
+        export FILESIZE_SILENT=true
+    fi
+}
+
+# =========================================================================
+# BUILD FUNCTIONS
+# =========================================================================
+
+get_size_info() {
+    local file="$1"
+    # Get precise byte count for more accurate comparison
+    local bytes=$(wc -c < "$file")
+    local size=$(du -h "$file" | awk '{print $1}')
+    local gzip=$(gzip -c "$file" | wc -c | numfmt --to=iec --format="%.1f")
+    local brotli_size=$(brotli -c "$file" 2>/dev/null | wc -c | numfmt --to=iec --format="%.1f" || echo "N/A")
+
+    echo "$size|$gzip|$bytes|$brotli_size"
+}
+
+get_file_hash() {
+    local file="$1"
+    if command -v sha256sum &> /dev/null; then
+        sha256sum "$file" | awk '{print $1}'
+    elif command -v shasum &> /dev/null; then
+        shasum -a 256 "$file" | awk '{print $1}'
+    else
+        echo "HASH_UNAVAILABLE"
+    fi
+}
+
+analyze_file_content() {
+    local file="$1"
+    local filename=$(basename "$file")
+    local dir="${TEMP_DIR}/analysis/$(dirname "$file" | sed 's/\//_/g')"
+    mkdir -p "$dir"
+
+    # Get first 10 lines for a quick look
+    head -n 10 "$file" > "${dir}/${filename}.head"
+
+    # Get hash for exact comparison
+    local hash=$(get_file_hash "$file")
+    echo "$hash" > "${dir}/${filename}.hash"
+
+    # For CSS/JS, try to determine if it's minified
+    if [[ "$file" == *.css || "$file" == *.js ]]; then
+        # Count semicolons to help identify if minified
+        local semicolons=$(grep -o ";" "$file" | wc -l)
+        # Count newlines
+        local newlines=$(grep -c $'\n' "$file")
+
+        # Simple heuristic: if few newlines relative to semicolons, likely minified
+        if [ "$newlines" -lt 10 ] || [ "$semicolons" -gt "$((newlines * 5))" ]; then
+            echo "MINIFIED:YES semicolons:$semicolons newlines:$newlines" > "${dir}/${filename}.analysis"
+        else
+            echo "MINIFIED:NO semicolons:$semicolons newlines:$newlines" > "${dir}/${filename}.analysis"
+        fi
+    fi
+
+    echo "$hash"
+}
+
+collect_build_statistics() {
+    local modules_count=0
+    local themes_count=0
+    declare -a theme_names=()
+    local unique_css_hashes=0
+    local unique_js_hashes=0
+    declare -A css_hashes=()
+    declare -A js_hashes=()
+
+    # Create temporary directory for data
+    mkdir -p "${TEMP_DIR}/modules"
+    mkdir -p "${TEMP_DIR}/themes"
+    mkdir -p "${TEMP_DIR}/analysis"
+
+    echo "DEBUG: Looking for modules and themes..." >> "${BUILD_LOG}"
+
+    # Check for core flasher module first
+    if [ -f "${PRIME_PATH}/dist/flasher.min.js" ]; then
+        local size_info=$(get_size_info "${PRIME_PATH}/dist/flasher.min.js")
+        local hash="N/A"
+        if [ "$DEEP_ANALYZE" = true ]; then
+            hash=$(analyze_file_content "${PRIME_PATH}/dist/flasher.min.js")
+            js_hashes["$hash"]=1
+            ((unique_js_hashes++))
+        fi
+        echo "flasher:$size_info:$hash" >> "${TEMP_DIR}/modules/data"
+        ((modules_count++))
+    fi
+
+    # Collect module statistics - FIXED to avoid subshell issue
+    # Store filenames to process in a temporary file
+    find ${SRC_DIR}/*/Prime/Resources/dist -name "*.min.js" | grep -v themes > "${TEMP_DIR}/module_files.txt" 2>/dev/null
+
+    # Process each module file
+    while IFS= read -r file; do
+        local module=$(basename "$file" .min.js)
+        local size_info=$(get_size_info "$file")
+        local hash="N/A"
+        if [ "$DEEP_ANALYZE" = true ]; then
+            hash=$(analyze_file_content "$file")
+            js_hashes["$hash"]=1
+            ((unique_js_hashes++))
+        fi
+        echo "$module:$size_info:$hash" >> "${TEMP_DIR}/modules/data"
+        ((modules_count++))
+        echo "DEBUG: Found module: $module in $file (${size_info})" >> "${BUILD_LOG}"
+    done < "${TEMP_DIR}/module_files.txt"
+
+    # Collect theme statistics - FIXED to avoid subshell issue
+    if [ -d "${PRIME_PATH}/dist/themes" ]; then
+        # Store theme files in a temporary file
+        find ${PRIME_PATH}/dist/themes -name "*.min.js" > "${TEMP_DIR}/theme_files.txt" 2>/dev/null
+
+        # Process each theme file
+        while IFS= read -r file; do
+            local theme=$(basename "$(dirname "$file")")
+            local size_info=$(get_size_info "$file")
+            local js_hash="N/A"
+            local css_hash="N/A"
+
+            # Also get the CSS file size and analyze it
+            local css_file="${PRIME_PATH}/dist/themes/${theme}/${theme}.min.css"
+            local css_size_info="N/A"
+            if [ -f "$css_file" ]; then
+                css_size_info=$(get_size_info "$css_file")
+
+                if [ "$DEEP_ANALYZE" = true ]; then
+                    css_hash=$(analyze_file_content "$css_file")
+                    if [ -z "${css_hashes[$css_hash]}" ]; then
+                        css_hashes["$css_hash"]=1
+                        ((unique_css_hashes++))
+                    else
+                        css_hashes["$css_hash"]=$((css_hashes["$css_hash"] + 1))
+                    fi
+
+                    js_hash=$(analyze_file_content "$file")
+                    if [ -z "${js_hashes[$js_hash]}" ]; then
+                        js_hashes["$js_hash"]=1
+                    else
+                        js_hashes["$js_hash"]=$((js_hashes["$js_hash"] + 1))
+                    fi
+                fi
+
+                echo "DEBUG: Theme $theme JS: $size_info, CSS: $css_size_info" >> "${BUILD_LOG}"
+            else
+                echo "DEBUG: No CSS file found for theme $theme" >> "${BUILD_LOG}"
+            fi
+
+            echo "$theme:$size_info:$js_hash:$css_size_info:$css_hash" >> "${TEMP_DIR}/themes/data"
+            theme_names+=("$theme")
+            ((themes_count++))
+        done < "${TEMP_DIR}/theme_files.txt"
+
+        # Sort theme names alphabetically
+        if [ ${#theme_names[@]} -gt 0 ]; then
+            printf "%s\n" "${theme_names[@]}" | sort > "${TEMP_DIR}/theme_names"
+        fi
+    fi
+
+    # Store counts for summary
+    echo "$modules_count" > "${TEMP_DIR}/modules_count"
+    echo "$themes_count" > "${TEMP_DIR}/themes_count"
+    echo "$unique_js_hashes" > "${TEMP_DIR}/unique_js_hashes"
+    echo "$unique_css_hashes" > "${TEMP_DIR}/unique_css_hashes"
+
+    # Write hash statistics if deep analysis was enabled
+    if [ "$DEEP_ANALYZE" = true ]; then
+        echo "JS Hash Distribution:" > "${TEMP_DIR}/hash_stats.txt"
+        for hash in "${!js_hashes[@]}"; do
+            echo "  $hash: ${js_hashes[$hash]} files" >> "${TEMP_DIR}/hash_stats.txt"
+        done
+
+        echo -e "\nCSS Hash Distribution:" >> "${TEMP_DIR}/hash_stats.txt"
+        for hash in "${!css_hashes[@]}"; do
+            echo "  $hash: ${css_hashes[$hash]} files" >> "${TEMP_DIR}/hash_stats.txt"
+        done
+    fi
+}
+
+run_build() {
+    print_section "Starting Build Process" "${HAMMER}"
+
+    info_msg "Environment: ${NODE_ENV}"
+    info_msg "Building PHP-Flasher assets..."
+
+    # Set environment variables
+    export NODE_ENV="$NODE_ENV"
+    export ANALYZE="$ANALYZE"
+    export DEEP_ANALYZE="$DEEP_ANALYZE"
+
+    # Determine which parts to build based on flags
+    local rollup_args="$ROLLUP_ARGS"
+    if [ "$THEME_ONLY" = true ]; then
+        info_msg "Building themes only"
+        # Here we'd need to extend rollup to support theme-only builds
+        # For now, we'll complete the full build
+    elif [ "$MODULE_ONLY" = true ]; then
+        info_msg "Building modules only"
+        # Similarly, we'd need to extend rollup
+    fi
+
+    # Execute rollup with appropriate flags
+    if [ "$VERBOSE" = true ]; then
+        if npx rollup $rollup_args; then
+            success_msg "Build process completed"
+            return 0
+        else
+            error_msg "Build process failed"
+            return 1
+        fi
+    else
+        # Capture output for non-verbose mode
+        if npx rollup $rollup_args > "$BUILD_LOG" 2>&1; then
+            success_msg "Build process completed"
+            return 0
+        else
+            error_msg "Build process failed"
+            cat "$BUILD_LOG"
+            return 1
+        fi
+    fi
+}
+
+# =========================================================================
+# REPORTING FUNCTIONS
+# =========================================================================
+
+print_size_table() {
+    local title="$1"
+    local data_file="$2"
+    local max_name_len=20
+
+    if [ ! -f "$data_file" ] || [ ! -s "$data_file" ]; then
+        return
+    fi
+
+    echo -e "\n${BOLD}${WHITE}${title}${RESET}\n"
+
+    # Print table header with or without hashes based on deep analysis
+    if [ "$DEEP_ANALYZE" = true ]; then
+        printf "${BOLD}%-${max_name_len}s %-10s %-10s %-10s %-10s${RESET}\n" "Component" "Size" "Gzip" "Bytes" "Hash"
+    else
+        printf "${BOLD}%-${max_name_len}s %-10s %-10s %-10s${RESET}\n" "Component" "Size" "Gzip" "Bytes"
+    fi
+
+    echo -e "${DIM}$(printf '%.0s─' {1..70})${RESET}"
+
+    # Print table rows
+    while IFS=: read -r line; do
+        # Split the line into fields
+        local fields=()
+        while IFS=: read -ra parts; do
+            fields=("${parts[@]}")
+        done <<< "$line"
+
+        local name="${fields[0]}"
+        local size_data="${fields[1]}"
+        local hash="N/A"
+        if [ "${#fields[@]}" -gt 2 ]; then
+            hash="${fields[2]}"
+        fi
+
+        IFS='|' read -r size gzip bytes brotli <<< "$size_data"
+
+        if [ "$DEEP_ANALYZE" = true ]; then
+            printf "%-${max_name_len}s ${GREEN}%-10s${RESET} ${BLUE}%-10s${RESET} ${YELLOW}%-10s${RESET} ${DIM}%.8s${RESET}\n" \
+                "$name" "$size" "$gzip" "$bytes" "$hash"
+        else
+            printf "%-${max_name_len}s ${GREEN}%-10s${RESET} ${BLUE}%-10s${RESET} ${YELLOW}%-10s${RESET}\n" \
+                "$name" "$size" "$gzip" "$bytes"
+        fi
+    done < "$data_file"
+}
+
+print_theme_table() {
+    local data_file="$1"
+    local max_name_len=15
+
+    if [ ! -f "$data_file" ] || [ ! -s "$data_file" ]; then
+        return
+    fi
+
+    echo -e "\n${BOLD}${WHITE}Theme Sizes${RESET}\n"
+
+    # Print table header
+    printf "${BOLD}%-${max_name_len}s %-10s %-10s %-10s %-10s${RESET}\n" "Theme" "JS Size" "CSS Size" "JS Bytes" "CSS Bytes"
+    echo -e "${DIM}$(printf '%.0s─' {1..70})${RESET}"
+
+    # Print table rows
+    while IFS=: read -r line; do
+        # Split the line into fields
+        local fields=()
+        while IFS=: read -ra parts; do
+            fields=("${parts[@]}")
+        done <<< "$line"
+
+        local name="${fields[0]}"
+        local js_size_data="${fields[1]}"
+        local js_hash="N/A"
+        local css_size_data="N/A"
+        local css_hash="N/A"
+
+        if [ "${#fields[@]}" -gt 2 ]; then
+            js_hash="${fields[2]}"
+        fi
+
+        if [ "${#fields[@]}" -gt 3 ]; then
+            css_size_data="${fields[3]}"
+        fi
+
+        if [ "${#fields[@]}" -gt 4 ]; then
+            css_hash="${fields[4]}"
+        fi
+
+        IFS='|' read -r js_size js_gzip js_bytes js_brotli <<< "$js_size_data"
+
+        local css_size="N/A"
+        local css_bytes="N/A"
+
+        if [ "$css_size_data" != "N/A" ]; then
+            IFS='|' read -r css_size css_gzip css_bytes css_brotli <<< "$css_size_data"
+        fi
+
+        printf "%-${max_name_len}s ${GREEN}%-10s${RESET} ${MAGENTA}%-10s${RESET} ${YELLOW}%-10s${RESET} ${BLUE}%-10s${RESET}\n" \
+            "$name" "$js_size" "$css_size" "$js_bytes" "$css_bytes"
+    done < "$data_file"
+}
+
+print_theme_grid() {
+    local theme_names_file="$1"
+    if [ ! -f "$theme_names_file" ] || [ ! -s "$theme_names_file" ]; then
+        return
+    fi
+
+    echo -e "\n${BOLD}${MAGENTA}${PALETTE} Themes:${RESET}"
+
+    # Define grid parameters
+    local columns=3
+    local max_width=15
+    local count=0
+
+    # Print themes in a grid
+    while read -r theme; do
+        if [ $((count % columns)) -eq 0 ]; then
+            echo -ne "  "
+        fi
+
+        printf "• %-${max_width}s" "$theme"
+        count=$((count + 1))
+
+        if [ $((count % columns)) -eq 0 ]; then
+            echo
+        fi
+    done < "$theme_names_file"
+
+    # Add a newline if the last row wasn't complete
+    if [ $((count % columns)) -ne 0 ]; then
+        echo
+    fi
+}
+
+print_deep_analysis() {
+    if [ ! -d "${TEMP_DIR}/analysis" ]; then
+        return
+    fi
+
+    local unique_js=0
+    local unique_css=0
+
+    if [ -f "${TEMP_DIR}/unique_js_hashes" ]; then
+        unique_js=$(cat "${TEMP_DIR}/unique_js_hashes")
+    fi
+
+    if [ -f "${TEMP_DIR}/unique_css_hashes" ]; then
+        unique_css=$(cat "${TEMP_DIR}/unique_css_hashes")
+    fi
+
+    echo -e "\n${BOLD}${WHITE}Deep File Analysis${RESET}"
+    echo -e "${DIM}$(printf '%.0s─' {1..50})${RESET}"
+
+    echo -e "Unique JavaScript files: ${YELLOW}${unique_js}${RESET}"
+    echo -e "Unique CSS files: ${MAGENTA}${unique_css}${RESET}"
+
+    if [ -f "${TEMP_DIR}/hash_stats.txt" ]; then
+        echo -e "\n${BOLD}Hash Distribution:${RESET}"
+        local top_5=$(head -n 10 "${TEMP_DIR}/hash_stats.txt")
+        echo -e "${DIM}$top_5${RESET}"
+        echo -e "${DIM}(See ${TEMP_DIR}/hash_stats.txt for full details)${RESET}"
+    fi
+}
+
+print_summary() {
+    local success=$1
+    local duration=$2
+
+    # Read statistics
+    local modules_count=0
+    local themes_count=0
+
+    if [ -f "${TEMP_DIR}/modules_count" ]; then
+        modules_count=$(cat "${TEMP_DIR}/modules_count")
+    fi
+
+    if [ -f "${TEMP_DIR}/themes_count" ]; then
+        themes_count=$(cat "${TEMP_DIR}/themes_count")
+    fi
+
+    # Print summary header
+    echo -e "\n${BOLD}${PACKAGE} Build Summary${RESET}"
+    echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+    # Print statistics
+    if [ "$MODULE_ONLY" = false ]; then
+        echo -e "${CHECK} Modules/Plugins:      ${BOLD}${CYAN}${modules_count}${RESET}"
+    fi
+
+    if [ "$THEME_ONLY" = false ]; then
+        echo -e "${CHECK} Themes:       ${BOLD}${MAGENTA}${themes_count}${RESET}"
+    fi
+
+    echo -e "${CHECK} Build completed in ${BOLD}${YELLOW}${duration}s${RESET}"
+
+    # Print theme names if available
+    if [ -f "${TEMP_DIR}/theme_names" ]; then
+        print_theme_grid "${TEMP_DIR}/theme_names"
+    fi
+
+    # Show size analysis if requested
+    if [ "$ANALYZE" = true ]; then
+        echo -e "\n${BOLD}${CHART} Size Analysis:${RESET}"
+        print_size_table "Module Sizes" "${TEMP_DIR}/modules/data"
+
+        if [ "$DEEP_ANALYZE" = true ]; then
+            print_theme_table "${TEMP_DIR}/themes/data"
+            print_deep_analysis
+        else
+            print_size_table "Theme Sizes" "${TEMP_DIR}/themes/data"
+        fi
+
+        # Add option to view detailed logs
+        echo -e "\nFor detailed build info, run: ${CYAN}cat $BUILD_LOG${RESET}"
+        echo -e "Temporary files at: ${CYAN}${TEMP_DIR}${RESET}"
+    fi
+}
+
+# =========================================================================
+# MAIN EXECUTION
+# =========================================================================
+
+main() {
+    local start_time=$(date +%s)
+    local build_success=true
+
+    # Parse command-line arguments
+    parse_args "$@"
+
+    # Show header
+    print_header
+
+    # Run the build process
+    run_build || build_success=false
+
+    # Only collect statistics if build was successful and not in watch mode
+    if [ "$WATCH_MODE" = false ] && [ "$build_success" = true ]; then
+        if [ "$ANALYZE" = true ] || [ ! -t 1 ]; then
+            print_section "Analyzing Build Output" "${CHART}"
+        fi
+        collect_build_statistics
+    fi
+
+    # Print summary (unless in watch mode)
+    if [ "$WATCH_MODE" = false ]; then
+        local end_time=$(date +%s)
+        local duration=$((end_time - start_time))
+
+        print_summary "$build_success" "$duration"
+    fi
+
+    # Exit with appropriate code
+    [ "$build_success" = true ] && exit 0 || exit 1
+}
+
+# Execute main function with all arguments
+main "$@"

@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Onyx Theme Implementation
  * @description Modern floating notifications with subtle accent elements
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './onyx.scss'
 import type { Envelope } from '../../types'

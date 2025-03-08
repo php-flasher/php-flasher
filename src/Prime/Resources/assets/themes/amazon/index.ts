@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Amazon Theme Registration
  * @description Registers the Amazon theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { amazonTheme } from './amazon'

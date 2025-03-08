@@ -1,4 +1,9 @@
-import flasher from '../../index.ts';
+/**
+ * @package PHPFlasher
+ * @author Younes ENNAJI
+ * @license MIT
+ */
+import flasher from '@flasher/flasher';
 
 const slackTheme = {
     render: (envelope) => {

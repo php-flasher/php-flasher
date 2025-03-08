@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Google Theme Implementation
  * @description Material Design-inspired notification theme
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './google.scss'
 import type { Envelope } from '../../types'

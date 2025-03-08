@@ -1,7 +1,7 @@
 /**
  * @file SweetAlert Plugin Implementation
  * @description PHPFlasher integration with the SweetAlert2 library
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import { AbstractPlugin } from '@flasher/flasher/dist/plugin'
 import type { Envelope, Options } from '@flasher/flasher/dist/types'

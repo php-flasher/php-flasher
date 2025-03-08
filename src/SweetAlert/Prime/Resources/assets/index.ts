@@ -1,7 +1,7 @@
 /**
  * @file SweetAlert Plugin Entry Point
  * @description Registers the SweetAlert plugin with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '@flasher/flasher'
 import SweetAlertPlugin from './sweetalert'

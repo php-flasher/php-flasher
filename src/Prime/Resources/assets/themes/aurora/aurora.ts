@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Aurora Theme Implementation
  * @description Calm, soothing notification style with glass morphism effects
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './aurora.scss'
 import type { Envelope } from '../../types'

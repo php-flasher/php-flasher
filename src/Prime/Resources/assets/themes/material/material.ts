@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Material Design Theme Implementation
  * @description Minimalist Material Design notification theme
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './material.scss'
 import type { Envelope } from '../../types'

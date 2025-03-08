@@ -1,3 +1,8 @@
+/**
+ * @package PHPFlasher
+ * @author Younes ENNAJI
+ * @license MIT
+ */
 import flasher from '@flasher/flasher';
 import toastr from 'toastr';
 

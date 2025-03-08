@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Crystal Theme Registration
  * @description Registers the Crystal theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { crystalTheme } from './crystal'

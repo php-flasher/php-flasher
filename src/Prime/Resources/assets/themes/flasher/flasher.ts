@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Default Theme
  * @description Theme implementation for the default PHPFlasher notification style
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './flasher.scss'
 import type { Envelope } from '../../types'

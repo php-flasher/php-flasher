@@ -1,7 +1,7 @@
 /**
  * @file Abstract Plugin Base Class
  * @description Base implementation shared by all notification plugins
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import type { Envelope, Options, PluginInterface } from './types'
 

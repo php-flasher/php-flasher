@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Minimal Theme Registration
  * @description Registers the Minimal theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { minimalTheme } from './minimal'

@@ -1,6 +1,11 @@
+/**
+ * @package PHPFlasher
+ * @author Younes ENNAJI
+ * @license MIT
+ */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../../index.ts')) :
-    typeof define === 'function' && define.amd ? define(['../../index.ts'], factory) :
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('@flasher/flasher')) :
+    typeof define === 'function' && define.amd ? define(['@flasher/flasher'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.flasher));
 })(this, (function (flasher) { 'use strict';
 

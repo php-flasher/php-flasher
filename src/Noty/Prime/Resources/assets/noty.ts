@@ -1,7 +1,7 @@
 /**
  * @file Noty Plugin Implementation
  * @description PHPFlasher integration with the Noty notification library
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import { AbstractPlugin } from '@flasher/flasher/dist/plugin'
 import type { Envelope, Options } from '@flasher/flasher/dist/types'

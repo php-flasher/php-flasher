@@ -1,4 +1,7 @@
 {
-  "upgrade": true,
-  "target": "semver"
+    "upgrade": true,
+    "target": "semver",
+    "format": "group",
+    "color": true,
+    "root": true
 }

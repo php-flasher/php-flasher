@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Neon Theme Implementation
  * @description Elegant notifications with subtle glowing accents
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './neon.scss'
 import type { Envelope } from '../../types'

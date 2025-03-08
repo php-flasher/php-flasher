@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Type Exports
  * @description Re-exports types and interfaces for TypeScript users
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 
 /**

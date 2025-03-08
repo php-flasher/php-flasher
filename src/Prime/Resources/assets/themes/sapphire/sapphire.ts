@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Sapphire Theme Implementation
  * @description Modern glassmorphic notifications with blurred backdrop effect
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './sapphire.scss'
 import type { Envelope } from '../../types'

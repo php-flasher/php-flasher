@@ -1,7 +1,7 @@
 /**
  * @file Notyf Plugin Entry Point
  * @description Registers the Notyf plugin with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import './notyf.scss'
 

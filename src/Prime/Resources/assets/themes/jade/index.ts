@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Jade Theme Registration
  * @description Registers the Jade theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { jadeTheme } from './jade'

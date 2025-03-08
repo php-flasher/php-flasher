@@ -1,7 +1,7 @@
 /**
  * @file PHPFlasher Neon Theme Registration
  * @description Registers the Neon theme with PHPFlasher
- * @author yoeunes
+ * @author Younes ENNAJI
  */
 import flasher from '../../index'
 import { neonTheme } from './neon'
