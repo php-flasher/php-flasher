@@ -13,17 +13,41 @@ use Flasher\Prime\Translation\Language;
 use Flasher\Prime\Translation\TranslatorInterface;
 
 /**
- * Listener responsible for applying translations to envelopes during presentation events based on TranslationStamps and locale settings.
+ * TranslationListener - Applies translations to notifications during presentation.
+ *
+ * This listener is responsible for translating notification titles and messages
+ * before they are displayed to users. It also sets RTL mode for right-to-left
+ * languages and translates preset parameters.
+ *
+ * Design patterns:
+ * - Decorator: Adds translation functionality to notifications
+ * - Strategy: Uses pluggable translation strategies via TranslatorInterface
  */
 final readonly class TranslationListener implements EventListenerInterface
 {
+    /**
+     * The translator to use for translating notification content.
+     */
     private TranslatorInterface $translator;
 
+    /**
+     * Creates a new TranslationListener instance.
+     *
+     * If no translator is provided, falls back to the EchoTranslator which simply
+     * returns the input strings unchanged.
+     *
+     * @param TranslatorInterface|null $translator The translator to use
+     */
     public function __construct(?TranslatorInterface $translator = null)
     {
         $this->translator = $translator ?: new EchoTranslator();
     }
 
+    /**
+     * Handles presentation events by translating all notifications.
+     *
+     * @param PresentationEvent $event The presentation event
+     */
     public function __invoke(PresentationEvent $event): void
     {
         foreach ($event->getEnvelopes() as $envelope) {
@@ -36,6 +60,17 @@ final readonly class TranslationListener implements EventListenerInterface
         return PresentationEvent::class;
     }
 
+    /**
+     * Translates a notification envelope.
+     *
+     * This method:
+     * 1. Determines the appropriate locale
+     * 2. Gathers translation parameters
+     * 3. Applies translations to title and message
+     * 4. Sets RTL mode if needed
+     *
+     * @param Envelope $envelope The notification envelope to translate
+     */
     private function translateEnvelope(Envelope $envelope): void
     {
         $translationStamp = $envelope->get(TranslationStamp::class);
@@ -53,7 +88,14 @@ final readonly class TranslationListener implements EventListenerInterface
     }
 
     /**
-     * @return array<string, mixed>
+     * Extracts and translates parameters from preset stamps.
+     *
+     * @param Envelope $envelope The notification envelope
+     * @param string   $locale   The locale to use
+     *
+     * @return array<string, mixed> The translated parameters
+     *
+     * @throws \InvalidArgumentException If a parameter value is not a string
      */
     private function getParameters(Envelope $envelope, string $locale): array
     {
@@ -76,7 +118,13 @@ final readonly class TranslationListener implements EventListenerInterface
     }
 
     /**
-     * @param array<string, mixed> $parameters
+     * Applies translations to the notification title and message.
+     *
+     * If the title is empty, the notification type is used as a fallback.
+     *
+     * @param Envelope             $envelope   The notification envelope
+     * @param string               $locale     The locale to use
+     * @param array<string, mixed> $parameters The translation parameters
      */
     private function applyTranslations(Envelope $envelope, string $locale, array $parameters): void
     {

@@ -8,6 +8,21 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 
 /**
+ * SweetAlertBuilder - Builder implementation for SweetAlert2 notifications.
+ *
+ * This class provides a comprehensive fluent interface for configuring
+ * SweetAlert2 notifications. It extends the core notification builder with
+ * SweetAlert2's extensive range of options, including modal dialogs, custom
+ * styling, input forms, and interactive features.
+ *
+ * SweetAlert2 is a complete replacement for JavaScript's alert(), confirm(),
+ * and prompt() functions, offering far more customization and interactivity.
+ *
+ * Design patterns:
+ * - Builder: Provides a fluent interface for constructing complex objects
+ * - Fluent Interface: Methods return $this for method chaining
+ * - Type Safety: Uses PHPStan annotations for compile-time type checking
+ *
  * @phpstan-type NotificationType "success"|"info"|"warning"|"error"|"question"
  * @phpstan-type CustomClassType "container"|"popup"|"header"|"title"|"closeButton"|"icon"|"image"|"content"|"input"|"inputLabel"|"validationMessage"|"actions"|"confirmButton"|"denyButton"|"cancelButton"|"loader"|"footer"
  * @phpstan-type OptionsType array{
@@ -83,7 +98,11 @@ use Flasher\Prime\Notification\NotificationBuilder;
 final class SweetAlertBuilder extends NotificationBuilder
 {
     /**
-     * @phpstan-param NotificationType $type
+     * Sets the notification type with SweetAlert-specific type checking.
+     *
+     * @phpstan-param NotificationType $type The notification type
+     *
+     * @return static The builder instance
      */
     public function type(string $type): static
     {
@@ -91,7 +110,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates a success notification with SweetAlert-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options SweetAlert-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function success(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -99,7 +124,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates an error notification with SweetAlert-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options SweetAlert-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function error(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -107,7 +138,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates an info notification with SweetAlert-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options SweetAlert-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function info(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -115,7 +152,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates a warning notification with SweetAlert-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options SweetAlert-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function warning(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -123,8 +166,17 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param NotificationType $type
-     * @phpstan-param OptionsType      $options
+     * Creates a notification of the specified type with SweetAlert-specific options.
+     *
+     * @phpstan-param NotificationType|null $type    The notification type
+     * @phpstan-param OptionsType           $options SweetAlert-specific options
+     *
+     * @param string|null $type    The notification type
+     * @param string|null $message The notification message
+     * @param array       $options SweetAlert-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
     {
@@ -132,7 +184,12 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Sets notification options with SweetAlert-specific type checking.
+     *
+     * @param OptionsType $options The notification options
+     * @param bool        $append  Whether to append or replace existing options
+     *
+     * @return static The builder instance
      */
     public function options(array $options, bool $append = true): static
     {
@@ -140,11 +197,18 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets a specific notification option with SweetAlert-specific type checking.
+     *
      * @template T of OptionsType
      * @template K of key-of<T>
      *
      * @phpstan-param K $name
      * @phpstan-param T[K] $value
+     *
+     * @param string $name  The option name
+     * @param mixed  $value The option value
+     *
+     * @return static The builder instance
      */
     public function option(string $name, mixed $value): static
     {
@@ -152,9 +216,15 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Display a question typed alert message.
+     * Creates a question type dialog with a cancel button.
      *
-     * @param array<string, mixed> $options
+     * SweetAlert2 provides a specific question type for creating confirmation dialogs,
+     * which is a common UI pattern for actions that need user confirmation.
+     *
+     * @param string|null          $message The question message
+     * @param array<string, mixed> $options Additional options
+     *
+     * @return self The builder instance
      */
     public function question(?string $message = null, array $options = []): self
     {
@@ -172,7 +242,11 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * The title of the popup, as HTML.
+     * Sets the title of the popup as HTML.
+     *
+     * @param string $title The title content
+     *
+     * @return static The builder instance
      */
     public function title(string $title): static
     {
@@ -184,7 +258,13 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * The title of the popup, as text. Useful to avoid HTML injection.
+     * Sets the title of the popup as plain text.
+     *
+     * Useful to avoid HTML injection.
+     *
+     * @param string $text The title text
+     *
+     * @return self The builder instance
      */
     public function titleText(string $text): self
     {
@@ -194,10 +274,15 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * A HTML description for the popup.
+     * Sets HTML content for the popup.
      *
-     * [Security] SweetAlert2 does NOT sanitize this parameter. It is the developer's responsibility to escape any user
-     * input when using the html option, so XSS attacks would be prevented.
+     * [Security] SweetAlert2 does NOT sanitize this parameter. It is the developer's
+     * responsibility to escape any user input when using the html option,
+     * so XSS attacks would be prevented.
+     *
+     * @param string $html The HTML content
+     *
+     * @return self The builder instance
      */
     public function html(string $html): self
     {
@@ -303,10 +388,17 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end" $position
+     * Configures a toast notification.
      *
-     * Whether or not an alert should be treated as a toast notification. This option is normally coupled with the
-     * position parameter and a timer. Toasts are NEVER autofocused.
+     *  Toast notifications are smaller, less intrusive notifications typically
+     *  shown at the screen edge. This is a convenience method that configures
+     *  several properties at once for toast behavior.
+     *
+     * @param bool                                                                                                  $toast             Whether to enable toast mode
+     * @param "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end" $position
+     * @param bool                                                                                                  $showConfirmButton Whether to show the confirm button
+     *
+     * @return self The builder instance
      */
     public function toast(bool $toast = true, string $position = 'top-end', bool $showConfirmButton = false): self
     {
@@ -841,6 +933,16 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * Makes the dialog persistent, requiring the user to interact with it.
+     *
+     * This prevents the dialog from being dismissed via outside clicks or escape key.
+     *
+     * @param bool $showConfirmBtn Whether to show the confirm button
+     * @param bool $showCloseBtn   Whether to show the close button
+     *
+     * @return self The builder instance
+     */
     public function persistent(bool $showConfirmBtn = true, bool $showCloseBtn = false): self
     {
         $this->allowEscapeKey(false);
@@ -904,6 +1006,20 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * Configures an image dialog with customizable dimensions.
+     *
+     * This method configures a dialog with an image as the main content.
+     *
+     * @param string      $title       The dialog title
+     * @param string      $text        The dialog text
+     * @param string      $imageUrl    The URL of the image
+     * @param int         $imageWidth  The width of the image in pixels
+     * @param int         $imageHeight The height of the image in pixels
+     * @param string|null $imageAlt    Alternative text for the image
+     *
+     * @return self The builder instance
+     */
     public function image(string $title, string $text, string $imageUrl, int $imageWidth = 400, int $imageHeight = 200, ?string $imageAlt = null): self
     {
         $this->title($title);
@@ -923,7 +1039,18 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Shortcut to add and flush an image.
+     * Creates and immediately pushes an image notification.
+     *
+     * This is a shortcut method that combines image configuration and pushing.
+     *
+     * @param string      $title       The dialog title
+     * @param string      $text        The dialog text
+     * @param string      $imageUrl    The URL of the image
+     * @param int         $imageWidth  The width of the image in pixels
+     * @param int         $imageHeight The height of the image in pixels
+     * @param string|null $imageAlt    Alternative text for the image
+     *
+     * @return Envelope The notification envelope
      */
     public function addImage(string $title, string $text, string $imageUrl, int $imageWidth = 400, int $imageHeight = 200, ?string $imageAlt = null): Envelope
     {

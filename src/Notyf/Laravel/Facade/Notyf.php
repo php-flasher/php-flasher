@@ -10,6 +10,29 @@ use Flasher\Prime\Stamp\StampInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * Notyf - Laravel facade for Notyf notifications.
+ *
+ * This facade provides a static interface to Notyf's functionality within Laravel,
+ * following Laravel's facade pattern. It offers comprehensive IDE autocompletion
+ * for all Notyf builder methods.
+ *
+ * Design patterns:
+ * - Facade: Provides a simplified, static interface to a complex subsystem
+ * - Proxy: Acts as a proxy to the underlying Notyf service
+ *
+ * Usage examples:
+ * ```php
+ * // Simple notification
+ * Notyf::success('Operation completed successfully');
+ *
+ * // Chained configuration
+ * Notyf::duration(3000)
+ *      ->dismissible(true)
+ *      ->position('x', 'right')
+ *      ->position('y', 'top')
+ *      ->success('Record saved');
+ * ```
+ *
  * @method static NotyfBuilder success(string $message, array<string, mixed> $options = array())
  * @method static NotyfBuilder error(string $message, array<string, mixed> $options = array())
  * @method static NotyfBuilder warning(string $message, array<string, mixed> $options = array())
@@ -34,6 +57,11 @@ use Illuminate\Support\Facades\Facade;
  */
 final class Notyf extends Facade
 {
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string The service container binding key for Notyf
+     */
     protected static function getFacadeAccessor(): string
     {
         return 'flasher.notyf';

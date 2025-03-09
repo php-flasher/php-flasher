@@ -8,6 +8,15 @@ use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Type;
 
+/*
+ * Namespace-specific helper functions for Toastr notifications.
+ *
+ * This file provides a namespace-specific helper function that simplifies
+ * the creation of Toastr notifications from code that uses imports.
+ *
+ * Design pattern: Facade - Provides a simplified interface to a complex subsystem
+ */
+
 if (!\function_exists('Flasher\Toastr\Prime\toastr')) {
     /**
      * Creates a Toastr notification or returns the Toastr factory.

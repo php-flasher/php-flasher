@@ -7,14 +7,49 @@ namespace Flasher\Prime\Response\Presenter;
 use Flasher\Prime\Response\Response;
 use Livewire\LivewireManager;
 
+/**
+ * HtmlPresenter - Presents notifications as JavaScript for HTML pages.
+ *
+ * This presenter generates JavaScript code that can be embedded in HTML pages
+ * to display notifications. It handles resource loading, Content Security Policy
+ * considerations, and special HTML content from notifications.
+ *
+ * Design patterns:
+ * - Presenter: Transforms domain objects into a presentation format
+ * - Template Method: Defines the skeleton of the JavaScript generation algorithm
+ * - Adapter: Integrates with frontend frameworks like Livewire
+ */
 final class HtmlPresenter implements PresenterInterface
 {
+    /**
+     * Placeholder for inserting notification data in already rendered HTML.
+     */
     public const FLASHER_REPLACE_ME = '/** {--FLASHER_REPLACE_ME--} **/';
+
+    /**
+     * Placeholder for inserting at the end of head tag.
+     */
     public const HEAD_END_PLACE_HOLDER = '</head>';
+
+    /**
+     * Placeholder for inserting at the end of body tag.
+     */
     public const BODY_END_PLACE_HOLDER = '</body>';
 
     /**
-     * @throws \JsonException
+     * Renders a response as JavaScript code for HTML pages.
+     *
+     * This method generates JavaScript code that will:
+     * 1. Extract any direct HTML content from notifications
+     * 2. Create a script that dynamically loads resources if needed
+     * 3. Initialize and render the notifications using the frontend library
+     * 4. Set up event listeners for dynamic notification rendering
+     *
+     * @param Response $response The response to render
+     *
+     * @return string The generated JavaScript code
+     *
+     * @throws \JsonException If JSON encoding fails
      */
     public function render(Response $response): string
     {
@@ -132,7 +167,12 @@ final class HtmlPresenter implements PresenterInterface
     }
 
     /**
-     * Generate the script for Livewire event handling.
+     * Generates the JavaScript for Livewire integration.
+     *
+     * This method checks if Livewire is available and, if so, generates
+     * the necessary JavaScript to handle Livewire page navigation events.
+     *
+     * @return string The Livewire integration JavaScript, or an empty string if Livewire is not available
      */
     private function getLivewireListenerScript(): string
     {

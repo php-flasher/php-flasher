@@ -5,7 +5,16 @@ declare(strict_types=1);
 namespace Flasher\Symfony\Storage;
 
 /**
- * FallbackSession acts as a stand-in when the regular session is not available.
+ * FallbackSessionInterface - Contract for alternative session storage.
+ *
+ * This interface defines methods for a fallback storage mechanism when the
+ * regular Symfony session is not available. This is particularly useful in
+ * stateless contexts or when the session hasn't been started.
+ *
+ * Design patterns:
+ * - Interface Segregation: Defines a minimal interface for session-like storage
+ * - Strategy Pattern: Allows different storage implementations to be used
+ * - Fallback Strategy: Provides an alternative when primary storage is unavailable
  */
 interface FallbackSessionInterface
 {

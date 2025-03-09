@@ -5,6 +5,14 @@ declare(strict_types=1);
 namespace Illuminate\Contracts\Config;
 
 /**
+ * Repository - PHPStan stub for Laravel's Config Repository.
+ *
+ * This stub file enhances PHPStan's static analysis for PHPFlasher by
+ * providing detailed type information for Laravel's configuration repository,
+ * particularly for PHPFlasher's configuration structure.
+ *
+ * Design pattern: Type Annotation - Provides detailed type information for static analysis
+ *
  * @phpstan-type ConfigType array{
  *     default: string,
  *     main_script: string,
@@ -36,7 +44,15 @@ namespace Illuminate\Contracts\Config;
 interface Repository
 {
     /**
-     * @param string[]|string $key
+     * Get a configuration value.
+     *
+     * This stub provides detailed return type information for PHPFlasher's
+     * configuration structure, enabling better static analysis.
+     *
+     * @param string[]|string $key     The configuration key
+     * @param mixed           $default Default value if key doesn't exist
+     *
+     * @return mixed The configuration value with precise type information for PHPFlasher keys
      *
      * @phpstan-return ($key is 'flasher' ? ConfigType :
      *            ($key is 'flasher.default' ? string :

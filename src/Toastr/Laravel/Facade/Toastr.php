@@ -10,6 +10,29 @@ use Flasher\Toastr\Prime\ToastrBuilder;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * Toastr - Laravel facade for Toastr notifications.
+ *
+ * This facade provides a static interface to Toastr's functionality within Laravel,
+ * following Laravel's facade pattern. It offers comprehensive IDE autocompletion
+ * for all Toastr builder methods through PHPDoc annotations.
+ *
+ * Design patterns:
+ * - Facade: Provides a simplified, static interface to a complex subsystem
+ * - Proxy: Acts as a proxy to the underlying Toastr service
+ * - Static Gateway: Provides static access to instance methods
+ *
+ * Usage examples:
+ * ```php
+ * // Simple notification
+ * Toastr::success('Operation completed successfully');
+ *
+ * // Chained configuration
+ * Toastr::positionClass('toast-bottom-right')
+ *     ->progressBar(true)
+ *     ->timeOut(5000)
+ *     ->success('Your changes have been saved');
+ * ```
+ *
  * @method static ToastrBuilder flash(StampInterface[] $stamps = array())
  * @method static ToastrBuilder type(string $type, string $message = null, array<string, mixed> $options = array())
  * @method static ToastrBuilder message(string $message)
@@ -65,6 +88,13 @@ use Illuminate\Support\Facades\Facade;
  */
 final class Toastr extends Facade
 {
+    /**
+     * Get the registered name of the component.
+     *
+     * Returns the service container binding key for the Toastr service.
+     *
+     * @return string The service container binding key
+     */
     protected static function getFacadeAccessor(): string
     {
         return 'flasher.toastr';

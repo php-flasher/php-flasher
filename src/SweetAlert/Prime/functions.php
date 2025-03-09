@@ -8,13 +8,22 @@ use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Type;
 
+/*
+ * Namespace-specific helper functions for SweetAlert notifications.
+ *
+ * This file provides a namespace-specific helper function that simplifies
+ * the creation of SweetAlert notifications from code that uses imports.
+ *
+ * Design pattern: Facade - Provides a simplified interface to a complex subsystem
+ */
+
 if (!\function_exists('Flasher\SweetAlert\Prime\sweetalert')) {
     /**
-     * Creates a Sweetalert notification or returns the Sweetalert factory.
+     * Creates a SweetAlert notification or returns the SweetAlert factory.
      *
-     * This function simplifies the process of creating Sweetalert notifications.
+     * This function simplifies the process of creating SweetAlert notifications.
      * When called with no arguments, it returns an instance of SweetAlertInterface.
-     * When called with arguments, it creates a Sweetalert notification and returns an Envelope.
+     * When called with arguments, it creates a SweetAlert notification and returns an Envelope.
      *
      * @param string|null                                   $message the message content of the notification
      * @param "success"|"info"|"warning"|"error"|"question" $type    The type of the notification (e.g., success, error, warning, info).
@@ -86,7 +95,7 @@ if (!\function_exists('Flasher\SweetAlert\Prime\sweetalert')) {
      *     inputAttributes?: string,
      *     inputValidator?: string,
      *     validationMessage?: string,
-     * } $options additional options for the Sweetalert notification
+     * } $options additional options for the SweetAlert notification
      * @param string|null $title the title of the notification
      *
      * @return Envelope|SweetAlertInterface Returns an Envelope containing the notification details when arguments are provided.
@@ -95,8 +104,8 @@ if (!\function_exists('Flasher\SweetAlert\Prime\sweetalert')) {
      * @phpstan-return ($message is empty ? SweetAlertInterface : Envelope)
      *
      * Usage:
-     * 1. Without arguments - Get the Sweetalert factory: $sweetalert = sweetalert();
-     * 2. With arguments - Create and return a Sweetalert notification:
+     * 1. Without arguments - Get the SweetAlert factory: $sweetalert = sweetalert();
+     * 2. With arguments - Create and return a SweetAlert notification:
      *    sweetalert('Message', Type::SUCCESS, ['option' => 'value'], 'Title');
      */
     function sweetalert(?string $message = null, string $type = Type::SUCCESS, array $options = [], ?string $title = null): Envelope|SweetAlertInterface

@@ -14,7 +14,4 @@ return Rector\Config\RectorConfig::configure()
         Rector\PHPUnit\Set\PHPUnitSetList::PHPUNIT_110,
         Rector\PHPUnit\Set\PHPUnitSetList::ANNOTATIONS_TO_ATTRIBUTES,
         Rector\PHPUnit\Set\PHPUnitSetList::PHPUNIT_CODE_QUALITY,
-    ])
-    ->withRules([
-        Spatie\Ray\Rector\RemoveRayCallRector::class,
     ]);

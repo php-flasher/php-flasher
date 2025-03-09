@@ -7,6 +7,15 @@ use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Type;
 
+/*
+ * Global helper functions for Noty notifications.
+ *
+ * This file provides a global helper function that simplifies
+ * the creation of Noty notifications from any PHP code.
+ *
+ * Design pattern: Facade - Provides a simplified interface to a complex subsystem
+ */
+
 if (!function_exists('noty')) {
     /**
      * Creates a Noty notification or returns the Noty factory.

@@ -51,7 +51,6 @@
         "phpunit/phpunit": "^10.5.26",
         "rector/rector": "^1.2.8",
         "rector/swiss-knife": "^1.0.0",
-        "spatie/ray": "^1.41.2",
         "symplify/monorepo-builder": "^11.2.22"
     },
     "autoload": {

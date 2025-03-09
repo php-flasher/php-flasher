@@ -10,8 +10,25 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ * Request - Adapter for Symfony's HTTP request.
+ *
+ * This class implements PHPFlasher's RequestInterface for Symfony's HTTP request,
+ * providing a consistent interface for request inspection and session interaction
+ * regardless of the underlying framework.
+ *
+ * Design patterns:
+ * - Adapter Pattern: Adapts framework-specific request to PHPFlasher's interface
+ * - Decorator Pattern: Adds PHPFlasher-specific functionality to request objects
+ * - Null Object Pattern: Gracefully handles missing sessions
+ */
 final readonly class Request implements RequestInterface
 {
+    /**
+     * Creates a new Request adapter.
+     *
+     * @param SymfonyRequest $request The underlying Symfony request object
+     */
     public function __construct(private SymfonyRequest $request)
     {
     }
@@ -75,6 +92,11 @@ final readonly class Request implements RequestInterface
         $this->getType($type);
     }
 
+    /**
+     * Gets the session from the request, with graceful handling of missing sessions.
+     *
+     * @return SessionInterface|null The session or null if not available
+     */
     private function getSession(): ?SessionInterface
     {
         try {

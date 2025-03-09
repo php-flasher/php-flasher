@@ -10,6 +10,16 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PresetStamp;
 
 /**
+ * ApplyPresetListener - Applies preset configurations to notifications.
+ *
+ * This listener is responsible for applying predefined notification templates (presets)
+ * to envelopes that contain a PresetStamp. Presets allow defining common notification
+ * patterns that can be reused across an application.
+ *
+ * Design patterns:
+ * - Template Method: Applies predefined templates to notifications
+ * - Strategy: Uses different preset configurations based on the preset name
+ *
  * @phpstan-type PresetType array{
  *     type: string,
  *     title: string,
@@ -20,14 +30,20 @@ use Flasher\Prime\Stamp\PresetStamp;
 final readonly class ApplyPresetListener implements EventListenerInterface
 {
     /**
-     * @phpstan-param array<string, PresetType> $presets
+     * Creates a new ApplyPresetListener with the specified presets.
+     *
+     * @param array<string, PresetType> $presets Map of preset names to their configurations
      */
     public function __construct(private array $presets)
     {
     }
 
     /**
-     * @throws PresetNotFoundException
+     * Handles persist events by applying presets to envelopes with PresetStamps.
+     *
+     * @param PersistEvent $event The persist event
+     *
+     * @throws PresetNotFoundException If a requested preset doesn't exist
      */
     public function __invoke(PersistEvent $event): void
     {
@@ -44,7 +60,12 @@ final readonly class ApplyPresetListener implements EventListenerInterface
     /**
      * Applies preset settings to an envelope if applicable.
      *
-     * @throws PresetNotFoundException if the preset is not found
+     * This method checks if the envelope has a PresetStamp and if so, applies
+     * the corresponding preset configuration.
+     *
+     * @param Envelope $envelope The envelope to process
+     *
+     * @throws PresetNotFoundException If the requested preset doesn't exist
      */
     private function applyPreset(Envelope $envelope): void
     {
@@ -63,11 +84,11 @@ final readonly class ApplyPresetListener implements EventListenerInterface
     }
 
     /**
-     * Retrieves preset data or default values if not set.
+     * Retrieves preset data with default values for missing fields.
      *
-     * @param string $alias the preset key
+     * @param string $alias The preset key
      *
-     * @phpstan-return PresetType The preset data.
+     * @return PresetType The preset data with defaults for missing fields
      */
     private function getPreset(string $alias): array
     {
@@ -83,9 +104,12 @@ final readonly class ApplyPresetListener implements EventListenerInterface
     /**
      * Updates the envelope with the provided preset data.
      *
-     * @param Envelope $envelope the envelope to be updated
+     * This method applies the preset data to the envelope, but only for fields
+     * that aren't already set. Envelope-specific settings take precedence over
+     * preset defaults.
      *
-     * @phpstan-param PresetType $preset The preset data to apply.
+     * @param Envelope   $envelope The envelope to update
+     * @param PresetType $preset   The preset data to apply
      */
     private function updateEnvelope(Envelope $envelope, array $preset): void
     {
