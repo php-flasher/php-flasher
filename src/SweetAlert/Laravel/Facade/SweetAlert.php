@@ -10,6 +10,35 @@ use Flasher\SweetAlert\Prime\SweetAlertBuilder;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * SweetAlert - Laravel facade for SweetAlert notifications.
+ *
+ * This facade provides a static interface to SweetAlert's extensive functionality within Laravel,
+ * following Laravel's facade pattern. It offers comprehensive IDE autocompletion for all
+ * SweetAlert builder methods, making it easy to create rich interactive dialogs.
+ *
+ * Design patterns:
+ * - Facade: Provides a simplified, static interface to a complex subsystem
+ * - Proxy: Acts as a proxy to the underlying SweetAlert service
+ *
+ * Usage examples:
+ * ```php
+ * // Simple notification
+ * SweetAlert::success('Operation completed successfully');
+ *
+ * // Confirmation dialog
+ * SweetAlert::question('Are you sure?')
+ *     ->showCancelButton()
+ *     ->confirmButtonText('Yes, delete it!')
+ *     ->cancelButtonText('Cancel')
+ *     ->push();
+ *
+ * // Input form dialog
+ * SweetAlert::title('Enter your email')
+ *     ->input('email')
+ *     ->inputPlaceholder('name@example.com')
+ *     ->push();
+ * ```
+ *
  * @method static SweetAlertBuilder success(string $message, array<string, mixed> $options = array())
  * @method static SweetAlertBuilder error(string $message, array<string, mixed> $options = array())
  * @method static SweetAlertBuilder warning(string $message, array<string, mixed> $options = array())
@@ -99,6 +128,11 @@ use Illuminate\Support\Facades\Facade;
  */
 final class SweetAlert extends Facade
 {
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string The service container binding key for SweetAlert
+     */
     protected static function getFacadeAccessor(): string
     {
         return 'flasher.sweetalert';

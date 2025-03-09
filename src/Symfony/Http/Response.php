@@ -8,8 +8,25 @@ use Flasher\Prime\Http\ResponseInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
+/**
+ * Response - Adapter for Symfony's HTTP response.
+ *
+ * This class implements PHPFlasher's ResponseInterface for Symfony's HTTP response,
+ * providing a consistent interface for response manipulation regardless of the framework.
+ * It allows PHPFlasher to work with Symfony responses in a framework-agnostic way.
+ *
+ * Design patterns:
+ * - Adapter Pattern: Adapts framework-specific response to PHPFlasher's interface
+ * - Decorator Pattern: Adds PHPFlasher-specific functionality to response objects
+ * - Composition: Uses composition to delegate to the underlying response object
+ */
 final readonly class Response implements ResponseInterface
 {
+    /**
+     * Creates a new Response adapter.
+     *
+     * @param SymfonyResponse $response The underlying Symfony response object
+     */
     public function __construct(private SymfonyResponse $response)
     {
     }

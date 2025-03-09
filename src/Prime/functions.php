@@ -12,26 +12,33 @@ if (!\function_exists('Flasher\Prime\flash')) {
     /**
      * Creates a flash message or returns the Flasher factory.
      *
-     * This function serves a dual purpose:
-     * 1. When called with no arguments, it returns an instance of FlasherInterface or NotificationFactoryInterface.
-     *    This allows for accessing various methods provided by the Flasher factory.
-     * 2. When called with arguments, it creates a flash message and returns an Envelope.
-     *    This envelope contains the flash message details and can be used for further operations.
+     * This function provides a convenient shorthand for working with PHPFlasher.
+     * It serves as the primary entry point in namespaced contexts.
      *
-     * @param string|null          $message the message content of the flash message
-     * @param string               $type    The type of the message (e.g., success, error, warning, info).
-     * @param array<string, mixed> $options additional options for the flash message
-     * @param string|null          $title   the title of the flash message
+     * Design pattern: Gateway - Provides a simple entry point to the complex API.
      *
-     * @return Envelope|FlasherInterface Returns an Envelope containing the message details when arguments are provided.
-     *                                   Returns an instance of FlasherInterface or NotificationFactoryInterface when no arguments are provided.
+     * @param string|null          $message The message content of the flash notification
+     * @param string               $type    The notification type (success, error, warning, info)
+     * @param array<string, mixed> $options Additional configuration options
+     * @param string|null          $title   The notification title
+     *
+     * @return Envelope|FlasherInterface Returns an Envelope when creating a notification,
+     *                                   or a FlasherInterface when called with no arguments
      *
      * @phpstan-return ($message is empty ? FlasherInterface : Envelope)
      *
-     * Usage:
-     * 1. Without arguments - Get the Flasher factory: $flasher = flash();
-     * 2. With arguments - Create and return a flash message:
-     *    flash('Message', Type::SUCCESS, ['option' => 'value'], 'Title');
+     * Example usage:
+     * ```php
+     * // Get the flasher factory
+     * $flasher = \Flasher\Prime\flash();
+     * $flasher->info('Information message');
+     *
+     * // Create a notification directly
+     * \Flasher\Prime\flash('Operation successful', Type::SUCCESS);
+     *
+     * // With additional options
+     * \Flasher\Prime\flash('Profile updated', Type::SUCCESS, ['timeout' => 5000], 'Success');
+     * ```
      */
     function flash(?string $message = null, string $type = Type::SUCCESS, array $options = [], ?string $title = null): Envelope|FlasherInterface
     {

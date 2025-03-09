@@ -7,6 +7,15 @@ use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Type;
 
+/*
+ * Global helper functions for Notyf notifications.
+ *
+ * This file provides a global helper function that simplifies
+ * the creation of Notyf notifications from any PHP code.
+ *
+ * Design pattern: Facade - Provides a simplified interface to a complex subsystem
+ */
+
 if (!function_exists('notyf')) {
     /**
      * Creates a Notyf notification or returns the Notyf factory.

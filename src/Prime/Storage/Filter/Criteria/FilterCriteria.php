@@ -4,15 +4,35 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Storage\Filter\Criteria;
 
+use Flasher\Prime\Notification\Envelope;
+
+/**
+ * FilterCriteria - Applies custom closure-based filters to notifications.
+ *
+ * This criterion allows applying custom filtering logic provided as closures.
+ * It's a flexible way to implement complex or specific filtering needs that
+ * aren't covered by the standard criteria.
+ *
+ * Design pattern: Strategy - Encapsulates custom filtering algorithms provided
+ * as closures and applies them to notification collections.
+ */
 final class FilterCriteria implements CriteriaInterface
 {
     /**
+     * The collection of filter callbacks.
+     *
      * @var \Closure[]
      */
     private array $callbacks;
 
     /**
-     * @throws \InvalidArgumentException if the criteria type is invalid
+     * Creates a new FilterCriteria instance.
+     *
+     * @param mixed $criteria Either a single closure or an array of closures
+     *                        Each closure should accept an array of Envelope objects
+     *                        and return a filtered array of Envelope objects
+     *
+     * @throws \InvalidArgumentException If the criteria is not a closure or array of closures
      */
     public function __construct(mixed $criteria)
     {
@@ -32,6 +52,13 @@ final class FilterCriteria implements CriteriaInterface
 
     /**
      * Applies the filter callbacks to the envelopes.
+     *
+     * Each callback is applied in sequence, with the output of one becoming
+     * the input to the next.
+     *
+     * @param Envelope[] $envelopes The notification envelopes to filter
+     *
+     * @return Envelope[] The filtered notification envelopes
      */
     public function apply(array $envelopes): array
     {

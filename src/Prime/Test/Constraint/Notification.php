@@ -9,17 +9,26 @@ use Flasher\Prime\Notification\NotificationInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 
 /**
- * Checks for the existence of a notification with specified details.
+ * Notification - PHPUnit constraint for asserting complete notification properties.
+ *
+ * This constraint verifies that a NotificationEvents collection contains at least
+ * one notification matching a combination of type, message, title, and options.
+ * It allows for comprehensive notification assertions by checking multiple properties.
+ *
+ * Design patterns:
+ * - Composite: Part of PHPUnit's constraint composition system
+ * - Strategy: Implements a specific assertion strategy
+ * - Specification: Represents a specification that notifications can satisfy
  */
 final class Notification extends Constraint
 {
     /**
-     * Constructor to initialize notification expectations.
+     * Creates a new Notification constraint.
      *
-     * @param string               $expectedType    expected type of the notification
-     * @param string|null          $expectedMessage expected message content
-     * @param array<string, mixed> $expectedOptions expected options array
-     * @param string|null          $expectedTitle   expected title of the notification
+     * @param string               $expectedType    Expected notification type (e.g., 'success', 'error')
+     * @param string|null          $expectedMessage Expected message content (null to ignore)
+     * @param array<string, mixed> $expectedOptions Expected options as an associative array
+     * @param string|null          $expectedTitle   Expected title content (null to ignore)
      */
     public function __construct(
         private readonly string $expectedType,
@@ -29,6 +38,11 @@ final class Notification extends Constraint
     ) {
     }
 
+    /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string The constraint description
+     */
     public function toString(): string
     {
         $details = [
@@ -51,7 +65,12 @@ final class Notification extends Constraint
     }
 
     /**
-     * @param NotificationEvents|mixed $other
+     * Evaluates if the given NotificationEvents object contains at least one notification
+     * matching all the expected properties.
+     *
+     * @param NotificationEvents|mixed $other An instance of NotificationEvents to evaluate
+     *
+     * @return bool True if a matching notification is found
      */
     protected function matches(mixed $other): bool
     {
@@ -68,6 +87,19 @@ final class Notification extends Constraint
         return false;
     }
 
+    /**
+     * Checks if a specific notification matches all expected properties.
+     *
+     * A notification matches if:
+     * - Its type equals the expected type AND
+     * - Its message equals the expected message (if provided) AND
+     * - Its title equals the expected title (if provided) AND
+     * - Its options contain all expected option key-value pairs (if provided)
+     *
+     * @param NotificationInterface $notification The notification to check
+     *
+     * @return bool True if the notification matches all criteria
+     */
     private function isNotificationMatching(NotificationInterface $notification): bool
     {
         return $notification->getType() === $this->expectedType
@@ -77,7 +109,14 @@ final class Notification extends Constraint
     }
 
     /**
-     * @param NotificationEvents $other
+     * Provides a detailed failure description when the constraint fails.
+     *
+     * This method lists all actual notifications with their properties,
+     * making test failures easier to diagnose.
+     *
+     * @param NotificationEvents $other The evaluated NotificationEvents instance
+     *
+     * @return string A detailed failure description
      */
     protected function failureDescription(mixed $other): string
     {

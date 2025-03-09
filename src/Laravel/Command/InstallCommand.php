@@ -15,15 +15,41 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * InstallCommand - Artisan command for installing PHPFlasher resources.
+ *
+ * This command provides a CLI interface for installing PHPFlasher resources
+ * including assets (JS and CSS files) and configuration files. It discovers
+ * all registered PHPFlasher plugins and installs their resources.
+ *
+ * Design patterns:
+ * - Command: Implements the command pattern for Artisan CLI integration
+ * - Discovery: Automatically discovers and processes registered plugins
+ */
 final class InstallCommand extends Command
 {
+    /**
+     * Command description.
+     *
+     * @var string
+     */
     protected $description = 'Installs all <fg=blue;options=bold>PHPFlasher</> resources to the <comment>public</comment> and <comment>config</comment> directories.';
 
+    /**
+     * Creates a new InstallCommand instance.
+     *
+     * @param AssetManagerInterface $assetManager Manager for handling PHPFlasher assets
+     */
     public function __construct(private readonly AssetManagerInterface $assetManager)
     {
         parent::__construct();
     }
 
+    /**
+     * Configure the command.
+     *
+     * Sets the command name, description, help text, and options.
+     */
     protected function configure(): void
     {
         $this
@@ -34,6 +60,20 @@ final class InstallCommand extends Command
             ->addOption('symlink', 's', InputOption::VALUE_NONE, 'Symlink <fg=blue;options=bold>PHPFlasher</> assets instead of copying them.');
     }
 
+    /**
+     * Execute the command.
+     *
+     * Installs PHPFlasher resources by:
+     * 1. Displaying a fancy banner
+     * 2. Processing each registered plugin
+     * 3. Publishing assets and config files
+     * 4. Creating a manifest file
+     *
+     * @param InputInterface  $input  Command input
+     * @param OutputInterface $output Command output
+     *
+     * @return int Command exit code (0 for success, non-zero for failure)
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('');
@@ -122,7 +162,13 @@ final class InstallCommand extends Command
     }
 
     /**
-     * @return string[]
+     * Publish assets from a plugin to the public directory.
+     *
+     * @param PluginInterface $plugin      The plugin to publish assets from
+     * @param string          $publicDir   The target public directory
+     * @param bool            $useSymlinks Whether to symlink or copy assets
+     *
+     * @return string[] Array of published file paths
      */
     private function publishAssets(PluginInterface $plugin, string $publicDir, bool $useSymlinks): array
     {
@@ -156,6 +202,12 @@ final class InstallCommand extends Command
         return $files;
     }
 
+    /**
+     * Publish a plugin's configuration file.
+     *
+     * @param PluginInterface $plugin     The plugin to publish configuration for
+     * @param string          $configFile The source configuration file path
+     */
     private function publishConfig(PluginInterface $plugin, string $configFile): void
     {
         if (!file_exists($configFile)) {

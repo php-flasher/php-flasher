@@ -19,12 +19,30 @@ use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 
+/**
+ * OrderByCriteria - Sorts notifications based on stamp attributes.
+ *
+ * This criterion doesn't filter notifications but instead sorts them based
+ * on attributes from their stamps. It supports sorting by multiple fields
+ * in either ascending or descending order.
+ *
+ * Design pattern: Sorter - Defines sorting logic for collections.
+ */
 final class OrderByCriteria implements CriteriaInterface
 {
+    /**
+     * Constant for ascending sort order.
+     */
     public const ASC = 'ASC';
+
+    /**
+     * Constant for descending sort order.
+     */
     public const DESC = 'DESC';
 
     /**
+     * Map of friendly names to stamp class names.
+     *
      * @var array<string, class-string<StampInterface>>
      */
     private array $aliases = [
@@ -42,10 +60,21 @@ final class OrderByCriteria implements CriteriaInterface
     ];
 
     /**
+     * The sort ordering configuration.
+     *
      * @var array<class-string<StampInterface>, "ASC"|"DESC">
      */
     private array $orderings = [];
 
+    /**
+     * Creates a new OrderByCriteria instance.
+     *
+     * @param mixed $criteria The sort criteria, either:
+     *                        - A string with field name (defaults to ASC)
+     *                        - An array mapping field names to directions
+     *
+     * @throws \InvalidArgumentException If the criteria format is invalid
+     */
     public function __construct(mixed $criteria)
     {
         if (!\is_string($criteria) && !\is_array($criteria)) {
@@ -81,6 +110,13 @@ final class OrderByCriteria implements CriteriaInterface
         }
     }
 
+    /**
+     * Sorts the notification envelopes.
+     *
+     * @param Envelope[] $envelopes The notification envelopes to sort
+     *
+     * @return Envelope[] The sorted notification envelopes
+     */
     public function apply(array $envelopes): array
     {
         usort($envelopes, function (Envelope $first, Envelope $second): int {

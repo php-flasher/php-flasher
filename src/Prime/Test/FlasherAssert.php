@@ -18,8 +18,16 @@ use Flasher\Prime\Test\Constraint\NotificationType;
 use PHPUnit\Framework\Assert;
 
 /**
- * FlasherAssert provides a collection of static assertion methods for testing notification states within the Flasher notification system.
- * These methods facilitate easy and readable assertions in tests, focusing on notification presence, type, content, and other attributes.
+ * FlasherAssert - Fluent assertion library for testing notifications.
+ *
+ * This class provides a rich set of assertion methods for testing PHPFlasher
+ * notifications in test suites. It uses a fluent interface for more readable tests
+ * and integrates with PHPUnit's assertion system.
+ *
+ * Design patterns:
+ * - Fluent Interface: Provides method chaining for readable assertions
+ * - Facade: Provides a simplified interface to a complex subsystem
+ * - Delegation: Delegates assertion logic to specialized constraint classes
  */
 final class FlasherAssert
 {
@@ -28,15 +36,8 @@ final class FlasherAssert
      *
      * This method serves as a starting point for chaining assertion methods in tests.
      * It provides a fluent interface that allows for more readable and expressive tests.
-     * By starting assertions with `that()`, tests can emulate natural language, improving clarity.
      *
-     * Usage Example:
-     *
-     * ```php
-     * FlasherAssert::that()->hasNotifications('Custom error message if no notifications found.');
-     * ```
-     *
-     * @return self an instance of the FlasherAssert class to allow for method chaining
+     * @return self A new instance for method chaining
      */
     public static function that(): self
     {
@@ -45,11 +46,13 @@ final class FlasherAssert
 
     /**
      * Asserts the presence of at least one notification in the system.
-     * This assertion passes if the notification system has logged any notifications, regardless of their specific attributes.
      *
-     * @param string $message a custom message to display if the assertion fails
+     * This assertion passes if the notification system has logged any notifications,
+     * regardless of their specific attributes.
      *
-     * @return self returns itself to allow method chaining
+     * @param string $message A custom message to display if the assertion fails
+     *
+     * @return self Returns itself to allow method chaining
      */
     public static function hasNotifications(string $message = 'Expected at least one notification to exist.'): self
     {
@@ -58,11 +61,12 @@ final class FlasherAssert
 
     /**
      * Asserts that no notifications have been registered in the system.
+     *
      * Useful for tests where the absence of notifications indicates a pass condition.
      *
-     * @param string $message a custom message to display if the assertion fails
+     * @param string $message A custom message to display if the assertion fails
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function noNotifications(string $message = 'Expected no notifications to exist.'): self
     {
@@ -70,16 +74,17 @@ final class FlasherAssert
     }
 
     /**
-     * Asserts the existence of a notification matching specific criteria including type, message, options, and title.
+     * Asserts the existence of a notification matching specific criteria.
+     *
      * A notification must match all provided criteria to satisfy the assertion.
      *
-     * @param string               $expectedType    Expected notification type (e.g., 'success', 'error').
-     * @param string|null          $expectedMessage Expected message content. Null means the message is not considered.
-     * @param array<string, mixed> $expectedOptions Expected options as an associative array. Empty array means options are not considered.
-     * @param string|null          $expectedTitle   Expected notification title. Null means the title is not considered.
-     * @param string               $message         custom failure message
+     * @param string               $expectedType    Expected notification type (e.g., 'success', 'error')
+     * @param string|null          $expectedMessage Expected message content (null to ignore)
+     * @param array<string, mixed> $expectedOptions Expected options as an associative array
+     * @param string|null          $expectedTitle   Expected notification title (null to ignore)
+     * @param string               $message         Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withNotification(string $expectedType, ?string $expectedMessage = null, array $expectedOptions = [], ?string $expectedTitle = null, string $message = ''): self
     {
@@ -87,18 +92,15 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withNotification
+     * Alias of withNotification() - Asserts the existence of a notification matching specific criteria.
      *
-     * Asserts the existence of a notification matching specific criteria including type, message, options, and title.
-     * A notification must match all provided criteria to satisfy the assertion.
+     * @param string               $expectedType    Expected notification type
+     * @param string|null          $expectedMessage Expected message content
+     * @param array<string, mixed> $expectedOptions Expected options
+     * @param string|null          $expectedTitle   Expected notification title
+     * @param string               $message         Custom failure message
      *
-     * @param string               $expectedType    Expected notification type (e.g., 'success', 'error').
-     * @param string|null          $expectedMessage Expected message content. Null means the message is not considered.
-     * @param array<string, mixed> $expectedOptions Expected options as an associative array. Empty array means options are not considered.
-     * @param string|null          $expectedTitle   Expected notification title. Null means the title is not considered.
-     * @param string               $message         custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function notification(string $expectedType, ?string $expectedMessage = null, array $expectedOptions = [], ?string $expectedTitle = null, string $message = ''): self
     {
@@ -108,10 +110,10 @@ final class FlasherAssert
     /**
      * Asserts the total count of notifications matches an expected number.
      *
-     * @param int    $expectedCount expected number of notifications
-     * @param string $message       custom failure message
+     * @param int    $expectedCount Expected number of notifications
+     * @param string $message       Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withCount(int $expectedCount, string $message = ''): self
     {
@@ -119,14 +121,12 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withCount
+     * Alias of withCount() - Asserts the total count of notifications.
      *
-     * Asserts the total count of notifications matches an expected number.
+     * @param int    $expectedCount Expected number of notifications
+     * @param string $message       Custom failure message
      *
-     * @param int    $expectedCount expected number of notifications
-     * @param string $message       custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function count(int $expectedCount, string $message = ''): self
     {
@@ -136,10 +136,10 @@ final class FlasherAssert
     /**
      * Asserts the existence of at least one notification of a specific type.
      *
-     * @param string $expectedType expected notification type
-     * @param string $message      custom failure message
+     * @param string $expectedType Expected notification type
+     * @param string $message      Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withType(string $expectedType, string $message = ''): self
     {
@@ -147,14 +147,12 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withType
+     * Alias of withType() - Asserts the existence of a notification of a specific type.
      *
-     * Asserts the existence of at least one notification of a specific type.
+     * @param string $expectedType Expected notification type
+     * @param string $message      Custom failure message
      *
-     * @param string $expectedType expected notification type
-     * @param string $message      custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function type(string $expectedType, string $message = ''): self
     {
@@ -164,9 +162,9 @@ final class FlasherAssert
     /**
      * Asserts the presence of at least one 'success' type notification.
      *
-     * @param string $message custom failure message
+     * @param string $message Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withSuccess(string $message = ''): self
     {
@@ -174,13 +172,11 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withSuccess
+     * Alias of withSuccess() - Asserts the presence of a 'success' notification.
      *
-     * Asserts the presence of at least one 'success' type notification.
+     * @param string $message Custom failure message
      *
-     * @param string $message custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function success(string $message = ''): self
     {
@@ -190,9 +186,9 @@ final class FlasherAssert
     /**
      * Asserts the presence of at least one 'warning' type notification.
      *
-     * @param string $message custom failure message
+     * @param string $message Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withWarning(string $message = ''): self
     {
@@ -200,13 +196,11 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withWarning
+     * Alias of withWarning() - Asserts the presence of a 'warning' notification.
      *
-     * Asserts the presence of at least one 'warning' type notification.
+     * @param string $message Custom failure message
      *
-     * @param string $message custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function warning(string $message = ''): self
     {
@@ -216,9 +210,9 @@ final class FlasherAssert
     /**
      * Asserts the presence of at least one 'error' type notification.
      *
-     * @param string $message custom failure message
+     * @param string $message Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withError(string $message = ''): self
     {
@@ -226,13 +220,11 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withError
+     * Alias of withError() - Asserts the presence of an 'error' notification.
      *
-     * Asserts the presence of at least one 'error' type notification.
+     * @param string $message Custom failure message
      *
-     * @param string $message custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function error(string $message = ''): self
     {
@@ -242,9 +234,9 @@ final class FlasherAssert
     /**
      * Asserts the presence of at least one 'info' type notification.
      *
-     * @param string $message custom failure message
+     * @param string $message Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withInfo(string $message = ''): self
     {
@@ -252,13 +244,11 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withInfo
+     * Alias of withInfo() - Asserts the presence of an 'info' notification.
      *
-     * Asserts the presence of at least one 'info' type notification.
+     * @param string $message Custom failure message
      *
-     * @param string $message custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function info(string $message = ''): self
     {
@@ -268,10 +258,10 @@ final class FlasherAssert
     /**
      * Asserts the presence of a notification with a specific title.
      *
-     * @param string $expectedTitle expected notification title
-     * @param string $message       custom failure message
+     * @param string $expectedTitle Expected notification title
+     * @param string $message       Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withTitle(string $expectedTitle, string $message = ''): self
     {
@@ -279,14 +269,12 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withTitle
+     * Alias of withTitle() - Asserts the presence of a notification with specific title.
      *
-     * Asserts the presence of a notification with a specific title.
+     * @param string $expectedTitle Expected notification title
+     * @param string $message       Custom failure message
      *
-     * @param string $expectedTitle expected notification title
-     * @param string $message       custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function title(string $expectedTitle, string $message = ''): self
     {
@@ -296,10 +284,10 @@ final class FlasherAssert
     /**
      * Asserts the presence of a notification with a specific message.
      *
-     * @param string $expectedMessage expected notification message
-     * @param string $message         custom failure message
+     * @param string $expectedMessage Expected notification message
+     * @param string $message         Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withMessage(string $expectedMessage, string $message = ''): self
     {
@@ -307,14 +295,12 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withMessage
+     * Alias of withMessage() - Asserts the presence of a notification with specific message.
      *
-     * Asserts the presence of a notification with a specific message.
+     * @param string $expectedMessage Expected notification message
+     * @param string $message         Custom failure message
      *
-     * @param string $expectedMessage expected notification message
-     * @param string $message         custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function message(string $expectedMessage, string $message = ''): self
     {
@@ -324,10 +310,10 @@ final class FlasherAssert
     /**
      * Asserts the presence of a notification with specific options.
      *
-     * @param array<string, mixed> $expectedOptions expected options as an associative array
-     * @param string               $message         custom failure message
+     * @param array<string, mixed> $expectedOptions Expected options as an associative array
+     * @param string               $message         Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withOptions(array $expectedOptions, string $message = ''): self
     {
@@ -335,14 +321,12 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withOptions
+     * Alias of withOptions() - Asserts the presence of a notification with specific options.
      *
-     * Asserts the presence of a notification with specific options.
+     * @param array<string, mixed> $expectedOptions Expected options
+     * @param string               $message         Custom failure message
      *
-     * @param array<string, mixed> $expectedOptions expected options as an associative array
-     * @param string               $message         custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function options(array $expectedOptions, string $message = ''): self
     {
@@ -350,13 +334,13 @@ final class FlasherAssert
     }
 
     /**
-     * Asserts the presence of a notification with a specific option key and, optionally, a value.
+     * Asserts the presence of a notification with a specific option key and value.
      *
-     * @param string $expectedKey   expected option key
-     * @param mixed  $expectedValue Expected value of the option. Null or omitted to skip value check.
-     * @param string $message       custom failure message
+     * @param string $expectedKey   Expected option key
+     * @param mixed  $expectedValue Expected option value (null to check only key existence)
+     * @param string $message       Custom failure message
      *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function withOption(string $expectedKey, mixed $expectedValue = null, string $message = ''): self
     {
@@ -364,15 +348,13 @@ final class FlasherAssert
     }
 
     /**
-     * @alias of withOption
+     * Alias of withOption() - Asserts notification has a specific option.
      *
-     * Asserts the presence of a notification with a specific option key and, optionally, a value.
+     * @param string $expectedKey   Expected option key
+     * @param mixed  $expectedValue Expected option value
+     * @param string $message       Custom failure message
      *
-     * @param string $expectedKey   expected option key
-     * @param mixed  $expectedValue Expected value of the option. Null or omitted to skip value check.
-     * @param string $message       custom failure message
-     *
-     * @return self returns itself to allow method chaining
+     * @return self Returns itself to allow method chaining
      */
     public static function option(string $expectedKey, mixed $expectedValue = null, string $message = ''): self
     {
@@ -380,12 +362,14 @@ final class FlasherAssert
     }
 
     /**
-     * A utility method used internally to wrap assertions and allow fluent interface chaining.
-     * Not intended for public use.
+     * Internal utility method for fluent interface implementation.
      *
-     * @param callable $callback The assertion logic encapsulated in a callable function
+     * This method executes a callback and returns a new instance of FlasherAssert
+     * to allow method chaining in a fluent interface style.
      *
-     * @return self returns itself to enable fluent chaining of methods
+     * @param callable $callback The assertion logic to execute
+     *
+     * @return self A new instance for method chaining
      */
     private static function fluent(callable $callback): self
     {
@@ -395,10 +379,12 @@ final class FlasherAssert
     }
 
     /**
-     * Fetches the NotificationEvents instance from the NotificationLoggerListener.
-     * This method simplifies the process of obtaining NotificationEvents, facilitating easier assertion writing in tests.
+     * Fetches the NotificationEvents instance for assertion.
      *
-     * @return NotificationEvents the NotificationEvents instance, allowing for further inspection or assertion of notification states
+     * This method retrieves notification events from the NotificationLoggerListener
+     * service, which tracks notifications that were displayed.
+     *
+     * @return NotificationEvents Collection of notification events for assertion
      */
     public static function getNotificationEvents(): NotificationEvents
     {

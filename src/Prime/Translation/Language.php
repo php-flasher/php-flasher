@@ -5,26 +5,37 @@ declare(strict_types=1);
 namespace Flasher\Prime\Translation;
 
 /**
- * Provides utilities for determining the text direction (Left-to-Right or Right-to-Left)
- * based on a given locale. This can be particularly useful for handling languages
- * with different writing directions in internationalized applications.
+ * Language - Utility class for determining text direction based on locale.
+ *
+ * This class provides static methods for working with language directionality,
+ * particularly for determining if a language uses left-to-right (LTR) or
+ * right-to-left (RTL) text direction.
+ *
+ * Design patterns:
+ * - Utility: Provides a collection of static methods for a specific purpose
+ * - Service: Provides functionality related to a specific domain concept
  */
 final readonly class Language
 {
+    /**
+     * Constant representing left-to-right text direction.
+     */
     public const LTR = 'ltr';
 
+    /**
+     * Constant representing right-to-left text direction.
+     */
     public const RTL = 'rtl';
 
     /**
      * Determines the text direction for a given locale.
      *
-     * It uses the 'intl' PHP extension to get text direction from the ICU data.
-     * Defaults to Left-to-Right (LTR) if the 'intl' extension is not available,
-     * the locale is not found, or the text direction data is not available.
+     * This method uses the PHP intl extension to access ICU data about text direction.
+     * If the extension is not available or the locale data is missing, it defaults to LTR.
      *
-     * @param string $locale the locale to check the text direction for
+     * @param string $locale The locale code to check (e.g., 'en', 'ar')
      *
-     * @return string returns 'ltr' for Left-to-Right or 'rtl' for Right-to-Left text direction
+     * @return string Either 'ltr' for left-to-right or 'rtl' for right-to-left
      */
     public static function direction(string $locale): string
     {
@@ -43,11 +54,11 @@ final readonly class Language
     }
 
     /**
-     * Checks if the given locale is Right-to-Left (RTL).
+     * Checks if the given locale uses right-to-left text direction.
      *
-     * @param string $locale the locale to check
+     * @param string $locale The locale code to check
      *
-     * @return bool returns true if the locale is RTL, false otherwise
+     * @return bool True if the locale uses RTL, false otherwise
      */
     public static function isRTL(string $locale): bool
     {
@@ -55,11 +66,11 @@ final readonly class Language
     }
 
     /**
-     * Checks if the given locale is Left-to-Right (LTR).
+     * Checks if the given locale uses left-to-right text direction.
      *
-     * @param string $locale the locale to check
+     * @param string $locale The locale code to check
      *
-     * @return bool returns true if the locale is LTR, false otherwise
+     * @return bool True if the locale uses LTR, false otherwise
      */
     public static function isLTR(string $locale): bool
     {

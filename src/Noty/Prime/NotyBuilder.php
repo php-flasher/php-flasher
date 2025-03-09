@@ -8,6 +8,17 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 
 /**
+ * NotyBuilder - Builder implementation for Noty.js notifications.
+ *
+ * This class provides a fluent interface for configuring Noty.js notifications.
+ * It extends the core notification builder with Noty-specific options and
+ * features, such as layout, theme, animation, and more.
+ *
+ * Design patterns:
+ * - Builder: Provides a fluent interface for constructing complex objects
+ * - Fluent Interface: Methods return $this for method chaining
+ * - Type Safety: Uses PHPStan annotations for compile-time type checking
+ *
  * @phpstan-type NotificationType "success"|"info"|"warning"|"error"|"alert"|"information"
  * @phpstan-type OptionsType array{
  *     layout?: "top"|"topLeft"|"topCenter"|"topRight"|"center"|"centerLeft"|"centerRight"|"bottom"|"bottomLeft"|"bottomCenter"|"bottomRight",
@@ -40,7 +51,11 @@ use Flasher\Prime\Notification\NotificationBuilder;
 final class NotyBuilder extends NotificationBuilder
 {
     /**
-     * @phpstan-param NotificationType $type
+     * Sets the notification type with Noty-specific type checking.
+     *
+     * @phpstan-param NotificationType $type The notification type
+     *
+     * @return static The builder instance
      */
     public function type(string $type): static
     {
@@ -48,7 +63,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates a success notification with Noty-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options Noty-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function success(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -56,7 +77,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates an error notification with Noty-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options Noty-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function error(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -64,7 +91,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates an info notification with Noty-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options Noty-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function info(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -72,7 +105,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates a warning notification with Noty-specific options.
+     *
+     * @param string      $message The notification message
+     * @param OptionsType $options Noty-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function warning(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -80,8 +119,17 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param NotificationType $type
-     * @phpstan-param OptionsType      $options
+     * Creates a notification of the specified type with Noty-specific options.
+     *
+     * @phpstan-param NotificationType|null $type    The notification type
+     * @phpstan-param OptionsType           $options Noty-specific options
+     *
+     * @param string|null $type    The notification type
+     * @param string|null $message The notification message
+     * @param array       $options Noty-specific options
+     * @param string|null $title   The notification title
+     *
+     * @return Envelope The notification envelope
      */
     public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
     {
@@ -89,7 +137,12 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Sets notification options with Noty-specific type checking.
+     *
+     * @param OptionsType $options The notification options
+     * @param bool        $append  Whether to append or replace existing options
+     *
+     * @return static The builder instance
      */
     public function options(array $options, bool $append = true): static
     {
@@ -97,11 +150,18 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets a specific notification option with Noty-specific type checking.
+     *
      * @template T of OptionsType
      * @template K of key-of<T>
      *
      * @phpstan-param K $name
      * @phpstan-param T[K] $value
+     *
+     * @param string $name  The option name
+     * @param mixed  $value The option value
+     *
+     * @return static The builder instance
      */
     public function option(string $name, mixed $value): static
     {
@@ -109,7 +169,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets the notification text (alias for message).
+     *
      * This string can contain HTML too. But be careful and don't pass user inputs to this parameter.
+     *
+     * @param string $text The notification text
+     *
+     * @return self The builder instance
      */
     public function text(string $text): self
     {
@@ -117,7 +183,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param OptionsType $options
+     * Creates an alert notification.
+     *
+     * @param string|null $message The notification message
+     * @param string|null $title   The notification title
+     * @param OptionsType $options Noty-specific options
+     *
+     * @return self The builder instance
      */
     public function alert(?string $message = null, ?string $title = null, array $options = []): self
     {
@@ -139,9 +211,15 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param OptionsType['layout'] $layout
+     * Sets the notification layout.
+     *
+     * @phpstan-param OptionsType['layout'] $layout The layout position
      *
      * - ClassName generator uses this value → noty_layout__${layout}
+     *
+     * @param string $layout The layout position
+     *
+     * @return self The builder instance
      */
     public function layout(string $layout): self
     {
@@ -151,9 +229,15 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param OptionsType['theme'] $theme
+     * Sets the notification theme.
+     *
+     * @phpstan-param OptionsType['theme'] $theme The theme name
      *
      * ClassName generator uses this value → noty_theme__${theme}
+     *
+     * @param string $theme The theme name
+     *
+     * @return self The builder instance
      */
     public function theme(string $theme): self
     {
@@ -163,7 +247,14 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * false, 1000, 3000, 3500, etc. Delay for closing event in milliseconds (ms). Set 'false' for sticky notifications.
+     * Sets the notification timeout.
+     *
+     * false, 1000, 3000, 3500, etc. Delay for closing event in milliseconds (ms).
+     * Set 'false' for sticky notifications.
+     *
+     * @param false|int $timeout The timeout in milliseconds or false for sticky
+     *
+     * @return self The builder instance
      */
     public function timeout(false|int $timeout): self
     {
@@ -173,7 +264,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets whether to display a progress bar.
+     *
      * true, false - Displays a progress bar if timeout is not false.
+     *
+     * @param bool $progressBar Whether to display a progress bar
+     *
+     * @return self The builder instance
      */
     public function progressBar(bool $progressBar = false): self
     {
@@ -183,9 +280,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets how the notification can be closed.
+     *
      * click, button.
      *
-     * @param string|string[] $closeWith
+     * @param string|string[] $closeWith Close methods
+     *
+     * @return self The builder instance
      */
     public function closeWith(string|array $closeWith): self
     {
@@ -195,11 +296,16 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "open"|"close"                                  $option
-     * @param "noty_effects_open"|"noty_effects_close"|string $effect
+     * Sets animation effects for opening or closing.
      *
-     * If string, assumed to be CSS class name. If null, no animation at all. If function, runs the function. (v3.0.1+)
+     * @param "open"|"close"                                  $option Which animation to set
+     * @param "noty_effects_open"|"noty_effects_close"|string $effect The animation effect
+     *
+     * If string, assumed to be CSS class name. If null, no animation at all.
+     * If function, runs the function. (v3.0.1+)
      * You can use animate.css class names or your custom css animations as well.
+     *
+     * @return self The builder instance
      */
     public function animation(string $option, string $effect): self
     {
@@ -213,11 +319,18 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param "sources"|"volume"|"conditions" $option
+     * Sets sound options for the notification.
+     *
+     * @phpstan-param "sources"|"volume"|"conditions" $option The sound option to set
      * @phpstan-param ($option is "sources" ? string[] :
      *        ($option is "volume" ? int :
      *        ($option is "conditions" ? string[] :
-     *        mixed))) $value
+     *        mixed))) $value The option value
+     *
+     * @param string $option The sound option to set
+     * @param mixed  $value  The option value
+     *
+     * @return self The builder instance
      */
     public function sounds(string $option, mixed $value): self
     {
@@ -231,8 +344,15 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param "conditions"|string $option
-     * @phpstan-param ($option is "conditions" ? string[] : mixed) $value
+     * Sets document title options for the notification.
+     *
+     * @phpstan-param "conditions"|string $option The document title option
+     * @phpstan-param ($option is "conditions" ? string[] : mixed) $value The option value
+     *
+     * @param string $option The document title option
+     * @param mixed  $value  The option value
+     *
+     * @return self The builder instance
      */
     public function docTitle(string $option, mixed $value): self
     {
@@ -245,6 +365,13 @@ final class NotyBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * Sets whether the notification is modal.
+     *
+     * @param bool $modal Whether the notification is modal
+     *
+     * @return self The builder instance
+     */
     public function modal(bool $modal = true): self
     {
         $this->option('modal', $modal);
@@ -253,7 +380,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets the notification ID.
+     *
      * You can use this id with querySelectors. Generated automatically if false.
+     *
+     * @param bool|string $id The notification ID or false to generate automatically
+     *
+     * @return self The builder instance
      */
     public function id(bool|string $id): self
     {
@@ -263,7 +396,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets whether to force the notification.
+     *
      * DOM insert method depends on this parameter. If false uses append, if true uses prepend.
+     *
+     * @param bool $force Whether to force the notification
+     *
+     * @return self The builder instance
      */
     public function force(bool $force = true): self
     {
@@ -272,6 +411,13 @@ final class NotyBuilder extends NotificationBuilder
         return $this;
     }
 
+    /**
+     * Sets the notification queue.
+     *
+     * @param string $queue The queue name
+     *
+     * @return self The builder instance
+     */
     public function queue(string $queue): self
     {
         $this->option('queue', $queue);
@@ -280,8 +426,14 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * If true closes all visible notifications and shows itself. If string(queueName) closes all visible notification
-     * on this queue and shows itself.
+     * Sets whether the notification kills other notifications.
+     *
+     * If true closes all visible notifications and shows itself.
+     * If string(queueName) closes all visible notification on this queue and shows itself.
+     *
+     * @param bool|string $killer Whether to kill other notifications
+     *
+     * @return self The builder instance
      */
     public function killer(bool|string $killer): self
     {
@@ -291,7 +443,14 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * Custom container selector string. Like '.my-custom-container'. Layout parameter will be ignored.
+     * Sets the notification container.
+     *
+     * Custom container selector string. Like '.my-custom-container'.
+     * Layout parameter will be ignored.
+     *
+     * @param false|string $container The container selector or false to use default
+     *
+     * @return self The builder instance
      */
     public function container(false|string $container): self
     {
@@ -301,9 +460,13 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
+     * Sets the notification buttons.
+     *
      * An array of Noty.button, for creating confirmation dialogs.
      *
-     * @param string[] $buttons
+     * @param string[] $buttons The buttons configuration
+     *
+     * @return self The builder instance
      */
     public function buttons(array $buttons): self
     {
@@ -313,7 +476,14 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * If true Noty uses PageVisibility API to handle timeout. To ensure that users do not miss their notifications.
+     * Sets whether to use visibility control.
+     *
+     * If true Noty uses PageVisibility API to handle timeout.
+     * To ensure that users do not miss their notifications.
+     *
+     * @param bool $visibilityControl Whether to use visibility control
+     *
+     * @return self The builder instance
      */
     public function visibilityControl(bool $visibilityControl): self
     {

@@ -4,23 +4,44 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Notification;
 
+/**
+ * Default implementation of NotificationInterface.
+ *
+ * This class represents a notification with its basic properties: title, message,
+ * type, and options. It provides the core functionality for storing and
+ * manipulating notification data.
+ *
+ * Design pattern: Value Object - Represents a simple entity with equality based
+ * on attribute values rather than identity.
+ */
 final class Notification implements NotificationInterface
 {
+    /**
+     * The notification title.
+     */
     private string $title = '';
 
+    /**
+     * The notification message content.
+     */
     private string $message = '';
 
+    /**
+     * The notification type (e.g., "success", "error", "warning", "info").
+     */
     private string $type = '';
 
     /**
-     * @var array<string, mixed> options for the notification
+     * Configuration options for the notification.
+     *
+     * @var array<string, mixed>
      */
     private array $options = [];
 
     /**
      * Gets the title of the notification.
      *
-     * @return string the notification title
+     * @return string The notification title
      */
     public function getTitle(): string
     {
@@ -30,7 +51,7 @@ final class Notification implements NotificationInterface
     /**
      * Sets the title of the notification.
      *
-     * @param string $title the title to set
+     * @param string $title The title to set
      */
     public function setTitle(string $title): void
     {
@@ -40,7 +61,7 @@ final class Notification implements NotificationInterface
     /**
      * Gets the message of the notification.
      *
-     * @return string the notification message
+     * @return string The notification message
      */
     public function getMessage(): string
     {
@@ -50,7 +71,7 @@ final class Notification implements NotificationInterface
     /**
      * Sets the message of the notification.
      *
-     * @param string $message the message to set
+     * @param string $message The message to set
      */
     public function setMessage(string $message): void
     {
@@ -60,7 +81,7 @@ final class Notification implements NotificationInterface
     /**
      * Gets the type of the notification.
      *
-     * @return string the notification type
+     * @return string The notification type
      */
     public function getType(): string
     {
@@ -70,7 +91,7 @@ final class Notification implements NotificationInterface
     /**
      * Sets the type of the notification.
      *
-     * @param string $type the type to set
+     * @param string $type The type to set
      */
     public function setType(string $type): void
     {
@@ -80,7 +101,7 @@ final class Notification implements NotificationInterface
     /**
      * Gets all options of the notification.
      *
-     * @return array<string, mixed> the notification options
+     * @return array<string, mixed> The notification options
      */
     public function getOptions(): array
     {
@@ -90,7 +111,10 @@ final class Notification implements NotificationInterface
     /**
      * Sets or updates the options of the notification.
      *
-     * @param array<string, mixed> $options the options to set or update
+     * This method merges the provided options with existing ones,
+     * with new values taking precedence over existing values.
+     *
+     * @param array<string, mixed> $options The options to set or update
      */
     public function setOptions(array $options): void
     {
@@ -100,10 +124,10 @@ final class Notification implements NotificationInterface
     /**
      * Gets a specific option of the notification with a default fallback.
      *
-     * @param string $name    the name of the option
-     * @param mixed  $default the default value to return if the option is not set
+     * @param string $name    The name of the option
+     * @param mixed  $default The default value to return if the option is not set
      *
-     * @return mixed the option value or the default value
+     * @return mixed The option value or the default value
      */
     public function getOption(string $name, mixed $default = null): mixed
     {
@@ -115,8 +139,8 @@ final class Notification implements NotificationInterface
     /**
      * Sets a specific option for the notification.
      *
-     * @param string $name  the name of the option
-     * @param mixed  $value the value of the option
+     * @param string $name  The name of the option
+     * @param mixed  $value The value of the option
      */
     public function setOption(string $name, mixed $value): void
     {
@@ -126,7 +150,7 @@ final class Notification implements NotificationInterface
     /**
      * Unsets a specific option of the notification.
      *
-     * @param string $name the name of the option to unset
+     * @param string $name The name of the option to unset
      */
     public function unsetOption(string $name): void
     {
@@ -141,7 +165,7 @@ final class Notification implements NotificationInterface
      *     message: string,
      *     type: string,
      *     options: array<string, mixed>,
-     * }
+     * } The notification as an array
      */
     public function toArray(): array
     {

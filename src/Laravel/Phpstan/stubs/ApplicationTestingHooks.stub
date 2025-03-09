@@ -2,9 +2,19 @@
 
 namespace Orchestra\Testbench\Concerns;
 
+/**
+ * ApplicationTestingHooks - PHPStan stub for Orchestra Testbench.
+ *
+ * This stub file enhances PHPStan's static analysis for PHPFlasher by
+ * providing type information for Orchestra Testbench's testing hooks.
+ *
+ * Design pattern: Type Annotation - Provides type information for static analysis
+ */
 trait ApplicationTestingHooks
 {
     /**
+     * The Laravel application instance for testing.
+     *
      * @var \Illuminate\Foundation\Application
      */
     protected $app;
