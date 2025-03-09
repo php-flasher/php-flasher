@@ -3,85 +3,48 @@
     <head>
         {% include head.html %}
     </head>
-    <body class="min-h-screen min-w-full leading-normal bg-gray-50 overflow-x-hidden" data-controller="anchor clipboard navigation tryit {{ page.data-controller }}">
+    <body class="min-h-screen bg-slate-50 text-slate-800 font-sans leading-relaxed" data-controller="anchor clipboard navigation tryit {{ page.data-controller }}">
         {% include size-helper.html %}
+        {% include banner.html %}
+        {% include header.html %}
 
-        {% if site.data.dev.dev_mode %}
-            <div data-controller="ray"></div>
-        {% endif %}
 
-        <div class="bg-green-700 text-white text-center p-1 leading-tight shadow-lg">
-            <span class="text-xl font-bold">🇵🇸 Solidarity with Palestine.</span>
-            <span class="inline text-xs sm:text-sm md:text-base">We seek justice and peace, and strongly oppose all forms of injustice and genocide.</span>
-        </div>
+        <div class="container max-w-7xl mx-auto px-4 lg:px-6 py-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar Navigation -->
+                <aside class="lg:w-64 shrink-0">
+                    {% include sidebar.html %}
+                </aside>
 
-        <div class="h-16 z-10 top-0 w-screen bg-white border-b border-indigo-200 shadow">
-            <div id="header-logo" class="lg:container lg:mx-auto px-4 py-2">
-                <div class="flex items-center flex-no-shrink pt-1">
-                    <div class="flex items-center">
-                        <span class="pr-2 font-normal leading-none text-3xl text-indigo-900 hidden sm:block">
-                            <img class="fill-current h-8 mr-2" src="/static/images/php-flasher-logo.svg" alt="PHPFlasher Logo" />
-                            {% for version in site.data.project.versions %}
-                                <a href="{{ version[1] }}" class="{% if forloop.first %}text-white bg-indigo-500{% else %}text-indigo-600{% endif %} p-1 rounded text-xs relative text-grey-dark hover:bg-indigo-500 hover:scale-110 hover:text-white" style="top: -20px;">{{ version[0] }}</a>
-                            {% endfor %}
-                        </span>
+                <!-- Main Content -->
+                <main class="flex-1 min-w-0">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        {% include breadcrumb.html %}
+
+                        <div class="prose prose-slate max-w-none">
+                            {% include github-cta.html %}
+                            {{ content }}
+                        </div>
+
+                        {% include pagination.html %}
                     </div>
-                    <div class="flex-grow"></div>
-                    <a href="#" id="menu-toggle" class="block lg:hidden h-8 w-8 border p-1 border-transparent text-gray-200 hover:text-grey menu-closed">
-                        <svg class="menu-closed:shown fill-current h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-                        </svg>
-                        <svg class="menu-closed:hidden fill-current h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
-                        </svg>
-                    </a>
-                </div>
+                </main>
+
+                <!-- Table of Contents -->
+                <aside class="hidden xl:block w-56 shrink-0" id="anchor-navigation">
+                    <div class="sticky top-8">
+                        <h4 class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-4">
+                            <i class="fa-duotone fa-list-tree"></i> On This Page
+                        </h4>
+                        <nav class="toc">
+                            <ul class="list-none space-y-2 text-sm"></ul>
+                        </nav>
+                    </div>
+                </aside>
             </div>
         </div>
 
-        <main class="lg:container lg:mx-auto lg:px-6 flex">
-            <nav id="main-navigation" class="sticky top-8 hidden lg:block h-full w-full mx-10 lg:w-40">
-                {% for section in site.data.menu %}
-                    <h4 class="text-sm leading-loose tracking-wide text-indigo-400 uppercase mt-4">{{ section[0] }}</h4>
-                    <ul class="list-reset mb-8">
-                        {% for link in section[1] %}
-                            <li class="{% if page.url == link[1] %}bg-indigo-500 {% endif %}px-6 rounded">
-                                <a href="{{ link[1] }}" class="leading-loose text-md inline-block w-full {% if page.url == link[1] %}text-white{% else %}text-gray-900{% endif %}">{{ link[0] }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endfor %}
-            </nav>
-            <article id="main-article" class="flex-1 px-2 lg:px-10 py-5 w-full overflow-x-auto">
-                <div class="border-b border-grey-lighter py-3 mb-3 hidden sm:block">
-                    {% include prev-next.html %}
-                </div>
-
-                <blockquote>
-                    <p>
-                        If you find <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> useful,
-                        please consider giving it a <strong>⭐ star</strong> on <a href="https://github.com/php-flasher/php-flasher"><i class="fab fa-github text-black"></i> GitHub</a> 😊.
-                        If you spot any typos or have suggestions, feel free to contribute to the documentation 📝.
-                        Your feedback helps keep the project up-to-date and well-maintained. <strong>Thank you</strong> <i class="fa-solid fa-heart text-red-600"></i>
-                    </p>
-                </blockquote>
-
-                <hr>
-
-                {{ content }}
-
-                <div class="border-t border-grey-lighter py-3 mb-3 hidden sm:block">
-                    {% include prev-next.html %}
-                </div>
-            </article>
-            <nav id="anchor-navigation" class="js-sticky hidden sticky top-8 h-full w-56">
-                <h4 class="text-sm leading-loose tracking-wide text-indigo-400 uppercase mt-4">
-                    <i class="fa-duotone fa-bars-sort"></i> Jump to
-                </h4>
-                <ul class="list-reset mb-8"></ul>
-            </nav>
-        </main>
-
         {% include footer.html %}
+        {% include scripts.html %}
     </body>
 </html>
