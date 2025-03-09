@@ -1,0 +1,67 @@
+<script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-menu');
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                document.body.classList.toggle('overflow-hidden');
+            });
+
+            closeMenu.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            });
+        }
+
+        // Run example buttons
+        const exampleButtons = document.querySelectorAll('.run-example');
+        exampleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                if (window.messages && window.messages[id]) {
+                    const notification = window.messages[id];
+                    // This assumes there's a global function to show notifications
+                    if (window.flasher) {
+                        window.flasher.flash(
+                            notification.type,
+                            notification.message,
+                            notification.options,
+                            notification.title
+                        );
+                    }
+                }
+            });
+        });
+
+        // Generate table of contents
+        const headings = document.querySelectorAll('main h2, main h3');
+        const tocList = document.querySelector('#anchor-navigation ul');
+
+        if (headings.length > 0 && tocList) {
+            headings.forEach((heading, index) => {
+                // Add ID to heading if not present
+                if (!heading.id) {
+                    heading.id = 'heading-' + index;
+                }
+
+                const isH3 = heading.tagName.toLowerCase() === 'h3';
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+
+                link.href = '#' + heading.id;
+                link.className = isH3 ? 'pl-4 text-slate-600 hover:text-indigo-600 border-l-2 border-slate-200 block py-1'
+                                     : 'text-slate-700 hover:text-indigo-600 font-medium block py-1';
+                link.textContent = heading.textContent;
+
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
+            });
+
+            document.getElementById('anchor-navigation').classList.remove('hidden');
+        }
+    });
+</script>

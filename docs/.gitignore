@@ -2,6 +2,7 @@ node_modules/
 vendor/
 
 _site/
+_site_dev/
 
 .jekyll-cache/
 

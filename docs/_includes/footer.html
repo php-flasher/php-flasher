@@ -1,8 +1,55 @@
-<section class="bg-indigo-900 pt-10 pb-10">
-    <div class="max-w-xs mx-auto text-center text-md leading-loose">
-        <img src="/static/images/younes-khoubza.jpeg" alt="Younes" class="inline rounded-full h-20 w-20 border-gray-100 border-2"/>
-        <p class="text-white">
-            <span class="text-gray-300">PHP<span class="text-gray-400">Flasher</span></span> is a project by <a class="text-indigo-300" target="_blank" href="https://www.linkedin.com/in/younes--ennaji/">Younes ENNAJI</a>.
-        </p>
+<footer class="bg-indigo-900 mt-12 pt-12 pb-8 text-white">
+    <div class="container max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- About Section -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    PHP<span class="text-indigo-300">Flasher</span>
+                </h3>
+                <p class="text-indigo-200 mb-4 text-sm leading-relaxed">
+                    A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects.
+                    Provides feedback to users, improves engagement & enhances user experience.
+                </p>
+                <div class="flex space-x-4 mt-6">
+                    <a href="https://github.com/php-flasher/php-flasher" class="text-indigo-300 hover:text-white">
+                        <i class="fa-brands fa-github text-xl"></i>
+                    </a>
+                    <a href="https://twitter.com/phpflasher" class="text-indigo-300 hover:text-white">
+                        <i class="fa-brands fa-twitter text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4 text-indigo-100">Documentation</h3>
+                <ul class="space-y-2 text-sm text-indigo-200">
+                    <li><a href="/" class="text-indigo-200 transition">Introduction</a></li>
+                    <li><a href="/laravel/" class="text-indigo-200 transition">Laravel Integration</a></li>
+                    <li><a href="/symfony/" class="text-indigo-200 transition">Symfony Integration</a></li>
+                    <li><a href="/livewire/" class="text-indigo-200 transition">Livewire Integration</a></li>
+                </ul>
+            </div>
+
+            <!-- Author -->
+            <div class="text-center md:text-left">
+                <h3 class="text-lg font-semibold mb-4 text-indigo-100">Created By</h3>
+                <div class="flex md:justify-start justify-center items-center">
+                    <img src="/static/images/younes-ennaji.jpeg" alt="Younes ENNAJI"
+                         class="h-16 w-16 rounded-full border-2 border-indigo-200 mr-4">
+                    <div>
+                        <h4 class="font-medium">Younes ENNAJI</h4>
+                        <a href="https://www.linkedin.com/in/younes--ennaji/"
+                           class="text-indigo-300 hover:text-white text-sm inline-flex items-center gap-1">
+                            <i class="fa-brands fa-linkedin"></i> LinkedIn Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-indigo-800 text-center text-indigo-400 text-sm">
+            <p>© {{ 'now' | date: "%Y" }} PHPFlasher. Released under the MIT License.</p>
+        </div>
     </div>
-</section>
+</footer>

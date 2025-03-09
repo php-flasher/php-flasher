@@ -1,0 +1,8 @@
+# This file is used by TailwindCSS and browserslist to determine
+# which browsers to support with generated CSS
+
+# Define target browsers
+last 2 versions
+not dead
+> 0.5%
+Firefox ESR
