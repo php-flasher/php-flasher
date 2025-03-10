@@ -5,8 +5,26 @@
     <i class="fa-duotone fa-ghost fa-lg text-pink-800 mr-1"></i> Livewire: '/livewire/'
     <i class="fa-duotone fa-angles-right fa-lg text-indigo-900 mr-1"></i> Inertia: '/inertia/'
 
-<i class="fa-duotone fa-plug"></i> libraries:
+<i class="fa-duotone fa-plug"></i> 3rd Party:
     <i class="fa-duotone fa-bell text-indigo-900 mr-1 fa-lg"></i> Noty: '/library/noty/'
     <i class="fa-duotone fa-info-circle text-indigo-900 mr-1 fa-lg"></i> Notyf: '/library/notyf/'
     <i class="fa-duotone fa-exclamation-circle text-indigo-900 mr-1 fa-lg"></i> Sweetalert: '/library/sweetalert/'
     <i class="fa-duotone fa-bread-loaf text-indigo-900 mr-1 fa-lg"></i> Toastr: '/library/toastr/'
+
+<i class="fa-duotone fa-palette"></i> Themes <i class="fa-duotone fa-clock-rotate-left text-gray-500" title="Coming soon"></i> <span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full font-medium ml-1">soon</span>:
+    <i class="fa-duotone fa-circle-minus text-indigo-900 mr-1 fa-lg"></i> Minimal: '/theme/minimal/'
+    <i class="fa-duotone fa-sun text-yellow-600 mr-1 fa-lg"></i> Amber: '/theme/amber/'
+    <i class="fa-duotone fa-diamond text-indigo-900 mr-1 fa-lg"></i> Crystal: '/theme/crystal/'
+    <i class="fa-duotone fa-lightbulb text-yellow-300 mr-1 fa-lg"></i> Neon: '/theme/neon/'
+    <i class="fa-duotone fa-gem text-purple-800 mr-1 fa-lg"></i> Onyx: '/theme/onyx/'
+    <i class="fa-duotone fa-gem text-green-500 mr-1 fa-lg"></i> Emerald: '/theme/emerald/'
+    <i class="fa-duotone fa-leaf text-green-600 mr-1 fa-lg"></i> Jade: '/theme/jade/'
+    <i class="fa-duotone fa-sparkles text-blue-400 mr-1 fa-lg"></i> Aurora: '/theme/aurora/'
+    <i class="fa-duotone fa-gem text-red-600 mr-1 fa-lg"></i> Ruby: '/theme/ruby/'
+    <i class="fa-duotone fa-gem text-blue-500 mr-1 fa-lg"></i> Sapphire: '/theme/sapphire/'
+    <i class="fa-duotone fa-layer-group text-indigo-900 mr-1 fa-lg"></i> Material: '/theme/material/'
+    <i class="fa-brands fa-google text-red-500 mr-1 fa-lg"></i> Google: '/theme/google/'
+    <i class="fa-duotone fa-shopping-bag text-indigo-900 mr-1 fa-lg"></i> Amazon: '/theme/amazon/'
+    <i class="fa-brands fa-facebook text-blue-600 mr-1 fa-lg"></i> Facebook: '/theme/facebook/'
+    <i class="fa-brands fa-apple text-gray-800 mr-1 fa-lg"></i> IOS: '/theme/ios/'
+    <i class="fa-brands fa-slack text-purple-500 mr-1 fa-lg"></i> Slack: '/theme/slack/'

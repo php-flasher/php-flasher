@@ -1,44 +1,158 @@
-# PHPFlasher Google Theme
+---
+permalink: /theme/google/
+title: Google Theme
+description: Add Material Design-inspired notifications to your application with the Google theme for PHPFlasher. Featuring Google's card-based layout, typography, and interactive elements like ripple effects.
+handler: theme.google
+data-controller: theme-google
+---
 
-## Overview
+## <i class="fa-brands fa-google"></i> Google Theme
 
 The Google theme provides notifications inspired by Google's Material Design system, one of the most recognized design languages worldwide. It features Google's distinctive card-based layout, typography, elevation patterns, and interactive elements like ripple effects that will be immediately familiar to users of Google products.
 
-![Google Theme Preview](./images/google-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Material Design Cards**: Elevated cards with proper shadow depth following Material guidelines
-- **Material Icons**: SVG icons following Google's Material Design iconography
-- **Ripple Effect**: Interactive feedback with ripple animation on button press
-- **Action Button**: DISMISS button with uppercase text following Material conventions
-- **Slide-Up Animation**: Smooth entrance animation with Material motion easing
-- **Material Typography**: Roboto font with Google's type scale and weights
-- **Linear Progress**: Material Design progress indicator at the bottom of card
-- **Dark Mode Support**: Proper implementation of Material dark theme
-- **RTL Support**: Full right-to-left language support
+The easiest way to use the Google theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.google',  // Make Google the default theme
+    
+    'themes' => [
+        'google' => [
+            'scripts' => [
+                '/vendor/flasher/themes/google.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/google.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.google  # Make Google the default theme
+    
+    themes:
+        google:
+            scripts:
+                - '/vendor/flasher/themes/google.min.js'
+            styles:
+                - '/vendor/flasher/themes/google.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { googleTheme } from '@flasher/flasher/themes';
 flasher.addTheme('google', googleTheme);
 
-// Use the theme
-flasher.use('theme.google').success('Operation completed successfully');
-flasher.use('theme.google').error('An error occurred during the operation');
-flasher.use('theme.google').warning('This action cannot be undone');
-flasher.use('theme.google').info('New updates are available');
-
-// With a title
-flasher.use('theme.google').success('Your changes have been saved', 'Success');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.google';
+
+// Or use it for specific notifications
+flasher.success('Operation completed successfully');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
+
+Once configured, use standard PHPFlasher methods to create notifications with Google styling:
+
+{% assign successMessage = 'Operation completed successfully.' %}
+{% assign errorMessage = 'An error occurred during the operation.' %}
+{% assign warningMessage = 'This action cannot be undone.' %}
+{% assign infoMessage = 'New updates are available.' %}
+
+<script type="text/javascript">
+    messages['#/ google types'] = [
+        {
+            handler: 'theme.google',
+            type: 'success',
+            message: '{{ successMessage }}',
+            title: 'Success',
+            options: { theme: 'google' },
+        },
+        {
+            handler: 'theme.google',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            title: 'Error',
+            options: { theme: 'google' },
+        },
+        {
+            handler: 'theme.google',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            title: 'Warning',
+            options: { theme: 'google' },
+        },
+        {
+            handler: 'theme.google',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            title: 'Information',
+            options: { theme: 'google' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ google types
+
+// With Google set as default theme
+flash()->success('{{ successMessage }}', 'Success');
+flash()->error('{{ errorMessage }}', 'Error');
+flash()->warning('{{ warningMessage }}', 'Warning');
+flash()->info('{{ infoMessage }}', 'Information');
+```
+
+### JavaScript
+
+```javascript
+// With Google set as default theme
+flasher.success('{{ successMessage }}', 'Success');
+flasher.error('{{ errorMessage }}', 'Error');
+flasher.warning('{{ warningMessage }}', 'Warning');
+flasher.info('{{ infoMessage }}', 'Information');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Google Theme for Specific Notifications
+
+If Google isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.google')
+    ->success('This notification uses Google theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.google').success('This notification uses Google theme.');
+```
+
+### Custom Colors and Appearance
 
 The Google theme uses CSS variables that can be customized to match your brand while maintaining the Material Design feel:
 
@@ -49,6 +163,8 @@ The Google theme uses CSS variables that can be customized to match your brand w
     --md-bg-dark: #2d2d2d;               /* Dark mode background */
     --md-text-light: rgba(0, 0, 0, 0.87); /* Primary text in light mode */
     --md-text-secondary-light: rgba(0, 0, 0, 0.6); /* Secondary text in light mode */
+    --md-text-dark: rgba(255, 255, 255, 0.87); /* Primary text in dark mode */
+    --md-text-secondary-dark: rgba(255, 255, 255, 0.6); /* Secondary text in dark mode */
     --md-elevation: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12); /* Card shadow */
     --md-border-radius: 4px;             /* Card corner radius */
     
@@ -64,7 +180,7 @@ The Google theme uses CSS variables that can be customized to match your brand w
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Google theme generates notifications with the following HTML structure:
 
@@ -92,9 +208,13 @@ The Google theme generates notifications with the following HTML structure:
 </div>
 ```
 
-## Material Design Elements
+This structure follows Material Design principles with cards, proper typography hierarchy, and interactive elements.
 
-### Elevation
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
+
+### Material Design Elements
+
+#### Elevation
 
 The theme uses proper Material Design elevation with three shadow components:
 
@@ -104,7 +224,7 @@ The theme uses proper Material Design elevation with three shadow components:
 
 This creates the characteristic Material Design "floating" effect for cards.
 
-### Typography
+#### Typography
 
 Following Material Design typography guidelines:
 
@@ -112,7 +232,7 @@ Following Material Design typography guidelines:
 - **Message**: 14px (0.875rem), regular weight (400), 60% opacity for secondary text
 - **Button**: 13px (0.8125rem), medium weight (500), uppercase with letterSpacing
 
-### Ripple Effect
+#### Ripple Effect
 
 The theme includes Material Design's signature "ink ripple" effect:
 
@@ -122,34 +242,7 @@ The theme includes Material Design's signature "ink ripple" effect:
 
 This provides visual feedback that enhances the tactile feeling of the interface.
 
-## Animation Details
-
-### Entrance Animation
-
-The Google theme uses Material Design's standard motion curve (cubic-bezier(0.4, 0, 0.2, 1)) for its slide-up animation. This creates a natural-feeling motion that follows the principles of Material motion:
-
-- Quick acceleration from start
-- Smooth deceleration to end
-- Total duration of 300ms
-
-### Interaction Animations
-
-The theme includes several interaction animations:
-
-1. **Button Hover**: Background color transition (200ms)
-2. **Button Press**: Ripple effect (600ms)
-3. **Progress Bar**: Linear progress animation
-
-## Accessibility Features
-
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query and disables animations
-- **Keyboard Access**: Action button is fully keyboard accessible
-- **Color Contrast**: All text meets WCAG 2.1 AA color contrast standards
-- **Text Alternatives**: Descriptive aria-labels for interactive elements
-
-## Dark Mode
+### Dark Mode
 
 The Google theme implements Material Design's dark theme guidelines:
 
@@ -158,17 +251,18 @@ The Google theme implements Material Design's dark theme guidelines:
 - Adjusted shadows for better visibility on dark backgrounds
 - Higher contrast for hover states (8% opacity instead of 4%)
 
-## Font Considerations
+### Accessibility Features
 
-For the best experience, it's recommended to include the Roboto font in your project:
+The Google theme includes several accessibility features:
 
-```html
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
-```
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query and disables animations
+- **Keyboard Access**: Action button is fully keyboard accessible
+- **Color Contrast**: All text meets WCAG 2.1 AA color contrast standards
+- **Text Alternatives**: Descriptive aria-labels for interactive elements
 
-If Roboto is not available, the theme falls back to system fonts while maintaining the Material Design aesthetic as much as possible.
-
-## Browser Support
+## <i class="fa-solid fa-browser"></i> Browser Support
 
 The Google theme is compatible with all modern browsers:
 
@@ -177,5 +271,26 @@ The Google theme is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 - Opera (latest)
+- Mobile browsers on iOS and Android
 
 The ripple effect and other animations may have slightly different appearances across browsers, but the core functionality works everywhere.
+
+## <i class="fa-solid fa-gears"></i> Implementation Details
+
+The Google theme uses modern web technologies:
+
+- **CSS Variables**: For theme customization and dark mode support
+- **Material Design Elevation**: Proper shadow implementation for depth
+- **Ripple Animation**: For tactile button feedback
+- **CSS Animations**: With Material Design easing curves
+- **Linear Progress**: For countdown visualization
+- **Roboto Font**: Falls back to system fonts if unavailable
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.
+
+For the best experience, it's recommended to include the Roboto font in your project:
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+```

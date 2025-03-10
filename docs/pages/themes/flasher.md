@@ -1,43 +1,139 @@
-# PHPFlasher Default Theme
+---
+permalink: /theme/flasher/
+title: Flasher Theme
+description: Explore the default notification theme for PHPFlasher featuring a clean design with distinctive colored borders, clear type indicators, and comprehensive accessibility support.
+handler: theme.flasher
+data-controller: theme-flasher
+---
 
-## Overview
+## <i class="fa-solid fa-bolt"></i> Flasher Theme
 
 The Flasher theme is the default notification theme for PHPFlasher. It provides a classic, clean design with a distinctive colored left border that visually indicates the notification type. This theme balances visual clarity with simplicity, making it suitable for a wide range of applications.
 
-![Flasher Theme Preview](./images/flasher-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Colored Left Border**: Prominent left border that clearly indicates notification type
-- **Type-Specific Icons**: Each notification type has its own distinctive icon
-- **Title & Message**: Supports both a title and message text for clear communication
-- **Hover Animation**: Subtle lift effect when hovering over notifications
-- **Progress Bar**: Shows the time remaining before auto-dismiss
-- **Slide-in Animation**: Smooth entrance animation from the left
-- **Dark Mode Support**: Complete dark mode implementation with optimized colors
-- **RTL Support**: Full right-to-left language support
+As the default theme for PHPFlasher, the Flasher theme is automatically available without any additional configuration. However, you can explicitly set it as your default theme:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
 
-The Flasher theme is available by default without requiring explicit registration:
+```php
+<?php // config/flasher.php
 
-```typescript
-// Use directly without specifying a theme
-flasher.success('Operation completed successfully');
-flasher.error('An error occurred during the operation');
-flasher.warning('This action cannot be undone');
-flasher.info('New updates are available');
-
-// Or explicitly use the theme
-flasher.use('theme.flasher').success('Operation completed successfully');
-
-// With a title
-flasher.success('Operation completed successfully', 'Success');
+return [
+    'default' => 'flasher',  // Use the default Flasher theme
+    
+    // Other configuration options...
+];
 ```
 
-## Customization
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
 
-The Flasher theme uses CSS variables that can be customized:
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: flasher  # Use the default Flasher theme
+    
+    # Other configuration options...
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
+
+```typescript
+// The Flasher theme is available by default
+// You can use it directly:
+flasher.success('Operation completed successfully');
+
+// Or explicitly specify it:
+flasher.defaultPlugin = 'flasher';
+```
+
+## <i class="fa-solid fa-palette"></i> Notification Types
+
+Use standard PHPFlasher methods to create notifications with the default Flasher styling:
+
+{% assign successMessage = 'Operation completed successfully.' %}
+{% assign errorMessage = 'An error occurred during the operation.' %}
+{% assign warningMessage = 'This action cannot be undone.' %}
+{% assign infoMessage = 'New updates are available.' %}
+
+<script type="text/javascript">
+    messages['#/ flasher types'] = [
+        {
+            handler: 'flasher',
+            type: 'success',
+            message: '{{ successMessage }}',
+            title: 'Success'
+        },
+        {
+            handler: 'flasher',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            title: 'Error'
+        },
+        {
+            handler: 'flasher',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            title: 'Warning'
+        },
+        {
+            handler: 'flasher',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            title: 'Information'
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ flasher types
+
+// With Flasher as default theme
+flash()->success('{{ successMessage }}', 'Success');
+flash()->error('{{ errorMessage }}', 'Error');
+flash()->warning('{{ warningMessage }}', 'Warning');
+flash()->info('{{ infoMessage }}', 'Information');
+```
+
+### JavaScript
+
+```javascript
+// With Flasher as default theme
+flasher.success('{{ successMessage }}', 'Success');
+flasher.error('{{ errorMessage }}', 'Error');
+flasher.warning('{{ warningMessage }}', 'Warning');
+flasher.info('{{ infoMessage }}', 'Information');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Flasher Theme for Specific Notifications
+
+If another theme is set as your default, you can use the Flasher theme for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('flasher')
+    ->success('This notification uses the default Flasher theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('flasher').success('This notification uses the default Flasher theme.');
+```
+
+### Custom Colors and Appearance
+
+The Flasher theme uses CSS variables that can be customized to match your brand:
 
 ```css
 :root {
@@ -65,7 +161,7 @@ The Flasher theme uses CSS variables that can be customized:
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Flasher theme generates notifications with the following HTML structure:
 
@@ -85,34 +181,19 @@ The Flasher theme generates notifications with the following HTML structure:
 </div>
 ```
 
-## Animation
+This structure provides a clear hierarchy with a colored left border, icon, title, message, close button, and progress bar.
 
-The Flasher theme features two animations:
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
 
-1. **Entrance Animation**: A slide-in from the left with a fade-in effect:
-   ```css
-   @keyframes flasherIn {
-       from {
-           opacity: 0;
-           transform: translateX(-10px);
-       }
-       to {
-           opacity: 1;
-           transform: translateX(0);
-       }
-   }
-   ```
+### Visual Characteristics
 
-2. **Hover Animation**: A subtle lift effect when hovering over notifications:
-   ```css
-   &:hover {
-       transform: translateY(-2px);
-   }
-   ```
+- **Colored Border**: Thick, colored left border that visually identifies the notification type
+- **Type-Specific Icons**: Each notification type has its own distinctive icon
+- **Title & Message Support**: Allows for both a title and detailed message
+- **Progress Bar**: Shows the time remaining before auto-dismiss
+- **Animation**: Smooth slide-in from the left with a subtle hover effect
 
-Both animations are disabled for users who prefer reduced motion.
-
-## Design Philosophy
+### Design Philosophy
 
 As the default theme for PHPFlasher, the Flasher theme is designed with these principles:
 
@@ -121,24 +202,22 @@ As the default theme for PHPFlasher, the Flasher theme is designed with these pr
 3. **Accessibility**: High contrast, clear typography, and semantic HTML ensure notifications are accessible
 4. **Familiarity**: The design follows common notification patterns that users will find intuitive
 
-## Visual Characteristics
+### Dark Mode
 
-- **Border**: Thick, colored left border (0.8em) that visually identifies the notification type
-- **Typography**: Clear hierarchy with distinct title and message styles
-- **Shadow**: Subtle shadow that gives depth without being too prominent
-- **Icons**: Type-specific icons that help with quick visual identification
-- **Progress Bar**: Thin progress indicator at the bottom that shows remaining time
+The theme automatically adapts to system dark mode preferences without additional configuration, with optimized colors for dark backgrounds.
 
-## Accessibility Features
+### Accessibility Features
 
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query
+The Flasher theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query
 - **Keyboard Access**: Close button is fully keyboard accessible
 - **Color Contrast**: All text meets WCAG 2.1 AA color contrast standards
 - **RTL Support**: Full right-to-left language support with appropriately mirrored layout
 
-## Browser Support
+## <i class="fa-solid fa-browser"></i> Browser Support
 
 The Flasher theme is compatible with all modern browsers:
 
@@ -147,14 +226,17 @@ The Flasher theme is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 - Opera (latest)
+- Mobile browsers on iOS and Android
 
-## Implementation Details
+## <i class="fa-solid fa-gears"></i> Implementation Details
 
-The Flasher theme is built using:
+The Flasher theme uses modern web technologies:
 
-- **SCSS Mixins**: Uses shared mixins for common functionality
-- **CSS Variables**: For theme customization and consistency
-- **Flexbox**: For layout structure
-- **CSS Animation**: For entrance and hover effects
-- **Media Queries**: For responsive design, dark mode, and reduced motion
-- **CSS Transitions**: For smooth hover interactions
+- **CSS Variables**: For theme customization and dark mode support
+- **Flexbox Layout**: For responsive and flexible notification structure
+- **CSS Animations**: For entrance and hover effects
+- **Progress Bar**: Shows countdown until notification dismissal
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+- **SCSS Mixins**: For shared functionality across PHPFlasher themes
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.

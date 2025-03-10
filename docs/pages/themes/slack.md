@@ -1,40 +1,154 @@
-# PHPFlasher Slack Theme
+---
+permalink: /theme/slack/
+title: Slack Theme
+description: Add Slack-style notifications to your application with the Slack theme for PHPFlasher. Featuring message bubbles with colored avatars, clean typography, and interactive hover effects.
+handler: theme.slack
+data-controller: theme-slack
+---
 
-## Overview
+## <i class="fa-brands fa-slack"></i> Slack Theme
 
 The Slack theme provides notifications styled after Slack's familiar messaging interface. It features message bubbles with colored avatars, clean typography, and interactive hover effects that closely resemble the appearance and behavior of messages in the popular workplace communication platform.
 
-![Slack Theme Preview](./images/slack-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Message Bubbles**: Clean, bordered containers resembling Slack messages
-- **Colored Avatars**: Type-specific colored icon containers (green, blue, orange, red)
-- **Slack Typography**: Font styles matching Slack's clean text appearance
-- **Hover Interactions**: Background change and button reveal on hover
-- **Close Button**: SVG "X" icon that appears when hovering over messages
-- **Quick Animation**: Fast fade-in animation for a responsive feel
-- **Dark Mode Support**: Dark theme matching Slack's dark mode appearance
-- **RTL Support**: Full right-to-left language support
+The easiest way to use the Slack theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.slack',  // Make Slack the default theme
+    
+    'themes' => [
+        'slack' => [
+            'scripts' => [
+                '/vendor/flasher/themes/slack.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/slack.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.slack  # Make Slack the default theme
+    
+    themes:
+        slack:
+            scripts:
+                - '/vendor/flasher/themes/slack.min.js'
+            styles:
+                - '/vendor/flasher/themes/slack.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { slackTheme } from '@flasher/flasher/themes';
 flasher.addTheme('slack', slackTheme);
 
-// Use the theme
-flasher.use('theme.slack').success('Your file was uploaded successfully');
-flasher.use('theme.slack').error('Unable to connect to the server');
-flasher.use('theme.slack').warning('Your session will expire soon');
-flasher.use('theme.slack').info('New comments on your post');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.slack';
+
+// Or use it for specific notifications
+flasher.success('Your file was uploaded successfully');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
+
+Once configured, use standard PHPFlasher methods to create notifications with Slack styling:
+
+{% assign successMessage = 'Your file was uploaded successfully.' %}
+{% assign errorMessage = 'Unable to connect to the server.' %}
+{% assign warningMessage = 'Your session will expire soon.' %}
+{% assign infoMessage = 'New comments on your post.' %}
+
+<script type="text/javascript">
+    messages['#/ slack types'] = [
+        {
+            handler: 'theme.slack',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'slack' },
+        },
+        {
+            handler: 'theme.slack',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'slack' },
+        },
+        {
+            handler: 'theme.slack',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'slack' },
+        },
+        {
+            handler: 'theme.slack',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'slack' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ slack types
+
+// With Slack set as default theme
+flash()->success('{{ successMessage }}');
+flash()->error('{{ errorMessage }}');
+flash()->warning('{{ warningMessage }}');
+flash()->info('{{ infoMessage }}');
+```
+
+### JavaScript
+
+```javascript
+// With Slack set as default theme
+flasher.success('{{ successMessage }}');
+flasher.error('{{ errorMessage }}');
+flasher.warning('{{ warningMessage }}');
+flasher.info('{{ infoMessage }}');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Slack Theme for Specific Notifications
+
+If Slack isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.slack')
+    ->success('This notification uses Slack theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.slack').success('This notification uses Slack theme.');
+```
+
+### Custom Colors and Appearance
 
 The Slack theme uses CSS variables that can be customized to match your brand while maintaining the Slack-like appearance:
 
@@ -46,6 +160,7 @@ The Slack theme uses CSS variables that can be customized to match your brand wh
     --slack-text-light: #1d1c1d;                /* Light mode text */
     --slack-text-dark: #e0e0e0;                 /* Dark mode text */
     --slack-border-light: #e0e0e0;              /* Light mode border */
+    --slack-border-dark: #393a3e;               /* Dark mode border */
     --slack-avatar-size: 36px;                  /* Avatar size */
     
     /* Type colors */
@@ -56,7 +171,7 @@ The Slack theme uses CSS variables that can be customized to match your brand wh
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Slack theme generates notifications with the following HTML structure:
 
@@ -78,9 +193,11 @@ The Slack theme generates notifications with the following HTML structure:
 </div>
 ```
 
-## Design Details
+This structure mirrors Slack's message layout with an avatar container, message content, and action button.
 
-### Message Bubble
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
+
+### Message Bubble Design
 
 The main container follows Slack's message styling:
 - White background (#ffffff) in light mode
@@ -100,21 +217,6 @@ Each notification type has a colored square avatar:
 
 The avatars are 36px × 36px squares with slightly rounded corners (4px border radius).
 
-### Typography
-
-The theme uses Slack's typography style:
-- Font family: Lato, Slack-Lato, Helvetica Neue, Helvetica, sans-serif
-- Font size: 15px for message text
-- Line height: 1.46668 (Slack's specific line height)
-- Text color: Near black (#1d1c1d) in light mode, off-white (#e0e0e0) in dark mode
-
-### Animation
-
-The theme uses a simple, quick fade-in animation:
-- Duration: 150ms (matches Slack's quick, responsive feel)
-- Timing function: ease-out
-- Effect: Simple opacity change from 0 to 1
-
 ### Interactive Elements
 
 The close button appears on hover:
@@ -124,7 +226,22 @@ The close button appears on hover:
 - Changes color on hover (from #616061 to #1d1c1d)
 - Has a subtle background on hover (#f8f8f8)
 
-## Dark Mode
+### Animation Effects
+
+The theme uses a simple, quick fade-in animation:
+- Duration: 150ms (matches Slack's quick, responsive feel)
+- Timing function: ease-out
+- Effect: Simple opacity change from 0 to 1
+
+### Typography
+
+The theme uses Slack's typography style:
+- Font family: Lato, Slack-Lato, Helvetica Neue, Helvetica, sans-serif
+- Font size: 15px for message text
+- Line height: 1.46668 (Slack's specific line height)
+- Text color: Near black (#1d1c1d) in light mode, off-white (#e0e0e0) in dark mode
+
+### Dark Mode
 
 The dark mode implementation closely matches Slack's dark theme:
 - Background: #1a1d21 (Slack's dark mode color)
@@ -134,40 +251,45 @@ The dark mode implementation closely matches Slack's dark theme:
 
 The avatar colors remain consistent between light and dark modes to maintain clear visual indicators.
 
-## Accessibility Features
+### Accessibility Features
 
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query and disables animations
+The Slack theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query and disables animations
 - **Keyboard Access**: Close button is fully keyboard accessible
 - **Color Indicators**: Each notification type has its own color, but also includes a symbol
 - **Text Contrast**: Maintains good contrast ratios in both light and dark modes
+- **RTL Support**: Complete right-to-left language support with properly flipped layout
 
-## RTL Support
+## <i class="fa-solid fa-browser"></i> Browser Support
 
-The theme includes comprehensive right-to-left language support:
-- Swaps all directional padding and margins
-- Moves the avatar to the right side
-- Moves the close button to the left side
-- Properly aligns text for RTL languages
+The Slack theme is compatible with all modern browsers:
 
-## Font Considerations
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- Opera (latest)
+- Mobile browsers on iOS and Android
+
+The theme uses standard CSS features that are well-supported across browsers, ensuring a consistent experience for all users.
+
+## <i class="fa-solid fa-gears"></i> Implementation Details
+
+The Slack theme uses modern web technologies:
+
+- **CSS Variables**: For theme customization and dark mode support
+- **CSS Flexbox**: For proper message layout and alignment
+- **CSS Transitions**: For smooth hover interactions
+- **SVG Icons**: For the close button and notification type indicators
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.
 
 For the best experience with the Slack theme, it's recommended to include the Lato font in your project:
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 ```
-
-If Lato is not available, the theme falls back to Helvetica Neue or Helvetica, which provide a similar clean appearance.
-
-## Browser Support
-
-The Slack theme is compatible with all modern browsers:
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Opera (latest)
-
-The theme uses standard CSS features that are well-supported across browsers, ensuring a consistent experience for all users.

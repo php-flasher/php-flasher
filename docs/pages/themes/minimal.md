@@ -1,44 +1,156 @@
-# PHPFlasher Minimal Theme
+---
+permalink: /theme/minimal/
+title: Minimal Theme
+description: Enhance your application with ultra-clean, distraction-free notifications using the Minimal theme for PHPFlasher. Featuring a translucent design with subtle styling for unobtrusive messaging.
+handler: theme.minimal
+data-controller: theme-minimal
+---
 
-## Overview
+## <i class="fa-solid fa-minus"></i> Minimal Theme
 
 The Minimal theme provides an ultra-clean, distraction-free notification design that prioritizes simplicity and unobtrusiveness. With its compact dimensions, subtle visual styling, and reduced visual elements, this theme is perfect for applications where notifications should provide information without competing for attention with the main interface.
 
-![Minimal Theme Preview](./images/minimal-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Ultra-Clean Design**: Stripped down to only essential elements
-- **Translucent Background**: Semi-transparent with subtle backdrop blur
-- **Compact Size**: Smaller footprint with comfortable spacing
-- **Small Dot Indicator**: Uses a small colored dot instead of large icons
-- **System Fonts**: Uses the system font stack for optimal readability
-- **Thin Progress Bar**: Nearly invisible 2px progress indicator
-- **Quick Animation**: Brief, subtle entrance animation
-- **Minimal Shadows**: Very light shadows for just a hint of depth
-- **Dark Mode Support**: Refined dark appearance with adjusted opacity
-- **RTL Support**: Full right-to-left language support
+The easiest way to use the Minimal theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.minimal',  // Make Minimal the default theme
+    
+    'themes' => [
+        'minimal' => [
+            'scripts' => [
+                '/vendor/flasher/themes/minimal.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/minimal.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.minimal  # Make Minimal the default theme
+    
+    themes:
+        minimal:
+            scripts:
+                - '/vendor/flasher/themes/minimal.min.js'
+            styles:
+                - '/vendor/flasher/themes/minimal.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { minimalTheme } from '@flasher/flasher/themes';
 flasher.addTheme('minimal', minimalTheme);
 
-// Use the theme
-flasher.use('theme.minimal').success('Changes saved');
-flasher.use('theme.minimal').error('Connection lost');
-flasher.use('theme.minimal').warning('Low disk space');
-flasher.use('theme.minimal').info('Updates available');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.minimal';
+
+// Or use it for specific notifications
+flasher.success('Changes saved');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
 
-The Minimal theme uses CSS variables that can be customized:
+Once configured, use standard PHPFlasher methods to create notifications with Minimal styling:
+
+{% assign successMessage = 'Changes saved.' %}
+{% assign errorMessage = 'Connection lost.' %}
+{% assign warningMessage = 'Low disk space.' %}
+{% assign infoMessage = 'Updates available.' %}
+
+<script type="text/javascript">
+    messages['#/ minimal types'] = [
+        {
+            handler: 'theme.minimal',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'minimal' },
+        },
+        {
+            handler: 'theme.minimal',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'minimal' },
+        },
+        {
+            handler: 'theme.minimal',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'minimal' },
+        },
+        {
+            handler: 'theme.minimal',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'minimal' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ minimal types
+
+// With Minimal set as default theme
+flash()->success('{{ successMessage }}');
+flash()->error('{{ errorMessage }}');
+flash()->warning('{{ warningMessage }}');
+flash()->info('{{ infoMessage }}');
+```
+
+### JavaScript
+
+```javascript
+// With Minimal set as default theme
+flasher.success('{{ successMessage }}');
+flasher.error('{{ errorMessage }}');
+flasher.warning('{{ warningMessage }}');
+flasher.info('{{ infoMessage }}');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Minimal Theme for Specific Notifications
+
+If Minimal isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.minimal')
+    ->success('This notification uses Minimal theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.minimal').success('This notification uses Minimal theme.');
+```
+
+### Custom Colors and Appearance
+
+The Minimal theme uses CSS variables that can be customized to match your brand:
 
 ```css
 :root {
@@ -54,16 +166,21 @@ The Minimal theme uses CSS variables that can be customized:
     --minimal-info: rgba(14, 165, 233, 0.9);       /* Info color */
     --minimal-warning: rgba(245, 158, 11, 0.9);    /* Warning color */
     --minimal-error: rgba(239, 68, 68, 0.9);       /* Error color */
+    
+    /* Additional customization */
+    --minimal-blur: 8px;                          /* Backdrop blur amount */
+    --minimal-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Shadow */
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Minimal theme generates notifications with the following HTML structure:
 
 ```html
 <div class="fl-minimal fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
     <div class="fl-content">
+        <div class="fl-dot"></div>
         <div class="fl-message">Message text</div>
         <button class="fl-close" aria-label="Close [type] message">×</button>
     </div>
@@ -73,9 +190,11 @@ The Minimal theme generates notifications with the following HTML structure:
 </div>
 ```
 
-Note: The HTML includes the class `fl-dot`, but this element is not present in the rendered structure (this appears to be a small inconsistency in the theme).
+This structure is deliberately minimalist, with just a small colored dot to indicate notification type and a thin progress bar at the bottom.
 
-## Design Philosophy
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
+
+### Design Philosophy
 
 The Minimal theme embodies several key design principles:
 
@@ -87,75 +206,65 @@ The Minimal theme embodies several key design principles:
 
 The theme deliberately avoids large icons, bold colors, or pronounced animations that might distract users from their primary tasks. The small colored dot provides just enough visual indication of the notification type without overwhelming the interface.
 
-## Visual Characteristics
+### Visual Characteristics
 
-### Frosted Glass Effect
+#### Frosted Glass Effect
 
 The theme uses a semi-transparent background (80% opacity) with an 8px backdrop blur, creating a subtle "frosted glass" effect that lets the underlying content partially show through.
 
-### System Font Stack
+#### System Font Stack
 
-```css
-font-family: -apple-system, BlinkMacSystemFont, var(--fl-font), sans-serif;
-```
+The theme uses the system UI font of the user's device (San Francisco on Apple devices, Segoe UI on Windows, etc.), ensuring that notifications look native to the platform.
 
-This stack uses the system UI font of the user's device (San Francisco on Apple devices, Segoe UI on Windows, etc.), ensuring that notifications look native to the platform.
-
-### Size and Space
+#### Compact Size and Spacing
 
 - **Max Width**: 320px
 - **Padding**: 0.75rem 1rem (12px 16px at default font size)
 - **Text Size**: 0.875rem (14px at default font size)
 - **Dot Size**: 8px diameter
 
-### Animation
+#### Quick Animation
 
-The entrance animation is intentionally brief (0.2s) and subtle:
+The entrance animation is intentionally brief (0.2s) and subtle, with just a small movement from above and fade-in effect.
 
-```css
-@keyframes minimalIn {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-```
+### Dark Mode
 
-## Accessibility Features
+The theme automatically adapts to system dark mode preferences, with a dark semi-transparent background and light text that maintains the minimal aesthetic while ensuring readability.
 
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query
+### Accessibility Features
+
+The Minimal theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query
 - **Keyboard Access**: Close button is fully keyboard accessible
 - **Color Indications**: Uses color dots to indicate type without relying solely on color
 - **System Fonts**: Improved readability through native font rendering
 - **Adequate Contrast**: Maintains good contrast ratio between text and background
 
-## Dark Mode
+## <i class="fa-solid fa-browser"></i> Browser Support
 
-The dark mode implementation maintains the minimal aesthetic while ensuring readability:
+The Minimal theme is compatible with all modern browsers:
 
-- Dark semi-transparent background (rgba(25, 25, 25, 0.8))
-- Light text color (#f5f5f5)
-- Slightly stronger shadows
-- Subtle white border (10% opacity)
+- Chrome (latest)
+- Firefox (latest) - falls back gracefully to semi-transparent background without blur
+- Safari (latest)
+- Edge (latest)
+- Opera (latest)
+- Mobile browsers on iOS and Android
 
-The colors of the dot indicators remain the same in both light and dark modes to maintain consistency.
+## <i class="fa-solid fa-gears"></i> Implementation Details
 
-## Browser Compatibility
+The Minimal theme uses modern web technologies:
 
-The Minimal theme is compatible with all modern browsers. For the backdrop blur effect:
-- Full support: Chrome 76+, Safari 9+, Edge 17+
-- No backdrop blur: Firefox (falls back gracefully to semi-transparent background)
+- **CSS Variables**: For theme customization and dark mode support
+- **Backdrop Filter**: For the subtle frosted glass effect
+- **System Font Stack**: For optimal readability with native fonts
+- **CSS Transitions**: For subtle hover effects
+- **CSS Animations**: For quick, minimal entrance animation
+- **Performance Optimization**: Uses `will-change: transform, opacity` for smooth animations
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
 
-## Performance Considerations
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times and minimal impact on application performance.
 
-The theme is designed for optimal performance:
-- Uses `will-change: transform, opacity` to optimize animations
-- Minimal DOM structure reduces rendering complexity
-- Short animations minimize computation
-- No complex gradients or heavy visual effects

@@ -92,6 +92,7 @@ Choose your framework and follow our quick-start guide:
 
 ## <i class="fa-duotone fa-list-radio"></i> Quick Installation
 
+
 ```bash
 # Laravel
 composer require php-flasher/flasher-laravel
