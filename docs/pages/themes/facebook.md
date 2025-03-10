@@ -1,46 +1,177 @@
-# PHPFlasher Facebook Theme
+---
+permalink: /theme/facebook/
+title: Facebook Theme
+description: Add Facebook-style notifications to your application with the Facebook theme for PHPFlasher. Featuring familiar notification cards, circular icons, and Facebook's signature design elements.
+handler: theme.facebook
+data-controller: theme-facebook
+---
 
-## Overview
+## <i class="fa-brands fa-facebook"></i> Facebook Theme
 
 The Facebook theme replicates the familiar notification style from Facebook's interface, providing a user experience that billions of people worldwide will instantly recognize. It features Facebook's signature look and feel, including rounded cards, circular icons, and the platform's distinctive typography and color scheme.
 
-![Facebook Theme Preview](./images/facebook-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Facebook-Style Cards**: Rounded notification cards with subtle shadows and hover effects
-- **Circular Icons**: Type-specific colored icons in Facebook's style
-- **Timestamp Display**: Shows the time when the notification was created
-- **Interactive Elements**: Close button with hover effects
-- **Facebook Typography**: Uses Facebook's font stack for authentic appearance
-- **Dark Mode Support**: Complete dark mode implementation matching Facebook's dark theme
-- **RTL Support**: Full right-to-left language support
+The easiest way to use the Facebook theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.facebook',  // Make Facebook the default theme
+    
+    'themes' => [
+        'facebook' => [
+            'scripts' => [
+                '/vendor/flasher/themes/facebook.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/facebook.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.facebook  # Make Facebook the default theme
+    
+    themes:
+        facebook:
+            scripts:
+                - '/vendor/flasher/themes/facebook.min.js'
+            styles:
+                - '/vendor/flasher/themes/facebook.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { facebookTheme } from '@flasher/flasher/themes';
 flasher.addTheme('facebook', facebookTheme);
 
-// Use the theme
-flasher.use('theme.facebook').success('Your post was published successfully');
-flasher.use('theme.facebook').error('There was a problem uploading your photo');
-flasher.use('theme.facebook').warning('Your account is approaching storage limits');
-flasher.use('theme.facebook').info('3 people reacted to your comment');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.facebook';
 
-// Add a timestamp to your notification
-flasher.use('theme.facebook').success('Your post was published', {
-  timestamp: '2023-03-08 15:43:27'
-});
+// Or use it for specific notifications
+flasher.success('Your post was published successfully');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
 
-The Facebook theme uses CSS variables that can be customized:
+Once configured, use standard PHPFlasher methods to create notifications with Facebook styling:
+
+{% assign successMessage = 'Your post was published successfully.' %}
+{% assign errorMessage = 'There was a problem uploading your photo.' %}
+{% assign warningMessage = 'Your account is approaching storage limits.' %}
+{% assign infoMessage = '3 people reacted to your comment.' %}
+
+<script type="text/javascript">
+    messages['#/ facebook types'] = [
+        {
+            handler: 'theme.facebook',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'facebook' },
+        },
+        {
+            handler: 'theme.facebook',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'facebook' },
+        },
+        {
+            handler: 'theme.facebook',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'facebook' },
+        },
+        {
+            handler: 'theme.facebook',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'facebook' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ facebook types
+
+// With Facebook set as default theme
+flash()->success('{{ successMessage }}');
+flash()->error('{{ errorMessage }}');
+flash()->warning('{{ warningMessage }}');
+flash()->info('{{ infoMessage }}');
+```
+
+### JavaScript
+
+```javascript
+// With Facebook set as default theme
+flasher.success('{{ successMessage }}');
+flasher.error('{{ errorMessage }}');
+flasher.warning('{{ warningMessage }}');
+flasher.info('{{ infoMessage }}');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Facebook Theme for Specific Notifications
+
+If Facebook isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.facebook')
+    ->success('This notification uses Facebook theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.facebook').success('This notification uses Facebook theme.');
+```
+
+### Adding a Timestamp
+
+You can add a timestamp to your Facebook-style notification:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.facebook')
+    ->success('Your post was published successfully.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.facebook')
+    .success('Your post was published successfully');
+```
+
+If no timestamp is provided, the current time will be used automatically.
+
+### Custom Colors and Appearance
+
+The Facebook theme uses CSS variables that can be customized to match your brand:
 
 ```css
 :root {
@@ -49,7 +180,10 @@ The Facebook theme uses CSS variables that can be customized:
     --fb-bg-dark: #242526;                   /* Dark mode background */
     --fb-text-light: #050505;                /* Light mode primary text */
     --fb-text-secondary-light: #65676b;      /* Light mode secondary text */
+    --fb-text-dark: #e4e6eb;                 /* Dark mode primary text */
+    --fb-text-secondary-dark: #b0b3b8;       /* Dark mode secondary text */
     --fb-hover-light: #f0f2f5;               /* Light mode hover state */
+    --fb-hover-dark: #3a3b3c;                /* Dark mode hover state */
     
     /* Type colors */
     --fb-success: #31a24c;                   /* Success color */
@@ -59,7 +193,7 @@ The Facebook theme uses CSS variables that can be customized:
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Facebook theme generates notifications with the following HTML structure:
 
@@ -88,54 +222,36 @@ The Facebook theme generates notifications with the following HTML structure:
 </div>
 ```
 
-## Configuration Options
+This structure closely mimics Facebook's notification layout, including the circular icons, message content, timestamp, and close button.
 
-### Timestamp
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
 
-You can customize the timestamp displayed in the notification:
+### Facebook-Style Design
 
-```typescript
-flasher.use('theme.facebook').success('Your post was published', {
-  timestamp: '2023-03-08 15:43:27' // Format: YYYY-MM-DD HH:MM:SS
-});
-```
+The Facebook theme accurately recreates Facebook's notification appearance with:
 
-If no timestamp is provided, the current time will be used.
+- Rounded notification cards with subtle shadows
+- Circular colored icons for each notification type
+- Timestamp display showing when the notification was created
+- Interactive close button with hover effects
+- Facebook's signature typography
 
-## Accessibility Features
+### Dark Mode
 
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query
+The theme automatically adapts to system dark mode preferences without additional configuration, switching to Facebook's dark theme colors for a consistent experience.
+
+### Accessibility Features
+
+The Facebook theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query
 - **Keyboard Access**: Close button is fully keyboard accessible
 - **Color Contrast**: Maintains Facebook's visual identity while ensuring readability
 - **Button Labels**: Close button has descriptive aria-label for screen readers
 
-## Design Notes
-
-### Icons
-
-The theme uses SVG icons similar to those used in Facebook notifications:
-
-- **Success**: Checkmark circle icon
-- **Info**: Information circle icon
-- **Warning**: Exclamation triangle icon
-- **Error**: Alert circle icon
-
-### Dark Mode
-
-The dark mode implementation follows Facebook's dark theme approach:
-
-- Dark background (#242526)
-- Light text (#e4e6eb)
-- Colored icons with dark backgrounds
-- Subtle hover states
-
-### Animation
-
-The entrance animation uses a subtle slide-down with fade effect, providing a familiar experience for Facebook users who are accustomed to seeing notifications appear this way.
-
-## Browser Support
+## <i class="fa-solid fa-browser"></i> Browser Support
 
 The Facebook theme is compatible with all modern browsers:
 
@@ -144,11 +260,17 @@ The Facebook theme is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 - Opera (latest)
+- Mobile browsers on iOS and Android
 
-## Implementation Details
+## <i class="fa-solid fa-gears"></i> Implementation Details
 
-- Uses Facebook's font stack for authentic typography
-- Implements Facebook's signature color palette
-- Recreates Facebook's card design, shadows, and hover effects
-- Uses a simplified version of Facebook's notification structure
-- Includes timestamps in Facebook's time format
+The Facebook theme uses modern web technologies:
+
+- **CSS Variables**: For theme customization and dark mode support
+- **Facebook's Font Stack**: For authentic typography
+- **SVG Icons**: For high-quality, resolution-independent icons
+- **CSS Animations**: For subtle entrance effects
+- **CSS Box Shadows**: For depth and dimension
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.

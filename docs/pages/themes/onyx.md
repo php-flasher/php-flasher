@@ -1,41 +1,154 @@
-# PHPFlasher Onyx Theme
+---
+permalink: /theme/onyx/
+title: Onyx Theme
+description: Add modern, floating notifications to your application with the Onyx theme for PHPFlasher. Featuring elegant shadows, colored corner dots, and smooth animations for a sophisticated appearance.
+handler: theme.onyx
+data-controller: theme-onyx
+---
 
-## Overview
+## <i class="fa-solid fa-gem"></i> Onyx Theme
 
 The Onyx theme provides modern, floating notifications with a clean design and subtle accent elements. It features elegant shadows, colored corner dots indicating notification type, and smooth animations to create a sophisticated, contemporary appearance that integrates well with modern interfaces.
 
-![Onyx Theme Preview](./images/onyx-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Floating Appearance**: Clean cards with elegant shadows for a floating effect
-- **Accent Dots**: Small colored dots in the corners indicate notification type
-- **Generous Rounded Corners**: Large border radius (1rem) for a contemporary look
-- **Smooth Animation**: Combined movement and blur transitions for refined entrance
-- **Minimal Design**: No large icons or visual elements to maintain focus on content
-- **Progress Indicator**: Colored bar showing time remaining
-- **Type-Specific Accents**: Each notification type has its own color scheme
-- **Dark Mode Support**: Enhanced dark appearance with adjusted shadows and colors
-- **RTL Support**: Full right-to-left language support with proper dot positioning
+The easiest way to use the Onyx theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.onyx',  // Make Onyx the default theme
+    
+    'themes' => [
+        'onyx' => [
+            'scripts' => [
+                '/vendor/flasher/themes/onyx.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/onyx.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.onyx  # Make Onyx the default theme
+    
+    themes:
+        onyx:
+            scripts:
+                - '/vendor/flasher/themes/onyx.min.js'
+            styles:
+                - '/vendor/flasher/themes/onyx.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { onyxTheme } from '@flasher/flasher/themes';
 flasher.addTheme('onyx', onyxTheme);
 
-// Use the theme
-flasher.use('theme.onyx').success('Your changes have been saved');
-flasher.use('theme.onyx').error('There was a problem saving your changes');
-flasher.use('theme.onyx').warning('This action cannot be undone');
-flasher.use('theme.onyx').info('New features are available');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.onyx';
+
+// Or use it for specific notifications
+flasher.success('Your changes have been saved');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
+
+Once configured, use standard PHPFlasher methods to create notifications with Onyx styling:
+
+{% assign successMessage = 'Your changes have been saved successfully.' %}
+{% assign errorMessage = 'There was a problem saving your changes.' %}
+{% assign warningMessage = 'This action cannot be undone.' %}
+{% assign infoMessage = 'New features are available.' %}
+
+<script type="text/javascript">
+    messages['#/ onyx types'] = [
+        {
+            handler: 'theme.onyx',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'onyx' },
+        },
+        {
+            handler: 'theme.onyx',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'onyx' },
+        },
+        {
+            handler: 'theme.onyx',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'onyx' },
+        },
+        {
+            handler: 'theme.onyx',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'onyx' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ onyx types
+
+// With Onyx set as default theme
+flash()->success('{{ successMessage }}');
+flash()->error('{{ errorMessage }}');
+flash()->warning('{{ warningMessage }}');
+flash()->info('{{ infoMessage }}');
+```
+
+### JavaScript
+
+```javascript
+// With Onyx set as default theme
+flasher.success('{{ successMessage }}');
+flasher.error('{{ errorMessage }}');
+flasher.warning('{{ warningMessage }}');
+flasher.info('{{ infoMessage }}');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Onyx Theme for Specific Notifications
+
+If Onyx isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.onyx')
+    ->success('This notification uses Onyx theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.onyx').success('This notification uses Onyx theme.');
+```
+
+### Custom Colors and Appearance
 
 The Onyx theme uses CSS variables that can be customized to match your brand:
 
@@ -47,6 +160,7 @@ The Onyx theme uses CSS variables that can be customized to match your brand:
     --onyx-text-light: #333333;                  /* Light mode text */
     --onyx-text-dark: #f5f5f5;                   /* Dark mode text */
     --onyx-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Light mode shadow */
+    --onyx-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25); /* Dark mode shadow */
     --onyx-border-radius: 1rem;                  /* Corner roundness */
     
     /* Accent colors */
@@ -57,7 +171,7 @@ The Onyx theme uses CSS variables that can be customized to match your brand:
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Onyx theme generates notifications with the following HTML structure:
 
@@ -77,53 +191,40 @@ The Onyx theme generates notifications with the following HTML structure:
 
 The accent dots are created using CSS pseudo-elements (`::before` and `::after`) rather than being part of the HTML structure.
 
-## Animation Details
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
 
-The Onyx theme features a sophisticated entrance animation that combines multiple effects:
+### Design Philosophy
 
-```css
-@keyframes onyxIn {
-    0% {
-        opacity: 0;
-        transform: translateY(15px);
-        filter: blur(3px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-```
+The Onyx theme embodies several design principles:
 
-This combined animation creates a refined appearance where notifications:
-1. Fade in from invisible to fully visible
-2. Move upward slightly from below their final position
-3. Transition from a blurred state to sharp focus
+1. **Elegance**: Clean, sophisticated appearance with subtle details
+2. **Minimalism**: Only essential elements are included, with no icons or extraneous components
+3. **Focus**: The clean design keeps attention on the message content
+4. **Refinement**: Thoughtful attention to details like animation timing and corner dots 
+5. **Consistency**: Each notification type follows the same pattern with its own accent color
 
-The animation uses a carefully crafted easing curve (`cubic-bezier(0.16, 1, 0.3, 1)`) for a natural, refined movement.
-
-## Accent Dots Design
+### Accent Dots Design
 
 One of the distinctive features of the Onyx theme is its use of subtle accent dots in the corners:
 
-1. **Top-left dot**: Positioned 10px from the top and left edges
-2. **Bottom-right dot**: Positioned 10px from the bottom and right edges
-3. **Small size**: Each dot is just 6px in diameter
-4. **Type-specific colors**: The dots match the color associated with the notification type
+- **Top-left dot**: Positioned 10px from the top and left edges
+- **Bottom-right dot**: Positioned 10px from the bottom and right edges
+- **Small size**: Each dot is just 6px in diameter
+- **Type-specific colors**: The dots match the color associated with the notification type
 
 These small visual elements provide a subtle but clear indication of the notification type without requiring large icons or colored backgrounds.
 
-## Typography
+### Animation Effects
 
-The Onyx theme features clean, modern typography:
+The Onyx theme features a sophisticated entrance animation that combines multiple effects:
 
-- Regular weight (400) for a light, contemporary feel
-- Comfortable line height (1.5) for easy reading
-- Slight letter spacing (0.01rem) for improved legibility
-- Modest font size (0.925rem or approximately 14.8px at default size)
+- Notifications fade in from invisible to fully visible
+- They move upward slightly from below their final position
+- They transition from a blurred state to sharp focus
 
-## Dark Mode
+The animation uses a carefully crafted easing curve for a natural, refined movement.
+
+### Dark Mode
 
 The dark mode implementation maintains the sophisticated aesthetic while adjusting for low-light environments:
 
@@ -134,26 +235,18 @@ The dark mode implementation maintains the sophisticated aesthetic while adjusti
 
 The accent dot colors remain consistent between light and dark modes to maintain brand color recognition.
 
-## Accessibility Features
+### Accessibility Features
 
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query and disables entrance animation
+The Onyx theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query and disables entrance animation
 - **Keyboard Access**: Close button is fully keyboard accessible with visual feedback
 - **Color Indicators**: Uses colored dots to indicate type without relying solely on color for meaning
 - **Adequate Contrast**: Ensures good contrast between text and background in both light and dark modes
 
-## Design Philosophy
-
-The Onyx theme embodies several design principles:
-
-1. **Elegance**: Clean, sophisticated appearance with subtle details
-2. **Minimalism**: Only essential elements are included, with no icons or extraneous components
-3. **Focus**: The clean design keeps attention on the message content
-4. **Refinement**: Thoughtful attention to details like animation timing and corner dots 
-5. **Consistency**: Each notification type follows the same pattern with its own accent color
-
-## Browser Support
+## <i class="fa-solid fa-browser"></i> Browser Support
 
 The Onyx theme is compatible with all modern browsers:
 
@@ -162,5 +255,20 @@ The Onyx theme is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 - Opera (latest)
+- Mobile browsers on iOS and Android
 
 No special polyfills or fallbacks are required as the theme uses standard CSS features that are well-supported across browsers.
+
+## <i class="fa-solid fa-gears"></i> Implementation Details
+
+The Onyx theme uses modern web technologies:
+
+- **CSS Variables**: For theme customization and dark mode support
+- **CSS Pseudo-elements**: For creating the accent dots without extra HTML
+- **Box Shadows**: For the floating card appearance
+- **CSS Animations**: For refined entrance effects combining movement and blur
+- **CSS Transitions**: For smooth hover interactions
+- **Progress Bar**: Shows countdown until notification dismissal with type-specific colors
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.

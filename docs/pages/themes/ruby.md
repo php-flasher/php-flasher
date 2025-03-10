@@ -1,43 +1,156 @@
-# PHPFlasher Ruby Theme
+---
+permalink: /theme/ruby/
+title: Ruby Theme
+description: Add vibrant notifications with rich gradient backgrounds to your application using the Ruby theme for PHPFlasher. Featuring an elegant shine animation, circular icons, and gemstone-like appearance.
+handler: theme.ruby
+data-controller: theme-ruby
+---
 
-## Overview
+## <i class="fa-solid fa-gem text-red-500"></i> Ruby Theme
 
 The Ruby theme provides vibrant notifications with rich gradient backgrounds and a distinctive gemstone-like appearance. It features an elegant shine animation that mimics light reflecting off a precious stone, along with circular icon containers and smooth animations to create a premium, eye-catching visual experience.
 
-![Ruby Theme Preview](./images/ruby-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Gradient Backgrounds**: Rich, vibrant gradients for each notification type
-- **Gemstone Shine Effect**: Animated light reflection that moves across notifications
-- **Circular Icon Container**: Translucent white circle housing the notification icon
-- **Scale Animation**: Smooth entrance with a subtle scale effect
-- **Enhanced Close Button**: Interactive button with scale and opacity effects
-- **Thick Progress Bar**: More prominent progress indicator than other themes
-- **High Contrast Text**: White text for excellent readability on colored backgrounds
-- **RTL Support**: Full right-to-left language support
-- **Reduced Motion Support**: Respectful fallbacks for users who prefer reduced motion
+The easiest way to use the Ruby theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.ruby',  // Make Ruby the default theme
+    
+    'themes' => [
+        'ruby' => [
+            'scripts' => [
+                '/vendor/flasher/themes/ruby.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/ruby.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.ruby  # Make Ruby the default theme
+    
+    themes:
+        ruby:
+            scripts:
+                - '/vendor/flasher/themes/ruby.min.js'
+            styles:
+                - '/vendor/flasher/themes/ruby.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { rubyTheme } from '@flasher/flasher/themes';
 flasher.addTheme('ruby', rubyTheme);
 
-// Use the theme
-flasher.use('theme.ruby').success('Your changes have been saved');
-flasher.use('theme.ruby').error('There was a problem saving your changes');
-flasher.use('theme.ruby').warning('This action cannot be undone');
-flasher.use('theme.ruby').info('New features are available');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.ruby';
+
+// Or use it for specific notifications
+flasher.success('Your changes have been saved');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
 
-The Ruby theme uses CSS variables that can be customized:
+Once configured, use standard PHPFlasher methods to create notifications with Ruby styling:
+
+{% assign successMessage = 'Your changes have been saved successfully.' %}
+{% assign errorMessage = 'There was a problem saving your changes.' %}
+{% assign warningMessage = 'This action cannot be undone.' %}
+{% assign infoMessage = 'New features are available.' %}
+
+<script type="text/javascript">
+    messages['#/ ruby types'] = [
+        {
+            handler: 'theme.ruby',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'ruby' },
+        },
+        {
+            handler: 'theme.ruby',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'ruby' },
+        },
+        {
+            handler: 'theme.ruby',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'ruby' },
+        },
+        {
+            handler: 'theme.ruby',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'ruby' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ ruby types
+
+// With Ruby set as default theme
+flash()->success('{{ successMessage }}');
+flash()->error('{{ errorMessage }}');
+flash()->warning('{{ warningMessage }}');
+flash()->info('{{ infoMessage }}');
+```
+
+### JavaScript
+
+```javascript
+// With Ruby set as default theme
+flasher.success('{{ successMessage }}');
+flasher.error('{{ errorMessage }}');
+flasher.warning('{{ warningMessage }}');
+flasher.info('{{ infoMessage }}');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Ruby Theme for Specific Notifications
+
+If Ruby isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.ruby')
+    ->success('This notification uses Ruby theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.ruby').success('This notification uses Ruby theme.');
+```
+
+### Custom Colors and Appearance
+
+The Ruby theme uses CSS variables that can be customized to match your brand:
 
 ```css
 :root {
@@ -54,7 +167,7 @@ The Ruby theme uses CSS variables that can be customized:
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Ruby theme generates notifications with the following HTML structure:
 
@@ -76,57 +189,11 @@ The Ruby theme generates notifications with the following HTML structure:
 </div>
 ```
 
-## Animation Details
+This structure includes the shine element that creates the gemstone-like reflection animation and the circular icon container that's distinctive to this theme.
 
-The Ruby theme features two distinctive animations:
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
 
-### Shine Animation
-
-```css
-@keyframes rubyShine {
-    0% {
-        left: -100%;
-        opacity: 0.6;
-    }
-    60% {
-        left: 100%;
-        opacity: 0.6;
-    }
-    100% {
-        left: 100%;
-        opacity: 0;
-    }
-}
-```
-
-This animation creates a moving highlight that travels across the notification from left to right, mimicking light reflecting off a gemstone surface. The effect:
-- Is angled with a skew transform
-- Uses a semi-transparent white gradient
-- Repeats every 6 seconds after an initial 1-second delay
-- Fades out at the end of each cycle
-
-### Entrance Animation
-
-```css
-@keyframes rubyIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.96);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-```
-
-This animation creates a smooth appearance where notifications:
-- Fade in from invisible to fully visible
-- Scale up slightly from 96% to 100% of their final size
-
-The animation uses a custom easing curve (`cubic-bezier(0.21, 1.02, 0.73, 1)`) for a natural, premium feel.
-
-## Gradient Design
+### Gradient Design
 
 The theme uses rich, vibrant gradients that flow from a deeper shade to a brighter one:
 
@@ -137,7 +204,19 @@ The theme uses rich, vibrant gradients that flow from a deeper shade to a bright
 
 All gradients are angled at 135 degrees, creating a consistent diagonal flow across all notification types.
 
-## Icon Container Design
+### Shine Animation
+
+The Ruby theme features a distinctive shine animation that mimics light reflecting off a gemstone surface:
+
+- A moving highlight travels across the notification from left to right
+- The effect is angled with a skew transform
+- Uses a semi-transparent white gradient
+- Repeats every 6 seconds after an initial 1-second delay
+- Fades out at the end of each cycle
+
+This animation adds a premium, dynamic quality to the notifications that draws the user's attention.
+
+### Circular Icon Container
 
 The circular icon container uses:
 - Semi-transparent white background (25% opacity)
@@ -147,33 +226,15 @@ The circular icon container uses:
 
 This creates a subtle but distinctive visual element that helps identify the notification type.
 
-## Progress Bar
+### Animation Effects
 
-The Ruby theme features a more prominent progress bar:
-- 5px height (taller than most themes)
-- Semi-transparent black background (10% opacity)
-- Semi-transparent white progress indicator (40% opacity)
-- Positioned at the bottom edge of the notification
+In addition to the shine animation, the Ruby theme includes:
 
-## Close Button Design
+- **Entrance Animation**: A smooth scale-up from 96% to 100% combined with a fade-in
+- **Close Button Interactions**: Scale and opacity changes on hover
+- **Progress Bar Animation**: A fluid countdown indicator
 
-The close button has several interactive features:
-- Semi-transparent white background (20% opacity)
-- Perfect circular shape
-- Scale effect on hover (grows to 105% size)
-- Opacity change from 80% to 100% on hover
-- Background lightens to 30% opacity on hover
-
-## Accessibility Features
-
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query by disabling animations and shine effect
-- **Color Contrast**: White text (#ffffff) on colored backgrounds meets WCAG 2.1 AA contrast requirements
-- **Keyboard Access**: Close button is fully keyboard accessible with visual feedback
-- **RTL Support**: Complete right-to-left language support with appropriate directional adjustments
-
-## Design Philosophy
+### Design Philosophy
 
 The Ruby theme embodies a premium, attention-grabbing design philosophy:
 1. **Vibrance**: Rich, saturated colors that stand out
@@ -182,7 +243,18 @@ The Ruby theme embodies a premium, attention-grabbing design philosophy:
 4. **Polish**: Refined animations and hover states reflect a premium quality
 5. **Legibility**: Despite the colorful backgrounds, text remains highly readable
 
-## Browser Support
+### Accessibility Features
+
+The Ruby theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query by disabling animations and shine effect
+- **Color Contrast**: White text (#ffffff) on colored backgrounds meets WCAG 2.1 AA contrast requirements
+- **Keyboard Access**: Close button is fully keyboard accessible with visual feedback
+- **RTL Support**: Complete right-to-left language support with appropriate directional adjustments
+
+## <i class="fa-solid fa-browser"></i> Browser Support
 
 The Ruby theme is compatible with all modern browsers:
 
@@ -191,5 +263,20 @@ The Ruby theme is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 - Opera (latest)
+- Mobile browsers on iOS and Android
 
 The gradient backgrounds and animations are well-supported across modern browsers, requiring no special fallbacks.
+
+## <i class="fa-solid fa-gears"></i> Implementation Details
+
+The Ruby theme uses modern web technologies:
+
+- **CSS Variables**: For theme customization
+- **CSS Gradients**: For rich, vibrant backgrounds
+- **CSS Animations**: For shine effect and entrance animations
+- **CSS Transitions**: For smooth hover interactions
+- **Box Shadows**: For depth and premium feel
+- **SVG Icons**: For crisp, scalable notification type indicators
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.

@@ -1,39 +1,154 @@
-# PHPFlasher Crystal Theme
+---
+permalink: /theme/crystal/
+title: Crystal Theme
+description: Enhance your notifications with the elegant Crystal theme for PHPFlasher. Featuring a clean, monochromatic design with colored text and subtle animation effects.
+handler: theme.crystal
+data-controller: theme-crystal
+---
 
-## Overview
+## <i class="fa-solid fa-diamond"></i> Crystal Theme
 
 The Crystal theme provides an elegant, clean notification style with subtle animations and a focus on simplicity. It features a monochromatic design with type-specific colored text and a gentle pulsing shadow effect on hover.
 
-![Crystal Theme Preview](./images/crystal-theme.png)
+> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
+> New to PHPFlasher? Check the [installation guide](/installation/) first.
 
-## Features
+## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
 
-- **Clean Design**: Minimal, white background that lets the content shine
-- **Colored Text**: Each notification type has its own text color for easy identification
-- **Animated Shadows**: Gentle pulsing shadow effect when hovering over notifications
-- **Smooth Entrance**: Subtle slide-in animation when notifications appear
-- **Progress Indicator**: Shows the time remaining before auto-dismiss
-- **Dark Mode Support**: Complete dark mode implementation with adjusted colors
-- **RTL Support**: Full right-to-left language support
+The easiest way to use the Crystal theme is to set it as your **default theme**:
 
-## Usage
+### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+
+```php
+<?php // config/flasher.php
+
+return [
+    'default' => 'theme.crystal',  // Make Crystal the default theme
+    
+    'themes' => [
+        'crystal' => [
+            'scripts' => [
+                '/vendor/flasher/themes/crystal.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/crystal.min.css',
+            ],
+        ],
+    ],
+];
+```
+
+### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
+
+```yaml
+# config/packages/flasher.yaml
+
+flasher:
+    default: theme.crystal  # Make Crystal the default theme
+    
+    themes:
+        crystal:
+            scripts:
+                - '/vendor/flasher/themes/crystal.min.js'
+            styles:
+                - '/vendor/flasher/themes/crystal.min.css'
+```
+
+### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
 
 ```typescript
 // Import the theme (if not auto-registered)
 import { crystalTheme } from '@flasher/flasher/themes';
 flasher.addTheme('crystal', crystalTheme);
 
-// Use the theme
-flasher.use('theme.crystal').success('Document saved successfully');
-flasher.use('theme.crystal').error('An error occurred while saving');
-flasher.use('theme.crystal').warning('Your session will expire in 5 minutes');
-flasher.use('theme.crystal').info('New features have been added');
-
 // Set as default theme
 flasher.defaultPlugin = 'theme.crystal';
+
+// Or use it for specific notifications
+flasher.success('Document saved successfully');
 ```
 
-## Customization
+## <i class="fa-solid fa-palette"></i> Notification Types
+
+Once configured, use standard PHPFlasher methods to create notifications with Crystal styling:
+
+{% assign successMessage = 'Document saved successfully.' %}
+{% assign errorMessage = 'An error occurred while saving your document.' %}
+{% assign warningMessage = 'Your session will expire in 5 minutes.' %}
+{% assign infoMessage = 'New features have been added to the editor.' %}
+
+<script type="text/javascript">
+    messages['#/ crystal types'] = [
+        {
+            handler: 'theme.crystal',
+            type: 'success',
+            message: '{{ successMessage }}',
+            options: { theme: 'crystal' },
+        },
+        {
+            handler: 'theme.crystal',
+            type: 'error',
+            message: '{{ errorMessage }}',
+            options: { theme: 'crystal' },
+        },
+        {
+            handler: 'theme.crystal',
+            type: 'warning',
+            message: '{{ warningMessage }}',
+            options: { theme: 'crystal' },
+        },
+        {
+            handler: 'theme.crystal',
+            type: 'info',
+            message: '{{ infoMessage }}',
+            options: { theme: 'crystal' },
+        }
+    ];
+</script>
+
+### PHP
+
+```php
+#/ crystal types
+
+// With Crystal set as default theme
+flash()->success('{{ successMessage }}');
+flash()->error('{{ errorMessage }}');
+flash()->warning('{{ warningMessage }}');
+flash()->info('{{ infoMessage }}');
+```
+
+### JavaScript
+
+```javascript
+// With Crystal set as default theme
+flasher.success('{{ successMessage }}');
+flasher.error('{{ errorMessage }}');
+flasher.warning('{{ warningMessage }}');
+flasher.info('{{ infoMessage }}');
+```
+
+## <i class="fa-solid fa-brush"></i> Customization
+
+### Using Crystal Theme for Specific Notifications
+
+If Crystal isn't your default theme, you can use it for specific notifications:
+
+#### PHP
+
+```php
+flash()
+    ->use('theme.crystal')
+    ->success('This notification uses Crystal theme.');
+```
+
+#### JavaScript
+
+```javascript
+flasher.use('theme.crystal').success('This notification uses Crystal theme.');
+```
+
+### Custom Colors and Appearance
 
 The Crystal theme uses CSS variables that can be customized to match your brand:
 
@@ -55,7 +170,7 @@ The Crystal theme uses CSS variables that can be customized to match your brand:
 }
 ```
 
-## Structure
+## <i class="fa-solid fa-code"></i> HTML Structure
 
 The Crystal theme generates notifications with the following HTML structure:
 
@@ -73,7 +188,11 @@ The Crystal theme generates notifications with the following HTML structure:
 </div>
 ```
 
-## Animations
+This minimalist structure focuses on content with a clean design, while still maintaining a progress bar that shows the time remaining before auto-dismiss.
+
+## <i class="fa-solid fa-lightbulb"></i> Theme Features
+
+### Elegant Animations
 
 The Crystal theme features two distinct animations:
 
@@ -82,22 +201,26 @@ The Crystal theme features two distinct animations:
 
 The hover animation is disabled in dark mode and for users who prefer reduced motion, replaced with a static enhanced shadow effect.
 
-## Accessibility Features
+### Dark Mode
 
-- **ARIA Roles**: Uses appropriate role="alert" for error/warning and role="status" for success/info
-- **ARIA Live Regions**: Uses aria-live="assertive" for critical messages and aria-live="polite" for non-critical messages
-- **Reduced Motion**: Respects prefers-reduced-motion media query and disables animations
+The theme automatically adapts to system dark mode preferences without additional configuration, adjusting both the background and text colors for optimal readability.
+
+### Design Philosophy
+
+The Crystal theme embodies clarity and simplicity. Rather than using colored backgrounds or borders, it employs colored text to indicate notification types. This creates a cleaner, more sophisticated appearance while still providing clear visual cues about the notification's nature.
+
+### Accessibility Features
+
+The Crystal theme includes several accessibility features:
+
+- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
+- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
+- **Reduced Motion**: Respects `prefers-reduced-motion` media query and disables animations
 - **Keyboard Access**: Close button is fully keyboard accessible with visual feedback
 - **Color Contrast**: High contrast between text and background for readability
 - **Button Labels**: Close button has descriptive aria-label for screen readers
 
-## Design Philosophy
-
-The Crystal theme embodies clarity and simplicity. Rather than using colored backgrounds or borders, it employs colored text to indicate notification types. This creates a cleaner, more sophisticated appearance while still providing clear visual cues about the notification's nature.
-
-The theme's name "Crystal" reflects its clean, transparent design and the subtle light effects created by its animations.
-
-## Browser Support
+## <i class="fa-solid fa-browser"></i> Browser Support
 
 The Crystal theme is compatible with all modern browsers:
 
@@ -106,11 +229,17 @@ The Crystal theme is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 - Opera (latest)
+- Mobile browsers on iOS and Android
 
-## Implementation Notes
+## <i class="fa-solid fa-gears"></i> Implementation Details
 
-- Uses CSS transitions for smooth hover effects
-- Employs keyframe animations for entrance and pulsing shadow
-- Uses absolute positioning for the close button to maintain consistent layout
-- Provides comprehensive RTL support for international applications
-- Implements different behavior in dark mode for optimal visibility
+The Crystal theme uses modern web technologies:
+
+- **CSS Variables**: For theme customization and dark mode support
+- **CSS Transitions**: For smooth hover effects
+- **Keyframe Animations**: For entrance and pulsing shadow effects
+- **Absolute Positioning**: For consistent close button layout
+- **Progress Bar**: Shows countdown until notification dismissal
+- **Media Queries**: For responsive design, dark mode, and reduced motion support
+
+All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.
