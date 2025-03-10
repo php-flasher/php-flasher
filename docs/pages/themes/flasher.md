@@ -1,59 +1,95 @@
 ---
 permalink: /theme/flasher/
 title: Flasher Theme
-description: Explore the default notification theme for PHPFlasher featuring a clean design with distinctive colored borders, clear type indicators, and comprehensive accessibility support.
+description: The default notification theme for PHPFlasher with a clean design, colored borders, and accessible notifications for your web applications.
 handler: theme.flasher
 data-controller: theme-flasher
 ---
 
-## <i class="fa-solid fa-bolt"></i> Flasher Theme
+# <i class="fa-solid fa-bolt"></i> Flasher Theme
 
-The Flasher theme is the default notification theme for PHPFlasher. It provides a classic, clean design with a distinctive colored left border that visually indicates the notification type. This theme balances visual clarity with simplicity, making it suitable for a wide range of applications.
+**The default notification style for PHPFlasher**
 
-> <i class="fa-solid fa-circle-info text-blue-400"></i> **Note:**
-> New to PHPFlasher? Check the [installation guide](/installation/) first.
+The Flasher theme comes built-in with PHPFlasher and gives you clean, professional notifications right out of the box. Each alert has a colored border on the left that helps users quickly identify the message type (success, error, etc.).
 
-## <i class="fa-solid fa-wand-magic-sparkles"></i> Setup
+<div class="p-4 mt-4 mb-4 border rounded-lg bg-blue-50 border-blue-200">
+  <div class="flex">
+    <div class="flex-shrink-0">
+      <i class="fa-solid fa-circle-info text-blue-400 mt-0.5"></i>
+    </div>
+    <div class="ml-3">
+      <p class="text-sm text-blue-700">
+        <strong>Just getting started?</strong> Check out the <a href="/installation/" class="font-medium underline">installation guide</a> first to set up PHPFlasher.
+      </p>
+    </div>
+  </div>
+</div>
 
-As the default theme for PHPFlasher, the Flasher theme is automatically available without any additional configuration. However, you can explicitly set it as your default theme:
+## <i class="fa-solid fa-wand-magic-sparkles"></i> How to Use This Theme
 
-### <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel
+### The Easy Way (Default Theme)
+
+Good news! The Flasher theme is already set up and ready to go as soon as you install PHPFlasher. You don't need to do anything special to use it.
+
+**Just create notifications like this:**
 
 ```php
-<?php // config/flasher.php
+// In your PHP code
+flash()->success('Your changes have been saved!');
+```
+
+```javascript
+// Or in your JavaScript
+flasher.success('Your changes have been saved!');
+```
+
+### Want to Make Sure It's Set as Default?
+
+If you want to explicitly set Flasher as your default theme (maybe you've changed it before), here's how:
+
+<div class="mb-6">
+  <div class="border rounded-lg p-4 bg-gray-50 mb-4">
+    <p class="mb-2">
+      <i class="fa-brands fa-laravel fa-lg text-red-500 mr-2"></i>
+      <strong>Laravel</strong>
+    </p>
+    <pre class="text-sm bg-white p-2 rounded copyable language-php"><code>// config/flasher.php
 
 return [
-    'default' => 'flasher',  // Use the default Flasher theme
+    'default' => 'flasher',
     
-    // Other configuration options...
-];
-```
-
-### <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony
-
-```yaml
-# config/packages/flasher.yaml
+    // Other settings...
+];</code></pre>
+  </div>
+  
+  <div class="border rounded-lg p-4 bg-gray-50">
+    <p class="mb-2">
+      <i class="fa-brands fa-symfony fa-lg text-black mr-2"></i>
+      <strong>Symfony</strong>
+    </p>
+    <pre class="text-sm bg-white p-2 rounded language-yaml"><code># config/packages/flasher.yaml
 
 flasher:
-    default: flasher  # Use the default Flasher theme
+    default: flasher
     
-    # Other configuration options...
-```
+    # Other settings...</code></pre>
+  </div>
+</div>
 
-### <i class="fa-brands fa-js fa-lg text-yellow-400 mr-1"></i> JavaScript/TypeScript
+### JavaScript Setup
 
-```typescript
-// The Flasher theme is available by default
-// You can use it directly:
-flasher.success('Operation completed successfully');
+```javascript
+// The theme is available automatically
+// Just use it like this:
+flasher.success('Well done!');
 
-// Or explicitly specify it:
+// Or explicitly set it as default:
 flasher.defaultPlugin = 'flasher';
 ```
 
 ## <i class="fa-solid fa-palette"></i> Notification Types
 
-Use standard PHPFlasher methods to create notifications with the default Flasher styling:
+You can create four types of notifications with different colors and icons:
 
 {% assign successMessage = 'Operation completed successfully.' %}
 {% assign errorMessage = 'An error occurred during the operation.' %}
@@ -89,51 +125,60 @@ Use standard PHPFlasher methods to create notifications with the default Flasher
     ];
 </script>
 
-### PHP
+<div class="mb-6">
+  <div class="border rounded-lg p-4 mb-4">
+    <p class="font-bold mb-2"><i class="fa-brands fa-php text-purple-600 mr-1"></i> PHP Example</p>
+    <pre class="text-sm bg-gray-50 p-2 rounded">#/ flasher types
 
-```php
-#/ flasher types
-
-// With Flasher as default theme
+// Create notifications
 flash()->success('{{ successMessage }}', 'Success');
 flash()->error('{{ errorMessage }}', 'Error');
 flash()->warning('{{ warningMessage }}', 'Warning');
-flash()->info('{{ infoMessage }}', 'Information');
-```
-
-### JavaScript
-
-```javascript
-// With Flasher as default theme
+flash()->info('{{ infoMessage }}', 'Information');</pre>
+  </div>
+  
+  <div class="border rounded-lg p-4">
+    <p class="font-bold mb-2"><i class="fa-brands fa-js text-yellow-400 mr-1"></i> JavaScript Example</p>
+    <pre class="text-sm bg-gray-50 p-2 rounded">// Create notifications
 flasher.success('{{ successMessage }}', 'Success');
 flasher.error('{{ errorMessage }}', 'Error');
 flasher.warning('{{ warningMessage }}', 'Warning');
-flasher.info('{{ infoMessage }}', 'Information');
-```
+flasher.info('{{ infoMessage }}', 'Information');</pre>
+  </div>
+</div>
 
-## <i class="fa-solid fa-brush"></i> Customization
+<div class="p-4 mb-4 border rounded-lg bg-amber-50 border-amber-200">
+  <div class="flex">
+    <div class="flex-shrink-0">
+      <i class="fa-solid fa-lightbulb text-amber-400 mt-0.5"></i>
+    </div>
+    <div class="ml-3">
+      <p class="text-sm text-amber-700">
+        <strong>Tip:</strong> You can add a title to your notification by providing it as the second parameter.
+      </p>
+    </div>
+  </div>
+</div>
 
-### Using Flasher Theme for Specific Notifications
+## <i class="fa-solid fa-brush"></i> Customizing Notifications
 
-If another theme is set as your default, you can use the Flasher theme for specific notifications:
+### Using This Theme for Specific Notifications
 
-#### PHP
+If you have a different default theme but want to use the Flasher theme for just one notification:
 
 ```php
-flash()
-    ->use('flasher')
-    ->success('This notification uses the default Flasher theme.');
+// In PHP
+flash()->use('flasher')->success('This will use the Flasher theme!');
 ```
-
-#### JavaScript
 
 ```javascript
-flasher.use('flasher').success('This notification uses the default Flasher theme.');
+// In JavaScript
+flasher.use('flasher').success('This will use the Flasher theme!');
 ```
 
-### Custom Colors and Appearance
+### Changing the Colors
 
-The Flasher theme uses CSS variables that can be customized to match your brand:
+Want to customize the colors? You can override these CSS variables in your stylesheet:
 
 ```css
 :root {
@@ -144,26 +189,46 @@ The Flasher theme uses CSS variables that can be customized to match your brand:
     --fl-text-dark: #ffffff;           /* Dark mode text */
     
     /* Type colors */
-    --fl-success: #10b981;             /* Success color */
-    --fl-info: #3b82f6;                /* Info color */
-    --fl-warning: #f59e0b;             /* Warning color */
-    --fl-error: #ef4444;               /* Error color */
-    
-    /* Legacy support */
-    --background-color: var(--fl-bg-light);
-    --text-color: var(--fl-text-light);
-    --dark-background-color: var(--fl-bg-dark);
-    --dark-text-color: var(--fl-text-dark);
-    --success-color: var(--fl-success);
-    --info-color: var(--fl-info);
-    --warning-color: var(--fl-warning);
-    --error-color: var(--fl-error);
+    --fl-success: #10b981;             /* Success color (green) */
+    --fl-info: #3b82f6;                /* Info color (blue) */
+    --fl-warning: #f59e0b;             /* Warning color (orange) */
+    --fl-error: #ef4444;               /* Error color (red) */
 }
 ```
 
+## <i class="fa-solid fa-lightbulb"></i> Features and Benefits
+
+<div class="mb-6">
+  <div class="border rounded-lg p-4 mb-4">
+    <h3 class="text-lg font-semibold mb-2"><i class="fa-solid fa-palette text-purple-500 mr-1"></i> Visual Design</h3>
+    <ul class="list-disc pl-5 space-y-1 text-sm">
+      <li>Colored left border for quick message identification</li>
+      <li>Clean, easy-to-read typography</li>
+      <li>Type-specific icons (checkmark, alert, etc.)</li>
+      <li>Progress bar shows time until auto-dismiss</li>
+      <li>Smooth animations for better user experience</li>
+    </ul>
+  </div>
+  
+  <div class="border rounded-lg p-4">
+    <h3 class="text-lg font-semibold mb-2"><i class="fa-solid fa-universal-access text-blue-500 mr-1"></i> Accessibility</h3>
+    <ul class="list-disc pl-5 space-y-1 text-sm">
+      <li>Proper ARIA roles for screen readers</li>
+      <li>High contrast text meeting WCAG standards</li>
+      <li>Keyboard navigable close buttons</li>
+      <li>Respects reduced motion preferences</li>
+      <li>Full RTL (right-to-left) language support</li>
+    </ul>
+  </div>
+</div>
+
+### Dark Mode Ready
+
+The Flasher theme automatically switches to dark mode when your user's system preference is set to dark.
+
 ## <i class="fa-solid fa-code"></i> HTML Structure
 
-The Flasher theme generates notifications with the following HTML structure:
+For developers who want to customize further, here's the HTML structure:
 
 ```html
 <div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
@@ -181,62 +246,15 @@ The Flasher theme generates notifications with the following HTML structure:
 </div>
 ```
 
-This structure provides a clear hierarchy with a colored left border, icon, title, message, close button, and progress bar.
-
-## <i class="fa-solid fa-lightbulb"></i> Theme Features
-
-### Visual Characteristics
-
-- **Colored Border**: Thick, colored left border that visually identifies the notification type
-- **Type-Specific Icons**: Each notification type has its own distinctive icon
-- **Title & Message Support**: Allows for both a title and detailed message
-- **Progress Bar**: Shows the time remaining before auto-dismiss
-- **Animation**: Smooth slide-in from the left with a subtle hover effect
-
-### Design Philosophy
-
-As the default theme for PHPFlasher, the Flasher theme is designed with these principles:
-
-1. **Clarity**: The colored left border makes it immediately clear what type of notification is being shown
-2. **Versatility**: The clean design fits well in a wide range of applications and design systems
-3. **Accessibility**: High contrast, clear typography, and semantic HTML ensure notifications are accessible
-4. **Familiarity**: The design follows common notification patterns that users will find intuitive
-
-### Dark Mode
-
-The theme automatically adapts to system dark mode preferences without additional configuration, with optimized colors for dark backgrounds.
-
-### Accessibility Features
-
-The Flasher theme includes several accessibility features:
-
-- **ARIA Roles**: Uses appropriate `role="alert"` for error/warning and `role="status"` for success/info
-- **ARIA Live Regions**: Uses `aria-live="assertive"` for critical messages and `aria-live="polite"` for non-critical messages
-- **Reduced Motion**: Respects `prefers-reduced-motion` media query
-- **Keyboard Access**: Close button is fully keyboard accessible
-- **Color Contrast**: All text meets WCAG 2.1 AA color contrast standards
-- **RTL Support**: Full right-to-left language support with appropriately mirrored layout
-
-## <i class="fa-solid fa-browser"></i> Browser Support
-
-The Flasher theme is compatible with all modern browsers:
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Opera (latest)
-- Mobile browsers on iOS and Android
-
-## <i class="fa-solid fa-gears"></i> Implementation Details
-
-The Flasher theme uses modern web technologies:
-
-- **CSS Variables**: For theme customization and dark mode support
-- **Flexbox Layout**: For responsive and flexible notification structure
-- **CSS Animations**: For entrance and hover effects
-- **Progress Bar**: Shows countdown until notification dismissal
-- **Media Queries**: For responsive design, dark mode, and reduced motion support
-- **SCSS Mixins**: For shared functionality across PHPFlasher themes
-
-All theme files are optimized for production use, with minified JavaScript and CSS to ensure fast loading times.
+<div class="p-4 border rounded-lg bg-gray-50 mt-6">
+  <h3 class="font-bold text-lg mb-2">Browser Support</h3>
+  <p class="mb-2">The Flasher theme works in all modern browsers:</p>
+  <div class="flex flex-wrap gap-3">
+    <span class="px-3 py-1 bg-white rounded-full border text-sm"><i class="fa-brands fa-chrome text-green-600"></i> Chrome</span>
+    <span class="px-3 py-1 bg-white rounded-full border text-sm"><i class="fa-brands fa-firefox text-orange-600"></i> Firefox</span>
+    <span class="px-3 py-1 bg-white rounded-full border text-sm"><i class="fa-brands fa-safari text-blue-600"></i> Safari</span>
+    <span class="px-3 py-1 bg-white rounded-full border text-sm"><i class="fa-brands fa-edge text-blue-500"></i> Edge</span>
+    <span class="px-3 py-1 bg-white rounded-full border text-sm"><i class="fa-brands fa-opera text-red-600"></i> Opera</span>
+    <span class="px-3 py-1 bg-white rounded-full border text-sm"><i class="fa-solid fa-mobile-screen"></i> Mobile</span>
+  </div>
+</div>
