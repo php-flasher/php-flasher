@@ -25,36 +25,6 @@ description: The default notification theme for PHPFlasher with a clean design, 
   </div>
 </div>
 
-<!-- Quick Overview Cards -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-  <div class="border border-slate-200 p-4 rounded-lg bg-white">
-    <div class="flex items-center text-slate-700 mb-2">
-      <i class="fa-solid fa-bolt text-lg mr-2 text-purple-600"></i>
-      <h2 class="text-lg font-medium">Ready to Use</h2>
-    </div>
-    <p class="text-sm text-slate-600">Pre-installed with PHPFlasher. No setup required.</p>
-  </div>
-  
-  <div class="border border-slate-200 p-4 rounded-lg bg-white">
-    <div class="flex items-center text-slate-700 mb-2">
-      <i class="fa-solid fa-universal-access text-lg mr-2 text-blue-600"></i>
-      <h2 class="text-lg font-medium">Accessible</h2>
-    </div>
-    <p class="text-sm text-slate-600">WCAG-compliant with semantic ARIA support.</p>
-  </div>
-  
-  <div class="border border-slate-200 p-4 rounded-lg bg-white">
-    <div class="flex items-center text-slate-700 mb-2">
-      <i class="fa-solid fa-paint-brush text-lg mr-2 text-amber-600"></i>
-      <h2 class="text-lg font-medium">Customizable</h2>
-    </div>
-    <p class="text-sm text-slate-600">Easy to style with CSS variables and clean markup.</p>
-  </div>
-</div>
-
-<!-- Example Notifications -->
-<h2 class="text-2xl font-semibold text-slate-800 mb-4">Notification Types</h2>
-
 <div class="bg-slate-50 rounded-lg border border-slate-200 p-4 mb-8">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="fl-flasher fl-success fl-container fl-show hover:-translate-y-1 transition-all duration-200 shadow-sm" role="status" aria-live="polite" aria-atomic="true">
