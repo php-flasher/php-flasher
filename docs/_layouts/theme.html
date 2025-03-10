@@ -1,0 +1,444 @@
+---
+layout: default
+---
+
+<!-- Refined Hero Section -->
+<header class="flex items-center justify-between pt-2 pb-6 mb-6 border-b border-slate-100">
+    <div class="flex items-center">
+        <div class="mr-4 relative">
+            <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center">
+                <i class="fa-solid {{ page.icon }} text-{{ page.color }}-600 text-lg"></i>
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-{{ page.color }}-100 flex items-center justify-center">
+                <div class="w-2 h-2 rounded-full bg-{{ page.color }}-500"></div>
+            </div>
+        </div>
+        <div>
+            <h1 class="text-2xl font-semibold text-slate-800 tracking-tight mb-0.5">{{ page.title }}</h1>
+            <p class="text-sm text-slate-500">{{ page.subtitle }}</p>
+        </div>
+    </div>
+    <div class="hidden sm:flex gap-2">
+        <button
+            onclick="flasher.use('{{ page.theme_name }}').success('Success! Your changes were saved.', 'Well Done')"
+            class="px-3 py-1.5 text-xs bg-white hover:bg-gray-50 text-slate-700 rounded-full border border-slate-200 transition-colors flex items-center"
+        >
+            <i class="fa-regular fa-circle-check text-green-500 mr-1.5"></i> Try Success
+        </button>
+        <button
+            onclick="flasher.use('{{ page.theme_name }}').error('Something went wrong. Please try again.')"
+            class="px-3 py-1.5 text-xs bg-white hover:bg-gray-50 text-slate-700 rounded-full border border-slate-200 transition-colors flex items-center"
+        >
+            <i class="fa-regular fa-circle-xmark text-red-500 mr-1.5"></i> Try Error
+        </button>
+    </div>
+</header>
+
+<!-- Demo buttons for mobile -->
+<div class="sm:hidden flex gap-2 mb-6">
+    <button
+        onclick="flasher.use('{{ page.theme_name }}').success('Success! Your changes were saved.', 'Well Done')"
+        class="flex-1 py-1.5 px-0 text-xs bg-white text-slate-600 rounded-full border border-slate-200 flex items-center justify-center"
+    >
+        <i class="fa-regular fa-circle-check text-green-500 mr-1"></i> Success
+    </button>
+    <button
+        onclick="flasher.use('{{ page.theme_name }}').error('Something went wrong. Please try again.')"
+        class="flex-1 py-1.5 px-0 text-xs bg-white text-slate-600 rounded-full border border-slate-200 flex items-center justify-center"
+    >
+        <i class="fa-regular fa-circle-xmark text-red-500 mr-1"></i> Error
+    </button>
+</div>
+
+<!-- Notification Examples with darker background -->
+<section class="bg-slate-50 rounded-lg shadow-sm overflow-hidden mb-8">
+    {% include themes/{{ page.theme_name }}.html %}
+</section>
+
+<!-- Configuration Section -->
+<section class="mb-8">
+    <div class="flex items-center mb-3">
+        <h2 class="text-sm font-medium text-slate-800">Configuration</h2>
+        <div class="h-px bg-slate-100 flex-grow ml-3"></div>
+    </div>
+
+    <div class="bg-white rounded-lg border border-slate-100 shadow-sm overflow-hidden">
+        <div class="flex border-b border-slate-100 overflow-x-auto">
+            <button
+                class="tab-button px-4 py-2 text-xs text-slate-800 font-medium border-b-2 border-{{ page.color }}-500 whitespace-nowrap focus:outline-none transition-colors"
+                data-framework="laravel"
+            >
+                Laravel
+            </button>
+            <button
+                class="tab-button px-4 py-2 text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none transition-colors"
+                data-framework="symfony"
+            >
+                Symfony
+            </button>
+            <button
+                class="tab-button px-4 py-2 text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none transition-colors"
+                data-framework="javascript"
+            >
+                JavaScript
+            </button>
+        </div>
+
+        <div class="tab-content p-4" id="config-content">
+            <div class="flex items-center mb-2 text-slate-800">
+                <i class="fa-brands fa-laravel text-red-500 mr-1.5"></i>
+                <span class="text-xs font-medium">Setting as Default in Laravel</span>
+            </div>
+            <pre class="language-php bg-slate-50 p-3 rounded-md text-xs"><code>// config/flasher.php
+
+return [
+    'default' => '{{ page.theme_name }}',{% if page.has_assets %}
+
+    'themes' => [
+        '{{ page.theme_name_short }}' => [
+            'scripts' => [
+                '/vendor/flasher/themes/{{ page.theme_name }}.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/{{ page.theme_name }}.min.css',
+            ],
+        ],
+    ],{% endif %}
+];</code></pre>
+        </div>
+    </div>
+</section>
+
+<!-- Theme Usage -->
+<section class="mb-8">
+    <div class="flex items-center mb-3">
+        <h2 class="text-sm font-medium text-slate-800">Theme Usage</h2>
+        <div class="h-px bg-slate-100 flex-grow ml-3"></div>
+    </div>
+
+    <!-- Combined Usage Section -->
+    <div class="bg-white rounded-lg border border-slate-100 shadow-sm overflow-hidden">
+        <!-- Tabs -->
+        <div class="flex border-b border-slate-100">
+            <button
+                class="usage-tab px-4 py-2 text-xs text-slate-800 font-medium border-b-2 border-{{ page.color }}-500 whitespace-nowrap focus:outline-none transition-colors"
+                data-lang="php"
+            >
+                PHP
+            </button>
+            <button
+                class="usage-tab px-4 py-2 text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none transition-colors"
+                data-lang="js"
+            >
+                JavaScript
+            </button>
+        </div>
+
+        <!-- PHP Content -->
+        <div class="p-4 usage-content" id="php-content">
+            <div class="flex items-center text-xs text-slate-500 mb-2">
+                <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+                </div>
+                <span class="font-medium text-slate-700">
+                    When <span class="font-medium">{{ page.theme_name }}</span> is set as your default theme, you can call methods directly.
+                </span>
+            </div>
+
+            <pre class="language-php bg-slate-50 p-3 rounded-md text-xs mb-6"><code>flash()->success('Your changes have been saved!');</code></pre>
+
+            <div class="flex items-center text-xs text-slate-500 mb-2">
+                <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+                </div>
+                <span class="font-medium text-slate-700">For specific notifications</span>
+            </div>
+
+            <pre class="language-php bg-slate-50 p-3 rounded-md text-xs"><code>flash()->use('{{ page.theme_name }}')->success('This uses {{ page.title }}');</code></pre>
+        </div>
+
+        <!-- JavaScript Content -->
+        <div class="p-4 usage-content hidden" id="js-content">
+            <div class="flex items-center text-xs text-slate-500 mb-2">
+                <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+                </div>
+                <span class="font-medium text-slate-700">
+                    When <span class="font-medium">{{ page.theme_name }}</span> is set as your default theme, you can call methods directly.
+                </span>
+            </div>
+
+            <pre class="language-javascript bg-slate-50 p-3 rounded-md text-xs mb-6"><code>flasher.success('Your changes have been saved!');</code></pre>
+
+            <div class="flex items-center text-xs text-slate-500 mb-2">
+                <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+                </div>
+                <span class="font-medium text-slate-700">For specific notifications</span>
+            </div>
+
+            <pre class="language-javascript bg-slate-50 p-3 rounded-md text-xs"><code>flasher.use('{{ page.theme_name }}').success('This uses {{ page.title }}');</code></pre>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="mb-8">
+    <div class="flex items-center mb-3">
+        <h2 class="text-sm font-medium text-slate-800">Key Features</h2>
+        <div class="h-px bg-slate-100 flex-grow ml-3"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+            <div class="flex items-center mb-3">
+                <div class="w-6 h-6 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-2">
+                    <i class="fa-solid fa-palette text-{{ page.color }}-500 text-xs"></i>
+                </div>
+                <h3 class="font-medium text-slate-700 text-xs">Visual Design</h3>
+            </div>
+
+            <ul class="space-y-2 ml-4">
+                {% for feature in page.visual_features %}
+                <li class="flex items-start text-xs text-slate-600">
+                    <div class="w-4 h-4 rounded-full bg-green-50 flex-shrink-0 flex items-center justify-center mr-2 mt-0.5">
+                        <i class="fa-solid fa-check text-green-500 text-[9px]"></i>
+                    </div>
+                    <span>{{ feature }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+            <div class="flex items-center mb-3">
+                <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center mr-2">
+                    <i class="fa-solid fa-universal-access text-blue-500 text-xs"></i>
+                </div>
+                <h3 class="font-medium text-slate-700 text-xs">Accessibility</h3>
+            </div>
+
+            <ul class="space-y-2 ml-4">
+                {% for feature in page.accessibility_features %}
+                <li class="flex items-start text-xs text-slate-600">
+                    <div class="w-4 h-4 rounded-full bg-green-50 flex-shrink-0 flex items-center justify-center mr-2 mt-0.5">
+                        <i class="fa-solid fa-check text-green-500 text-[9px]"></i>
+                    </div>
+                    <span>{{ feature }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Customization Section -->
+<section class="mb-8">
+    <div class="flex items-center mb-3">
+        <h2 class="text-sm font-medium text-slate-800">Customization</h2>
+        <div class="h-px bg-slate-100 flex-grow ml-3"></div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4">
+        <!-- Color Customization -->
+        <div class="bg-white rounded-lg border border-slate-100 shadow-sm">
+            <div class="border-b border-slate-50 px-4 py-2 flex items-center">
+                <i class="fa-solid fa-palette text-{{ page.color }}-400 mr-1.5 text-xs"></i>
+                <h3 class="text-xs font-medium text-slate-700">CSS Variables</h3>
+            </div>
+            <div class="p-4">
+                <pre class="language-css text-xs rounded-md overflow-hidden"><code>{{ page.css_variables }}</code></pre>
+            </div>
+        </div>
+
+        <!-- HTML Structure -->
+        <div class="bg-white rounded-lg border border-slate-100 shadow-sm">
+            <div class="border-b border-slate-50 px-4 py-2 flex items-center">
+                <i class="fa-solid fa-code text-blue-400 mr-1.5 text-xs"></i>
+                <h3 class="text-xs font-medium text-slate-700">HTML Structure</h3>
+            </div>
+            <div class="p-4">
+                <pre class="language-html text-xs rounded-md overflow-hidden"><code>{{ page.html_structure | escape }}</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Browser Support -->
+<section class="mb-8">
+    <div class="flex items-center mb-3">
+        <h2 class="text-sm font-medium text-slate-800">Browser Support</h2>
+        <div class="h-px bg-slate-100 flex-grow ml-3"></div>
+    </div>
+
+    <div class="bg-white rounded-lg border border-slate-100 shadow-sm p-4">
+        <div class="flex flex-wrap justify-center gap-6">
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+                    <i class="fa-brands fa-chrome text-green-500 text-lg"></i>
+                </div>
+                <span class="text-xs text-slate-500">Chrome</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+                    <i class="fa-brands fa-firefox text-orange-500 text-lg"></i>
+                </div>
+                <span class="text-xs text-slate-500">Firefox</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+                    <i class="fa-brands fa-safari text-blue-500 text-lg"></i>
+                </div>
+                <span class="text-xs text-slate-500">Safari</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+                    <i class="fa-brands fa-edge text-blue-600 text-lg"></i>
+                </div>
+                <span class="text-xs text-slate-500">Edge</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+                    <i class="fa-solid fa-mobile-screen text-slate-600 text-lg"></i>
+                </div>
+                <span class="text-xs text-slate-500">Mobile</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+                    <i class="fa-solid fa-moon text-indigo-500 text-lg"></i>
+                </div>
+                <span class="text-xs text-slate-500">Dark</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Help Section (Redesigned) -->
+<div class="bg-gradient-to-r from-slate-50 to-white rounded-lg shadow-sm border border-slate-100 p-4 mb-6">
+    <div class="flex items-center">
+        <div class="w-10 h-10 rounded-lg bg-{{ page.color }}-50 border border-{{ page.color }}-100 flex items-center justify-center mr-3">
+            <i class="fa-regular fa-life-ring text-{{ page.color }}-500"></i>
+        </div>
+        <div>
+            <h3 class="text-sm font-medium text-slate-800 mb-1">Need assistance?</h3>
+            <div class="flex items-center flex-wrap gap-3">
+                <a
+                    href="/docs/"
+                    class="inline-flex items-center text-xs px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                    <i class="fa-regular fa-file-lines text-{{ page.color }}-500 mr-1.5"></i>
+                    Documentation
+                </a>
+                <a
+                    href="https://github.com/php-flasher/php-flasher/discussions"
+                    class="inline-flex items-center text-xs px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                    <i class="fa-regular fa-comments text-{{ page.color }}-500 mr-1.5"></i>
+                    Community
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Tab system with Prism re-highlight
+document.addEventListener('DOMContentLoaded', function() {
+    // Config tabs
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContent = document.getElementById('config-content');
+
+    const frameworkContents = {
+        'laravel': `<div class="flex items-center mb-2 text-slate-800">
+            <i class="fa-brands fa-laravel text-red-500 mr-1.5"></i>
+            <span class="text-xs font-medium">Setting as Default in Laravel</span>
+        </div>
+        <pre class="language-php bg-slate-50 p-3 rounded-md text-xs"><code>// config/flasher.php
+
+return [
+    'default' => '{{ page.theme_name }}',{% if page.has_assets %}
+
+    'themes' => [
+        '{{ page.theme_name_short }}' => [
+            'scripts' => [
+                '/vendor/flasher/themes/{{ page.theme_name }}.min.js',
+            ],
+            'styles' => [
+                '/vendor/flasher/themes/{{ page.theme_name }}.min.css',
+            ],
+        ],
+    ],{% endif %}
+];</code></pre>`,
+
+        'symfony': `<div class="flex items-center mb-2 text-slate-800">
+            <i class="fa-brands fa-symfony text-black mr-1.5"></i>
+            <span class="text-xs font-medium">Setting as Default in Symfony</span>
+        </div>
+        <pre class="language-yaml bg-slate-50 p-3 rounded-md text-xs"><code># config/packages/flasher.yaml
+
+flasher:
+    default: {{ page.theme_name }}{% if page.has_assets %}
+
+    themes:
+        {{ page.theme_name_short }}:
+            scripts:
+                - '/vendor/flasher/themes/{{ page.theme_name }}.min.js'
+            styles:
+                - '/vendor/flasher/themes/{{ page.theme_name }}.min.css'{% endif %}</code></pre>`,
+
+        'javascript': `<div class="flex items-center mb-2 text-slate-800">
+            <i class="fa-brands fa-js text-amber-500 mr-1.5"></i>
+            <span class="text-xs font-medium">Setting as Default in JavaScript</span>
+        </div>
+        <pre class="language-javascript bg-slate-50 p-3 rounded-md text-xs"><code>// Set as default theme
+flasher.defaultPlugin = '{{ page.theme_name }}';
+
+// Then use it
+flasher.success('Well done!');</code></pre>`
+    };
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Update active tab
+            tabButtons.forEach(btn => {
+                btn.classList.remove('border-{{ page.color }}-500', 'text-slate-800', 'font-medium');
+                btn.classList.add('text-slate-500');
+            });
+            this.classList.add('border-b-2', 'border-{{ page.color }}-500', 'text-slate-800', 'font-medium');
+            this.classList.remove('text-slate-500');
+
+            // Update content
+            const framework = this.getAttribute('data-framework');
+            tabContent.innerHTML = frameworkContents[framework];
+
+            // Re-run Prism highlighting
+            if (window.Prism) {
+                Prism.highlightAllUnder(tabContent);
+            }
+        });
+    });
+
+    // Usage tabs
+    const usageTabs = document.querySelectorAll('.usage-tab');
+    const usageContents = document.querySelectorAll('.usage-content');
+
+    usageTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Update active tab
+            usageTabs.forEach(t => {
+                t.classList.remove('border-{{ page.color }}-500', 'text-slate-800', 'font-medium');
+                t.classList.add('text-slate-500');
+            });
+            this.classList.add('border-b-2', 'border-{{ page.color }}-500', 'text-slate-800', 'font-medium');
+            this.classList.remove('text-slate-500');
+
+            // Show correct content
+            const lang = this.getAttribute('data-lang');
+            usageContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(lang + '-content').classList.remove('hidden');
+        });
+    });
+});
+</script>
