@@ -85,38 +85,6 @@ description: The default notification theme for PHPFlasher with a clean design, 
   </div>
 </div>
 
-<!-- Code Examples Section -->
-<h2 class="text-2xl font-semibold text-slate-800 mb-4">Quick Implementation</h2>
-
-<div class="space-y-3 mb-8">
-  <div class="rounded-lg shadow-sm border border-slate-200 p-3 bg-white">
-    <div class="flex items-center">
-      <span class="w-7 h-7 bg-purple-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-        <i class="fa-brands fa-php text-purple-600"></i>
-      </span>
-      <pre class="overflow-auto language-php flex-1"><code>flash()->success('Your changes have been saved!');</code></pre>
-    </div>
-  </div>
-  
-  <div class="rounded-lg shadow-sm border border-slate-200 p-3 bg-white">
-    <div class="flex items-center">
-      <span class="w-7 h-7 bg-amber-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-        <i class="fa-brands fa-js text-amber-600"></i>
-      </span>
-      <pre class="overflow-auto language-javascript flex-1"><code>flasher.success('Your changes have been saved!');</code></pre>
-    </div>
-  </div>
-  
-  <div class="rounded-lg shadow-sm border border-slate-200 p-3 bg-white">
-    <div class="flex items-center">
-      <span class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-        <i class="fa-solid fa-code text-blue-600"></i>
-      </span>
-      <pre class="overflow-auto language-php flex-1"><code>flash()->success('Operation completed!', 'Success Title');</code></pre>
-    </div>
-  </div>
-</div>
-
 <!-- Configuration Tabs -->
 <h2 class="text-2xl font-semibold text-slate-800 mb-4">Configuration</h2>
 
@@ -138,6 +106,15 @@ return [
     'default' => 'flasher',
     // Other settings...
 ];</code></pre>
+  </div>
+</div>
+
+<!-- Theme Selection -->
+<div class="mb-6">
+  <h3 class="text-lg font-medium text-slate-800 mb-3">Theme Selection</h3>
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
+    <pre class="language-php text-sm"><code>// Use this theme for a specific notification
+flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
   </div>
 </div>
 
@@ -199,15 +176,6 @@ return [
 <!-- Customization Section -->
 <h2 class="text-2xl font-semibold text-slate-800 mb-4">Customize the Theme</h2>
 
-<!-- Theme Selection -->
-<div class="mb-6">
-  <h3 class="text-lg font-medium text-slate-800 mb-3">Theme Selection</h3>
-  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
-    <pre class="language-php text-sm"><code>// Use this theme for a specific notification
-flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
-  </div>
-</div>
-
 <!-- Color Customization -->
 <div class="mb-6">
   <h3 class="text-lg font-medium text-slate-800 mb-3">Color Customization</h3>
@@ -218,6 +186,26 @@ flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
   --fl-warning: #f59e0b; /* Orange */
   --fl-info: #3b82f6;    /* Blue */
 }</code></pre>
+  </div>
+</div>
+
+<!-- HTML Structure -->
+<div class="mb-6">
+  <h3 class="text-lg font-medium text-slate-800 mb-3">HTML Structure</h3>
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
+    <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
+    &lt;div class="fl-content">
+        &lt;div class="fl-icon">&lt;/div>
+        &lt;div>
+            &lt;strong class="fl-title">Title text&lt;/strong>
+            &lt;span class="fl-message">Message text&lt;/span>
+        &lt;/div>
+        &lt;button class="fl-close" aria-label="Close [type] message">&times;&lt;/button>
+    &lt;/div>
+    &lt;span class="fl-progress-bar">
+        &lt;span class="fl-progress">&lt;/span>
+    &lt;/span>
+&lt;/div></code></pre>
   </div>
 </div>
 
@@ -253,26 +241,6 @@ flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
         Dark Mode
       </div>
     </div>
-  </div>
-</div>
-
-<!-- HTML Structure -->
-<div class="mb-6">
-  <h3 class="text-lg font-medium text-slate-800 mb-3">HTML Structure</h3>
-  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
-    <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
-    &lt;div class="fl-content">
-        &lt;div class="fl-icon">&lt;/div>
-        &lt;div>
-            &lt;strong class="fl-title">Title text&lt;/strong>
-            &lt;span class="fl-message">Message text&lt;/span>
-        &lt;/div>
-        &lt;button class="fl-close" aria-label="Close [type] message">&times;&lt;/button>
-    &lt;/div>
-    &lt;span class="fl-progress-bar">
-        &lt;span class="fl-progress">&lt;/span>
-    &lt;/span>
-&lt;/div></code></pre>
   </div>
 </div>
 
