@@ -1,0 +1,13 @@
+<div class="{{ include.theme | default: 'fl-flasher' }} {{ include.theme | default: 'fl' }}-{{ include.type }} {{ include.theme | default: 'fl' }}-container {{ include.theme | default: 'fl' }}-show hover:-translate-y-0.5 transition-all duration-200" role="{{ include.role }}" aria-live="{{ include.aria-live }}" aria-atomic="true">
+  <div class="{{ include.theme | default: 'fl' }}-content">
+    <div class="{{ include.theme | default: 'fl' }}-icon"></div>
+    <div>
+      <strong class="{{ include.theme | default: 'fl' }}-title">{{ include.title }}</strong>
+      <span class="{{ include.theme | default: 'fl' }}-message">{{ include.message }}</span>
+    </div>
+    <button class="{{ include.theme | default: 'fl' }}-close" aria-label="Close {{ include.type }} message">×</button>
+  </div>
+  <span class="{{ include.theme | default: 'fl' }}-progress-bar">
+    <span class="{{ include.theme | default: 'fl' }}-progress" style="width: {{ include.progress }}%;"></span>
+  </span>
+</div>
