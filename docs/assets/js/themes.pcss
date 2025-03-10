@@ -1,0 +1,52 @@
+/* Additional custom styles for the Flasher Theme page */
+.copy-btn {
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Enhance the notification preview buttons */
+button[onclick^="flasher"] {
+  transition: all 0.2s ease;
+}
+
+button[onclick^="flasher"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Add a subtle animation to feature icons */
+.fa-solid.fa-check {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+li:hover .fa-solid.fa-check {
+  transform: scale(1.2);
+}
+
+/* Improve code block readability */
+.bg-slate-50 {
+  font-family: 'Fira Code', 'Consolas', monospace;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+}
