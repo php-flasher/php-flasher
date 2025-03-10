@@ -4,24 +4,22 @@ title: Flasher Theme
 description: The default notification theme for PHPFlasher with a clean design, colored borders, and accessible notifications for your web applications.
 ---
 
-<!-- Hero Section with Interactive Demo -->
-<div class="relative overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl p-6 mb-10 text-white shadow-lg">
-  <div class="absolute top-0 right-0 -mt-4 -mr-12 opacity-20">
-    <i class="fa-solid fa-bolt text-8xl"></i>
+<!-- Simple Hero Section -->
+<div class="border-b border-slate-200 pb-6 mb-10">
+  <div class="flex items-center mb-4">
+    <span class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mr-3">
+      <i class="fa-solid fa-bolt text-purple-600"></i>
+    </span>
+    <h1 class="text-3xl font-bold text-slate-800">Flasher Theme</h1>
   </div>
-  
-  <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
-    <div class="mb-6 md:mb-0 md:mr-6">
-      <h1 class="text-3xl font-bold tracking-tight mb-2">Flasher Theme</h1>
-      <p class="text-lg opacity-90 max-w-lg">Beautiful notifications that enhance your web applications — instantly.</p>
-    </div>
-    
-    <div class="flex flex-wrap gap-2">
-      <button onclick="flasher.success('Success! Your changes were saved.', 'Well Done')" class="px-3 py-2 bg-white text-purple-700 rounded-md hover:bg-opacity-90 transition-colors">
-        <i class="fa-regular fa-circle-check mr-1"></i> Try Success
+  <div class="flex flex-col md:flex-row md:items-center justify-between">
+    <p class="text-lg text-slate-600 max-w-lg mb-4 md:mb-0">Beautiful notifications that enhance your web applications — instantly.</p>
+    <div class="flex gap-2">
+      <button onclick="flasher.success('Success! Your changes were saved.', 'Well Done')" class="px-3 py-1.5 border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition-colors">
+        <i class="fa-regular fa-circle-check mr-1 text-green-500"></i> Try Success
       </button>
-      <button onclick="flasher.error('Something went wrong. Please try again.')" class="px-3 py-2 bg-white text-purple-700 rounded-md hover:bg-opacity-90 transition-colors">
-        <i class="fa-regular fa-circle-xmark mr-1"></i> Try Error
+      <button onclick="flasher.error('Something went wrong. Please try again.')" class="px-3 py-1.5 border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition-colors">
+        <i class="fa-regular fa-circle-xmark mr-1 text-red-500"></i> Try Error
       </button>
     </div>
   </div>
@@ -29,28 +27,28 @@ description: The default notification theme for PHPFlasher with a clean design, 
 
 <!-- Quick Overview Cards -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-  <div class="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 rounded-lg border border-emerald-100">
-    <div class="flex items-center text-emerald-700 mb-2">
-      <i class="fa-solid fa-bolt text-lg mr-2"></i>
+  <div class="border border-slate-200 p-4 rounded-lg bg-white">
+    <div class="flex items-center text-slate-700 mb-2">
+      <i class="fa-solid fa-bolt text-lg mr-2 text-purple-600"></i>
       <h2 class="text-lg font-medium">Ready to Use</h2>
     </div>
-    <p class="text-sm text-emerald-800">Pre-installed with PHPFlasher. No setup required.</p>
+    <p class="text-sm text-slate-600">Pre-installed with PHPFlasher. No setup required.</p>
   </div>
   
-  <div class="bg-gradient-to-br from-blue-50 to-sky-50 p-4 rounded-lg border border-blue-100">
-    <div class="flex items-center text-blue-700 mb-2">
-      <i class="fa-solid fa-universal-access text-lg mr-2"></i>
+  <div class="border border-slate-200 p-4 rounded-lg bg-white">
+    <div class="flex items-center text-slate-700 mb-2">
+      <i class="fa-solid fa-universal-access text-lg mr-2 text-blue-600"></i>
       <h2 class="text-lg font-medium">Accessible</h2>
     </div>
-    <p class="text-sm text-blue-800">WCAG-compliant with semantic ARIA support.</p>
+    <p class="text-sm text-slate-600">WCAG-compliant with semantic ARIA support.</p>
   </div>
   
-  <div class="bg-gradient-to-br from-amber-50 to-yellow-50 p-4 rounded-lg border border-amber-100">
-    <div class="flex items-center text-amber-700 mb-2">
-      <i class="fa-solid fa-paint-brush text-lg mr-2"></i>
+  <div class="border border-slate-200 p-4 rounded-lg bg-white">
+    <div class="flex items-center text-slate-700 mb-2">
+      <i class="fa-solid fa-paint-brush text-lg mr-2 text-amber-600"></i>
       <h2 class="text-lg font-medium">Customizable</h2>
     </div>
-    <p class="text-sm text-amber-800">Easy to style with CSS variables and clean markup.</p>
+    <p class="text-sm text-slate-600">Easy to style with CSS variables and clean markup.</p>
   </div>
 </div>
 
@@ -120,28 +118,28 @@ description: The default notification theme for PHPFlasher with a clean design, 
 <!-- Code Examples Section -->
 <h2 class="text-2xl font-semibold text-slate-800 mb-4">Quick Implementation</h2>
 
-<div class="flex overflow-x-auto gap-2 mb-6 pb-1 snap-x">
-  <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border-l-4 border-l-purple-500 shadow-sm p-3 min-w-[280px] max-w-full flex-shrink-0 snap-start">
+<div class="space-y-3 mb-8">
+  <div class="rounded-lg shadow-sm border border-slate-200 p-3 bg-white">
     <div class="flex items-center">
-      <span class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-2">
+      <span class="w-7 h-7 bg-purple-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
         <i class="fa-brands fa-php text-purple-600"></i>
       </span>
       <pre class="overflow-auto language-php flex-1"><code>flash()->success('Your changes have been saved!');</code></pre>
     </div>
   </div>
   
-  <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border-l-4 border-l-amber-500 shadow-sm p-3 min-w-[320px] max-w-full flex-shrink-0 snap-start">
+  <div class="rounded-lg shadow-sm border border-slate-200 p-3 bg-white">
     <div class="flex items-center">
-      <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+      <span class="w-7 h-7 bg-amber-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
         <i class="fa-brands fa-js text-amber-600"></i>
       </span>
       <pre class="overflow-auto language-javascript flex-1"><code>flasher.success('Your changes have been saved!');</code></pre>
     </div>
   </div>
-
-  <div class="bg-gradient-to-r from-blue-50 to-sky-50 rounded-lg border-l-4 border-l-blue-500 shadow-sm p-3 min-w-[400px] max-w-full flex-shrink-0 snap-start">
+  
+  <div class="rounded-lg shadow-sm border border-slate-200 p-3 bg-white">
     <div class="flex items-center">
-      <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+      <span class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
         <i class="fa-solid fa-code text-blue-600"></i>
       </span>
       <pre class="overflow-auto language-php flex-1"><code>flash()->success('Operation completed!', 'Success Title');</code></pre>
@@ -231,35 +229,35 @@ return [
 <!-- Customization Section -->
 <h2 class="text-2xl font-semibold text-slate-800 mb-4">Customize the Theme</h2>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <div>
-    <h3 class="text-lg font-medium text-slate-800 mb-3">Theme Selection</h3>
-    <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
-      <pre class="language-php text-sm"><code>// Use this theme for a specific notification
+<!-- Theme Selection -->
+<div class="mb-6">
+  <h3 class="text-lg font-medium text-slate-800 mb-3">Theme Selection</h3>
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
+    <pre class="language-php text-sm"><code>// Use this theme for a specific notification
 flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
-    </div>
   </div>
-  
-  <div>
-    <h3 class="text-lg font-medium text-slate-800 mb-3">Color Customization</h3>
-    <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
-      <pre class="language-css text-sm"><code>:root {
+</div>
+
+<!-- Color Customization -->
+<div class="mb-6">
+  <h3 class="text-lg font-medium text-slate-800 mb-3">Color Customization</h3>
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
+    <pre class="language-css text-sm"><code>:root {
   --fl-success: #10b981; /* Green */
   --fl-error: #ef4444;   /* Red */
   --fl-warning: #f59e0b; /* Orange */
   --fl-info: #3b82f6;    /* Blue */
 }</code></pre>
-    </div>
   </div>
 </div>
 
 <!-- Technical Details -->
-<div class="flex flex-col md:flex-row gap-6 mb-8">
-  <div class="w-full md:w-1/3">
-    <h2 class="text-2xl font-semibold text-slate-800 mb-3">Technical Details</h2>
+<div class="mb-6">
+  <h3 class="text-lg font-medium text-slate-800 mb-3">Technical Details</h3>
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
     <p class="text-slate-600 mb-3">The Flasher theme is well-supported across all modern browsers and devices.</p>
     
-    <div class="grid grid-cols-3 md:grid-cols-2 gap-2">
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
       <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
         <i class="fa-brands fa-chrome text-lg block mb-1 text-green-600"></i>
         Chrome
@@ -286,11 +284,13 @@ flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
       </div>
     </div>
   </div>
-  
-  <div class="w-full md:w-2/3">
-    <h3 class="text-lg font-medium text-slate-800 mb-3">HTML Structure</h3>
-    <div class="bg-white rounded shadow-sm border border-slate-200 p-3 h-[90%] overflow-auto">
-      <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
+</div>
+
+<!-- HTML Structure -->
+<div class="mb-6">
+  <h3 class="text-lg font-medium text-slate-800 mb-3">HTML Structure</h3>
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
+    <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
     &lt;div class="fl-content">
         &lt;div class="fl-icon">&lt;/div>
         &lt;div>
@@ -303,19 +303,18 @@ flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
         &lt;span class="fl-progress">&lt;/span>
     &lt;/span>
 &lt;/div></code></pre>
-    </div>
   </div>
 </div>
 
 <!-- Help Section -->
-<div class="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-lg border border-teal-100 p-4 flex items-center">
+<div class="border border-slate-200 rounded-lg p-4 flex items-center bg-white mb-8">
   <div class="mr-4 flex-shrink-0">
-    <i class="fa-solid fa-circle-question text-teal-500 text-xl"></i>
+    <i class="fa-solid fa-circle-question text-purple-500 text-xl"></i>
   </div>
   <div>
-    <h3 class="text-lg font-medium text-teal-800 mb-1">Need Help?</h3>
-    <p class="text-teal-700 text-sm">
-      Check out our <a href="/docs/" class="text-teal-800 underline hover:text-teal-900">documentation</a> or join our <a href="https://github.com/php-flasher/php-flasher/discussions" class="text-teal-800 underline hover:text-teal-900">community</a>.
+    <h3 class="text-lg font-medium text-slate-800 mb-1">Need Help?</h3>
+    <p class="text-slate-600 text-sm">
+      Check out our <a href="/docs/" class="text-purple-700 underline hover:text-purple-900">documentation</a> or join our <a href="https://github.com/php-flasher/php-flasher/discussions" class="text-purple-700 underline hover:text-purple-900">community</a>.
     </p>
   </div>
 </div>
