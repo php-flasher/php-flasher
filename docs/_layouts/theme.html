@@ -2,62 +2,67 @@
 layout: default
 ---
 
-<!-- Compact Hero Section -->
-<header class="flex items-center justify-between pb-3 mb-5 border-b border-slate-100">
+<!-- Refined Hero Section -->
+<header class="flex items-center justify-between pt-2 pb-6 mb-6 border-b border-slate-100">
   <div class="flex items-center">
-    <span class="w-8 h-8 rounded-md bg-slate-100 flex-shrink-0 flex items-center justify-center mr-2">
-      <i class="fa-solid {{ page.icon }} text-{{ page.color }}-600"></i>
-    </span>
+    <div class="mr-4 relative">
+      <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center">
+        <i class="fa-solid {{ page.icon }} text-{{ page.color }}-600 text-lg"></i>
+      </div>
+      <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-{{ page.color }}-100 flex items-center justify-center">
+        <div class="w-2 h-2 rounded-full bg-{{ page.color }}-500"></div>
+      </div>
+    </div>
     <div>
-      <h1 class="text-xl font-medium text-slate-800">{{ page.title }}</h1>
+      <h1 class="text-2xl font-semibold text-slate-800 tracking-tight mb-0.5">{{ page.title }}</h1>
       <p class="text-sm text-slate-500">{{ page.subtitle }}</p>
     </div>
   </div>
   <div class="hidden sm:flex gap-2">
-    <button onclick="flasher.use('{{ page.theme_name }}').success('Success! Your changes were saved.', 'Well Done')" class="px-2 py-1 text-xs border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition">
-      <i class="fa-regular fa-circle-check text-green-500 mr-1"></i> Try Success
+    <button onclick="flasher.use('{{ page.theme_name }}').success('Success! Your changes were saved.', 'Well Done')" class="px-3 py-1.5 text-xs bg-white hover:bg-gray-50 text-slate-700 rounded-full border border-slate-200 transition-colors flex items-center">
+      <i class="fa-regular fa-circle-check text-green-500 mr-1.5"></i> Try Success
     </button>
-    <button onclick="flasher.use('{{ page.theme_name }}').error('Something went wrong. Please try again.')" class="px-2 py-1 text-xs border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition">
-      <i class="fa-regular fa-circle-xmark text-red-500 mr-1"></i> Try Error
+    <button onclick="flasher.use('{{ page.theme_name }}').error('Something went wrong. Please try again.')" class="px-3 py-1.5 text-xs bg-white hover:bg-gray-50 text-slate-700 rounded-full border border-slate-200 transition-colors flex items-center">
+      <i class="fa-regular fa-circle-xmark text-red-500 mr-1.5"></i> Try Error
     </button>
   </div>
 </header>
 
 <!-- Demo buttons for mobile -->
-<div class="sm:hidden flex gap-2 mb-4">
-  <button onclick="flasher.use('{{ page.theme_name }}').success('Success! Your changes were saved.', 'Well Done')" class="flex-1 px-2 py-1 text-xs border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition">
-    <i class="fa-regular fa-circle-check text-green-500 mr-1"></i> Try Success
+<div class="sm:hidden flex gap-2 mb-6">
+  <button onclick="flasher.use('{{ page.theme_name }}').success('Success! Your changes were saved.', 'Well Done')" class="flex-1 py-1.5 px-0 text-xs bg-white text-slate-600 rounded-full border border-slate-200 flex items-center justify-center">
+    <i class="fa-regular fa-circle-check text-green-500 mr-1"></i> Success
   </button>
-  <button onclick="flasher.use('{{ page.theme_name }}').error('Something went wrong. Please try again.')" class="flex-1 px-2 py-1 text-xs border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition">
-    <i class="fa-regular fa-circle-xmark text-red-500 mr-1"></i> Try Error
+  <button onclick="flasher.use('{{ page.theme_name }}').error('Something went wrong. Please try again.')" class="flex-1 py-1.5 px-0 text-xs bg-white text-slate-600 rounded-full border border-slate-200 flex items-center justify-center">
+    <i class="fa-regular fa-circle-xmark text-red-500 mr-1"></i> Error
   </button>
 </div>
 
 <!-- Notification Examples - using theme-specific include -->
-<section class="bg-white rounded border border-slate-200 overflow-hidden mb-4">
+<section class="bg-white rounded-lg border border-slate-100 shadow-sm overflow-hidden mb-8">
   {% include themes/{{ page.theme_name }}.html %}
 </section>
 
 <!-- Configuration Section -->
-<section class="mb-4">
-  <div class="flex items-center mb-2">
+<section class="mb-8">
+  <div class="flex items-center mb-3">
     <h2 class="text-sm font-medium text-slate-800">Configuration</h2>
-    <div class="h-px bg-slate-200 flex-grow ml-2"></div>
+    <div class="h-px bg-slate-100 flex-grow ml-3"></div>
   </div>
 
-  <div class="bg-white rounded border border-slate-200 overflow-hidden">
-    <div class="flex border-b border-slate-100 bg-slate-50 overflow-x-auto">
-      <button class="tab-button px-3 py-1.5 text-slate-800 font-medium border-b-2 border-{{ page.color }}-500 whitespace-nowrap focus:outline-none text-xs" data-framework="laravel">Laravel</button>
-      <button class="tab-button px-3 py-1.5 text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none text-xs" data-framework="symfony">Symfony</button>
-      <button class="tab-button px-3 py-1.5 text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none text-xs" data-framework="javascript">JavaScript</button>
+  <div class="bg-white rounded-lg border border-slate-100 shadow-sm overflow-hidden">
+    <div class="flex border-b border-slate-100 overflow-x-auto">
+      <button class="tab-button px-4 py-2 text-xs text-slate-800 font-medium border-b-2 border-{{ page.color }}-500 whitespace-nowrap focus:outline-none transition-colors" data-framework="laravel">Laravel</button>
+      <button class="tab-button px-4 py-2 text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none transition-colors" data-framework="symfony">Symfony</button>
+      <button class="tab-button px-4 py-2 text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none transition-colors" data-framework="javascript">JavaScript</button>
     </div>
 
-    <div class="tab-content p-3" id="config-content">
-      <div class="flex items-center mb-1.5 text-slate-800">
+    <div class="tab-content p-4" id="config-content">
+      <div class="flex items-center mb-2 text-slate-800">
         <i class="fa-brands fa-laravel text-red-500 mr-1.5"></i>
         <span class="text-xs font-medium">Setting as Default in Laravel</span>
       </div>
-      <pre class="language-php bg-slate-50 p-2 rounded text-xs"><code>// config/flasher.php
+      <pre class="language-php bg-slate-50 p-3 rounded-md text-xs"><code>// config/flasher.php
 
 return [
     'default' => '{{ page.theme_name }}',{% if page.has_assets %}
@@ -78,171 +83,206 @@ return [
 </section>
 
 <!-- Theme Usage -->
-<section class="mb-4">
-  <div class="flex items-center mb-2">
+<section class="mb-8">
+  <div class="flex items-center mb-3">
     <h2 class="text-sm font-medium text-slate-800">Theme Usage</h2>
-    <div class="h-px bg-slate-200 flex-grow ml-2"></div>
+    <div class="h-px bg-slate-100 flex-grow ml-3"></div>
   </div>
 
-  <!-- PHP Usage -->
-  <div class="bg-white rounded border border-slate-200 p-3 mb-3">
-    <div class="flex items-center text-xs text-slate-700 mb-2">
-      <i class="fa-brands fa-php text-purple-600 mr-1.5"></i>
-      <span class="font-medium">PHP</span>
+  <!-- Combined Usage Section -->
+  <div class="bg-white rounded-lg border border-slate-100 shadow-sm overflow-hidden">
+    <!-- Tabs -->
+    <div class="flex border-b border-slate-100">
+      <button class="usage-tab px-4 py-2 text-xs text-slate-800 font-medium border-b-2 border-{{ page.color }}-500 whitespace-nowrap focus:outline-none transition-colors" data-lang="php">PHP</button>
+      <button class="usage-tab px-4 py-2 text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none transition-colors" data-lang="js">JavaScript</button>
     </div>
 
-    <p class="text-xs text-slate-600 mb-2">
-      When <span class="font-medium">{{ page.theme_name }}</span> is configured as your default theme, you can call methods directly:
-    </p>
-    <pre class="language-php text-xs mb-3"><code>flash()->success('Your changes have been saved!');</code></pre>
+    <!-- PHP Content -->
+    <div class="p-4 usage-content" id="php-content">
+      <div class="flex items-center text-xs text-slate-500 mb-2">
+        <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+          <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+        </div>
+        <span class="font-medium text-slate-700">When <span class="font-medium">{{ page.theme_name }}</span> is set as your default theme, you can call methods directly.</span>
+      </div>
 
-    <p class="text-xs text-slate-600 mb-2">
-      To use this theme for just this notification (when another theme is your default):
-    </p>
-    <pre class="language-php text-xs"><code>flash()->use('{{ page.theme_name }}')->success('This uses {{ page.title }}');</code></pre>
-  </div>
+      <pre class="language-php bg-slate-50 p-3 rounded-md text-xs mb-6"><code>flash()->success('Your changes have been saved!');</code></pre>
 
-  <!-- JavaScript Usage -->
-  <div class="bg-white rounded border border-slate-200 p-3">
-    <div class="flex items-center text-xs text-slate-700 mb-2">
-      <i class="fa-brands fa-js text-amber-600 mr-1.5"></i>
-      <span class="font-medium">JavaScript</span>
+      <div class="flex items-center text-xs text-slate-500 mb-2">
+        <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+          <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+        </div>
+        <span class="font-medium text-slate-700">For specific notifications</span>
+      </div>
+
+      <pre class="language-php bg-slate-50 p-3 rounded-md text-xs"><code>flash()->use('{{ page.theme_name }}')->success('This uses {{ page.title }}');</code></pre>
     </div>
 
-    <p class="text-xs text-slate-600 mb-2">
-      When <span class="font-medium">{{ page.theme_name }}</span> is configured as your default theme:
-    </p>
-    <pre class="language-javascript text-xs mb-3"><code>flasher.success('Your changes have been saved!');</code></pre>
+    <!-- JavaScript Content -->
+    <div class="p-4 usage-content hidden" id="js-content">
+      <div class="flex items-center text-xs text-slate-500 mb-2">
+        <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+          <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+        </div>
+        <span class="font-medium text-slate-700">When <span class="font-medium">{{ page.theme_name }}</span> is set as your default theme, you can call methods directly.</span>
+      </div>
 
-    <p class="text-xs text-slate-600 mb-2">
-      To use this theme for a specific notification:
-    </p>
-    <pre class="language-javascript text-xs"><code>flasher.use('{{ page.theme_name }}').success('This uses {{ page.title }}');</code></pre>
+      <pre class="language-javascript bg-slate-50 p-3 rounded-md text-xs mb-6"><code>flasher.success('Your changes have been saved!');</code></pre>
+
+      <div class="flex items-center text-xs text-slate-500 mb-2">
+        <div class="w-5 h-5 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-1.5">
+          <i class="fa-solid fa-wand-magic-sparkles text-{{ page.color }}-500 text-[10px]"></i>
+        </div>
+        <span class="font-medium text-slate-700">For specific notifications</span>
+      </div>
+
+      <pre class="language-javascript bg-slate-50 p-3 rounded-md text-xs"><code>flasher.use('{{ page.theme_name }}').success('This uses {{ page.title }}');</code></pre>
+    </div>
   </div>
 </section>
 
 <!-- Features Grid -->
-<section class="mb-4">
-  <div class="flex items-center mb-2">
+<section class="mb-8">
+  <div class="flex items-center mb-3">
     <h2 class="text-sm font-medium text-slate-800">Key Features</h2>
-    <div class="h-px bg-slate-200 flex-grow ml-2"></div>
+    <div class="h-px bg-slate-100 flex-grow ml-3"></div>
   </div>
 
-  <div class="bg-white rounded border border-slate-200 overflow-hidden">
-    <div class="grid grid-cols-1 md:grid-cols-2">
-      <div class="p-4 border-b md:border-b-0 md:border-r border-slate-100">
-        <div class="flex items-center mb-3">
-          <span class="w-6 h-6 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-2">
-            <i class="fa-solid fa-palette text-{{ page.color }}-500 text-xs"></i>
-          </span>
-          <h3 class="font-medium text-slate-700 text-xs">Visual Design</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+      <div class="flex items-center mb-3">
+        <div class="w-6 h-6 rounded-full bg-{{ page.color }}-50 flex items-center justify-center mr-2">
+          <i class="fa-solid fa-palette text-{{ page.color }}-500 text-xs"></i>
         </div>
-
-        <ul class="space-y-2 pl-8">
-          {% for feature in page.visual_features %}
-          <li class="flex items-start text-xs text-slate-600 relative">
-            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
-            <span>{{ feature }}</span>
-          </li>
-          {% endfor %}
-        </ul>
+        <h3 class="font-medium text-slate-700 text-xs">Visual Design</h3>
       </div>
 
-      <div class="p-4">
-        <div class="flex items-center mb-3">
-          <span class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center mr-2">
-            <i class="fa-solid fa-universal-access text-blue-500 text-xs"></i>
-          </span>
-          <h3 class="font-medium text-slate-700 text-xs">Accessibility</h3>
-        </div>
+      <ul class="space-y-2 ml-4">
+        {% for feature in page.visual_features %}
+        <li class="flex items-start text-xs text-slate-600">
+          <div class="w-4 h-4 rounded-full bg-green-50 flex-shrink-0 flex items-center justify-center mr-2 mt-0.5">
+            <i class="fa-solid fa-check text-green-500 text-[9px]"></i>
+          </div>
+          <span>{{ feature }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
-        <ul class="space-y-2 pl-8">
-          {% for feature in page.accessibility_features %}
-          <li class="flex items-start text-xs text-slate-600 relative">
-            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
-            <span>{{ feature }}</span>
-          </li>
-          {% endfor %}
-        </ul>
+    <div class="p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+      <div class="flex items-center mb-3">
+        <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center mr-2">
+          <i class="fa-solid fa-universal-access text-blue-500 text-xs"></i>
+        </div>
+        <h3 class="font-medium text-slate-700 text-xs">Accessibility</h3>
       </div>
+
+      <ul class="space-y-2 ml-4">
+        {% for feature in page.accessibility_features %}
+        <li class="flex items-start text-xs text-slate-600">
+          <div class="w-4 h-4 rounded-full bg-green-50 flex-shrink-0 flex items-center justify-center mr-2 mt-0.5">
+            <i class="fa-solid fa-check text-green-500 text-[9px]"></i>
+          </div>
+          <span>{{ feature }}</span>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- Customization Section -->
-<section class="mb-4">
-  <div class="flex items-center mb-2">
+<section class="mb-8">
+  <div class="flex items-center mb-3">
     <h2 class="text-sm font-medium text-slate-800">Customization</h2>
-    <div class="h-px bg-slate-200 flex-grow ml-2"></div>
+    <div class="h-px bg-slate-100 flex-grow ml-3"></div>
   </div>
 
-  <!-- Color Customization (without header) -->
-  <div class="mb-3">
-    <div class="bg-white rounded border border-slate-200 p-3">
-      <div class="flex items-center text-xs text-slate-500 mb-1.5">
-        <i class="fa-solid fa-palette text-slate-400 mr-1.5"></i> CSS Variables
+  <div class="grid grid-cols-1 lg:grid-cols-1 gap-4">
+    <!-- Color Customization -->
+    <div class="bg-white rounded-lg border border-slate-100 shadow-sm">
+      <div class="border-b border-slate-50 px-4 py-2 flex items-center">
+        <i class="fa-solid fa-palette text-{{ page.color }}-400 mr-1.5 text-xs"></i>
+        <h3 class="text-xs font-medium text-slate-700">CSS Variables</h3>
       </div>
-      <pre class="language-css text-xs"><code>{{ page.css_variables }}</code></pre>
+      <div class="p-4">
+        <pre class="language-css text-xs rounded-md overflow-hidden"><code>{{ page.css_variables }}</code></pre>
+      </div>
     </div>
-  </div>
 
-  <!-- HTML Structure (without header) -->
-  <div class="mb-3">
-    <div class="bg-white rounded border border-slate-200 p-3">
-      <div class="flex items-center text-xs text-slate-500 mb-1.5">
-        <i class="fa-solid fa-code text-slate-400 mr-1.5"></i> HTML Structure
+    <!-- HTML Structure -->
+    <div class="bg-white rounded-lg border border-slate-100 shadow-sm">
+      <div class="border-b border-slate-50 px-4 py-2 flex items-center">
+        <i class="fa-solid fa-code text-blue-400 mr-1.5 text-xs"></i>
+        <h3 class="text-xs font-medium text-slate-700">HTML Structure</h3>
       </div>
-      <pre class="language-html text-xs"><code>{{ page.html_structure | escape }}</code></pre>
+      <div class="p-4">
+        <pre class="language-html text-xs rounded-md overflow-hidden"><code>{{ page.html_structure | escape }}</code></pre>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Browser Support -->
-<section class="mb-4">
-  <div class="flex items-center mb-2">
+<section class="mb-8">
+  <div class="flex items-center mb-3">
     <h2 class="text-sm font-medium text-slate-800">Browser Support</h2>
-    <div class="h-px bg-slate-200 flex-grow ml-2"></div>
+    <div class="h-px bg-slate-100 flex-grow ml-3"></div>
   </div>
 
-  <div class="bg-white rounded border border-slate-200 p-3 flex flex-wrap justify-around">
-    <div class="flex flex-col items-center p-1">
-      <i class="fa-brands fa-chrome text-base text-green-600"></i>
-      <span class="text-[10px] mt-0.5 text-slate-500">Chrome</span>
-    </div>
-    <div class="flex flex-col items-center p-1">
-      <i class="fa-brands fa-firefox text-base text-orange-600"></i>
-      <span class="text-[10px] mt-0.5 text-slate-500">Firefox</span>
-    </div>
-    <div class="flex flex-col items-center p-1">
-      <i class="fa-brands fa-safari text-base text-blue-600"></i>
-      <span class="text-[10px] mt-0.5 text-slate-500">Safari</span>
-    </div>
-    <div class="flex flex-col items-center p-1">
-      <i class="fa-brands fa-edge text-base text-blue-500"></i>
-      <span class="text-[10px] mt-0.5 text-slate-500">Edge</span>
-    </div>
-    <div class="flex flex-col items-center p-1">
-      <i class="fa-solid fa-mobile-screen text-base"></i>
-      <span class="text-[10px] mt-0.5 text-slate-500">Mobile</span>
-    </div>
-    <div class="flex flex-col items-center p-1">
-      <i class="fa-solid fa-moon text-base text-indigo-600"></i>
-      <span class="text-[10px] mt-0.5 text-slate-500">Dark</span>
+  <div class="bg-white rounded-lg border border-slate-100 shadow-sm p-4">
+    <div class="flex flex-wrap justify-center gap-6">
+      <div class="flex flex-col items-center">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+          <i class="fa-brands fa-chrome text-green-500 text-lg"></i>
+        </div>
+        <span class="text-xs text-slate-500">Chrome</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+          <i class="fa-brands fa-firefox text-orange-500 text-lg"></i>
+        </div>
+        <span class="text-xs text-slate-500">Firefox</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+          <i class="fa-brands fa-safari text-blue-500 text-lg"></i>
+        </div>
+        <span class="text-xs text-slate-500">Safari</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+          <i class="fa-brands fa-edge text-blue-600 text-lg"></i>
+        </div>
+        <span class="text-xs text-slate-500">Edge</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+          <i class="fa-solid fa-mobile-screen text-slate-600 text-lg"></i>
+        </div>
+        <span class="text-xs text-slate-500">Mobile</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1.5">
+          <i class="fa-solid fa-moon text-indigo-500 text-lg"></i>
+        </div>
+        <span class="text-xs text-slate-500">Dark</span>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Help Section -->
-<div class="border border-slate-200 rounded p-2 flex items-center bg-white">
-  <div class="mr-2 flex-shrink-0">
-    <div class="w-6 h-6 rounded-full bg-{{ page.color }}-50 flex items-center justify-center">
-      <i class="fa-solid fa-question text-{{ page.color }}-500 text-xs"></i>
+<div class="bg-{{ page.color }}-50 rounded-lg p-4 flex items-start mb-6 border border-{{ page.color }}-100">
+  <div class="mr-3 flex-shrink-0">
+    <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+      <i class="fa-solid fa-question text-{{ page.color }}-500"></i>
     </div>
   </div>
   <div>
-    <h3 class="text-xs font-medium text-slate-800">Need help?</h3>
-    <p class="text-[10px] text-slate-600">
-      Check our <a href="/docs/" class="text-{{ page.color }}-600 hover:text-{{ page.color }}-800">documentation</a> or join our <a href="https://github.com/php-flasher/php-flasher/discussions" class="text-{{ page.color }}-600 hover:text-{{ page.color }}-800">community</a>.
+    <h3 class="text-sm font-medium text-{{ page.color }}-800 mb-1">Need help?</h3>
+    <p class="text-xs text-{{ page.color }}-700">
+      Check our <a href="/docs/" class="font-medium underline hover:text-{{ page.color }}-900 transition-colors">documentation</a> or join our <a href="https://github.com/php-flasher/php-flasher/discussions" class="font-medium underline hover:text-{{ page.color }}-900 transition-colors">community</a> for assistance.
     </p>
   </div>
 </div>
@@ -250,15 +290,16 @@ return [
 <script>
 // Tab system with Prism re-highlight
 document.addEventListener('DOMContentLoaded', function() {
+  // Config tabs
   const tabButtons = document.querySelectorAll('.tab-button');
   const tabContent = document.getElementById('config-content');
 
   const frameworkContents = {
-    'laravel': `<div class="flex items-center mb-1.5 text-slate-800">
+    'laravel': `<div class="flex items-center mb-2 text-slate-800">
       <i class="fa-brands fa-laravel text-red-500 mr-1.5"></i>
       <span class="text-xs font-medium">Setting as Default in Laravel</span>
     </div>
-    <pre class="language-php bg-slate-50 p-2 rounded text-xs"><code>// config/flasher.php
+    <pre class="language-php bg-slate-50 p-3 rounded-md text-xs"><code>// config/flasher.php
 
 return [
     'default' => '{{ page.theme_name }}',{% if page.has_assets %}
@@ -275,11 +316,11 @@ return [
     ],{% endif %}
 ];</code></pre>`,
 
-    'symfony': `<div class="flex items-center mb-1.5 text-slate-800">
+    'symfony': `<div class="flex items-center mb-2 text-slate-800">
       <i class="fa-brands fa-symfony text-black mr-1.5"></i>
       <span class="text-xs font-medium">Setting as Default in Symfony</span>
     </div>
-    <pre class="language-yaml bg-slate-50 p-2 rounded text-xs"><code># config/packages/flasher.yaml
+    <pre class="language-yaml bg-slate-50 p-3 rounded-md text-xs"><code># config/packages/flasher.yaml
 
 flasher:
     default: {{ page.theme_name }}{% if page.has_assets %}
@@ -291,11 +332,11 @@ flasher:
             styles:
                 - '/vendor/flasher/themes/{{ page.theme_name }}.min.css'{% endif %}</code></pre>`,
 
-    'javascript': `<div class="flex items-center mb-1.5 text-slate-800">
+    'javascript': `<div class="flex items-center mb-2 text-slate-800">
       <i class="fa-brands fa-js text-amber-500 mr-1.5"></i>
       <span class="text-xs font-medium">Setting as Default in JavaScript</span>
     </div>
-    <pre class="language-javascript bg-slate-50 p-2 rounded text-xs"><code>// Set as default theme
+    <pre class="language-javascript bg-slate-50 p-3 rounded-md text-xs"><code>// Set as default theme
 flasher.defaultPlugin = '{{ page.theme_name }}';
 
 // Then use it
@@ -320,6 +361,29 @@ flasher.success('Well done!');</code></pre>`
       if (window.Prism) {
         Prism.highlightAllUnder(tabContent);
       }
+    });
+  });
+
+  // Usage tabs
+  const usageTabs = document.querySelectorAll('.usage-tab');
+  const usageContents = document.querySelectorAll('.usage-content');
+
+  usageTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Update active tab
+      usageTabs.forEach(t => {
+        t.classList.remove('border-{{ page.color }}-500', 'text-slate-800', 'font-medium');
+        t.classList.add('text-slate-500');
+      });
+      this.classList.add('border-b-2', 'border-{{ page.color }}-500', 'text-slate-800', 'font-medium');
+      this.classList.remove('text-slate-500');
+
+      // Show correct content
+      const lang = this.getAttribute('data-lang');
+      usageContents.forEach(content => {
+        content.classList.add('hidden');
+      });
+      document.getElementById(lang + '-content').classList.remove('hidden');
     });
   });
 });
