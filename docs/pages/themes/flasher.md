@@ -35,13 +35,8 @@ description: The default notification theme for PHPFlasher with a clean design, 
   </button>
 </div>
 
-<!-- Notification Examples -->
+<!-- Notification Examples (without header) -->
 <section class="bg-white rounded border border-slate-200 overflow-hidden mb-4">
-  <div class="border-b border-slate-100 px-3 py-1.5 bg-slate-50 flex items-center">
-    <i class="fa-regular fa-bell text-slate-400 mr-1.5"></i>
-    <h2 class="font-medium text-slate-700 text-xs">Notification Types</h2>
-  </div>
-  
   <div class="p-3 grid grid-cols-1 md:grid-cols-2 gap-3">
     <div class="fl-flasher fl-success fl-container fl-show hover:-translate-y-0.5 transition-all duration-200" role="status" aria-live="polite" aria-atomic="true">
       <div class="fl-content">
@@ -130,7 +125,7 @@ return [
   </div>
 </section>
 
-<!-- Theme Selection -->
+<!-- Theme Usage -->
 <section class="mb-4">
   <div class="flex items-center mb-2">
     <h2 class="text-sm font-medium text-slate-800">Theme Usage</h2>
@@ -139,20 +134,31 @@ return [
   
   <div class="bg-white rounded border border-slate-200 p-3">
     <div class="flex items-center text-xs text-slate-500 mb-1.5">
-      <i class="fa-solid fa-code mr-1.5"></i> Using with PHP
+      <i class="fa-solid fa-code-compare mr-1.5"></i> When set as default theme
     </div>
-    <pre class="language-php text-xs mb-3"><code>// Use this theme for a specific notification
+    <pre class="language-php text-xs mb-3"><code>// When 'flasher' is configured as your default theme
+// You can call directly without specifying the theme
+flash()->success('Your changes have been saved!');</code></pre>
+    
+    <div class="flex items-center text-xs text-slate-500 mb-1.5">
+      <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-purple-500"></i> For specific notifications
+    </div>
+    <pre class="language-php text-xs mb-3"><code>// To use Flasher theme for just this notification
+// (when another theme is your default)
 flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
     
     <div class="flex items-center text-xs text-slate-500 mb-1.5">
-      <i class="fa-brands fa-js mr-1.5 text-amber-500"></i> Using with JavaScript
+      <i class="fa-brands fa-js mr-1.5 text-amber-500"></i> JavaScript equivalent
     </div>
-    <pre class="language-javascript text-xs"><code>// JavaScript equivalent
+    <pre class="language-javascript text-xs"><code>// Default usage
+flasher.success('Your changes have been saved!');
+
+// Specific theme usage
 flasher.use('flasher').success('This uses Flasher theme');</code></pre>
   </div>
 </section>
 
-<!-- Features Grid -->
+<!-- Features Grid (restored previous design) -->
 <section class="mb-4">
   <div class="flex items-center mb-2">
     <h2 class="text-sm font-medium text-slate-800">Key Features</h2>
@@ -160,30 +166,52 @@ flasher.use('flasher').success('This uses Flasher theme');</code></pre>
   </div>
   
   <div class="bg-white rounded border border-slate-200 overflow-hidden">
-    <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-      <div class="p-3">
-        <div class="flex items-center mb-2">
-          <i class="fa-solid fa-palette text-purple-500 text-xs mr-1.5"></i>
-          <h3 class="text-xs font-medium text-slate-700">Visual Design</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <div class="p-4 border-b md:border-b-0 md:border-r border-slate-100">
+        <div class="flex items-center mb-3">
+          <span class="w-6 h-6 rounded-full bg-purple-50 flex items-center justify-center mr-2">
+            <i class="fa-solid fa-palette text-purple-500 text-xs"></i>
+          </span>
+          <h3 class="font-medium text-slate-700 text-xs">Visual Design</h3>
         </div>
         
-        <ul class="space-y-1 text-xs text-slate-600 pl-5 list-disc">
-          <li>Color-coded borders for quick identification</li>
-          <li>Progress indicator shows remaining display time</li>
-          <li>Responsive design works on all screen sizes</li>
+        <ul class="space-y-2 pl-8">
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Color-coded borders for quick identification</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Progress indicator shows remaining display time</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Responsive design works on all screen sizes</span>
+          </li>
         </ul>
       </div>
       
-      <div class="p-3">
-        <div class="flex items-center mb-2">
-          <i class="fa-solid fa-universal-access text-blue-500 text-xs mr-1.5"></i>
-          <h3 class="text-xs font-medium text-slate-700">Accessibility</h3>
+      <div class="p-4">
+        <div class="flex items-center mb-3">
+          <span class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center mr-2">
+            <i class="fa-solid fa-universal-access text-blue-500 text-xs"></i>
+          </span>
+          <h3 class="font-medium text-slate-700 text-xs">Accessibility</h3>
         </div>
         
-        <ul class="space-y-1 text-xs text-slate-600 pl-5 list-disc">
-          <li>Semantic ARIA attributes for screen readers</li>
-          <li>Keyboard navigation support</li>
-          <li>RTL language support</li>
+        <ul class="space-y-2 pl-8">
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Semantic ARIA attributes for screen readers</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Keyboard navigation support</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>RTL language support</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -197,33 +225,28 @@ flasher.use('flasher').success('This uses Flasher theme');</code></pre>
     <div class="h-px bg-slate-200 flex-grow ml-2"></div>
   </div>
   
-  <!-- Color Customization -->
+  <!-- Color Customization (without header) -->
   <div class="mb-3">
-    <div class="bg-white rounded border border-slate-200 overflow-hidden">
-      <div class="border-b border-slate-100 px-3 py-1.5 bg-slate-50 flex items-center">
-        <i class="fa-solid fa-palette text-slate-400 mr-1.5 text-xs"></i>
-        <h3 class="text-xs font-medium text-slate-700">Color Variables</h3>
+    <div class="bg-white rounded border border-slate-200 p-3">
+      <div class="flex items-center text-xs text-slate-500 mb-1.5">
+        <i class="fa-solid fa-palette text-slate-400 mr-1.5"></i> CSS Variables
       </div>
-      <div class="p-2">
-        <pre class="language-css text-xs"><code>:root {
+      <pre class="language-css text-xs"><code>:root {
   --fl-success: #10b981; /* Green */
   --fl-error: #ef4444;   /* Red */
   --fl-warning: #f59e0b; /* Orange */
   --fl-info: #3b82f6;    /* Blue */
 }</code></pre>
-      </div>
     </div>
   </div>
 
-  <!-- HTML Structure -->
+  <!-- HTML Structure (without header) -->
   <div class="mb-3">
-    <div class="bg-white rounded border border-slate-200 overflow-hidden">
-      <div class="border-b border-slate-100 px-3 py-1.5 bg-slate-50 flex items-center">
-        <i class="fa-solid fa-code text-slate-400 mr-1.5 text-xs"></i>
-        <h3 class="text-xs font-medium text-slate-700">HTML Structure</h3>
+    <div class="bg-white rounded border border-slate-200 p-3">
+      <div class="flex items-center text-xs text-slate-500 mb-1.5">
+        <i class="fa-solid fa-code text-slate-400 mr-1.5"></i> HTML Structure
       </div>
-      <div class="p-2">
-        <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
+      <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
     &lt;div class="fl-content">
         &lt;div class="fl-icon">&lt;/div>
         &lt;div>
@@ -236,42 +259,41 @@ flasher.use('flasher').success('This uses Flasher theme');</code></pre>
         &lt;span class="fl-progress">&lt;/span>
     &lt;/span>
 &lt;/div></code></pre>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- Browser Support -->
+<!-- Browser Support (horizontal layout) -->
 <section class="mb-4">
   <div class="flex items-center mb-2">
     <h2 class="text-sm font-medium text-slate-800">Browser Support</h2>
     <div class="h-px bg-slate-200 flex-grow ml-2"></div>
   </div>
   
-  <div class="grid grid-cols-6 gap-1">
-    <div class="flex flex-col items-center p-1 bg-white rounded border border-slate-200">
-      <i class="fa-brands fa-chrome text-sm text-green-600"></i>
-      <span class="text-[10px] text-slate-500">Chrome</span>
+  <div class="bg-white rounded border border-slate-200 p-3 flex flex-wrap justify-around">
+    <div class="flex flex-col items-center p-1">
+      <i class="fa-brands fa-chrome text-base text-green-600"></i>
+      <span class="text-[10px] mt-0.5 text-slate-500">Chrome</span>
     </div>
-    <div class="flex flex-col items-center p-1 bg-white rounded border border-slate-200">
-      <i class="fa-brands fa-firefox text-sm text-orange-600"></i>
-      <span class="text-[10px] text-slate-500">Firefox</span>
+    <div class="flex flex-col items-center p-1">
+      <i class="fa-brands fa-firefox text-base text-orange-600"></i>
+      <span class="text-[10px] mt-0.5 text-slate-500">Firefox</span>
     </div>
-    <div class="flex flex-col items-center p-1 bg-white rounded border border-slate-200">
-      <i class="fa-brands fa-safari text-sm text-blue-600"></i>
-      <span class="text-[10px] text-slate-500">Safari</span>
+    <div class="flex flex-col items-center p-1">
+      <i class="fa-brands fa-safari text-base text-blue-600"></i>
+      <span class="text-[10px] mt-0.5 text-slate-500">Safari</span>
     </div>
-    <div class="flex flex-col items-center p-1 bg-white rounded border border-slate-200">
-      <i class="fa-brands fa-edge text-sm text-blue-500"></i>
-      <span class="text-[10px] text-slate-500">Edge</span>
+    <div class="flex flex-col items-center p-1">
+      <i class="fa-brands fa-edge text-base text-blue-500"></i>
+      <span class="text-[10px] mt-0.5 text-slate-500">Edge</span>
     </div>
-    <div class="flex flex-col items-center p-1 bg-white rounded border border-slate-200">
-      <i class="fa-solid fa-mobile-screen text-sm"></i>
-      <span class="text-[10px] text-slate-500">Mobile</span>
+    <div class="flex flex-col items-center p-1">
+      <i class="fa-solid fa-mobile-screen text-base"></i>
+      <span class="text-[10px] mt-0.5 text-slate-500">Mobile</span>
     </div>
-    <div class="flex flex-col items-center p-1 bg-white rounded border border-slate-200">
-      <i class="fa-solid fa-moon text-sm text-indigo-600"></i>
-      <span class="text-[10px] text-slate-500">Dark</span>
+    <div class="flex flex-col items-center p-1">
+      <i class="fa-solid fa-moon text-base text-indigo-600"></i>
+      <span class="text-[10px] mt-0.5 text-slate-500">Dark</span>
     </div>
   </div>
 </section>
@@ -292,7 +314,7 @@ flasher.use('flasher').success('This uses Flasher theme');</code></pre>
 </div>
 
 <script>
-// Tab system
+// Tab system with Prism re-highlight
 document.addEventListener('DOMContentLoaded', function() {
   const tabButtons = document.querySelectorAll('.tab-button');
   const tabContent = document.querySelector('.tab-content');
@@ -340,6 +362,11 @@ flasher.success('Well done!');</code></pre>`
       // Update content
       const framework = this.textContent;
       tabContent.innerHTML = frameworkContents[framework];
+      
+      // Re-run Prism highlighting
+      if (window.Prism) {
+        Prism.highlightAllUnder(tabContent);
+      }
     });
   });
 });
