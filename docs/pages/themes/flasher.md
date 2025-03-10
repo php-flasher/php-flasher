@@ -4,261 +4,315 @@ title: Flasher Theme
 description: The default notification theme for PHPFlasher with a clean design, colored borders, and accessible notifications for your web applications.
 ---
 
-<!-- Simple Hero Section -->
-<div class="border-b border-slate-200 pb-6 mb-10">
-  <div class="flex items-center mb-4">
-    <span class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mr-3">
-      <i class="fa-solid fa-bolt text-purple-600"></i>
-    </span>
-    <h1 class="text-3xl font-bold text-slate-800">Flasher Theme</h1>
-  </div>
-  <div class="flex flex-col md:flex-row md:items-center justify-between">
-    <p class="text-lg text-slate-600 max-w-lg mb-4 md:mb-0">Beautiful notifications that enhance your web applications — instantly.</p>
-    <div class="flex gap-2">
-      <button onclick="flasher.success('Success! Your changes were saved.', 'Well Done')" class="px-3 py-1.5 border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition-colors">
-        <i class="fa-regular fa-circle-check mr-1 text-green-500"></i> Try Success
-      </button>
-      <button onclick="flasher.error('Something went wrong. Please try again.')" class="px-3 py-1.5 border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition-colors">
-        <i class="fa-regular fa-circle-xmark mr-1 text-red-500"></i> Try Error
-      </button>
+<!-- Refined Hero Section -->
+<header class="flex items-start justify-between pb-5 mb-8 border-b border-slate-100">
+  <div class="flex items-center">
+    <div class="mr-4 flex-shrink-0">
+      <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-slate-50 to-white shadow-sm border border-slate-100 flex items-center justify-center">
+        <i class="fa-solid fa-bolt text-purple-600 text-xl"></i>
+      </div>
+    </div>
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-semibold text-slate-800 tracking-tight mb-1">Flasher Theme</h1>
+      <p class="text-slate-500">The default, elegant notification system for PHPFlasher</p>
     </div>
   </div>
+  <div class="hidden sm:flex items-center gap-2">
+    <button onclick="flasher.success('Success! Your changes were saved.', 'Well Done')" class="px-3 py-1.5 text-sm border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition shadow-sm">
+      <i class="fa-regular fa-circle-check text-green-500 mr-1"></i> Try Success
+    </button>
+    <button onclick="flasher.error('Something went wrong. Please try again.')" class="px-3 py-1.5 text-sm border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition shadow-sm">
+      <i class="fa-regular fa-circle-xmark text-red-500 mr-1"></i> Try Error
+    </button>
+  </div>
+</header>
+
+<!-- Demo buttons for mobile -->
+<div class="sm:hidden flex flex-wrap gap-2 mb-6">
+  <button onclick="flasher.success('Success! Your changes were saved.', 'Well Done')" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition shadow-sm">
+    <i class="fa-regular fa-circle-check text-green-500 mr-1"></i> Try Success
+  </button>
+  <button onclick="flasher.error('Something went wrong. Please try again.')" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 bg-white text-slate-700 rounded hover:bg-slate-50 transition shadow-sm">
+    <i class="fa-regular fa-circle-xmark text-red-500 mr-1"></i> Try Error
+  </button>
 </div>
 
-<div class="bg-slate-50 rounded-lg border border-slate-200 p-4 mb-8">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div class="fl-flasher fl-success fl-container fl-show hover:-translate-y-1 transition-all duration-200 shadow-sm" role="status" aria-live="polite" aria-atomic="true">
-        <div class="fl-content">
-            <div class="fl-icon"></div>
-            <div>
-                <strong class="fl-title">Success</strong>
-                <span class="fl-message">Data has been saved successfully!</span>
-            </div>
-            <button class="fl-close" aria-label="Close success message">×</button>
-        </div>
-        <span class="fl-progress-bar">
-            <span class="fl-progress" style="width: 40%;"></span>
-        </span>
-    </div>
-
-    <div class="fl-flasher fl-error fl-container fl-show hover:-translate-y-1 transition-all duration-200 shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="fl-content">
-            <div class="fl-icon"></div>
-            <div>
-                <strong class="fl-title">Error</strong>
-                <span class="fl-message">Oops! Something went wrong!</span>
-            </div>
-            <button class="fl-close" aria-label="Close error message">×</button>
-        </div>
-        <span class="fl-progress-bar">
-            <span class="fl-progress" style="width: 25%;"></span>
-        </span>
-    </div>
-
-    <div class="fl-flasher fl-warning fl-container fl-show hover:-translate-y-1 transition-all duration-200 shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="fl-content">
-            <div class="fl-icon"></div>
-            <div>
-                <strong class="fl-title">Warning</strong>
-                <span class="fl-message">Are you sure you want to proceed?</span>
-            </div>
-            <button class="fl-close" aria-label="Close warning message">×</button>
-        </div>
-        <span class="fl-progress-bar">
-            <span class="fl-progress" style="width: 10%;"></span>
-        </span>
-    </div>
-
-    <div class="fl-flasher fl-info fl-container fl-show hover:-translate-y-1 transition-all duration-200 shadow-sm" role="status" aria-live="polite" aria-atomic="true">
-        <div class="fl-content">
-            <div class="fl-icon"></div>
-            <div>
-                <strong class="fl-title">Information</strong>
-                <span class="fl-message">Welcome back!</span>
-            </div>
-            <button class="fl-close" aria-label="Close info message">×</button>
-        </div>
-        <span class="fl-progress-bar">
-            <span class="fl-progress" style="width: 5%;"></span>
-        </span>
-    </div>
-  </div>
-</div>
-
-<!-- Configuration Tabs -->
-<h2 class="text-2xl font-semibold text-slate-800 mb-4">Configuration</h2>
-
-<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden mb-8">
-  <div class="flex border-b border-slate-200 bg-slate-50">
-    <button class="tab-button px-4 py-2 text-slate-800 font-medium border-b-2 border-purple-500 focus:outline-none">Laravel</button>
-    <button class="tab-button px-4 py-2 text-slate-500 hover:text-slate-800 focus:outline-none">Symfony</button>
-    <button class="tab-button px-4 py-2 text-slate-500 hover:text-slate-800 focus:outline-none">JavaScript</button>
+<!-- Notification Examples -->
+<section class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-8">
+  <div class="border-b border-slate-100 px-4 py-2.5 bg-slate-50 flex items-center">
+    <i class="fa-regular fa-bell text-slate-400 mr-2"></i>
+    <h2 class="font-medium text-slate-700 text-sm">Notification Types</h2>
   </div>
   
-  <div class="tab-content p-4">
-    <div class="flex items-center mb-2 text-slate-800">
-      <i class="fa-brands fa-laravel text-red-500 mr-2"></i>
-      <span class="font-medium">Setting as Default in Laravel</span>
+  <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="fl-flasher fl-success fl-container fl-show hover:-translate-y-0.5 transition-all duration-200" role="status" aria-live="polite" aria-atomic="true">
+      <div class="fl-content">
+        <div class="fl-icon"></div>
+        <div>
+          <strong class="fl-title">Success</strong>
+          <span class="fl-message">Data has been saved successfully!</span>
+        </div>
+        <button class="fl-close" aria-label="Close success message">×</button>
+      </div>
+      <span class="fl-progress-bar">
+        <span class="fl-progress" style="width: 40%;"></span>
+      </span>
     </div>
-    <pre class="language-php bg-slate-50 p-3 rounded"><code>// config/flasher.php
+
+    <div class="fl-flasher fl-error fl-container fl-show hover:-translate-y-0.5 transition-all duration-200" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="fl-content">
+        <div class="fl-icon"></div>
+        <div>
+          <strong class="fl-title">Error</strong>
+          <span class="fl-message">Oops! Something went wrong!</span>
+        </div>
+        <button class="fl-close" aria-label="Close error message">×</button>
+      </div>
+      <span class="fl-progress-bar">
+        <span class="fl-progress" style="width: 25%;"></span>
+      </span>
+    </div>
+
+    <div class="fl-flasher fl-warning fl-container fl-show hover:-translate-y-0.5 transition-all duration-200" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="fl-content">
+        <div class="fl-icon"></div>
+        <div>
+          <strong class="fl-title">Warning</strong>
+          <span class="fl-message">Are you sure you want to proceed?</span>
+        </div>
+        <button class="fl-close" aria-label="Close warning message">×</button>
+      </div>
+      <span class="fl-progress-bar">
+        <span class="fl-progress" style="width: 10%;"></span>
+      </span>
+    </div>
+
+    <div class="fl-flasher fl-info fl-container fl-show hover:-translate-y-0.5 transition-all duration-200" role="status" aria-live="polite" aria-atomic="true">
+      <div class="fl-content">
+        <div class="fl-icon"></div>
+        <div>
+          <strong class="fl-title">Information</strong>
+          <span class="fl-message">Welcome back!</span>
+        </div>
+        <button class="fl-close" aria-label="Close info message">×</button>
+      </div>
+      <span class="fl-progress-bar">
+        <span class="fl-progress" style="width: 5%;"></span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- Configuration Section -->
+<section class="mb-6">
+  <div class="flex items-center space-x-2 mb-4">
+    <h2 class="text-lg font-medium text-slate-800">Configuration</h2>
+    <div class="h-px bg-slate-200 flex-grow"></div>
+  </div>
+  
+  <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+    <div class="flex border-b border-slate-200 bg-slate-50 overflow-x-auto scrollbar-hide">
+      <button class="tab-button px-4 py-2 text-slate-800 font-medium border-b-2 border-purple-500 whitespace-nowrap focus:outline-none">Laravel</button>
+      <button class="tab-button px-4 py-2 text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none">Symfony</button>
+      <button class="tab-button px-4 py-2 text-slate-500 hover:text-slate-700 whitespace-nowrap focus:outline-none">JavaScript</button>
+    </div>
+    
+    <div class="tab-content p-4">
+      <div class="flex items-center mb-2 text-slate-800">
+        <i class="fa-brands fa-laravel text-red-500 mr-2"></i>
+        <span class="font-medium">Setting as Default in Laravel</span>
+      </div>
+      <pre class="language-php bg-slate-50 p-3 rounded text-sm"><code>// config/flasher.php
 
 return [
     'default' => 'flasher',
     // Other settings...
 ];</code></pre>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- Theme Selection -->
-<div class="mb-6">
-  <h3 class="text-lg font-medium text-slate-800 mb-3">Theme Selection</h3>
+<section class="mb-6">
+  <div class="flex items-center space-x-2 mb-4">
+    <h2 class="text-lg font-medium text-slate-800">Theme Usage</h2>
+    <div class="h-px bg-slate-200 flex-grow"></div>
+  </div>
+  
   <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
+    <div class="flex items-center text-xs text-slate-500 mb-2">
+      <i class="fa-solid fa-code mr-1.5"></i> PHP / JavaScript
+    </div>
     <pre class="language-php text-sm"><code>// Use this theme for a specific notification
 flash()->use('flasher')->success('This uses Flasher theme');</code></pre>
-  </div>
-</div>
-
-<!-- Features Section -->
-<h2 class="text-2xl font-semibold text-slate-800 mb-6">Key Features</h2>
-
-<div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm mb-8">
-  <div class="grid grid-cols-1 md:grid-cols-2">
-    <div class="p-5 border-b md:border-b-0 md:border-r border-slate-200">
-      <h3 class="flex items-center text-lg font-medium text-slate-800 mb-3">
-        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-purple-100 mr-2 flex-shrink-0">
-          <i class="fa-solid fa-palette text-purple-600 text-sm"></i>
-        </span>
-        Visual Design
-      </h3>
-      
-      <ul class="space-y-2">
-        <li class="flex items-start text-sm text-slate-600">
-          <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
-          <span>Color-coded borders for quick identification</span>
-        </li>
-        <li class="flex items-start text-sm text-slate-600">
-          <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
-          <span>Progress indicator shows remaining display time</span>
-        </li>
-        <li class="flex items-start text-sm text-slate-600">
-          <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
-          <span>Responsive design works on all screen sizes</span>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="p-5">
-      <h3 class="flex items-center text-lg font-medium text-slate-800 mb-3">
-        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 mr-2 flex-shrink-0">
-          <i class="fa-solid fa-universal-access text-blue-600 text-sm"></i>
-        </span>
-        Accessibility
-      </h3>
-      
-      <ul class="space-y-2">
-        <li class="flex items-start text-sm text-slate-600">
-          <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
-          <span>Semantic ARIA attributes for screen readers</span>
-        </li>
-        <li class="flex items-start text-sm text-slate-600">
-          <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
-          <span>Keyboard navigation support</span>
-        </li>
-        <li class="flex items-start text-sm text-slate-600">
-          <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
-          <span>RTL language support</span>
-        </li>
-      </ul>
+    <div class="mt-2 pt-2 border-t border-slate-100">
+      <pre class="language-javascript text-sm"><code>// JavaScript equivalent
+flasher.use('flasher').success('This uses Flasher theme');</code></pre>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Features Grid -->
+<section class="mb-8">
+  <div class="flex items-center space-x-2 mb-4">
+    <h2 class="text-lg font-medium text-slate-800">Key Features</h2>
+    <div class="h-px bg-slate-200 flex-grow"></div>
+  </div>
+  
+  <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-slate-200">
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <div class="p-4 border-b md:border-b-0 md:border-r border-slate-100">
+        <div class="flex items-center mb-3">
+          <span class="w-6 h-6 rounded-full bg-purple-50 flex items-center justify-center mr-2">
+            <i class="fa-solid fa-palette text-purple-500 text-xs"></i>
+          </span>
+          <h3 class="font-medium text-slate-700">Visual Design</h3>
+        </div>
+        
+        <ul class="space-y-2 pl-8">
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Color-coded borders for quick identification</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Progress indicator shows remaining display time</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Responsive design works on all screen sizes</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="p-4">
+        <div class="flex items-center mb-3">
+          <span class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center mr-2">
+            <i class="fa-solid fa-universal-access text-blue-500 text-xs"></i>
+          </span>
+          <h3 class="font-medium text-slate-700">Accessibility</h3>
+        </div>
+        
+        <ul class="space-y-2 pl-8">
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Semantic ARIA attributes for screen readers</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>Keyboard navigation support</span>
+          </li>
+          <li class="flex items-start text-xs text-slate-600 relative">
+            <i class="fa-solid fa-check text-green-500 absolute -left-5 mt-0.5"></i>
+            <span>RTL language support</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Customization Section -->
-<h2 class="text-2xl font-semibold text-slate-800 mb-4">Customize the Theme</h2>
-
-<!-- Color Customization -->
-<div class="mb-6">
-  <h3 class="text-lg font-medium text-slate-800 mb-3">Color Customization</h3>
-  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
-    <pre class="language-css text-sm"><code>:root {
+<section class="mb-8">
+  <div class="flex items-center space-x-2 mb-4">
+    <h2 class="text-lg font-medium text-slate-800">Customization</h2>
+    <div class="h-px bg-slate-200 flex-grow"></div>
+  </div>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <!-- Color Customization -->
+    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+      <div class="border-b border-slate-100 px-3 py-2 bg-slate-50 flex items-center">
+        <i class="fa-solid fa-palette text-slate-400 mr-2 text-sm"></i>
+        <h3 class="text-sm font-medium text-slate-700">Color Variables</h3>
+      </div>
+      <div class="p-3">
+        <pre class="language-css text-xs"><code>:root {
   --fl-success: #10b981; /* Green */
   --fl-error: #ef4444;   /* Red */
   --fl-warning: #f59e0b; /* Orange */
   --fl-info: #3b82f6;    /* Blue */
 }</code></pre>
-  </div>
-</div>
-
-<!-- HTML Structure -->
-<div class="mb-6">
-  <h3 class="text-lg font-medium text-slate-800 mb-3">HTML Structure</h3>
-  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
-    <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
+      </div>
+    </div>
+  
+    <!-- HTML Structure -->
+    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+      <div class="border-b border-slate-100 px-3 py-2 bg-slate-50 flex items-center">
+        <i class="fa-solid fa-code text-slate-400 mr-2 text-sm"></i>
+        <h3 class="text-sm font-medium text-slate-700">HTML Structure</h3>
+      </div>
+      <div class="p-3">
+        <pre class="language-html text-xs"><code>&lt;div class="fl-flasher fl-[type]" role="[role]" aria-live="[ariaLive]" aria-atomic="true">
     &lt;div class="fl-content">
         &lt;div class="fl-icon">&lt;/div>
         &lt;div>
             &lt;strong class="fl-title">Title text&lt;/strong>
             &lt;span class="fl-message">Message text&lt;/span>
         &lt;/div>
-        &lt;button class="fl-close" aria-label="Close [type] message">&times;&lt;/button>
+        &lt;button class="fl-close" aria-label="Close">&times;&lt;/button>
     &lt;/div>
     &lt;span class="fl-progress-bar">
         &lt;span class="fl-progress">&lt;/span>
     &lt;/span>
 &lt;/div></code></pre>
-  </div>
-</div>
-
-<!-- Technical Details -->
-<div class="mb-6">
-  <h3 class="text-lg font-medium text-slate-800 mb-3">Technical Details</h3>
-  <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
-    <p class="text-slate-600 mb-3">The Flasher theme is well-supported across all modern browsers and devices.</p>
-    
-    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
-      <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
-        <i class="fa-brands fa-chrome text-lg block mb-1 text-green-600"></i>
-        Chrome
-      </div>
-      <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
-        <i class="fa-brands fa-firefox text-lg block mb-1 text-orange-600"></i>
-        Firefox
-      </div>
-      <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
-        <i class="fa-brands fa-safari text-lg block mb-1 text-blue-600"></i>
-        Safari
-      </div>
-      <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
-        <i class="fa-brands fa-edge text-lg block mb-1 text-blue-500"></i>
-        Edge
-      </div>
-      <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
-        <i class="fa-solid fa-mobile-screen text-lg block mb-1"></i>
-        Mobile
-      </div>
-      <div class="p-2 bg-slate-50 rounded text-center text-xs text-slate-600">
-        <i class="fa-solid fa-moon text-lg block mb-1 text-indigo-600"></i>
-        Dark Mode
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Browser Support -->
+<section class="mb-8">
+  <div class="flex items-center space-x-2 mb-4">
+    <h2 class="text-lg font-medium text-slate-800">Browser Support</h2>
+    <div class="h-px bg-slate-200 flex-grow"></div>
+  </div>
+  
+  <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+    <div class="aspect-square flex flex-col items-center justify-center p-2 bg-white rounded border border-slate-200 shadow-sm">
+      <i class="fa-brands fa-chrome text-xl text-green-600 mb-1"></i>
+      <span class="text-xs text-slate-600">Chrome</span>
+    </div>
+    <div class="aspect-square flex flex-col items-center justify-center p-2 bg-white rounded border border-slate-200 shadow-sm">
+      <i class="fa-brands fa-firefox text-xl text-orange-600 mb-1"></i>
+      <span class="text-xs text-slate-600">Firefox</span>
+    </div>
+    <div class="aspect-square flex flex-col items-center justify-center p-2 bg-white rounded border border-slate-200 shadow-sm">
+      <i class="fa-brands fa-safari text-xl text-blue-600 mb-1"></i>
+      <span class="text-xs text-slate-600">Safari</span>
+    </div>
+    <div class="aspect-square flex flex-col items-center justify-center p-2 bg-white rounded border border-slate-200 shadow-sm">
+      <i class="fa-brands fa-edge text-xl text-blue-500 mb-1"></i>
+      <span class="text-xs text-slate-600">Edge</span>
+    </div>
+    <div class="aspect-square flex flex-col items-center justify-center p-2 bg-white rounded border border-slate-200 shadow-sm">
+      <i class="fa-solid fa-mobile-screen text-xl text-slate-600 mb-1"></i>
+      <span class="text-xs text-slate-600">Mobile</span>
+    </div>
+    <div class="aspect-square flex flex-col items-center justify-center p-2 bg-white rounded border border-slate-200 shadow-sm">
+      <i class="fa-solid fa-moon text-xl text-indigo-600 mb-1"></i>
+      <span class="text-xs text-slate-600">Dark Mode</span>
+    </div>
+  </div>
+</section>
 
 <!-- Help Section -->
-<div class="border border-slate-200 rounded-lg p-4 flex items-center bg-white mb-8">
-  <div class="mr-4 flex-shrink-0">
-    <i class="fa-solid fa-circle-question text-purple-500 text-xl"></i>
+<div class="border border-slate-200 rounded-lg p-3 flex items-center bg-white">
+  <div class="mr-3 flex-shrink-0">
+    <div class="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center">
+      <i class="fa-solid fa-question text-purple-500 text-sm"></i>
+    </div>
   </div>
   <div>
-    <h3 class="text-lg font-medium text-slate-800 mb-1">Need Help?</h3>
-    <p class="text-slate-600 text-sm">
-      Check out our <a href="/docs/" class="text-purple-700 underline hover:text-purple-900">documentation</a> or join our <a href="https://github.com/php-flasher/php-flasher/discussions" class="text-purple-700 underline hover:text-purple-900">community</a>.
+    <h3 class="text-sm font-medium text-slate-800">Need help?</h3>
+    <p class="text-xs text-slate-600">
+      Check our <a href="/docs/" class="text-purple-600 hover:text-purple-800">documentation</a> or join our <a href="https://github.com/php-flasher/php-flasher/discussions" class="text-purple-600 hover:text-purple-800">community</a>.
     </p>
   </div>
 </div>
 
 <script>
-// Simple tab system
+// Tab system
 document.addEventListener('DOMContentLoaded', function() {
   const tabButtons = document.querySelectorAll('.tab-button');
   const tabContent = document.querySelector('.tab-content');
@@ -267,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <i class="fa-brands fa-laravel text-red-500 mr-2"></i>
       <span class="font-medium">Setting as Default in Laravel</span>
     </div>
-    <pre class="language-php bg-slate-50 p-3 rounded"><code>// config/flasher.php
+    <pre class="language-php bg-slate-50 p-3 rounded text-sm"><code>// config/flasher.php
 
 return [
     'default' => 'flasher',
@@ -277,7 +331,7 @@ return [
       <i class="fa-brands fa-symfony text-black mr-2"></i>
       <span class="font-medium">Setting as Default in Symfony</span>
     </div>
-    <pre class="language-yaml bg-slate-50 p-3 rounded"><code># config/packages/flasher.yaml
+    <pre class="language-yaml bg-slate-50 p-3 rounded text-sm"><code># config/packages/flasher.yaml
 
 flasher:
     default: flasher
@@ -286,7 +340,7 @@ flasher:
       <i class="fa-brands fa-js text-amber-500 mr-2"></i>
       <span class="font-medium">Setting as Default in JavaScript</span>
     </div>
-    <pre class="language-javascript bg-slate-50 p-3 rounded"><code>// Set as default theme
+    <pre class="language-javascript bg-slate-50 p-3 rounded text-sm"><code>// Set as default theme
 flasher.defaultPlugin = 'flasher';
 
 // Then use it
