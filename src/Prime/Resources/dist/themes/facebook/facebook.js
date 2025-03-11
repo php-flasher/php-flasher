@@ -11,13 +11,12 @@
 
     const facebookTheme = {
         render: (envelope) => {
-            var _a;
             const { type, message } = envelope;
             const isAlert = type === 'error' || type === 'warning';
             const role = isAlert ? 'alert' : 'status';
             const ariaLive = isAlert ? 'assertive' : 'polite';
-            const timestamp = String(((_a = envelope.options) === null || _a === void 0 ? void 0 : _a.timestamp) || '2025-03-02 06:49:21');
-            const formattedTime = timestamp.split(' ')[1].substring(0, 5);
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
             const getNotificationIcon = () => {
                 switch (type) {
                     case 'success':
@@ -58,7 +57,7 @@
                             ${message}
                         </div>
                         <div class="fl-meta">
-                            <span class="fl-time">${formattedTime}</span>
+                            <span class="fl-time">${timeString}</span>
                         </div>
                     </div>
                     <div class="fl-actions">

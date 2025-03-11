@@ -50,11 +50,9 @@ export const facebookTheme = {
         const role = isAlert ? 'alert' : 'status'
         const ariaLive = isAlert ? 'assertive' : 'polite'
 
-        // Extract timestamp from options or use current time
-        const timestamp = String(envelope.options?.timestamp || '2025-03-02 06:49:21')
-
-        // Format time to be more readable (HH:MM format)
-        const formattedTime = timestamp.split(' ')[1].substring(0, 5)
+        // Format current time in Facebook style (hour:minute)
+        const now = new Date()
+        const timeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 
         /**
          * Gets the appropriate icon based on notification type.
@@ -103,7 +101,7 @@ export const facebookTheme = {
                             ${message}
                         </div>
                         <div class="fl-meta">
-                            <span class="fl-time">${formattedTime}</span>
+                            <span class="fl-time">${timeString}</span>
                         </div>
                     </div>
                     <div class="fl-actions">

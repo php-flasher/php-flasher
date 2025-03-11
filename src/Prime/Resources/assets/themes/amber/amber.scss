@@ -57,11 +57,6 @@
     font-family: var(--fl-font), serif;
     will-change: transform, opacity;
 
-    /* Remove margin from last notification in a stack */
-    &:last-child {
-        margin-bottom: 0;
-    }
-
     /**
      * Content container
      * Holds all notification elements in a flexbox layout

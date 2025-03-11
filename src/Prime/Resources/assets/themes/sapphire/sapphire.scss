@@ -76,13 +76,6 @@
     -webkit-backdrop-filter: blur(12px);           /* Safari support */
 
     /**
-     * Remove margin from last notification in a stack
-     */
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    /**
      * Message styling
      * Clean, readable text
      */
