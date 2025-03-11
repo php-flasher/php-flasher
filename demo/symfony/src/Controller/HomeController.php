@@ -14,7 +14,7 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $themes = [
-            'flasher',
+            // 'flasher',
             // 'amber',
             // 'sapphire',
             // 'crystal',
@@ -23,7 +23,7 @@ class HomeController extends AbstractController
             // 'ruby',
             // 'onyx',
 
-            'jade',
+            // 'jade',
             // 'aurora',
             // 'neon',
             // 'minimal',
@@ -34,33 +34,33 @@ class HomeController extends AbstractController
             // 'ios',
             // 'slack',
             // 'facebook',
-            // 'amazon',
+            'amazon',
         ];
 
         $positions = [
-            'top-left',
+            // 'top-left',
             'top-right',
-            'bottom-left',
-            'bottom-right',
-            'top-center',
-            'bottom-center',
-            'center-left',
-            'center-right',
-            'center-center',
+            // 'bottom-left',
+            // 'bottom-right',
+            // 'top-center',
+            // 'bottom-center',
+            // 'center-left',
+            // 'center-right',
+            // 'center-center',
         ];
 
         $messages = [
-            'success' => 'Your profile has been updated successfully',
-            'info' => 'New: You can now export your reports in PDF format',
-            'warning' => 'Your premium subscription will expire in 3 days',
-            'error' => 'Payment failed: Your card has been declined',
+            'info' => 'Welcome back!',
+            'warning' => 'Are you sure you want to proceed?',
+            'error' => 'Oops! Something went wrong!',
+            'success' => 'Data has been saved successfully!',
         ];
 
         foreach ($themes as $index => $theme) {
             foreach ($messages as $type => $message) {
                 $position = $positions[$index % \count($positions)];
 
-                $message = \sprintf('%s: %s', $theme, $message);
+                // $message = \sprintf('%s: %s', $theme, $message);
 
                 flash()
                     ->use("theme.$theme")

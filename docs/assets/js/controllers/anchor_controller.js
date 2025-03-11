@@ -72,7 +72,7 @@ export default class extends Controller {
         const stickies = document.querySelectorAll('.sticky')
 
         stickies.forEach((sticky) => {
-            if (sticky.offsetHeight > window.innerHeight && article.clientHeight > sticky.offsetHeight) {
+            if (sticky.offsetHeight > window.innerHeight && article && article.clientHeight > sticky.offsetHeight) {
                 const div = document.createElement('div')
                 div.className = 'h-screen overflow-y-auto'
                 div.innerHTML = sticky.innerHTML

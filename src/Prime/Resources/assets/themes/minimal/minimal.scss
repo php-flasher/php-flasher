@@ -66,13 +66,6 @@
     max-width: 320px;                             /* Limit width for readability */
 
     /**
-     * Remove margin from last notification in a stack
-     */
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    /**
      * Content container
      * Holds message and close button
      */

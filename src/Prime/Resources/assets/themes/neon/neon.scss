@@ -77,6 +77,7 @@
     animation: neonEntrance var(--neon-animation-duration) ease-out;
     font-family: 'Inter', var(--fl-font), sans-serif; /* Prefer Inter font for elegant typography */
     will-change: transform, opacity, filter;      /* Optimize for animation performance */
+    overflow: hidden;                             /* Contain progress bar */
 
     /* Frosted glass effect */
     backdrop-filter: blur(10px);

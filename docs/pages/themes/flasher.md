@@ -4,7 +4,7 @@ permalink: /theme/flasher/
 title: Flasher Theme
 subtitle: The default notification system for PHPFlasher
 description: The default notification theme for PHPFlasher with a clean design, colored borders, and accessible notifications for your web applications.
-theme_name: flasher
+theme_name: theme.flasher
 theme_name_short: flasher
 theme_class: fl
 icon: fa-bolt

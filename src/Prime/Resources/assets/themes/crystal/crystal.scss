@@ -82,13 +82,6 @@
     }
 
     /**
-     * Remove margin from last notification in a stack
-     */
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    /**
      * Content container
      * Holds the message and close button
      */
