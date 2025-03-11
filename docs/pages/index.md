@@ -79,847 +79,279 @@ layout: home
     </div>
 </section>
 
-<!-- Mission Control Dashboard Demo -->
-<section class="relative min-h-screen py-10 overflow-hidden bg-slate-900">
-    <!-- Animated Background -->
-    <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
-        <div class="absolute top-0 w-full h-full opacity-30">
-            <div class="absolute top-0 left-0 w-full h-full">
-                <!-- Grid Pattern -->
-                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 40px 40px;"></div>
-                
-                <!-- Moving Particles -->
-                <div id="particles-js" class="absolute inset-0 opacity-50"></div>
-                
-                <!-- Glowing Orbs -->
-                <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-[100px] opacity-10 animate-pulse-slow"></div>
-                <div class="absolute top-2/3 right-1/3 w-96 h-96 bg-purple-500 rounded-full filter blur-[120px] opacity-10 animate-pulse-medium"></div>
-                <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-500 rounded-full filter blur-[100px] opacity-10 animate-pulse-slow"></div>
-            </div>
-        </div>
-    </div>
+<!-- Minimal Interactive PHPFlasher Demo -->
+<section class="py-10 bg-white">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <!-- Simple header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-2xl font-light mb-2">
+                <span class="text-gray-800">see the magic with this</span>
+                <span class="font-medium text-blue-500">interactive demo</span>
+            </h1>
+            <p class="text-gray-500">Customize your notification, click the button, and watch it appear</p>
+        </header>
 
-    <div class="container relative z-10 px-4 mx-auto max-w-7xl">
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-                <div class="relative p-1 overflow-hidden rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600">
-                    <div class="p-2 font-mono text-xs font-bold tracking-wide text-white uppercase">PHPFlasher</div>
+        <!-- Main content area -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left side: Options panel -->
+            <div class="w-full lg:w-1/2 bg-white rounded-lg border border-gray-100 shadow-sm">
+                <div class="border-b border-gray-100 px-5 py-4">
+                    <h2 class="text-lg font-light text-gray-700">
+                        <span class="font-medium text-blue-500">Customize</span> your notification
+                    </h2>
                 </div>
-                <h1 class="text-xl font-medium text-white">Mission Control <span class="font-mono text-sm opacity-50">v2.0</span></h1>
-            </div>
-            <div class="flex items-center gap-3 px-3 py-1.5 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50">
-                <div class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></div>
-                <span class="text-xs font-medium text-green-400">SYSTEM READY</span>
-                <span class="pl-3 ml-2 text-xs text-slate-400 border-l border-slate-700" id="mc-current-time">2025-03-11 06:28:39</span>
-                <span class="pl-3 ml-2 text-xs text-slate-400 border-l border-slate-700">User: <span class="text-indigo-400">yoeunes</span></span>
-            </div>
-        </div>
-        
-        <!-- Main Dashboard Grid -->
-        <div class="grid grid-cols-12 gap-5">
-            <!-- Left Panel: Notification Builder -->
-            <div class="col-span-12 md:col-span-7">
-                <div class="p-5 border rounded-lg shadow-lg bg-slate-800/60 backdrop-blur-md border-slate-700/50">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-2">
-                            <div class="p-1.5 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                                </svg>
-                            </div>
-                            <h2 class="font-medium text-white">Notification Builder</h2>
-                            <div class="px-2 py-0.5 ml-2 text-xs font-semibold rounded-full bg-indigo-900/50 text-indigo-300">INTERACTIVE</div>
-                        </div>
-                        <div class="px-2 py-1 text-xs bg-slate-700/50 rounded-md text-slate-300">Blueprint Mode</div>
-                    </div>
-                    
-                    <!-- Tabs -->
-                    <div class="flex mb-5 border-b border-slate-700/50">
-                        <button class="px-4 py-2 -mb-px text-sm font-medium text-indigo-400 border-b-2 border-indigo-500" id="basicTab">Basic</button>
-                        <button class="px-4 py-2 -mb-px text-sm font-medium text-slate-400 hover:text-slate-300" id="advancedTab">Advanced</button>
-                        <button class="px-4 py-2 -mb-px text-sm font-medium text-slate-400 hover:text-slate-300" id="presetTab">Presets</button>
-                    </div>
-                    
-                    <!-- Builder Interface -->
-                    <div class="mb-4">
-                        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-                            <!-- Notification Type -->
-                            <div>
-                                <label class="block mb-1 text-xs font-medium text-slate-400">Notification Type</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button active-type bg-gradient-to-br from-green-500/20 to-green-600/20 text-green-400 border border-green-500/30" 
-                                            data-type="success" onclick="updateBuilderType('success')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span>Success</span>
-                                    </button>
-                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button bg-slate-800/80 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50" 
-                                            data-type="error" onclick="updateBuilderType('error')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span>Error</span>
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-2 gap-2 mt-2">
-                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button bg-slate-800/80 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50" 
-                                            data-type="info" onclick="updateBuilderType('info')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span>Info</span>
-                                    </button>
-                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button bg-slate-800/80 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50" 
-                                            data-type="warning" onclick="updateBuilderType('warning')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span>Warning</span>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- Position -->
-                            <div>
-                                <label class="block mb-1 text-xs font-medium text-slate-400">Position</label>
-                                <div class="grid grid-cols-3 gap-2 mb-2">
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50" 
-                                            data-position="top-left" onclick="updateBuilderPosition('top-left')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 5v5" />
-                                        </svg>
-                                    </button>
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="top-center" onclick="updateBuilderPosition('top-center')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 5h10" />
-                                        </svg>
-                                    </button>
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="top-right" onclick="updateBuilderPosition('top-right')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5M19 5v5" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-3 gap-2 mb-2">
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="middle-left" onclick="updateBuilderPosition('middle-left')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h5" />
-                                        </svg>
-                                    </button>
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center active-position bg-gradient-to-br from-blue-500/20 to-indigo-500/20 text-indigo-400 border border-indigo-500/30"  
-                                            data-position="center" onclick="updateBuilderPosition('center')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h14M5 19h14M5 12h14" />
-                                        </svg>
-                                    </button>
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="middle-right" onclick="updateBuilderPosition('middle-right')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 12h5" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-3 gap-2">
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="bottom-left" onclick="updateBuilderPosition('bottom-left')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19h5M5 14v5" />
-                                        </svg>
-                                    </button>
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="bottom-center" onclick="updateBuilderPosition('bottom-center')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 19h10" />
-                                        </svg>
-                                    </button>
-                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
-                                            data-position="bottom-right" onclick="updateBuilderPosition('bottom-right')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 19h5M19 14v5" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Content -->
-                        <div class="mt-5">
-                            <label class="block mb-1 text-xs font-medium text-slate-400">Content</label>
-                            <div class="grid grid-cols-3 gap-3">
-                                <div class="col-span-2">
-                                    <input type="text" id="message-input" class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" 
-                                       placeholder="Notification message" value="Your changes have been saved successfully!">
-                                </div>
-                                <div>
-                                    <input type="text" id="title-input" class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" 
-                                       placeholder="Title (optional)" value="Success">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Options -->
-                        <div class="grid grid-cols-4 gap-3 mt-5">
-                            <div>
-                                <label class="block mb-1 text-xs font-medium text-slate-400">Duration (ms)</label>
-                                <input type="number" id="duration-input" class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" 
-                                   value="5000">
-                            </div>
-                            <div>
-                                <label class="block mb-1 text-xs font-medium text-slate-400">Animation</label>
-                                <select class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
-                                    <option value="fade">Fade</option>
-                                    <option value="slide" selected>Slide</option>
-                                    <option value="bounce">Bounce</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block mb-1 text-xs font-medium text-slate-400">Theme</label>
-                                <select class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
-                                    <option value="light">Light</option>
-                                    <option value="dark" selected>Dark</option>
-                                    <option value="material">Material</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block mb-1 text-xs font-medium invisible">Launch</label>
-                                <button id="launchButton" class="w-full px-4 py-2 font-medium text-white transition-all border rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-slate-800" onclick="launchNotification()">
-                                    Launch
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Code Preview -->
-                    <div class="mt-5">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-medium text-slate-400">Generated Code</label>
-                            <button class="flex items-center gap-1.5 px-2 py-1 text-xs bg-slate-700 rounded-md text-slate-300 hover:bg-slate-600" onclick="copyToClipboard('#codeDisplay')">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                </svg>
-                                Copy Code
+
+                <div class="p-5 space-y-6">
+                    <!-- Notification Type -->
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn active" data-type="success">
+                                Success
+                            </button>
+                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn" data-type="error">
+                                Error
+                            </button>
+                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn" data-type="info">
+                                Info
+                            </button>
+                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn" data-type="warning">
+                                Warning
                             </button>
                         </div>
-                        <div class="overflow-hidden rounded-md">
-                            <div class="flex items-center px-4 py-2 space-x-2 text-xs text-slate-400 bg-slate-800/80 border-b border-slate-700">
-                                <div class="w-3 h-3 rounded-full bg-slate-600"></div>
-                                <div class="w-3 h-3 rounded-full bg-slate-600"></div>
-                                <div class="w-3 h-3 rounded-full bg-slate-600"></div>
-                                <span class="ml-2 font-mono">Controller.php</span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="space-y-4">
+                        <div>
+                            <label for="title-input" class="block mb-2 text-sm font-medium text-gray-700">Title (optional)</label>
+                            <input type="text" id="title-input" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                   placeholder="Enter title" value="Success">
+                        </div>
+                        <div>
+                            <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                            <input type="text" id="message-input" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                   placeholder="Enter your message" value="Your changes have been saved successfully!">
+                        </div>
+                    </div>
+
+                    <!-- Options -->
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Options</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="position-select" class="block mb-1 text-xs text-gray-500">Position</label>
+                                <select id="position-select" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm">
+                                    <option value="top-right" selected>top-right</option>
+                                    <option value="top-left">top-left</option>
+                                    <option value="bottom-right">bottom-right</option>
+                                    <option value="bottom-left">bottom-left</option>
+                                    <option value="center-top">center-top</option>
+                                    <option value="center-bottom">center-bottom</option>
+                                </select>
                             </div>
-                            <pre id="codeDisplay" class="font-mono text-xs leading-relaxed bg-slate-800/60 p-4 text-slate-200 overflow-x-auto"><span class="text-slate-500">// Display a success notification</span>
-<span class="text-blue-400">flash</span>()-><span class="text-green-400">success</span>(<span class="text-amber-300">'Your changes have been saved successfully!'</span>, <span class="text-amber-300">'Success'</span>)
-    -><span class="text-purple-400">options</span>([
-        <span class="text-amber-300">'position'</span> => <span class="text-amber-300">'center'</span>,
-        <span class="text-amber-300">'duration'</span> => <span class="text-blue-300">5000</span>,
-        <span class="text-amber-300">'theme'</span> => <span class="text-amber-300">'dark'</span>,
-        <span class="text-amber-300">'animation'</span> => <span class="text-amber-300">'slide'</span>
+                            <div>
+                                <label for="duration-input" class="block mb-1 text-xs text-gray-500">Duration (ms)</label>
+                                <input type="number" id="duration-input" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm" 
+                                       value="5000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div>
+                        <button id="show-notification-btn" class="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Show Notification
+                        </button>
+                        <div class="text-center mt-2 text-xs text-gray-400">Click to see your notification in action</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side: Code preview -->
+            <div class="w-full lg:w-1/2 bg-white rounded-lg border border-gray-100 shadow-sm flex flex-col">
+                <div class="border-b border-gray-100 px-5 py-4">
+                    <h2 class="text-lg font-light text-gray-700">
+                        <span class="font-medium text-blue-500">Generated</span> code
+                    </h2>
+                </div>
+                
+                <!-- Code editor appearance -->
+                <div class="flex-grow p-5 relative">
+                    <div class="absolute inset-0 m-5 overflow-hidden rounded-md bg-gray-50 border border-gray-200">
+                        <div class="border-b border-gray-200 bg-gray-100 px-4 py-2 flex items-center justify-between">
+                            <div class="flex space-x-1.5">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono">Controller.php</div>
+                        </div>
+                        
+                        <div class="h-full overflow-auto p-4 font-mono text-sm">
+<pre id="code-display" class="text-gray-800 whitespace-pre-wrap">// Display a success notification
+flash()->success('Your changes have been saved successfully!', 'Success')
+    ->options([
+        'position' => 'top-right',
+        'duration' => 5000
     ]);</pre>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Right Panel: Preview & Analytics -->
-            <div class="col-span-12 md:col-span-5">
-                <!-- Live Preview -->
-                <div class="mb-5 border rounded-lg shadow-lg h-80 bg-slate-800/60 backdrop-blur-md border-slate-700/50">
-                    <div class="flex items-center justify-between p-3 border-b border-slate-700/50">
-                        <div class="flex items-center gap-2">
-                            <div class="p-1.5 rounded-md bg-gradient-to-r from-blue-500 to-indigo-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <h2 class="font-medium text-white">Live Preview</h2>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping-slow"></div>
-                            <span class="text-xs font-medium text-emerald-400">Active</span>
-                        </div>
-                    </div>
-                    
-                    <div id="preview-screen" class="relative flex items-center justify-center w-full h-[calc(100%-49px)] bg-gradient-to-b from-slate-800 to-slate-900">
-                        <!-- Browser Frame -->
-                        <div class="absolute top-0 left-0 w-full border-b border-slate-700/50">
-                            <div class="flex items-center h-8 px-3 space-x-1.5 bg-slate-800/40">
-                                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                                <div class="flex items-center h-6 px-2 mx-auto text-xs bg-slate-700/40 rounded-md text-slate-400 w-60">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                                    </svg>
-                                    app.example.com/dashboard
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- App content placeholder -->
-                        <div class="w-full px-8 pt-10 pb-5">
-                            <div class="flex items-center mb-4 space-x-3">
-                                <div class="w-8 h-8 rounded-full bg-slate-700/60"></div>
-                                <div class="w-1/2 h-3 rounded-full bg-slate-700/60"></div>
-                            </div>
-                            <div class="w-full h-4 mb-2 rounded-full bg-slate-700/40"></div>
-                            <div class="w-5/6 h-4 mb-2 rounded-full bg-slate-700/40"></div>
-                            <div class="w-4/6 h-4 rounded-full bg-slate-700/40"></div>
-                            
-                            <div class="grid grid-cols-2 gap-3 mt-6">
-                                                                <div class="h-20 p-4 border rounded-lg bg-slate-700/30 border-slate-700/50"></div>
-                                <div class="h-20 p-4 border rounded-lg bg-slate-700/30 border-slate-700/50"></div>
-                            </div>
-                            
-                            <div id="notification-container" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                <!-- Notifications will appear here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Analytics -->
-                <div class="border rounded-lg shadow-lg bg-slate-800/60 backdrop-blur-md border-slate-700/50">
-                    <div class="flex items-center justify-between p-3 border-b border-slate-700/50">
-                        <div class="flex items-center gap-2">
-                            <div class="p-1.5 rounded-md bg-gradient-to-r from-emerald-500 to-teal-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                </svg>
-                            </div>
-                            <h2 class="font-medium text-white">Analytics</h2>
-                        </div>
-                        <div class="px-2 py-1 text-xs bg-slate-700/50 rounded-md text-slate-300">Real-time</div>
-                    </div>
-                    
-                    <div class="p-3">
-                        <div class="grid grid-cols-2 gap-3 mb-3">
-                            <div class="p-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-xs font-medium text-slate-400">Success Rate</span>
-                                    <span class="text-xs font-medium text-emerald-400">98.2%</span>
-                                </div>
-                                <div class="w-full h-1.5 bg-slate-700 rounded-full">
-                                    <div class="h-1.5 bg-emerald-500 rounded-full" style="width: 98.2%"></div>
-                                </div>
-                            </div>
-                            <div class="p-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-xs font-medium text-slate-400">User Engagement</span>
-                                    <span class="text-xs font-medium text-blue-400">87.5%</span>
-                                </div>
-                                <div class="w-full h-1.5 bg-slate-700 rounded-full">
-                                    <div class="h-1.5 bg-blue-500 rounded-full" style="width: 87.5%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-3 mb-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
-                            <h3 class="mb-2 text-xs font-medium text-slate-400">Notification Distribution</h3>
-                            <div class="relative h-24">
-                                <div class="absolute bottom-0 left-0 w-1/4 bg-gradient-to-t from-green-500 to-green-500/20" style="height: 75%"></div>
-                                <div class="absolute bottom-0 left-1/4 w-1/4 bg-gradient-to-t from-red-500 to-red-500/20" style="height: 35%"></div>
-                                <div class="absolute bottom-0 left-2/4 w-1/4 bg-gradient-to-t from-blue-500 to-blue-500/20" style="height: 60%"></div>
-                                <div class="absolute bottom-0 left-3/4 w-1/4 bg-gradient-to-t from-amber-500 to-amber-500/20" style="height: 45%"></div>
-                                
-                                <div class="absolute bottom-0 left-0 flex justify-around w-full">
-                                    <div class="px-2 py-1 text-xs text-center text-green-400 bg-green-900/20 rounded-t-md">Success</div>
-                                    <div class="px-2 py-1 text-xs text-center text-red-400 bg-red-900/20 rounded-t-md">Error</div>
-                                    <div class="px-2 py-1 text-xs text-center text-blue-400 bg-blue-900/20 rounded-t-md">Info</div>
-                                    <div class="px-2 py-1 text-xs text-center text-amber-400 bg-amber-900/20 rounded-t-md">Warning</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
-                            <h3 class="mb-2 text-xs font-medium text-slate-400">Activity Log</h3>
-                            <div class="space-y-2 h-28 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800/50">
-                                <div class="flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                                    <span>Success notification displayed</span>
-                                    <span class="ml-auto text-slate-400">2s ago</span>
-                                </div>
-                                <div class="flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                                    <span>User configuration updated</span>
-                                    <span class="ml-auto text-slate-400">24s ago</span>
-                                </div>
-                                <div class="flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
-                                    <span>Warning notification dismissed</span>
-                                    <span class="ml-auto text-slate-400">1m ago</span>
-                                </div>
-                                <div id="activity-log-container">
-                                    <!-- New log items will be added here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        
-        <!-- Footer Status Bar -->
-        <div class="mt-6 text-xs text-center text-slate-500">
-            <div class="flex items-center justify-center gap-6">
-                <div class="flex items-center gap-1">
-                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                    <span>System Online</span>
-                </div>
-                <div class="flex items-center gap-1">
-                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                    <span>API Active</span>
-                </div>
-                <div class="flex items-center gap-1">
-                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
-                    <span>Database Connected</span>
-                </div>
-            </div>
-            <div class="mt-3">
-                <span>PHPFlasher Mission Control v2.0 • Last Update: 2025-03-11 06:30:54 • © 2025 @yoeunes</span>
-            </div>
-        </div>
+
+        <!-- Minimal footer -->
+        <footer class="mt-8 text-center text-xs text-gray-400">
+            <p>PHPFlasher Interactive Demo • <span id="current-time">2025-03-11 06:43:47</span> • Session: <span class="text-gray-500">yoeunes</span></p>
+        </footer>
     </div>
 </section>
 
 <style>
-/* Animation styles for the Mission Control demo */
-@keyframes pulse-slow {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.2; }
+/* Minimal styling for type buttons */
+.type-btn {
+    @apply border-gray-200 text-gray-500;
 }
 
-@keyframes pulse-medium {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.3; }
+.type-btn.active[data-type="success"] {
+    @apply border-green-200 bg-green-50 text-green-700;
 }
 
-@keyframes ping-slow {
-    0% { transform: scale(1); opacity: 1; }
-    75%, 100% { transform: scale(2); opacity: 0; }
+.type-btn.active[data-type="error"] {
+    @apply border-red-200 bg-red-50 text-red-700;
 }
 
-.animate-ping-slow {
-    animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+.type-btn.active[data-type="info"] {
+    @apply border-blue-200 bg-blue-50 text-blue-700;
 }
 
-.animate-pulse-slow {
-    animation: pulse-slow 8s ease-in-out infinite;
+.type-btn.active[data-type="warning"] {
+    @apply border-amber-200 bg-amber-50 text-amber-700;
 }
 
-.animate-pulse-medium {
-    animation: pulse-medium 6s ease-in-out infinite;
+/* Animation for notification trigger */
+@keyframes pulse-blue {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    }
 }
 
-.pulse-dot::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-    background-color: #10b981;
-    opacity: 0.6;
-    animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-/* Type button colors */
-.type-button[data-type="success"].active-type {
-    @apply bg-gradient-to-br from-green-500/20 to-green-600/20 text-green-400 border-green-500/30;
-}
-
-.type-button[data-type="error"].active-type {
-    @apply bg-gradient-to-br from-red-500/20 to-red-600/20 text-red-400 border-red-500/30;
-}
-
-.type-button[data-type="info"].active-type {
-    @apply bg-gradient-to-br from-blue-500/20 to-blue-600/20 text-blue-400 border-blue-500/30;
-}
-
-.type-button[data-type="warning"].active-type {
-    @apply bg-gradient-to-br from-amber-500/20 to-amber-600/20 text-amber-400 border-amber-500/30;
-}
-
-/* Scrollbar styles */
-.scrollbar-thin {
-    scrollbar-width: thin;
-}
-
-.scrollbar-thumb-slate-700 {
-    scrollbar-color: #334155 #1e293b;
-}
-
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(30, 41, 59, 0.5);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-}
-
-/* Notification styles */
-.notification {
-    position: absolute;
-    max-width: 350px;
-    padding: 10px 15px;
-    border-radius: 6px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: notification-fade-in 0.3s ease forwards, notification-fade-out 0.3s ease 4.7s forwards;
-}
-
-@keyframes notification-fade-in {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes notification-fade-out {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-20px); }
-}
-
-.notification-success {
-    background: linear-gradient(to right, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
-    border: 1px solid rgba(16, 185, 129, 0.4);
-}
-
-.notification-error {
-    background: linear-gradient(to right, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
-    border: 1px solid rgba(239, 68, 68, 0.4);
-}
-
-.notification-info {
-    background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2));
-    border: 1px solid rgba(59, 130, 246, 0.4);
-}
-
-.notification-warning {
-    background: linear-gradient(to right, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2));
-    border: 1px solid rgba(245, 158, 11, 0.4);
+.pulse-animation {
+    animation: pulse-blue 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Update current time
-    function updateCurrentTime() {
-        const now = new Date();
-        const year = now.getUTCFullYear();
-        const month = String(now.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(now.getUTCDate()).padStart(2, '0');
-        const hours = String(now.getUTCHours()).padStart(2, '0');
-        const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-        const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-        
-        const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        document.getElementById('mc-current-time').textContent = formattedTime;
-    }
+// Current state management
+const state = {
+    type: 'success',
+    title: 'Success',
+    message: 'Your changes have been saved successfully!',
+    position: 'top-right',
+    duration: 5000
+};
+
+// Update current time
+function updateCurrentTime() {
+    const now = new Date();
+    const year = now.getUTCFullYear();
+    const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(now.getUTCDate()).padStart(2, '0');
+    const hours = String(now.getUTCHours()).padStart(2, '0');
+    const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(now.getUTCSeconds()).padStart(2, '0');
     
+    const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    document.getElementById('current-time').textContent = formattedTime;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize time
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
     
-    // Initialize particles.js
-    if (typeof particlesJS !== 'undefined') {
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 40, density: { enable: true, value_area: 800 } },
-                color: { value: "#ffffff" },
-                opacity: { value: 0.1, random: true },
-                size: { value: 1.5, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#ffffff",
-                    opacity: 0.1,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 0.3,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out"
-                }
-            }
+    // Notification type buttons
+    document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            // Update state
+            state.type = btn.dataset.type;
+            updateCodeDisplay();
         });
-    }
-    
-    // Show the initial notification after a short delay
-    setTimeout(() => {
-        launchNotification();
-    }, 1000);
-});
-
-// Update builder type
-function updateBuilderType(type) {
-    // Remove active class from all type buttons
-    document.querySelectorAll('.type-button').forEach(btn => {
-        btn.classList.remove('active-type', 'bg-gradient-to-br', 'from-green-500/20', 'to-green-600/20', 
-            'from-red-500/20', 'to-red-600/20', 'from-blue-500/20', 'to-blue-600/20', 
-            'from-amber-500/20', 'to-amber-600/20', 'text-green-400', 'text-red-400', 
-            'text-blue-400', 'text-amber-400', 'border-green-500/30', 'border-red-500/30', 
-            'border-blue-500/30', 'border-amber-500/30');
-        
-        btn.classList.add('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
     });
     
-    // Add active class to the selected type button
-    const button = document.querySelector(`.type-button[data-type="${type}"]`);
-    button.classList.remove('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
-    button.classList.add('active-type');
-    
-    // Update code preview
-    updateCodePreview();
-    
-    // Add to activity log
-    addActivityLog(`Type changed to: ${type}`);
-}
-
-// Update builder position
-function updateBuilderPosition(position) {
-    // Remove active class from all position buttons
-    document.querySelectorAll('[data-position]').forEach(btn => {
-        btn.classList.remove('active-position', 'bg-gradient-to-br', 'from-blue-500/20', 
-            'to-indigo-500/20', 'text-indigo-400', 'border-indigo-500/30');
-        
-        btn.classList.add('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
+    // Input change handlers
+    document.getElementById('title-input').addEventListener('input', (e) => {
+        state.title = e.target.value;
+        updateCodeDisplay();
     });
     
-    // Add active class to the selected position button
-    const button = document.querySelector(`[data-position="${position}"]`);
-    button.classList.remove('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
-    button.classList.add('active-position', 'bg-gradient-to-br', 'from-blue-500/20', 
-        'to-indigo-500/20', 'text-indigo-400', 'border-indigo-500/30');
+    document.getElementById('message-input').addEventListener('input', (e) => {
+        state.message = e.target.value;
+        updateCodeDisplay();
+    });
     
-    // Update code preview
-    updateCodePreview();
+    document.getElementById('position-select').addEventListener('change', (e) => {
+        state.position = e.target.value;
+        updateCodeDisplay();
+    });
     
-    // Add to activity log
-    addActivityLog(`Position changed to: ${position}`);
-}
-
-// Update code preview
-function updateCodePreview() {
-    // Get current values
-    const typeElement = document.querySelector('.type-button.active-type');
-    const type = typeElement ? typeElement.dataset.type : 'success';
+    document.getElementById('duration-input').addEventListener('input', (e) => {
+        state.duration = parseInt(e.target.value);
+        updateCodeDisplay();
+    });
     
-    const positionElement = document.querySelector('.active-position');
-    const position = positionElement ? positionElement.dataset.position : 'center';
-    
-    const message = document.getElementById('message-input').value;
-    const title = document.getElementById('title-input').value;
-    const duration = document.getElementById('duration-input').value;
-    
-    // Generate code
-    let code = `<span class="text-slate-500">// Display a ${type} notification</span>\n`;
-    code += `<span class="text-blue-400">flash</span>()-><span class="text-green-400">${type}</span>(<span class="text-amber-300">'${message}'</span>`;
-    
-    if (title) {
-        code += `, <span class="text-amber-300">'${title}'</span>`;
-    }
-    
-    code += `)\n    -><span class="text-purple-400">options</span>([\n        <span class="text-amber-300">'position'</span> => <span class="text-amber-300">'${position}'</span>,\n        <span class="text-amber-300">'duration'</span> => <span class="text-blue-300">${duration}</span>,\n        <span class="text-amber-300">'theme'</span> => <span class="text-amber-300">'dark'</span>,\n        <span class="text-amber-300">'animation'</span> => <span class="text-amber-300">'slide'</span>\n    ]);`;
-    
-    document.getElementById('codeDisplay').innerHTML = code;
-}
-
-// Launch notification
-function launchNotification() {
-    // Get current values
-    const typeElement = document.querySelector('.type-button.active-type');
-    const type = typeElement ? typeElement.dataset.type : 'success';
-    
-    const positionElement = document.querySelector('.active-position');
-    const position = positionElement ? positionElement.dataset.position : 'center';
-    
-    const message = document.getElementById('message-input').value;
-    const title = document.getElementById('title-input').value;
-    
-    // Create notification element
-    const notificationContainer = document.getElementById('notification-container');
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    
-    // Position the notification
-    notification.style.transform = 'translateY(20px)';
-    if (position === 'center') {
-        notification.style.top = '50%';
-        notification.style.left = '50%';
-        notification.style.transform = 'translate(-50%, -50%) translateY(20px)';
-    } else if (position.includes('top')) {
-        notification.style.top = '10%';
-    } else if (position.includes('bottom')) {
-        notification.style.bottom = '10%';
-    }
-    
-    if (position.includes('left')) {
-        notification.style.left = '10%';
-    } else if (position.includes('right')) {
-        notification.style.right = '10%';
-    } else if (!position.includes('center')) {
-        notification.style.left = '50%';
-        notification.style.transform = 'translateX(-50%) translateY(20px)';
-    }
-    
-    // Create notification content
-    const contentHTML = `
-        <div class="flex items-start space-x-3">
-            <div class="mt-0.5">
-                ${getNotificationIcon(type)}
-            </div>
-            <div>
-                ${title ? `<div class="mb-1 text-sm font-medium ${getNotificationTextColor(type)}">${title}</div>` : ''}
-                <div class="text-xs text-slate-200">${message}</div>
-            </div>
-        </div>
-    `;
-    
-    notification.innerHTML = contentHTML;
-    notificationContainer.appendChild(notification);
-    
-    // Add to activity log
-    addActivityLog(`${type.charAt(0).toUpperCase() + type.slice(1)} notification displayed`);
-    
-    // Show the notification in the actual page too
-    if (typeof flasher !== 'undefined') {
-        flasher[type](message, title);
-    }
-    
-    // Remove the notification after animation completes
-    setTimeout(() => {
-        notification.remove();
-    }, 5000);
-}
-
-// Get notification icon based on type
-function getNotificationIcon(type) {
-    const icons = {
-        success: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>`,
-        error: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-        </svg>`,
-        info: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
-        </svg>`,
-        warning: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-        </svg>`
-    };
-    
-    return icons[type] || icons.info;
-}
-
-// Get notification text color based on type
-function getNotificationTextColor(type) {
-    const colors = {
-        success: 'text-green-400',
-        error: 'text-red-400',
-        info: 'text-blue-400',
-        warning: 'text-amber-400'
-    };
-    
-    return colors[type] || colors.info;
-}
-
-// Add item to activity log
-function addActivityLog(message) {
-    const logContainer = document.getElementById('activity-log-container');
-    const logItem = document.createElement('div');
-    
-    logItem.className = 'flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300';
-    logItem.innerHTML = `
-        <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
-        <span>${message}</span>
-        <span class="ml-auto text-slate-400">just now</span>
-    `;
-    
-    logContainer.insertBefore(logItem, logContainer.firstChild);
-    
-    // Update timestamps of existing log items
-    const existingLogs = document.querySelectorAll('#activity-log-container > div:not(:first-child) .text-slate-400');
-    existingLogs.forEach(log => {
-        if (log.textContent === 'just now') {
-            log.textContent = '5s ago';
-        } else if (log.textContent === '5s ago') {
-            log.textContent = '10s ago';
-        } else if (log.textContent === '10s ago') {
-            log.textContent = '15s ago';
+    // Show notification button
+    document.getElementById('show-notification-btn').addEventListener('click', () => {
+        // Add pulse animation
+        const button = document.getElementById('show-notification-btn');
+        button.classList.add('pulse-animation');
+        
+        // Show the notification
+        if (typeof flasher !== 'undefined') {
+            flasher[state.type](state.message, state.title, {
+                position: state.position,
+                duration: state.duration
+            });
+        } else {
+            // Fallback if flasher is not available
+            alert(`${state.type.toUpperCase()}: ${state.title}\n${state.message}`);
         }
-    });
-    
-    // Remove old logs if there are more than 5
-    const logs = document.querySelectorAll('#activity-log-container > div');
-    if (logs.length > 5) {
-        logContainer.removeChild(logs[logs.length - 1]);
-    }
-}
-
-// Copy code to clipboard
-function copyToClipboard(selector) {
-    const element = document.querySelector(selector);
-    const text = element.innerText;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        // Show success message
-        addActivityLog('Code copied to clipboard');
         
-        // Flash the copy button
-        const copyButton = document.querySelector('button[onclick="copyToClipboard(\'#codeDisplay\')"]');
-        copyButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-            Copied!
-        `;
-        
+        // Remove animation after a short delay
         setTimeout(() => {
-            copyButton.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Copy Code
-            `;
+            button.classList.remove('pulse-animation');
         }, 2000);
     });
+    
+    // Initial code display update
+    updateCodeDisplay();
+});
+
+// Update the code display
+function updateCodeDisplay() {
+    const codeDisplay = document.getElementById('code-display');
+    
+    let code = `// Display a ${state.type} notification\n`;
+    
+    if (state.title) {
+        code += `flash()->${state.type}('${state.message}', '${state.title}')\n`;
+    } else {
+        code += `flash()->${state.type}('${state.message}')\n`;
+    }
+    
+    code += `    ->options([\n        'position' => '${state.position}',\n        'duration' => ${state.duration}\n    ]);`;
+    
+    codeDisplay.textContent = code;
 }
-
-// When tab buttons are clicked
-document.getElementById('basicTab')?.addEventListener('click', function() {
-    // Add tab switching logic here
-    addActivityLog('Switched to Basic tab');
-});
-
-document.getElementById('advancedTab')?.addEventListener('click', function() {
-    // Add tab switching logic here
-    addActivityLog('Advanced features coming soon');
-});
-
-document.getElementById('presetTab')?.addEventListener('click', function() {
-    // Add tab switching logic here
-    addActivityLog('Preset templates coming soon');
-});
 </script>
-
 
 <!-- Quick Start Section (Moved before Features) -->
 <section id="quick-start" class="container mx-auto px-4 mb-16">
