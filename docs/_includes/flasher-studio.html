@@ -216,8 +216,9 @@
                     </div>
 
                     <!-- Laravel Code Panel -->
-                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-php code-block focus-highlight"><code>// app/Http/Controllers/ProductController.php
+                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active" style="height: calc(100vh - 15rem); max-height: 700px;">
+                        <pre class="language-php"><code class="code-block">
+// app/Http/Controllers/ProductController.php
 
 namespace App\Http\Controllers;
 
@@ -232,17 +233,17 @@ class ProductController extends Controller
         // Create new product
         $product = Product::create($request->validated());
 
-        flash()->success('Your product has been created successfully!');
+        <span class="flash-code-block">flash()->success('Your product has been created successfully!');</span>
 
         return redirect()->route('products.index');
     }
-}
-</code></pre>
+}</code></pre>
                     </div>
 
                     <!-- Symfony Code Panel -->
-                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-php code-block focus-highlight"><code>// src/Controller/ProductController.php
+                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel" style="height: calc(100vh - 15rem); max-height: 700px;">
+                        <pre class="language-php"><code class="code-block">
+// src/Controller/ProductController.php
 
 namespace App\Controller;
 
@@ -267,7 +268,7 @@ class ProductController extends AbstractController
             $em->persist($product);
             $em->flush();
 
-            flash()->success('Your product has been created successfully!');
+            <span class="flash-code-block">flash()->success('Your product has been created successfully!');</span>
 
             return $this->redirectToRoute('app_product_index');
         }
@@ -277,13 +278,13 @@ class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
-}
-</code></pre>
+}</code></pre>
                     </div>
 
                     <!-- JavaScript Code Panel -->
-                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-javascript code-block focus-highlight"><code>// product-service.js
+                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel" style="height: calc(100vh - 15rem); max-height: 700px;">
+                        <pre class="language-javascript"><code class="code-block">
+// product-service.js
 
 import flasher from '@flasher/flasher';
 
@@ -304,22 +305,21 @@ async function createProduct(productData) {
             throw new Error(result.message || 'Failed to create product');
         }
 
-        flasher.success('Your product has been created successfully!');
+        <span class="flash-code-block">flasher.success('Your product has been created successfully!');</span>
 
         return result;
     } catch (error) {
         flasher.error('Error: ' + error.message);
         throw error;
     }
-}
-</code></pre>
+}</code></pre>
                     </div>
                 </div>
             </div>
 
             <!-- Additional interactive elements for demos -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="text-sm text-gray-500"></div>
+                <div class="text-sm text-gray-500">Current date: <span id="current-date">2025-03-11 23:46:24</span></div>
                 <div class="flex space-x-4">
                     <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fas fa-book mr-1.5 text-xs"></i>
@@ -337,30 +337,41 @@ async function createProduct(productData) {
 
 <style>
 /* Custom styles for highlighting and blurring code */
-.focus-highlight code {
-    transition: all 0.3s ease;
+pre {
+    position: relative;
 }
 
-/* Blur effect for lines not containing flash method */
-.focus-highlight .token-line:not(.highlight-line) {
+.code-block {
+    display: block;
+    position: relative;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+/* Blur effect for all code except flash-code-block */
+.code-block > *:not(.flash-code-block) {
     filter: blur(0.6px);
-    opacity: 0.7;
+    opacity: 0.65;
     transition: all 0.3s ease;
 }
 
-.focus-highlight:hover .token-line {
-    filter: blur(0);
-    opacity: 1;
+pre:hover .code-block > * {
+    filter: blur(0) !important;
+    opacity: 1 !important;
 }
 
 /* Highlight for the flash method lines */
-.focus-highlight .highlight-line {
-    position: relative;
+.flash-code-block {
+    display: inline-block;
+    width: 100%;
     background-color: rgba(16, 185, 129, 0.1);
     border-radius: 4px;
     font-weight: 600;
-    z-index: 1;
+    z-index: 5;
     box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
+    padding: 2px 0;
+    filter: blur(0) !important;
+    opacity: 1 !important;
 }
 
 /* Animation keyframes */
@@ -384,9 +395,6 @@ async function createProduct(productData) {
 }
 .type-button:hover {
     transform: translateY(-2px);
-}
-.type-button.active {
-    transform: translateY(-1px);
 }
 </style>
 
@@ -424,31 +432,9 @@ const messageTemplates = {
     }
 };
 
-// Code templates for each framework and notification type
-const codeTemplates = {
-    laravel: {
-        success: `flash()->success('Your product has been created successfully!');`,
-        error: `flash()->error('An error occurred while saving the product.');`,
-        info: `flash()->info('Your product is being processed.');`,
-        warning: `flash()->warning('Please review your product before submitting.');`
-    },
-    symfony: {
-        success: `$this->flash()->success('Your product has been created successfully!');`,
-        error: `$this->flash()->error('An error occurred while saving the product.');`,
-        info: `$this->flash()->info('Your product is being processed.');`,
-        warning: `$this->flash()->warning('Please review your product before submitting.');`
-    },
-    js: {
-        success: `flasher.success('Your product has been created successfully!');`,
-        error: `flasher.error('An error occurred while saving the product.');`,
-        info: `flasher.info('Your product is being processed.');`,
-        warning: `flasher.warning('Please review your product before submitting.');`
-    }
-};
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Prism.js highlighting and add highlight to flash lines
-    initPrismHighlighting();
+    // Update current date
+    document.getElementById('current-date').textContent = "2025-03-11 23:46:24";
 
     // Initialize type buttons
     document.querySelectorAll('.type-button').forEach(btn => {
@@ -560,35 +546,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize with Laravel tab selected
     showCodeTab('laravel');
 
-    // Initialize with appropriate notification type content
-    updateAllCodeExamples();
-});
-
-// Initialize Prism.js highlighting and add highlight to flash lines
-function initPrismHighlighting() {
-    // Ensure Prism is available
+    // Apply syntax highlighting if Prism is available
     if (typeof Prism !== 'undefined') {
-        Prism.highlightAll();
-
-        // Add highlight to the flash method lines
         setTimeout(() => {
-            const codeBlocks = document.querySelectorAll('.focus-highlight code');
-            codeBlocks.forEach(codeBlock => {
-                const lines = codeBlock.innerHTML.split('\n');
-                const highlightedLines = lines.map(line => {
-                    if (line.includes('flash()->') || line.includes('$this->flash()->') || line.includes('flasher.')) {
-                        return `<span class="token-line highlight-line">${line}</span>`;
-                    }
-                    return `<span class="token-line">${line}</span>`;
-                });
-                codeBlock.innerHTML = highlightedLines.join('\n');
-            });
-
-            // Re-highlight after modifying the DOM
             Prism.highlightAll();
         }, 100);
     }
-}
+});
 
 function updateStatus(message) {
     const statusText = document.getElementById('status-text');
@@ -614,147 +578,17 @@ function updateStatus(message) {
     }, 2000);
 }
 
-// Update all code examples to be in sync
-function updateAllCodeExamples() {
-    // Loop through all three tabs and update them
-    ['laravel', 'symfony', 'js'].forEach(tab => {
-        updateCodeForTab(tab);
-    });
-}
-
-// Update code for a specific tab
-function updateCodeForTab(tab) {
-    const codePanel = document.querySelector(`#${tab}-code-panel pre code`);
-    if (!codePanel) return;
-
-    // Find the flash line in the code
-    const codeLines = codePanel.innerHTML.split('\n');
-    let flashLineIndex = -1;
-
-    // Find the line with the flash code
-    codeLines.forEach((line, index) => {
-        if ((tab === 'laravel' && line.includes('flash()->')) ||
-            (tab === 'symfony' && line.includes('flash()->')) ||
-            (tab === 'js' && line.includes('flasher.'))) {
-            flashLineIndex = index;
-        }
-    });
-
-    // Replace the flash line with the appropriate code if found
-    if (flashLineIndex !== -1) {
-        // Create the code based on settings
-        let flashCode = createFlasherCode(tab);
-
-        // Make sure we're only replacing the token-line content
-        const tokenLineStart = '<span class="token-line highlight-line">';
-        const tokenLineEnd = '</span>';
-
-        let prefix = '';
-
-        // Extract prefix based on indentation in the original line
-        const originalLine = codeLines[flashLineIndex];
-        const indentMatch = originalLine.match(/^(\s+)/);
-        if (indentMatch) {
-            prefix = indentMatch[0];
-        }
-
-        // Replace the line
-        codeLines[flashLineIndex] = `${tokenLineStart}${prefix}${flashCode}${tokenLineEnd}`;
-
-        // Update the code panel with the modified lines
-        codePanel.innerHTML = codeLines.join('\n');
-
-        // Re-highlight with Prism if available
-        if (typeof Prism !== 'undefined') {
-            Prism.highlightElement(codePanel);
-
-            // Re-apply line highlighting
-            setTimeout(() => {
-                const lines = codePanel.innerHTML.split('\n');
-                const highlightedLines = lines.map(line => {
-                    if ((tab === 'laravel' && line.includes('flash()->')) ||
-                        (tab === 'symfony' && line.includes('flash()->')) ||
-                        (tab === 'js' && line.includes('flasher.'))) {
-                        return `<span class="token-line highlight-line">${line}</span>`;
-                    }
-                    return `<span class="token-line">${line}</span>`;
-                });
-                codePanel.innerHTML = highlightedLines.join('\n');
-                Prism.highlightElement(codePanel);
-            }, 50);
-        }
-    }
-}
-
-function createFlasherCode(framework) {
-    // Base template depends on the framework and notification type
-    let prefix = '';
-
-    switch(framework) {
-        case 'laravel':
-            prefix = 'flash()->';
-            break;
-        case 'symfony':
-            prefix = 'flash()->';
-            break;
-        case 'js':
-            prefix = 'flasher.';
-            break;
-    }
-
-    // Base code with notification type
-    let code = `${prefix}${state.type}('${state.message}'`;
-
-    // Add title if provided
-    if (state.title) {
-        code += `, '${state.title}'`;
-    }
-
-    // Add options if any are set
-    const options = {};
-    if (state.position) options.position = state.position;
-    if (state.timeout) options.timeout = state.timeout;
-    if (state.theme) options.theme = state.theme;
-    if (state.direction) options.direction = state.direction;
-    if (state.rtl) options.rtl = true;
-    if (!state.escapeHtml) options.escapeHtml = false;
-
-    // Add options to code
-    if (Object.keys(options).length > 0) {
-        if (framework === 'js') {
-            // JavaScript objects use camelCase
-            code += ', ' + JSON.stringify(options)
-                .replace(/"([^"]+)":/g, '$1:'); // Convert "key": to key:
-        } else {
-            // PHP uses array syntax
-            const phpOptions = Object.entries(options)
-                .map(([key, value]) => {
-                    if (typeof value === 'string') {
-                        return `'${key}' => '${value}'`;
-                    } else {
-                        return `'${key}' => ${value}`;
-                    }
-                })
-                .join(', ');
-
-            code += `, ['${phpOptions}']`;
-        }
-    }
-
-    // Close the function call
-    code += ');';
-
-    return code;
-}
-
 function showCodeTab(tab) {
     // Hide all panels
-    document.querySelectorAll('#laravel-code-panel, #symfony-code-panel, #js-code-panel').forEach(panel => {
+    document.querySelectorAll('.code-panel').forEach(panel => {
         panel.classList.add('hidden');
+        panel.classList.remove('active');
     });
 
     // Show the selected panel
-    document.getElementById(`${tab}-code-panel`).classList.remove('hidden');
+    const activePanel = document.getElementById(`${tab}-code-panel`);
+    activePanel.classList.remove('hidden');
+    activePanel.classList.add('active');
 
     // Update tab styling
     document.querySelectorAll('.code-tab-btn').forEach(btn => {
@@ -766,49 +600,165 @@ function showCodeTab(tab) {
     document.querySelector(`[data-tab="${tab}"]`).classList.remove('text-gray-600');
     document.querySelector(`[data-tab="${tab}"]`).classList.add('text-blue-600', 'border-b-2', 'border-blue-500');
 
-    // Ensure the code is updated for the current tab
-    updateCodeForTab(tab);
+    // Update the code based on current state
+    updateCodeDisplay();
+
+    // Re-initialize Prism highlighting if available
+    if (typeof Prism !== 'undefined') {
+        setTimeout(() => {
+            Prism.highlightAll();
+        }, 100);
+    }
 }
 
-// Update code display function with Prism.js integration
 function updateCodeDisplay() {
-    // Update code in all tabs to ensure sync
-    updateAllCodeExamples();
-}
-
-// Show notification function (simplified version that shows an alert)
-function showNotification() {
-    const options = {
-        type: state.type,
-        message: state.message,
-        title: state.title
+    // Get all code panels
+    const codePanels = {
+        'laravel': document.querySelector('#laravel-code-panel .flash-code-block'),
+        'symfony': document.querySelector('#symfony-code-panel .flash-code-block'),
+        'js': document.querySelector('#js-code-panel .flash-code-block')
     };
 
+    // Update each panel with the appropriate code
+    Object.keys(codePanels).forEach(framework => {
+        const flashBlock = codePanels[framework];
+        if (flashBlock) {
+            flashBlock.innerHTML = createCodeForFramework(framework);
+        }
+    });
+
+    // Update current date display
+    document.getElementById('current-date').textContent = "2025-03-11 23:48:50";
+}
+
+function createCodeForFramework(framework) {
+    // Base prefix depends on the framework
+    let prefix = '';
+    switch(framework) {
+        case 'laravel':
+            prefix = 'flash()';
+            break;
+        case 'symfony':
+            prefix = 'flash()';
+            break;
+        case 'js':
+            prefix = 'flasher';
+            break;
+    }
+
+    // Check if we have any options to set
+    const options = {};
     if (state.position) options.position = state.position;
     if (state.timeout) options.timeout = state.timeout;
+    if (state.theme) options.theme = state.theme;
     if (state.direction) options.direction = state.direction;
     if (state.rtl) options.rtl = true;
     if (!state.escapeHtml) options.escapeHtml = false;
 
+    // For PHP frameworks, use the multi-line ->options() format if we have options
+    if (Object.keys(options).length > 0 && framework !== 'js') {
+        let code = `${prefix}\n`;
+        code += `    ->options([\n`;
 
-    flasher.use(state.theme).flash(options);
+        // Add each option with proper indentation
+        Object.entries(options).forEach(([key, value], index, array) => {
+            if (typeof value === 'string') {
+                code += `        '${key}' => '${value}'`;
+            } else if (typeof value === 'boolean') {
+                code += `        '${key}' => ${value ? 'true' : 'false'}`;
+            } else {
+                code += `        '${key}' => ${value}`;
+            }
+
+            // Add comma if not the last item
+            if (index < array.length - 1) {
+                code += ',';
+            }
+
+            code += '\n';
+        });
+
+        code += `    ])\n`;
+        code += `    ->${state.type}('${state.message}'`;
+
+        // Add title if provided
+        if (state.title) {
+            code += `, '${state.title}'`;
+        }
+
+        code += `);`;
+        return code;
+    }
+    // For JavaScript or when no options are present, use the simple format
+    else if (framework === 'js') {
+        let code = '';
+
+        if (Object.keys(options).length > 0) {
+            // JavaScript uses object literal syntax
+            code = `${prefix}.${state.type}('${state.message}'`;
+
+            // Add title if provided
+            if (state.title) {
+                code += `, '${state.title}'`;
+            }
+
+            // Add options object
+            code += ', ' + JSON.stringify(options, null, 4)
+                .replace(/"([^"]+)":/g, '$1:') // Convert "key": to key:
+                .replace(/\n/g, '\n    '); // Proper indentation
+
+            code += `);`;
+        } else {
+            code = `${prefix}.${state.type}('${state.message}'`;
+
+            // Add title if provided
+            if (state.title) {
+                code += `, '${state.title}'`;
+            }
+
+            code += `);`;
+        }
+
+        return code;
+    } else {
+        // Simple format for PHP frameworks with no options
+        let code = `${prefix}->${state.type}('${state.message}'`;
+
+        // Add title if provided
+        if (state.title) {
+            code += `, '${state.title}'`;
+        }
+
+        code += `);`;
+        return code;
+    }
 }
 
-// Define keyframes at the document level once
-if (!document.getElementById('flasher-keyframes')) {
-    const styleSheet = document.createElement('style');
-    styleSheet.id = 'flasher-keyframes';
-    styleSheet.textContent = `
-        @keyframes shine {
-            to {
-                left: 100%;
-            }
-        }
-        @keyframes progress {
-            0% { transform: scaleX(1); }
-            100% { transform: scaleX(0); }
-        }
-    `;
-    document.head.appendChild(styleSheet);
+// Show notification function (simplified alert version)
+function showNotification() {
+    const options = {
+        type: state.type,
+        message: state.message
+    };
+
+    if (state.title) options.title = state.title;
+    if (state.position) options.position = state.position;
+    if (state.timeout) options.timeout = state.timeout;
+    if (state.theme) options.theme = state.theme;
+    if (state.direction) options.direction = state.direction;
+    if (state.rtl) options.rtl = true;
+    if (!state.escapeHtml) options.escapeHtml = false;
+
+    // Show notification details as an alert (in real use, would use the flasher library)
+    alert('Notification would display with these settings:\n\n' +
+          `Type: ${state.type}\n` +
+          `Message: ${state.message}\n` +
+          (state.title ? `Title: ${state.title}\n` : '') +
+          '\nOptions:\n' +
+          Object.entries(options)
+            .filter(([key]) => !['type', 'message', 'title'].includes(key))
+            .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+            .join('\n')
+    );
 }
 </script>
