@@ -88,6 +88,12 @@ layout: home
         
         <!-- Animated particles -->
         <div id="particles-js" class="absolute inset-0 opacity-60"></div>
+        
+        <!-- Animated lines -->
+        <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-pulse-slow"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-pulse-medium"></line>
+        </svg>
     </div>
 
     <!-- Main content -->
@@ -104,7 +110,7 @@ layout: home
             <div class="mt-3 inline-flex items-center px-3 py-1 space-x-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span class="text-xs text-gray-500">Session: <span class="text-gray-700 font-medium">yoeunes</span></span>
-                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 06:55:34</span>
+                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:11:29</span>
             </div>
         </header>
 
@@ -143,71 +149,75 @@ layout: home
                     
                     <!-- Options panel -->
                     <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem);">
-                        <!-- Notification Type with elegant selection -->
+                        <!-- Notification Type Selection - Improved with color cards -->
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
-                            <div class="flex -mx-1">
+                            <div class="grid grid-cols-4 gap-3">
                                 <!-- Success -->
-                                <div class="px-1 w-1/4">
-                                    <button class="type-btn active relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
-                                            data-type="success">
-                                        <div class="flex flex-col items-center">
-                                            <div class="type-icon-wrapper">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            </div>
-                                            <span class="type-label text-sm mt-1">Success</span>
+                                <div class="type-card-container">
+                                    <button class="type-card active" data-type="success">
+                                        <div class="type-card-color bg-green-500">
+                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
                                         </div>
-                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
+                                        <div class="type-card-label">Success</div>
+                                        <div class="type-card-check">
+                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
                                     </button>
                                 </div>
                                 
                                 <!-- Error -->
-                                <div class="px-1 w-1/4">
-                                    <button class="type-btn relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
-                                            data-type="error">
-                                        <div class="flex flex-col items-center">
-                                            <div class="type-icon-wrapper">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            </div>
-                                            <span class="type-label text-sm mt-1">Error</span>
+                                <div class="type-card-container">
+                                    <button class="type-card" data-type="error">
+                                        <div class="type-card-color bg-red-500">
+                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
                                         </div>
-                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
+                                        <div class="type-card-label">Error</div>
+                                        <div class="type-card-check">
+                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
                                     </button>
                                 </div>
                                 
                                 <!-- Info -->
-                                <div class="px-1 w-1/4">
-                                    <button class="type-btn relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
-                                            data-type="info">
-                                        <div class="flex flex-col items-center">
-                                            <div class="type-icon-wrapper">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            </div>
-                                            <span class="type-label text-sm mt-1">Info</span>
+                                <div class="type-card-container">
+                                    <button class="type-card" data-type="info">
+                                        <div class="type-card-color bg-blue-500">
+                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
                                         </div>
-                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
+                                        <div class="type-card-label">Info</div>
+                                        <div class="type-card-check">
+                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
                                     </button>
                                 </div>
                                 
                                 <!-- Warning -->
-                                <div class="px-1 w-1/4">
-                                    <button class="type-btn relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
-                                            data-type="warning">
-                                        <div class="flex flex-col items-center">
-                                            <div class="type-icon-wrapper">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                                                </svg>
-                                            </div>
-                                            <span class="type-label text-sm mt-1">Warning</span>
+                                <div class="type-card-container">
+                                    <button class="type-card" data-type="warning">
+                                        <div class="type-card-color bg-amber-500">
+                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
                                         </div>
-                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
+                                        <div class="type-card-label">Warning</div>
+                                        <div class="type-card-check">
+                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -231,19 +241,14 @@ layout: home
                             </div>
                         </div>
 
-                        <!-- Advanced Options with elegant accordion -->
+                        <!-- Advanced Options - No collapsing, less padding -->
                         <div class="mb-6 border border-gray-200 rounded-md overflow-hidden">
-                            <div class="bg-gray-50 px-4 py-2 flex items-center justify-between cursor-pointer" onclick="toggleOptions()">
+                            <div class="bg-gray-50 px-3 py-2 flex items-center">
                                 <h3 class="font-medium text-gray-700">Advanced Options</h3>
-                                <div id="options-chevron" class="transform transition-transform">
-                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
                             </div>
                             
-                            <div id="options-content" class="px-4 py-3 border-t border-gray-200">
-                                <div class="grid grid-cols-2 gap-4">
+                            <div class="px-3 py-3 border-t border-gray-200">
+                                <div class="grid grid-cols-2 gap-3">
                                     <div>
                                         <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
                                         <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -328,18 +333,19 @@ layout: home
                 <div class="w-full lg:w-1/2">
                     <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
-                        <button id="copy-code-btn" class="px-3 py-1 bg-white text-sm text-gray-600 hover:text-gray-900 border border-gray-200 rounded-md flex items-center space-x-1 hover:bg-gray-50 transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                            </svg>
-                            <span>Copy</span>
-                        </button>
+                        <!-- Removed copy button as per request -->
+                    </div>
+                    
+                    <!-- Code tabs -->
+                    <div class="flex border-b border-gray-200 bg-gray-50">
+                        <button id="php-tab" class="px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500">PHP</button>
+                        <button id="js-tab" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800">JavaScript</button>
                     </div>
                     
                     <!-- Code editor with Prism syntax highlighting -->
-                    <div class="p-4 bg-gray-50 h-full overflow-y-auto">
-                        <pre><code class="language-php" id="code-display">// Display a success notification
-flash()->success('Your changes have been saved successfully!', 'Success')
+                    <div id="php-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel">
+                        <pre><code class="language-php" id="php-code-display">// Display a success notification
+flash()
     ->options([
         'position' => 'top-right',
         'duration' => 5000,
@@ -347,17 +353,28 @@ flash()->success('Your changes have been saved successfully!', 'Success')
         'animation' => 'fade',
         'closeButton' => true,
         'progressBar' => true
-    ]);</code></pre>
-                        
-                        <!-- Preview notification -->
-                        <div id="notification-preview" class="absolute bottom-8 right-8 opacity-0 transition-opacity duration-300">
-                            <div class="notification-card notification-success shadow-lg">
-                                <div class="notification-content">
-                                    <div class="notification-title">Success</div>
-                                    <div class="notification-message">Your changes have been saved successfully!</div>
-                                </div>
-                            </div>
-                        </div>
+    ])
+    ->success(
+        'Your changes have been saved successfully!', 
+        'Success'
+    );</code></pre>
+                    </div>
+                    
+                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel hidden">
+                        <pre><code class="language-javascript" id="js-code-display">// Display a success notification
+flasher.options({
+    position: 'top-right',
+    duration: 5000,
+    theme: 'dark',
+    animation: 'fade',
+    closeButton: true,
+    progressBar: true
+});
+
+flasher.success(
+    'Your changes have been saved successfully!', 
+    'Success'
+);</code></pre>
                     </div>
                 </div>
             </div>
@@ -396,6 +413,19 @@ flash()->success('Your changes have been saved successfully!', 'Success')
     animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-medium {
+    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @keyframes shine {
     to {
         left: 100%;
@@ -406,128 +436,133 @@ flash()->success('Your changes have been saved successfully!', 'Success')
     animation: shine 1s forwards;
 }
 
-/* Type button styles */
-.type-btn {
-    @apply border-gray-200 text-gray-500;
+/* Type card styles */
+.type-card-container {
+    position: relative;
+    width: 100%;
+    perspective: 1000px;
 }
 
-.type-btn .type-icon-wrapper {
-    @apply text-gray-400;
-}
-
-.type-btn .type-indicator {
-    @apply opacity-0;
-}
-
-/* Success */
-.type-btn[data-type="success"].active {
-    @apply border-green-500 bg-green-50;
-}
-
-.type-btn[data-type="success"].active .type-icon-wrapper {
-    @apply text-green-500;
-}
-
-.type-btn[data-type="success"].active .type-label {
-    @apply text-green-700;
-}
-
-.type-btn[data-type="success"].active .type-indicator {
-    @apply opacity-100 bg-green-500;
-}
-
-/* Error */
-.type-btn[data-type="error"].active {
-    @apply border-red-500 bg-red-50;
-}
-
-.type-btn[data-type="error"].active .type-icon-wrapper {
-    @apply text-red-500;
-}
-
-.type-btn[data-type="error"].active .type-label {
-    @apply text-red-700;
-}
-
-.type-btn[data-type="error"].active .type-indicator {
-    @apply opacity-100 bg-red-500;
-}
-
-/* Info */
-.type-btn[data-type="info"].active {
-    @apply border-blue-500 bg-blue-50;
-}
-
-.type-btn[data-type="info"].active .type-icon-wrapper {
-    @apply text-blue-500;
-}
-
-.type-btn[data-type="info"].active .type-label {
-    @apply text-blue-700;
-}
-
-.type-btn[data-type="info"].active .type-indicator {
-    @apply opacity-100 bg-blue-500;
-}
-
-/* Warning */
-.type-btn[data-type="warning"].active {
-    @apply border-amber-500 bg-amber-50;
-}
-
-.type-btn[data-type="warning"].active .type-icon-wrapper {
-    @apply text-amber-500;
-}
-
-.type-btn[data-type="warning"].active .type-label {
-    @apply text-amber-700;
-}
-
-.type-btn[data-type="warning"].active .type-indicator {
-    @apply opacity-100 bg-amber-500;
-}
-
-/* Preview notification styles */
-.notification-card {
-    width: 360px;
-    border-radius: 0.375rem;
-    border-left: 4px solid;
-    overflow: hidden;
-    background-color: #2d3748;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+.type-card {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: white;
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
-.notification-success {
-    border-color: #48bb78;
+.type-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.notification-error {
-    border-color: #f56565;
-}
-
-.notification-info {
-    border-color: #4299e1;
-}
-
-.notification-warning {
-    border-color: #ed8936;
-}
-
-.notification-content {
-    padding: 1rem;
+.type-card-color {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 3.5rem;
     color: white;
 }
 
-.notification-title {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
+.type-card-label {
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #374151;
+    background-color: white;
+    transition: all 0.2s ease;
 }
 
-.notification-message {
-    font-size: 0.875rem;
-    color: #e2e8f0;
+.type-card-check {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    height: 1.25rem;
+    width: 1.25rem;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Success */
+.type-card[data-type="success"] {
+    border-color: rgba(16, 185, 129, 0.1);
+}
+
+.type-card[data-type="success"].active {
+    border-color: #10B981;
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
+}
+
+.type-card[data-type="success"].active .type-card-check {
+    opacity: 1;
+    color: #10B981;
+}
+
+/* Error */
+.type-card[data-type="error"] {
+    border-color: rgba(239, 68, 68, 0.1);
+}
+
+.type-card[data-type="error"].active {
+    border-color: #EF4444;
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3);
+}
+
+.type-card[data-type="error"].active .type-card-check {
+    opacity: 1;
+    color: #EF4444;
+}
+
+/* Info */
+.type-card[data-type="info"] {
+    border-color: rgba(59, 130, 246, 0.1);
+}
+
+.type-card[data-type="info"].active {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
+}
+
+/* Info */
+.type-card[data-type="info"].active .type-card-check {
+    opacity: 1;
+    color: #3B82F6;
+}
+
+/* Warning */
+.type-card[data-type="warning"] {
+    border-color: rgba(245, 158, 11, 0.1);
+}
+
+.type-card[data-type="warning"].active {
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3);
+}
+
+.type-card[data-type="warning"].active .type-card-check {
+    opacity: 1;
+    color: #F59E0B;
+}
+
+/* Code panel styles */
+.code-panel {
+    height: calc(100vh - 15rem);
+    max-height: 500px;
 }
 
 /* Override Prism default styles to make them work better in our UI */
@@ -543,6 +578,16 @@ code[class*="language-"] {
     font-size: 0.875rem !important;
     line-height: 1.6 !important;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* Tab button styles */
+#php-tab.active, #js-tab.active {
+    @apply text-blue-600 border-b-2 border-blue-500;
+}
+
+/* Additional animation for code tabs */
+.code-tab-transition {
+    transition: all 0.3s ease-in-out;
 }
 </style>
 
@@ -564,7 +609,7 @@ const state = {
 
 // Update current time
 function updateCurrentTime() {
-    document.getElementById('current-time').textContent = "2025-03-11 06:55:34";
+    document.getElementById('current-time').textContent = "2025-03-11 07:14:01";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -596,24 +641,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize time with user-provided values
-    document.getElementById('current-time').textContent = "2025-03-11 06:57:57";
+    updateCurrentTime();
     
     // Initialize type buttons
-    document.querySelectorAll('.type-btn').forEach(btn => {
+    document.querySelectorAll('.type-card').forEach(btn => {
         btn.addEventListener('click', () => {
             // Remove active class from all type buttons
-            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.type-card').forEach(b => b.classList.remove('active'));
             
             // Add active class to clicked button
             btn.classList.add('active');
             
-            // Update state and UI
+            // Update state
             state.type = btn.dataset.type;
             
-            // Update notification preview
-            updateNotificationPreview();
+            // Update title to match type if it matches a default value
+            if (state.title === 'Success' || state.title === 'Error' || 
+                state.title === 'Info' || state.title === 'Warning') {
+                state.title = capitalizeFirstLetter(state.type);
+                document.getElementById('title-input').value = state.title;
+            }
             
-            // Update code
+            // Update code display
             updateCodeDisplay();
             
             // Update status
@@ -621,17 +670,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Capitalize helper function
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
     // Input event listeners
     document.getElementById('title-input').addEventListener('input', (e) => {
         state.title = e.target.value;
         updateCodeDisplay();
-        updateNotificationPreview();
     });
     
     document.getElementById('message-input').addEventListener('input', (e) => {
         state.message = e.target.value;
         updateCodeDisplay();
-        updateNotificationPreview();
     });
     
     // Select event listeners
@@ -681,15 +733,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update status
         updateStatus('Launching notification...');
         
-        // Show notification preview
-        const preview = document.getElementById('notification-preview');
-        preview.style.opacity = '1';
-        
-        setTimeout(() => {
-            preview.style.opacity = '0';
-        }, 3000);
-        
-        // Show the actual notification
+        // Show the actual notification if flasher is available
         if (typeof flasher !== 'undefined') {
             const options = {
                 position: state.position,
@@ -709,51 +753,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Copy code button
-    document.getElementById('copy-code-btn').addEventListener('click', () => {
-        const code = document.getElementById('code-display').textContent;
-        navigator.clipboard.writeText(code).then(() => {
-            updateStatus('Code copied to clipboard!');
-            
-            const btn = document.getElementById('copy-code-btn');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = `
-                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="text-green-600">Copied!</span>
-            `;
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-            }, 2000);
-        });
+    // Code tabs functionality
+    document.getElementById('php-tab').addEventListener('click', () => {
+        showCodeTab('php');
     });
+    
+    document.getElementById('js-tab').addEventListener('click', () => {
+        showCodeTab('js');
+    });
+    
+    function showCodeTab(tab) {
+        // Hide all panels
+        document.querySelectorAll('.code-panel').forEach(panel => {
+            panel.classList.add('hidden');
+        });
+        
+        // Show the selected panel
+        document.getElementById(`${tab}-code-panel`).classList.remove('hidden');
+        
+        // Update tab styling
+        document.getElementById('php-tab').classList.remove('text-blue-600', 'border-b-2', 'border-blue-500');
+        document.getElementById('js-tab').classList.remove('text-blue-600', 'border-b-2', 'border-blue-500');
+        document.getElementById('php-tab').classList.add('text-gray-600');
+        document.getElementById('js-tab').classList.add('text-gray-600');
+        
+        document.getElementById(`${tab}-tab`).classList.remove('text-gray-600');
+        document.getElementById(`${tab}-tab`).classList.add('text-blue-600', 'border-b-2', 'border-blue-500');
+        
+        // Update code for the selected tab
+        updateCodeDisplay();
+    }
     
     // Initialize
     updateCodeDisplay();
-    updateNotificationPreview();
-    
-    // Apply Prism highlighting to the code
-    if (Prism) {
-        Prism.highlightAll();
-    }
 });
-
-// Toggle advanced options
-function toggleOptions() {
-    const content = document.getElementById('options-content');
-    const chevron = document.getElementById('options-chevron');
-    
-    if (content.style.display === 'none') {
-        content.style.display = 'block';
-        chevron.classList.remove('rotate-180');
-    } else {
-        content.style.display = 'none';
-        chevron.classList.add('rotate-180');
-    }
-}
 
 // Update the status indicator
 function updateStatus(message) {
@@ -780,68 +813,84 @@ function updateStatus(message) {
     }, 2000);
 }
 
-// Update the notification preview
-function updateNotificationPreview() {
-    const preview = document.getElementById('notification-preview');
-    const card = preview.querySelector('.notification-card');
-    
-    // Remove existing classes
-    card.className = 'notification-card';
-    
-    // Add proper class based on type
-    card.classList.add(`notification-${state.type}`);
-    
-    // Update content
-    const title = preview.querySelector('.notification-title');
-    const message = preview.querySelector('.notification-message');
-    
-    title.textContent = state.title;
-    message.textContent = state.message;
-}
-
 // Update the code display with Prism syntax highlighting
 function updateCodeDisplay() {
-    const codeDisplay = document.getElementById('code-display');
+    const phpCodeDisplay = document.getElementById('php-code-display');
+    const jsCodeDisplay = document.getElementById('js-code-display');
     
-    let code = `// Display a ${state.type} notification\n`;
-    
-    if (state.title) {
-        code += `flash()->${state.type}('${state.message}', '${state.title}')\n`;
-    } else {
-        code += `flash()->${state.type}('${state.message}')\n`;
-    }
-    
-    code += `    ->options([\n`;
+    // PHP Code
+    let phpCode = `// Display a ${state.type} notification\nflash()\n    ->options([\n`;
     
     // Add options
-    code += `        'position' => '${state.position}',\n`;
-    code += `        'duration' => ${state.duration},\n`;
-    code += `        'theme' => '${state.theme}',\n`;
-    code += `        'animation' => '${state.animation}'`;
+    phpCode += `        'position' => '${state.position}',\n`;
+    phpCode += `        'duration' => ${state.duration},\n`;
+    phpCode += `        'theme' => '${state.theme}',\n`;
+    phpCode += `        'animation' => '${state.animation}'`;
     
     if (state.closeButton) {
-        code += `,\n        'closeButton' => true`;
+        phpCode += `,\n        'closeButton' => true`;
     }
     
     if (state.progressBar) {
-        code += `,\n        'progressBar' => true`;
+        phpCode += `,\n        'progressBar' => true`;
     }
     
     if (state.dismissible) {
-        code += `,\n        'dismissible' => true`;
+        phpCode += `,\n        'dismissible' => true`;
     }
     
     if (state.pauseOnHover) {
-        code += `,\n        'pauseOnHover' => true`;
+        phpCode += `,\n        'pauseOnHover' => true`;
     }
     
-    code += `\n    ]);`;
+    phpCode += `\n    ])\n    ->${state.type}(\n        '${state.message}'`;
     
-    codeDisplay.textContent = code;
+    if (state.title) {
+        phpCode += `, \n        '${state.title}'`;
+    }
+    
+    phpCode += `\n    );`;
+    
+    // JavaScript Code
+    let jsCode = `// Display a ${state.type} notification\nflasher.options({\n`;
+    
+    // Add options
+    jsCode += `    position: '${state.position}',\n`;
+    jsCode += `    duration: ${state.duration},\n`;
+    jsCode += `    theme: '${state.theme}',\n`;
+    jsCode += `    animation: '${state.animation}'`;
+    
+    if (state.closeButton) {
+        jsCode += `,\n    closeButton: true`;
+    }
+    
+    if (state.progressBar) {
+        jsCode += `,\n    progressBar: true`;
+    }
+    
+    if (state.dismissible) {
+        jsCode += `,\n    dismissible: true`;
+    }
+    
+    if (state.pauseOnHover) {
+        jsCode += `,\n    pauseOnHover: true`;
+    }
+    
+    jsCode += `\n});\n\nflasher.${state.type}(\n    '${state.message}'`;
+    
+    if (state.title) {
+        jsCode += `, \n    '${state.title}'`;
+    }
+    
+    jsCode += `\n);`;
+    
+    phpCodeDisplay.textContent = phpCode;
+    jsCodeDisplay.textContent = jsCode;
     
     // Re-highlight with Prism
-    if (Prism) {
-        Prism.highlightElement(codeDisplay);
+    if (typeof Prism !== 'undefined') {
+        Prism.highlightElement(phpCodeDisplay);
+        Prism.highlightElement(jsCodeDisplay);
     }
 }
 </script>
