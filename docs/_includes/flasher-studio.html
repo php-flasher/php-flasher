@@ -2,43 +2,34 @@
 <section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
     <!-- Dynamic background elements -->
     <div class="absolute inset-0 z-0">
-        <div
-            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
-        <div
-            class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
 
         <!-- Animated particles -->
         <div id="particles-js" class="absolute inset-0 opacity-60"></div>
 
         <!-- Animated lines -->
         <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2"
-                  class="text-blue-500 animate-pulse-slow"></line>
-            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2"
-                  class="text-indigo-500 animate-pulse-medium"></line>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-pulse-slow"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-pulse-medium"></line>
         </svg>
     </div>
 
     <!-- Main content -->
-    <div class="container relative z-10 mx-auto px-4 max-w-6xl">
+    <div class="container relative z-10 mx-auto px-4 max-w-7xl">
         <!-- Elegant header -->
         <header class="mb-8 text-center relative">
-            <div
-                class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
             <h1 class="mt-6 text-3xl font-light tracking-tight">
-                PHPFlasher <span
-                class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span>
-                Studio
+                PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
             </h1>
-            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see
-                it in action</p>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see it in action</p>
         </header>
 
         <!-- Main interactive area -->
         <div class="rounded-xl shadow-lg bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
             <!-- Toolbar -->
-            <div
-                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <div class="w-3 h-3 rounded-full bg-red-400"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
@@ -47,66 +38,54 @@
                 <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250311</div>
                 <div id="status-indicator" class="flex items-center space-x-2">
                     <span id="status-text" class="text-xs text-emerald-600">Ready</span>
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
                 </div>
             </div>
 
             <!-- Main content area with tabs -->
             <div class="flex flex-col lg:flex-row">
                 <!-- Left panel: Options -->
-                <div class="w-full lg:w-1/2 border-r border-gray-100">
+                <div class="w-full lg:w-2/5 border-r border-gray-100">
                     <!-- Options panel -->
-                    <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem);">
-                        <!-- Notification Type Selection - Redesigned professional interface with spacing -->
+                    <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem); max-height: 700px;">
+                        <!-- Notification Type Selection -->
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
-                            <div class="notification-types-grid">
-                                <button class="type-button active" data-type="success">
-                                                <span class="type-icon success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                         fill="currentColor">
-                                                        <path fill-rule="evenodd"
-                                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                              clip-rule="evenodd" />
-                                                    </svg>
-                                                </span>
-                                    <span>Success</span>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-colors active:scale-95 transform active border-2 border-green-500" data-type="success">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Success</span>
                                 </button>
 
-                                <button class="type-button" data-type="error">
-                                                <span class="type-icon error">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                         fill="currentColor">
-                                                        <path fill-rule="evenodd"
-                                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                                              clip-rule="evenodd" />
-                                                    </svg>
-                                                </span>
-                                    <span>Error</span>
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-colors active:scale-95 transform" data-type="error">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Error</span>
                                 </button>
 
-                                <button class="type-button" data-type="info">
-                                                <span class="type-icon info">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                         fill="currentColor">
-                                                        <path fill-rule="evenodd"
-                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z"
-                                                              clip-rule="evenodd" />
-                                                    </svg>
-                                                </span>
-                                    <span>Info</span>
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors active:scale-95 transform" data-type="info">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Info</span>
                                 </button>
 
-                                <button class="type-button" data-type="warning">
-                                                <span class="type-icon warning">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                         fill="currentColor">
-                                                        <path fill-rule="evenodd"
-                                                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                                              clip-rule="evenodd" />
-                                                    </svg>
-                                                </span>
-                                    <span>Warning</span>
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors active:scale-95 transform" data-type="warning">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Warning</span>
                                 </button>
                             </div>
                         </div>
@@ -115,37 +94,29 @@
                         <div class="mb-6 space-y-4">
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <label for="title-input"
-                                           class="block text-sm font-medium text-gray-700">Title</label>
+                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title</label>
                                     <span class="text-xs text-gray-400">Optional</span>
                                 </div>
-                                <input type="text" id="title-input"
-                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-                                       placeholder="Enter notification title" value="">
+                                <input type="text" id="title-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" placeholder="Enter notification title" value="">
                             </div>
 
                             <div>
-                                <label for="message-input"
-                                       class="block mb-2 text-sm font-medium text-gray-700">Message</label>
-                                <textarea id="message-input" rows="3"
-                                          class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none"
-                                          placeholder="Enter your notification message">Your changes have been saved successfully!</textarea>
+                                <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message-input" rows="3" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none" placeholder="Enter your notification message">Your product has been created successfully!</textarea>
                             </div>
                         </div>
 
                         <!-- Configuration Options -->
-                        <div class="mb-6 border border-gray-200 rounded-md overflow-hidden">
-                            <div class="bg-gray-50 px-3 py-2 flex items-center">
+                        <div class="mb-6 border border-gray-200 rounded-md overflow-hidden shadow-sm">
+                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-3 py-2 flex items-center">
                                 <h3 class="font-medium text-gray-700">Configuration Options</h3>
                             </div>
 
                             <div class="px-3 py-3 border-t border-gray-200">
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
-                                        <label for="position-select"
-                                               class="block mb-1 text-sm font-medium text-gray-700">Position</label>
-                                        <select id="position-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="top-right">top-right</option>
                                             <option value="top-left">top-left</option>
@@ -156,10 +127,8 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout
-                                            (ms)</label>
-                                        <select id="timeout-input"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout (ms)</label>
+                                        <select id="timeout-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="10000">10 seconds</option>
                                             <option value="5000">5 seconds</option>
@@ -172,8 +141,7 @@
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
                                         <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
-                                        <select id="theme-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="amazon">amazon</option>
                                             <option value="amber">amber</option>
@@ -195,10 +163,8 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="direction-select"
-                                               class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
-                                        <select id="direction-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="direction-select" class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                        <select id="direction-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="top">top</option>
                                             <option value="bottom">bottom</option>
@@ -208,10 +174,8 @@
 
                                 <div class="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label for="fps-input"
-                                               class="block mb-1 text-sm font-medium text-gray-700">FPS</label>
-                                        <select id="fps-input"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="fps-input" class="block mb-1 text-sm font-medium text-gray-700">FPS</label>
+                                        <select id="fps-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="30">30</option>
                                             <option value="60">60</option>
@@ -220,8 +184,7 @@
                                     </div>
                                     <div class="flex items-end">
                                         <div class="flex items-center h-10">
-                                            <input type="checkbox" id="rtl-check"
-                                                   class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                            <input type="checkbox" id="rtl-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
                                             <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
                                         </div>
                                     </div>
@@ -229,16 +192,12 @@
 
                                 <div class="mt-4 grid grid-cols-2 gap-3">
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="close-btn-check"
-                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
-                                        <label for="close-btn-check" class="ml-2 text-sm text-gray-700">Close
-                                            Button</label>
+                                        <input type="checkbox" id="close-btn-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                        <label for="close-btn-check" class="ml-2 text-sm text-gray-700">Close Button</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="escape-html-check"
-                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
-                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape
-                                            HTML</label>
+                                        <input type="checkbox" id="escape-html-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape HTML</label>
                                     </div>
                                 </div>
                             </div>
@@ -247,121 +206,812 @@
                         <!-- Launch button -->
                         <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md"
                                 data-controller="notification-demo">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
-                            <div class="absolute inset-0 bg-grid opacity-10"></div>
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
+                            <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
 
                             <div class="relative px-5 py-3 flex items-center justify-center text-white font-medium">
-                                            <span class="flex items-center space-x-2">
-                                                <span>Launch Notification</span>
-                                                <svg
-                                                    class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                                </svg>
-                                            </span>
+                                <span class="flex items-center space-x-2">
+                                    <span>Launch Notification</span>
+                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </span>
                             </div>
 
-                            <div
-                                class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine"></div>
+                            <div class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
                         </button>
                     </div>
                 </div>
 
-                <!-- Right panel: Code Preview -->
-                <div class="w-full lg:w-1/2">
+                <!-- Right panel: Code Preview (wider) -->
+                <div class="w-full lg:w-3/5">
                     <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs text-gray-500">Last updated: 2025-03-11 22:32:02</span>
+                        </div>
                     </div>
 
-                    <!-- Code tabs -->
+                    <!-- Code tabs with icons -->
                     <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
-                        <button id="laravel-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500"
-                                data-tab="laravel">Laravel
+                        <button id="laravel-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5" data-tab="laravel">
+                            <!-- Laravel Icon -->
+                            <svg class="w-4 h-4" viewBox="0 0 50 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M49.626 11.564a.809.809 0 0 1 .028.209v10.972a.8.8 0 0 1-.402.694l-9.209 5.302V39.25a.8.8 0 0 1-.4.694L21.088 51.078a.796.796 0 0 1-.792 0L1.736 39.937a.801.801 0 0 1-.402-.694h-.005V5.484a.81.81 0 0 1 .028-.208.82.82 0 0 1 .402-.5L20.705.675a.817.817 0 0 1 .792 0l18.953 10.93a.815.815 0 0 1 .176.123.802.802 0 0 1 .228.336.82.82 0 0 1 .066.277.828.828 0 0 1-.068.282.803.803 0 0 1-.226.339zM7.202 29.53l13.53 7.794 9.768-5.761L18.835 9.648 7.202 29.53zm28.157-5.72a.805.805 0 0 1 .3.067l8.09 4.283v-9.356l-8.09 4.284a.804.804 0 0 1-.3.722zm-45.22-14.04v28.201l13.532 7.794V12.804L11.98 6.97l-8.09 4.763-13.75 8.037zm20.353 18.876l9.768 5.823 13.75-7.968-9.768-5.125-13.75 7.27z" fill="currentColor"/>
+                            </svg>
+                            <span>Laravel</span>
                         </button>
-                        <button id="symfony-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800"
-                                data-tab="symfony">Symfony
+                        <button id="symfony-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5" data-tab="symfony">
+                                                        <!-- Symfony Icon (continued) -->
+                            <path d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12zm-12 1.67c-2.965 0-5.37-2.348-5.37-5.25C6.63 5.52 9.035 3.17 12 3.17c2.965 0 5.37 2.348 5.37 5.25 0 2.9-2.405 5.25-5.37 5.25zm-1.7-5.25c0 .944.774 1.71 1.72 1.71.948 0 1.721-.766 1.721-1.71 0-.946-.773-1.712-1.72-1.712-.947 0-1.72.766-1.72 1.711z" fill="currentColor"/>
+                            </svg>
+                            <span>Symfony</span>
                         </button>
-                        <button id="npm-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800"
-                                data-tab="npm">JavaScript
+                        <button id="js-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5" data-tab="js">
+                            <!-- JavaScript Icon -->
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0H24V24H0V0Z" fill="#F7DF1E"/>
+                                <path d="M6.421 19.876C7.055 20.91 7.991 21.684 9.536 21.684C10.846 21.684 11.667 21.06 11.667 20.145C11.667 19.062 10.811 18.69 9.406 18.104L8.666 17.793C6.5 16.88 5.068 15.728 5.068 13.273C5.068 10.988 6.836 9.215 9.445 9.215C11.321 9.215 12.67 9.839 13.677 11.453L11.719 12.743C11.206 11.843 10.654 11.471 9.445 11.471C8.205 11.471 7.652 12.026 7.652 12.743C7.652 13.643 8.206 14.015 9.523 14.557L10.263 14.867C12.79 15.942 14.223 17.052 14.223 19.578C14.223 22.262 12.052 24 9.588 24C7.184 24 5.52 22.781 4.65 21.167L6.421 19.876ZM15.755 19.675C16.181 20.44 16.88 21.06 17.965 21.06C18.961 21.06 19.626 20.637 19.626 19.291V9.45H22.25V19.328C22.25 22.055 20.634 23.962 18.076 23.962C15.755 23.962 14.298 22.301 13.755 21.06L15.755 19.675Z" fill="black"/>
+                            </svg>
+                            <span>JavaScript</span>
                         </button>
                     </div>
 
-                    <!-- Code panels -->
-                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel">
-<pre><code class="language-php" id="laravel-code-display">// Laravel Controller Method Example
-public function store(Request $request)
+                    <!-- Laravel Code Panel -->
+                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto" style="height: calc(100vh - 15rem); max-height: 700px;">
+                        <pre class="text-left text-sm"><code class="language-php">
+<span class="text-gray-500 font-semibold">// app/Http/Controllers/ProductController.php</span>
+
+<span class="text-blue-700">namespace</span> App\Http\Controllers;
+
+<span class="text-blue-700">use</span> App\Models\Product;
+<span class="text-blue-700">use</span> App\Http\Requests\ProductRequest;
+<span class="text-blue-700">use</span> Illuminate\Http\Request;
+<span class="text-blue-700">use</span> Illuminate\Support\Facades\DB;
+<span class="text-blue-700">use</span> Illuminate\Support\Facades\Log;
+
+<span class="text-blue-700">class</span> <span class="text-green-700 font-bold">ProductController</span> <span class="text-blue-700">extends</span> Controller
 {
-    // Your logic to process the form
-    $result = $this->processData($request->all());
+    <span class="text-gray-400">/**
+     * Display a listing of products
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">index</span>()
+    {
+        $products = Product::latest()->paginate(10);
+        <span class="text-blue-700">return</span> view('products.index', compact('products'));
+    }
 
-    flash()->success('Your changes have been saved successfully!');
+    <span class="text-gray-400">/**
+     * Show form for creating a new product
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">create</span>()
+    {
+        <span class="text-blue-700">return</span> view('products.create');
+    }
 
-    return redirect()->back();
+    <span class="text-gray-400">/**
+     * Store a newly created product
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">store</span>(ProductRequest $request)
+    {
+        <span class="text-blue-700">try</span> {
+            <span class="text-gray-400">// Begin transaction</span>
+            DB::beginTransaction();
+
+            <span class="text-gray-400">// Create new product</span>
+            $product = <span class="text-blue-700">new</span> Product;
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->category_id = $request->category_id;
+            $product->save();
+
+            <span class="text-gray-400">// Handle image uploads if any</span>
+            <span class="text-blue-700">if</span> ($request->hasFile('image')) {
+                $product->addMediaFromRequest('image')
+                    ->toMediaCollection('products');
+            }
+
+            DB::commit();
+
+            <span class="bg-green-100 p-1 rounded-md shadow-sm font-bold">flash()->success('Your product has been created successfully!');</span>
+
+            <span class="text-blue-700">return</span> redirect()->route('products.index');
+
+        } <span class="text-blue-700">catch</span> (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to create product: ' . $e->getMessage());
+
+            flash()->error('Failed to create product. Please try again.');
+
+            <span class="text-blue-700">return</span> back()->withInput();
+        }
+    }
+
+    <span class="text-gray-400">/**
+     * Show a specific product
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">show</span>(Product $product)
+    {
+        <span class="text-blue-700">return</span> view('products.show', compact('product'));
+    }
+
+    <span class="text-gray-400">/**
+     * Edit a specific product
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">edit</span>(Product $product)
+    {
+        <span class="text-blue-700">return</span> view('products.edit', compact('product'));
+    }
 }</code></pre>
                     </div>
 
-                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel hidden">
-<pre><code class="language-php" id="symfony-code-display">// Symfony Controller Method Example
-public function store(Request $request): Response
+                    <!-- Symfony Code Panel -->
+                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden" style="height: calc(100vh - 15rem); max-height: 700px;">
+                        <pre class="text-left text-sm"><code class="language-php">
+<span class="text-gray-500 font-semibold">// src/Controller/ProductController.php</span>
+
+<span class="text-blue-700">namespace</span> App\Controller;
+
+<span class="text-blue-700">use</span> App\Entity\Product;
+<span class="text-blue-700">use</span> App\Form\ProductType;
+<span class="text-blue-700">use</span> App\Repository\ProductRepository;
+<span class="text-blue-700">use</span> Doctrine\ORM\EntityManagerInterface;
+<span class="text-blue-700">use</span> Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+<span class="text-blue-700">use</span> Symfony\Component\HttpFoundation\Request;
+<span class="text-blue-700">use</span> Symfony\Component\HttpFoundation\Response;
+<span class="text-blue-700">use</span> Symfony\Component\Routing\Attribute\Route;
+
+<span class="text-gray-400">/**
+ * @Route("/product", name="product_")
+ */</span>
+<span class="text-blue-700">class</span> <span class="text-green-700 font-bold">ProductController</span> <span class="text-blue-700">extends</span> AbstractController
 {
-    // Your logic to process the form
-    $result = $this->processData($request->request->all());
+    <span class="text-blue-700">private</span> $entityManager;
+    <span class="text-blue-700">private</span> $productRepository;
 
-    $this->flash()->success('Your changes have been saved successfully!');
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">__construct</span>(
+        EntityManagerInterface $entityManager,
+        ProductRepository $productRepository
+    ) {
+        $this->entityManager = $entityManager;
+        $this->productRepository = $productRepository;
+    }
 
-    return $this->redirectToRoute('app_homepage');
+    <span class="text-gray-400">/**
+     * @Route("/", name="index", methods={"GET"})
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">index</span>(): Response
+    {
+        $products = $this->productRepository->findAll();
+
+        <span class="text-blue-700">return</span> $this->render('product/index.html.twig', [
+            'products' => $products,
+        ]);
+    }
+
+    <span class="text-gray-400">/**
+     * @Route("/new", name="new", methods={"GET","POST"})
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">new</span>(Request $request): Response
+    {
+        $product = <span class="text-blue-700">new</span> Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        <span class="text-blue-700">if</span> ($form->isSubmitted() && $form->isValid()) {
+            <span class="text-blue-700">try</span> {
+                $this->entityManager->persist($product);
+                $this->entityManager->flush();
+
+                <span class="bg-green-100 p-1 rounded-md shadow-sm font-bold">$this->flash()->success('Your product has been created successfully!');</span>
+
+                <span class="text-blue-700">return</span> $this->redirectToRoute('product_index');
+            } <span class="text-blue-700">catch</span> (\Exception $e) {
+                $this->flash()->error('Failed to create product. Please try again.');
+            }
+        }
+
+        <span class="text-blue-700">return</span> $this->render('product/new.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    <span class="text-gray-400">/**
+     * @Route("/{id}", name="show", methods={"GET"})
+     */</span>
+    <span class="text-blue-700">public function</span> <span class="text-yellow-600">show</span>(Product $product): Response
+    {
+        <span class="text-blue-700">return</span> $this->render('product/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
 }</code></pre>
                     </div>
 
-                    <div id="npm-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel hidden">
-<pre><code class="language-javascript" id="npm-code-display">// NPM Installation
-// npm install @flasher/flasher --save
+                    <!-- JavaScript Code Panel -->
+                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden" style="height: calc(100vh - 15rem); max-height: 700px;">
+                        <pre class="text-left text-sm"><code class="language-javascript">
+<span class="text-gray-500 font-semibold">// src/product-service.js</span>
 
-// ES6 Module Import
-import flasher from '@flasher/flasher';
+<span class="text-blue-700">import</span> axios <span class="text-blue-700">from</span> 'axios';
+<span class="text-blue-700">import</span> flasher <span class="text-blue-700">from</span> '@flasher/flasher';
 
-// Example in React, Vue, or other framework
-function saveData() {
-    // API call or data processing
-    return apiService.saveData(formData)
-        .then(response => {
-            flasher.success('Your changes have been saved successfully!');
-            return response;
-        })
-        .catch(error => {
-            flasher.error('Failed to save data');
-            throw error;
-        });
-}</code></pre>
+<span class="text-blue-700">class</span> <span class="text-green-700 font-bold">ProductService</span> {
+    <span class="text-blue-700">constructor</span>() {
+        <span class="text-blue-700">this</span>.apiUrl = '/api/products';
+    }
+
+    <span class="text-gray-400">/**
+     * Fetch all products
+     * @returns {Promise} - Returns products data
+     */</span>
+    <span class="text-blue-700">async</span> <span class="text-yellow-600">getAllProducts</span>() {
+        <span class="text-blue-700">try</span> {
+            <span class="text-blue-700">const</span> response = <span class="text-blue-700">await</span> axios.get(<span class="text-blue-700">this</span>.apiUrl);
+            <span class="text-blue-700">return</span> response.data;
+        } <span class="text-blue-700">catch</span> (error) {
+            <span class="text-blue-700">this</span>.handleError(error);
+            <span class="text-blue-700">throw</span> error;
+        }
+    }
+
+    <span class="text-gray-400">/**
+     * Create a new product
+     * @param {Object} productData - The product data
+     * @returns {Promise} - Returns the created product
+     */</span>
+    <span class="text-blue-700">async</span> <span class="text-yellow-600">createProduct</span>(productData) {
+        <span class="text-blue-700">try</span> {
+            <span class="text-blue-700">const</span> response = <span class="text-blue-700">await</span> axios.post(<span class="text-blue-700">this</span>.apiUrl, productData);
+
+            <span class="bg-green-100 p-1 rounded-md shadow-sm font-bold">flasher.success('Your product has been created successfully!');</span>
+
+            <span class="text-blue-700">return</span> response.data;
+        } <span class="text-blue-700">catch</span> (error) {
+            <span class="text-blue-700">this</span>.handleError(error);
+            <span class="text-blue-700">throw</span> error;
+        }
+    }
+
+    <span class="text-gray-400">/**
+     * Update an existing product
+     * @param {string} id - Product ID
+     * @param {Object} productData - Updated product data
+     * @returns {Promise} - Returns the updated product
+     */</span>
+    <span class="text-blue-700">async</span> <span class="text-yellow-600">updateProduct</span>(id, productData) {
+        <span class="text-blue-700">try</span> {
+            <span class="text-blue-700">const</span> response = <span class="text-blue-700">await</span> axios.put(`${<span class="text-blue-700">this</span>.apiUrl}/${id}`, productData);
+
+            flasher.info('Product has been updated.');
+
+            <span class="text-blue-700">return</span> response.data;
+        } <span class="text-blue-700">catch</span> (error) {
+            <span class="text-blue-700">this</span>.handleError(error);
+            <span class="text-blue-700">throw</span> error;
+        }
+    }
+
+    <span class="text-gray-400">/**
+     * Delete a product
+     * @param {string} id - Product ID to delete
+     * @returns {Promise} - Returns success status
+     */</span>
+    <span class="text-blue-700">async</span> <span class="text-yellow-600">deleteProduct</span>(id) {
+        <span class="text-blue-700">try</span> {
+            <span class="text-blue-700">await</span> axios.delete(`${<span class="text-blue-700">this</span>.apiUrl}/${id}`);
+
+            flasher.warning('Product has been removed.');
+
+            <span class="text-blue-700">return</span> true;
+        } <span class="text-blue-700">catch</span> (error) {
+            <span class="text-blue-700">this</span>.handleError(error);
+            <span class="text-blue-700">throw</span> error;
+        }
+    }
+
+    <span class="text-gray-400">/**
+     * Handle errors from API calls
+     * @param {Error} error - The error object
+     */</span>
+    <span class="text-yellow-600">handleError</span>(error) {
+        <span class="text-blue-700">const</span> errorMessage = error.response?.data?.message || 'An unexpected error occurred';
+
+        flasher
+            .options({
+                position: 'bottom-right',
+                timeout: 8000,
+                closeButton: true
+            })
+            .error(errorMessage);
+
+        console.error('API Error:', error);
+    }
+}
+
+<span class="text-blue-700">export</span> <span class="text-blue-700">default</span> <span class="text-blue-700">new</span> ProductService();
+</code></pre>
                     </div>
+                </div>
+            </div>
+
+            <!-- Additional interactive elements for demos -->
+            <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                <div class="text-sm text-gray-500">Current time: <span id="current-time" class="font-mono">2025-03-11 22:36:05</span></div>
+                <div class="flex space-x-4">
+                    <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Documentation
+                    </a>
+                    <a href="https://github.com/php-flasher/php-flasher" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                        </svg>
+                        GitHub
+                    </a>
                 </div>
             </div>
         </div>
 
         <!-- Code preview actions -->
         <div class="flex justify-center mt-4 space-x-4">
-            <a href="https://phpflasher.com/docs"
-               class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+            <a href="https://phpflasher.com/docs" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
                 <span>Documentation</span>
             </a>
-            <a href="https://github.com/php-flasher/php-flasher"
-               class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+            <a href="https://github.com/php-flasher/php-flasher" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd"
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                          clip-rule="evenodd"></path>
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
                 </svg>
                 <span>GitHub</span>
             </a>
         </div>
     </div>
 </section>
+
+<script>
+// Current state management
+const state = {
+    type: 'success',
+    title: '',
+    message: 'Your product has been created successfully!',
+    timeout: '',
+    fps: '',
+    position: '',
+    direction: '',
+    rtl: false,
+    theme: '',
+    closeButton: false,
+    escapeHtml: true
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Update current time
+    document.getElementById('current-time').textContent = "2025-03-11 22:36:05";
+
+    // Initialize type buttons
+    document.querySelectorAll('.type-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all type buttons
+            document.querySelectorAll('.type-button').forEach(b => {
+                b.classList.remove('border-2');
+                b.classList.remove('border-green-500', 'border-red-500', 'border-blue-500', 'border-amber-500');
+            });
+
+            // Add active class to clicked button
+            btn.classList.add('border-2');
+
+            // Add appropriate color based on type
+            const type = btn.dataset.type;
+            switch(type) {
+                case 'success':
+                    btn.classList.add('border-green-500');
+                    break;
+                case 'error':
+                    btn.classList.add('border-red-500');
+                    break;
+                case 'info':
+                    btn.classList.add('border-blue-500');
+                    break;
+                case 'warning':
+                    btn.classList.add('border-amber-500');
+                    break;
+            }
+
+            // Update state
+            state.type = type;
+
+            // Update code display
+            updateCodeDisplay();
+
+            // Update status
+            updateStatus(`Type changed to: ${state.type}`);
+        });
+    });
+
+    // Input event listeners
+    document.getElementById('title-input').addEventListener('input', (e) => {
+        state.title = e.target.value.trim();
+        updateCodeDisplay();
+    });
+
+    document.getElementById('message-input').addEventListener('input', (e) => {
+        state.message = e.target.value;
+        updateCodeDisplay();
+    });
+
+    // Select event listeners
+    document.getElementById('position-select').addEventListener('change', (e) => {
+        state.position = e.target.value;
+        updateCodeDisplay();
+    });
+
+    document.getElementById('timeout-input').addEventListener('change', (e) => {
+        state.timeout = e.target.value ? parseInt(e.target.value) : '';
+        updateCodeDisplay();
+    });
+
+    document.getElementById('fps-input').addEventListener('change', (e) => {
+        state.fps = e.target.value ? parseInt(e.target.value) : '';
+        updateCodeDisplay();
+    });
+
+    document.getElementById('theme-select').addEventListener('change', (e) => {
+        state.theme = e.target.value;
+        updateCodeDisplay();
+    });
+
+    document.getElementById('direction-select').addEventListener('change', (e) => {
+        state.direction = e.target.value;
+        updateCodeDisplay();
+    });
+
+    // Checkbox event listeners
+    document.getElementById('rtl-check').addEventListener('change', (e) => {
+        state.rtl = e.target.checked;
+        updateCodeDisplay();
+    });
+
+    document.getElementById('close-btn-check').addEventListener('change', (e) => {
+        state.closeButton = e.target.checked;
+        updateCodeDisplay();
+    });
+
+    document.getElementById('escape-html-check').addEventListener('change', (e) => {
+        state.escapeHtml = e.target.checked;
+        updateCodeDisplay();
+    });
+
+    // Show notification button
+    document.getElementById('show-notification-btn').addEventListener('click', () => {
+        updateStatus('Launching notification...');
+        showNotification();
+    });
+
+    // Tab buttons functionality
+    document.querySelectorAll('.code-tab-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const tab = button.getAttribute('data-tab');
+            showCodeTab(tab);
+        });
+    });
+
+    // Initialize with Laravel tab selected
+    showCodeTab('laravel');
+});
+
+function updateStatus(message) {
+    const statusText = document.getElementById('status-text');
+    statusText.textContent = message;
+
+    // Temporarily change color
+    statusText.classList.remove('text-emerald-600');
+    statusText.classList.add('text-blue-600');
+
+    // Add animation to the dot
+    const dot = document.querySelector('#status-indicator div');
+    dot.classList.remove('bg-emerald-500');
+    dot.classList.add('bg-blue-500');
+
+    // Reset after 2 seconds
+    setTimeout(() => {
+        statusText.classList.remove('text-blue-600');
+        statusText.classList.add('text-emerald-600');
+        statusText.textContent = 'Ready';
+
+        dot.classList.remove('bg-blue-500');
+        dot.classList.add('bg-emerald-500');
+    }, 2000);
+}
+
+function showCodeTab(tab) {
+    // Hide all panels
+    document.querySelectorAll('#laravel-code-panel, #symfony-code-panel, #js-code-panel').forEach(panel => {
+        panel.classList.add('hidden');
+    });
+
+    // Show the selected panel
+    document.getElementById(`${tab}-code-panel`).classList.remove('hidden');
+
+    // Update tab styling
+    document.querySelectorAll('.code-tab-btn').forEach(btn => {
+    btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-500');
+    btn.classList.add('text-gray-600');
+});
+
+// Highlight active tab
+document.querySelector(`[data-tab="${tab}"]`).classList.remove('text-gray-600');
+document.querySelector(`[data-tab="${tab}"]`).classList.add('text-blue-600', 'border-b-2', 'border-blue-500');
+}
+
+// Show notification function
+function showNotification() {
+    // Create container for notifications if it doesn't exist
+    let container = document.getElementById('flasher-notifications');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'flasher-notifications';
+        container.className = 'fixed z-50';
+        document.body.appendChild(container);
+    }
+
+    // Position based on settings
+    positionContainer(container, state.position || 'top-right');
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `transform transition-all duration-300 flex overflow-hidden rounded-lg shadow-md mb-3 max-w-xs w-full`;
+
+    // Style based on type
+    const styles = getNotificationStyles(state.type);
+
+    // Build notification HTML
+    let notificationHTML = `
+        <div class="flex-shrink-0 ${styles.iconBg} flex items-center justify-center rounded-l-lg px-3">
+            ${styles.icon}
+        </div>
+        <div class="p-3 flex-1 ${styles.bg} relative overflow-hidden">
+            ${state.title ? `<h4 class="font-medium ${styles.titleColor} mb-1">${state.title}</h4>` : ''}
+            <p class="${styles.textColor} text-sm">${state.message}</p>
+            ${state.closeButton ? `<button class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>` : ''}
+            <div class="absolute bottom-0 left-0 right-0 h-1 ${styles.progressBg} origin-left animate-[progress_${state.timeout || 5000}ms_linear_forwards]"></div>
+        </div>
+    `;
+
+    notification.innerHTML = notificationHTML;
+
+    // Add entrance animation classes based on position
+    addEntranceAnimation(notification, state.position || 'top-right');
+
+    // Add to container
+    container.appendChild(notification);
+
+    // Close button functionality if enabled
+    if (state.closeButton) {
+        const closeButton = notification.querySelector('button');
+        closeButton.addEventListener('click', () => {
+            removeNotification(notification, state.position || 'top-right');
+        });
+    }
+
+    // Auto-remove after timeout
+    const timeout = state.timeout !== '' ? state.timeout : 5000;
+    if (timeout > 0) {
+        setTimeout(() => {
+            removeNotification(notification, state.position || 'top-right');
+        }, timeout);
+    }
+}
+
+function positionContainer(container, position) {
+    // Reset positioning
+    container.className = 'fixed z-50';
+
+    // Set position
+    switch(position) {
+        case 'top-right':
+            container.classList.add('top-4', 'right-4');
+            break;
+        case 'top-left':
+            container.classList.add('top-4', 'left-4');
+            break;
+        case 'bottom-right':
+            container.classList.add('bottom-4', 'right-4');
+            break;
+        case 'bottom-left':
+            container.classList.add('bottom-4', 'left-4');
+            break;
+        case 'center-top':
+            container.classList.add('top-4', 'left-1/2', '-translate-x-1/2');
+            break;
+        case 'center-bottom':
+            container.classList.add('bottom-4', 'left-1/2', '-translate-x-1/2');
+            break;
+        default:
+            container.classList.add('top-4', 'right-4');
+    }
+}
+
+function getNotificationStyles(type) {
+    switch(type) {
+        case 'success':
+            return {
+                bg: 'bg-green-50',
+                iconBg: 'bg-green-500',
+                titleColor: 'text-green-800',
+                textColor: 'text-green-700',
+                progressBg: 'bg-green-500',
+                icon: `<svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                       </svg>`
+            };
+        case 'error':
+            return {
+                bg: 'bg-red-50',
+                iconBg: 'bg-red-500',
+                titleColor: 'text-red-800',
+                textColor: 'text-red-700',
+                progressBg: 'bg-red-500',
+                icon: `<svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                       </svg>`
+            };
+        case 'info':
+            return {
+                bg: 'bg-blue-50',
+                iconBg: 'bg-blue-500',
+                titleColor: 'text-blue-800',
+                textColor: 'text-blue-700',
+                progressBg: 'bg-blue-500',
+                icon: `<svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                       </svg>`
+            };
+        case 'warning':
+            return {
+                bg: 'bg-amber-50',
+                iconBg: 'bg-amber-500',
+                titleColor: 'text-amber-800',
+                textColor: 'text-amber-700',
+                progressBg: 'bg-amber-500',
+                icon: `<svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                         <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                       </svg>`
+            };
+        default:
+            return getNotificationStyles('success');
+    }
+}
+
+function addEntranceAnimation(notification, position) {
+    if (position.includes('right')) {
+        notification.classList.add('translate-x-full');
+    } else if (position.includes('left')) {
+        notification.classList.add('-translate-x-full');
+    } else if (position.includes('top')) {
+        notification.classList.add('-translate-y-full');
+    } else if (position.includes('bottom')) {
+        notification.classList.add('translate-y-full');
+    }
+
+    // Trigger animation after a brief delay
+    setTimeout(() => {
+        notification.classList.remove(
+            'translate-x-full',
+            '-translate-x-full',
+            'translate-y-full',
+            '-translate-y-full'
+        );
+    }, 10);
+}
+
+function removeNotification(notification, position) {
+    // Add exit animation
+    if (position.includes('right')) {
+        notification.classList.add('translate-x-full');
+    } else if (position.includes('left')) {
+        notification.classList.add('-translate-x-full');
+    } else if (position.includes('top')) {
+        notification.classList.add('-translate-y-full');
+    } else if (position.includes('bottom')) {
+        notification.classList.add('translate-y-full');
+    }
+
+    notification.classList.add('opacity-0');
+
+    // Remove after animation completes
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 300);
+}
+
+// Define keyframes at the document level once
+if (!document.getElementById('flasher-keyframes')) {
+    const styleSheet = document.createElement('style');
+    styleSheet.id = 'flasher-keyframes';
+    styleSheet.textContent = `
+        @keyframes shine {
+            to {
+                left: 100%;
+            }
+        }
+        @keyframes progress {
+            0% { transform: scaleX(1); }
+            100% { transform: scaleX(0); }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+}
+
+// Update code display function - this updates the highlighted line in each example
+function updateCodeDisplay() {
+    // Get currently active tab
+    const activeTab = document.querySelector('.code-tab-btn.text-blue-600').getAttribute('data-tab');
+
+    // Update notification message and type in the highlighted lines
+    const highlightLines = document.querySelectorAll('.bg-green-100');
+    highlightLines.forEach(line => {
+        switch(activeTab) {
+            case 'laravel':
+                line.textContent = `flash()->${state.type}('${state.message}'${state.title ? ", '" + state.title + "'" : ''});`;
+                break;
+            case 'symfony':
+                line.textContent = `$this->flash()->${state.type}('${state.message}'${state.title ? ", '" + state.title + "'" : ''});`;
+                break;
+            case 'js':
+                line.textContent = `flasher.${state.type}('${state.message}'${state.title ? ", '" + state.title + "'" : ''});`;
+                break;
+        }
+    });
+}
+
+// Current time updater - automatically update the displayed time
+function updateCurrentTime() {
+    document.getElementById('current-time').textContent = "2025-03-11 22:38:15";
+    // In a real implementation, this would update with the actual current time
+}
+
+// Call it once on load
+updateCurrentTime();
+// In a production environment, you would use setInterval to update regularly
+</script>
+
+<style>
+/* Utility classes for animation - using Tailwind's @keyframes */
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+@keyframes progress {
+    0% { transform: scaleX(1); }
+    100% { transform: scaleX(0); }
+}
+@keyframes ping {
+    0% { transform: scale(1); opacity: 1; }
+    75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* Additional styles for the notification types buttons */
+.type-button {
+    transition: all 0.2s ease;
+}
+.type-button:hover {
+    transform: translateY(-2px);
+}
+.type-button.active {
+    transform: translateY(-1px);
+}
+</style>
