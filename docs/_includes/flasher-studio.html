@@ -1,0 +1,367 @@
+<!-- Elegant PHPFlasher Interactive Demo -->
+<section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <!-- Dynamic background elements -->
+    <div class="absolute inset-0 z-0">
+        <div
+            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
+        <div
+            class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
+
+        <!-- Animated particles -->
+        <div id="particles-js" class="absolute inset-0 opacity-60"></div>
+
+        <!-- Animated lines -->
+        <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2"
+                  class="text-blue-500 animate-pulse-slow"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2"
+                  class="text-indigo-500 animate-pulse-medium"></line>
+        </svg>
+    </div>
+
+    <!-- Main content -->
+    <div class="container relative z-10 mx-auto px-4 max-w-6xl">
+        <!-- Elegant header -->
+        <header class="mb-8 text-center relative">
+            <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+            <h1 class="mt-6 text-3xl font-light tracking-tight">
+                PHPFlasher <span
+                class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span>
+                Studio
+            </h1>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see
+                it in action</p>
+        </header>
+
+        <!-- Main interactive area -->
+        <div class="rounded-xl shadow-lg bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
+            <!-- Toolbar -->
+            <div
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250311</div>
+                <div id="status-indicator" class="flex items-center space-x-2">
+                    <span id="status-text" class="text-xs text-emerald-600">Ready</span>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow"></div>
+                </div>
+            </div>
+
+            <!-- Main content area with tabs -->
+            <div class="flex flex-col lg:flex-row">
+                <!-- Left panel: Options -->
+                <div class="w-full lg:w-1/2 border-r border-gray-100">
+                    <!-- Options panel -->
+                    <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem);">
+                        <!-- Notification Type Selection - Redesigned professional interface with spacing -->
+                        <div class="mb-6">
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
+                            <div class="notification-types-grid">
+                                <button class="type-button active" data-type="success">
+                                                <span class="type-icon success">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                         fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                              clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                    <span>Success</span>
+                                </button>
+
+                                <button class="type-button" data-type="error">
+                                                <span class="type-icon error">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                         fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                                              clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                    <span>Error</span>
+                                </button>
+
+                                <button class="type-button" data-type="info">
+                                                <span class="type-icon info">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                         fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z"
+                                                              clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                    <span>Info</span>
+                                </button>
+
+                                <button class="type-button" data-type="warning">
+                                                <span class="type-icon warning">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                         fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                                              clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                    <span>Warning</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="mb-6 space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="title-input"
+                                           class="block text-sm font-medium text-gray-700">Title</label>
+                                    <span class="text-xs text-gray-400">Optional</span>
+                                </div>
+                                <input type="text" id="title-input"
+                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                                       placeholder="Enter notification title" value="">
+                            </div>
+
+                            <div>
+                                <label for="message-input"
+                                       class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message-input" rows="3"
+                                          class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none"
+                                          placeholder="Enter your notification message">Your changes have been saved successfully!</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Configuration Options -->
+                        <div class="mb-6 border border-gray-200 rounded-md overflow-hidden">
+                            <div class="bg-gray-50 px-3 py-2 flex items-center">
+                                <h3 class="font-medium text-gray-700">Configuration Options</h3>
+                            </div>
+
+                            <div class="px-3 py-3 border-t border-gray-200">
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div>
+                                        <label for="position-select"
+                                               class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Default</option>
+                                            <option value="top-right">top-right</option>
+                                            <option value="top-left">top-left</option>
+                                            <option value="bottom-right">bottom-right</option>
+                                            <option value="bottom-left">bottom-left</option>
+                                            <option value="center-top">center-top</option>
+                                            <option value="center-bottom">center-bottom</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout
+                                            (ms)</label>
+                                        <select id="timeout-input"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Default</option>
+                                            <option value="10000">10 seconds</option>
+                                            <option value="5000">5 seconds</option>
+                                            <option value="3000">3 seconds</option>
+                                            <option value="60000">1 minute</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div>
+                                        <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
+                                        <select id="theme-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Default</option>
+                                            <option value="amazon">amazon</option>
+                                            <option value="amber">amber</option>
+                                            <option value="aurora">aurora</option>
+                                            <option value="crystal">crystal</option>
+                                            <option value="emerald">emerald</option>
+                                            <option value="facebook">facebook</option>
+                                            <option value="flasher">flasher</option>
+                                            <option value="google">google</option>
+                                            <option value="ios">ios</option>
+                                            <option value="jade">jade</option>
+                                            <option value="material">material</option>
+                                            <option value="minimal">minimal</option>
+                                            <option value="neon">neon</option>
+                                            <option value="onyx">onyx</option>
+                                            <option value="ruby">ruby</option>
+                                            <option value="sapphire">sapphire</option>
+                                            <option value="slack">slack</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="direction-select"
+                                               class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                        <select id="direction-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Default</option>
+                                            <option value="top">top</option>
+                                            <option value="bottom">bottom</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label for="fps-input"
+                                               class="block mb-1 text-sm font-medium text-gray-700">FPS</label>
+                                        <select id="fps-input"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Default</option>
+                                            <option value="30">30</option>
+                                            <option value="60">60</option>
+                                            <option value="120">120</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <div class="flex items-center h-10">
+                                            <input type="checkbox" id="rtl-check"
+                                                   class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                            <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="close-btn-check"
+                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                        <label for="close-btn-check" class="ml-2 text-sm text-gray-700">Close
+                                            Button</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="escape-html-check"
+                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape
+                                            HTML</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Launch button -->
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md"
+                                data-controller="notification-demo">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
+                            <div class="absolute inset-0 bg-grid opacity-10"></div>
+
+                            <div class="relative px-5 py-3 flex items-center justify-center text-white font-medium">
+                                            <span class="flex items-center space-x-2">
+                                                <span>Launch Notification</span>
+                                                <svg
+                                                    class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                                </svg>
+                                            </span>
+                            </div>
+
+                            <div
+                                class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right panel: Code Preview -->
+                <div class="w-full lg:w-1/2">
+                    <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
+                        <div class="text-sm font-medium text-gray-700">Generated Code</div>
+                    </div>
+
+                    <!-- Code tabs -->
+                    <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
+                        <button id="laravel-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500"
+                                data-tab="laravel">Laravel
+                        </button>
+                        <button id="symfony-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800"
+                                data-tab="symfony">Symfony
+                        </button>
+                        <button id="npm-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800"
+                                data-tab="npm">JavaScript
+                        </button>
+                    </div>
+
+                    <!-- Code panels -->
+                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel">
+<pre><code class="language-php" id="laravel-code-display">// Laravel Controller Method Example
+public function store(Request $request)
+{
+    // Your logic to process the form
+    $result = $this->processData($request->all());
+
+    flash()->success('Your changes have been saved successfully!');
+
+    return redirect()->back();
+}</code></pre>
+                    </div>
+
+                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel hidden">
+<pre><code class="language-php" id="symfony-code-display">// Symfony Controller Method Example
+public function store(Request $request): Response
+{
+    // Your logic to process the form
+    $result = $this->processData($request->request->all());
+
+    $this->flash()->success('Your changes have been saved successfully!');
+
+    return $this->redirectToRoute('app_homepage');
+}</code></pre>
+                    </div>
+
+                    <div id="npm-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel hidden">
+<pre><code class="language-javascript" id="npm-code-display">// NPM Installation
+// npm install @flasher/flasher --save
+
+// ES6 Module Import
+import flasher from '@flasher/flasher';
+
+// Example in React, Vue, or other framework
+function saveData() {
+    // API call or data processing
+    return apiService.saveData(formData)
+        .then(response => {
+            flasher.success('Your changes have been saved successfully!');
+            return response;
+        })
+        .catch(error => {
+            flasher.error('Failed to save data');
+            throw error;
+        });
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code preview actions -->
+        <div class="flex justify-center mt-4 space-x-4">
+            <a href="https://phpflasher.com/docs"
+               class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <span>Documentation</span>
+            </a>
+            <a href="https://github.com/php-flasher/php-flasher"
+               class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                          clip-rule="evenodd"></path>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </div>
+</section>

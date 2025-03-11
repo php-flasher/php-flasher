@@ -1,0 +1,183 @@
+/* Essential styles for the elegant notifications demo */
+.bg-grid {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes ping-slow {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.animate-ping-slow {
+    animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse-slow {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-medium {
+    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+
+.animate-shine {
+    animation: shine 1s forwards;
+}
+
+/* New spaced notification type buttons */
+.notification-types-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
+}
+
+.type-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4b5563;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.type-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.type-button.active {
+    border-width: 2px;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.type-icon {
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+}
+
+/* Success type */
+.type-button[data-type="success"] {
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+.type-button[data-type="success"].active {
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: #10B981;
+}
+
+.type-icon.success {
+    color: #10B981;
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* Error type */
+.type-button[data-type="error"] {
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.type-button[data-type="error"].active {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: #EF4444;
+}
+
+.type-icon.error {
+    color: #EF4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Info type */
+.type-button[data-type="info"] {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.type-button[data-type="info"].active {
+    background-color: rgba(59, 130, 246, 0.15);
+    border-color: #3B82F6;
+}
+
+.type-icon.info {
+    color: #3B82F6;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Warning type */
+.type-button[data-type="warning"] {
+    background-color: rgba(245, 158, 11, 0.05);
+}
+
+.type-button[data-type="warning"].active {
+    background-color: rgba(245, 158, 11, 0.15);
+    border-color: #F59E0B;
+}
+
+.type-icon.warning {
+    color: #F59E0B;
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+/* Code panel styles */
+.code-panel {
+    height: calc(100vh - 15rem);
+    max-height: 500px;
+}
+
+/* Override Prism default styles to make them work better in our UI */
+pre[class*="language-"] {
+    background: #f9fafb !important; /* Use light gray instead of darker backgrounds */
+    margin: 0 !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+code[class*="language-"] {
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* Tab button styles */
+#php-tab.active, #js-tab.active {
+    @apply text-blue-600 border-b-2 border-blue-500;
+}
+
+/* Additional animation for code tabs */
+.code-tab-transition {
+    transition: all 0.3s ease-in-out;
+}
