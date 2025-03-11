@@ -110,7 +110,7 @@ layout: home
             <div class="mt-3 inline-flex items-center px-3 py-1 space-x-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span class="text-xs text-gray-500">Session: <span class="text-gray-700 font-medium">yoeunes</span></span>
-                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:22:36</span>
+                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:32:00</span>
             </div>
         </header>
 
@@ -294,7 +294,8 @@ layout: home
                         </div>
 
                         <!-- Launch button with wow effect -->
-                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md">
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md" 
+                                data-controller="notification-demo">
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
                             <div class="absolute inset-0 bg-grid opacity-10"></div>
                             
@@ -394,7 +395,7 @@ flasher.success('Your changes have been saved successfully!');</code></pre>
     animation: shine 1s forwards;
 }
 
-/* New Notification Type Selector */
+/* New Notification Type Selector with lighter backgrounds */
 .notification-type-selector {
     display: flex;
     background-color: #f9fafb;
@@ -438,6 +439,32 @@ flasher.success('Your changes have been saved successfully!');</code></pre>
     margin-right: 0.5rem;
     align-items: center;
     justify-content: center;
+}
+
+/* Add light colored backgrounds to types */
+.type-option[data-type="success"] {
+    background-color: rgba(16, 185, 129, 0.05);
+}
+.type-option[data-type="success"].active {
+    background-color: rgba(16, 185, 129, 0.15);
+}
+.type-option[data-type="error"] {
+    background-color: rgba(239, 68, 68, 0.05);
+}
+.type-option[data-type="error"].active {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+.type-option[data-type="info"] {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+.type-option[data-type="info"].active {
+    background-color: rgba(59, 130, 246, 0.15);
+}
+.type-option[data-type="warning"] {
+    background-color: rgba(245, 158, 11, 0.05);
+}
+.type-option[data-type="warning"].active {
+    background-color: rgba(245, 158, 11, 0.15);
 }
 
 .type-icon.success {
@@ -506,7 +533,7 @@ const state = {
 
 // Update current time
 function updateCurrentTime() {
-    document.getElementById('current-time').textContent = "2025-03-11 07:22:36";
+    document.getElementById('current-time').textContent = "2025-03-11 07:32:00";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -523,7 +550,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     distance: 150,
                     color: "#4b5563",
                     opacity: 0.1,
-                    width: 1
+                                        width: 1
                 },
                 move: {
                     enable: true,
@@ -555,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update code display
             updateCodeDisplay();
             
-                        // Update status
+            // Update status
             updateStatus(`Type changed to: ${state.type}`);
         });
     });
@@ -614,39 +641,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Show notification button
-    document.getElementById('show-notification-btn').addEventListener('click', () => {
-        // Update status
-        updateStatus('Launching notification...');
-        
-        // Show the actual notification if flasher is available
-        if (typeof flasher !== 'undefined') {
-            const options = {};
-            
-            // Only add options that have been explicitly set
-            if (state.position) options.position = state.position;
-            if (state.timeout !== '') options.timeout = state.timeout;
-            if (state.fps !== '') options.fps = state.fps;
-            if (state.direction) options.direction = state.direction;
-            if (state.rtl) options.rtl = state.rtl;
-            if (state.theme) options.theme = state.theme;
-            if (state.closeButton) options.closeButton = state.closeButton;
-            if (!state.escapeHtml) options.escapeHtml = state.escapeHtml;
-            
-            if (Object.keys(options).length > 0) {
-                flasher.options(options);
-            }
-            
-            // Call the appropriate method based on whether title is specified
-            if (state.title) {
-                flasher[state.type](state.message, state.title);
-            } else {
-                flasher[state.type](state.message);
-            }
-        } else {
-            // Fallback if flasher is not available
-            console.log(`Would show a ${state.type} notification with message: "${state.message}"${state.title ? ` and title: "${state.title}"` : ''}`);
-        }
-    });
+    // We don't need custom code here since we're using the Stimulus controller
     
     // Code tabs functionality
     document.getElementById('php-tab').addEventListener('click', () => {
@@ -716,16 +711,24 @@ function updateCodeDisplay() {
     // PHP Code
     let phpCode = `// Display a ${state.type} notification\n`;
     
-    // Build options object first
+    // Handle theme usage
+    let useTheme = '';
+    if (state.theme) {
+        useTheme = `flash()->use('theme.${state.theme}')`;
+    } else {
+        useTheme = 'flash()';
+    }
+    
+    // Build options object
     let hasOptions = false;
     let phpOptionsCode = '';
     
     if (state.position || state.timeout !== '' || state.fps !== '' || 
-        state.direction || state.rtl || state.theme || 
+        state.direction || state.rtl || 
         state.closeButton || !state.escapeHtml) {
         
         hasOptions = true;
-        phpOptionsCode = 'flash()\n    ->options([\n';
+        phpOptionsCode = '->options([\n';
         
         // Add each option that's been explicitly set
         const optionLines = [];
@@ -734,16 +737,15 @@ function updateCodeDisplay() {
         if (state.fps !== '') optionLines.push(`        'fps' => ${state.fps}`);
         if (state.direction) optionLines.push(`        'direction' => '${state.direction}'`);
         if (state.rtl) optionLines.push(`        'rtl' => true`);
-        if (state.theme) optionLines.push(`        'theme' => '${state.theme}'`);
         if (state.closeButton) optionLines.push(`        'closeButton' => true`);
         if (!state.escapeHtml) optionLines.push(`        'escapeHtml' => false`);
         
-        phpOptionsCode += optionLines.join(',\n') + '\n    ])\n';
+        phpOptionsCode += optionLines.join(',\n') + '\n    ])';
     }
     
     // Build the full PHP code
     if (hasOptions) {
-        phpCode += phpOptionsCode;
+        phpCode += `${useTheme}${phpOptionsCode}\n`;
         
         if (state.title) {
             phpCode += `    ->${state.type}(\n        '${state.message}', \n        '${state.title}'\n    );`;
@@ -753,22 +755,30 @@ function updateCodeDisplay() {
     } else {
         // Simple call without options
         if (state.title) {
-            phpCode += `flash()->${state.type}('${state.message}', '${state.title}');`;
+            phpCode += `${useTheme}->${state.type}('${state.message}', '${state.title}');`;
         } else {
-            phpCode += `flash()->${state.type}('${state.message}');`;
+            phpCode += `${useTheme}->${state.type}('${state.message}');`;
         }
     }
     
     // JavaScript Code
     let jsCode = `// Display a ${state.type} notification\n`;
     
-    // Build options object first
+    // Handle theme usage
+    let jsUseTheme = '';
+    if (state.theme) {
+        jsUseTheme = `flasher.use('theme.${state.theme}')`;
+    } else {
+        jsUseTheme = 'flasher';
+    }
+    
+    // Build options object
     let jsOptionsCode = '';
     if (state.position || state.timeout !== '' || state.fps !== '' || 
-        state.direction || state.rtl || state.theme || 
+        state.direction || state.rtl || 
         state.closeButton || !state.escapeHtml) {
         
-        jsOptionsCode = 'flasher.options({\n';
+        jsOptionsCode = '.options({\n';
         
         // Add each option that's been explicitly set
         const optionLines = [];
@@ -777,22 +787,28 @@ function updateCodeDisplay() {
         if (state.fps !== '') optionLines.push(`    fps: ${state.fps}`);
         if (state.direction) optionLines.push(`    direction: '${state.direction}'`);
         if (state.rtl) optionLines.push(`    rtl: true`);
-        if (state.theme) optionLines.push(`    theme: '${state.theme}'`);
         if (state.closeButton) optionLines.push(`    closeButton: true`);
         if (!state.escapeHtml) optionLines.push(`    escapeHtml: false`);
         
-        jsOptionsCode += optionLines.join(',\n') + '\n});\n\n';
+        jsOptionsCode += optionLines.join(',\n') + '\n})';
     }
     
     // Build the full JavaScript code
     if (jsOptionsCode) {
-        jsCode += jsOptionsCode;
-    }
-    
-    if (state.title) {
-        jsCode += `flasher.${state.type}('${state.message}', '${state.title}');`;
+        jsCode += `${jsUseTheme}${jsOptionsCode}\n`;
+        
+        if (state.title) {
+            jsCode += `    .${state.type}('${state.message}', '${state.title}');`;
+        } else {
+            jsCode += `    .${state.type}('${state.message}');`;
+        }
     } else {
-        jsCode += `flasher.${state.type}('${state.message}');`;
+        // Simple call without options
+        if (state.title) {
+            jsCode += `${jsUseTheme}.${state.type}('${state.message}', '${state.title}');`;
+        } else {
+            jsCode += `${jsUseTheme}.${state.type}('${state.message}');`;
+        }
     }
     
     phpCodeDisplay.textContent = phpCode;
@@ -804,6 +820,66 @@ function updateCodeDisplay() {
         Prism.highlightElement(jsCodeDisplay);
     }
 }
+
+// The following is the integrated implementation of the notification stimulus controller
+// It is not actually executed here but shows how it would be integrated
+/*
+import { Controller } from '@hotwired/stimulus'
+import { showNotificationsForHandler } from '../show_notifications'
+import '@flasher/flasher-notyf/dist/flasher-notyf.min.css'
+
+export default class extends Controller {
+    connect() {
+        showNotificationsForHandler('notyf')
+    }
+}
+
+// Import flasher
+import flasher from '@flasher/flasher'
+
+function showNotifications(notifications) {
+    if (notifications.length === 0) {
+        return
+    }
+
+    setTimeout(() => {
+        notifications[0]()
+        showNotifications(notifications.slice(1))
+    }, 1500)
+}
+
+export function showNotificationsForHandler(handler, options = {}) {
+    const factory = flasher.use(handler)
+
+    // Handle theme-based handlers with different positions
+    const isThemeHandler = handler.startsWith('theme.')
+
+    // Define position-specific options for theme handlers
+    let infoOptions = { ...options }
+    let errorOptions = { ...options }
+    let warningOptions = { ...options }
+    let successOptions = { ...options }
+
+    if (isThemeHandler) {
+        infoOptions = { ...options, position: 'bottom-right' }
+        errorOptions = { ...options, position: 'bottom-right' }
+        warningOptions = { ...options, position: 'bottom-right' }
+        successOptions = { ...options, position: 'bottom-right' }
+    }
+
+    factory.info('Welcome back', 'Info', infoOptions)
+
+    if (['sweetalert'].includes(handler)) {
+        return
+    }
+
+    showNotifications([
+        () => factory.error('Oops! Something went wrong!', 'Error', errorOptions),
+        () => factory.warning('Are you sure you want to proceed?', 'Warning', warningOptions),
+        () => factory.success('Data has been saved successfully!', 'Success', successOptions),
+    ])
+}
+*/
 </script>
 
 <!-- Quick Start Section (Moved before Features) -->
