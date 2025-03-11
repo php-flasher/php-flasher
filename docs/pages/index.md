@@ -82,7 +82,7 @@ layout: home
 <!-- Interactive Demo Section with WOW Effect -->
 <section class="relative py-20 mb-24 overflow-hidden">
     <!-- Background effects -->
-    <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 opacity-95"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-indigo-900 via-purple-900 to-slate-900 opacity-95"></div>
     <div class="absolute inset-0">
         <div class="absolute top-0 left-0 w-full h-full">
             <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full">
@@ -129,19 +129,18 @@ layout: home
 
         <!-- Interactive demo container -->
         <div class="perspective-1000">
-            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6 transition-all duration-500 hover:scale-[1.02]">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6">
                 <!-- Code editor side -->
-                <div class="lg:col-span-3 transform-gpu transition-all rounded-xl shadow-glow-indigo overflow-hidden border border-indigo-500/30 backdrop-blur-sm bg-slate-900/80">
+                <div class="lg:col-span-3 rounded-xl shadow-glow-indigo overflow-hidden border border-indigo-500/30 backdrop-blur-sm bg-slate-900/80">
                     <!-- Tab bar -->
                     <div class="flex items-center bg-slate-800/80 border-b border-slate-700/50">
                         <div class="bg-gradient-to-r from-indigo-500 to-purple-500 border-r border-slate-700/50 px-4 py-2 flex items-center space-x-2">
-                            <span class="text-white text-xs font-medium">app.php</span>
+                            <span class="text-white text-xs font-medium">Controller.php</span>
                         </div>
-                        <div class="px-4 py-2 text-xs text-slate-400">Controller.php</div>
                         <div class="ml-auto px-4 py-2 text-xs text-slate-400 flex space-x-2">
                             <span>yoeunes</span>
                             <span class="text-slate-500">|</span>
-                            <span id="demo-current-time">2025-03-11 06:15:40</span>
+                            <span id="demo-current-time">2025-03-11 06:23:40</span>
                         </div>
                     </div>
 
@@ -155,41 +154,39 @@ layout: home
                             <div class="px-2">4</div>
                             <div class="px-2">5</div>
                             <div class="px-2">6</div>
-                            <div class="px-2">7</div>
-                            <div class="px-2">8</div>
-                            <div class="px-2">9</div>
-                            <div class="px-2">10</div>
                         </div>
 
                         <!-- Code content -->
                         <div class="pl-10 pr-3 py-3 font-mono text-sm" id="animated-code">
-                            <pre class="language-php"><code><span class="text-rose-400">// Include PHPFlasher in your application</span>
-<span class="text-purple-400">use</span> <span class="text-blue-300">Flasher\Prime\FlasherInterface</span>;
+                            <pre class="language-php"><code><span class="text-purple-400">namespace</span> <span class="text-blue-300">App\Http\Controllers</span>;
 
-<span class="text-purple-400">public function</span> <span class="text-green-400">index</span>(<span class="text-blue-300">FlasherInterface</span> <span class="text-yellow-300">$flasher</span>)
+<span class="text-purple-400">class</span> <span class="text-green-400">ProfileController</span> <span class="text-purple-400">extends</span> <span class="text-blue-300">Controller</span>
 {
-    <span class="text-slate-400"># Choose your notification type:</span>
-    <span id="active-line" class="block relative -mx-10 px-10 bg-indigo-900/30 border-l-2 border-indigo-500"><span class="text-yellow-300">$flasher</span>-><span class="demo-method text-green-400">success</span>(<span class="text-amber-300">'Your profile has been updated!'</span>);</span>
-    
-    <span class="text-slate-400"># Customize with a title:</span>
-    <span class="text-yellow-300">$flasher</span>-><span class="text-green-400">info</span>(<span class="text-amber-300">'Please verify your email'</span>, <span class="text-amber-300">'Account Setup'</span>);
-    
-    <span class="text-slate-400"># More options available...</span>
+    <span class="text-purple-400">public function</span> <span class="text-green-400">update</span>(<span class="text-blue-300">Request</span> <span class="text-yellow-300">$request</span>)
+    {</code></pre>
+                            <div class="px-4 py-2 bg-indigo-800/30 border-y border-indigo-500/30 my-2">
+                                <div class="text-center text-xs text-indigo-300 mb-2">👇 Click one of the buttons below to test each notification type 👇</div>
+                                <pre class="language-php"><code>        <span id="active-line" class="block"><span class="text-slate-400"># Show notification with:</span>
+        <span class="text-yellow-300">flash()</span>-><span class="demo-method text-green-400">success</span>(<span class="text-amber-300">'Your profile has been updated!'</span>);</span></code></pre>
+                            </div>
+                            <pre class="language-php mt-2"><code>        <span class="text-slate-400"># Return back to the page:</span>
+        <span class="text-purple-400">return</span> <span class="text-yellow-300">back()</span>;
+    }
 }</code></pre>
                         </div>
                     </div>
                 </div>
 
                 <!-- Preview side with device mockup -->
-                <div class="lg:col-span-2 transform-gpu transition-all">
+                <div class="lg:col-span-2">
                     <div class="h-full flex flex-col">
                         <!-- Controls -->
                         <div class="flex justify-center items-center space-x-3 mb-3">
                             <button onclick="changeMethod('success'); flasher.success('Your profile has been updated!', 'Success')" 
-                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-green-500/30 bg-green-500/10 hover:bg-green-500/20 transition-all overflow-hidden">
+                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-green-500/30 bg-green-500/10 hover:bg-green-500/20 transition-all overflow-hidden pulse-attention">
                                 <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-green-600/20 to-green-600/0"></span>
                                 <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fa-solid fa-circle-check text-green-500"></i>
+                                    <i class="fas fa-circle-check text-green-500"></i>
                                     <span class="text-sm text-green-400 font-medium">Success</span>
                                 </div>
                             </button>
@@ -198,7 +195,7 @@ layout: home
                                     class="group relative flex-1 py-2.5 px-3 rounded-lg border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-all overflow-hidden">
                                 <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-red-600/20 to-red-600/0"></span>
                                 <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fa-solid fa-circle-xmark text-red-500"></i>
+                                    <i class="fas fa-circle-xmark text-red-500"></i>
                                     <span class="text-sm text-red-400 font-medium">Error</span>
                                 </div>
                             </button>
@@ -209,7 +206,7 @@ layout: home
                                     class="group relative flex-1 py-2.5 px-3 rounded-lg border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 transition-all overflow-hidden">
                                 <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-blue-600/20 to-blue-600/0"></span>
                                 <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fa-solid fa-circle-info text-blue-500"></i>
+                                    <i class="fas fa-circle-info text-blue-500"></i>
                                     <span class="text-sm text-blue-400 font-medium">Info</span>
                                 </div>
                             </button>
@@ -218,7 +215,7 @@ layout: home
                                     class="group relative flex-1 py-2.5 px-3 rounded-lg border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 transition-all overflow-hidden">
                                 <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-amber-600/20 to-amber-600/0"></span>
                                 <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                                    <i class="fas fa-triangle-exclamation text-amber-500"></i>
                                     <span class="text-sm text-amber-400 font-medium">Warning</span>
                                 </div>
                             </button>
@@ -240,7 +237,11 @@ layout: home
                                     <div class="w-full h-full bg-gradient-to-b from-indigo-50 to-white relative">
                                         <!-- Smartphone Content -->
                                         <header class="absolute inset-x-0 top-0 h-14 bg-white/70 backdrop-blur-sm border-b border-slate-200 flex items-center px-4 z-10">
-                                            <div class="w-6 h-6 text-indigo-600"><i class="fa-solid fa-arrow-left"></i></div>
+                                            <div class="w-6 h-6 text-indigo-600">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                                    <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
                                             <div class="ml-4 text-sm font-medium text-slate-800">PHPFlasher Demo</div>
                                             <div class="ml-auto text-xs text-slate-500">11:45 AM</div>
                                         </header>
@@ -258,7 +259,9 @@ layout: home
                                                 <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
                                                     <div class="flex items-center justify-between">
                                                         <div class="h-8 w-8 bg-rose-100 rounded-full flex items-center justify-center">
-                                                            <i class="fa-solid fa-laravel text-rose-600 text-sm"></i>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 text-rose-600">
+                                                                <path fill="currentColor" d="M504.4,115.83a5.72,5.72,0,0,0-.28-.68,8.52,8.52,0,0,0-.53-1.25,6,6,0,0,0-.54-.71,9.36,9.36,0,0,0-.72-.94c-.23-.22-.52-.4-.77-.6a8.84,8.84,0,0,0-.9-.68L404.4,55.55a8,8,0,0,0-8,0L300.12,111h0a8.07,8.07,0,0,0-.88.69,7.68,7.68,0,0,0-.78.6,8.23,8.23,0,0,0-.72.93c-.17.24-.39.45-.54.71a9.7,9.7,0,0,0-.52,1.25c-.08.23-.21.44-.28.68a8.08,8.08,0,0,0-.28,2.08V223.18l-80.22,46.19V63.44a7.8,7.8,0,0,0-.28-2.09c-.06-.24-.2-.45-.28-.68a8.35,8.35,0,0,0-.52-1.24c-.14-.26-.37-.47-.54-.72a9.36,9.36,0,0,0-.72-.94,9.46,9.46,0,0,0-.78-.6,9.8,9.8,0,0,0-.88-.68h0L115.61,1.07a8,8,0,0,0-8,0L11.34,56.49h0a6.52,6.52,0,0,0-.88.69,7.81,7.81,0,0,0-.79.6,8.15,8.15,0,0,0-.71.93c-.18.25-.4.46-.55.72a7.88,7.88,0,0,0-.51,1.24,6.46,6.46,0,0,0-.29.67,8.18,8.18,0,0,0-.28,2.1v329.7a8,8,0,0,0,4,6.95l192.5,110.84a8.83,8.83,0,0,0,1.33.54c.21.08.41.2.63.26a7.92,7.92,0,0,0,4.1,0c.2-.05.37-.16.55-.22a8.6,8.6,0,0,0,1.4-.58L404.4,400.09a8,8,0,0,0,4-6.95V287.88l92.24-53.11a8,8,0,0,0,4-7V117.92A8.63,8.63,0,0,0,504.4,115.83ZM111.6,17.28h0l80.19,46.15-80.2,46.18L31.41,63.44Zm88.25,60V278.6l-46.53,26.79-33.69,19.4V123.5l46.53-26.79Zm0,412.78L23.37,388.5V77.32L57.06,96.7l46.52,26.8V338.68a6.94,6.94,0,0,0,.12.9,8,8,0,0,0,.16,1.18h0a5.92,5.92,0,0,0,.38.9,6.38,6.38,0,0,0,.42,1v0a8.54,8.54,0,0,0,.6.78,7.62,7.62,0,0,0,.66.84l0,0c.23.22.52.38.77.58a8.93,8.93,0,0,0,.86.66l0,0,0,0,92.19,52.18Zm8-106.17-80.06-45.32,84.09-48.41,92.26-53.11,80.13,46.13-58.8,33.56Zm184.52,4.57L215.88,490.11V397.8L346.6,323.2l45.77-26.15Zm0-119.13L358.68,250l-46.53-26.79V131.79l33.69,19.4L392.37,178Zm8-105.28-80.2-46.17,80.2-46.16,80.18,46.15Zm8,105.28V178L455,151.19l33.68-19.4v91.39Z" />
+                                                            </svg>
                                                         </div>
                                                         <div class="text-[10px] text-slate-500">Laravel</div>
                                                     </div>
@@ -267,7 +270,9 @@ layout: home
                                                 <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
                                                     <div class="flex items-center justify-between">
                                                         <div class="h-8 w-8 bg-slate-100 rounded-full flex items-center justify-center">
-                                                            <i class="fa-solid fa-symfony text-slate-900 text-sm"></i>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5 text-slate-900">
+                                                                <path fill="currentColor" d="M12 22.71l-8.2-2.37V3.66l8.2 2.37v16.68zm1.8-16.68l8.2-2.37v16.68l-8.2 2.37V6.03z"/>
+                                                            </svg>
                                                         </div>
                                                         <div class="text-[10px] text-slate-500">Symfony</div>
                                                     </div>
@@ -282,15 +287,22 @@ layout: home
 
                                         <footer class="absolute inset-x-0 bottom-0 h-16 bg-white border-t border-slate-200 flex items-center justify-around px-3">
                                             <div class="flex flex-col items-center">
-                                                <i class="fa-solid fa-house text-indigo-600 text-sm"></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-indigo-600">
+                                                    <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                                                    <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                                                </svg>
                                                 <span class="text-[10px] text-slate-800 mt-1">Home</span>
                                             </div>
                                             <div class="flex flex-col items-center">
-                                                <i class="fa-solid fa-bell text-slate-400 text-sm"></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-slate-400">
+                                                    <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd" />
+                                                </svg>
                                                 <span class="text-[10px] text-slate-500 mt-1">Notifications</span>
                                             </div>
                                             <div class="flex flex-col items-center">
-                                                <i class="fa-solid fa-gear text-slate-400 text-sm"></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-slate-400">
+                                                    <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
+                                                </svg>
                                                 <span class="text-[10px] text-slate-500 mt-1">Settings</span>
                                             </div>
                                         </footer>
@@ -300,13 +312,6 @@ layout: home
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Floating tags -->
-            <div class="hidden lg:block">
-                <div class="absolute top-1/3 left-[20%] transform -translate-x-1/2 -translate-y-1/2 rotate-[-15deg] bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg shadow-glow text-white text-xs font-mono border border-white/20 animate-float-slow">event: flash</div>
-                <div class="absolute top-2/3 right-[15%] transform translate-x-1/2 -translate-y-1/2 rotate-[10deg] bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg shadow-glow text-white text-xs font-mono border border-white/20 animate-float">type: success</div>
-                <div class="absolute bottom-1/4 left-[30%] transform -translate-x-1/2 rotate-[-5deg] bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg shadow-glow text-white text-xs font-mono border border-white/20 animate-float-medium">position: top-right</div>
             </div>
         </div>
     </div>
@@ -324,33 +329,6 @@ layout: home
 
 .shadow-glow-indigo {
     box-shadow: 0 0 25px 5px rgba(99, 102, 241, 0.2);
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(10deg); }
-    50% { transform: translateY(-10px) rotate(10deg); }
-}
-
-@keyframes float-slow {
-    0%, 100% { transform: translateY(0) rotate(-15deg); }
-    50% { transform: translateY(-15px) rotate(-15deg); }
-}
-
-@keyframes float-medium {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-12px) rotate(-5deg); }
-}
-
-.animate-float {
-    animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-slow {
-    animation: float-slow 8s ease-in-out infinite;
-}
-
-.animate-float-medium {
-    animation: float-medium 7s ease-in-out infinite;
 }
 
 /* Blinking cursor effect */
@@ -376,6 +354,16 @@ layout: home
 
 @keyframes slide-out {
     100% { transform: translateX(120%); }
+}
+
+/* Button attention animation */
+@keyframes pulse-attention {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(79, 209, 137, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(79, 209, 137, 0); }
+}
+
+.pulse-attention {
+    animation: pulse-attention 2s infinite;
 }
 </style>
 
@@ -472,10 +460,10 @@ function addNotificationToPhone(type, message, title) {
     };
     
     const icons = {
-        'success': '<i class="fa-solid fa-circle-check"></i>',
-        'error': '<i class="fa-solid fa-circle-xmark"></i>',
-        'info': '<i class="fa-solid fa-circle-info"></i>',
-        'warning': '<i class="fa-solid fa-triangle-exclamation"></i>'
+        'success': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" /></svg>',
+        'error': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" /></svg>',
+        'info': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" /></svg>',
+        'warning': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" /></svg>'
     };
     
     const notification = document.createElement('div');
