@@ -110,7 +110,7 @@ layout: home
             <div class="mt-3 inline-flex items-center px-3 py-1 space-x-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span class="text-xs text-gray-500">Session: <span class="text-gray-700 font-medium">yoeunes</span></span>
-                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:11:29</span>
+                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:22:36</span>
             </div>
         </header>
 
@@ -149,77 +149,42 @@ layout: home
                     
                     <!-- Options panel -->
                     <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem);">
-                        <!-- Notification Type Selection - Improved with color cards -->
+                        <!-- Notification Type Selection - Redesigned professional interface -->
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
-                            <div class="grid grid-cols-4 gap-3">
-                                <!-- Success -->
-                                <div class="type-card-container">
-                                    <button class="type-card active" data-type="success">
-                                        <div class="type-card-color bg-green-500">
-                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="type-card-label">Success</div>
-                                        <div class="type-card-check">
-                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </div>
-                                
-                                <!-- Error -->
-                                <div class="type-card-container">
-                                    <button class="type-card" data-type="error">
-                                        <div class="type-card-color bg-red-500">
-                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="type-card-label">Error</div>
-                                        <div class="type-card-check">
-                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </div>
-                                
-                                <!-- Info -->
-                                <div class="type-card-container">
-                                    <button class="type-card" data-type="info">
-                                        <div class="type-card-color bg-blue-500">
-                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="type-card-label">Info</div>
-                                        <div class="type-card-check">
-                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </div>
-                                
-                                <!-- Warning -->
-                                <div class="type-card-container">
-                                    <button class="type-card" data-type="warning">
-                                        <div class="type-card-color bg-amber-500">
-                                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="type-card-label">Warning</div>
-                                        <div class="type-card-check">
-                                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </div>
+                            <div class="notification-type-selector">
+                                <button class="type-option active" data-type="success">
+                                    <span class="type-icon success">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span>Success</span>
+                                </button>
+                                <button class="type-option" data-type="error">
+                                    <span class="type-icon error">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span>Error</span>
+                                </button>
+                                <button class="type-option" data-type="info">
+                                    <span class="type-icon info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span>Info</span>
+                                </button>
+                                <button class="type-option" data-type="warning">
+                                    <span class="type-icon warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span>Warning</span>
+                                </button>
                             </div>
                         </div>
 
@@ -231,7 +196,7 @@ layout: home
                                     <span class="text-xs text-gray-400">Optional</span>
                                 </div>
                                 <input type="text" id="title-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" 
-                                       placeholder="Enter notification title" value="Success">
+                                       placeholder="Enter notification title" value="">
                             </div>
                             
                             <div>
@@ -241,18 +206,19 @@ layout: home
                             </div>
                         </div>
 
-                        <!-- Advanced Options - No collapsing, less padding -->
+                        <!-- Configuration Options -->
                         <div class="mb-6 border border-gray-200 rounded-md overflow-hidden">
                             <div class="bg-gray-50 px-3 py-2 flex items-center">
-                                <h3 class="font-medium text-gray-700">Advanced Options</h3>
+                                <h3 class="font-medium text-gray-700">Configuration Options</h3>
                             </div>
                             
                             <div class="px-3 py-3 border-t border-gray-200">
-                                <div class="grid grid-cols-2 gap-3">
+                                <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
                                         <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
                                         <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="top-right" selected>top-right</option>
+                                            <option value="">Default</option>
+                                            <option value="top-right">top-right</option>
                                             <option value="top-left">top-left</option>
                                             <option value="bottom-right">bottom-right</option>
                                             <option value="bottom-left">bottom-left</option>
@@ -262,49 +228,66 @@ layout: home
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="duration-input" class="block mb-1 text-sm font-medium text-gray-700">Duration (ms)</label>
-                                        <input type="number" id="duration-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value="5000">
+                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout (ms)</label>
+                                        <input type="number" id="timeout-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value="" placeholder="Default">
                                     </div>
-                                    
-                                    <div>
-                                        <label for="animation-select" class="block mb-1 text-sm font-medium text-gray-700">Animation</label>
-                                        <select id="animation-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="fade" selected>fade</option>
-                                            <option value="slide">slide</option>
-                                            <option value="zoom">zoom</option>
-                                            <option value="flip">flip</option>
-                                        </select>
-                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
                                         <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
                                         <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="light">light</option>
-                                            <option value="dark" selected>dark</option>
+                                            <option value="">Default</option>
+                                            <option value="amazon">amazon</option>
+                                            <option value="amber">amber</option>
+                                            <option value="aurora">aurora</option>
+                                            <option value="crystal">crystal</option>
+                                            <option value="emerald">emerald</option>
+                                            <option value="facebook">facebook</option>
+                                            <option value="flasher">flasher</option>
+                                            <option value="google">google</option>
+                                            <option value="ios">ios</option>
+                                            <option value="jade">jade</option>
                                             <option value="material">material</option>
-                                            <option value="bootstrap">bootstrap</option>
+                                            <option value="minimal">minimal</option>
+                                            <option value="neon">neon</option>
+                                            <option value="onyx">onyx</option>
+                                            <option value="ruby">ruby</option>
+                                            <option value="sapphire">sapphire</option>
+                                            <option value="slack">slack</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="direction-select" class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                        <select id="direction-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Default</option>
+                                            <option value="top">top</option>
+                                            <option value="bottom">bottom</option>
                                         </select>
                                     </div>
                                 </div>
                                 
-                                <div class="mt-3">
-                                    <label class="block mb-1 text-sm font-medium text-gray-700">Additional Options</label>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="dismissible-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
-                                            <label for="dismissible-check" class="ml-2 text-sm text-gray-700">Dismissible</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label for="fps-input" class="block mb-1 text-sm font-medium text-gray-700">FPS</label>
+                                        <input type="number" id="fps-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value="" placeholder="Default">
+                                    </div>
+                                    <div class="flex items-end">
+                                        <div class="flex items-center h-10">
+                                            <input type="checkbox" id="rtl-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                            <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
                                         </div>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="progress-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
-                                            <label for="progress-check" class="ml-2 text-sm text-gray-700">Show Progress</label>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="close-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
-                                            <label for="close-check" class="ml-2 text-sm text-gray-700">Close Button</label>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="pause-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
-                                            <label for="pause-check" class="ml-2 text-sm text-gray-700">Pause on Hover</label>
-                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="close-btn-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                        <label for="close-btn-check" class="ml-2 text-sm text-gray-700">Close Button</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="escape-html-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape HTML</label>
                                     </div>
                                 </div>
                             </div>
@@ -333,7 +316,6 @@ layout: home
                 <div class="w-full lg:w-1/2">
                     <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
-                        <!-- Removed copy button as per request -->
                     </div>
                     
                     <!-- Code tabs -->
@@ -345,36 +327,12 @@ layout: home
                     <!-- Code editor with Prism syntax highlighting -->
                     <div id="php-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel">
                         <pre><code class="language-php" id="php-code-display">// Display a success notification
-flash()
-    ->options([
-        'position' => 'top-right',
-        'duration' => 5000,
-        'theme' => 'dark',
-        'animation' => 'fade',
-        'closeButton' => true,
-        'progressBar' => true
-    ])
-    ->success(
-        'Your changes have been saved successfully!', 
-        'Success'
-    );</code></pre>
+flash()->success('Your changes have been saved successfully!');</code></pre>
                     </div>
                     
                     <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel hidden">
                         <pre><code class="language-javascript" id="js-code-display">// Display a success notification
-flasher.options({
-    position: 'top-right',
-    duration: 5000,
-    theme: 'dark',
-    animation: 'fade',
-    closeButton: true,
-    progressBar: true
-});
-
-flasher.success(
-    'Your changes have been saved successfully!', 
-    'Success'
-);</code></pre>
+flasher.success('Your changes have been saved successfully!');</code></pre>
                     </div>
                 </div>
             </div>
@@ -436,126 +394,65 @@ flasher.success(
     animation: shine 1s forwards;
 }
 
-/* Type card styles */
-.type-card-container {
-    position: relative;
-    width: 100%;
-    perspective: 1000px;
-}
-
-.type-card {
+/* New Notification Type Selector */
+.notification-type-selector {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+    background-color: #f9fafb;
     border-radius: 0.5rem;
-    background-color: white;
-    border: 2px solid transparent;
-    overflow: hidden;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+    padding: 0.25rem;
+    border: 1px solid #e5e7eb;
 }
 
-.type-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.type-card-color {
+.type-option {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 3.5rem;
-    color: white;
-}
-
-.type-card-label {
-    width: 100%;
-    padding: 0.5rem;
-    text-align: center;
-    font-weight: 500;
+    padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    color: #374151;
-    background-color: white;
+    font-weight: 500;
+    color: #4b5563;
+    border-radius: 0.375rem;
     transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border: none;
+    outline: none;
 }
 
-.type-card-check {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    height: 1.25rem;
-    width: 1.25rem;
+.type-option:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.type-option.active {
     background-color: white;
-    border-radius: 50%;
-    display: flex;
+    color: #111827;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.type-icon {
+    display: inline-flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
     align-items: center;
     justify-content: center;
-    color: currentColor;
-    opacity: 0;
-    transition: opacity 0.2s ease;
 }
 
-/* Success */
-.type-card[data-type="success"] {
-    border-color: rgba(16, 185, 129, 0.1);
-}
-
-.type-card[data-type="success"].active {
-    border-color: #10B981;
-    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
-}
-
-.type-card[data-type="success"].active .type-card-check {
-    opacity: 1;
+.type-icon.success {
     color: #10B981;
 }
 
-/* Error */
-.type-card[data-type="error"] {
-    border-color: rgba(239, 68, 68, 0.1);
-}
-
-.type-card[data-type="error"].active {
-    border-color: #EF4444;
-    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3);
-}
-
-.type-card[data-type="error"].active .type-card-check {
-    opacity: 1;
+.type-icon.error {
     color: #EF4444;
 }
 
-/* Info */
-.type-card[data-type="info"] {
-    border-color: rgba(59, 130, 246, 0.1);
-}
-
-.type-card[data-type="info"].active {
-    border-color: #3B82F6;
-    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
-}
-
-/* Info */
-.type-card[data-type="info"].active .type-card-check {
-    opacity: 1;
+.type-icon.info {
     color: #3B82F6;
 }
 
-/* Warning */
-.type-card[data-type="warning"] {
-    border-color: rgba(245, 158, 11, 0.1);
-}
-
-.type-card[data-type="warning"].active {
-    border-color: #F59E0B;
-    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3);
-}
-
-.type-card[data-type="warning"].active .type-card-check {
-    opacity: 1;
+.type-icon.warning {
     color: #F59E0B;
 }
 
@@ -595,21 +492,21 @@ code[class*="language-"] {
 // Current state management
 const state = {
     type: 'success',
-    title: 'Success',
+    title: '',
     message: 'Your changes have been saved successfully!',
-    position: 'top-right',
-    duration: 5000,
-    animation: 'fade',
-    theme: 'dark',
-    closeButton: true,
-    progressBar: true,
-    dismissible: false,
-    pauseOnHover: false
+    timeout: '',
+    fps: '',
+    position: '',
+    direction: '',
+    rtl: false,
+    theme: '',
+    closeButton: false,
+    escapeHtml: true
 };
 
 // Update current time
 function updateCurrentTime() {
-    document.getElementById('current-time').textContent = "2025-03-11 07:14:01";
+    document.getElementById('current-time').textContent = "2025-03-11 07:22:36";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -644,10 +541,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCurrentTime();
     
     // Initialize type buttons
-    document.querySelectorAll('.type-card').forEach(btn => {
+    document.querySelectorAll('.type-option').forEach(btn => {
         btn.addEventListener('click', () => {
             // Remove active class from all type buttons
-            document.querySelectorAll('.type-card').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.type-option').forEach(b => b.classList.remove('active'));
             
             // Add active class to clicked button
             btn.classList.add('active');
@@ -655,29 +552,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update state
             state.type = btn.dataset.type;
             
-            // Update title to match type if it matches a default value
-            if (state.title === 'Success' || state.title === 'Error' || 
-                state.title === 'Info' || state.title === 'Warning') {
-                state.title = capitalizeFirstLetter(state.type);
-                document.getElementById('title-input').value = state.title;
-            }
-            
             // Update code display
             updateCodeDisplay();
             
-            // Update status
+                        // Update status
             updateStatus(`Type changed to: ${state.type}`);
         });
     });
     
-    // Capitalize helper function
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    
     // Input event listeners
     document.getElementById('title-input').addEventListener('input', (e) => {
-        state.title = e.target.value;
+        state.title = e.target.value.trim();
         updateCodeDisplay();
     });
     
@@ -692,13 +577,13 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCodeDisplay();
     });
     
-    document.getElementById('duration-input').addEventListener('input', (e) => {
-        state.duration = parseInt(e.target.value);
+    document.getElementById('timeout-input').addEventListener('input', (e) => {
+        state.timeout = e.target.value ? parseInt(e.target.value) : '';
         updateCodeDisplay();
     });
     
-    document.getElementById('animation-select').addEventListener('change', (e) => {
-        state.animation = e.target.value;
+    document.getElementById('fps-input').addEventListener('input', (e) => {
+        state.fps = e.target.value ? parseInt(e.target.value) : '';
         updateCodeDisplay();
     });
     
@@ -707,24 +592,24 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCodeDisplay();
     });
     
+    document.getElementById('direction-select').addEventListener('change', (e) => {
+        state.direction = e.target.value;
+        updateCodeDisplay();
+    });
+    
     // Checkbox event listeners
-    document.getElementById('dismissible-check').addEventListener('change', (e) => {
-        state.dismissible = e.target.checked;
+    document.getElementById('rtl-check').addEventListener('change', (e) => {
+        state.rtl = e.target.checked;
         updateCodeDisplay();
     });
     
-    document.getElementById('progress-check').addEventListener('change', (e) => {
-        state.progressBar = e.target.checked;
-        updateCodeDisplay();
-    });
-    
-    document.getElementById('close-check').addEventListener('change', (e) => {
+    document.getElementById('close-btn-check').addEventListener('change', (e) => {
         state.closeButton = e.target.checked;
         updateCodeDisplay();
     });
     
-    document.getElementById('pause-check').addEventListener('change', (e) => {
-        state.pauseOnHover = e.target.checked;
+    document.getElementById('escape-html-check').addEventListener('change', (e) => {
+        state.escapeHtml = e.target.checked;
         updateCodeDisplay();
     });
     
@@ -735,21 +620,31 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show the actual notification if flasher is available
         if (typeof flasher !== 'undefined') {
-            const options = {
-                position: state.position,
-                duration: state.duration,
-                theme: state.theme,
-                animation: state.animation,
-                closeButton: state.closeButton,
-                progressBar: state.progressBar,
-                dismissible: state.dismissible,
-                pauseOnHover: state.pauseOnHover
-            };
+            const options = {};
             
-            flasher[state.type](state.message, state.title, options);
+            // Only add options that have been explicitly set
+            if (state.position) options.position = state.position;
+            if (state.timeout !== '') options.timeout = state.timeout;
+            if (state.fps !== '') options.fps = state.fps;
+            if (state.direction) options.direction = state.direction;
+            if (state.rtl) options.rtl = state.rtl;
+            if (state.theme) options.theme = state.theme;
+            if (state.closeButton) options.closeButton = state.closeButton;
+            if (!state.escapeHtml) options.escapeHtml = state.escapeHtml;
+            
+            if (Object.keys(options).length > 0) {
+                flasher.options(options);
+            }
+            
+            // Call the appropriate method based on whether title is specified
+            if (state.title) {
+                flasher[state.type](state.message, state.title);
+            } else {
+                flasher[state.type](state.message);
+            }
         } else {
             // Fallback if flasher is not available
-            console.log(`Would show a ${state.type} notification with title "${state.title}" and message "${state.message}"`);
+            console.log(`Would show a ${state.type} notification with message: "${state.message}"${state.title ? ` and title: "${state.title}"` : ''}`);
         }
     });
     
@@ -819,70 +714,86 @@ function updateCodeDisplay() {
     const jsCodeDisplay = document.getElementById('js-code-display');
     
     // PHP Code
-    let phpCode = `// Display a ${state.type} notification\nflash()\n    ->options([\n`;
+    let phpCode = `// Display a ${state.type} notification\n`;
     
-    // Add options
-    phpCode += `        'position' => '${state.position}',\n`;
-    phpCode += `        'duration' => ${state.duration},\n`;
-    phpCode += `        'theme' => '${state.theme}',\n`;
-    phpCode += `        'animation' => '${state.animation}'`;
+    // Build options object first
+    let hasOptions = false;
+    let phpOptionsCode = '';
     
-    if (state.closeButton) {
-        phpCode += `,\n        'closeButton' => true`;
+    if (state.position || state.timeout !== '' || state.fps !== '' || 
+        state.direction || state.rtl || state.theme || 
+        state.closeButton || !state.escapeHtml) {
+        
+        hasOptions = true;
+        phpOptionsCode = 'flash()\n    ->options([\n';
+        
+        // Add each option that's been explicitly set
+        const optionLines = [];
+        if (state.position) optionLines.push(`        'position' => '${state.position}'`);
+        if (state.timeout !== '') optionLines.push(`        'timeout' => ${state.timeout}`);
+        if (state.fps !== '') optionLines.push(`        'fps' => ${state.fps}`);
+        if (state.direction) optionLines.push(`        'direction' => '${state.direction}'`);
+        if (state.rtl) optionLines.push(`        'rtl' => true`);
+        if (state.theme) optionLines.push(`        'theme' => '${state.theme}'`);
+        if (state.closeButton) optionLines.push(`        'closeButton' => true`);
+        if (!state.escapeHtml) optionLines.push(`        'escapeHtml' => false`);
+        
+        phpOptionsCode += optionLines.join(',\n') + '\n    ])\n';
     }
     
-    if (state.progressBar) {
-        phpCode += `,\n        'progressBar' => true`;
+    // Build the full PHP code
+    if (hasOptions) {
+        phpCode += phpOptionsCode;
+        
+        if (state.title) {
+            phpCode += `    ->${state.type}(\n        '${state.message}', \n        '${state.title}'\n    );`;
+        } else {
+            phpCode += `    ->${state.type}('${state.message}');`;
+        }
+    } else {
+        // Simple call without options
+        if (state.title) {
+            phpCode += `flash()->${state.type}('${state.message}', '${state.title}');`;
+        } else {
+            phpCode += `flash()->${state.type}('${state.message}');`;
+        }
     }
-    
-    if (state.dismissible) {
-        phpCode += `,\n        'dismissible' => true`;
-    }
-    
-    if (state.pauseOnHover) {
-        phpCode += `,\n        'pauseOnHover' => true`;
-    }
-    
-    phpCode += `\n    ])\n    ->${state.type}(\n        '${state.message}'`;
-    
-    if (state.title) {
-        phpCode += `, \n        '${state.title}'`;
-    }
-    
-    phpCode += `\n    );`;
     
     // JavaScript Code
-    let jsCode = `// Display a ${state.type} notification\nflasher.options({\n`;
+    let jsCode = `// Display a ${state.type} notification\n`;
     
-    // Add options
-    jsCode += `    position: '${state.position}',\n`;
-    jsCode += `    duration: ${state.duration},\n`;
-    jsCode += `    theme: '${state.theme}',\n`;
-    jsCode += `    animation: '${state.animation}'`;
-    
-    if (state.closeButton) {
-        jsCode += `,\n    closeButton: true`;
+    // Build options object first
+    let jsOptionsCode = '';
+    if (state.position || state.timeout !== '' || state.fps !== '' || 
+        state.direction || state.rtl || state.theme || 
+        state.closeButton || !state.escapeHtml) {
+        
+        jsOptionsCode = 'flasher.options({\n';
+        
+        // Add each option that's been explicitly set
+        const optionLines = [];
+        if (state.position) optionLines.push(`    position: '${state.position}'`);
+        if (state.timeout !== '') optionLines.push(`    timeout: ${state.timeout}`);
+        if (state.fps !== '') optionLines.push(`    fps: ${state.fps}`);
+        if (state.direction) optionLines.push(`    direction: '${state.direction}'`);
+        if (state.rtl) optionLines.push(`    rtl: true`);
+        if (state.theme) optionLines.push(`    theme: '${state.theme}'`);
+        if (state.closeButton) optionLines.push(`    closeButton: true`);
+        if (!state.escapeHtml) optionLines.push(`    escapeHtml: false`);
+        
+        jsOptionsCode += optionLines.join(',\n') + '\n});\n\n';
     }
     
-    if (state.progressBar) {
-        jsCode += `,\n    progressBar: true`;
+    // Build the full JavaScript code
+    if (jsOptionsCode) {
+        jsCode += jsOptionsCode;
     }
-    
-    if (state.dismissible) {
-        jsCode += `,\n    dismissible: true`;
-    }
-    
-    if (state.pauseOnHover) {
-        jsCode += `,\n    pauseOnHover: true`;
-    }
-    
-    jsCode += `\n});\n\nflasher.${state.type}(\n    '${state.message}'`;
     
     if (state.title) {
-        jsCode += `, \n    '${state.title}'`;
+        jsCode += `flasher.${state.type}('${state.message}', '${state.title}');`;
+    } else {
+        jsCode += `flasher.${state.type}('${state.message}');`;
     }
-    
-    jsCode += `\n);`;
     
     phpCodeDisplay.textContent = phpCode;
     jsCodeDisplay.textContent = jsCode;
