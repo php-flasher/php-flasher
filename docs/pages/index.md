@@ -79,169 +79,482 @@ layout: home
     </div>
 </section>
 
-<!-- Minimal Interactive PHPFlasher Demo -->
-<section class="py-10 bg-white">
-    <div class="container mx-auto px-4 max-w-6xl">
-        <!-- Simple header -->
-        <header class="mb-8 text-center">
-            <h1 class="text-2xl font-light mb-2">
-                <span class="text-gray-800">see the magic with this</span>
-                <span class="font-medium text-blue-500">interactive demo</span>
+<!-- Elegant PHPFlasher Interactive Demo -->
+<section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-12">
+    <!-- Dynamic background elements -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
+        
+        <!-- Animated particles -->
+        <div id="particles-js" class="absolute inset-0 opacity-60"></div>
+        
+        <!-- Animated lines -->
+        <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-pulse-slow"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-pulse-medium"></line>
+        </svg>
+    </div>
+
+    <!-- Main content -->
+    <div class="container relative z-10 mx-auto px-4 max-w-6xl">
+        <!-- Elegant header -->
+        <header class="mb-12 text-center relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+            <h1 class="mt-6 text-4xl font-light tracking-tight">
+                PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
             </h1>
-            <p class="text-gray-500">Customize your notification, click the button, and watch it appear</p>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see it in action</p>
+            
+            <!-- User session info -->
+            <div class="mt-3 inline-flex items-center px-3 py-1 space-x-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
+                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span class="text-xs text-gray-500">Session: <span class="text-gray-700 font-medium">yoeunes</span></span>
+                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 06:47:45</span>
+            </div>
         </header>
 
-        <!-- Main content area -->
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Left side: Options panel -->
-            <div class="w-full lg:w-1/2 bg-white rounded-lg border border-gray-100 shadow-sm">
-                <div class="border-b border-gray-100 px-5 py-4">
-                    <h2 class="text-lg font-light text-gray-700">
-                        <span class="font-medium text-blue-500">Customize</span> your notification
-                    </h2>
+        <!-- Main interactive area -->
+        <div class="rounded-2xl shadow-xl bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
+            <!-- Toolbar -->
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
                 </div>
-
-                <div class="p-5 space-y-6">
-                    <!-- Notification Type -->
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
-                        <div class="flex flex-wrap gap-2">
-                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn active" data-type="success">
-                                Success
-                            </button>
-                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn" data-type="error">
-                                Error
-                            </button>
-                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn" data-type="info">
-                                Info
-                            </button>
-                            <button type="button" class="px-4 py-2 border rounded-md text-sm transition-colors type-btn" data-type="warning">
-                                Warning
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="space-y-4">
-                        <div>
-                            <label for="title-input" class="block mb-2 text-sm font-medium text-gray-700">Title (optional)</label>
-                            <input type="text" id="title-input" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" 
-                                   placeholder="Enter title" value="Success">
-                        </div>
-                        <div>
-                            <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
-                            <input type="text" id="message-input" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" 
-                                   placeholder="Enter your message" value="Your changes have been saved successfully!">
-                        </div>
-                    </div>
-
-                    <!-- Options -->
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Options</label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="position-select" class="block mb-1 text-xs text-gray-500">Position</label>
-                                <select id="position-select" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm">
-                                    <option value="top-right" selected>top-right</option>
-                                    <option value="top-left">top-left</option>
-                                    <option value="bottom-right">bottom-right</option>
-                                    <option value="bottom-left">bottom-left</option>
-                                    <option value="center-top">center-top</option>
-                                    <option value="center-bottom">center-bottom</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="duration-input" class="block mb-1 text-xs text-gray-500">Duration (ms)</label>
-                                <input type="number" id="duration-input" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm" 
-                                       value="5000">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Button -->
-                    <div>
-                        <button id="show-notification-btn" class="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                            Show Notification
-                        </button>
-                        <div class="text-center mt-2 text-xs text-gray-400">Click to see your notification in action</div>
-                    </div>
+                <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250311</div>
+                <div id="status-indicator" class="flex items-center space-x-2">
+                    <span id="status-text" class="text-xs text-emerald-600">Ready</span>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow"></div>
                 </div>
             </div>
-
-            <!-- Right side: Code preview -->
-            <div class="w-full lg:w-1/2 bg-white rounded-lg border border-gray-100 shadow-sm flex flex-col">
-                <div class="border-b border-gray-100 px-5 py-4">
-                    <h2 class="text-lg font-light text-gray-700">
-                        <span class="font-medium text-blue-500">Generated</span> code
-                    </h2>
-                </div>
-                
-                <!-- Code editor appearance -->
-                <div class="flex-grow p-5 relative">
-                    <div class="absolute inset-0 m-5 overflow-hidden rounded-md bg-gray-50 border border-gray-200">
-                        <div class="border-b border-gray-200 bg-gray-100 px-4 py-2 flex items-center justify-between">
-                            <div class="flex space-x-1.5">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+            
+            <!-- Main content area with tabs -->
+            <div class="flex flex-col lg:flex-row">
+                <!-- Left panel: Options -->
+                <div class="w-full lg:w-1/2 border-r border-gray-100">
+                    <!-- Tabs -->
+                    <div class="flex border-b border-gray-200">
+                        <button class="px-6 py-3 border-b-2 border-blue-500 text-blue-600 font-medium">
+                            Design
+                        </button>
+                        <button class="px-6 py-3 text-gray-500 hover:text-gray-700">
+                            Templates
+                        </button>
+                        <button class="px-6 py-3 text-gray-500 hover:text-gray-700">
+                            History
+                        </button>
+                    </div>
+                    
+                    <!-- Options panel -->
+                    <div class="p-6 overflow-y-auto" style="height: calc(100vh - 13rem);">
+                        <!-- Notification Type with elegant selection -->
+                        <div class="mb-8">
+                            <label class="block mb-3 text-sm font-medium text-gray-700">Notification Type</label>
+                            <div class="flex flex-wrap -mx-2">
+                                <!-- Success -->
+                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
+                                    <button class="type-btn active relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                            data-type="success">
+                                        <span class="absolute top-2 right-2 opacity-0 type-check">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </span>
+                                        
+                                        <div class="type-icon-wrapper mb-2">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="type-label font-medium">Success</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Error -->
+                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
+                                    <button class="type-btn relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                            data-type="error">
+                                        <span class="absolute top-2 right-2 opacity-0 type-check">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </span>
+                                        
+                                        <div class="type-icon-wrapper mb-2">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="type-label font-medium">Error</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Info -->
+                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
+                                    <button class="type-btn relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                            data-type="info">
+                                        <span class="absolute top-2 right-2 opacity-0 type-check">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </span>
+                                        
+                                        <div class="type-icon-wrapper mb-2">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="type-label font-medium">Info</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Warning -->
+                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
+                                    <button class="type-btn relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                            data-type="warning">
+                                        <span class="absolute top-2 right-2 opacity-0 type-check">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </span>
+                                        
+                                        <div class="type-icon-wrapper mb-2">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="type-label font-medium">Warning</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="text-xs text-gray-500 font-mono">Controller.php</div>
                         </div>
-                        
-                        <div class="h-full overflow-auto p-4 font-mono text-sm">
-<pre id="code-display" class="text-gray-800 whitespace-pre-wrap">// Display a success notification
-flash()->success('Your changes have been saved successfully!', 'Success')
-    ->options([
-        'position' => 'top-right',
-        'duration' => 5000
+
+                        <!-- Content Section -->
+                        <div class="mb-8 space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title</label>
+                                    <span class="text-xs text-gray-400">Optional</span>
+                                </div>
+                                <input type="text" id="title-input" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" 
+                                       placeholder="Enter notification title" value="Success">
+                            </div>
+                            
+                            <div>
+                                <label for="message-input" class="block mb-3 text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message-input" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none" 
+                                          placeholder="Enter your notification message">Your changes have been saved successfully!</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Options with elegant accordion -->
+                        <div class="mb-8 border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 px-4 py-3 flex items-center justify-between cursor-pointer" onclick="toggleOptions()">
+                                <h3 class="font-medium text-gray-700">Advanced Options</h3>
+                                <div id="options-chevron" class="transform transition-transform">
+                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div id="options-content" class="px-4 py-4 border-t border-gray-200">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="position-select" class="block mb-2 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="top-right" selected>top-right</option>
+                                            <option value="top-left">top-left</option>
+                                            <option value="bottom-right">bottom-right</option>
+                                            <option value="bottom-left">bottom-left</option>
+                                            <option value="center-top">center-top</option>
+                                            <option value="center-bottom">center-bottom</option>
+                                            <option value="center">center</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="duration-input" class="block mb-2 text-sm font-medium text-gray-700">Duration (ms)</label>
+                                        <input type="number" id="duration-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="5000">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="animation-select" class="block mb-2 text-sm font-medium text-gray-700">Animation</label>
+                                        <select id="animation-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="fade" selected>fade</option>
+                                            <option value="slide">slide</option>
+                                            <option value="zoom">zoom</option>
+                                            <option value="flip">flip</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="theme-select" class="block mb-2 text-sm font-medium text-gray-700">Theme</label>
+                                        <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="light">light</option>
+                                            <option value="dark" selected>dark</option>
+                                            <option value="material">material</option>
+                                            <option value="bootstrap">bootstrap</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <label class="block mb-2 text-sm font-medium text-gray-700">Additional Options</label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="dismissible-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                            <label for="dismissible-check" class="ml-2 text-sm text-gray-700">Dismissible</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="progress-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                            <label for="progress-check" class="ml-2 text-sm text-gray-700">Show Progress</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="close-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                            <label for="close-check" class="ml-2 text-sm text-gray-700">Close Button</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="pause-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                            <label for="pause-check" class="ml-2 text-sm text-gray-700">Pause on Hover</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Launch button with wow effect -->
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-lg">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
+                            <div class="absolute inset-0 bg-grid opacity-10"></div>
+                            
+                            <div class="relative px-6 py-4 flex items-center justify-center text-white font-medium text-lg">
+                                <span class="flex items-center space-x-2">
+                                    <span>Launch Notification</span>
+                                    <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            
+                            <div class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right panel: Code Preview -->
+                <div class="w-full lg:w-1/2">
+                    <div class="border-b border-gray-200 px-6 py-3 flex items-center justify-between bg-gray-50">
+                        <div class="text-sm font-medium text-gray-700">Generated Code</div>
+                        <button id="copy-code-btn" class="px-3 py-1 bg-white text-sm text-gray-600 hover:text-gray-900 border border-gray-200 rounded-md flex items-center space-x-1 hover:bg-gray-50 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Code editor with syntax highlighting -->
+                    <div class="p-6 bg-slate-900 h-full overflow-y-auto">
+                        <pre id="code-display" class="font-mono text-sm leading-relaxed"><span class="text-slate-500">// Display a success notification</span>
+<span class="text-blue-400">flash</span>()-&gt;<span class="text-green-400">success</span>(<span class="text-amber-300">'Your changes have been saved successfully!'</span>, <span class="text-amber-300">'Success'</span>)
+    -&gt;<span class="text-purple-400">options</span>([
+        <span class="text-amber-300">'position'</span> =&gt; <span class="text-amber-300">'top-right'</span>,
+        <span class="text-amber-300">'duration'</span> =&gt; <span class="text-blue-300">5000</span>,
+        <span class="text-amber-300">'theme'</span> =&gt; <span class="text-amber-300">'dark'</span>,
+        <span class="text-amber-300">'animation'</span> =&gt; <span class="text-amber-300">'fade'</span>,
+        <span class="text-amber-300">'closeButton'</span> =&gt; <span class="text-orange-300">true</span>,
+        <span class="text-amber-300">'progressBar'</span> =&gt; <span class="text-orange-300">true</span>
     ]);</pre>
+                        
+                        <!-- Preview notification -->
+                        <div id="notification-preview" class="absolute bottom-8 right-8 opacity-0 transition-opacity duration-300">
+                            <div class="notification-card notification-success shadow-xl">
+                                <div class="notification-content">
+                                    <div class="notification-title">Success</div>
+                                    <div class="notification-message">Your changes have been saved successfully!</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Minimal footer -->
-        <footer class="mt-8 text-center text-xs text-gray-400">
-            <p>PHPFlasher Interactive Demo • <span id="current-time">2025-03-11 06:43:47</span> • Session: <span class="text-gray-500">yoeunes</span></p>
-        </footer>
+        
+        <!-- Code preview actions -->
+        <div class="flex justify-center mt-6 space-x-4">
+            <a href="https://phpflasher.com/docs" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <span>Documentation</span>
+            </a>
+            <a href="https://github.com/php-flasher/php-flasher" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
     </div>
 </section>
 
 <style>
-/* Minimal styling for type buttons */
+/* Essential styles for the elegant notifications demo */
+.bg-grid {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes ping-slow {
+    0% { transform: scale(1); opacity: 1; }
+    75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+.animate-ping-slow {
+    animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-medium {
+    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+
+.animate-shine {
+    animation: shine 1s forwards;
+}
+
+/* Type button styles */
 .type-btn {
     @apply border-gray-200 text-gray-500;
 }
 
-.type-btn.active[data-type="success"] {
-    @apply border-green-200 bg-green-50 text-green-700;
+.type-btn .type-icon-wrapper {
+    @apply text-gray-400;
 }
 
-.type-btn.active[data-type="error"] {
-    @apply border-red-200 bg-red-50 text-red-700;
+/* Success */
+.type-btn[data-type="success"].active {
+    @apply border-green-500 bg-green-50;
 }
 
-.type-btn.active[data-type="info"] {
-    @apply border-blue-200 bg-blue-50 text-blue-700;
+.type-btn[data-type="success"].active .type-icon-wrapper {
+    @apply text-green-500;
 }
 
-.type-btn.active[data-type="warning"] {
-    @apply border-amber-200 bg-amber-50 text-amber-700;
+.type-btn[data-type="success"].active .type-label {
+    @apply text-green-700;
 }
 
-/* Animation for notification trigger */
-@keyframes pulse-blue {
-    0%, 100% {
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
-    }
-    50% {
-        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
-    }
+.type-btn[data-type="success"].active .type-check {
+    @apply opacity-100 bg-green-500;
 }
 
-.pulse-animation {
-    animation: pulse-blue 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Error */
+.type-btn[data-type="error"].active {
+    @apply border-red-500 bg-red-50;
+}
+
+.type-btn[data-type="error"].active .type-icon-wrapper {
+    @apply text-red-500;
+}
+
+.type-btn[data-type="error"].active .type-label {
+    @apply text-red-700;
+}
+
+.type-btn[data-type="error"].active .type-check {
+    @apply opacity-100 bg-red-500;
+}
+
+/* Info */
+.type-btn[data-type="info"].active {
+    @apply border-blue-500 bg-blue-50;
+}
+
+.type-btn[data-type="info"].active .type-icon-wrapper {
+    @apply text-blue-500;
+}
+
+.type-btn[data-type="info"].active .type-label {
+    @apply text-blue-700;
+}
+
+.type-btn[data-type="info"].active .type-check {
+    @apply opacity-100 bg-blue-500;
+}
+
+/* Warning */
+.type-btn[data-type="warning"].active {
+    @apply border-amber-500 bg-amber-50;
+}
+
+.type-btn[data-type="warning"].active .type-icon-wrapper {
+    @apply text-amber-500;
+}
+
+.type-btn[data-type="warning"].active .type-label {
+    @apply text-amber-700;
+}
+
+.type-btn[data-type="warning"].active .type-check {
+    @apply opacity-100 bg-amber-500;
+}
+
+/* Preview notification styles */
+.notification-card {
+    width: 360px;
+    border-radius: 0.375rem;
+    border-left: 4px solid;
+    overflow: hidden;
+    background-color: #2d3748;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    display: flex;
+}
+
+.notification-success {
+    border-color: #48bb78;
+}
+
+.notification-error {
+    border-color: #f56565;
+}
+
+.notification-info {
+    border-color: #4299e1;
+}
+
+.notification-warning {
+    border-color: #ed8936;
+}
+
+.notification-content {
+    padding: 1rem;
+    color: white;
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    font-size: 0.875rem;
+    color: #e2e8f0;
 }
 </style>
 
@@ -252,7 +565,13 @@ const state = {
     title: 'Success',
     message: 'Your changes have been saved successfully!',
     position: 'top-right',
-    duration: 5000
+    duration: 5000,
+    animation: 'fade',
+    theme: 'dark',
+    closeButton: true,
+    progressBar: true,
+    dismissible: false,
+    pauseOnHover: false
 };
 
 // Update current time
@@ -270,34 +589,74 @@ function updateCurrentTime() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize particles.js if available
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 24, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                opacity: { value: 0.1, random: true },
+                size: { value: 2, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4b5563",
+                    opacity: 0.1,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 0.4,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out"
+                }
+            }
+        });
+    }
+    
     // Initialize time
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
     
-    // Notification type buttons
+    // Initialize type buttons
     document.querySelectorAll('.type-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active class from all buttons
+            // Remove active class from all type buttons
             document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            
             // Add active class to clicked button
             btn.classList.add('active');
-            // Update state
+            
+            // Update state and UI
             state.type = btn.dataset.type;
+            
+            // Update notification preview
+            updateNotificationPreview();
+            
+            // Update code
             updateCodeDisplay();
+            
+            // Update status
+            updateStatus(`Type changed to: ${state.type}`);
         });
     });
     
-    // Input change handlers
+    // Input event listeners
     document.getElementById('title-input').addEventListener('input', (e) => {
         state.title = e.target.value;
         updateCodeDisplay();
+        updateNotificationPreview();
     });
     
     document.getElementById('message-input').addEventListener('input', (e) => {
         state.message = e.target.value;
         updateCodeDisplay();
+        updateNotificationPreview();
     });
     
+    // Select event listeners
     document.getElementById('position-select').addEventListener('change', (e) => {
         state.position = e.target.value;
         updateCodeDisplay();
@@ -308,48 +667,194 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCodeDisplay();
     });
     
-    // Show notification button
-    document.getElementById('show-notification-btn').addEventListener('click', () => {
-        // Add pulse animation
-        const button = document.getElementById('show-notification-btn');
-        button.classList.add('pulse-animation');
-        
-        // Show the notification
-        if (typeof flasher !== 'undefined') {
-            flasher[state.type](state.message, state.title, {
-                position: state.position,
-                duration: state.duration
-            });
-        } else {
-            // Fallback if flasher is not available
-            alert(`${state.type.toUpperCase()}: ${state.title}\n${state.message}`);
-        }
-        
-        // Remove animation after a short delay
-        setTimeout(() => {
-            button.classList.remove('pulse-animation');
-        }, 2000);
+    document.getElementById('animation-select').addEventListener('change', (e) => {
+        state.animation = e.target.value;
+        updateCodeDisplay();
     });
     
-    // Initial code display update
+    document.getElementById('theme-select').addEventListener('change', (e) => {
+        state.theme = e.target.value;
+        updateCodeDisplay();
+    });
+    
+    // Checkbox event listeners
+    document.getElementById('dismissible-check').addEventListener('change', (e) => {
+        state.dismissible = e.target.checked;
+        updateCodeDisplay();
+    });
+    
+    document.getElementById('progress-check').addEventListener('change', (e) => {
+        state.progressBar = e.target.checked;
+        updateCodeDisplay();
+    });
+    
+    document.getElementById('close-check').addEventListener('change', (e) => {
+        state.closeButton = e.target.checked;
+        updateCodeDisplay();
+    });
+    
+    document.getElementById('pause-check').addEventListener('change', (e) => {
+        state.pauseOnHover = e.target.checked;
+        updateCodeDisplay();
+    });
+    
+    // Show notification button
+    document.getElementById('show-notification-btn').addEventListener('click', () => {
+        // Update status
+        updateStatus('Launching notification...');
+        
+        // Show notification preview
+        const preview = document.getElementById('notification-preview');
+        preview.style.opacity = '1';
+        
+        setTimeout(() => {
+            preview.style.opacity = '0';
+        }, 3000);
+        
+        // Show the actual notification
+        if (typeof flasher !== 'undefined') {
+            const options = {
+                position: state.position,
+                duration: state.duration,
+                theme: state.theme,
+                animation: state.animation,
+                closeButton: state.closeButton,
+                progressBar: state.progressBar,
+                dismissible: state.dismissible,
+                pauseOnHover: state.pauseOnHover
+            };
+            
+            flasher[state.type](state.message, state.title, options);
+        } else {
+            // Fallback if flasher is not available
+            console.log(`Would show a ${state.type} notification with title "${state.title}" and message "${state.message}"`);
+        }
+    });
+    
+    // Copy code button
+    document.getElementById('copy-code-btn').addEventListener('click', () => {
+        const code = document.getElementById('code-display').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            updateStatus('Code copied to clipboard!');
+            
+            const btn = document.getElementById('copy-code-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = `
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span class="text-green-600">Copied!</span>
+            `;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        });
+    });
+    
+    // Initialize
     updateCodeDisplay();
+    updateNotificationPreview();
 });
 
-// Update the code display
+// Toggle advanced options
+function toggleOptions() {
+    const content = document.getElementById('options-content');
+    const chevron = document.getElementById('options-chevron');
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        chevron.classList.remove('rotate-180');
+    } else {
+        content.style.display = 'none';
+        chevron.classList.add('rotate-180');
+    }
+}
+
+// Update the status indicator
+function updateStatus(message) {
+    const statusText = document.getElementById('status-text');
+    statusText.textContent = message;
+    
+    // Temporarily change color
+    statusText.classList.remove('text-emerald-600');
+    statusText.classList.add('text-blue-600');
+    
+    // Add animation to the dot
+    const dot = document.querySelector('#status-indicator div');
+    dot.classList.remove('bg-emerald-500');
+    dot.classList.add('bg-blue-500');
+    
+    // Reset after 2 seconds
+    setTimeout(() => {
+        statusText.classList.remove('text-blue-600');
+        statusText.classList.add('text-emerald-600');
+        statusText.textContent = 'Ready';
+        
+        dot.classList.remove('bg-blue-500');
+        dot.classList.add('bg-emerald-500');
+    }, 2000);
+}
+
+// Update the notification preview
+function updateNotificationPreview() {
+    const preview = document.getElementById('notification-preview');
+    const card = preview.querySelector('.notification-card');
+    
+    // Remove existing classes
+    card.className = 'notification-card';
+    
+    // Add proper class based on type
+    card.classList.add(`notification-${state.type}`);
+    
+    // Update content
+    const title = preview.querySelector('.notification-title');
+    const message = preview.querySelector('.notification-message');
+    
+    title.textContent = state.title;
+    message.textContent = state.message;
+}
+
+// Update the code display with syntax highlighting
 function updateCodeDisplay() {
     const codeDisplay = document.getElementById('code-display');
     
-    let code = `// Display a ${state.type} notification\n`;
+    let code = `<span class="text-slate-500">// Display a ${state.type} notification</span>\n`;
     
     if (state.title) {
-        code += `flash()->${state.type}('${state.message}', '${state.title}')\n`;
+        code += `<span class="text-blue-400">flash</span>()-&gt;<span class="text-green-400">${state.type}</span>(<span class="text-amber-300">'${state.message}'</span>, <span class="text-amber-300">'${state.title}'</span>)\n`;
     } else {
-        code += `flash()->${state.type}('${state.message}')\n`;
+        code += `<span class="text-blue-400">flash</span>()-&gt;<span class="text-green-400">${state.type}</span>(<span class="text-amber-300">'${state.message}'</span>)\n`;
     }
     
-    code += `    ->options([\n        'position' => '${state.position}',\n        'duration' => ${state.duration}\n    ]);`;
+    code += `    -&gt;<span class="text-purple-400">options</span>([\n`;
     
-    codeDisplay.textContent = code;
+    // Add options
+    code += `        <span class="text-amber-300">'position'</span> =&gt; <span class="text-amber-300">'${state.position}'</span>,\n`;
+    code += `        <span class="text-amber-300">'duration'</span> =&gt; <span class="text-blue-300">${state.duration}</span>,\n`;
+    code += `        <span class="text-amber-300">'theme'</span> =&gt; <span class="text-amber-300">'${state.theme}'</span>,\n`;
+    code += `        <span class="text-amber-300">'animation'</span> =&gt; <span class="text-amber-300">'${state.animation}'</span>`;
+    
+    if (state.closeButton) {
+        code += `,\n        <span class="text-amber-300">'closeButton'</span> =&gt; <span class="text-orange-300">true</span>`;
+    }
+    
+    if (state.progressBar) {
+        code += `,\n        <span class="text-amber-300">'progressBar'</span> =&gt; <span class="text-orange-300">true</span>`;
+    }
+    
+    if (state.dismissible) {
+        code += `,\n        <span class="text-amber-300">'dismissible'</span> =&gt; <span class="text-orange-300">true</span>`;
+    }
+    
+    if (state.pauseOnHover) {
+        code += `,\n        <span class="text-amber-300">'pauseOnHover'</span> =&gt; <span class="text-orange-300">true</span>`;
+    }
+    
+    code += `\n    ]);</span>`;
+    
+    codeDisplay.innerHTML = code;
 }
 </script>
 
