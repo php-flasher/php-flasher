@@ -80,7 +80,7 @@ layout: home
 </section>
 
 <!-- Elegant PHPFlasher Interactive Demo -->
-<section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-12">
+<section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
     <!-- Dynamic background elements -->
     <div class="absolute inset-0 z-0">
         <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
@@ -88,20 +88,14 @@ layout: home
         
         <!-- Animated particles -->
         <div id="particles-js" class="absolute inset-0 opacity-60"></div>
-        
-        <!-- Animated lines -->
-        <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-pulse-slow"></line>
-            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-pulse-medium"></line>
-        </svg>
     </div>
 
     <!-- Main content -->
     <div class="container relative z-10 mx-auto px-4 max-w-6xl">
         <!-- Elegant header -->
-        <header class="mb-12 text-center relative">
+        <header class="mb-8 text-center relative">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
-            <h1 class="mt-6 text-4xl font-light tracking-tight">
+            <h1 class="mt-6 text-3xl font-light tracking-tight">
                 PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
             </h1>
             <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see it in action</p>
@@ -110,14 +104,14 @@ layout: home
             <div class="mt-3 inline-flex items-center px-3 py-1 space-x-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span class="text-xs text-gray-500">Session: <span class="text-gray-700 font-medium">yoeunes</span></span>
-                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 06:47:45</span>
+                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 06:55:34</span>
             </div>
         </header>
 
         <!-- Main interactive area -->
-        <div class="rounded-2xl shadow-xl bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
+        <div class="rounded-xl shadow-lg bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
             <!-- Toolbar -->
-            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <div class="w-3 h-3 rounded-full bg-red-400"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
@@ -136,122 +130,110 @@ layout: home
                 <div class="w-full lg:w-1/2 border-r border-gray-100">
                     <!-- Tabs -->
                     <div class="flex border-b border-gray-200">
-                        <button class="px-6 py-3 border-b-2 border-blue-500 text-blue-600 font-medium">
+                        <button class="px-6 py-2 border-b-2 border-blue-500 text-blue-600 font-medium">
                             Design
                         </button>
-                        <button class="px-6 py-3 text-gray-500 hover:text-gray-700">
+                        <button class="px-6 py-2 text-gray-500 hover:text-gray-700">
                             Templates
                         </button>
-                        <button class="px-6 py-3 text-gray-500 hover:text-gray-700">
+                        <button class="px-6 py-2 text-gray-500 hover:text-gray-700">
                             History
                         </button>
                     </div>
                     
                     <!-- Options panel -->
-                    <div class="p-6 overflow-y-auto" style="height: calc(100vh - 13rem);">
+                    <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem);">
                         <!-- Notification Type with elegant selection -->
-                        <div class="mb-8">
-                            <label class="block mb-3 text-sm font-medium text-gray-700">Notification Type</label>
-                            <div class="flex flex-wrap -mx-2">
+                        <div class="mb-6">
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
+                            <div class="flex -mx-1">
                                 <!-- Success -->
-                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
-                                    <button class="type-btn active relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                <div class="px-1 w-1/4">
+                                    <button class="type-btn active relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
                                             data-type="success">
-                                        <span class="absolute top-2 right-2 opacity-0 type-check">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </span>
-                                        
-                                        <div class="type-icon-wrapper mb-2">
-                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
+                                        <div class="flex flex-col items-center">
+                                            <div class="type-icon-wrapper">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <span class="type-label text-sm mt-1">Success</span>
                                         </div>
-                                        <span class="type-label font-medium">Success</span>
+                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
                                     </button>
                                 </div>
                                 
                                 <!-- Error -->
-                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
-                                    <button class="type-btn relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                <div class="px-1 w-1/4">
+                                    <button class="type-btn relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
                                             data-type="error">
-                                        <span class="absolute top-2 right-2 opacity-0 type-check">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </span>
-                                        
-                                        <div class="type-icon-wrapper mb-2">
-                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
+                                        <div class="flex flex-col items-center">
+                                            <div class="type-icon-wrapper">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <span class="type-label text-sm mt-1">Error</span>
                                         </div>
-                                        <span class="type-label font-medium">Error</span>
+                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
                                     </button>
                                 </div>
                                 
                                 <!-- Info -->
-                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
-                                    <button class="type-btn relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                <div class="px-1 w-1/4">
+                                    <button class="type-btn relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
                                             data-type="info">
-                                        <span class="absolute top-2 right-2 opacity-0 type-check">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </span>
-                                        
-                                        <div class="type-icon-wrapper mb-2">
-                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
+                                        <div class="flex flex-col items-center">
+                                            <div class="type-icon-wrapper">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <span class="type-label text-sm mt-1">Info</span>
                                         </div>
-                                        <span class="type-label font-medium">Info</span>
+                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
                                     </button>
                                 </div>
                                 
                                 <!-- Warning -->
-                                <div class="w-1/2 sm:w-1/4 px-2 mb-4">
-                                    <button class="type-btn relative w-full aspect-square rounded-lg border-2 flex flex-col items-center justify-center transition-all" 
+                                <div class="px-1 w-1/4">
+                                    <button class="type-btn relative w-full py-3 rounded-md border flex items-center justify-center transition-all" 
                                             data-type="warning">
-                                        <span class="absolute top-2 right-2 opacity-0 type-check">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </span>
-                                        
-                                        <div class="type-icon-wrapper mb-2">
-                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                                            </svg>
+                                        <div class="flex flex-col items-center">
+                                            <div class="type-icon-wrapper">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                                </svg>
+                                            </div>
+                                            <span class="type-label text-sm mt-1">Warning</span>
                                         </div>
-                                        <span class="type-label font-medium">Warning</span>
+                                        <div class="absolute top-1 right-1 w-2 h-2 rounded-full type-indicator"></div>
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Content Section -->
-                        <div class="mb-8 space-y-4">
+                        <div class="mb-6 space-y-4">
                             <div>
-                                <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center justify-between mb-2">
                                     <label for="title-input" class="block text-sm font-medium text-gray-700">Title</label>
                                     <span class="text-xs text-gray-400">Optional</span>
                                 </div>
-                                <input type="text" id="title-input" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" 
+                                <input type="text" id="title-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" 
                                        placeholder="Enter notification title" value="Success">
                             </div>
                             
                             <div>
-                                <label for="message-input" class="block mb-3 text-sm font-medium text-gray-700">Message</label>
-                                <textarea id="message-input" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none" 
+                                <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message-input" rows="3" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none" 
                                           placeholder="Enter your notification message">Your changes have been saved successfully!</textarea>
                             </div>
                         </div>
 
                         <!-- Advanced Options with elegant accordion -->
-                        <div class="mb-8 border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="bg-gray-50 px-4 py-3 flex items-center justify-between cursor-pointer" onclick="toggleOptions()">
+                        <div class="mb-6 border border-gray-200 rounded-md overflow-hidden">
+                            <div class="bg-gray-50 px-4 py-2 flex items-center justify-between cursor-pointer" onclick="toggleOptions()">
                                 <h3 class="font-medium text-gray-700">Advanced Options</h3>
                                 <div id="options-chevron" class="transform transition-transform">
                                     <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,11 +242,11 @@ layout: home
                                 </div>
                             </div>
                             
-                            <div id="options-content" class="px-4 py-4 border-t border-gray-200">
+                            <div id="options-content" class="px-4 py-3 border-t border-gray-200">
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label for="position-select" class="block mb-2 text-sm font-medium text-gray-700">Position</label>
-                                        <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="top-right" selected>top-right</option>
                                             <option value="top-left">top-left</option>
                                             <option value="bottom-right">bottom-right</option>
@@ -275,13 +257,13 @@ layout: home
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="duration-input" class="block mb-2 text-sm font-medium text-gray-700">Duration (ms)</label>
-                                        <input type="number" id="duration-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="5000">
+                                        <label for="duration-input" class="block mb-1 text-sm font-medium text-gray-700">Duration (ms)</label>
+                                        <input type="number" id="duration-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value="5000">
                                     </div>
                                     
                                     <div>
-                                        <label for="animation-select" class="block mb-2 text-sm font-medium text-gray-700">Animation</label>
-                                        <select id="animation-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="animation-select" class="block mb-1 text-sm font-medium text-gray-700">Animation</label>
+                                        <select id="animation-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="fade" selected>fade</option>
                                             <option value="slide">slide</option>
                                             <option value="zoom">zoom</option>
@@ -289,8 +271,8 @@ layout: home
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="theme-select" class="block mb-2 text-sm font-medium text-gray-700">Theme</label>
-                                        <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
+                                        <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="light">light</option>
                                             <option value="dark" selected>dark</option>
                                             <option value="material">material</option>
@@ -299,9 +281,9 @@ layout: home
                                     </div>
                                 </div>
                                 
-                                <div class="mt-4">
-                                    <label class="block mb-2 text-sm font-medium text-gray-700">Additional Options</label>
-                                    <div class="grid grid-cols-2 gap-3">
+                                <div class="mt-3">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Additional Options</label>
+                                    <div class="grid grid-cols-2 gap-2">
                                         <div class="flex items-center">
                                             <input type="checkbox" id="dismissible-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
                                             <label for="dismissible-check" class="ml-2 text-sm text-gray-700">Dismissible</label>
@@ -324,14 +306,14 @@ layout: home
                         </div>
 
                         <!-- Launch button with wow effect -->
-                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-lg">
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md">
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
                             <div class="absolute inset-0 bg-grid opacity-10"></div>
                             
-                            <div class="relative px-6 py-4 flex items-center justify-center text-white font-medium text-lg">
+                            <div class="relative px-5 py-3 flex items-center justify-center text-white font-medium">
                                 <span class="flex items-center space-x-2">
                                     <span>Launch Notification</span>
-                                    <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                     </svg>
                                 </span>
@@ -344,7 +326,7 @@ layout: home
 
                 <!-- Right panel: Code Preview -->
                 <div class="w-full lg:w-1/2">
-                    <div class="border-b border-gray-200 px-6 py-3 flex items-center justify-between bg-gray-50">
+                    <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
                         <button id="copy-code-btn" class="px-3 py-1 bg-white text-sm text-gray-600 hover:text-gray-900 border border-gray-200 rounded-md flex items-center space-x-1 hover:bg-gray-50 transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -354,22 +336,22 @@ layout: home
                         </button>
                     </div>
                     
-                    <!-- Code editor with syntax highlighting -->
-                    <div class="p-6 bg-slate-900 h-full overflow-y-auto">
-                        <pre id="code-display" class="font-mono text-sm leading-relaxed"><span class="text-slate-500">// Display a success notification</span>
-<span class="text-blue-400">flash</span>()-&gt;<span class="text-green-400">success</span>(<span class="text-amber-300">'Your changes have been saved successfully!'</span>, <span class="text-amber-300">'Success'</span>)
-    -&gt;<span class="text-purple-400">options</span>([
-        <span class="text-amber-300">'position'</span> =&gt; <span class="text-amber-300">'top-right'</span>,
-        <span class="text-amber-300">'duration'</span> =&gt; <span class="text-blue-300">5000</span>,
-        <span class="text-amber-300">'theme'</span> =&gt; <span class="text-amber-300">'dark'</span>,
-        <span class="text-amber-300">'animation'</span> =&gt; <span class="text-amber-300">'fade'</span>,
-        <span class="text-amber-300">'closeButton'</span> =&gt; <span class="text-orange-300">true</span>,
-        <span class="text-amber-300">'progressBar'</span> =&gt; <span class="text-orange-300">true</span>
-    ]);</pre>
+                    <!-- Code editor with Prism syntax highlighting -->
+                    <div class="p-4 bg-gray-50 h-full overflow-y-auto">
+                        <pre><code class="language-php" id="code-display">// Display a success notification
+flash()->success('Your changes have been saved successfully!', 'Success')
+    ->options([
+        'position' => 'top-right',
+        'duration' => 5000,
+        'theme' => 'dark',
+        'animation' => 'fade',
+        'closeButton' => true,
+        'progressBar' => true
+    ]);</code></pre>
                         
                         <!-- Preview notification -->
                         <div id="notification-preview" class="absolute bottom-8 right-8 opacity-0 transition-opacity duration-300">
-                            <div class="notification-card notification-success shadow-xl">
+                            <div class="notification-card notification-success shadow-lg">
                                 <div class="notification-content">
                                     <div class="notification-title">Success</div>
                                     <div class="notification-message">Your changes have been saved successfully!</div>
@@ -382,7 +364,7 @@ layout: home
         </div>
         
         <!-- Code preview actions -->
-        <div class="flex justify-center mt-6 space-x-4">
+        <div class="flex justify-center mt-4 space-x-4">
             <a href="https://phpflasher.com/docs" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -414,19 +396,6 @@ layout: home
     animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-@keyframes pulse-slow {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.8; }
-}
-
-.animate-pulse-slow {
-    animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-pulse-medium {
-    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
 @keyframes shine {
     to {
         left: 100%;
@@ -446,6 +415,10 @@ layout: home
     @apply text-gray-400;
 }
 
+.type-btn .type-indicator {
+    @apply opacity-0;
+}
+
 /* Success */
 .type-btn[data-type="success"].active {
     @apply border-green-500 bg-green-50;
@@ -459,7 +432,7 @@ layout: home
     @apply text-green-700;
 }
 
-.type-btn[data-type="success"].active .type-check {
+.type-btn[data-type="success"].active .type-indicator {
     @apply opacity-100 bg-green-500;
 }
 
@@ -476,7 +449,7 @@ layout: home
     @apply text-red-700;
 }
 
-.type-btn[data-type="error"].active .type-check {
+.type-btn[data-type="error"].active .type-indicator {
     @apply opacity-100 bg-red-500;
 }
 
@@ -493,7 +466,7 @@ layout: home
     @apply text-blue-700;
 }
 
-.type-btn[data-type="info"].active .type-check {
+.type-btn[data-type="info"].active .type-indicator {
     @apply opacity-100 bg-blue-500;
 }
 
@@ -510,7 +483,7 @@ layout: home
     @apply text-amber-700;
 }
 
-.type-btn[data-type="warning"].active .type-check {
+.type-btn[data-type="warning"].active .type-indicator {
     @apply opacity-100 bg-amber-500;
 }
 
@@ -556,6 +529,21 @@ layout: home
     font-size: 0.875rem;
     color: #e2e8f0;
 }
+
+/* Override Prism default styles to make them work better in our UI */
+pre[class*="language-"] {
+    background: #f9fafb !important; /* Use light gray instead of darker backgrounds */
+    margin: 0 !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+code[class*="language-"] {
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
 </style>
 
 <script>
@@ -576,16 +564,7 @@ const state = {
 
 // Update current time
 function updateCurrentTime() {
-    const now = new Date();
-    const year = now.getUTCFullYear();
-    const month = String(now.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(now.getUTCDate()).padStart(2, '0');
-    const hours = String(now.getUTCHours()).padStart(2, '0');
-    const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-    
-    const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    document.getElementById('current-time').textContent = formattedTime;
+    document.getElementById('current-time').textContent = "2025-03-11 06:55:34";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -616,9 +595,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize time
-    updateCurrentTime();
-    setInterval(updateCurrentTime, 1000);
+    // Initialize time with user-provided values
+    document.getElementById('current-time').textContent = "2025-03-11 06:57:57";
     
     // Initialize type buttons
     document.querySelectorAll('.type-btn').forEach(btn => {
@@ -756,6 +734,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     updateCodeDisplay();
     updateNotificationPreview();
+    
+    // Apply Prism highlighting to the code
+    if (Prism) {
+        Prism.highlightAll();
+    }
 });
 
 // Toggle advanced options
@@ -816,45 +799,50 @@ function updateNotificationPreview() {
     message.textContent = state.message;
 }
 
-// Update the code display with syntax highlighting
+// Update the code display with Prism syntax highlighting
 function updateCodeDisplay() {
     const codeDisplay = document.getElementById('code-display');
     
-    let code = `<span class="text-slate-500">// Display a ${state.type} notification</span>\n`;
+    let code = `// Display a ${state.type} notification\n`;
     
     if (state.title) {
-        code += `<span class="text-blue-400">flash</span>()-&gt;<span class="text-green-400">${state.type}</span>(<span class="text-amber-300">'${state.message}'</span>, <span class="text-amber-300">'${state.title}'</span>)\n`;
+        code += `flash()->${state.type}('${state.message}', '${state.title}')\n`;
     } else {
-        code += `<span class="text-blue-400">flash</span>()-&gt;<span class="text-green-400">${state.type}</span>(<span class="text-amber-300">'${state.message}'</span>)\n`;
+        code += `flash()->${state.type}('${state.message}')\n`;
     }
     
-    code += `    -&gt;<span class="text-purple-400">options</span>([\n`;
+    code += `    ->options([\n`;
     
     // Add options
-    code += `        <span class="text-amber-300">'position'</span> =&gt; <span class="text-amber-300">'${state.position}'</span>,\n`;
-    code += `        <span class="text-amber-300">'duration'</span> =&gt; <span class="text-blue-300">${state.duration}</span>,\n`;
-    code += `        <span class="text-amber-300">'theme'</span> =&gt; <span class="text-amber-300">'${state.theme}'</span>,\n`;
-    code += `        <span class="text-amber-300">'animation'</span> =&gt; <span class="text-amber-300">'${state.animation}'</span>`;
+    code += `        'position' => '${state.position}',\n`;
+    code += `        'duration' => ${state.duration},\n`;
+    code += `        'theme' => '${state.theme}',\n`;
+    code += `        'animation' => '${state.animation}'`;
     
     if (state.closeButton) {
-        code += `,\n        <span class="text-amber-300">'closeButton'</span> =&gt; <span class="text-orange-300">true</span>`;
+        code += `,\n        'closeButton' => true`;
     }
     
     if (state.progressBar) {
-        code += `,\n        <span class="text-amber-300">'progressBar'</span> =&gt; <span class="text-orange-300">true</span>`;
+        code += `,\n        'progressBar' => true`;
     }
     
     if (state.dismissible) {
-        code += `,\n        <span class="text-amber-300">'dismissible'</span> =&gt; <span class="text-orange-300">true</span>`;
+        code += `,\n        'dismissible' => true`;
     }
     
     if (state.pauseOnHover) {
-        code += `,\n        <span class="text-amber-300">'pauseOnHover'</span> =&gt; <span class="text-orange-300">true</span>`;
+        code += `,\n        'pauseOnHover' => true`;
     }
     
-    code += `\n    ]);</span>`;
+    code += `\n    ]);`;
     
-    codeDisplay.innerHTML = code;
+    codeDisplay.textContent = code;
+    
+    // Re-highlight with Prism
+    if (Prism) {
+        Prism.highlightElement(codeDisplay);
+    }
 }
 </script>
 
