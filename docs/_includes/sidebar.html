@@ -1,19 +1,20 @@
 <nav id="main-navigation" class="sticky top-24 hidden lg:block">
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 transition-shadow hover:shadow-md">
         {% for section in site.data.menu %}
             <div class="mb-6">
-                <h3 class="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-3">
+                <h3 class="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-3 flex items-center">
+                    <span class="w-1 h-4 bg-indigo-500 inline-block mr-2 rounded"></span>
                     {{ section[0] }}
                 </h3>
-                <ul class="space-y-1">
+                <ul class="space-y-1.5">
                     {% for link in section[1] %}
                         <li>
                             <a href="{{ link[1] }}"
-                               class="block py-2 px-3 rounded-md text-sm leading-tight
+                               class="flex items-center py-1.5 px-3 rounded-md text-sm leading-tight transition-colors
                                     {% if page.url == link[1] %}
-                                        bg-indigo-500 text-white font-medium
+                                        bg-indigo-50 text-indigo-700 font-medium border-l-2 border-indigo-500 pl-2.5
                                     {% else %}
-                                        text-slate-700 hover:bg-slate-100 hover:text-indigo-700
+                                        text-slate-700 hover:bg-slate-50 hover:text-indigo-700
                                     {% endif %}">
                                 {{ link[0] }}
                             </a>
@@ -27,20 +28,24 @@
 
 <!-- Mobile Navigation Menu -->
 <div id="mobile-menu" class="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm hidden">
-    <div class="fixed right-0 top-0 bottom-0 w-64 bg-white shadow-xl p-5 overflow-y-auto">
-        <div class="flex justify-between items-center mb-5">
-            <h2 class="text-lg font-bold text-indigo-900">Navigation</h2>
-            <button id="close-menu" class="p-2 text-slate-500 hover:text-slate-700">
+    <div class="fixed right-0 top-0 bottom-0 w-72 bg-white shadow-xl p-5 overflow-y-auto">
+        <div class="flex justify-between items-center mb-5 border-b border-slate-100 pb-3">
+            <h2 class="text-lg font-bold text-indigo-900">
+                PHP<span class="text-indigo-500">Flasher</span>
+                <span class="text-xs font-normal text-slate-500 block mt-0.5">Navigation</span>
+            </h2>
+            <button id="close-menu" class="p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-100">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
         {% for section in site.data.menu %}
             <div class="mb-6">
-                <h3 class="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-2">
+                <h3 class="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-2 flex items-center">
+                    <span class="w-1 h-3 bg-indigo-500 inline-block mr-2 rounded"></span>
                     {{ section[0] }}
                 </h3>
-                <ul class="space-y-1">
+                <ul class="space-y-1 pl-3">
                     {% for link in section[1] %}
                         <li>
                             <a href="{{ link[1] }}"
@@ -57,5 +62,19 @@
                 </ul>
             </div>
         {% endfor %}
+
+        <div class="mt-8 pt-6 border-t border-slate-100">
+            <div class="flex justify-around">
+                <a href="https://github.com/php-flasher/php-flasher" class="p-3 text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                    <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                <a href="/docs/" class="p-3 text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                    <i class="fa-solid fa-book text-xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/younes--ennaji/" class="p-3 text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                    <i class="fa-brands fa-linkedin text-xl"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </div>

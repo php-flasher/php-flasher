@@ -1,14 +1,22 @@
-<div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-lg p-4 mb-8">
-    <div class="flex flex-col sm:flex-row items-center">
+<div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-lg p-4 mb-8 transform transition-all duration-300 hover:shadow-md">
+    <div class="flex flex-col sm:flex-row items-center gap-4">
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-full flex-shrink-0">
+            <i class="fa-brands fa-github text-indigo-800 text-2xl"></i>
+        </div>
         <div class="text-center sm:text-left">
-            <div class="text-slate-700">
-                Enjoying <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>?
+            <div class="text-slate-700 text-sm leading-relaxed">
+                Enjoying <strong><span class="text-indigo-900 italic transform -rotate-1 inline-block">PHP<span class="text-indigo-500">Flasher</span></span></strong>?
                 Show your support with a <strong><i class="fa-solid fa-star text-amber-400"></i> star</strong> on
-                <a href="https://github.com/php-flasher/php-flasher"><i class="fab fa-github text-black"></i> GitHub</a>!
+                <a href="https://github.com/php-flasher/php-flasher" class="text-indigo-700 hover:text-indigo-900 font-medium transition-colors"><i class="fab fa-github text-black"></i> GitHub</a>!
                 It helps others discover this tool and motivates us to keep improving it.
-                Have ideas or spot a typo? We'd love your contributions to the docs <i class="fa-solid fa-file-pen text-blue-600"></i>.
-                <strong>Thank you</strong> <i class="fa-solid fa-heart text-red-600"></i>
+                <span class="hidden md:inline">Have ideas or spot a typo? We'd love your contributions to the docs <i class="fa-solid fa-file-pen text-blue-600"></i>.</span>
+                <strong class="text-indigo-800">Thank you</strong> <i class="fa-solid fa-heart text-red-600 animate-pulse"></i>
             </div>
+        </div>
+        <div class="sm:ml-auto flex-shrink-0">
+            <a href="https://github.com/php-flasher/php-flasher" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-full transition-colors shadow-sm">
+                <i class="fa-solid fa-star mr-1.5"></i> Star
+            </a>
         </div>
     </div>
 </div>
