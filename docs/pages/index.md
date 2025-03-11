@@ -79,80 +79,437 @@ layout: home
     </div>
 </section>
 
-<!-- Interactive Demo Section -->
-<section class="container mx-auto px-4 mb-16">
-    <div class="text-center mb-8">
-        <div class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm font-medium mb-2">Try It Now</div>
-        <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">See the Magic in Action</h2>
-        <p class="text-slate-600">Click to preview different notification types</p>
+<!-- Interactive Demo Section with WOW Effect -->
+<section class="relative py-20 mb-24 overflow-hidden">
+    <!-- Background effects -->
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 opacity-95"></div>
+    <div class="absolute inset-0">
+        <div class="absolute top-0 left-0 w-full h-full">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full">
+                <defs>
+                    <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
+                        <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                        <stop offset="0%" stop-color="rgba(255, 0, 255, 0.25)"></stop>
+                        <stop offset="100%" stop-color="rgba(255, 0, 255, 0)"></stop>
+                    </radialGradient>
+                    <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
+                        <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                        <stop offset="0%" stop-color="rgba(255, 255, 0, 0.25)"></stop>
+                        <stop offset="100%" stop-color="rgba(255, 255, 0, 0)"></stop>
+                    </radialGradient>
+                    <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
+                        <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                        <stop offset="0%" stop-color="rgba(0, 255, 255, 0.25)"></stop>
+                        <stop offset="100%" stop-color="rgba(0, 255, 255, 0)"></stop>
+                    </radialGradient>
+                </defs>
+                <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient1)">
+                    <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite" />
+                    <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite" />
+                </rect>
+                <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient2)">
+                    <animate attributeName="x" dur="22s" values="25%;0%;25%" repeatCount="indefinite" />
+                    <animate attributeName="y" dur="24s" values="0%;25%;0%" repeatCount="indefinite" />
+                </rect>
+                <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient3)">
+                    <animate attributeName="x" dur="23s" values="0%;25%;0%" repeatCount="indefinite" />
+                    <animate attributeName="y" dur="24s" values="25%;0%;25%" repeatCount="indefinite" />
+                </rect>
+            </svg>
+        </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 max-w-4xl mx-auto">
-        <!-- PHPStorm-like editor tabs -->
-        <div class="bg-slate-100 border-b border-slate-200 flex items-center">
-            <div class="bg-white border-r border-t border-l border-slate-200 px-4 py-2 flex items-center space-x-2">
-                <i class="fa-solid fa-code text-indigo-500"></i>
-                <span class="text-sm font-medium text-slate-700">index.php</span>
-            </div>
-            <div class="border-r border-slate-200 px-4 py-2 text-sm text-slate-500">Controller.php</div>
+    <!-- Content container -->
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-10">
+            <div class="inline-block px-4 py-1 bg-white/10 backdrop-blur-lg text-white rounded-full text-sm font-medium mb-3 border border-white/20">Interactive Experience</div>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Witness the <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">Magic</span> in Action</h2>
+            <p class="text-indigo-200 max-w-xl mx-auto">Experience PHPFlasher's power through this interactive demo</p>
         </div>
-        
-        <!-- Action buttons row that looks like IDE controls -->
-        <div class="flex items-center justify-between bg-slate-50 px-3 py-1.5 border-b border-slate-200">
-            <div class="flex items-center space-x-3">
-                <button class="p-1 text-slate-600 hover:text-slate-800">
-                    <i class="fa-solid fa-play text-xs"></i>
-                </button>
-                <button class="p-1 text-slate-600 hover:text-slate-800">
-                    <i class="fa-solid fa-bug text-xs"></i>
-                </button>
-                <span class="h-4 border-l border-slate-300 mx-1"></span>
-                <button class="p-1 text-slate-600 hover:text-slate-800">
-                    <i class="fa-solid fa-save text-xs"></i>
-                </button>
+
+        <!-- Interactive demo container -->
+        <div class="perspective-1000">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6 transition-all duration-500 hover:scale-[1.02]">
+                <!-- Code editor side -->
+                <div class="lg:col-span-3 transform-gpu transition-all rounded-xl shadow-glow-indigo overflow-hidden border border-indigo-500/30 backdrop-blur-sm bg-slate-900/80">
+                    <!-- Tab bar -->
+                    <div class="flex items-center bg-slate-800/80 border-b border-slate-700/50">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-500 border-r border-slate-700/50 px-4 py-2 flex items-center space-x-2">
+                            <span class="text-white text-xs font-medium">app.php</span>
+                        </div>
+                        <div class="px-4 py-2 text-xs text-slate-400">Controller.php</div>
+                        <div class="ml-auto px-4 py-2 text-xs text-slate-400 flex space-x-2">
+                            <span>yoeunes</span>
+                            <span class="text-slate-500">|</span>
+                            <span id="demo-current-time">2025-03-11 06:15:40</span>
+                        </div>
+                    </div>
+
+                    <!-- Editor -->
+                    <div class="relative">
+                        <!-- Line numbers -->
+                        <div class="absolute left-0 top-0 bottom-0 w-10 bg-slate-800/50 border-r border-slate-700/40 flex flex-col items-end pt-3 pb-3 text-xs text-slate-500 font-mono">
+                            <div class="px-2">1</div>
+                            <div class="px-2">2</div>
+                            <div class="px-2">3</div>
+                            <div class="px-2">4</div>
+                            <div class="px-2">5</div>
+                            <div class="px-2">6</div>
+                            <div class="px-2">7</div>
+                            <div class="px-2">8</div>
+                            <div class="px-2">9</div>
+                            <div class="px-2">10</div>
+                        </div>
+
+                        <!-- Code content -->
+                        <div class="pl-10 pr-3 py-3 font-mono text-sm" id="animated-code">
+                            <pre class="language-php"><code><span class="text-rose-400">// Include PHPFlasher in your application</span>
+<span class="text-purple-400">use</span> <span class="text-blue-300">Flasher\Prime\FlasherInterface</span>;
+
+<span class="text-purple-400">public function</span> <span class="text-green-400">index</span>(<span class="text-blue-300">FlasherInterface</span> <span class="text-yellow-300">$flasher</span>)
+{
+    <span class="text-slate-400"># Choose your notification type:</span>
+    <span id="active-line" class="block relative -mx-10 px-10 bg-indigo-900/30 border-l-2 border-indigo-500"><span class="text-yellow-300">$flasher</span>-><span class="demo-method text-green-400">success</span>(<span class="text-amber-300">'Your profile has been updated!'</span>);</span>
+    
+    <span class="text-slate-400"># Customize with a title:</span>
+    <span class="text-yellow-300">$flasher</span>-><span class="text-green-400">info</span>(<span class="text-amber-300">'Please verify your email'</span>, <span class="text-amber-300">'Account Setup'</span>);
+    
+    <span class="text-slate-400"># More options available...</span>
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview side with device mockup -->
+                <div class="lg:col-span-2 transform-gpu transition-all">
+                    <div class="h-full flex flex-col">
+                        <!-- Controls -->
+                        <div class="flex justify-center items-center space-x-3 mb-3">
+                            <button onclick="changeMethod('success'); flasher.success('Your profile has been updated!', 'Success')" 
+                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-green-500/30 bg-green-500/10 hover:bg-green-500/20 transition-all overflow-hidden">
+                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-green-600/20 to-green-600/0"></span>
+                                <div class="relative flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-circle-check text-green-500"></i>
+                                    <span class="text-sm text-green-400 font-medium">Success</span>
+                                </div>
+                            </button>
+                            
+                            <button onclick="changeMethod('error'); flasher.error('Oops! Something went wrong.', 'Error')" 
+                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-all overflow-hidden">
+                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-red-600/20 to-red-600/0"></span>
+                                <div class="relative flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-circle-xmark text-red-500"></i>
+                                    <span class="text-sm text-red-400 font-medium">Error</span>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <div class="flex justify-center items-center space-x-3 mb-6">
+                            <button onclick="changeMethod('info'); flasher.info('Remember to verify your email.', 'Info')" 
+                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 transition-all overflow-hidden">
+                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-blue-600/20 to-blue-600/0"></span>
+                                <div class="relative flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-circle-info text-blue-500"></i>
+                                    <span class="text-sm text-blue-400 font-medium">Info</span>
+                                </div>
+                            </button>
+                            
+                            <button onclick="changeMethod('warning'); flasher.warning('Your subscription will expire soon.', 'Warning')" 
+                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 transition-all overflow-hidden">
+                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-amber-600/20 to-amber-600/0"></span>
+                                <div class="relative flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                                    <span class="text-sm text-amber-400 font-medium">Warning</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Device mockup -->
+                        <div class="flex-1 flex items-center justify-center">
+                            <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+                                <div class="absolute top-0 inset-x-0">
+                                    <div class="h-[32px] w-[148px] mx-auto bg-slate-800 rounded-b-[1rem] flex items-center justify-center">
+                                        <div class="h-2 w-16 bg-slate-600 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="h-[32px] w-[10px] bg-gray-800 absolute right-[-14px] top-[120px] rounded-l-lg"></div>
+                                <div class="h-[46px] w-[10px] bg-gray-800 absolute right-[-14px] top-[190px] rounded-l-lg"></div>
+                                <div class="h-[46px] w-[10px] bg-gray-800 absolute left-[-14px] top-[190px] rounded-r-lg"></div>
+                                <div class="h-[30px] w-[10px] bg-gray-800 absolute left-[-14px] top-[270px] rounded-r-lg"></div>
+                                <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white">
+                                    <div class="w-full h-full bg-gradient-to-b from-indigo-50 to-white relative">
+                                        <!-- Smartphone Content -->
+                                        <header class="absolute inset-x-0 top-0 h-14 bg-white/70 backdrop-blur-sm border-b border-slate-200 flex items-center px-4 z-10">
+                                            <div class="w-6 h-6 text-indigo-600"><i class="fa-solid fa-arrow-left"></i></div>
+                                            <div class="ml-4 text-sm font-medium text-slate-800">PHPFlasher Demo</div>
+                                            <div class="ml-auto text-xs text-slate-500">11:45 AM</div>
+                                        </header>
+
+                                        <main class="pt-14 pb-16 px-3 h-full overflow-y-auto">
+                                            <div class="rounded-xl overflow-hidden shadow-sm border border-slate-200 mb-4">
+                                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" alt="Coding" class="h-32 w-full object-cover" />
+                                                <div class="bg-white p-3">
+                                                    <h3 class="text-sm font-medium text-slate-800">Getting Started with PHPFlasher</h3>
+                                                    <p class="text-xs text-slate-600 mt-1">Learn how to integrate beautiful notifications in your application</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                                <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="h-8 w-8 bg-rose-100 rounded-full flex items-center justify-center">
+                                                            <i class="fa-solid fa-laravel text-rose-600 text-sm"></i>
+                                                        </div>
+                                                        <div class="text-[10px] text-slate-500">Laravel</div>
+                                                    </div>
+                                                    <div class="mt-3 text-[10px] font-medium text-slate-800">Integration ready</div>
+                                                </div>
+                                                <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="h-8 w-8 bg-slate-100 rounded-full flex items-center justify-center">
+                                                            <i class="fa-solid fa-symfony text-slate-900 text-sm"></i>
+                                                        </div>
+                                                        <div class="text-[10px] text-slate-500">Symfony</div>
+                                                    </div>
+                                                    <div class="mt-3 text-[10px] font-medium text-slate-800">Bundle available</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div id="notification-display" class="flex flex-col space-y-3">
+                                                <!-- Notifications will appear here -->
+                                            </div>
+                                        </main>
+
+                                        <footer class="absolute inset-x-0 bottom-0 h-16 bg-white border-t border-slate-200 flex items-center justify-around px-3">
+                                            <div class="flex flex-col items-center">
+                                                <i class="fa-solid fa-house text-indigo-600 text-sm"></i>
+                                                <span class="text-[10px] text-slate-800 mt-1">Home</span>
+                                            </div>
+                                            <div class="flex flex-col items-center">
+                                                <i class="fa-solid fa-bell text-slate-400 text-sm"></i>
+                                                <span class="text-[10px] text-slate-500 mt-1">Notifications</span>
+                                            </div>
+                                            <div class="flex flex-col items-center">
+                                                <i class="fa-solid fa-gear text-slate-400 text-sm"></i>
+                                                <span class="text-[10px] text-slate-500 mt-1">Settings</span>
+                                            </div>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Try it buttons that look like IDE run configurations -->
-            <div class="flex items-center space-x-2">
-                <button onclick="flasher.success('Your profile has been updated!', 'Success')" 
-                        class="flex items-center space-x-1.5 bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-1.5 rounded border border-green-200 transition-colors">
-                    <i class="fa-solid fa-circle-check text-green-500"></i>
-                    <span>Run Success</span>
-                </button>
-                <button onclick="flasher.error('Oops! Something went wrong.', 'Error')"
-                        class="flex items-center space-x-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs px-3 py-1.5 rounded border border-red-200 transition-colors">
-                    <i class="fa-solid fa-circle-xmark text-red-500"></i>
-                    <span>Run Error</span>
-                </button>
-                <button onclick="flasher.info('Remember to verify your email.')"
-                        class="flex items-center space-x-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs px-3 py-1.5 rounded border border-blue-200 transition-colors">
-                    <i class="fa-solid fa-circle-info text-blue-500"></i>
-                    <span>Run Info</span>
-                </button>
-                <button onclick="flasher.warning('Your subscription will expire soon.')"
-                        class="flex items-center space-x-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs px-3 py-1.5 rounded border border-amber-200 transition-colors">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
-                    <span>Run Warning</span>
-                </button>
+
+            <!-- Floating tags -->
+            <div class="hidden lg:block">
+                <div class="absolute top-1/3 left-[20%] transform -translate-x-1/2 -translate-y-1/2 rotate-[-15deg] bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg shadow-glow text-white text-xs font-mono border border-white/20 animate-float-slow">event: flash</div>
+                <div class="absolute top-2/3 right-[15%] transform translate-x-1/2 -translate-y-1/2 rotate-[10deg] bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg shadow-glow text-white text-xs font-mono border border-white/20 animate-float">type: success</div>
+                <div class="absolute bottom-1/4 left-[30%] transform -translate-x-1/2 rotate-[-5deg] bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg shadow-glow text-white text-xs font-mono border border-white/20 animate-float-medium">position: top-right</div>
             </div>
-        </div>
-        
-        <!-- Code content with 4-space indentation -->
-        <div class="p-6">
-            <pre class="bg-slate-50 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-php">// Show beautiful notifications with a single line
-flash()->success('Your profile has been updated!');
-
-// Display error messages
-flash()->error('Oops! Something went wrong.');
-
-// Info notifications
-flash()->info('Remember to verify your email.');
-
-// Warning alerts
-flash()->warning('Your subscription will expire soon.');</code></pre>
         </div>
     </div>
 </section>
+
+<style>
+/* Additional styles for the interactive demo */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.shadow-glow {
+    box-shadow: 0 0 15px 2px rgba(99, 102, 241, 0.3);
+}
+
+.shadow-glow-indigo {
+    box-shadow: 0 0 25px 5px rgba(99, 102, 241, 0.2);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(10deg); }
+    50% { transform: translateY(-10px) rotate(10deg); }
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(-15deg); }
+    50% { transform: translateY(-15px) rotate(-15deg); }
+}
+
+@keyframes float-medium {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-12px) rotate(-5deg); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+    animation: float-medium 7s ease-in-out infinite;
+}
+
+/* Blinking cursor effect */
+.blinking-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Mobile notification styles */
+.mobile-notification {
+    transform: translateX(120%);
+    animation: slide-in 0.5s forwards, slide-out 0.5s forwards 4.5s;
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0); }
+}
+
+@keyframes slide-out {
+    100% { transform: translateX(120%); }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize with success method highlighted
+    changeMethod('success');
+    
+    // Update the current time
+    function updateCurrentTime() {
+        const now = new Date();
+        const formattedTime = now.toISOString().substring(0, 10) + ' ' + 
+                             String(now.getHours()).padStart(2, '0') + ':' + 
+                             String(now.getMinutes()).padStart(2, '0') + ':' + 
+                             String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('demo-current-time').textContent = formattedTime;
+    }
+    
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+    
+    // Create a simulated typing effect on page load
+    const codeLine = document.getElementById('active-line');
+    if (codeLine) {
+        const originalText = codeLine.innerHTML;
+        codeLine.innerHTML = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < originalText.length) {
+                codeLine.innerHTML += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 30);
+            } else {
+                // Add blinking cursor at the end
+                setTimeout(() => {
+                    flasher.success('Your profile has been updated!', 'Success');
+                    addNotificationToPhone('success', 'Your profile has been updated!', 'Success');
+                }, 500);
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+    }
+});
+
+// Change the highlighted method in the code
+function changeMethod(method) {
+    const methods = ['success', 'error', 'info', 'warning'];
+    const colors = {
+        'success': 'text-green-400',
+        'error': 'text-red-400',
+        'info': 'text-blue-400',
+        'warning': 'text-amber-400'
+    };
+    
+    // Update all method elements
+    document.querySelectorAll('.demo-method').forEach(el => {
+        // Remove all color classes
+        methods.forEach(m => el.classList.remove(colors[m]));
+        
+        // Add the new color class
+        el.classList.add(colors[method]);
+        
+        // Change the text
+        el.textContent = method;
+    });
+    
+    // Add notification to the phone mockup
+    switch(method) {
+        case 'success':
+            addNotificationToPhone('success', 'Your profile has been updated!', 'Success');
+            break;
+        case 'error':
+            addNotificationToPhone('error', 'Oops! Something went wrong.', 'Error');
+            break;
+        case 'info':
+            addNotificationToPhone('info', 'Remember to verify your email.', 'Info');
+            break;
+        case 'warning':
+            addNotificationToPhone('warning', 'Your subscription will expire soon.', 'Warning');
+            break;
+    }
+}
+
+// Add a notification to the phone mockup
+function addNotificationToPhone(type, message, title) {
+    const notificationDisplay = document.getElementById('notification-display');
+    const colors = {
+        'success': 'bg-green-500 text-white',
+        'error': 'bg-red-500 text-white',
+        'info': 'bg-blue-500 text-white',
+        'warning': 'bg-amber-500 text-white'
+    };
+    
+    const icons = {
+        'success': '<i class="fa-solid fa-circle-check"></i>',
+        'error': '<i class="fa-solid fa-circle-xmark"></i>',
+        'info': '<i class="fa-solid fa-circle-info"></i>',
+        'warning': '<i class="fa-solid fa-triangle-exclamation"></i>'
+    };
+    
+    const notification = document.createElement('div');
+    notification.className = `mobile-notification bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden`;
+    notification.innerHTML = `
+        <div class="flex">
+            <div class="w-2 ${colors[type].split(' ')[0]}"></div>
+            <div class="flex-1 p-2">
+                <div class="flex items-start">
+                    <div class="text-xs ${colors[type]}">${icons[type]}</div>
+                    <div class="ml-2 flex-1">
+                        <div class="text-[11px] font-medium text-slate-800">${title}</div>
+                        <div class="text-[10px] text-slate-600">${message}</div>
+                    </div>
+                    <div class="text-[8px] text-slate-400">now</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add to display
+    notificationDisplay.prepend(notification);
+    
+    // Remove old notifications if there are more than 3
+    if (notificationDisplay.children.length > 3) {
+        notificationDisplay.removeChild(notificationDisplay.lastChild);
+    }
+    
+    // Remove notification after animation completes
+    setTimeout(() => {
+        notification.style.opacity = '0.5';
+    }, 5000);
+}
+</script>
 
 <!-- Quick Start Section (Moved before Features) -->
 <section id="quick-start" class="container mx-auto px-4 mb-16">
