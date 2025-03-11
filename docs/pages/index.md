@@ -79,425 +79,847 @@ layout: home
     </div>
 </section>
 
-<!-- Interactive Demo Section with WOW Effect -->
-<section class="relative py-20 mb-24 overflow-hidden">
-    <!-- Background effects -->
-    <div class="absolute inset-0 bg-gradient-to-b from-indigo-900 via-purple-900 to-slate-900 opacity-95"></div>
-    <div class="absolute inset-0">
-        <div class="absolute top-0 left-0 w-full h-full">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full">
-                <defs>
-                    <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
-                        <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
-                        <stop offset="0%" stop-color="rgba(255, 0, 255, 0.25)"></stop>
-                        <stop offset="100%" stop-color="rgba(255, 0, 255, 0)"></stop>
-                    </radialGradient>
-                    <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
-                        <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
-                        <stop offset="0%" stop-color="rgba(255, 255, 0, 0.25)"></stop>
-                        <stop offset="100%" stop-color="rgba(255, 255, 0, 0)"></stop>
-                    </radialGradient>
-                    <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
-                        <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
-                        <stop offset="0%" stop-color="rgba(0, 255, 255, 0.25)"></stop>
-                        <stop offset="100%" stop-color="rgba(0, 255, 255, 0)"></stop>
-                    </radialGradient>
-                </defs>
-                <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient1)">
-                    <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite" />
-                    <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite" />
-                </rect>
-                <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient2)">
-                    <animate attributeName="x" dur="22s" values="25%;0%;25%" repeatCount="indefinite" />
-                    <animate attributeName="y" dur="24s" values="0%;25%;0%" repeatCount="indefinite" />
-                </rect>
-                <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient3)">
-                    <animate attributeName="x" dur="23s" values="0%;25%;0%" repeatCount="indefinite" />
-                    <animate attributeName="y" dur="24s" values="25%;0%;25%" repeatCount="indefinite" />
-                </rect>
-            </svg>
+<!-- Mission Control Dashboard Demo -->
+<section class="relative min-h-screen py-10 overflow-hidden bg-slate-900">
+    <!-- Animated Background -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        <div class="absolute top-0 w-full h-full opacity-30">
+            <div class="absolute top-0 left-0 w-full h-full">
+                <!-- Grid Pattern -->
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 40px 40px;"></div>
+                
+                <!-- Moving Particles -->
+                <div id="particles-js" class="absolute inset-0 opacity-50"></div>
+                
+                <!-- Glowing Orbs -->
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-[100px] opacity-10 animate-pulse-slow"></div>
+                <div class="absolute top-2/3 right-1/3 w-96 h-96 bg-purple-500 rounded-full filter blur-[120px] opacity-10 animate-pulse-medium"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-500 rounded-full filter blur-[100px] opacity-10 animate-pulse-slow"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Content container -->
-    <div class="container mx-auto px-4 relative z-10">
-        <div class="text-center mb-10">
-            <div class="inline-block px-4 py-1 bg-white/10 backdrop-blur-lg text-white rounded-full text-sm font-medium mb-3 border border-white/20">Interactive Experience</div>
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Witness the <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">Magic</span> in Action</h2>
-            <p class="text-indigo-200 max-w-xl mx-auto">Experience PHPFlasher's power through this interactive demo</p>
-        </div>
-
-        <!-- Interactive demo container -->
-        <div class="perspective-1000">
-            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6">
-                <!-- Code editor side -->
-                <div class="lg:col-span-3 rounded-xl shadow-glow-indigo overflow-hidden border border-indigo-500/30 backdrop-blur-sm bg-slate-900/80">
-                    <!-- Tab bar -->
-                    <div class="flex items-center bg-slate-800/80 border-b border-slate-700/50">
-                        <div class="bg-gradient-to-r from-indigo-500 to-purple-500 border-r border-slate-700/50 px-4 py-2 flex items-center space-x-2">
-                            <span class="text-white text-xs font-medium">Controller.php</span>
-                        </div>
-                        <div class="ml-auto px-4 py-2 text-xs text-slate-400 flex space-x-2">
-                            <span>yoeunes</span>
-                            <span class="text-slate-500">|</span>
-                            <span id="demo-current-time">2025-03-11 06:23:40</span>
-                        </div>
-                    </div>
-
-                    <!-- Editor -->
-                    <div class="relative">
-                        <!-- Line numbers -->
-                        <div class="absolute left-0 top-0 bottom-0 w-10 bg-slate-800/50 border-r border-slate-700/40 flex flex-col items-end pt-3 pb-3 text-xs text-slate-500 font-mono">
-                            <div class="px-2">1</div>
-                            <div class="px-2">2</div>
-                            <div class="px-2">3</div>
-                            <div class="px-2">4</div>
-                            <div class="px-2">5</div>
-                            <div class="px-2">6</div>
-                        </div>
-
-                        <!-- Code content -->
-                        <div class="pl-10 pr-3 py-3 font-mono text-sm" id="animated-code">
-                            <pre class="language-php"><code><span class="text-purple-400">namespace</span> <span class="text-blue-300">App\Http\Controllers</span>;
-
-<span class="text-purple-400">class</span> <span class="text-green-400">ProfileController</span> <span class="text-purple-400">extends</span> <span class="text-blue-300">Controller</span>
-{
-    <span class="text-purple-400">public function</span> <span class="text-green-400">update</span>(<span class="text-blue-300">Request</span> <span class="text-yellow-300">$request</span>)
-    {</code></pre>
-                            <div class="px-4 py-2 bg-indigo-800/30 border-y border-indigo-500/30 my-2">
-                                <div class="text-center text-xs text-indigo-300 mb-2">👇 Click one of the buttons below to test each notification type 👇</div>
-                                <pre class="language-php"><code>        <span id="active-line" class="block"><span class="text-slate-400"># Show notification with:</span>
-        <span class="text-yellow-300">flash()</span>-><span class="demo-method text-green-400">success</span>(<span class="text-amber-300">'Your profile has been updated!'</span>);</span></code></pre>
-                            </div>
-                            <pre class="language-php mt-2"><code>        <span class="text-slate-400"># Return back to the page:</span>
-        <span class="text-purple-400">return</span> <span class="text-yellow-300">back()</span>;
-    }
-}</code></pre>
-                        </div>
-                    </div>
+    <div class="container relative z-10 px-4 mx-auto max-w-7xl">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="relative p-1 overflow-hidden rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <div class="p-2 font-mono text-xs font-bold tracking-wide text-white uppercase">PHPFlasher</div>
                 </div>
-
-                <!-- Preview side with device mockup -->
-                <div class="lg:col-span-2">
-                    <div class="h-full flex flex-col">
-                        <!-- Controls -->
-                        <div class="flex justify-center items-center space-x-3 mb-3">
-                            <button onclick="changeMethod('success'); flasher.success('Your profile has been updated!', 'Success')" 
-                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-green-500/30 bg-green-500/10 hover:bg-green-500/20 transition-all overflow-hidden pulse-attention">
-                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-green-600/20 to-green-600/0"></span>
-                                <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fas fa-circle-check text-green-500"></i>
-                                    <span class="text-sm text-green-400 font-medium">Success</span>
+                <h1 class="text-xl font-medium text-white">Mission Control <span class="font-mono text-sm opacity-50">v2.0</span></h1>
+            </div>
+            <div class="flex items-center gap-3 px-3 py-1.5 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50">
+                <div class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></div>
+                <span class="text-xs font-medium text-green-400">SYSTEM READY</span>
+                <span class="pl-3 ml-2 text-xs text-slate-400 border-l border-slate-700" id="mc-current-time">2025-03-11 06:28:39</span>
+                <span class="pl-3 ml-2 text-xs text-slate-400 border-l border-slate-700">User: <span class="text-indigo-400">yoeunes</span></span>
+            </div>
+        </div>
+        
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-12 gap-5">
+            <!-- Left Panel: Notification Builder -->
+            <div class="col-span-12 md:col-span-7">
+                <div class="p-5 border rounded-lg shadow-lg bg-slate-800/60 backdrop-blur-md border-slate-700/50">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <div class="p-1.5 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                </svg>
+                            </div>
+                            <h2 class="font-medium text-white">Notification Builder</h2>
+                            <div class="px-2 py-0.5 ml-2 text-xs font-semibold rounded-full bg-indigo-900/50 text-indigo-300">INTERACTIVE</div>
+                        </div>
+                        <div class="px-2 py-1 text-xs bg-slate-700/50 rounded-md text-slate-300">Blueprint Mode</div>
+                    </div>
+                    
+                    <!-- Tabs -->
+                    <div class="flex mb-5 border-b border-slate-700/50">
+                        <button class="px-4 py-2 -mb-px text-sm font-medium text-indigo-400 border-b-2 border-indigo-500" id="basicTab">Basic</button>
+                        <button class="px-4 py-2 -mb-px text-sm font-medium text-slate-400 hover:text-slate-300" id="advancedTab">Advanced</button>
+                        <button class="px-4 py-2 -mb-px text-sm font-medium text-slate-400 hover:text-slate-300" id="presetTab">Presets</button>
+                    </div>
+                    
+                    <!-- Builder Interface -->
+                    <div class="mb-4">
+                        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                            <!-- Notification Type -->
+                            <div>
+                                <label class="block mb-1 text-xs font-medium text-slate-400">Notification Type</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button active-type bg-gradient-to-br from-green-500/20 to-green-600/20 text-green-400 border border-green-500/30" 
+                                            data-type="success" onclick="updateBuilderType('success')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>Success</span>
+                                    </button>
+                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button bg-slate-800/80 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50" 
+                                            data-type="error" onclick="updateBuilderType('error')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>Error</span>
+                                    </button>
                                 </div>
-                            </button>
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button bg-slate-800/80 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50" 
+                                            data-type="info" onclick="updateBuilderType('info')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>Info</span>
+                                    </button>
+                                    <button class="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium transition-colors rounded-md type-button bg-slate-800/80 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50" 
+                                            data-type="warning" onclick="updateBuilderType('warning')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>Warning</span>
+                                    </button>
+                                </div>
+                            </div>
                             
-                            <button onclick="changeMethod('error'); flasher.error('Oops! Something went wrong.', 'Error')" 
-                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-all overflow-hidden">
-                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-red-600/20 to-red-600/0"></span>
-                                <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fas fa-circle-xmark text-red-500"></i>
-                                    <span class="text-sm text-red-400 font-medium">Error</span>
+                            <!-- Position -->
+                            <div>
+                                <label class="block mb-1 text-xs font-medium text-slate-400">Position</label>
+                                <div class="grid grid-cols-3 gap-2 mb-2">
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50" 
+                                            data-position="top-left" onclick="updateBuilderPosition('top-left')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 5v5" />
+                                        </svg>
+                                    </button>
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="top-center" onclick="updateBuilderPosition('top-center')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 5h10" />
+                                        </svg>
+                                    </button>
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="top-right" onclick="updateBuilderPosition('top-right')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5M19 5v5" />
+                                        </svg>
+                                    </button>
                                 </div>
-                            </button>
+                                <div class="grid grid-cols-3 gap-2 mb-2">
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="middle-left" onclick="updateBuilderPosition('middle-left')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h5" />
+                                        </svg>
+                                    </button>
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center active-position bg-gradient-to-br from-blue-500/20 to-indigo-500/20 text-indigo-400 border border-indigo-500/30"  
+                                            data-position="center" onclick="updateBuilderPosition('center')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h14M5 19h14M5 12h14" />
+                                        </svg>
+                                    </button>
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="middle-right" onclick="updateBuilderPosition('middle-right')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 12h5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="bottom-left" onclick="updateBuilderPosition('bottom-left')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19h5M5 14v5" />
+                                        </svg>
+                                    </button>
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="bottom-center" onclick="updateBuilderPosition('bottom-center')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 19h10" />
+                                        </svg>
+                                    </button>
+                                    <button class="grid w-full h-10 transition-colors rounded place-items-center bg-slate-800/80 hover:bg-slate-700/50 border border-slate-700/50"  
+                                            data-position="bottom-right" onclick="updateBuilderPosition('bottom-right')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 19h5M19 14v5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="flex justify-center items-center space-x-3 mb-6">
-                            <button onclick="changeMethod('info'); flasher.info('Remember to verify your email.', 'Info')" 
-                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 transition-all overflow-hidden">
-                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-blue-600/20 to-blue-600/0"></span>
-                                <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fas fa-circle-info text-blue-500"></i>
-                                    <span class="text-sm text-blue-400 font-medium">Info</span>
+                        <!-- Content -->
+                        <div class="mt-5">
+                            <label class="block mb-1 text-xs font-medium text-slate-400">Content</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="col-span-2">
+                                    <input type="text" id="message-input" class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" 
+                                       placeholder="Notification message" value="Your changes have been saved successfully!">
                                 </div>
-                            </button>
-                            
-                            <button onclick="changeMethod('warning'); flasher.warning('Your subscription will expire soon.', 'Warning')" 
-                                    class="group relative flex-1 py-2.5 px-3 rounded-lg border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 transition-all overflow-hidden">
-                                <span class="absolute inset-0 w-0 group-hover:w-full transition-all duration-500 ease-out bg-gradient-to-r from-amber-600/20 to-amber-600/0"></span>
-                                <div class="relative flex items-center justify-center space-x-2">
-                                    <i class="fas fa-triangle-exclamation text-amber-500"></i>
-                                    <span class="text-sm text-amber-400 font-medium">Warning</span>
+                                <div>
+                                    <input type="text" id="title-input" class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" 
+                                       placeholder="Title (optional)" value="Success">
                                 </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Options -->
+                        <div class="grid grid-cols-4 gap-3 mt-5">
+                            <div>
+                                <label class="block mb-1 text-xs font-medium text-slate-400">Duration (ms)</label>
+                                <input type="number" id="duration-input" class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" 
+                                   value="5000">
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-xs font-medium text-slate-400">Animation</label>
+                                <select class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                    <option value="fade">Fade</option>
+                                    <option value="slide" selected>Slide</option>
+                                    <option value="bounce">Bounce</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-xs font-medium text-slate-400">Theme</label>
+                                <select class="w-full px-3 py-2 text-sm bg-transparent border rounded-md text-slate-200 border-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                    <option value="light">Light</option>
+                                    <option value="dark" selected>Dark</option>
+                                    <option value="material">Material</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-xs font-medium invisible">Launch</label>
+                                <button id="launchButton" class="w-full px-4 py-2 font-medium text-white transition-all border rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-slate-800" onclick="launchNotification()">
+                                    Launch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Code Preview -->
+                    <div class="mt-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-xs font-medium text-slate-400">Generated Code</label>
+                            <button class="flex items-center gap-1.5 px-2 py-1 text-xs bg-slate-700 rounded-md text-slate-300 hover:bg-slate-600" onclick="copyToClipboard('#codeDisplay')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Copy Code
                             </button>
                         </div>
-
-                        <!-- Device mockup -->
-                        <div class="flex-1 flex items-center justify-center">
-                            <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
-                                <div class="absolute top-0 inset-x-0">
-                                    <div class="h-[32px] w-[148px] mx-auto bg-slate-800 rounded-b-[1rem] flex items-center justify-center">
-                                        <div class="h-2 w-16 bg-slate-600 rounded-full"></div>
-                                    </div>
+                        <div class="overflow-hidden rounded-md">
+                            <div class="flex items-center px-4 py-2 space-x-2 text-xs text-slate-400 bg-slate-800/80 border-b border-slate-700">
+                                <div class="w-3 h-3 rounded-full bg-slate-600"></div>
+                                <div class="w-3 h-3 rounded-full bg-slate-600"></div>
+                                <div class="w-3 h-3 rounded-full bg-slate-600"></div>
+                                <span class="ml-2 font-mono">Controller.php</span>
+                            </div>
+                            <pre id="codeDisplay" class="font-mono text-xs leading-relaxed bg-slate-800/60 p-4 text-slate-200 overflow-x-auto"><span class="text-slate-500">// Display a success notification</span>
+<span class="text-blue-400">flash</span>()-><span class="text-green-400">success</span>(<span class="text-amber-300">'Your changes have been saved successfully!'</span>, <span class="text-amber-300">'Success'</span>)
+    -><span class="text-purple-400">options</span>([
+        <span class="text-amber-300">'position'</span> => <span class="text-amber-300">'center'</span>,
+        <span class="text-amber-300">'duration'</span> => <span class="text-blue-300">5000</span>,
+        <span class="text-amber-300">'theme'</span> => <span class="text-amber-300">'dark'</span>,
+        <span class="text-amber-300">'animation'</span> => <span class="text-amber-300">'slide'</span>
+    ]);</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Panel: Preview & Analytics -->
+            <div class="col-span-12 md:col-span-5">
+                <!-- Live Preview -->
+                <div class="mb-5 border rounded-lg shadow-lg h-80 bg-slate-800/60 backdrop-blur-md border-slate-700/50">
+                    <div class="flex items-center justify-between p-3 border-b border-slate-700/50">
+                        <div class="flex items-center gap-2">
+                            <div class="p-1.5 rounded-md bg-gradient-to-r from-blue-500 to-indigo-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h2 class="font-medium text-white">Live Preview</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping-slow"></div>
+                            <span class="text-xs font-medium text-emerald-400">Active</span>
+                        </div>
+                    </div>
+                    
+                    <div id="preview-screen" class="relative flex items-center justify-center w-full h-[calc(100%-49px)] bg-gradient-to-b from-slate-800 to-slate-900">
+                        <!-- Browser Frame -->
+                        <div class="absolute top-0 left-0 w-full border-b border-slate-700/50">
+                            <div class="flex items-center h-8 px-3 space-x-1.5 bg-slate-800/40">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                                <div class="flex items-center h-6 px-2 mx-auto text-xs bg-slate-700/40 rounded-md text-slate-400 w-60">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    app.example.com/dashboard
                                 </div>
-                                <div class="h-[32px] w-[10px] bg-gray-800 absolute right-[-14px] top-[120px] rounded-l-lg"></div>
-                                <div class="h-[46px] w-[10px] bg-gray-800 absolute right-[-14px] top-[190px] rounded-l-lg"></div>
-                                <div class="h-[46px] w-[10px] bg-gray-800 absolute left-[-14px] top-[190px] rounded-r-lg"></div>
-                                <div class="h-[30px] w-[10px] bg-gray-800 absolute left-[-14px] top-[270px] rounded-r-lg"></div>
-                                <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white">
-                                    <div class="w-full h-full bg-gradient-to-b from-indigo-50 to-white relative">
-                                        <!-- Smartphone Content -->
-                                        <header class="absolute inset-x-0 top-0 h-14 bg-white/70 backdrop-blur-sm border-b border-slate-200 flex items-center px-4 z-10">
-                                            <div class="w-6 h-6 text-indigo-600">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                                                    <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4 text-sm font-medium text-slate-800">PHPFlasher Demo</div>
-                                            <div class="ml-auto text-xs text-slate-500">11:45 AM</div>
-                                        </header>
-
-                                        <main class="pt-14 pb-16 px-3 h-full overflow-y-auto">
-                                            <div class="rounded-xl overflow-hidden shadow-sm border border-slate-200 mb-4">
-                                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" alt="Coding" class="h-32 w-full object-cover" />
-                                                <div class="bg-white p-3">
-                                                    <h3 class="text-sm font-medium text-slate-800">Getting Started with PHPFlasher</h3>
-                                                    <p class="text-xs text-slate-600 mt-1">Learn how to integrate beautiful notifications in your application</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="grid grid-cols-2 gap-3 mb-4">
-                                                <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
-                                                    <div class="flex items-center justify-between">
-                                                        <div class="h-8 w-8 bg-rose-100 rounded-full flex items-center justify-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 text-rose-600">
-                                                                <path fill="currentColor" d="M504.4,115.83a5.72,5.72,0,0,0-.28-.68,8.52,8.52,0,0,0-.53-1.25,6,6,0,0,0-.54-.71,9.36,9.36,0,0,0-.72-.94c-.23-.22-.52-.4-.77-.6a8.84,8.84,0,0,0-.9-.68L404.4,55.55a8,8,0,0,0-8,0L300.12,111h0a8.07,8.07,0,0,0-.88.69,7.68,7.68,0,0,0-.78.6,8.23,8.23,0,0,0-.72.93c-.17.24-.39.45-.54.71a9.7,9.7,0,0,0-.52,1.25c-.08.23-.21.44-.28.68a8.08,8.08,0,0,0-.28,2.08V223.18l-80.22,46.19V63.44a7.8,7.8,0,0,0-.28-2.09c-.06-.24-.2-.45-.28-.68a8.35,8.35,0,0,0-.52-1.24c-.14-.26-.37-.47-.54-.72a9.36,9.36,0,0,0-.72-.94,9.46,9.46,0,0,0-.78-.6,9.8,9.8,0,0,0-.88-.68h0L115.61,1.07a8,8,0,0,0-8,0L11.34,56.49h0a6.52,6.52,0,0,0-.88.69,7.81,7.81,0,0,0-.79.6,8.15,8.15,0,0,0-.71.93c-.18.25-.4.46-.55.72a7.88,7.88,0,0,0-.51,1.24,6.46,6.46,0,0,0-.29.67,8.18,8.18,0,0,0-.28,2.1v329.7a8,8,0,0,0,4,6.95l192.5,110.84a8.83,8.83,0,0,0,1.33.54c.21.08.41.2.63.26a7.92,7.92,0,0,0,4.1,0c.2-.05.37-.16.55-.22a8.6,8.6,0,0,0,1.4-.58L404.4,400.09a8,8,0,0,0,4-6.95V287.88l92.24-53.11a8,8,0,0,0,4-7V117.92A8.63,8.63,0,0,0,504.4,115.83ZM111.6,17.28h0l80.19,46.15-80.2,46.18L31.41,63.44Zm88.25,60V278.6l-46.53,26.79-33.69,19.4V123.5l46.53-26.79Zm0,412.78L23.37,388.5V77.32L57.06,96.7l46.52,26.8V338.68a6.94,6.94,0,0,0,.12.9,8,8,0,0,0,.16,1.18h0a5.92,5.92,0,0,0,.38.9,6.38,6.38,0,0,0,.42,1v0a8.54,8.54,0,0,0,.6.78,7.62,7.62,0,0,0,.66.84l0,0c.23.22.52.38.77.58a8.93,8.93,0,0,0,.86.66l0,0,0,0,92.19,52.18Zm8-106.17-80.06-45.32,84.09-48.41,92.26-53.11,80.13,46.13-58.8,33.56Zm184.52,4.57L215.88,490.11V397.8L346.6,323.2l45.77-26.15Zm0-119.13L358.68,250l-46.53-26.79V131.79l33.69,19.4L392.37,178Zm8-105.28-80.2-46.17,80.2-46.16,80.18,46.15Zm8,105.28V178L455,151.19l33.68-19.4v91.39Z" />
-                                                            </svg>
-                                                        </div>
-                                                        <div class="text-[10px] text-slate-500">Laravel</div>
-                                                    </div>
-                                                    <div class="mt-3 text-[10px] font-medium text-slate-800">Integration ready</div>
-                                                </div>
-                                                <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
-                                                    <div class="flex items-center justify-between">
-                                                        <div class="h-8 w-8 bg-slate-100 rounded-full flex items-center justify-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5 text-slate-900">
-                                                                <path fill="currentColor" d="M12 22.71l-8.2-2.37V3.66l8.2 2.37v16.68zm1.8-16.68l8.2-2.37v16.68l-8.2 2.37V6.03z"/>
-                                                            </svg>
-                                                        </div>
-                                                        <div class="text-[10px] text-slate-500">Symfony</div>
-                                                    </div>
-                                                    <div class="mt-3 text-[10px] font-medium text-slate-800">Bundle available</div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div id="notification-display" class="flex flex-col space-y-3">
-                                                <!-- Notifications will appear here -->
-                                            </div>
-                                        </main>
-
-                                        <footer class="absolute inset-x-0 bottom-0 h-16 bg-white border-t border-slate-200 flex items-center justify-around px-3">
-                                            <div class="flex flex-col items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-indigo-600">
-                                                    <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                                                    <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-                                                </svg>
-                                                <span class="text-[10px] text-slate-800 mt-1">Home</span>
-                                            </div>
-                                            <div class="flex flex-col items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-slate-400">
-                                                    <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd" />
-                                                </svg>
-                                                <span class="text-[10px] text-slate-500 mt-1">Notifications</span>
-                                            </div>
-                                            <div class="flex flex-col items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-slate-400">
-                                                    <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
-                                                </svg>
-                                                <span class="text-[10px] text-slate-500 mt-1">Settings</span>
-                                            </div>
-                                        </footer>
-                                    </div>
+                            </div>
+                        </div>
+                        
+                        <!-- App content placeholder -->
+                        <div class="w-full px-8 pt-10 pb-5">
+                            <div class="flex items-center mb-4 space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-slate-700/60"></div>
+                                <div class="w-1/2 h-3 rounded-full bg-slate-700/60"></div>
+                            </div>
+                            <div class="w-full h-4 mb-2 rounded-full bg-slate-700/40"></div>
+                            <div class="w-5/6 h-4 mb-2 rounded-full bg-slate-700/40"></div>
+                            <div class="w-4/6 h-4 rounded-full bg-slate-700/40"></div>
+                            
+                            <div class="grid grid-cols-2 gap-3 mt-6">
+                                                                <div class="h-20 p-4 border rounded-lg bg-slate-700/30 border-slate-700/50"></div>
+                                <div class="h-20 p-4 border rounded-lg bg-slate-700/30 border-slate-700/50"></div>
+                            </div>
+                            
+                            <div id="notification-container" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <!-- Notifications will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analytics -->
+                <div class="border rounded-lg shadow-lg bg-slate-800/60 backdrop-blur-md border-slate-700/50">
+                    <div class="flex items-center justify-between p-3 border-b border-slate-700/50">
+                        <div class="flex items-center gap-2">
+                            <div class="p-1.5 rounded-md bg-gradient-to-r from-emerald-500 to-teal-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                            </div>
+                            <h2 class="font-medium text-white">Analytics</h2>
+                        </div>
+                        <div class="px-2 py-1 text-xs bg-slate-700/50 rounded-md text-slate-300">Real-time</div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div class="p-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-xs font-medium text-slate-400">Success Rate</span>
+                                    <span class="text-xs font-medium text-emerald-400">98.2%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-slate-700 rounded-full">
+                                    <div class="h-1.5 bg-emerald-500 rounded-full" style="width: 98.2%"></div>
+                                </div>
+                            </div>
+                            <div class="p-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-xs font-medium text-slate-400">User Engagement</span>
+                                    <span class="text-xs font-medium text-blue-400">87.5%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-slate-700 rounded-full">
+                                    <div class="h-1.5 bg-blue-500 rounded-full" style="width: 87.5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 mb-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
+                            <h3 class="mb-2 text-xs font-medium text-slate-400">Notification Distribution</h3>
+                            <div class="relative h-24">
+                                <div class="absolute bottom-0 left-0 w-1/4 bg-gradient-to-t from-green-500 to-green-500/20" style="height: 75%"></div>
+                                <div class="absolute bottom-0 left-1/4 w-1/4 bg-gradient-to-t from-red-500 to-red-500/20" style="height: 35%"></div>
+                                <div class="absolute bottom-0 left-2/4 w-1/4 bg-gradient-to-t from-blue-500 to-blue-500/20" style="height: 60%"></div>
+                                <div class="absolute bottom-0 left-3/4 w-1/4 bg-gradient-to-t from-amber-500 to-amber-500/20" style="height: 45%"></div>
+                                
+                                <div class="absolute bottom-0 left-0 flex justify-around w-full">
+                                    <div class="px-2 py-1 text-xs text-center text-green-400 bg-green-900/20 rounded-t-md">Success</div>
+                                    <div class="px-2 py-1 text-xs text-center text-red-400 bg-red-900/20 rounded-t-md">Error</div>
+                                    <div class="px-2 py-1 text-xs text-center text-blue-400 bg-blue-900/20 rounded-t-md">Info</div>
+                                    <div class="px-2 py-1 text-xs text-center text-amber-400 bg-amber-900/20 rounded-t-md">Warning</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 border rounded-lg bg-slate-800/80 border-slate-700/50">
+                            <h3 class="mb-2 text-xs font-medium text-slate-400">Activity Log</h3>
+                            <div class="space-y-2 h-28 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800/50">
+                                <div class="flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                                    <span>Success notification displayed</span>
+                                    <span class="ml-auto text-slate-400">2s ago</span>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                                    <span>User configuration updated</span>
+                                    <span class="ml-auto text-slate-400">24s ago</span>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                                    <span>Warning notification dismissed</span>
+                                    <span class="ml-auto text-slate-400">1m ago</span>
+                                </div>
+                                <div id="activity-log-container">
+                                    <!-- New log items will be added here -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Footer Status Bar -->
+        <div class="mt-6 text-xs text-center text-slate-500">
+            <div class="flex items-center justify-center gap-6">
+                <div class="flex items-center gap-1">
+                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                    <span>System Online</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                    <span>API Active</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                    <span>Database Connected</span>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span>PHPFlasher Mission Control v2.0 • Last Update: 2025-03-11 06:30:54 • © 2025 @yoeunes</span>
             </div>
         </div>
     </div>
 </section>
 
 <style>
-/* Additional styles for the interactive demo */
-.perspective-1000 {
-    perspective: 1000px;
+/* Animation styles for the Mission Control demo */
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.2; }
 }
 
-.shadow-glow {
-    box-shadow: 0 0 15px 2px rgba(99, 102, 241, 0.3);
+@keyframes pulse-medium {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
 }
 
-.shadow-glow-indigo {
-    box-shadow: 0 0 25px 5px rgba(99, 102, 241, 0.2);
+@keyframes ping-slow {
+    0% { transform: scale(1); opacity: 1; }
+    75%, 100% { transform: scale(2); opacity: 0; }
 }
 
-/* Blinking cursor effect */
-.blinking-cursor::after {
-    content: '|';
-    animation: blink 1s step-end infinite;
+.animate-ping-slow {
+    animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-@keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
+.animate-pulse-slow {
+    animation: pulse-slow 8s ease-in-out infinite;
 }
 
-/* Mobile notification styles */
-.mobile-notification {
-    transform: translateX(120%);
-    animation: slide-in 0.5s forwards, slide-out 0.5s forwards 4.5s;
+.animate-pulse-medium {
+    animation: pulse-medium 6s ease-in-out infinite;
 }
 
-@keyframes slide-in {
-    100% { transform: translateX(0); }
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-color: #10b981;
+    opacity: 0.6;
+    animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-@keyframes slide-out {
-    100% { transform: translateX(120%); }
+/* Type button colors */
+.type-button[data-type="success"].active-type {
+    @apply bg-gradient-to-br from-green-500/20 to-green-600/20 text-green-400 border-green-500/30;
 }
 
-/* Button attention animation */
-@keyframes pulse-attention {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(79, 209, 137, 0.5); }
-    50% { box-shadow: 0 0 0 8px rgba(79, 209, 137, 0); }
+.type-button[data-type="error"].active-type {
+    @apply bg-gradient-to-br from-red-500/20 to-red-600/20 text-red-400 border-red-500/30;
 }
 
-.pulse-attention {
-    animation: pulse-attention 2s infinite;
+.type-button[data-type="info"].active-type {
+    @apply bg-gradient-to-br from-blue-500/20 to-blue-600/20 text-blue-400 border-blue-500/30;
+}
+
+.type-button[data-type="warning"].active-type {
+    @apply bg-gradient-to-br from-amber-500/20 to-amber-600/20 text-amber-400 border-amber-500/30;
+}
+
+/* Scrollbar styles */
+.scrollbar-thin {
+    scrollbar-width: thin;
+}
+
+.scrollbar-thumb-slate-700 {
+    scrollbar-color: #334155 #1e293b;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Notification styles */
+.notification {
+    position: absolute;
+    max-width: 350px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: notification-fade-in 0.3s ease forwards, notification-fade-out 0.3s ease 4.7s forwards;
+}
+
+@keyframes notification-fade-in {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes notification-fade-out {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.notification-success {
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.notification-error {
+    background: linear-gradient(to right, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.notification-info {
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.notification-warning {
+    background: linear-gradient(to right, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2));
+    border: 1px solid rgba(245, 158, 11, 0.4);
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize with success method highlighted
-    changeMethod('success');
-    
-    // Update the current time
+    // Update current time
     function updateCurrentTime() {
         const now = new Date();
-        const formattedTime = now.toISOString().substring(0, 10) + ' ' + 
-                             String(now.getHours()).padStart(2, '0') + ':' + 
-                             String(now.getMinutes()).padStart(2, '0') + ':' + 
-                             String(now.getSeconds()).padStart(2, '0');
-        document.getElementById('demo-current-time').textContent = formattedTime;
+        const year = now.getUTCFullYear();
+        const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(now.getUTCDate()).padStart(2, '0');
+        const hours = String(now.getUTCHours()).padStart(2, '0');
+        const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+        
+        const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        document.getElementById('mc-current-time').textContent = formattedTime;
     }
     
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
     
-    // Create a simulated typing effect on page load
-    const codeLine = document.getElementById('active-line');
-    if (codeLine) {
-        const originalText = codeLine.innerHTML;
-        codeLine.innerHTML = '';
-        
-        let i = 0;
-        function typeWriter() {
-            if (i < originalText.length) {
-                codeLine.innerHTML += originalText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 30);
-            } else {
-                // Add blinking cursor at the end
-                setTimeout(() => {
-                    flasher.success('Your profile has been updated!', 'Success');
-                    addNotificationToPhone('success', 'Your profile has been updated!', 'Success');
-                }, 500);
+    // Initialize particles.js
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 40, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                opacity: { value: 0.1, random: true },
+                size: { value: 1.5, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.1,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 0.3,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out"
+                }
             }
-        }
-        
-        setTimeout(typeWriter, 1000);
+        });
     }
+    
+    // Show the initial notification after a short delay
+    setTimeout(() => {
+        launchNotification();
+    }, 1000);
 });
 
-// Change the highlighted method in the code
-function changeMethod(method) {
-    const methods = ['success', 'error', 'info', 'warning'];
-    const colors = {
-        'success': 'text-green-400',
-        'error': 'text-red-400',
-        'info': 'text-blue-400',
-        'warning': 'text-amber-400'
-    };
-    
-    // Update all method elements
-    document.querySelectorAll('.demo-method').forEach(el => {
-        // Remove all color classes
-        methods.forEach(m => el.classList.remove(colors[m]));
+// Update builder type
+function updateBuilderType(type) {
+    // Remove active class from all type buttons
+    document.querySelectorAll('.type-button').forEach(btn => {
+        btn.classList.remove('active-type', 'bg-gradient-to-br', 'from-green-500/20', 'to-green-600/20', 
+            'from-red-500/20', 'to-red-600/20', 'from-blue-500/20', 'to-blue-600/20', 
+            'from-amber-500/20', 'to-amber-600/20', 'text-green-400', 'text-red-400', 
+            'text-blue-400', 'text-amber-400', 'border-green-500/30', 'border-red-500/30', 
+            'border-blue-500/30', 'border-amber-500/30');
         
-        // Add the new color class
-        el.classList.add(colors[method]);
-        
-        // Change the text
-        el.textContent = method;
+        btn.classList.add('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
     });
     
-    // Add notification to the phone mockup
-    switch(method) {
-        case 'success':
-            addNotificationToPhone('success', 'Your profile has been updated!', 'Success');
-            break;
-        case 'error':
-            addNotificationToPhone('error', 'Oops! Something went wrong.', 'Error');
-            break;
-        case 'info':
-            addNotificationToPhone('info', 'Remember to verify your email.', 'Info');
-            break;
-        case 'warning':
-            addNotificationToPhone('warning', 'Your subscription will expire soon.', 'Warning');
-            break;
-    }
+    // Add active class to the selected type button
+    const button = document.querySelector(`.type-button[data-type="${type}"]`);
+    button.classList.remove('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
+    button.classList.add('active-type');
+    
+    // Update code preview
+    updateCodePreview();
+    
+    // Add to activity log
+    addActivityLog(`Type changed to: ${type}`);
 }
 
-// Add a notification to the phone mockup
-function addNotificationToPhone(type, message, title) {
-    const notificationDisplay = document.getElementById('notification-display');
-    const colors = {
-        'success': 'bg-green-500 text-white',
-        'error': 'bg-red-500 text-white',
-        'info': 'bg-blue-500 text-white',
-        'warning': 'bg-amber-500 text-white'
-    };
+// Update builder position
+function updateBuilderPosition(position) {
+    // Remove active class from all position buttons
+    document.querySelectorAll('[data-position]').forEach(btn => {
+        btn.classList.remove('active-position', 'bg-gradient-to-br', 'from-blue-500/20', 
+            'to-indigo-500/20', 'text-indigo-400', 'border-indigo-500/30');
+        
+        btn.classList.add('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
+    });
     
-    const icons = {
-        'success': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" /></svg>',
-        'error': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" /></svg>',
-        'info': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" /></svg>',
-        'warning': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" /></svg>'
-    };
+    // Add active class to the selected position button
+    const button = document.querySelector(`[data-position="${position}"]`);
+    button.classList.remove('bg-slate-800/80', 'text-slate-400', 'border-slate-700/50');
+    button.classList.add('active-position', 'bg-gradient-to-br', 'from-blue-500/20', 
+        'to-indigo-500/20', 'text-indigo-400', 'border-indigo-500/30');
     
+    // Update code preview
+    updateCodePreview();
+    
+    // Add to activity log
+    addActivityLog(`Position changed to: ${position}`);
+}
+
+// Update code preview
+function updateCodePreview() {
+    // Get current values
+    const typeElement = document.querySelector('.type-button.active-type');
+    const type = typeElement ? typeElement.dataset.type : 'success';
+    
+    const positionElement = document.querySelector('.active-position');
+    const position = positionElement ? positionElement.dataset.position : 'center';
+    
+    const message = document.getElementById('message-input').value;
+    const title = document.getElementById('title-input').value;
+    const duration = document.getElementById('duration-input').value;
+    
+    // Generate code
+    let code = `<span class="text-slate-500">// Display a ${type} notification</span>\n`;
+    code += `<span class="text-blue-400">flash</span>()-><span class="text-green-400">${type}</span>(<span class="text-amber-300">'${message}'</span>`;
+    
+    if (title) {
+        code += `, <span class="text-amber-300">'${title}'</span>`;
+    }
+    
+    code += `)\n    -><span class="text-purple-400">options</span>([\n        <span class="text-amber-300">'position'</span> => <span class="text-amber-300">'${position}'</span>,\n        <span class="text-amber-300">'duration'</span> => <span class="text-blue-300">${duration}</span>,\n        <span class="text-amber-300">'theme'</span> => <span class="text-amber-300">'dark'</span>,\n        <span class="text-amber-300">'animation'</span> => <span class="text-amber-300">'slide'</span>\n    ]);`;
+    
+    document.getElementById('codeDisplay').innerHTML = code;
+}
+
+// Launch notification
+function launchNotification() {
+    // Get current values
+    const typeElement = document.querySelector('.type-button.active-type');
+    const type = typeElement ? typeElement.dataset.type : 'success';
+    
+    const positionElement = document.querySelector('.active-position');
+    const position = positionElement ? positionElement.dataset.position : 'center';
+    
+    const message = document.getElementById('message-input').value;
+    const title = document.getElementById('title-input').value;
+    
+    // Create notification element
+    const notificationContainer = document.getElementById('notification-container');
     const notification = document.createElement('div');
-    notification.className = `mobile-notification bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden`;
-    notification.innerHTML = `
-        <div class="flex">
-            <div class="w-2 ${colors[type].split(' ')[0]}"></div>
-            <div class="flex-1 p-2">
-                <div class="flex items-start">
-                    <div class="text-xs ${colors[type]}">${icons[type]}</div>
-                    <div class="ml-2 flex-1">
-                        <div class="text-[11px] font-medium text-slate-800">${title}</div>
-                        <div class="text-[10px] text-slate-600">${message}</div>
-                    </div>
-                    <div class="text-[8px] text-slate-400">now</div>
-                </div>
+    notification.className = `notification notification-${type}`;
+    
+    // Position the notification
+    notification.style.transform = 'translateY(20px)';
+    if (position === 'center') {
+        notification.style.top = '50%';
+        notification.style.left = '50%';
+        notification.style.transform = 'translate(-50%, -50%) translateY(20px)';
+    } else if (position.includes('top')) {
+        notification.style.top = '10%';
+    } else if (position.includes('bottom')) {
+        notification.style.bottom = '10%';
+    }
+    
+    if (position.includes('left')) {
+        notification.style.left = '10%';
+    } else if (position.includes('right')) {
+        notification.style.right = '10%';
+    } else if (!position.includes('center')) {
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%) translateY(20px)';
+    }
+    
+    // Create notification content
+    const contentHTML = `
+        <div class="flex items-start space-x-3">
+            <div class="mt-0.5">
+                ${getNotificationIcon(type)}
+            </div>
+            <div>
+                ${title ? `<div class="mb-1 text-sm font-medium ${getNotificationTextColor(type)}">${title}</div>` : ''}
+                <div class="text-xs text-slate-200">${message}</div>
             </div>
         </div>
     `;
     
-    // Add to display
-    notificationDisplay.prepend(notification);
+    notification.innerHTML = contentHTML;
+    notificationContainer.appendChild(notification);
     
-    // Remove old notifications if there are more than 3
-    if (notificationDisplay.children.length > 3) {
-        notificationDisplay.removeChild(notificationDisplay.lastChild);
+    // Add to activity log
+    addActivityLog(`${type.charAt(0).toUpperCase() + type.slice(1)} notification displayed`);
+    
+    // Show the notification in the actual page too
+    if (typeof flasher !== 'undefined') {
+        flasher[type](message, title);
     }
     
-    // Remove notification after animation completes
+    // Remove the notification after animation completes
     setTimeout(() => {
-        notification.style.opacity = '0.5';
+        notification.remove();
     }, 5000);
 }
+
+// Get notification icon based on type
+function getNotificationIcon(type) {
+    const icons = {
+        success: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>`,
+        error: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>`,
+        info: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+        </svg>`,
+        warning: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>`
+    };
+    
+    return icons[type] || icons.info;
+}
+
+// Get notification text color based on type
+function getNotificationTextColor(type) {
+    const colors = {
+        success: 'text-green-400',
+        error: 'text-red-400',
+        info: 'text-blue-400',
+        warning: 'text-amber-400'
+    };
+    
+    return colors[type] || colors.info;
+}
+
+// Add item to activity log
+function addActivityLog(message) {
+    const logContainer = document.getElementById('activity-log-container');
+    const logItem = document.createElement('div');
+    
+    logItem.className = 'flex items-center gap-2 p-2 text-xs border rounded-md bg-slate-700/30 border-slate-600/50 text-slate-300';
+    logItem.innerHTML = `
+        <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+        <span>${message}</span>
+        <span class="ml-auto text-slate-400">just now</span>
+    `;
+    
+    logContainer.insertBefore(logItem, logContainer.firstChild);
+    
+    // Update timestamps of existing log items
+    const existingLogs = document.querySelectorAll('#activity-log-container > div:not(:first-child) .text-slate-400');
+    existingLogs.forEach(log => {
+        if (log.textContent === 'just now') {
+            log.textContent = '5s ago';
+        } else if (log.textContent === '5s ago') {
+            log.textContent = '10s ago';
+        } else if (log.textContent === '10s ago') {
+            log.textContent = '15s ago';
+        }
+    });
+    
+    // Remove old logs if there are more than 5
+    const logs = document.querySelectorAll('#activity-log-container > div');
+    if (logs.length > 5) {
+        logContainer.removeChild(logs[logs.length - 1]);
+    }
+}
+
+// Copy code to clipboard
+function copyToClipboard(selector) {
+    const element = document.querySelector(selector);
+    const text = element.innerText;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        // Show success message
+        addActivityLog('Code copied to clipboard');
+        
+        // Flash the copy button
+        const copyButton = document.querySelector('button[onclick="copyToClipboard(\'#codeDisplay\')"]');
+        copyButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Copied!
+        `;
+        
+        setTimeout(() => {
+            copyButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy Code
+            `;
+        }, 2000);
+    });
+}
+
+// When tab buttons are clicked
+document.getElementById('basicTab')?.addEventListener('click', function() {
+    // Add tab switching logic here
+    addActivityLog('Switched to Basic tab');
+});
+
+document.getElementById('advancedTab')?.addEventListener('click', function() {
+    // Add tab switching logic here
+    addActivityLog('Advanced features coming soon');
+});
+
+document.getElementById('presetTab')?.addEventListener('click', function() {
+    // Add tab switching logic here
+    addActivityLog('Preset templates coming soon');
+});
 </script>
+
 
 <!-- Quick Start Section (Moved before Features) -->
 <section id="quick-start" class="container mx-auto px-4 mb-16">
