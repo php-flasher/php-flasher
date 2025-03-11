@@ -217,8 +217,7 @@
 
                     <!-- Laravel Code Panel -->
                     <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-php code-block focus-highlight"><code>
-// app/Http/Controllers/ProductController.php
+                        <pre class="language-php code-block focus-highlight"><code>// app/Http/Controllers/ProductController.php
 
 namespace App\Http\Controllers;
 
@@ -243,8 +242,7 @@ class ProductController extends Controller
 
                     <!-- Symfony Code Panel -->
                     <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-php code-block focus-highlight"><code>
-// src/Controller/ProductController.php
+                        <pre class="language-php code-block focus-highlight"><code>// src/Controller/ProductController.php
 
 namespace App\Controller;
 
@@ -285,8 +283,7 @@ class ProductController extends AbstractController
 
                     <!-- JavaScript Code Panel -->
                     <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-javascript code-block focus-highlight"><code>
-// product-service.js
+                        <pre class="language-javascript code-block focus-highlight"><code>// product-service.js
 
 import flasher from '@flasher/flasher';
 
@@ -322,7 +319,7 @@ async function createProduct(productData) {
 
             <!-- Additional interactive elements for demos -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="text-sm text-gray-500">Current time: <span id="current-time" class="font-mono">2025-03-11 22:50:20</span></div>
+                <div class="text-sm text-gray-500"></div>
                 <div class="flex space-x-4">
                     <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fas fa-book mr-1.5 text-xs"></i>
@@ -334,18 +331,6 @@ async function createProduct(productData) {
                     </a>
                 </div>
             </div>
-        </div>
-
-        <!-- Code preview actions -->
-        <div class="flex justify-center mt-4 space-x-4">
-            <a href="https://phpflasher.com/docs" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
-                <i class="fas fa-book text-lg"></i>
-                <span>Documentation</span>
-            </a>
-            <a href="https://github.com/php-flasher/php-flasher" class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
-                <i class="fab fa-github text-lg"></i>
-                <span>GitHub</span>
-            </a>
         </div>
     </div>
 </section>
@@ -419,6 +404,48 @@ const state = {
     escapeHtml: true
 };
 
+// Message templates based on notification type
+const messageTemplates = {
+    success: {
+        message: 'Your product has been created successfully!',
+        title: 'Success'
+    },
+    error: {
+        message: 'An error occurred while saving the product.',
+        title: 'Error'
+    },
+    info: {
+        message: 'Your product is being processed.',
+        title: 'Information'
+    },
+    warning: {
+        message: 'Please review your product before submitting.',
+        title: 'Warning'
+    }
+};
+
+// Code templates for each framework and notification type
+const codeTemplates = {
+    laravel: {
+        success: `flash()->success('Your product has been created successfully!');`,
+        error: `flash()->error('An error occurred while saving the product.');`,
+        info: `flash()->info('Your product is being processed.');`,
+        warning: `flash()->warning('Please review your product before submitting.');`
+    },
+    symfony: {
+        success: `$this->flash()->success('Your product has been created successfully!');`,
+        error: `$this->flash()->error('An error occurred while saving the product.');`,
+        info: `$this->flash()->info('Your product is being processed.');`,
+        warning: `$this->flash()->warning('Please review your product before submitting.');`
+    },
+    js: {
+        success: `flasher.success('Your product has been created successfully!');`,
+        error: `flasher.error('An error occurred while saving the product.');`,
+        info: `flasher.info('Your product is being processed.');`,
+        warning: `flasher.warning('Please review your product before submitting.');`
+    }
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Prism.js highlighting and add highlight to flash lines
     initPrismHighlighting();
@@ -452,8 +479,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
             }
 
-            // Update state
+            // Update state with type-specific defaults
             state.type = type;
+
+            // Update message and title inputs with type-specific templates
+            if (document.getElementById('message-input').value === state.message) {
+                document.getElementById('message-input').value = messageTemplates[type].message;
+                state.message = messageTemplates[type].message;
+            }
+
+            if (!state.title && document.getElementById('title-input').value === '') {
+                document.getElementById('title-input').placeholder = messageTemplates[type].title;
+            }
 
             // Update code display
             updateCodeDisplay();
@@ -522,6 +559,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize with Laravel tab selected
     showCodeTab('laravel');
+
+    // Initialize with appropriate notification type content
+    updateAllCodeExamples();
 });
 
 // Initialize Prism.js highlighting and add highlight to flash lines
@@ -574,6 +614,139 @@ function updateStatus(message) {
     }, 2000);
 }
 
+// Update all code examples to be in sync
+function updateAllCodeExamples() {
+    // Loop through all three tabs and update them
+    ['laravel', 'symfony', 'js'].forEach(tab => {
+        updateCodeForTab(tab);
+    });
+}
+
+// Update code for a specific tab
+function updateCodeForTab(tab) {
+    const codePanel = document.querySelector(`#${tab}-code-panel pre code`);
+    if (!codePanel) return;
+
+    // Find the flash line in the code
+    const codeLines = codePanel.innerHTML.split('\n');
+    let flashLineIndex = -1;
+
+    // Find the line with the flash code
+    codeLines.forEach((line, index) => {
+        if ((tab === 'laravel' && line.includes('flash()->')) ||
+            (tab === 'symfony' && line.includes('flash()->')) ||
+            (tab === 'js' && line.includes('flasher.'))) {
+            flashLineIndex = index;
+        }
+    });
+
+    // Replace the flash line with the appropriate code if found
+    if (flashLineIndex !== -1) {
+        // Create the code based on settings
+        let flashCode = createFlasherCode(tab);
+
+        // Make sure we're only replacing the token-line content
+        const tokenLineStart = '<span class="token-line highlight-line">';
+        const tokenLineEnd = '</span>';
+
+        let prefix = '';
+
+        // Extract prefix based on indentation in the original line
+        const originalLine = codeLines[flashLineIndex];
+        const indentMatch = originalLine.match(/^(\s+)/);
+        if (indentMatch) {
+            prefix = indentMatch[0];
+        }
+
+        // Replace the line
+        codeLines[flashLineIndex] = `${tokenLineStart}${prefix}${flashCode}${tokenLineEnd}`;
+
+        // Update the code panel with the modified lines
+        codePanel.innerHTML = codeLines.join('\n');
+
+        // Re-highlight with Prism if available
+        if (typeof Prism !== 'undefined') {
+            Prism.highlightElement(codePanel);
+
+            // Re-apply line highlighting
+            setTimeout(() => {
+                const lines = codePanel.innerHTML.split('\n');
+                const highlightedLines = lines.map(line => {
+                    if ((tab === 'laravel' && line.includes('flash()->')) ||
+                        (tab === 'symfony' && line.includes('flash()->')) ||
+                        (tab === 'js' && line.includes('flasher.'))) {
+                        return `<span class="token-line highlight-line">${line}</span>`;
+                    }
+                    return `<span class="token-line">${line}</span>`;
+                });
+                codePanel.innerHTML = highlightedLines.join('\n');
+                Prism.highlightElement(codePanel);
+            }, 50);
+        }
+    }
+}
+
+function createFlasherCode(framework) {
+    // Base template depends on the framework and notification type
+    let prefix = '';
+
+    switch(framework) {
+        case 'laravel':
+            prefix = 'flash()->';
+            break;
+        case 'symfony':
+            prefix = 'flash()->';
+            break;
+        case 'js':
+            prefix = 'flasher.';
+            break;
+    }
+
+    // Base code with notification type
+    let code = `${prefix}${state.type}('${state.message}'`;
+
+    // Add title if provided
+    if (state.title) {
+        code += `, '${state.title}'`;
+    }
+
+    // Add options if any are set
+    const options = {};
+    if (state.position) options.position = state.position;
+    if (state.timeout) options.timeout = state.timeout;
+    if (state.theme) options.theme = state.theme;
+    if (state.direction) options.direction = state.direction;
+    if (state.rtl) options.rtl = true;
+    if (!state.escapeHtml) options.escapeHtml = false;
+
+    // Add options to code
+    if (Object.keys(options).length > 0) {
+        if (framework === 'js') {
+            // JavaScript objects use camelCase
+            code += ', ' + JSON.stringify(options)
+                .replace(/"([^"]+)":/g, '$1:'); // Convert "key": to key:
+        } else {
+            // PHP uses array syntax
+            const phpOptions = Object.entries(options)
+                .map(([key, value]) => {
+                    if (typeof value === 'string') {
+                        return `'${key}' => '${value}'`;
+                    } else {
+                        return `'${key}' => ${value}`;
+                    }
+                })
+                .join(', ');
+
+            code += `, ['${phpOptions}']`;
+        }
+    }
+
+    // Close the function call
+    code += ');';
+
+    return code;
+}
+
 function showCodeTab(tab) {
     // Hide all panels
     document.querySelectorAll('#laravel-code-panel, #symfony-code-panel, #js-code-panel').forEach(panel => {
@@ -593,98 +766,32 @@ function showCodeTab(tab) {
     document.querySelector(`[data-tab="${tab}"]`).classList.remove('text-gray-600');
     document.querySelector(`[data-tab="${tab}"]`).classList.add('text-blue-600', 'border-b-2', 'border-blue-500');
 
-    // Re-apply Prism highlighting and focus effects
-    setTimeout(() => {
-        updateCodeDisplay();
-    }, 100);
-}
-
-// Show notification function
-function showNotification() {
-    alert('showNotification function called');
+    // Ensure the code is updated for the current tab
+    updateCodeForTab(tab);
 }
 
 // Update code display function with Prism.js integration
 function updateCodeDisplay() {
-    // Get currently active tab
-    const activeTab = document.querySelector('.code-tab-btn.text-blue-600').getAttribute('data-tab');
-
-    // Create the code based on settings
-    let flashCode;
-    switch(activeTab) {
-        case 'laravel':
-            flashCode = `flash()->${state.type}('${state.message}'${state.title ? ", '" + state.title + "'" : ''});`;
-            break;
-        case 'symfony':
-            flashCode = `$this->flash()->${state.type}('${state.message}'${state.title ? ", '" + state.title + "'" : ''});`;
-            break;
-        case 'js':
-            flashCode = `flasher.${state.type}('${state.message}'${state.title ? ", '" + state.title + "'" : ''});`;
-            break;
-    }
-
-    // Get the code panels
-    const codePanel = document.querySelector(`#${activeTab}-code-panel pre code`);
-    if (!codePanel) return;
-
-    // Find the flash line in the code
-    const codeLines = codePanel.innerHTML.split('\n');
-    let flashLineIndex = -1;
-
-    // Find the line with the flash code
-    codeLines.forEach((line, index) => {
-        if ((activeTab === 'laravel' && line.includes('flash()->')) ||
-            (activeTab === 'symfony' && line.includes('$this->flash()->')) ||
-            (activeTab === 'js' && line.includes('flasher.'))) {
-            flashLineIndex = index;
-        }
-    });
-
-    // Replace the flash line with the new code if found
-    if (flashLineIndex !== -1) {
-        // Make sure we're only replacing the token-line content
-        const tokenLineStart = '<span class="token-line highlight-line">';
-        const tokenLineEnd = '</span>';
-
-        let prefix = '';
-        let suffix = '';
-
-        // Extract prefix based on indentation in the original line
-        const originalLine = codeLines[flashLineIndex];
-        const indentMatch = originalLine.match(/^(\s+)/);
-        if (indentMatch) {
-            prefix = indentMatch[0];
-        }
-
-        // Replace the line
-        codeLines[flashLineIndex] = `${tokenLineStart}${prefix}${flashCode}${suffix}${tokenLineEnd}`;
-
-        // Update the code panel with the modified lines
-        codePanel.innerHTML = codeLines.join('\n');
-
-        // Re-highlight with Prism if available
-        if (typeof Prism !== 'undefined') {
-            Prism.highlightElement(codePanel);
-
-            // Re-apply line highlighting
-            setTimeout(() => {
-                initPrismHighlighting();
-            }, 50);
-        }
-    }
+    // Update code in all tabs to ensure sync
+    updateAllCodeExamples();
 }
 
-// Get current time in format YYYY-MM-DD HH:MM:SS
-function getCurrentTime() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+// Show notification function (simplified version that shows an alert)
+function showNotification() {
+    const options = {
+        type: state.type,
+        message: state.message,
+        title: state.title
+    };
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    if (state.position) options.position = state.position;
+    if (state.timeout) options.timeout = state.timeout;
+    if (state.direction) options.direction = state.direction;
+    if (state.rtl) options.rtl = true;
+    if (!state.escapeHtml) options.escapeHtml = false;
+
+
+    flasher.use(state.theme).flash(options);
 }
 
 // Define keyframes at the document level once
@@ -705,4 +812,3 @@ if (!document.getElementById('flasher-keyframes')) {
     document.head.appendChild(styleSheet);
 }
 </script>
-
