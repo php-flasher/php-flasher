@@ -197,6 +197,7 @@
                 <div class="w-full lg:w-3/5">
                     <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
+                        <div class="text-xs text-gray-500">User: <span class="font-medium">yoeunes</span></div>
                     </div>
 
                     <!-- Code tabs with FontAwesome icons -->
@@ -319,7 +320,7 @@ async function createProduct(productData) {
 
             <!-- Additional interactive elements for demos -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="text-sm text-gray-500">Current date: <span id="current-date">2025-03-11 23:46:24</span></div>
+                <div class="text-sm text-gray-500">Current date: <span id="current-date">2025-03-11 23:52:16</span></div>
                 <div class="flex space-x-4">
                     <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fas fa-book mr-1.5 text-xs"></i>
@@ -336,7 +337,7 @@ async function createProduct(productData) {
 </section>
 
 <style>
-/* Custom styles for highlighting and blurring code */
+/* Custom styles for highlighting code */
 pre {
     position: relative;
 }
@@ -344,20 +345,7 @@ pre {
 .code-block {
     display: block;
     position: relative;
-    transition: all 0.3s ease;
     font-size: 0.875rem;
-}
-
-/* Blur effect for all code except flash-code-block */
-.code-block > *:not(.flash-code-block) {
-    filter: blur(0.6px);
-    opacity: 0.65;
-    transition: all 0.3s ease;
-}
-
-pre:hover .code-block > * {
-    filter: blur(0) !important;
-    opacity: 1 !important;
 }
 
 /* Highlight for the flash method lines */
@@ -367,11 +355,8 @@ pre:hover .code-block > * {
     background-color: rgba(16, 185, 129, 0.1);
     border-radius: 4px;
     font-weight: 600;
-    z-index: 5;
     box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
     padding: 2px 0;
-    filter: blur(0) !important;
-    opacity: 1 !important;
 }
 
 /* Animation keyframes */
@@ -434,7 +419,7 @@ const messageTemplates = {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Update current date
-    document.getElementById('current-date').textContent = "2025-03-11 23:46:24";
+    document.getElementById('current-date').textContent = "2025-03-11 23:52:16";
 
     // Initialize type buttons
     document.querySelectorAll('.type-button').forEach(btn => {
@@ -628,7 +613,7 @@ function updateCodeDisplay() {
     });
 
     // Update current date display
-    document.getElementById('current-date').textContent = "2025-03-11 23:48:50";
+    document.getElementById('current-date').textContent = "2025-03-11 23:54:39";
 }
 
 function createCodeForFramework(framework) {
@@ -686,7 +671,7 @@ function createCodeForFramework(framework) {
             code += `, '${state.title}'`;
         }
 
-        code += `);`;
+        code += ');';
         return code;
     }
     // For JavaScript or when no options are present, use the simple format
@@ -703,11 +688,11 @@ function createCodeForFramework(framework) {
             }
 
             // Add options object
-            code += ', ' + JSON.stringify(options, null, 4)
+            code += ', ' + JSON.stringify(options, null, 2)
                 .replace(/"([^"]+)":/g, '$1:') // Convert "key": to key:
                 .replace(/\n/g, '\n    '); // Proper indentation
 
-            code += `);`;
+            code += ');';
         } else {
             code = `${prefix}.${state.type}('${state.message}'`;
 
@@ -716,7 +701,7 @@ function createCodeForFramework(framework) {
                 code += `, '${state.title}'`;
             }
 
-            code += `);`;
+            code += ');';
         }
 
         return code;
@@ -729,12 +714,12 @@ function createCodeForFramework(framework) {
             code += `, '${state.title}'`;
         }
 
-        code += `);`;
+        code += ');';
         return code;
     }
 }
 
-// Show notification function (simplified alert version)
+// Show notification function
 function showNotification() {
     const options = {
         type: state.type,
@@ -749,16 +734,33 @@ function showNotification() {
     if (state.rtl) options.rtl = true;
     if (!state.escapeHtml) options.escapeHtml = false;
 
-    // Show notification details as an alert (in real use, would use the flasher library)
-    alert('Notification would display with these settings:\n\n' +
-          `Type: ${state.type}\n` +
-          `Message: ${state.message}\n` +
-          (state.title ? `Title: ${state.title}\n` : '') +
-          '\nOptions:\n' +
-          Object.entries(options)
-            .filter(([key]) => !['type', 'message', 'title'].includes(key))
-            .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
-            .join('\n')
-    );
+    try {
+        // If the flasher library is available, use it
+        if (typeof flasher !== 'undefined') {
+            if (state.theme) {
+                flasher.use(state.theme).flash(options);
+            } else {
+                flasher[state.type](state.message, state.title || null, options);
+            }
+
+            // Update status
+            updateStatus('Notification shown successfully!');
+        } else {
+            // If not available, show alert as fallback
+            alert('Notification would show with these settings:\n\n' +
+                  `Type: ${state.type}\n` +
+                  `Message: ${state.message}\n` +
+                  (state.title ? `Title: ${state.title}\n` : '') +
+                  '\nOptions:\n' +
+                  Object.entries(options)
+                    .filter(([key]) => !['type', 'message', 'title'].includes(key))
+                    .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+                    .join('\n')
+            );
+        }
+    } catch (e) {
+        console.error('Error showing notification:', e);
+        alert('Failed to show notification: ' + e.message);
+    }
 }
 </script>
