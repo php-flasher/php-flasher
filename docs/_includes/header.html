@@ -3,8 +3,16 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo Area -->
             <div class="flex items-center space-x-4">
-                <a href="/" class="flex items-center space-x-3">
-                    <span class="text-xl font-semibold text-indigo-900 hidden sm:block">PHP<span class="text-indigo-500">Flasher</span></span>
+                <a href="/" class="flex items-center space-x-3 group">
+                    <div class="relative">
+                        <span class="text-xl font-semibold italic text-indigo-900 transform -rotate-1 inline-block group-hover:rotate-0 transition-transform duration-300">PHP<span class="text-indigo-500">Flasher</span>
+                            <div class="absolute -right-2 -bottom-1 w-4 h-4 rounded-full bg-indigo-500 flex items-center justify-center animate-pulse">
+                                <div class="text-white text-[10px]">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
                 </a>
 
                 <!-- Version Selector -->
@@ -16,18 +24,6 @@
                     {% endfor %}
                 </div>
             </div>
-
-            <!-- Search (placeholder for future implementation) -->
-            <!--
-            <div class="hidden md:block flex-1 max-w-md mx-4">
-                <div class="relative">
-                    <input type="search" placeholder="Search documentation..."
-                           class="w-full pl-10 pr-4 py-2 rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm"
-                           disabled>
-                    <i class="fa-light fa-magnifying-glass absolute left-3 top-2.5 text-slate-400"></i>
-                </div>
-            </div>
-            -->
 
             <!-- Mobile Menu Button -->
             <div class="lg:hidden">
@@ -43,11 +39,14 @@
 
             <!-- Desktop Navigation Links -->
             <nav class="hidden lg:flex items-center space-x-4">
-                <a href="https://github.com/php-flasher/php-flasher" class="text-slate-600 hover:text-indigo-600 p-2 flex items-center gap-1.5">
+                <a href="https://github.com/php-flasher/php-flasher" class="text-slate-600 hover:text-indigo-600 p-2 flex items-center gap-1.5 transition-colors">
                     <i class="fa-brands fa-github"></i> <span>GitHub</span>
                 </a>
-                <a href="/" class="text-slate-600 hover:text-indigo-600 p-2 flex items-center gap-1.5">
+                <a href="/docs/" class="text-slate-600 hover:text-indigo-600 p-2 flex items-center gap-1.5 transition-colors">
                     <i class="fa-solid fa-book"></i> <span>Documentation</span>
+                </a>
+                <a href="https://www.linkedin.com/in/younes--ennaji/" class="text-slate-600 hover:text-indigo-600 p-2 flex items-center gap-1.5 transition-colors">
+                    <i class="fa-brands fa-linkedin"></i> <span>Author</span>
                 </a>
             </nav>
         </div>

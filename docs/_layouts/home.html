@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        {% include head.html %}
+    </head>
+    <body class="min-h-screen bg-slate-50 text-slate-800 font-sans leading-relaxed" data-controller="anchor clipboard navigation tryit {{ page.data-controller }}">
+        {% include size-helper.html %}
+        {% include banner.html %}
+        {% include header.html %}
+
+        <div class="container max-w-7xl mx-auto px-4 lg:px-6 py-4">
+            <!-- Home page content doesn't need sidebar -->
+            {{ content }}
+        </div>
+
+        {% include footer.html %}
+        {% include scripts.html %}
+    </body>
+</html>

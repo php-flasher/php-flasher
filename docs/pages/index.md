@@ -2,6 +2,7 @@
 permalink: /
 description: PHPFlasher is a powerful PHP notification library that makes it simple to add beautiful flash messages to your Laravel or Symfony applications. Perfect for form submissions, API responses, and user interactions.
 data-controller: flasher
+layout: home
 ---
 
 <!-- Hero Section -->
@@ -15,12 +16,13 @@ data-controller: flasher
     <div class="text-center">
       <div class="flex justify-center mb-4 animate-fade-in">
         <div class="relative">
-          <img id="logo" src="/static/images/php-flasher-logo.svg" class="h-24 md:h-28" alt="PHPFlasher">
-          <div class="absolute -right-3 -bottom-2 w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center animate-pulse">
-            <div class="text-white text-xs">
-              <i class="fa-solid fa-bolt"></i>
+          <span class="text-4xl md:text-5xl font-semibold text-indigo-900 italic transform -rotate-2 inline-block">PHP<span class="text-indigo-500">Flasher</span>
+            <div class="absolute -right-3 -bottom-1 w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center animate-pulse">
+              <div class="text-white text-xs">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
             </div>
-          </div>
+          </span>
         </div>
       </div>
       
@@ -77,14 +79,30 @@ data-controller: flasher
   </div>
 
   <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 max-w-4xl mx-auto">
-    <div class="flex flex-wrap bg-slate-50 border-b border-slate-100 p-1">
+    <div class="flex flex-wrap bg-slate-50 border-b border-slate-100 p-1 justify-between items-center">
       <div class="px-3 py-2 bg-white rounded-md shadow-sm mx-1 my-1 text-sm">index.php</div>
+      <div class="flex flex-wrap gap-2 px-2">
+        <button onclick="flasher.success('Your profile has been updated!', 'Success')" 
+                class="px-3 py-1 bg-white hover:bg-gray-50 text-sm text-green-700 rounded-full border border-green-200 transition-colors flex items-center">
+          <i class="fa-solid fa-circle-check mr-1.5 text-green-500"></i> Success
+        </button>
+        <button onclick="flasher.error('Oops! Something went wrong.', 'Error')"
+                class="px-3 py-1 bg-white hover:bg-gray-50 text-sm text-red-700 rounded-full border border-red-200 transition-colors flex items-center">
+          <i class="fa-solid fa-circle-xmark mr-1.5 text-red-500"></i> Error
+        </button>
+        <button onclick="flasher.info('Remember to verify your email.')"
+                class="px-3 py-1 bg-white hover:bg-gray-50 text-sm text-blue-700 rounded-full border border-blue-200 transition-colors flex items-center">
+          <i class="fa-solid fa-circle-info mr-1.5 text-blue-500"></i> Info
+        </button>
+        <button onclick="flasher.warning('Your subscription will expire soon.')"
+                class="px-3 py-1 bg-white hover:bg-gray-50 text-sm text-amber-700 rounded-full border border-amber-200 transition-colors flex items-center">
+          <i class="fa-solid fa-triangle-exclamation mr-1.5 text-amber-500"></i> Warning
+        </button>
+      </div>
     </div>
     
     <div class="p-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <pre class="bg-slate-50 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-php">// Show beautiful notifications with a single line
+      <pre class="bg-slate-50 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-php">// Show beautiful notifications with a single line
 flash()->success('Your profile has been updated!');
 
 // Display error messages
@@ -96,32 +114,6 @@ flash()->info('Remember to verify your email.');
 // Warning alerts
 flash()->warning('Your subscription will expire soon.');
 </code></pre>
-        </div>
-        
-        <div class="flex flex-col justify-center">
-          <div class="space-y-3">
-            <button onclick="flasher.success('Your profile has been updated!', 'Success')" 
-                    class="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">
-              <i class="fa-solid fa-circle-check mr-2"></i> Try Success Message
-            </button>
-            
-            <button onclick="flasher.error('Oops! Something went wrong. Please try again.', 'Error')"
-                    class="w-full px-4 py-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">
-              <i class="fa-solid fa-circle-xmark mr-2"></i> Try Error Message
-            </button>
-            
-            <button onclick="flasher.info('Remember to verify your email address.', 'Info')"
-                    class="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">
-              <i class="fa-solid fa-circle-info mr-2"></i> Try Info Message
-            </button>
-            
-            <button onclick="flasher.warning('Your subscription will expire soon.', 'Warning')"
-                    class="w-full px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">
-              <i class="fa-solid fa-triangle-exclamation mr-2"></i> Try Warning Message
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -134,7 +126,7 @@ flash()->warning('Your subscription will expire soon.');
     <p class="text-slate-600 max-w-2xl mx-auto">Everything you need to add beautiful notifications to your PHP applications</p>
   </div>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
     <!-- Feature 1 -->
     <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 p-6 flex flex-col h-full">
       <div class="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center mb-4">
@@ -374,7 +366,7 @@ flash()->warning('Your subscription will expire soon.');
     <p class="text-slate-600 max-w-2xl mx-auto">PHPFlasher integrates with popular JavaScript notification libraries</p>
   </div>
   
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
     <!-- Toastr -->
     <a href="/library/toastr/" class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 overflow-hidden flex flex-col h-full">
       <div class="h-32 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
@@ -414,7 +406,7 @@ flash()->warning('Your subscription will expire soon.');
           <i class="fa-solid fa-bell text-purple-500 text-2xl"></i>
         </div>
       </div>
-            <div class="p-5 flex-grow">
+      <div class="p-5 flex-grow">
         <h3 class="font-semibold text-slate-800 mb-2">Noty</h3>
         <p class="text-slate-600 text-sm mb-3">Highly customizable notification library with multiple positions and animations.</p>
         <div class="flex items-center text-purple-600 font-medium text-sm group-hover:underline">
@@ -430,7 +422,7 @@ flash()->warning('Your subscription will expire soon.');
           <i class="fa-solid fa-message-dots text-green-500 text-2xl"></i>
         </div>
       </div>
-      <div class="p-5 flex-grow">
+            <div class="p-5 flex-grow">
         <h3 class="font-semibold text-slate-800 mb-2">Notyf</h3>
         <p class="text-slate-600 text-sm mb-3">Minimalist toast notifications with a clean design and smooth animations.</p>
         <div class="flex items-center text-green-600 font-medium text-sm group-hover:underline">
@@ -449,7 +441,7 @@ flash()->warning('Your subscription will expire soon.');
     <p class="text-slate-600 max-w-2xl mx-auto">Just a few lines of code to get started</p>
   </div>
   
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+  <div class="flex flex-col gap-8 max-w-4xl mx-auto">
     <!-- PHP Example -->
     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
       <div class="bg-slate-800 px-4 py-3 flex items-center">
@@ -532,7 +524,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
       <p class="text-slate-600 max-w-2xl mx-auto">Help us make PHPFlasher even better</p>
     </div>
     
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- GitHub -->
       <a href="https://github.com/php-flasher/php-flasher" class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 p-6 flex flex-col items-center text-center">
         <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-slate-100 transition-colors">
@@ -641,39 +633,6 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   </div>
 </section>
 
-<!-- Footer with attribution -->
-<footer class="bg-white border-t border-slate-100 py-12">
-  <div class="container mx-auto px-4">
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <div class="flex items-center mb-6 md:mb-0">
-        <img src="/static/images/php-flasher-logo.svg" class="h-8 mr-3" alt="PHPFlasher">
-        <div>
-          <div class="text-xl font-semibold text-slate-800">PHPFlasher</div>
-          <div class="text-xs text-slate-500">© 2023-2025 Younes Ennaji</div>
-        </div>
-      </div>
-      
-      <div class="flex flex-wrap justify-center gap-6">
-        <a href="/docs/" class="text-slate-600 hover:text-indigo-600 transition-colors">
-          Documentation
-        </a>
-        <a href="https://github.com/php-flasher/php-flasher" class="text-slate-600 hover:text-indigo-600 transition-colors">
-          GitHub
-        </a>
-        <a href="https://packagist.org/packages/php-flasher/flasher" class="text-slate-600 hover:text-indigo-600 transition-colors">
-          Packagist
-        </a>
-        <a href="https://github.com/php-flasher/php-flasher/issues" class="text-slate-600 hover:text-indigo-600 transition-colors">
-          Issues
-        </a>
-        <a href="https://github.com/php-flasher/flasher/blob/master/LICENSE" class="text-slate-600 hover:text-indigo-600 transition-colors">
-          License
-        </a>
-      </div>
-    </div>
-  </div>
-</footer>
-
 <!-- Add animation utility classes -->
 <style>
 @keyframes fadeIn {
@@ -683,6 +642,15 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 </style>
 
