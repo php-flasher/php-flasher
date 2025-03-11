@@ -110,7 +110,7 @@ layout: home
             <div class="mt-3 inline-flex items-center px-3 py-1 space-x-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span class="text-xs text-gray-500">Session: <span class="text-gray-700 font-medium">yoeunes</span></span>
-                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:32:00</span>
+                <span class="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1" id="current-time">2025-03-11 07:38:23</span>
             </div>
         </header>
 
@@ -149,11 +149,11 @@ layout: home
                     
                     <!-- Options panel -->
                     <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem);">
-                        <!-- Notification Type Selection - Redesigned professional interface -->
+                        <!-- Notification Type Selection - Redesigned professional interface with spacing -->
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
-                            <div class="notification-type-selector">
-                                <button class="type-option active" data-type="success">
+                            <div class="notification-types-grid">
+                                <button class="type-button active" data-type="success">
                                     <span class="type-icon success">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -161,7 +161,8 @@ layout: home
                                     </span>
                                     <span>Success</span>
                                 </button>
-                                <button class="type-option" data-type="error">
+                                
+                                <button class="type-button" data-type="error">
                                     <span class="type-icon error">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
@@ -169,7 +170,8 @@ layout: home
                                     </span>
                                     <span>Error</span>
                                 </button>
-                                <button class="type-option" data-type="info">
+                                
+                                <button class="type-button" data-type="info">
                                     <span class="type-icon info">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -177,7 +179,8 @@ layout: home
                                     </span>
                                     <span>Info</span>
                                 </button>
-                                <button class="type-option" data-type="warning">
+                                
+                                <button class="type-button" data-type="warning">
                                     <span class="type-icon warning">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -395,92 +398,102 @@ flasher.success('Your changes have been saved successfully!');</code></pre>
     animation: shine 1s forwards;
 }
 
-/* New Notification Type Selector with lighter backgrounds */
-.notification-type-selector {
-    display: flex;
-    background-color: #f9fafb;
-    border-radius: 0.5rem;
-    padding: 0.25rem;
-    border: 1px solid #e5e7eb;
+/* New spaced notification type buttons */
+.notification-types-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
 }
 
-.type-option {
-    flex: 1;
+.type-button {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
     color: #4b5563;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-    background: transparent;
-    border: none;
-    outline: none;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.type-option:hover {
-    background-color: rgba(255, 255, 255, 0.75);
+.type-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.type-option.active {
-    background-color: white;
-    color: #111827;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+.type-button.active {
+    border-width: 2px;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .type-icon {
     display: inline-flex;
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
     align-items: center;
     justify-content: center;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
 }
 
-/* Add light colored backgrounds to types */
-.type-option[data-type="success"] {
+/* Success type */
+.type-button[data-type="success"] {
     background-color: rgba(16, 185, 129, 0.05);
 }
-.type-option[data-type="success"].active {
+.type-button[data-type="success"].active {
     background-color: rgba(16, 185, 129, 0.15);
+    border-color: #10B981;
 }
-.type-option[data-type="error"] {
-    background-color: rgba(239, 68, 68, 0.05);
-}
-.type-option[data-type="error"].active {
-    background-color: rgba(239, 68, 68, 0.15);
-}
-.type-option[data-type="info"] {
-    background-color: rgba(59, 130, 246, 0.05);
-}
-.type-option[data-type="info"].active {
-    background-color: rgba(59, 130, 246, 0.15);
-}
-.type-option[data-type="warning"] {
-    background-color: rgba(245, 158, 11, 0.05);
-}
-.type-option[data-type="warning"].active {
-    background-color: rgba(245, 158, 11, 0.15);
-}
-
 .type-icon.success {
     color: #10B981;
+    background-color: rgba(16, 185, 129, 0.1);
 }
 
+/* Error type */
+.type-button[data-type="error"] {
+    background-color: rgba(239, 68, 68, 0.05);
+}
+.type-button[data-type="error"].active {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: #EF4444;
+}
 .type-icon.error {
     color: #EF4444;
+    background-color: rgba(239, 68, 68, 0.1);
 }
 
+/* Info type */
+.type-button[data-type="info"] {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+.type-button[data-type="info"].active {
+    background-color: rgba(59, 130, 246, 0.15);
+    border-color: #3B82F6;
+}
 .type-icon.info {
     color: #3B82F6;
+    background-color: rgba(59, 130, 246, 0.1);
 }
 
+/* Warning type */
+.type-button[data-type="warning"] {
+    background-color: rgba(245, 158, 11, 0.05);
+}
+.type-button[data-type="warning"].active {
+    background-color: rgba(245, 158, 11, 0.15);
+    border-color: #F59E0B;
+}
 .type-icon.warning {
     color: #F59E0B;
+    background-color: rgba(245, 158, 11, 0.1);
 }
 
 /* Code panel styles */
@@ -533,13 +546,13 @@ const state = {
 
 // Update current time
 function updateCurrentTime() {
-    document.getElementById('current-time').textContent = "2025-03-11 07:32:00";
+    document.getElementById('current-time').textContent = "2025-03-11 07:38:23";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize particles.js if available
     if (typeof particlesJS !== 'undefined') {
-        particlesJS('particles-js', {
+            particlesJS('particles-js', {
             particles: {
                 number: { value: 24, density: { enable: true, value_area: 800 } },
                 color: { value: "#3b82f6" },
@@ -550,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     distance: 150,
                     color: "#4b5563",
                     opacity: 0.1,
-                                        width: 1
+                    width: 1
                 },
                 move: {
                     enable: true,
@@ -565,13 +578,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize time with user-provided values
-    updateCurrentTime();
+    document.getElementById('current-time').textContent = "2025-03-11 07:40:35";
     
     // Initialize type buttons
-    document.querySelectorAll('.type-option').forEach(btn => {
+    document.querySelectorAll('.type-button').forEach(btn => {
         btn.addEventListener('click', () => {
             // Remove active class from all type buttons
-            document.querySelectorAll('.type-option').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.type-button').forEach(b => b.classList.remove('active'));
             
             // Add active class to clicked button
             btn.classList.add('active');
@@ -640,8 +653,52 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCodeDisplay();
     });
     
-    // Show notification button
-    // We don't need custom code here since we're using the Stimulus controller
+    // Show notification button - directly execute notifications using the showNotificationsForHandler function
+    document.getElementById('show-notification-btn').addEventListener('click', () => {
+        // Update status
+        updateStatus('Launching notification...');
+        
+        // Get current options from state
+        const options = {};
+        
+        // Only add options that have been explicitly set
+        if (state.position) options.position = state.position;
+        if (state.timeout !== '') options.timeout = state.timeout;
+        if (state.fps !== '') options.fps = state.fps;
+        if (state.direction) options.direction = state.direction;
+        if (state.rtl) options.rtl = state.rtl;
+        if (state.closeButton) options.closeButton = state.closeButton;
+        if (!state.escapeHtml) options.escapeHtml = state.escapeHtml;
+        
+        // Determine the handler based on theme
+        let handler = 'notyf'; // Default handler
+        
+        if (state.theme) {
+            handler = `theme.${state.theme}`;
+        }
+        
+        // Try to use the direct notification function if it exists, otherwise use the stimulus controller
+        if (typeof showNotificationsForHandler === 'function') {
+            // Create a custom notification based on user selections
+            const factory = flasher.use(handler);
+            
+            // Configure flasher with options
+            if (Object.keys(options).length > 0) {
+                factory.options(options);
+            }
+            
+            // Show the notification
+            if (state.title) {
+                factory[state.type](state.message, state.title);
+            } else {
+                factory[state.type](state.message);
+            }
+        } else {
+            console.log(`Would show a ${state.type} notification with message "${state.message}"${state.title ? ` and title "${state.title}"` : ''} using handler "${handler}"`);
+            console.log('Notification options:', options);
+            console.log('Stimulus controller should be triggered');
+        }
+    });
     
     // Code tabs functionality
     document.getElementById('php-tab').addEventListener('click', () => {
@@ -821,65 +878,83 @@ function updateCodeDisplay() {
     }
 }
 
-// The following is the integrated implementation of the notification stimulus controller
-// It is not actually executed here but shows how it would be integrated
-/*
-import { Controller } from '@hotwired/stimulus'
-import { showNotificationsForHandler } from '../show_notifications'
-import '@flasher/flasher-notyf/dist/flasher-notyf.min.css'
-
-export default class extends Controller {
-    connect() {
-        showNotificationsForHandler('notyf')
-    }
+// Add a custom implementation of showNotificationsForHandler if it doesn't exist
+// This helps with preview in environments where the actual function isn't available
+if (typeof showNotificationsForHandler === 'undefined') {
+    window.showNotificationsForHandler = function(handler, options = {}) {
+        console.log(`Showing notifications for handler: ${handler}`);
+        console.log('Options:', options);
+        
+        // Mock the notification display
+        console.log('Showing mock notifications sequence...');
+    };
+    
+    window.flasher = {
+        use: function(handler) {
+            console.log(`Using handler: ${handler}`);
+            
+            return {
+                options: function(options) {
+                    console.log(`Setting options for ${handler}:`, options);
+                    return this;
+                },
+                success: function(message, title) {
+                    console.log(`Success: ${message}${title ? ` (${title})` : ''}`);
+                },
+                error: function(message, title) {
+                    console.log(`Error: ${message}${title ? ` (${title})` : ''}`);
+                },
+                info: function(message, title) {
+                    console.log(`Info: ${message}${title ? ` (${title})` : ''}`);
+                },
+                warning: function(message, title) {
+                    console.log(`Warning: ${message}${title ? ` (${title})` : ''}`);
+                }
+            };
+        },
+        options: function(options) {
+            console.log('Setting global options:', options);
+            return this;
+        },
+        success: function(message, title) {
+            console.log(`Success: ${message}${title ? ` (${title})` : ''}`);
+        },
+        error: function(message, title) {
+            console.log(`Error: ${message}${title ? ` (${title})` : ''}`);
+        },
+        info: function(message, title) {
+            console.log(`Info: ${message}${title ? ` (${title})` : ''}`);
+        },
+        warning: function(message, title) {
+            console.log(`Warning: ${message}${title ? ` (${title})` : ''}`);
+        }
+    };
 }
 
-// Import flasher
-import flasher from '@flasher/flasher'
-
-function showNotifications(notifications) {
-    if (notifications.length === 0) {
-        return
+// Helper function for the Stimulus controller integration
+document.addEventListener('DOMContentLoaded', function() {
+    // Implement a simple version of Stimulus controller behavior if Stimulus is not available
+    const notificationButtons = document.querySelectorAll('[data-controller="notification-demo"]');
+    
+    if (typeof Stimulus === 'undefined') {
+        notificationButtons.forEach(button => {
+            if (!button.hasAttribute('data-stimulus-initialized')) {
+                button.setAttribute('data-stimulus-initialized', 'true');
+                
+                // Only wire up the click handler if not already using the event listener above
+                if (button.id !== 'show-notification-btn') {
+                    button.addEventListener('click', function() {
+                        if (typeof showNotificationsForHandler === 'function') {
+                            showNotificationsForHandler('notyf');
+                        } else {
+                            console.log('Would show notifications using Stimulus controller');
+                        }
+                    });
+                }
+            }
+        });
     }
-
-    setTimeout(() => {
-        notifications[0]()
-        showNotifications(notifications.slice(1))
-    }, 1500)
-}
-
-export function showNotificationsForHandler(handler, options = {}) {
-    const factory = flasher.use(handler)
-
-    // Handle theme-based handlers with different positions
-    const isThemeHandler = handler.startsWith('theme.')
-
-    // Define position-specific options for theme handlers
-    let infoOptions = { ...options }
-    let errorOptions = { ...options }
-    let warningOptions = { ...options }
-    let successOptions = { ...options }
-
-    if (isThemeHandler) {
-        infoOptions = { ...options, position: 'bottom-right' }
-        errorOptions = { ...options, position: 'bottom-right' }
-        warningOptions = { ...options, position: 'bottom-right' }
-        successOptions = { ...options, position: 'bottom-right' }
-    }
-
-    factory.info('Welcome back', 'Info', infoOptions)
-
-    if (['sweetalert'].includes(handler)) {
-        return
-    }
-
-    showNotifications([
-        () => factory.error('Oops! Something went wrong!', 'Error', errorOptions),
-        () => factory.warning('Are you sure you want to proceed?', 'Warning', warningOptions),
-        () => factory.success('Data has been saved successfully!', 'Success', successOptions),
-    ])
-}
-*/
+});
 </script>
 
 <!-- Quick Start Section (Moved before Features) -->
