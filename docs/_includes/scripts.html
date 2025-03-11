@@ -105,38 +105,5 @@
                 });
             });
         }
-
-        // Copy buttons for code blocks
-        const codeBlocks = document.querySelectorAll('pre code');
-        codeBlocks.forEach((codeBlock, index) => {
-            const pre = codeBlock.parentNode;
-            const wrapper = pre.parentNode;
-
-            // Create copy button
-            const button = document.createElement('button');
-            button.className = 'absolute top-3 right-3 p-1.5 rounded-md bg-slate-700/50 text-slate-200 opacity-60 hover:opacity-100 transition-opacity';
-            button.innerHTML = '<i class="fa-regular fa-copy"></i>';
-            button.setAttribute('aria-label', 'Copy code');
-            button.setAttribute('data-copy-id', 'code-' + index);
-
-            // Add position relative to wrapper if not already
-            if (window.getComputedStyle(wrapper).position === 'static') {
-                wrapper.style.position = 'relative';
-            }
-
-            // Add the button
-            wrapper.appendChild(button);
-
-            // Add click handler
-            button.addEventListener('click', function() {
-                const code = codeBlock.textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    button.innerHTML = '<i class="fa-solid fa-check"></i>';
-                    setTimeout(() => {
-                        button.innerHTML = '<i class="fa-regular fa-copy"></i>';
-                    }, 2000);
-                });
-            });
-        });
     });
 </script>

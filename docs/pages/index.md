@@ -16,13 +16,9 @@ layout: home
     <div class="text-center">
       <div class="flex justify-center mb-4 animate-fade-in">
         <div class="relative">
-          <span class="text-4xl md:text-5xl font-semibold text-indigo-900 italic transform -rotate-2 inline-block">PHP<span class="text-indigo-500">Flasher</span>
-            <div class="absolute -right-3 -bottom-1 w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center animate-pulse">
-              <div class="text-white text-xs">
-                <i class="fa-solid fa-bolt"></i>
-              </div>
-            </div>
-          </span>
+          <div class="inline-block relative">
+            <img id="logo" src="/static/images/php-flasher-logo.svg" class="h-16 md:h-18 my-4" alt="PHPFlasher">
+          </div>
         </div>
       </div>
       
