@@ -1,17 +1,81 @@
+<style>
+    /* Custom styles for highlighting code */
+    pre {
+        position: relative;
+    }
+
+    .code-block {
+        display: block;
+        position: relative;
+        font-size: 0.875rem;
+    }
+
+    /* Highlight for the flash method lines */
+    .flash-code-block {
+        display: inline-block;
+        width: 100%;
+        background-color: rgba(16, 185, 129, 0.1);
+        border-radius: 4px;
+        font-weight: 600;
+        box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
+        padding: 2px 0;
+    }
+
+    /* Animation keyframes */
+    @keyframes shine {
+        to {
+            left: 100%;
+        }
+    }
+
+    @keyframes progress {
+        0% {
+            transform: scaleX(1);
+        }
+        100% {
+            transform: scaleX(0);
+        }
+    }
+
+    @keyframes ping {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        75%, 100% {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    /* Additional styles for the notification types buttons */
+    .type-button {
+        transition: all 0.2s ease;
+    }
+
+    .type-button:hover {
+        transform: translateY(-2px);
+    }
+</style>
+
 <!-- Elegant PHPFlasher Interactive Demo -->
 <section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
     <!-- Dynamic background elements -->
     <div class="absolute inset-0 z-0">
-        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
+        <div
+            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
+        <div
+            class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
 
         <!-- Animated particles -->
         <div id="particles-js" class="absolute inset-0 opacity-60"></div>
 
         <!-- Animated lines -->
         <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
-            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2"
+                  class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2"
+                  class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
         </svg>
     </div>
 
@@ -19,17 +83,22 @@
     <div class="container relative z-10 mx-auto px-4 max-w-7xl">
         <!-- Elegant header -->
         <header class="mb-8 text-center relative">
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+            <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
             <h1 class="mt-6 text-3xl font-light tracking-tight">
-                PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
+                PHPFlasher <span
+                class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span>
+                Studio
             </h1>
-            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see it in action</p>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see
+                it in action</p>
         </header>
 
         <!-- Main interactive area -->
         <div class="rounded-xl shadow-lg bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
             <!-- Toolbar -->
-            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
+            <div
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <div class="w-3 h-3 rounded-full bg-red-400"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
@@ -38,7 +107,8 @@
                 <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250311</div>
                 <div id="status-indicator" class="flex items-center space-x-2">
                     <span id="status-text" class="text-xs text-emerald-600">Ready</span>
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                    <div
+                        class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
                 </div>
             </div>
 
@@ -52,31 +122,43 @@
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
                             <div class="flex flex-row space-x-2 w-full">
-                                <button class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-colors active:scale-95 transform border-2 border-green-500" data-type="success">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
-                                        <i class="fas fa-check text-lg"></i>
-                                    </span>
+                                <button
+                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-colors active:scale-95 transform border-2 border-green-500"
+                                    data-type="success">
+                                        <span
+                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
+                                            <i class="fas fa-check text-lg"></i>
+                                        </span>
                                     <span class="text-xs font-medium text-gray-700">Success</span>
                                 </button>
 
-                                <button class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-colors active:scale-95 transform" data-type="error">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
-                                        <i class="fas fa-times text-lg"></i>
-                                    </span>
+                                <button
+                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-colors active:scale-95 transform"
+                                    data-type="error">
+                                        <span
+                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
+                                            <i class="fas fa-times text-lg"></i>
+                                        </span>
                                     <span class="text-xs font-medium text-gray-700">Error</span>
                                 </button>
 
-                                <button class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors active:scale-95 transform" data-type="info">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
-                                        <i class="fas fa-info-circle text-lg"></i>
-                                    </span>
+                                <button
+                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors active:scale-95 transform"
+                                    data-type="info">
+                                        <span
+                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
+                                            <i class="fas fa-info-circle text-lg"></i>
+                                        </span>
                                     <span class="text-xs font-medium text-gray-700">Info</span>
                                 </button>
 
-                                <button class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors active:scale-95 transform" data-type="warning">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
-                                        <i class="fas fa-exclamation-triangle text-lg"></i>
-                                    </span>
+                                <button
+                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors active:scale-95 transform"
+                                    data-type="warning">
+                                        <span
+                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
+                                            <i class="fas fa-exclamation-triangle text-lg"></i>
+                                        </span>
                                     <span class="text-xs font-medium text-gray-700">Warning</span>
                                 </button>
                             </div>
@@ -86,15 +168,22 @@
                         <div class="mb-6 space-y-4">
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title (optional)</label>
+                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title
+                                        (optional)</label>
                                     <span class="text-xs text-gray-400">Optional</span>
                                 </div>
-                                <input type="text" id="title-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" placeholder="Enter notification title" value="">
+                                <input type="text" id="title-input"
+                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                                       placeholder="Enter notification title" value="">
                             </div>
 
                             <div>
-                                <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
-                                <input id="message-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your notification message" value="Your product has been created successfully!">
+                                <label for="message-input"
+                                       class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <input id="message-input"
+                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Enter your notification message"
+                                       value="Your product has been created successfully!">
                             </div>
                         </div>
 
@@ -107,8 +196,10 @@
                             <div class="px-3 py-3 border-t border-gray-200">
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
-                                        <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
-                                        <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="position-select"
+                                               class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="top-right">top-right</option>
                                             <option value="top-left">top-left</option>
@@ -119,8 +210,10 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout (ms)</label>
-                                        <select id="timeout-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout
+                                            (ms)</label>
+                                        <select id="timeout-input"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="10000">10 seconds</option>
                                             <option value="5000">5 seconds</option>
@@ -132,7 +225,8 @@
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
                                         <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
-                                        <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <select id="theme-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="amazon">amazon</option>
                                             <option value="amber">amber</option>
@@ -154,8 +248,10 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="direction-select" class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
-                                        <select id="direction-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="direction-select"
+                                               class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                        <select id="direction-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">Default</option>
                                             <option value="top">top</option>
                                             <option value="bottom">bottom</option>
@@ -165,30 +261,37 @@
 
                                 <div class="mt-4 grid grid-cols-2 gap-3">
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="rtl-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                        <input type="checkbox" id="rtl-check"
+                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
                                         <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="escape-html-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
-                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape HTML</label>
+                                        <input type="checkbox" id="escape-html-check"
+                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape
+                                            HTML</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Launch button -->
-                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md" data-controller="notification-demo">
-                            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
-                            <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md"
+                                data-controller="notification-demo">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
+                            <div
+                                class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
 
                             <div class="relative px-5 py-3 flex items-center justify-center text-white font-medium">
-                                <span class="flex items-center space-x-2">
-                                    <span>Launch Notification</span>
-                                    <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
-                                </span>
+                                    <span class="flex items-center space-x-2">
+                                        <span>Launch Notification</span>
+                                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
+                                    </span>
                             </div>
 
-                            <div class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
+                            <div
+                                class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
                         </button>
                     </div>
                 </div>
@@ -202,23 +305,30 @@
 
                     <!-- Code tabs with FontAwesome icons -->
                     <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
-                        <button id="laravel-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5" data-tab="laravel">
+                        <button id="laravel-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5"
+                                data-tab="laravel">
                             <i class="fab fa-laravel text-red-500"></i>
                             <span>Laravel</span>
                         </button>
-                        <button id="symfony-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5" data-tab="symfony">
+                        <button id="symfony-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
+                                data-tab="symfony">
                             <i class="fab fa-symfony text-black"></i>
                             <span>Symfony</span>
                         </button>
-                        <button id="js-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5" data-tab="js">
+                        <button id="js-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
+                                data-tab="js">
                             <i class="fab fa-js text-yellow-400"></i>
                             <span>JavaScript</span>
                         </button>
                     </div>
 
                     <!-- Laravel Code Panel -->
-                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-php"><code class="code-block">
+                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active"
+                         style="height: calc(100vh - 15rem); max-height: 700px;">
+                            <pre class="language-php"><code class="code-block">
 // app/Http/Controllers/ProductController.php
 
 namespace App\Http\Controllers;
@@ -242,8 +352,9 @@ class ProductController extends Controller
                     </div>
 
                     <!-- Symfony Code Panel -->
-                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-php"><code class="code-block">
+                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel"
+                         style="height: calc(100vh - 15rem); max-height: 700px;">
+                            <pre class="language-php"><code class="code-block">
 // src/Controller/ProductController.php
 
 namespace App\Controller;
@@ -283,8 +394,9 @@ class ProductController extends AbstractController
                     </div>
 
                     <!-- JavaScript Code Panel -->
-                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel" style="height: calc(100vh - 15rem); max-height: 700px;">
-                        <pre class="language-javascript"><code class="code-block">
+                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel"
+                         style="height: calc(100vh - 15rem); max-height: 700px;">
+                            <pre class="language-javascript"><code class="code-block">
 // product-service.js
 
 import flasher from '@flasher/flasher';
@@ -320,13 +432,16 @@ async function createProduct(productData) {
 
             <!-- Additional interactive elements for demos -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="text-sm text-gray-500">Current date: <span id="current-date">2025-03-11 23:52:16</span></div>
+                <div class="text-sm text-gray-500">Current date: <span id="current-date">2025-03-12 00:09:38</span>
+                </div>
                 <div class="flex space-x-4">
-                    <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <a href="https://phpflasher.com/docs"
+                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fas fa-book mr-1.5 text-xs"></i>
                         Documentation
                     </a>
-                    <a href="https://github.com/php-flasher/php-flasher" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <a href="https://github.com/php-flasher/php-flasher"
+                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fab fa-github mr-1.5 text-xs"></i>
                         GitHub
                     </a>
@@ -336,431 +451,521 @@ async function createProduct(productData) {
     </div>
 </section>
 
-<style>
-/* Custom styles for highlighting code */
-pre {
-    position: relative;
-}
-
-.code-block {
-    display: block;
-    position: relative;
-    font-size: 0.875rem;
-}
-
-/* Highlight for the flash method lines */
-.flash-code-block {
-    display: inline-block;
-    width: 100%;
-    background-color: rgba(16, 185, 129, 0.1);
-    border-radius: 4px;
-    font-weight: 600;
-    box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
-    padding: 2px 0;
-}
-
-/* Animation keyframes */
-@keyframes shine {
-    to {
-        left: 100%;
-    }
-}
-@keyframes progress {
-    0% { transform: scaleX(1); }
-    100% { transform: scaleX(0); }
-}
-@keyframes ping {
-    0% { transform: scale(1); opacity: 1; }
-    75%, 100% { transform: scale(2); opacity: 0; }
-}
-
-/* Additional styles for the notification types buttons */
-.type-button {
-    transition: all 0.2s ease;
-}
-.type-button:hover {
-    transform: translateY(-2px);
-}
-</style>
-
 <script>
-// Current state management
-const state = {
-    type: 'success',
-    title: '',
-    message: 'Your product has been created successfully!',
-    timeout: '',
-    position: '',
-    direction: '',
-    rtl: false,
-    theme: '',
-    escapeHtml: true
-};
+    // Create a proxy to monitor state changes
+    const createStateProxy = () => {
+        const stateTarget = {
+            type: "success",
+            title: "",
+            message: "Your product has been created successfully!",
+            timeout: "",
+            position: "",
+            direction: "",
+            rtl: false,
+            theme: "",
+            escapeHtml: true
+        };
 
-// Message templates based on notification type
-const messageTemplates = {
-    success: {
-        message: 'Your product has been created successfully!',
-        title: 'Success'
-    },
-    error: {
-        message: 'An error occurred while saving the product.',
-        title: 'Error'
-    },
-    info: {
-        message: 'Your product is being processed.',
-        title: 'Information'
-    },
-    warning: {
-        message: 'Please review your product before submitting.',
-        title: 'Warning'
+        return new Proxy(stateTarget, {
+            set(target, property, value) {
+                target[property] = value;
+
+                // When state changes, update the code display
+                if (document.readyState === "complete") {
+                    updateCodeDisplay();
+                }
+
+                return true;
+            }
+        });
+    };
+
+    // Replace the existing state object with our proxy
+    const state = createStateProxy();
+
+    // Message templates based on notification type
+    const messageTemplates = {
+        success: {
+            message: "Your product has been created successfully!",
+            title: "Success"
+        },
+        error: {
+            message: "An error occurred while saving the product.",
+            title: "Error"
+        },
+        info: {
+            message: "Your product is being processed.",
+            title: "Information"
+        },
+        warning: {
+            message: "Please review your product before submitting.",
+            title: "Warning"
+        }
+    };
+
+    // Function to handle special characters in strings used in code examples
+    function sanitizeForCode(str) {
+        if (typeof str !== "string") {
+            return str;
+        }
+        return str
+            .replace(/\\/g, "\\\\")  // Escape backslashes
+            .replace(/'/g, "\\'")    // Escape single quotes
+            .replace(/"/g, "\\\"")    // Escape double quotes
+            .replace(/\n/g, "\\n")   // Handle newlines
+            .replace(/\r/g, "\\r")   // Handle carriage returns
+            .replace(/\t/g, "\\t");  // Handle tabs
     }
-};
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Update current date
-    document.getElementById('current-date').textContent = "2025-03-11 23:52:16";
+    // Function to safely escape HTML for display in code blocks
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 
-    // Initialize type buttons
-    document.querySelectorAll('.type-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all type buttons
-            document.querySelectorAll('.type-button').forEach(b => {
-                b.classList.remove('border-2');
-                b.classList.remove('border-green-500', 'border-red-500', 'border-blue-500', 'border-amber-500');
+    // Function to initialize the type buttons with proper selection
+    function initializeTypeButtons() {
+        // Set the initial type from state
+        document.querySelectorAll(".type-button").forEach(btn => {
+            const type = btn.dataset.type;
+
+            // Clear existing styling
+            btn.classList.remove("border-2");
+            btn.classList.remove("border-green-500", "border-red-500", "border-blue-500", "border-amber-500");
+
+            // Apply styling for the current type
+            if (type === state.type) {
+                btn.classList.add("border-2");
+
+                // Add appropriate border color based on type
+                switch (type) {
+                    case "success":
+                        btn.classList.add("border-green-500");
+                        break;
+                    case "error":
+                        btn.classList.add("border-red-500");
+                        break;
+                    case "info":
+                        btn.classList.add("border-blue-500");
+                        break;
+                    case "warning":
+                        btn.classList.add("border-amber-500");
+                        break;
+                }
+            }
+        });
+    }
+
+    // Initialize select elements with default values from state
+    function initializeFormValues() {
+        // Set values for all form elements based on state
+        if (state.title) {
+            document.getElementById("title-input").value = state.title;
+        }
+
+        document.getElementById("message-input").value = state.message;
+
+        if (state.position) {
+            document.getElementById("position-select").value = state.position;
+        }
+
+        if (state.timeout) {
+            document.getElementById("timeout-input").value = state.timeout;
+        }
+
+        if (state.theme) {
+            document.getElementById("theme-select").value = state.theme;
+        }
+
+        if (state.direction) {
+            document.getElementById("direction-select").value = state.direction;
+        }
+
+        document.getElementById("rtl-check").checked = !!state.rtl;
+        document.getElementById("escape-html-check").checked = state.escapeHtml !== false; // Default to true
+    }
+
+    function updateStatus(message) {
+        const statusText = document.getElementById("status-text");
+        statusText.textContent = message;
+
+        // Temporarily change color
+        statusText.classList.remove("text-emerald-600");
+        statusText.classList.add("text-blue-600");
+
+        // Add animation to the dot
+        const dot = document.querySelector("#status-indicator div");
+        dot.classList.remove("bg-emerald-500");
+        dot.classList.add("bg-blue-500");
+
+        // Reset after 2 seconds
+        setTimeout(() => {
+            statusText.classList.remove("text-blue-600");
+            statusText.classList.add("text-emerald-600");
+            statusText.textContent = "Ready";
+
+            dot.classList.remove("bg-blue-500");
+            dot.classList.add("bg-emerald-500");
+        }, 2000);
+    }
+
+    // Enhanced showCodeTab function to ensure proper tab switching and code updates
+    function showCodeTab(tab) {
+        // Hide all panels
+        document.querySelectorAll(".code-panel").forEach(panel => {
+            panel.classList.add("hidden");
+        });
+
+        // Show the selected panel
+        const activePanel = document.getElementById(`${tab}-code-panel`);
+        if (activePanel) {
+            activePanel.classList.remove("hidden");
+        }
+
+        // Update tab styling
+        document.querySelectorAll(".code-tab-btn").forEach(btn => {
+            btn.classList.remove("text-blue-600", "border-b-2", "border-blue-500");
+            btn.classList.add("text-gray-600");
+        });
+
+        // Highlight active tab
+        const activeTab = document.querySelector(`[data-tab="${tab}"]`);
+        if (activeTab) {
+            activeTab.classList.remove("text-gray-600");
+            activeTab.classList.add("text-blue-600", "border-b-2", "border-blue-500");
+        }
+
+        // Update the code based on current state
+        updateCodeDisplay();
+    }
+
+    // Modified createCodeForFramework to better handle special characters
+    function createCodeForFramework(framework) {
+        // Base prefix depends on the framework
+        let prefix = "";
+        switch (framework) {
+            case "laravel":
+                prefix = "flash()";
+                break;
+            case "symfony":
+                prefix = "flash()";
+                break;
+            case "js":
+                prefix = "flasher";
+                break;
+        }
+
+        // Check if we have any options to set
+        const options = {};
+        if (state.position) {
+            options.position = state.position;
+        }
+        if (state.timeout) {
+            options.timeout = parseInt(state.timeout);
+        }
+        if (state.theme) {
+            options.theme = state.theme;
+        }
+        if (state.direction) {
+            options.direction = state.direction;
+        }
+        if (state.rtl) {
+            options.rtl = true;
+        }
+        if (!state.escapeHtml) {
+            options.escapeHtml = false;
+        }
+
+        // Sanitize message and title for code display
+        const safeMessage = sanitizeForCode(state.message);
+        const safeTitle = state.title ? sanitizeForCode(state.title) : "";
+
+        // For PHP frameworks, use the multi-line ->options() format if we have options
+        if (Object.keys(options).length > 0 && framework !== "js") {
+            let code = `${prefix}\n`;
+            code += `    ->options([\n`;
+
+            Object.entries(options).forEach(([key, value], index, array) => {
+                if (typeof value === "string") {
+                    code += `        '${key}' => '${value}'`;
+                } else if (typeof value === "boolean") {
+                    code += `        '${key}' => ${value ? "true" : "false"}`;
+                } else {
+                    code += `        '${key}' => ${value}`;
+                }
+
+                if (index < array.length - 1) {
+                    code += ",";
+                }
+                code += "\n";
             });
 
-            // Add active class to clicked button
-            btn.classList.add('border-2');
+            code += `    ])\n`;
+            code += `    ->${state.type}('${safeMessage}'`;
 
-            // Add appropriate color based on type
-            const type = btn.dataset.type;
-            switch(type) {
-                case 'success':
-                    btn.classList.add('border-green-500');
-                    break;
-                case 'error':
-                    btn.classList.add('border-red-500');
-                    break;
-                case 'info':
-                    btn.classList.add('border-blue-500');
-                    break;
-                case 'warning':
-                    btn.classList.add('border-amber-500');
-                    break;
+            if (safeTitle) {
+                code += `, '${safeTitle}'`;
             }
 
-            // Update state with type-specific defaults
-            state.type = type;
+            code += ");";
+            return code;
+        }
+        // JavaScript format
+        else if (framework === "js") {
+            let code = "";
 
-            // Update message and title inputs with type-specific templates
-            if (document.getElementById('message-input').value === state.message) {
-                document.getElementById('message-input').value = messageTemplates[type].message;
-                state.message = messageTemplates[type].message;
+            if (Object.keys(options).length > 0) {
+                code = `${prefix}.${state.type}('${safeMessage}'`;
+
+                if (safeTitle) {
+                    code += `, '${safeTitle}'`;
+                }
+
+                const jsOptions = JSON.stringify(options, null, 2)
+                    .replace(/"([^"]+)":/g, "$1:")
+                    .replace(/\n/g, "\n    ");
+
+                code += ", " + jsOptions + ");";
+            } else {
+                code = `${prefix}.${state.type}('${safeMessage}'`;
+
+                if (safeTitle) {
+                    code += `, '${safeTitle}'`;
+                }
+
+                code += ");";
             }
 
-            if (!state.title && document.getElementById('title-input').value === '') {
-                document.getElementById('title-input').placeholder = messageTemplates[type].title;
+            return code;
+        } else {
+            // Simple format for PHP frameworks with no options
+            let code = `${prefix}->${state.type}('${safeMessage}'`;
+
+            if (safeTitle) {
+                code += `, '${safeTitle}'`;
             }
 
-            // Update code display
+            code += ");";
+            return code;
+        }
+    }
+
+    // Function to update the code display in all panels
+    function updateCodeDisplay() {
+        // Get all code panels
+        const laravelCodeBlock = document.querySelector("#laravel-code-panel .flash-code-block");
+        const symfonyCodeBlock = document.querySelector("#symfony-code-panel .flash-code-block");
+        const jsCodeBlock = document.querySelector("#js-code-panel .flash-code-block");
+
+        // Update each panel with the appropriate code
+        if (laravelCodeBlock) {
+            laravelCodeBlock.innerHTML = createCodeForFramework("laravel");
+        }
+
+        if (symfonyCodeBlock) {
+            symfonyCodeBlock.innerHTML = createCodeForFramework("symfony");
+        }
+
+        if (jsCodeBlock) {
+            jsCodeBlock.innerHTML = createCodeForFramework("js");
+        }
+
+        // Update current date display
+        document.getElementById("current-date").textContent = "2025-03-12 00:13:20";
+
+        // Re-initialize syntax highlighting if Prism is available
+        if (typeof Prism !== "undefined") {
+            Prism.highlightAll();
+        }
+    }
+
+    // Enhanced showNotification function to properly use the current state
+    function showNotification() {
+        // Create a clean options object with only the necessary properties
+        const options = {};
+
+        // Only add properties that have values
+        if (state.position) {
+            options.position = state.position;
+        }
+        if (state.timeout) {
+            options.timeout = parseInt(state.timeout);
+        }
+        if (state.theme) {
+            options.theme = state.theme;
+        }
+        if (state.direction) {
+            options.direction = state.direction;
+        }
+        if (state.rtl) {
+            options.rtl = state.rtl;
+        }
+        if (state.escapeHtml !== undefined) {
+            options.escapeHtml = state.escapeHtml;
+        }
+
+        try {
+            // If the flasher library is available, use it
+            if (typeof flasher !== "undefined") {
+                if (state.theme) {
+                    // When using a specific theme
+                    const notificationOptions = {
+                        type: state.type,
+                        message: state.message,
+                        title: state.title || undefined,
+                        ...options
+                    };
+                    delete notificationOptions.theme; // Remove theme from options as we're using it directly
+                    flasher.use(state.theme).flash(notificationOptions);
+                } else {
+                    // Standard approach
+                    flasher[state.type](state.message, state.title || null, options);
+                }
+
+                // Update status
+                updateStatus("Notification shown successfully!");
+            } else {
+                // Fallback to alert if flasher isn't available
+                let optionsText = "";
+                for (const [key, value] of Object.entries(options)) {
+                    if (!["type", "message", "title"].includes(key)) {
+                        optionsText += `\n${key}: ${JSON.stringify(value)}`;
+                    }
+                }
+
+                alert("Notification would show with these settings:\n\n" +
+                    `Type: ${state.type}\n` +
+                    `Message: ${state.message}\n` +
+                    (state.title ? `Title: ${state.title}\n` : "") +
+                    (optionsText ? "\nOptions:" + optionsText : "")
+                );
+            }
+        } catch (e) {
+            console.error("Error showing notification:", e);
+            updateStatus("Error: " + e.message);
+            alert("Failed to show notification: " + e.message);
+        }
+    }
+
+    // Debug helper function (can be called from console for troubleshooting)
+    function debugState() {
+        console.log("Current state:", { ...state });
+        console.log("Form values:");
+        console.log("- Title:", document.getElementById("title-input").value);
+        console.log("- Message:", document.getElementById("message-input").value);
+        console.log("- Position:", document.getElementById("position-select").value);
+        console.log("- Timeout:", document.getElementById("timeout-input").value);
+        console.log("- Theme:", document.getElementById("theme-select").value);
+        console.log("- Direction:", document.getElementById("direction-select").value);
+        console.log("- RTL:", document.getElementById("rtl-check").checked);
+        console.log("- Escape HTML:", document.getElementById("escape-html-check").checked);
+    }
+
+    // Add this to window for easy access
+    window.debugPhpFlasher = debugState;
+
+    // Enhanced DOM Ready function with better initialization
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize form with current state values
+        initializeFormValues();
+
+        // Initialize type buttons
+        initializeTypeButtons();
+
+        // Set up type button event listeners
+        document.querySelectorAll(".type-button").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const type = btn.dataset.type;
+                state.type = type;
+
+                // Update message based on type if it matches the previous template
+                const currentMessage = document.getElementById("message-input").value;
+                Object.values(messageTemplates).forEach(template => {
+                    if (currentMessage === template.message) {
+                        document.getElementById("message-input").value = messageTemplates[type].message;
+                        state.message = messageTemplates[type].message;
+                    }
+                });
+
+                // Update button styling
+                initializeTypeButtons();
+
+                // Update code display
+                updateCodeDisplay();
+
+                // Update status
+                updateStatus(`Type changed to: ${state.type}`);
+            });
+        });
+
+        // Input event listeners
+        document.getElementById("title-input").addEventListener("input", (e) => {
+            state.title = e.target.value.trim();
             updateCodeDisplay();
-
-            // Update status
-            updateStatus(`Type changed to: ${state.type}`);
-        });
-    });
-
-    // Input event listeners
-    document.getElementById('title-input').addEventListener('input', (e) => {
-        state.title = e.target.value.trim();
-        updateCodeDisplay();
-    });
-
-    document.getElementById('message-input').addEventListener('input', (e) => {
-        state.message = e.target.value;
-        updateCodeDisplay();
-    });
-
-    // Select event listeners
-    document.getElementById('position-select').addEventListener('change', (e) => {
-        state.position = e.target.value;
-        updateCodeDisplay();
-    });
-
-    document.getElementById('timeout-input').addEventListener('change', (e) => {
-        state.timeout = e.target.value ? parseInt(e.target.value) : '';
-        updateCodeDisplay();
-    });
-
-    document.getElementById('theme-select').addEventListener('change', (e) => {
-        state.theme = e.target.value;
-        updateCodeDisplay();
-    });
-
-    document.getElementById('direction-select').addEventListener('change', (e) => {
-        state.direction = e.target.value;
-        updateCodeDisplay();
-    });
-
-    // Checkbox event listeners
-    document.getElementById('rtl-check').addEventListener('change', (e) => {
-        state.rtl = e.target.checked;
-        updateCodeDisplay();
-    });
-
-    document.getElementById('escape-html-check').addEventListener('change', (e) => {
-        state.escapeHtml = e.target.checked;
-        updateCodeDisplay();
-    });
-
-    // Show notification button
-    document.getElementById('show-notification-btn').addEventListener('click', () => {
-        updateStatus('Launching notification...');
-        showNotification();
-    });
-
-    // Tab buttons functionality
-    document.querySelectorAll('.code-tab-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const tab = button.getAttribute('data-tab');
-            showCodeTab(tab);
-        });
-    });
-
-    // Initialize with Laravel tab selected
-    showCodeTab('laravel');
-
-    // Apply syntax highlighting if Prism is available
-    if (typeof Prism !== 'undefined') {
-        setTimeout(() => {
-            Prism.highlightAll();
-        }, 100);
-    }
-});
-
-function updateStatus(message) {
-    const statusText = document.getElementById('status-text');
-    statusText.textContent = message;
-
-    // Temporarily change color
-    statusText.classList.remove('text-emerald-600');
-    statusText.classList.add('text-blue-600');
-
-    // Add animation to the dot
-    const dot = document.querySelector('#status-indicator div');
-    dot.classList.remove('bg-emerald-500');
-    dot.classList.add('bg-blue-500');
-
-    // Reset after 2 seconds
-    setTimeout(() => {
-        statusText.classList.remove('text-blue-600');
-        statusText.classList.add('text-emerald-600');
-        statusText.textContent = 'Ready';
-
-        dot.classList.remove('bg-blue-500');
-        dot.classList.add('bg-emerald-500');
-    }, 2000);
-}
-
-function showCodeTab(tab) {
-    // Hide all panels
-    document.querySelectorAll('.code-panel').forEach(panel => {
-        panel.classList.add('hidden');
-        panel.classList.remove('active');
-    });
-
-    // Show the selected panel
-    const activePanel = document.getElementById(`${tab}-code-panel`);
-    activePanel.classList.remove('hidden');
-    activePanel.classList.add('active');
-
-    // Update tab styling
-    document.querySelectorAll('.code-tab-btn').forEach(btn => {
-        btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-500');
-        btn.classList.add('text-gray-600');
-    });
-
-    // Highlight active tab
-    document.querySelector(`[data-tab="${tab}"]`).classList.remove('text-gray-600');
-    document.querySelector(`[data-tab="${tab}"]`).classList.add('text-blue-600', 'border-b-2', 'border-blue-500');
-
-    // Update the code based on current state
-    updateCodeDisplay();
-
-    // Re-initialize Prism highlighting if available
-    if (typeof Prism !== 'undefined') {
-        setTimeout(() => {
-            Prism.highlightAll();
-        }, 100);
-    }
-}
-
-function updateCodeDisplay() {
-    // Get all code panels
-    const codePanels = {
-        'laravel': document.querySelector('#laravel-code-panel .flash-code-block'),
-        'symfony': document.querySelector('#symfony-code-panel .flash-code-block'),
-        'js': document.querySelector('#js-code-panel .flash-code-block')
-    };
-
-    // Update each panel with the appropriate code
-    Object.keys(codePanels).forEach(framework => {
-        const flashBlock = codePanels[framework];
-        if (flashBlock) {
-            flashBlock.innerHTML = createCodeForFramework(framework);
-        }
-    });
-
-    // Update current date display
-    document.getElementById('current-date').textContent = "2025-03-11 23:54:39";
-}
-
-function createCodeForFramework(framework) {
-    // Base prefix depends on the framework
-    let prefix = '';
-    switch(framework) {
-        case 'laravel':
-            prefix = 'flash()';
-            break;
-        case 'symfony':
-            prefix = 'flash()';
-            break;
-        case 'js':
-            prefix = 'flasher';
-            break;
-    }
-
-    // Check if we have any options to set
-    const options = {};
-    if (state.position) options.position = state.position;
-    if (state.timeout) options.timeout = state.timeout;
-    if (state.theme) options.theme = state.theme;
-    if (state.direction) options.direction = state.direction;
-    if (state.rtl) options.rtl = true;
-    if (!state.escapeHtml) options.escapeHtml = false;
-
-    // For PHP frameworks, use the multi-line ->options() format if we have options
-    if (Object.keys(options).length > 0 && framework !== 'js') {
-        let code = `${prefix}\n`;
-        code += `    ->options([\n`;
-
-        // Add each option with proper indentation
-        Object.entries(options).forEach(([key, value], index, array) => {
-            if (typeof value === 'string') {
-                code += `        '${key}' => '${value}'`;
-            } else if (typeof value === 'boolean') {
-                code += `        '${key}' => ${value ? 'true' : 'false'}`;
-            } else {
-                code += `        '${key}' => ${value}`;
-            }
-
-            // Add comma if not the last item
-            if (index < array.length - 1) {
-                code += ',';
-            }
-
-            code += '\n';
         });
 
-        code += `    ])\n`;
-        code += `    ->${state.type}('${state.message}'`;
+        document.getElementById("message-input").addEventListener("input", (e) => {
+            state.message = e.target.value;
+            updateCodeDisplay();
+        });
 
-        // Add title if provided
-        if (state.title) {
-            code += `, '${state.title}'`;
-        }
+        // Select event listeners
+        document.getElementById("position-select").addEventListener("change", (e) => {
+            state.position = e.target.value;
+            updateCodeDisplay();
+        });
 
-        code += ');';
-        return code;
-    }
-    // For JavaScript or when no options are present, use the simple format
-    else if (framework === 'js') {
-        let code = '';
+        document.getElementById("timeout-input").addEventListener("change", (e) => {
+            state.timeout = e.target.value ? parseInt(e.target.value) : "";
+            updateCodeDisplay();
+        });
 
-        if (Object.keys(options).length > 0) {
-            // JavaScript uses object literal syntax
-            code = `${prefix}.${state.type}('${state.message}'`;
+        document.getElementById("theme-select").addEventListener("change", (e) => {
+            state.theme = e.target.value;
+            updateCodeDisplay();
+        });
 
-            // Add title if provided
-            if (state.title) {
-                code += `, '${state.title}'`;
-            }
+        document.getElementById("direction-select").addEventListener("change", (e) => {
+            state.direction = e.target.value;
+            updateCodeDisplay();
+        });
 
-            // Add options object
-            code += ', ' + JSON.stringify(options, null, 2)
-                .replace(/"([^"]+)":/g, '$1:') // Convert "key": to key:
-                .replace(/\n/g, '\n    '); // Proper indentation
+        // Checkbox event listeners
+        document.getElementById("rtl-check").addEventListener("change", (e) => {
+            state.rtl = e.target.checked;
+            updateCodeDisplay();
+        });
 
-            code += ');';
-        } else {
-            code = `${prefix}.${state.type}('${state.message}'`;
+        document.getElementById("escape-html-check").addEventListener("change", (e) => {
+            state.escapeHtml = e.target.checked;
+            updateCodeDisplay();
+        });
 
-            // Add title if provided
-            if (state.title) {
-                code += `, '${state.title}'`;
-            }
+        // Initialize code tabs
+        document.querySelectorAll(".code-tab-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const tab = button.getAttribute("data-tab");
+                showCodeTab(tab);
+            });
+        });
 
-            code += ');';
-        }
+        // Show notification button
+        document.getElementById("show-notification-btn").addEventListener("click", () => {
+            updateStatus("Launching notification...");
+            showNotification();
+        });
 
-        return code;
-    } else {
-        // Simple format for PHP frameworks with no options
-        let code = `${prefix}->${state.type}('${state.message}'`;
+        // Update current date display
+        document.getElementById('current-date').textContent = '2025-03-12 00:13:20';
 
-        // Add title if provided
-        if (state.title) {
-            code += `, '${state.title}'`;
-        }
+        // Show the initial tab
+        showCodeTab('laravel');
 
-        code += ');';
-        return code;
-    }
-}
-
-// Show notification function
-function showNotification() {
-    const options = {
-        type: state.type,
-        message: state.message
-    };
-
-    if (state.title) options.title = state.title;
-    if (state.position) options.position = state.position;
-    if (state.timeout) options.timeout = state.timeout;
-    if (state.theme) options.theme = state.theme;
-    if (state.direction) options.direction = state.direction;
-    if (state.rtl) options.rtl = true;
-    if (!state.escapeHtml) options.escapeHtml = false;
-
-    try {
-        // If the flasher library is available, use it
-        if (typeof flasher !== 'undefined') {
-            if (state.theme) {
-                flasher.use(state.theme).flash(options);
-            } else {
-                flasher[state.type](state.message, state.title || null, options);
-            }
-
-            // Update status
-            updateStatus('Notification shown successfully!');
-        } else {
-            // If not available, show alert as fallback
-            alert('Notification would show with these settings:\n\n' +
-                  `Type: ${state.type}\n` +
-                  `Message: ${state.message}\n` +
-                  (state.title ? `Title: ${state.title}\n` : '') +
-                  '\nOptions:\n' +
-                  Object.entries(options)
-                    .filter(([key]) => !['type', 'message', 'title'].includes(key))
-                    .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
-                    .join('\n')
-            );
-        }
-    } catch (e) {
-        console.error('Error showing notification:', e);
-        alert('Failed to show notification: ' + e.message);
-    }
-}
+        // Initial code display update
+        updateCodeDisplay();
+    });
 </script>
