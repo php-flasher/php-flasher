@@ -372,8 +372,7 @@ async function createProduct(productData) {
 
             <!-- Additional interactive elements for demos -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="text-sm text-gray-500">Current date: <span id="current-date">2025-03-12 00:09:38</span>
-                </div>
+                <div class="text-sm text-gray-500"></div>
                 <div class="flex space-x-4">
                     <a href="https://phpflasher.com/docs"
                        class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
@@ -511,7 +510,7 @@ async function createProduct(productData) {
         return str
             .replace(/\\/g, "\\\\")  // Escape backslashes
             .replace(/'/g, "\\'")    // Escape single quotes
-            .replace(/"/g, "\\\"")    // Escape double quotes
+            .replace(/"/g, "\\\"")   // Escape double quotes
             .replace(/\n/g, "\\n")   // Handle newlines
             .replace(/\r/g, "\\r")   // Handle carriage returns
             .replace(/\t/g, "\\t");  // Handle tabs
@@ -761,6 +760,10 @@ async function createProduct(productData) {
         const symfonyCodeBlock = document.querySelector("#symfony-code-panel .flash-code-block");
         const jsCodeBlock = document.querySelector("#js-code-panel .flash-code-block");
 
+        console.log(`laravelCodeBlock: ${laravelCodeBlock}`);
+        console.log(`symfonyCodeBlock: ${symfonyCodeBlock}`);
+        console.log(`jsCodeBlock: ${jsCodeBlock}`);
+
         // Update each panel with the appropriate code
         if (laravelCodeBlock) {
             laravelCodeBlock.innerHTML = createCodeForFramework("laravel");
@@ -773,9 +776,6 @@ async function createProduct(productData) {
         if (jsCodeBlock) {
             jsCodeBlock.innerHTML = createCodeForFramework("js");
         }
-
-        // Update current date display
-        document.getElementById("current-date").textContent = "2025-03-12 00:13:20";
 
         // Re-initialize syntax highlighting if Prism is available
         if (typeof Prism !== "undefined") {
@@ -958,9 +958,6 @@ async function createProduct(productData) {
             updateStatus("Launching notification...");
             showNotification();
         });
-
-        // Update current date display
-        document.getElementById("current-date").textContent = "2025-03-12 00:13:20";
 
         // Show the initial tab
         showCodeTab("laravel");
