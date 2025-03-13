@@ -190,7 +190,7 @@
                                             <option value="onyx">Onyx</option>
                                             <option value="ruby">Ruby</option>
                                             <option value="sapphire">Sapphire</option>
-                                            <option value="slack">slack</option>
+                                            <option value="slack">Slack</option>
                                         </select>
                                     </div>
                                     <div>
@@ -199,8 +199,8 @@
                                         <select id="direction-select"
                                                 class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
                                             <option value="">Default</option>
-                                            <option value="top">top</option>
-                                            <option value="bottom">bottom</option>
+                                            <option value="top">Top</option>
+                                            <option value="bottom">Bottom</option>
                                         </select>
                                     </div>
                                 </div>
@@ -594,7 +594,6 @@
         display: inline-block;
         width: 2px;
         height: 1.2em;
-        vertical-align: middle;
     }
 </style>
 
@@ -1180,14 +1179,16 @@ async function checkStatus() {
                 Prism.highlightElement(panel.querySelector("code"));
             }
             const typingContainer = document.createElement("div");
-            typingContainer.className = "typing-container mt-2 mb-2 pl-2 border-l-4 border-green-500 bg-green-50/20";
+            typingContainer.className = "typing-container border-l-4 border-green-500 bg-green-50/20";
+            typingContainer.style.marginTop = "-20px";
             typingContainer.style.fontFamily = "monospace";
             typingContainer.style.position = "relative";
             typingContainer.style.minHeight = "50px";
             panel.querySelector("pre").appendChild(typingContainer);
             const afterContainer = document.createElement("pre");
             afterContainer.className = `language-${currentTab === "js" ? "javascript" : "php"}`;
-            afterContainer.style.marginTop = "-0.5em";
+            afterContainer.style.marginTop = "-2em";
+            afterContainer.style.paddingTop = "0";
             afterContainer.innerHTML = `<code>${escapeHtml(template.code.after)}</code>`;
             panel.appendChild(afterContainer);
             if (typeof Prism !== "undefined") {
