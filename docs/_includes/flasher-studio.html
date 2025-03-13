@@ -448,10 +448,109 @@ async function createProduct(productData) {
     .type-button:hover {
         transform: translateY(-2px);
     }
+
+    /* Additional animations for the PHPFlasher Interactive Studio */
+
+    /* Typing animation */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    /* Code highlight pulse */
+    @keyframes codePulse {
+      0% { background-color: rgba(79, 70, 229, 0.0); }
+      50% { background-color: rgba(79, 70, 229, 0.1); }
+      100% { background-color: rgba(79, 70, 229, 0.0); }
+    }
+
+    /* Shining effect for buttons */
+    @keyframes shine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Cursor blink effect */
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Line highlight effect */
+    .highlight-line {
+      background-color: rgba(16, 185, 129, 0.1);
+      display: block;
+      padding: 0 4px;
+      border-radius: 2px;
+      transition: background-color 0.3s ease;
+    }
+
+    .highlight-line:hover {
+      background-color: rgba(16, 185, 129, 0.2);
+    }
+
+    /* Typing container styles */
+    .typing-container {
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .typing-text {
+      animation: typing 3s steps(40, end);
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      margin-left: 2px;
+      width: 2px;
+      height: 1em;
+      background: currentColor;
+      animation: cursorBlink 1s infinite;
+    }
+
+    /* Enhanced code block */
+    .code-block {
+      position: relative;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .code-block:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Particle animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-particle {
+      position: absolute;
+      animation: float 3s ease-in-out infinite;
+      opacity: 0.5;
+      pointer-events: none;
+    }
 </style>
 
 <script>
-    // Create a proxy to monitor state changes
+    /**
+     * PHPFlasher Interactive Studio - Main Script
+     *
+     * This script powers the interactive notification demo that allows users to:
+     * - Select notification types (success, error, info, warning)
+     * - Customize notification content and options
+     * - See real-time code examples for Laravel, Symfony, and JavaScript
+     * - View typing animation effects for code generation
+     *
+     * @author PHPFlasher Team
+     * @version 2.0.0
+     * @lastUpdated 2025-03-13
+     */
+
+    // Create a proxy to monitor state changes for reactive UI updates
     const createStateProxy = () => {
         const stateTarget = {
             type: "success",
@@ -471,7 +570,7 @@ async function createProduct(productData) {
 
                 // When state changes, update the code display
                 if (document.readyState === "complete") {
-                    updateCodeDisplay();
+                    updateCodeDisplay(true);
                 }
 
                 return true;
@@ -479,34 +578,152 @@ async function createProduct(productData) {
         });
     };
 
-    // Replace the existing state object with our proxy
+    // Create state object with reactive properties
     const state = createStateProxy();
 
-    // Message templates based on notification type
-    const messageTemplates = {
+    /**
+     * Context-specific templates for each notification type and framework
+     *
+     * Each template contains:
+     * - title: Default title for the notification
+     * - message: Default message for the notification
+     * - controller: The controller name and context
+     * - method: The method name that would trigger this notification
+     * - code: Framework-specific code surrounding the notification
+     */
+    const contextTemplates = {
         success: {
-            message: "Your product has been created successfully!",
-            title: "Success"
+            laravel: {
+                title: "Success",
+                message: "Your product has been created successfully!",
+                controller: "ProductController",
+                method: "store",
+                code: {
+                    before: `// Create new product\n$product = Product::create($request->validated());`,
+                    after: `return redirect()->route('products.index');`
+                }
+            },
+            symfony: {
+                title: "Success",
+                message: "Your product has been created successfully!",
+                controller: "ProductController",
+                method: "new",
+                code: {
+                    before: `$em->persist($product);\n$em->flush();`,
+                    after: `return $this->redirectToRoute('app_product_index');`
+                }
+            },
+            js: {
+                title: "Success",
+                message: "Your product has been created successfully!",
+                method: "createProduct",
+                code: {
+                    before: `const result = await response.json();\n\nif (!response.ok) {\n    throw new Error(result.message || 'Failed to create product');\n}`,
+                    after: `return result;`
+                }
+            }
         },
         error: {
-            message: "An error occurred while saving the product.",
-            title: "Error"
+            laravel: {
+                title: "Error",
+                message: "An error occurred while processing your request.",
+                controller: "PaymentController",
+                method: "processPayment",
+                code: {
+                    before: `try {\n    $payment = $this->paymentGateway->charge($request->amount, $request->token);\n} catch (\\Exception $e) {`,
+                    after: `    return back()->withInput();\n}`
+                }
+            },
+            symfony: {
+                title: "Error",
+                message: "An error occurred while processing your payment.",
+                controller: "PaymentController",
+                method: "process",
+                code: {
+                    before: `try {\n    $payment = $this->paymentService->processPayment($request->get('token'), $amount);\n} catch (\\Exception $e) {`,
+                    after: `    return $this->redirectToRoute('app_checkout');\n}`
+                }
+            },
+            js: {
+                title: "Error",
+                message: "An error occurred while processing your payment.",
+                method: "processPayment",
+                code: {
+                    before: `try {\n    const paymentResponse = await stripeClient.createPayment({\n        amount: amount,\n        currency: 'usd',\n        payment_method: paymentMethodId\n    });\n\n    if (paymentResponse.error) {`,
+                    after: `        return { success: false };\n    }\n} catch (error) {\n    console.error('Payment error:', error);\n    flasher.error('Payment failed: ' + error.message);\n    return { success: false };\n}`
+                }
+            }
         },
         info: {
-            message: "Your product is being processed.",
-            title: "Information"
+            laravel: {
+                title: "Information",
+                message: "Your order has been received and is being processed.",
+                controller: "OrderController",
+                method: "create",
+                code: {
+                    before: `// Create order\n$order = Order::create([\n    'user_id' => auth()->id(),\n    'total' => $cart->total(),\n    'status' => 'pending'\n]);`,
+                    after: `// Dispatch background job\nProcessOrderJob::dispatch($order);\n\nreturn redirect()->route('orders.show', $order);`
+                }
+            },
+            symfony: {
+                title: "Information",
+                message: "Your order has been received and is being processed.",
+                controller: "OrderController",
+                method: "create",
+                code: {
+                    before: `$order = new Order();\n$order->setUser($this->getUser());\n$order->setTotal($cart->getTotal());\n$order->setStatus('pending');\n\n$em->persist($order);\n$em->flush();`,
+                    after: `// Dispatch message to queue\n$this->messageBus->dispatch(new ProcessOrderMessage($order->getId()));\n\nreturn $this->redirectToRoute('app_order_show', ['id' => $order->getId()]);`
+                }
+            },
+            js: {
+                title: "Information",
+                message: "Your order has been received and is being processed.",
+                method: "submitOrder",
+                code: {
+                    before: `// Submit order to API\nconst orderResponse = await fetch('/api/orders', {\n    method: 'POST',\n    headers: {\n        'Content-Type': 'application/json'\n    },\n    body: JSON.stringify(orderData)\n});\n\nconst order = await orderResponse.json();`,
+                    after: `// Track analytics\nanalytics.track('Order Submitted', {\n    orderId: order.id,\n    amount: order.total\n});\n\n// Navigate to order page\nnavigator.push(\`/orders/\${order.id}\`);`
+                }
+            }
         },
         warning: {
-            message: "Please review your product before submitting.",
-            title: "Warning"
+            laravel: {
+                title: "Warning",
+                message: "Your subscription will expire in 3 days.",
+                controller: "SubscriptionController",
+                method: "checkStatus",
+                code: {
+                    before: `$subscription = $user->subscription();\n$daysLeft = now()->diffInDays($subscription->expires_at, false);\n\nif ($daysLeft <= 3 && $daysLeft > 0) {`,
+                    after: `}\n\nreturn view('account.subscription', compact('subscription'));`
+                }
+            },
+            symfony: {
+                title: "Warning",
+                message: "Your subscription will expire in 3 days.",
+                controller: "SubscriptionController",
+                method: "checkStatus",
+                code: {
+                    before: `$subscription = $subscriptionRepository->findByUser($this->getUser());\n$daysLeft = $subscription->getExpiresAt()->diff(new \\DateTime())->days;\n\nif ($daysLeft <= 3 && $daysLeft > 0) {`,
+                    after: `}\n\nreturn $this->render('account/subscription.html.twig', [\n    'subscription' => $subscription\n]);`
+                }
+            },
+            js: {
+                title: "Warning",
+                message: "Your subscription will expire in 3 days.",
+                method: "checkSubscriptionStatus",
+                code: {
+                    before: `const { subscription } = await api.getSubscriptionStatus();\nconst daysLeft = moment(subscription.expiresAt).diff(moment(), 'days');\n\nif (daysLeft <= 3 && daysLeft > 0) {`,
+                    after: `}\n\n// Update UI\nthis.setState({\n    subscriptionStatus: subscription.status,\n    daysLeft: daysLeft\n});`
+                }
+            }
         }
     };
 
-    // Function to handle special characters in strings used in code examples
+    /**
+     * Function to safely escape special characters in code strings
+     * Ensures that quotes and backslashes are properly displayed in code examples
+     */
     function sanitizeForCode(str) {
-        if (typeof str !== "string") {
-            return str;
-        }
+        if (typeof str !== "string") return str;
         return str
             .replace(/\\/g, "\\\\")  // Escape backslashes
             .replace(/'/g, "\\'")    // Escape single quotes
@@ -516,8 +733,12 @@ async function createProduct(productData) {
             .replace(/\t/g, "\\t");  // Handle tabs
     }
 
-    // Function to safely escape HTML for display in code blocks
+    /**
+     * Function to safely escape HTML for display in code blocks
+     * Prevents XSS and ensures proper rendering of code
+     */
     function escapeHtml(text) {
+        if (typeof text !== "string") return "";
         return text
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
@@ -526,9 +747,11 @@ async function createProduct(productData) {
             .replace(/'/g, "&#039;");
     }
 
-    // Function to initialize the type buttons with proper selection
+    /**
+     * Updates the styling of notification type buttons
+     * Highlights the currently selected type
+     */
     function initializeTypeButtons() {
-        // Set the initial type from state
         document.querySelectorAll(".type-button").forEach(btn => {
             const type = btn.dataset.type;
 
@@ -559,15 +782,25 @@ async function createProduct(productData) {
         });
     }
 
-    // Initialize select elements with default values from state
+    /**
+     * Initializes form fields with current state values
+     * Sets all inputs, selects, and checkboxes to match the state object
+     */
     function initializeFormValues() {
         // Set values for all form elements based on state
-        if (state.title) {
-            document.getElementById("title-input").value = state.title;
+        const template = contextTemplates[state.type];
+
+        // Set title based on current notification type's template if empty
+        if (!state.title && template) {
+            state.title = template[getCurrentTab()].title;
         }
+        document.getElementById("title-input").value = state.title || "";
 
-        document.getElementById("message-input").value = state.message;
+        // Set message based on type if it matches a template message
+        const currentMessage = document.getElementById("message-input").value;
+        document.getElementById("message-input").value = state.message || "";
 
+        // Set all the option fields
         if (state.position) {
             document.getElementById("position-select").value = state.position;
         }
@@ -588,6 +821,10 @@ async function createProduct(productData) {
         document.getElementById("escape-html-check").checked = state.escapeHtml !== false; // Default to true
     }
 
+    /**
+     * Updates the status indicator in the UI
+     * Temporarily changes color and then reverts back to "Ready" state
+     */
     function updateStatus(message) {
         const statusText = document.getElementById("status-text");
         statusText.textContent = message;
@@ -612,7 +849,17 @@ async function createProduct(productData) {
         }, 2000);
     }
 
-    // Enhanced showCodeTab function to ensure proper tab switching and code updates
+    /**
+     * Gets the current active tab (laravel, symfony, or js)
+     */
+    function getCurrentTab() {
+        const activeTab = document.querySelector(".code-tab-btn.text-blue-600");
+        return activeTab ? activeTab.getAttribute("data-tab") : "laravel";
+    }
+
+    /**
+     * Switches to the specified code tab and updates the display
+     */
     function showCodeTab(tab) {
         // Hide all panels
         document.querySelectorAll(".code-panel").forEach(panel => {
@@ -639,174 +886,348 @@ async function createProduct(productData) {
         }
 
         // Update the code based on current state
-        updateCodeDisplay();
+        updateCodeDisplay(true);
     }
 
-    // Modified createCodeForFramework to better handle special characters
-    function createCodeForFramework(framework) {
-        // Base prefix depends on the framework
-        let prefix = "";
-        switch (framework) {
-            case "laravel":
-                prefix = "flash()";
-                break;
-            case "symfony":
-                prefix = "flash()";
-                break;
-            case "js":
-                prefix = "flasher";
-                break;
-        }
-
-        // Check if we have any options to set
-        const options = {};
-        if (state.position) {
-            options.position = state.position;
-        }
-        if (state.timeout) {
-            options.timeout = parseInt(state.timeout);
-        }
-        if (state.theme) {
-            options.theme = state.theme;
-        }
-        if (state.direction) {
-            options.direction = state.direction;
-        }
-        if (state.rtl) {
-            options.rtl = true;
-        }
-        if (!state.escapeHtml) {
-            options.escapeHtml = false;
-        }
-
-        // Sanitize message and title for code display
+    /**
+     * Generates a properly formatted flash method chain for the specified framework
+     * Handles proper multi-line formatting and indentation
+     */
+    function generateFlashCode(framework, indent = '') {
+        const prefix = framework === "js" ? "flasher" : "flash()";
         const safeMessage = sanitizeForCode(state.message);
         const safeTitle = state.title ? sanitizeForCode(state.title) : "";
 
-        // For PHP frameworks, use the multi-line ->options() format if we have options
-        if (Object.keys(options).length > 0 && framework !== "js") {
-            let code = `${prefix}\n`;
-            code += `    ->options([\n`;
+        // Start with the base prefix
+        let code = prefix;
+        let hasOptions = false;
 
-            Object.entries(options).forEach(([key, value], index, array) => {
+        // Indentation rules
+        const baseIndent = framework === "js" ? indent + '    ' : indent + '    ';
+
+        // Create properly formatted multi-line methods
+        let formattedCode = [];
+        formattedCode.push(prefix);
+
+        // Add options if present
+        if (state.position || state.timeout || state.theme || state.direction ||
+            state.rtl || state.escapeHtml === false) {
+            hasOptions = true;
+        }
+
+        if (framework === "js") {
+            // JavaScript format with options as object
+            const options = {};
+            if (state.position) options.position = state.position;
+            if (state.timeout) options.timeout = parseInt(state.timeout);
+            if (state.theme) options.theme = state.theme;
+            if (state.direction) options.direction = state.direction;
+            if (state.rtl) options.rtl = true;
+            if (state.escapeHtml === false) options.escapeHtml = false;
+
+            // For JS, all goes on one line if no options
+            if (Object.keys(options).length === 0) {
+                let jsCode = `${prefix}.${state.type}('${safeMessage}'`;
+                if (safeTitle) jsCode += `, '${safeTitle}'`;
+                jsCode += ");";
+                return jsCode;
+            }
+
+            // Add the type and arguments
+            formattedCode.push(`${baseIndent}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''}, {`);
+
+            // Add each option on its own line with proper indentation
+            const optionsLines = [];
+            Object.entries(options).forEach(([key, value]) => {
                 if (typeof value === "string") {
-                    code += `        '${key}' => '${value}'`;
-                } else if (typeof value === "boolean") {
-                    code += `        '${key}' => ${value ? "true" : "false"}`;
+                    optionsLines.push(`${baseIndent}    ${key}: '${value}'`);
                 } else {
-                    code += `        '${key}' => ${value}`;
+                    optionsLines.push(`${baseIndent}    ${key}: ${value}`);
                 }
-
-                if (index < array.length - 1) {
-                    code += ",";
-                }
-                code += "\n";
             });
 
-            code += `    ])\n`;
-            code += `    ->${state.type}('${safeMessage}'`;
-
-            if (safeTitle) {
-                code += `, '${safeTitle}'`;
-            }
-
-            code += ");";
-            return code;
-        }
-        // JavaScript format
-        else if (framework === "js") {
-            let code = "";
-
-            if (Object.keys(options).length > 0) {
-                code = `${prefix}.${state.type}('${safeMessage}'`;
-
-                if (safeTitle) {
-                    code += `, '${safeTitle}'`;
-                }
-
-                const jsOptions = JSON.stringify(options, null, 2)
-                    .replace(/"([^"]+)":/g, "$1:")
-                    .replace(/\n/g, "\n    ");
-
-                code += ", " + jsOptions + ");";
-            } else {
-                code = `${prefix}.${state.type}('${safeMessage}'`;
-
-                if (safeTitle) {
-                    code += `, '${safeTitle}'`;
-                }
-
-                code += ");";
-            }
-
-            return code;
+            formattedCode = formattedCode.concat(optionsLines);
+            formattedCode.push(`${baseIndent}});`);
         } else {
-            // Simple format for PHP frameworks with no options
-            let code = `${prefix}->${state.type}('${safeMessage}'`;
-
-            if (safeTitle) {
-                code += `, '${safeTitle}'`;
+            // PHP frameworks with method chaining - each option on a new line
+            if (state.position) {
+                formattedCode.push(`${baseIndent}->option('position', '${state.position}')`);
+            }
+            if (state.timeout) {
+                formattedCode.push(`${baseIndent}->option('timeout', ${state.timeout})`);
+            }
+            if (state.theme) {
+                formattedCode.push(`${baseIndent}->option('theme', '${state.theme}')`);
+            }
+            if (state.direction) {
+                formattedCode.push(`${baseIndent}->option('direction', '${state.direction}')`);
+            }
+            if (state.rtl) {
+                formattedCode.push(`${baseIndent}->option('rtl', true)`);
+            }
+            if (state.escapeHtml === false) {
+                formattedCode.push(`${baseIndent}->option('escapeHtml', false)`);
             }
 
-            code += ");";
-            return code;
+            // Add the final method call
+            const finalLine = `${baseIndent}->${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});`;
+            formattedCode.push(finalLine);
         }
+
+        // Join with line breaks for multi-line formatting
+        return formattedCode.join('\n');
     }
 
-    // Function to update the code display in all panels
-    function updateCodeDisplay() {
-        // Get all code panels
-        const laravelCodeBlock = document.querySelector("#laravel-code-panel .flash-code-block");
-        const symfonyCodeBlock = document.querySelector("#symfony-code-panel .flash-code-block");
-        const jsCodeBlock = document.querySelector("#js-code-panel .flash-code-block");
+    /**
+     * Generates complete, contextual code examples for each framework
+     * Uses templates that change based on the notification type
+     */
+    function generateCodeBlock(framework) {
+        // Get the template for the current notification type and framework
+        const template = contextTemplates[state.type][framework];
+        const indent = framework === "js" ? '    ' : '            ';
+        const flashCode = generateFlashCode(framework, indent);
 
-        console.log(`laravelCodeBlock: ${laravelCodeBlock}`);
-        console.log(`symfonyCodeBlock: ${symfonyCodeBlock}`);
-        console.log(`jsCodeBlock: ${jsCodeBlock}`);
+        // Template for each framework
+        let codeTemplate = "";
 
-        // Update each panel with the appropriate code
-        if (laravelCodeBlock) {
-            laravelCodeBlock.innerHTML = createCodeForFramework("laravel");
+        if (framework === "laravel") {
+            codeTemplate = `// app/Http/Controllers/${template.controller}.php
+
+    namespace App\\Http\\Controllers;
+
+    use App\\Models\\Product;
+    use App\\Http\\Requests\\StoreProductRequest;
+    use Illuminate\\Http\\Request;
+
+    class ${template.controller} extends Controller
+    {
+        public function ${template.method}(Request $request)
+        {
+            ${template.code.before}
+
+            ${flashCode}
+
+            ${template.code.after}
+        }
+    }`;
+        } else if (framework === "symfony") {
+            codeTemplate = `// src/Controller/${template.controller}.php
+
+    namespace App\\Controller;
+
+    use App\\Entity\\Product;
+    use App\\Form\\ProductType;
+    use Doctrine\\ORM\\EntityManagerInterface;
+    use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+    use Symfony\\Component\\HttpFoundation\\Request;
+    use Symfony\\Component\\HttpFoundation\\Response;
+    use Symfony\\Component\\Routing\\Attribute\\Route;
+
+    class ${template.controller} extends AbstractController
+    {
+        #[Route('/${template.method}', name: 'app_${template.method}', methods: ['GET', 'POST'])]
+        public function ${template.method}(Request $request, EntityManagerInterface $em): Response
+        {
+            ${template.code.before}
+
+            ${flashCode}
+
+            ${template.code.after}
+        }
+    }`;
+        } else { // JavaScript
+            codeTemplate = `// services/${template.method}.js
+
+    import flasher from '@flasher/flasher';
+
+    async function ${template.method}(data) {
+        try {
+            ${template.code.before}
+
+            ${flashCode}
+
+            ${template.code.after}
+        } catch (error) {
+            flasher.error('Error: ' + error.message);
+            throw error;
+        }
+    }`;
         }
 
-        if (symfonyCodeBlock) {
-            symfonyCodeBlock.innerHTML = createCodeForFramework("symfony");
-        }
+        return codeTemplate;
+    }
 
-        if (jsCodeBlock) {
-            jsCodeBlock.innerHTML = createCodeForFramework("js");
-        }
+    /**
+     * Apply typing animation to flash code
+     * Simulates real-time human typing for flash code blocks
+     */
+    function animateFlashCode(codeBlock, flashCode, fullCode) {
+        // Create container for the pre and code elements
+        const container = document.createElement('div');
 
-        // Re-initialize syntax highlighting if Prism is available
+        // Create temporary pre and code elements
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+
+        // Set appropriate classes
+        pre.className = 'language-' + (codeBlock.id.includes('js') ? 'javascript' : 'php');
+        code.className = 'code-block';
+
+        // Append them to the container
+        pre.appendChild(code);
+        container.appendChild(pre);
+
+        // Get the placeholder for the flash code in the full code
+        const flashRegex = /(\s*)flash\(\)[\s\S]*?;|(\s*)flasher[\s\S]*?;/m;
+
+        // Split the code at the flash part
+        const parts = fullCode.split(flashRegex);
+
+        // Find non-empty parts (before and after flash code)
+        const beforeFlash = parts.filter((part, i) => i < parts.length - 1 && part && !part.match(/^\s*$/)).join('');
+        const afterFlash = parts.filter((part, i) => i > 0 && part && !part.match(/^\s*$/)).pop();
+
+        // Set initial content to be everything before the flash code
+        code.textContent = beforeFlash;
+        codeBlock.innerHTML = '';
+        codeBlock.appendChild(container);
+
+        // Highlight the initial code
         if (typeof Prism !== "undefined") {
-            Prism.highlightAll();
+            Prism.highlightElement(code);
+        }
+
+        // Prepare for typing animation
+        let i = 0;
+        const typingSpeed = 30; // milliseconds per character
+        let currentText = beforeFlash;
+
+        // Start typing animation
+        const typeWriter = () => {
+            if (i < flashCode.length) {
+                // Add one character at a time
+                currentText += flashCode.charAt(i);
+                code.textContent = currentText;
+
+                // Re-highlight the code
+                if (typeof Prism !== "undefined") {
+                    Prism.highlightElement(code);
+                }
+
+                i++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                // Typing complete, add the rest of the code
+                currentText += afterFlash;
+                code.textContent = currentText;
+
+                // Final highlighting
+                if (typeof Prism !== "undefined") {
+                    Prism.highlightElement(code);
+                }
+            }
+        };
+
+        // Start the typing animation after a small delay
+        setTimeout(typeWriter, 100);
+    }
+
+    /**
+     * Update code display in all panels
+     * Optionally applies typing animation effect
+     */
+    function updateCodeDisplay(animate = false) {
+        const currentTab = getCurrentTab();
+
+        // Generate complete code blocks
+        const laravelCode = generateCodeBlock("laravel");
+        const symfonyCode = generateCodeBlock("symfony");
+        const jsCode = generateCodeBlock("js");
+
+        // Get panels
+        const laravelPanel = document.getElementById("laravel-code-panel");
+        const symfonyPanel = document.getElementById("symfony-code-panel");
+        const jsPanel = document.getElementById("js-code-panel");
+
+        // Extract just the flash code for animation
+        const getFlashCodePart = (framework) => {
+            const fullCode = generateCodeBlock(framework);
+            const flashRegex = /(\s*)flash\(\)[\s\S]*?;|(\s*)flasher[\s\S]*?;/m;
+            const match = fullCode.match(flashRegex);
+            return match ? match[0] : "";
+        };
+
+        // Update each panel with animation if requested
+        if (animate) {
+            // For Laravel panel
+            if (laravelPanel && currentTab === 'laravel') {
+                const flashCode = getFlashCodePart("laravel");
+                animateFlashCode(laravelPanel, flashCode, laravelCode);
+            } else if (laravelPanel) {
+                laravelPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(laravelCode)}</code></pre>`;
+                if (typeof Prism !== "undefined") {
+                    Prism.highlightElement(laravelPanel.querySelector('code'));
+                }
+            }
+
+            // For Symfony panel
+            if (symfonyPanel && currentTab === 'symfony') {
+                const flashCode = getFlashCodePart("symfony");
+                animateFlashCode(symfonyPanel, flashCode, symfonyCode);
+            } else if (symfonyPanel) {
+                symfonyPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(symfonyCode)}</code></pre>`;
+                if (typeof Prism !== "undefined") {
+                    Prism.highlightElement(symfonyPanel.querySelector('code'));
+                }
+            }
+
+            // For JavaScript panel
+            if (jsPanel && currentTab === 'js') {
+                const flashCode = getFlashCodePart("js");
+                animateFlashCode(jsPanel, flashCode, jsCode);
+            } else if (jsPanel) {
+                jsPanel.innerHTML = `<pre class="language-javascript"><code class="code-block">${escapeHtml(jsCode)}</code></pre>`;
+                if (typeof Prism !== "undefined") {
+                    Prism.highlightElement(jsPanel.querySelector('code'));
+                }
+            }
+        } else {
+            // Simple update without animation
+            if (laravelPanel) {
+                laravelPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(laravelCode)}</code></pre>`;
+            }
+
+            if (symfonyPanel) {
+                symfonyPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(symfonyCode)}</code></pre>`;
+            }
+
+            if (jsPanel) {
+                jsPanel.innerHTML = `<pre class="language-javascript"><code class="code-block">${escapeHtml(jsCode)}</code></pre>`;
+            }
+
+            // Re-initialize syntax highlighting
+            if (typeof Prism !== "undefined") {
+                Prism.highlightAll();
+            }
         }
     }
 
-    // Enhanced showNotification function to properly use the current state
+    /**
+     * Shows the notification using the Flasher library
+     * Falls back to a browser alert if Flasher isn't available
+     */
     function showNotification() {
         // Create a clean options object with only the necessary properties
         const options = {};
 
         // Only add properties that have values
-        if (state.position) {
-            options.position = state.position;
-        }
-        if (state.timeout) {
-            options.timeout = parseInt(state.timeout);
-        }
-        if (state.theme) {
-            options.theme = state.theme;
-        }
-        if (state.direction) {
-            options.direction = state.direction;
-        }
-        if (state.rtl) {
-            options.rtl = state.rtl;
-        }
-        if (state.escapeHtml !== undefined) {
-            options.escapeHtml = state.escapeHtml;
-        }
+        if (state.position) options.position = state.position;
+        if (state.timeout) options.timeout = parseInt(state.timeout);
+        if (state.theme) options.theme = state.theme;
+        if (state.direction) options.direction = state.direction;
+        if (state.rtl) options.rtl = state.rtl;
+        if (state.escapeHtml !== undefined) options.escapeHtml = state.escapeHtml;
 
         try {
             // If the flasher library is available, use it
@@ -826,8 +1247,14 @@ async function createProduct(productData) {
                     flasher[state.type](state.message, state.title || null, options);
                 }
 
-                // Update status
+                // Show success status
                 updateStatus("Notification shown successfully!");
+
+                // Add a subtle ripple effect to the button
+                const btn = document.getElementById("show-notification-btn");
+                btn.classList.add("animate-pulse");
+                setTimeout(() => btn.classList.remove("animate-pulse"), 1000);
+
             } else {
                 // Fallback to alert if flasher isn't available
                 let optionsText = "";
@@ -851,7 +1278,31 @@ async function createProduct(productData) {
         }
     }
 
-    // Debug helper function (can be called from console for troubleshooting)
+    /**
+     * Updates the message and title inputs based on the selected notification type
+     * Uses real-world examples from the contextTemplates
+     */
+    function updateContentForType(type) {
+        const currentTab = getCurrentTab();
+        const template = contextTemplates[type][currentTab];
+
+        // Update message and title inputs
+        if (template) {
+            document.getElementById("message-input").value = template.message;
+            state.message = template.message;
+
+            // Only update title if we have one in the template
+            if (template.title) {
+                document.getElementById("title-input").value = template.title;
+                state.title = template.title;
+            }
+        }
+    }
+
+    /**
+     * Debug helper function for troubleshooting the state
+     * Can be called from the browser console
+     */
     function debugState() {
         console.log("Current state:", { ...state });
         console.log("Form values:");
@@ -865,10 +1316,12 @@ async function createProduct(productData) {
         console.log("- Escape HTML:", document.getElementById("escape-html-check").checked);
     }
 
-    // Add this to window for easy access
+    // Add this to window for easy access from console
     window.debugPhpFlasher = debugState;
 
-    // Enhanced DOM Ready function with better initialization
+    /**
+     * Initialize the application when the DOM is fully loaded
+     */
     document.addEventListener("DOMContentLoaded", function() {
         // Initialize form with current state values
         initializeFormValues();
@@ -882,20 +1335,14 @@ async function createProduct(productData) {
                 const type = btn.dataset.type;
                 state.type = type;
 
-                // Update message based on type if it matches the previous template
-                const currentMessage = document.getElementById("message-input").value;
-                Object.values(messageTemplates).forEach(template => {
-                    if (currentMessage === template.message) {
-                        document.getElementById("message-input").value = messageTemplates[type].message;
-                        state.message = messageTemplates[type].message;
-                    }
-                });
+                // Update message and title based on contextual templates
+                updateContentForType(type);
 
                 // Update button styling
                 initializeTypeButtons();
 
-                // Update code display
-                updateCodeDisplay();
+                // Update code display with animation
+                updateCodeDisplay(true);
 
                 // Update status
                 updateStatus(`Type changed to: ${state.type}`);
@@ -916,53 +1363,128 @@ async function createProduct(productData) {
         // Select event listeners
         document.getElementById("position-select").addEventListener("change", (e) => {
             state.position = e.target.value;
-            updateCodeDisplay();
+            updateCodeDisplay(true);
         });
 
         document.getElementById("timeout-input").addEventListener("change", (e) => {
             state.timeout = e.target.value ? parseInt(e.target.value) : "";
-            updateCodeDisplay();
+            updateCodeDisplay(true);
         });
 
         document.getElementById("theme-select").addEventListener("change", (e) => {
             state.theme = e.target.value;
-            updateCodeDisplay();
+            updateCodeDisplay(true);
         });
 
         document.getElementById("direction-select").addEventListener("change", (e) => {
             state.direction = e.target.value;
-            updateCodeDisplay();
+            updateCodeDisplay(true);
         });
 
         // Checkbox event listeners
         document.getElementById("rtl-check").addEventListener("change", (e) => {
             state.rtl = e.target.checked;
-            updateCodeDisplay();
+            updateCodeDisplay(true);
         });
 
         document.getElementById("escape-html-check").addEventListener("change", (e) => {
             state.escapeHtml = e.target.checked;
-            updateCodeDisplay();
+            updateCodeDisplay(true);
         });
 
-        // Initialize code tabs
+        // Initialize code tabs with enhanced animation
         document.querySelectorAll(".code-tab-btn").forEach(button => {
             button.addEventListener("click", () => {
                 const tab = button.getAttribute("data-tab");
                 showCodeTab(tab);
+
+                // When changing tabs, update content based on the current state type
+                // This ensures each tab shows appropriate context for the notification type
+                updateContentForType(state.type);
             });
         });
 
-        // Show notification button
-        document.getElementById("show-notification-btn").addEventListener("click", () => {
+        // Show notification button with enhanced feedback
+        const notificationBtn = document.getElementById("show-notification-btn");
+        notificationBtn.addEventListener("click", () => {
+            // Add a subtle press effect
+            notificationBtn.classList.add("scale-95");
+            setTimeout(() => notificationBtn.classList.remove("scale-95"), 150);
+
             updateStatus("Launching notification...");
             showNotification();
         });
 
+        // Add hover shine effect to button
+        notificationBtn.addEventListener("mouseenter", () => {
+            const shineElement = notificationBtn.querySelector("div:last-child");
+            if (shineElement) {
+                shineElement.style.animation = "none";
+                setTimeout(() => {
+                    shineElement.style.animation = "shine 1s forwards";
+                }, 10);
+            }
+        });
+
+        // Easter egg: Konami code to show a special notification
+        let konamiCode = [];
+        const konamiSequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+                               "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+
+        document.addEventListener("keydown", function(e) {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-konamiSequence.length);
+
+            if (konamiCode.join(",") === konamiSequence.join(",")) {
+                // Show special Easter egg notification
+                if (typeof flasher !== "undefined") {
+                    flasher.use("neon").success("You found the Konami code! 🎮", "Secret Unlocked");
+                }
+            }
+        });
+
+        // Add special message to console
+        console.info("%c✨ PHPFlasher Interactive Studio v2.0 ✨", "color: #4F46E5; font-size: 14px; font-weight: bold;");
+        console.info("%cTry the Konami code for a surprise!", "color: #10B981; font-style: italic;");
+
         // Show the initial tab
         showCodeTab("laravel");
 
-        // Initial code display update
-        updateCodeDisplay();
+        // Initial code display update with animation
+        setTimeout(() => {
+            updateCodeDisplay(true);
+        }, 500);
     });
+
+    /**
+     * Special feature: Code animator
+     * Add subtle animations to the code display to make it more engaging
+     */
+    class CodeAnimator {
+        static highlight(codeElement) {
+            if (!codeElement) return;
+
+            // Add a subtle flash effect to the element
+            codeElement.style.transition = "background-color 0.5s ease";
+            codeElement.style.backgroundColor = "rgba(79, 70, 229, 0.1)";
+
+            setTimeout(() => {
+                codeElement.style.backgroundColor = "transparent";
+            }, 1000);
+        }
+
+        static pulse(element) {
+            if (!element) return;
+
+            element.classList.add("animate-pulse");
+            setTimeout(() => {
+                element.classList.remove("animate-pulse");
+            }, 1000);
+        }
+    }
+
+    // Initialize tooltips and other UI enhancements if available
+    if (typeof tippy !== "undefined") {
+        tippy("[data-tippy-content]");
+    }
 </script>
