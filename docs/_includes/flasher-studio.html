@@ -1,54 +1,46 @@
-<!-- Elegant PHPFlasher Interactive Demo -->
+<!-- PHPFlasher Interactive Studio - Enhanced Edition -->
 <section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
     <!-- Dynamic background elements -->
     <div class="absolute inset-0 z-0">
-        <div
-            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
-        <div
-            class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl"></div>
 
-        <!-- Animated particles -->
-        <div id="particles-js" class="absolute inset-0 opacity-60"></div>
+        <!-- Animated floating elements -->
+        <div class="floating-element absolute top-[15%] left-[10%] w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 animate-float-slow"></div>
+        <div class="floating-element absolute top-[40%] left-[80%] w-20 h-20 rounded-full bg-gradient-to-br from-green-500/5 to-emerald-500/5 animate-float-medium"></div>
+        <div class="floating-element absolute top-[80%] left-[20%] w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/5 to-orange-500/5 animate-float-fast"></div>
 
         <!-- Animated lines -->
         <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2"
-                  class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
-            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2"
-                  class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
         </svg>
     </div>
 
     <!-- Main content -->
     <div class="container relative z-10 mx-auto px-4 max-w-7xl">
         <!-- Elegant header -->
-        <header class="mb-8 text-center relative">
-            <div
-                class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+        <header class="mb-6 text-center relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
             <h1 class="mt-6 text-3xl font-light tracking-tight">
-                PHPFlasher <span
-                class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span>
-                Studio
+                PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
             </h1>
-            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see
-                it in action</p>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Design your perfect notification, customize options, and see it in action</p>
         </header>
 
         <!-- Main interactive area -->
-        <div class="rounded-xl shadow-lg bg-white overflow-hidden backdrop-blur-sm border border-gray-100">
+        <div class="rounded-xl shadow-xl bg-white overflow-hidden backdrop-blur-sm border border-gray-100 transition-all hover:shadow-2xl">
             <!-- Toolbar -->
-            <div
-                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <div class="w-3 h-3 rounded-full bg-red-400"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
                     <div class="w-3 h-3 rounded-full bg-green-400"></div>
                 </div>
-                <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250311</div>
+                <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250313</div>
                 <div id="status-indicator" class="flex items-center space-x-2">
                     <span id="status-text" class="text-xs text-emerald-600">Ready</span>
-                    <div
-                        class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
                 </div>
             </div>
 
@@ -57,48 +49,36 @@
                 <!-- Left panel: Options -->
                 <div class="w-full lg:w-2/5 border-r border-gray-100">
                     <!-- Options panel -->
-                    <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem); max-height: 700px;">
-                        <!-- Notification Type Selection - Changed to flex row layout -->
+                    <div class="p-4 overflow-y-auto" style="height: calc(100vh - 13rem); max-height: 650px;">
+                        <!-- Notification Type Selection -->
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
-                            <div class="flex flex-row space-x-2 w-full">
-                                <button
-                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-colors active:scale-95 transform border-2 border-green-500"
-                                    data-type="success">
-                                        <span
-                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
-                                            <i class="fas fa-check text-lg"></i>
-                                        </span>
+                            <div class="grid grid-cols-4 gap-2 w-full">
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-all duration-300 active:scale-95 transform border-2 border-green-500" data-type="success">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
+                                        <i class="fas fa-check text-lg"></i>
+                                    </span>
                                     <span class="text-xs font-medium text-gray-700">Success</span>
                                 </button>
 
-                                <button
-                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-colors active:scale-95 transform"
-                                    data-type="error">
-                                        <span
-                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
-                                            <i class="fas fa-times text-lg"></i>
-                                        </span>
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-all duration-300 active:scale-95 transform" data-type="error">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
+                                        <i class="fas fa-times text-lg"></i>
+                                    </span>
                                     <span class="text-xs font-medium text-gray-700">Error</span>
                                 </button>
 
-                                <button
-                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors active:scale-95 transform"
-                                    data-type="info">
-                                        <span
-                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
-                                            <i class="fas fa-info-circle text-lg"></i>
-                                        </span>
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-all duration-300 active:scale-95 transform" data-type="info">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
+                                        <i class="fas fa-info-circle text-lg"></i>
+                                    </span>
                                     <span class="text-xs font-medium text-gray-700">Info</span>
                                 </button>
 
-                                <button
-                                    class="type-button flex-1 flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors active:scale-95 transform"
-                                    data-type="warning">
-                                        <span
-                                            class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
-                                            <i class="fas fa-exclamation-triangle text-lg"></i>
-                                        </span>
+                                <button class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-all duration-300 active:scale-95 transform" data-type="warning">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
+                                        <i class="fas fa-exclamation-triangle text-lg"></i>
+                                    </span>
                                     <span class="text-xs font-medium text-gray-700">Warning</span>
                                 </button>
                             </div>
@@ -108,38 +88,30 @@
                         <div class="mb-6 space-y-4">
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title
-                                        (optional)</label>
+                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title</label>
                                     <span class="text-xs text-gray-400">Optional</span>
                                 </div>
-                                <input type="text" id="title-input"
-                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-                                       placeholder="Enter notification title" value="">
+                                <input type="text" id="title-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" placeholder="Enter notification title" value="">
                             </div>
 
                             <div>
-                                <label for="message-input"
-                                       class="block mb-2 text-sm font-medium text-gray-700">Message</label>
-                                <input id="message-input"
-                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                       placeholder="Enter your notification message"
-                                       value="Your product has been created successfully!">
+                                <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <input id="message-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" placeholder="Enter your notification message" value="Your product has been created successfully!">
                             </div>
                         </div>
 
                         <!-- Configuration Options -->
-                        <div class="mb-6 border border-gray-200 rounded-md overflow-hidden shadow-sm">
-                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-3 py-2 flex items-center">
+                        <div class="mb-6 border border-gray-200 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-3 py-2 flex items-center justify-between">
                                 <span class="font-medium text-gray-700">Configuration Options</span>
+                                <span class="text-xs text-gray-500">Customize appearance</span>
                             </div>
 
                             <div class="px-3 py-3 border-t border-gray-200">
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
-                                        <label for="position-select"
-                                               class="block mb-1 text-sm font-medium text-gray-700">Position</label>
-                                        <select id="position-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
                                             <option value="">Default</option>
                                             <option value="top-right">top-right</option>
                                             <option value="top-left">top-left</option>
@@ -150,10 +122,8 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout
-                                            (ms)</label>
-                                        <select id="timeout-input"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout (ms)</label>
+                                        <select id="timeout-input" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
                                             <option value="">Default</option>
                                             <option value="10000">10 seconds</option>
                                             <option value="5000">5 seconds</option>
@@ -165,8 +135,7 @@
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <div>
                                         <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
-                                        <select id="theme-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
                                             <option value="">Default</option>
                                             <option value="amazon">amazon</option>
                                             <option value="amber">amber</option>
@@ -188,10 +157,8 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="direction-select"
-                                               class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
-                                        <select id="direction-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <label for="direction-select" class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                        <select id="direction-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
                                             <option value="">Default</option>
                                             <option value="top">top</option>
                                             <option value="bottom">bottom</option>
@@ -201,37 +168,30 @@
 
                                 <div class="mt-4 grid grid-cols-2 gap-3">
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="rtl-check"
-                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                        <input type="checkbox" id="rtl-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
                                         <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="escape-html-check"
-                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
-                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape
-                                            HTML</label>
+                                        <input type="checkbox" id="escape-html-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape HTML</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Launch button -->
-                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md"
-                                data-controller="notification-demo">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
-                            <div
-                                class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md shadow-lg" data-controller="notification-demo">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
+                            <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
 
-                            <div class="relative px-5 py-3 flex items-center justify-center text-white font-medium">
-                                    <span class="flex items-center space-x-2">
-                                        <span>Launch Notification</span>
-                                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
-                                    </span>
+                            <div class="relative px-5 py-3.5 flex items-center justify-center text-white font-medium">
+                                <span class="flex items-center space-x-2">
+                                    <span>Launch Notification</span>
+                                    <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
+                                </span>
                             </div>
 
-                            <div
-                                class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
+                            <div class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
                         </button>
                     </div>
                 </div>
@@ -240,317 +200,290 @@
                 <div class="w-full lg:w-3/5">
                     <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
-                        <div class="text-xs text-gray-500">User: <span class="font-medium">yoeunes</span></div>
+                        <div id="user-info" class="text-xs text-gray-500">User: <span class="font-medium">yoeunes</span></div>
                     </div>
 
                     <!-- Code tabs with FontAwesome icons -->
                     <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
-                        <button id="laravel-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5"
-                                data-tab="laravel">
+                        <button id="laravel-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5" data-tab="laravel">
                             <i class="fab fa-laravel text-red-500"></i>
                             <span>Laravel</span>
                         </button>
-                        <button id="symfony-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
-                                data-tab="symfony">
+                        <button id="symfony-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5" data-tab="symfony">
                             <i class="fab fa-symfony text-black"></i>
                             <span>Symfony</span>
                         </button>
-                        <button id="js-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
-                                data-tab="js">
+                        <button id="js-tab" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5" data-tab="js">
                             <i class="fab fa-js text-yellow-400"></i>
                             <span>JavaScript</span>
                         </button>
                     </div>
 
-                    <!-- Laravel Code Panel -->
-                    <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active"
-                         style="height: calc(100vh - 15rem); max-height: 700px;">
-                            <pre class="language-php"><code class="code-block">
-// app/Http/Controllers/ProductController.php
+                    <!-- Code animation wrapper - Contains both the static code and the animation layer -->
+                    <div id="code-display-wrapper" class="relative">
+                        <!-- Laravel Code Panel -->
+                        <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active" style="height: 420px;">
+                            <!-- Code will be inserted here by JavaScript -->
+                        </div>
 
-namespace App\Http\Controllers;
+                        <!-- Symfony Code Panel -->
+                        <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel" style="height: 420px;">
+                            <!-- Code will be inserted here by JavaScript -->
+                        </div>
 
-use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use Illuminate\Http\Request;
+                        <!-- JavaScript Code Panel -->
+                        <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel" style="height: 420px;">
+                            <!-- Code will be inserted here by JavaScript -->
+                        </div>
 
-class ProductController extends Controller
-{
-    public function store(StoreProductRequest $request)
-    {
-        // Create new product
-        $product = Product::create($request->validated());
-
-        <span class="flash-code-block">flash()->success('Your product has been created successfully!');</span>
-
-        return redirect()->route('products.index');
-    }
-}</code></pre>
-                    </div>
-
-                    <!-- Symfony Code Panel -->
-                    <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel"
-                         style="height: calc(100vh - 15rem); max-height: 700px;">
-                            <pre class="language-php"><code class="code-block">
-// src/Controller/ProductController.php
-
-namespace App\Controller;
-
-use App\Entity\Product;
-use App\Form\ProductType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-
-class ProductController extends AbstractController
-{
-    #[Route('/products/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($product);
-            $em->flush();
-
-            <span class="flash-code-block">flash()->success('Your product has been created successfully!');</span>
-
-            return $this->redirectToRoute('app_product_index');
-        }
-
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
-}</code></pre>
-                    </div>
-
-                    <!-- JavaScript Code Panel -->
-                    <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel"
-                         style="height: calc(100vh - 15rem); max-height: 700px;">
-                            <pre class="language-javascript"><code class="code-block">
-// product-service.js
-
-import flasher from '@flasher/flasher';
-
-async function createProduct(productData) {
-    try {
-        const response = await fetch('/api/products', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(productData)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to create product');
-        }
-
-        <span class="flash-code-block">flasher.success('Your product has been created successfully!');</span>
-
-        return result;
-    } catch (error) {
-        flasher.error('Error: ' + error.message);
-        throw error;
-    }
-}</code></pre>
+                        <!-- Animation overlay - This stays invisible but receives animation commands -->
+                        <div id="animation-layer" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Additional interactive elements for demos -->
+            <!-- Footer with links -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="text-sm text-gray-500"></div>
+                <div class="flex items-center space-x-2">
+                    <span class="pulse-dot"></span>
+                    <span class="text-xs text-gray-500">Last update: <span id="last-update" class="font-medium">2025-03-13</span></span>
+                </div>
                 <div class="flex space-x-4">
-                    <a href="https://phpflasher.com/docs"
-                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fas fa-book mr-1.5 text-xs"></i>
                         Documentation
                     </a>
-                    <a href="https://github.com/php-flasher/php-flasher"
-                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <a href="https://github.com/php-flasher/php-flasher" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
                         <i class="fab fa-github mr-1.5 text-xs"></i>
                         GitHub
                     </a>
+                    <a href="#" id="theme-toggle" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <i class="fas fa-adjust mr-1.5 text-xs"></i>
+                        <span>Theme</span>
+                    </a>
                 </div>
+            </div>
+        </div>
+
+        <!-- Version badge -->
+        <div class="mt-4 flex justify-center">
+            <div class="bg-white/80 backdrop-blur-sm shadow-sm border border-gray-100 rounded-full px-3 py-1 text-xs flex items-center space-x-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="text-gray-600">PHPFlasher v2.5.0</span>
             </div>
         </div>
     </div>
 </section>
 
 <style>
-    /* Custom styles for highlighting code */
-    pre {
-        position: relative;
+    /* Base styles */
+    :root {
+        --primary-color: #4F46E5;
+        --success-color: #10B981;
+        --error-color: #EF4444;
+        --info-color: #3B82F6;
+        --warning-color: #F59E0B;
+        --highlight-color: rgba(16, 185, 129, 0.1);
     }
 
-    .code-block {
-        display: block;
-        position: relative;
-        font-size: 0.875rem;
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* Highlight for the flash method lines */
-    .flash-code-block {
-        display: inline-block;
-        width: 100%;
-        background-color: rgba(16, 185, 129, 0.1);
-        border-radius: 4px;
-        font-weight: 600;
-        box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
-        padding: 2px 0;
-    }
-
-    /* Animation keyframes */
+    /* Custom animations */
     @keyframes shine {
-        to {
-            left: 100%;
-        }
-    }
-
-    @keyframes progress {
-        0% {
-            transform: scaleX(1);
-        }
-        100% {
-            transform: scaleX(0);
-        }
+        to { left: 100%; }
     }
 
     @keyframes ping {
-        0% {
-            transform: scale(1);
-            opacity: 1;
-        }
-        75%, 100% {
-            transform: scale(2);
-            opacity: 0;
-        }
+        0% { transform: scale(1); opacity: 1; }
+        75%, 100% { transform: scale(2); opacity: 0; }
     }
 
-    /* Additional styles for the notification types buttons */
+    @keyframes float-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    @keyframes float-medium {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-10px) translateX(5px); }
+    }
+
+    @keyframes float-fast {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        25% { transform: translateY(-5px) translateX(3px); }
+        75% { transform: translateY(5px) translateX(-3px); }
+    }
+
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    @keyframes pulse-bg {
+        0%, 100% { background-color: rgba(79, 70, 229, 0.05); }
+        50% { background-color: rgba(79, 70, 229, 0.15); }
+    }
+
+    @keyframes highlight-line {
+        0% { background-color: rgba(16, 185, 129, 0.05); }
+        50% { background-color: rgba(16, 185, 129, 0.2); }
+        100% { background-color: rgba(16, 185, 129, 0.05); }
+    }
+
+    /* Floating elements */
+    .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+    .animate-float-medium { animation: float-medium 6s ease-in-out infinite; }
+    .animate-float-fast { animation: float-fast 4s ease-in-out infinite; }
+
+    /* Pulse dot animation in footer */
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        display: inline-block;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        position: relative;
+    }
+
+    .pulse-dot::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+        animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+    }
+
+    /* Code display styling */
+    .code-block {
+        display: block;
+        position: relative;
+        font-size: 0.85rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .flash-code-block {
+        display: inline-block;
+        width: 100%;
+        background-color: var(--highlight-color);
+        border-radius: 4px;
+        font-weight: 600;
+        box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
+        padding: 2px 4px;
+    }
+
+    .flash-typing {
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: rgba(16, 185, 129, 0.1);
+        width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 3.5s steps(40, end) forwards;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 3px;
+        height: 1.2em;
+        background-color: var(--primary-color);
+        margin-left: 2px;
+        animation: blink 1s infinite;
+    }
+
+    /* Animation for code typing */
+    .animated-line {
+        position: relative;
+        padding-left: 4px;
+        border-left: 2px solid var(--success-color);
+        animation: highlight-line 2s ease-in-out;
+    }
+
     .type-button {
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        position: relative;
     }
 
     .type-button:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
     }
 
-    /* Additional animations for the PHPFlasher Interactive Studio */
-
-    /* Typing animation */
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+    .type-button::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        box-shadow: 0 0 0 2px var(--primary-color);
     }
 
-    /* Code highlight pulse */
-    @keyframes codePulse {
-      0% { background-color: rgba(79, 70, 229, 0.0); }
-      50% { background-color: rgba(79, 70, 229, 0.1); }
-      100% { background-color: rgba(79, 70, 229, 0.0); }
+    .type-button:focus::after {
+        opacity: 1;
     }
 
-    /* Shining effect for buttons */
-    @keyframes shine {
-      0% { left: -100%; }
-      100% { left: 100%; }
+    /* Code panel enhancements */
+    .code-panel {
+        transition: opacity 0.3s ease;
     }
 
-    /* Cursor blink effect */
-    @keyframes cursorBlink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    .code-panel.hidden {
+        opacity: 0;
     }
 
-    /* Line highlight effect */
-    .highlight-line {
-      background-color: rgba(16, 185, 129, 0.1);
-      display: block;
-      padding: 0 4px;
-      border-radius: 2px;
-      transition: background-color 0.3s ease;
+    .code-panel.active {
+        opacity: 1;
     }
 
-    .highlight-line:hover {
-      background-color: rgba(16, 185, 129, 0.2);
+    /* Theme toggle effects */
+    #theme-toggle:hover i {
+        animation: spin 1s ease;
     }
 
-    /* Typing container styles */
-    .typing-container {
-      position: relative;
-      white-space: nowrap;
-      overflow: hidden;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
-    .typing-text {
-      animation: typing 3s steps(40, end);
+    /* Add responsive adjustments */
+    @media (max-width: 768px) {
+        .code-panel {
+            height: 350px !important;
+        }
     }
 
-    .typing-cursor {
-      display: inline-block;
-      margin-left: 2px;
-      width: 2px;
-      height: 1em;
-      background: currentColor;
-      animation: cursorBlink 1s infinite;
-    }
-
-    /* Enhanced code block */
-    .code-block {
-      position: relative;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .code-block:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-
-    /* Particle animations */
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
-
-    .floating-particle {
-      position: absolute;
-      animation: float 3s ease-in-out infinite;
-      opacity: 0.5;
-      pointer-events: none;
+    /* Concise code blocks */
+    pre code {
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
     }
 </style>
 
 <script>
-    /**
- * PHPFlasher Interactive Studio - Main Script
+/**
+ * PHPFlasher Interactive Studio - Enhanced Edition
  *
- * This enhanced script brings a real IDE-like experience to the PHPFlasher demo:
- * - Shows real code templates with the flash code being typed in real-time
- * - Only animates the relevant flash notification code, keeping surroundings static
- * - Contextual examples based on notification type
- * - Human-like typing animation with realistic speed
+ * Features:
+ * - Real-time code generation with typing animation
+ * - Context-aware examples for different notification types
+ * - Advanced animations and transitions
+ * - Clean and concise code examples
  *
+ * @version 3.0.0
  * @author PHPFlasher Team
- * @version 2.1.0
  * @lastUpdated 2025-03-13
  */
 
-// Create a proxy to monitor state changes for reactive UI updates
+// Create state with proxy to track changes
 const createStateProxy = () => {
     const stateTarget = {
         type: "success",
@@ -562,23 +495,32 @@ const createStateProxy = () => {
         rtl: false,
         theme: "",
         escapeHtml: true,
-        // Track what's changed to only animate that part
-        _previousState: {}
+        _previousState: {},
+        _animationInProgress: false
     };
 
     return new Proxy(stateTarget, {
         set(target, property, value) {
-            // Store previous value before updating
-            if (property !== '_previousState') {
+            // Store previous value
+            if (property !== '_previousState' && property !== '_animationInProgress') {
                 target._previousState[property] = target[property];
             }
 
             target[property] = value;
 
-            // When state changes, update the code display
-            if (document.readyState === "complete" && property !== '_previousState') {
-                const onlyOptionsChanged =
-                    ['position', 'timeout', 'theme', 'direction', 'rtl', 'escapeHtml'].includes(property);
+            // Update code when state changes
+            if (document.readyState === "complete" &&
+                property !== '_previousState' &&
+                property !== '_animationInProgress') {
+
+                const onlyOptionsChanged = ['position', 'timeout', 'theme', 'direction', 'rtl', 'escapeHtml'].includes(property);
+
+                if (property === 'type') {
+                    // Show loading state
+                    updateStatus("Changing template...");
+                }
+
+                // Update the code with animation
                 updateCodeDisplay(true, onlyOptionsChanged);
             }
 
@@ -587,11 +529,12 @@ const createStateProxy = () => {
     });
 };
 
-// Create state object with reactive properties
+// Create global state object
 const state = createStateProxy();
 
 /**
- * Context-specific templates for each notification type and framework
+ * Concise template examples for each notification type and framework
+ * Shorter examples to ensure they fit well in the viewport without scrolling
  */
 const contextTemplates = {
     success: {
@@ -601,19 +544,17 @@ const contextTemplates = {
             controller: "ProductController",
             method: "store",
             code: {
-                before: `// app/Http/Controllers/ProductController.php
-
+                before: `// ProductController.php
 namespace App\\Http\\Controllers;
 
 use App\\Models\\Product;
-use App\\Http\\Requests\\StoreProductRequest;
-use Illuminate\\Http\\Request;
+use App\\Http\\Requests\\ProductRequest;
 
 class ProductController extends Controller
 {
-    public function store(StoreProductRequest $request)
+    public function store(ProductRequest $request)
     {
-        // Create new product
+        // Create product
         $product = Product::create($request->validated());
 
         `,
@@ -627,42 +568,26 @@ class ProductController extends Controller
             title: "Success",
             message: "Your product has been created successfully!",
             controller: "ProductController",
-            method: "new",
+            method: "create",
             code: {
-                before: `// src/Controller/ProductController.php
-
+                before: `// ProductController.php
 namespace App\\Controller;
 
 use App\\Entity\\Product;
-use App\\Form\\ProductType;
-use Doctrine\\ORM\\EntityManagerInterface;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
-use Symfony\\Component\\HttpFoundation\\Request;
-use Symfony\\Component\\HttpFoundation\\Response;
-use Symfony\\Component\\Routing\\Attribute\\Route;
 
 class ProductController extends AbstractController
 {
-    #[Route('/products/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    #[Route('/product/new', name: 'app_product_create')]
+    public function create(Request $request): Response
     {
+        // Process form & save product
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
+        // ... form handling and persist logic
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($product);
-            $em->flush();
-
-            `,
+        `,
                 after: `
-            return $this->redirectToRoute('app_product_index');
-        }
-
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_product_index');
     }
 }`
             }
@@ -670,34 +595,21 @@ class ProductController extends AbstractController
         js: {
             title: "Success",
             message: "Your product has been created successfully!",
+            file: "product-service.js",
             method: "createProduct",
             code: {
                 before: `// product-service.js
-
 import flasher from '@flasher/flasher';
 
-async function createProduct(productData) {
+async function createProduct(data) {
     try {
-        const response = await fetch('/api/products', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(productData)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to create product');
-        }
+        const response = await api.post('/products', data);
 
         `,
                 after: `
-        return result;
+        return response.data;
     } catch (error) {
-        flasher.error('Error: ' + error.message);
+        flasher.error('Failed to create product');
         throw error;
     }
 }`
@@ -709,104 +621,80 @@ async function createProduct(productData) {
             title: "Error",
             message: "An error occurred while processing your request.",
             controller: "PaymentController",
-            method: "processPayment",
+            method: "process",
             code: {
-                before: `// app/Http/Controllers/PaymentController.php
-
+                before: `// PaymentController.php
 namespace App\\Http\\Controllers;
 
 use App\\Services\\PaymentGateway;
-use Illuminate\\Http\\Request;
 
 class PaymentController extends Controller
 {
-    protected $paymentGateway;
-
-    public function __construct(PaymentGateway $paymentGateway)
-    {
-        $this->paymentGateway = $paymentGateway;
-    }
-
-    public function processPayment(Request $request)
+    public function process(Request $request)
     {
         try {
-            $payment = $this->paymentGateway->charge($request->amount, $request->token);
+            $result = $this->paymentGateway->charge($request->token);
         } catch (\\Exception $e) {
             `,
                 after: `
-            return back()->withInput();
+            return back();
         }
 
-        return redirect()->route('order.confirmation');
+        return redirect()->route('payment.success');
     }
 }`
             }
         },
         symfony: {
             title: "Error",
-            message: "An error occurred while processing your payment.",
+            message: "An error occurred while processing your request.",
             controller: "PaymentController",
             method: "process",
             code: {
-                before: `// src/Controller/PaymentController.php
-
+                before: `// PaymentController.php
 namespace App\\Controller;
 
-use App\\Service\\PaymentService;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
-use Symfony\\Component\\HttpFoundation\\Request;
-use Symfony\\Component\\HttpFoundation\\Response;
-use Symfony\\Component\\Routing\\Attribute\\Route;
 
 class PaymentController extends AbstractController
 {
-    #[Route('/payment/process', name: 'app_payment_process', methods: ['POST'])]
-    public function process(Request $request, PaymentService $paymentService): Response
+    public function process(Request $request): Response
     {
-        $amount = $request->get('amount');
-
         try {
-            $payment = $paymentService->processPayment($request->get('token'), $amount);
+            $payment = $this->paymentService->process($request->get('token'));
         } catch (\\Exception $e) {
             `,
                 after: `
-            return $this->redirectToRoute('app_checkout');
+            return $this->redirectToRoute('payment_form');
         }
 
-        return $this->redirectToRoute('app_confirmation');
+        return $this->redirectToRoute('payment_success');
     }
 }`
             }
         },
         js: {
             title: "Error",
-            message: "An error occurred while processing your payment.",
+            message: "An error occurred while processing your request.",
+            file: "payment-service.js",
             method: "processPayment",
             code: {
                 before: `// payment-service.js
-
 import flasher from '@flasher/flasher';
-import { stripeClient } from './stripe-client';
 
-async function processPayment({ paymentMethodId, amount }) {
+async function processPayment(paymentData) {
     try {
-        const paymentResponse = await stripeClient.createPayment({
-            amount: amount,
-            currency: 'usd',
-            payment_method: paymentMethodId
-        });
-
-        if (paymentResponse.error) {
+        const response = await api.post('/payments', paymentData);
+        if (!response.ok) {
             `,
                 after: `
-            return { success: false };
+            return false;
         }
 
-        return { success: true, payment: paymentResponse };
+        return response.data;
     } catch (error) {
-        console.error('Payment error:', error);
-        flasher.error('Payment failed: ' + error.message);
-        return { success: false };
+        console.error(error);
+        return false;
     }
 }`
             }
@@ -815,34 +703,25 @@ async function processPayment({ paymentMethodId, amount }) {
     info: {
         laravel: {
             title: "Information",
-            message: "Your order has been received and is being processed.",
+            message: "Your order is being processed.",
             controller: "OrderController",
-            method: "create",
+            method: "submit",
             code: {
-                before: `// app/Http/Controllers/OrderController.php
-
+                before: `// OrderController.php
 namespace App\\Http\\Controllers;
 
 use App\\Models\\Order;
-use App\\Jobs\\ProcessOrderJob;
-use Illuminate\\Http\\Request;
 
 class OrderController extends Controller
 {
-    public function create(Request $request)
+    public function submit(Request $request)
     {
-        $cart = app(CartService::class);
-
-        // Create order
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'total' => $cart->total(),
-            'status' => 'pending'
-        ]);
+        // Create and save order
+        $order = Order::create($request->validated());
 
         `,
                 after: `
-        // Dispatch background job
+        // Send to processing queue
         ProcessOrderJob::dispatch($order);
 
         return redirect()->route('orders.show', $order);
@@ -852,81 +731,60 @@ class OrderController extends Controller
         },
         symfony: {
             title: "Information",
-            message: "Your order has been received and is being processed.",
+            message: "Your order is being processed.",
             controller: "OrderController",
             method: "create",
             code: {
-                before: `// src/Controller/OrderController.php
-
+                before: `// OrderController.php
 namespace App\\Controller;
 
 use App\\Entity\\Order;
-use App\\Message\\ProcessOrderMessage;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
-use Symfony\\Component\\HttpFoundation\\Response;
-use Symfony\\Component\\Messenger\\MessageBusInterface;
-use Symfony\\Component\\Routing\\Attribute\\Route;
 
 class OrderController extends AbstractController
 {
-    #[Route('/order/new', name: 'app_order_create', methods: ['POST'])]
-    public function create(CartService $cart, EntityManagerInterface $em, MessageBusInterface $messageBus): Response
+    public function create(Request $request): Response
     {
+        // Create and save order
         $order = new Order();
-        $order->setUser($this->getUser());
-        $order->setTotal($cart->getTotal());
-        $order->setStatus('pending');
-
-        $em->persist($order);
-        $em->flush();
+        // ... set order properties
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
 
         `,
                 after: `
-        // Dispatch message to queue
-        $messageBus->dispatch(new ProcessOrderMessage($order->getId()));
+        // Dispatch order processing
+        $this->messageBus->dispatch(new ProcessOrder($order->getId()));
 
-        return $this->redirectToRoute('app_order_show', ['id' => $order->getId()]);
+        return $this->redirectToRoute('app_order_show', [
+            'id' => $order->getId()
+        ]);
     }
 }`
             }
         },
         js: {
             title: "Information",
-            message: "Your order has been received and is being processed.",
+            message: "Your order is being processed.",
+            file: "order-service.js",
             method: "submitOrder",
             code: {
                 before: `// order-service.js
-
 import flasher from '@flasher/flasher';
-import { analytics } from './analytics';
 
 async function submitOrder(orderData) {
     try {
-        // Submit order to API
-        const orderResponse = await fetch('/api/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(orderData)
-        });
-
-        const order = await orderResponse.json();
+        const response = await api.post('/orders', orderData);
+        const order = response.data;
 
         `,
                 after: `
-        // Track analytics
-        analytics.track('Order Submitted', {
-            orderId: order.id,
-            amount: order.total
-        });
-
-        // Navigate to order page
-        navigator.push(\`/orders/\${order.id}\`);
+        // Track order
+        analytics.trackOrder(order.id);
 
         return order;
     } catch (error) {
-        flasher.error('Error: ' + error.message);
+        flasher.error('Order submission failed');
         throw error;
     }
 }`
@@ -936,65 +794,55 @@ async function submitOrder(orderData) {
     warning: {
         laravel: {
             title: "Warning",
-            message: "Your subscription will expire in 3 days.",
-            controller: "SubscriptionController",
-            method: "checkStatus",
+            message: "Your account will expire in 3 days.",
+            controller: "AccountController",
+            method: "dashboard",
             code: {
-                before: `// app/Http/Controllers/SubscriptionController.php
-
+                before: `// AccountController.php
 namespace App\\Http\\Controllers;
 
-use Carbon\\Carbon;
-use Illuminate\\Http\\Request;
-
-class SubscriptionController extends Controller
+class AccountController extends Controller
 {
-    public function checkStatus(Request $request)
+    public function dashboard()
     {
         $user = auth()->user();
-        $subscription = $user->subscription();
-        $daysLeft = now()->diffInDays($subscription->expires_at, false);
+        $subscription = $user->subscription;
 
-        if ($daysLeft <= 3 && $daysLeft > 0) {
+        if ($subscription && $subscription->daysUntilExpiration() <= 3) {
             `,
                 after: `
         }
 
-        return view('account.subscription', compact('subscription'));
+        return view('account.dashboard', compact('user'));
     }
 }`
             }
         },
         symfony: {
             title: "Warning",
-            message: "Your subscription will expire in 3 days.",
-            controller: "SubscriptionController",
-            method: "checkStatus",
+            message: "Your account will expire in 3 days.",
+            controller: "AccountController",
+            method: "dashboard",
             code: {
-                before: `// src/Controller/SubscriptionController.php
-
+                before: `// AccountController.php
 namespace App\\Controller;
 
-use App\\Repository\\SubscriptionRepository;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
-use Symfony\\Component\\HttpFoundation\\Response;
-use Symfony\\Component\\Routing\\Attribute\\Route;
 
-class SubscriptionController extends AbstractController
+class AccountController extends AbstractController
 {
-    #[Route('/account/subscription', name: 'app_subscription_status')]
-    public function checkStatus(SubscriptionRepository $subscriptionRepository): Response
+    public function dashboard(): Response
     {
-        $subscription = $subscriptionRepository->findByUser($this->getUser());
-        $daysLeft = $subscription->getExpiresAt()->diff(new \\DateTime())->days;
+        $user = $this->getUser();
+        $subscription = $user->getSubscription();
 
-        if ($daysLeft <= 3 && $daysLeft > 0) {
+        if ($subscription && $subscription->getDaysRemaining() <= 3) {
             `,
                 after: `
         }
 
-        return $this->render('account/subscription.html.twig', [
-            'subscription' => $subscription
+        return $this->render('account/dashboard.html.twig', [
+            'user' => $user
         ]);
     }
 }`
@@ -1002,32 +850,23 @@ class SubscriptionController extends AbstractController
         },
         js: {
             title: "Warning",
-            message: "Your subscription will expire in 3 days.",
-            method: "checkSubscriptionStatus",
+            message: "Your account will expire in 3 days.",
+            file: "account-service.js",
+            method: "checkStatus",
             code: {
-                before: `// subscription-service.js
-
+                before: `// account-service.js
 import flasher from '@flasher/flasher';
-import moment from 'moment';
 
-class SubscriptionService {
-    async checkSubscriptionStatus() {
-        const { subscription } = await api.getSubscriptionStatus();
-        const daysLeft = moment(subscription.expiresAt).diff(moment(), 'days');
+async function checkStatus() {
+    const response = await api.get('/account/status');
+    const { subscription } = response.data;
 
-        if (daysLeft <= 3 && daysLeft > 0) {
-            `,
+    if (subscription && subscription.daysRemaining <= 3) {
+        `,
                 after: `
-        }
-
-        // Update UI
-        this.setState({
-            subscriptionStatus: subscription.status,
-            daysLeft: daysLeft
-        });
-
-        return subscription;
     }
+
+    return subscription;
 }`
             }
         }
@@ -1035,7 +874,7 @@ class SubscriptionService {
 };
 
 /**
- * Function to safely escape special characters in code strings
+ * Helper function to safely escape special characters in code
  */
 function sanitizeForCode(str) {
     if (typeof str !== "string") return str;
@@ -1062,21 +901,20 @@ function escapeHtml(text) {
 }
 
 /**
- * Updates the styling of notification type buttons
+ * Updates the visual style of notification type buttons
  */
 function initializeTypeButtons() {
     document.querySelectorAll(".type-button").forEach(btn => {
         const type = btn.dataset.type;
 
-        // Clear existing styling
+        // Reset styles for all buttons
         btn.classList.remove("border-2");
         btn.classList.remove("border-green-500", "border-red-500", "border-blue-500", "border-amber-500");
 
-        // Apply styling for the current type
+        // Style the active button
         if (type === state.type) {
             btn.classList.add("border-2");
 
-            // Add appropriate border color based on type
             switch (type) {
                 case "success":
                     btn.classList.add("border-green-500");
@@ -1096,57 +934,49 @@ function initializeTypeButtons() {
 }
 
 /**
- * Initializes form fields with current state values
+ * Initialize form fields with values from state
  */
 function initializeFormValues() {
-    // Set values for all form elements based on state
     const template = contextTemplates[state.type];
+    const currentTab = getCurrentTab();
 
-    // Set title based on current notification type's template if empty
+    // Set title - don't set if it's the same as notification type
     if (!state.title && template) {
-        state.title = template[getCurrentTab()].title;
+        state.title = template[currentTab].title;
     }
     document.getElementById("title-input").value = state.title || "";
 
-    // Set message based on type's template
+    // Set message
     document.getElementById("message-input").value = state.message || "";
 
-    // Set all the option fields
-    if (state.position) {
-        document.getElementById("position-select").value = state.position;
-    }
-
-    if (state.timeout) {
-        document.getElementById("timeout-input").value = state.timeout;
-    }
-
-    if (state.theme) {
-        document.getElementById("theme-select").value = state.theme;
-    }
-
-    if (state.direction) {
-        document.getElementById("direction-select").value = state.direction;
-    }
+    // Set option fields
+    document.getElementById("position-select").value = state.position || "";
+    document.getElementById("timeout-input").value = state.timeout || "";
+    document.getElementById("theme-select").value = state.theme || "";
+    document.getElementById("direction-select").value = state.direction || "";
 
     document.getElementById("rtl-check").checked = !!state.rtl;
-    document.getElementById("escape-html-check").checked = state.escapeHtml !== false; // Default to true
+    document.getElementById("escape-html-check").checked = state.escapeHtml !== false;
 }
 
 /**
- * Updates the status indicator in the UI
+ * Updates UI status indicator
  */
 function updateStatus(message) {
     const statusText = document.getElementById("status-text");
+    if (!statusText) return;
+
     statusText.textContent = message;
 
-    // Temporarily change color
+    // Change status colors
     statusText.classList.remove("text-emerald-600");
     statusText.classList.add("text-blue-600");
 
-    // Add animation to the dot
     const dot = document.querySelector("#status-indicator div");
-    dot.classList.remove("bg-emerald-500");
-    dot.classList.add("bg-blue-500");
+    if (dot) {
+        dot.classList.remove("bg-emerald-500");
+        dot.classList.add("bg-blue-500");
+    }
 
     // Reset after 2 seconds
     setTimeout(() => {
@@ -1154,13 +984,15 @@ function updateStatus(message) {
         statusText.classList.add("text-emerald-600");
         statusText.textContent = "Ready";
 
-        dot.classList.remove("bg-blue-500");
-        dot.classList.add("bg-emerald-500");
+        if (dot) {
+            dot.classList.remove("bg-blue-500");
+            dot.classList.add("bg-emerald-500");
+        }
     }, 2000);
 }
 
 /**
- * Gets the current active tab (laravel, symfony, or js)
+ * Get the current active tab (laravel/symfony/js)
  */
 function getCurrentTab() {
     const activeTab = document.querySelector(".code-tab-btn.text-blue-600");
@@ -1168,7 +1000,7 @@ function getCurrentTab() {
 }
 
 /**
- * Switches to the specified code tab and updates the display
+ * Switch to a specific code tab
  */
 function showCodeTab(tab) {
     // Hide all panels
@@ -1176,7 +1008,7 @@ function showCodeTab(tab) {
         panel.classList.add("hidden");
     });
 
-    // Show the selected panel
+    // Show selected panel
     const activePanel = document.getElementById(`${tab}-code-panel`);
     if (activePanel) {
         activePanel.classList.remove("hidden");
@@ -1195,27 +1027,31 @@ function showCodeTab(tab) {
         activeTab.classList.add("text-blue-600", "border-b-2", "border-blue-500");
     }
 
-    // Update the code based on current state
-    updateCodeDisplay(true, false);
+    // Update code display
+    updateCodeDisplay(true);
 }
 
 /**
- * Generates a properly formatted flash method chain for the specified framework
+ * Generate flash code for the specified framework
+ * Handles multi-line formatting with proper indentation
  */
 function generateFlashCode(framework, indent = '') {
+    // Determine the prefix based on framework
     const prefix = framework === "js" ? "flasher" : "flash()";
+
+    // Sanitize message and title
     const safeMessage = sanitizeForCode(state.message);
-    const safeTitle = state.title && state.title !== state.type ? sanitizeForCode(state.title) : "";
 
-    // Create properly formatted multi-line methods
-    let formattedCode = [];
+    // Only use title if it's not empty and doesn't match the type name
+    // (prevents redundant "Success" title on success notifications)
+    const safeTitle = state.title && state.title.toLowerCase() !== state.type.toLowerCase()
+        ? sanitizeForCode(state.title) : "";
 
-    // First line - always the prefix
-    formattedCode.push(`${prefix}`);
+    // Lines of code with proper indentation
+    let lines = [];
 
-    // Add options if present
     if (framework === "js") {
-        // JavaScript format with options as object
+        // JavaScript options object
         const options = {};
         if (state.position) options.position = state.position;
         if (state.timeout) options.timeout = parseInt(state.timeout);
@@ -1224,222 +1060,315 @@ function generateFlashCode(framework, indent = '') {
         if (state.rtl) options.rtl = true;
         if (state.escapeHtml === false) options.escapeHtml = false;
 
-        // If no options, keep it simple
+        // Simple one-line if no options
         if (Object.keys(options).length === 0) {
-            formattedCode = [`${indent}${prefix}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});`];
-        } else {
-            // Add the type and arguments with options
-            formattedCode.push(`${indent}    .${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''}, {`);
-
-            // Add each option on its own line with proper indentation
-            Object.entries(options).forEach(([key, value], index, array) => {
-                const comma = index < array.length - 1 ? ',' : '';
-                if (typeof value === "string") {
-                    formattedCode.push(`${indent}        ${key}: '${value}'${comma}`);
-                } else {
-                    formattedCode.push(`${indent}        ${key}: ${value}${comma}`);
-                }
-            });
-
-            formattedCode.push(`${indent}    });`);
+            return `${indent}${prefix}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});`;
         }
+
+        // Multi-line with options
+        lines.push(`${indent}${prefix}`);
+        lines.push(`${indent}    .${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''}, {`);
+
+        // Add options with proper indentation
+        Object.entries(options).forEach(([key, value], index, array) => {
+            const comma = index < array.length - 1 ? ',' : '';
+            if (typeof value === "string") {
+                lines.push(`${indent}        ${key}: '${value}'${comma}`);
+            } else {
+                lines.push(`${indent}        ${key}: ${value}${comma}`);
+            }
+        });
+
+        lines.push(`${indent}    });`);
     } else {
-        // PHP frameworks with method chaining - each option on a new line
+        // PHP frameworks with method chaining
+        lines.push(`${indent}${prefix}`);
+
+        // Add options
         if (state.position) {
-            formattedCode.push(`${indent}    ->option('position', '${state.position}')`);
+            lines.push(`${indent}    ->option('position', '${state.position}')`);
         }
         if (state.timeout) {
-            formattedCode.push(`${indent}    ->option('timeout', ${state.timeout})`);
+            lines.push(`${indent}    ->option('timeout', ${state.timeout})`);
         }
         if (state.theme) {
-            formattedCode.push(`${indent}    ->option('theme', '${state.theme}')`);
+            lines.push(`${indent}    ->option('theme', '${state.theme}')`);
         }
         if (state.direction) {
-            formattedCode.push(`${indent}    ->option('direction', '${state.direction}')`);
+            lines.push(`${indent}    ->option('direction', '${state.direction}')`);
         }
         if (state.rtl) {
-            formattedCode.push(`${indent}    ->option('rtl', true)`);
+            lines.push(`${indent}    ->option('rtl', true)`);
         }
         if (state.escapeHtml === false) {
-            formattedCode.push(`${indent}    ->option('escapeHtml', false)`);
+            lines.push(`${indent}    ->option('escapeHtml', false)`);
         }
 
-        // Add the final method call
-        formattedCode.push(`${indent}    ->${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});\n`);
+        // Add the method call
+        lines.push(`${indent}    ->${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});`);
     }
 
-    // Join with line breaks for multi-line formatting
-    return formattedCode.join('\n');
+    // Join lines with newlines
+    return lines.join('\n');
 }
 
 /**
- * Apply typing animation to only the flash code
+ * Generate the complete code example
  */
-function animateFlashCode(codeBlock, framework) {
-    // Get template for the current type and framework
+function generateCompleteExample(framework) {
+    // Get framework-specific template for current notification type
     const template = contextTemplates[state.type][framework];
-    const indent = framework === "js" ? '' : '        ';
+    const indent = framework === "js" ? '    ' : '        ';
 
-    // Generate the flash code to be typed
+    // Generate the flash code with proper indentation
     const flashCode = generateFlashCode(framework, indent);
 
-    // Create parent container with specific visibility
-    const container = document.createElement('div');
-    container.style.position = 'relative';
+    // Combine the parts to create the complete code example
+    return `${template.code.before}\n${flashCode}\n${template.code.after}`;
+}
 
-    // Create pre and code elements with proper classes
+/**
+ * Update code display with animation
+ */
+function updateCodeDisplay(animate = true) {
+    // Don't run if animation is already in progress
+    if (state._animationInProgress) return;
+    state._animationInProgress = true;
+
+    const currentTab = getCurrentTab();
+    const panel = document.getElementById(`${currentTab}-code-panel`);
+
+    if (!panel) {
+        state._animationInProgress = false;
+        return;
+    }
+
+    // Generate the complete code example
+    const completeCode = generateCompleteExample(currentTab);
+
+    // Start with an empty panel
+    panel.innerHTML = '';
+
+    // Create the code display elements
     const pre = document.createElement('pre');
     const code = document.createElement('code');
 
-    pre.className = `language-${framework === 'js' ? 'javascript' : 'php'}`;
+    pre.className = `language-${currentTab === 'js' ? 'javascript' : 'php'}`;
     code.className = 'code-block';
 
-    // Add the "before" part of the code
-    code.innerHTML = escapeHtml(template.code.before);
+    // Set the code content
+    code.textContent = completeCode;
 
-    // Create a highly visible container for the typing animation
-    const flashContainer = document.createElement('div');
-    flashContainer.className = 'flash-code-typing';
-    flashContainer.style.position = 'relative';
-    flashContainer.style.display = 'block';
-    flashContainer.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
-    flashContainer.style.borderRadius = '4px';
-    flashContainer.style.padding = '4px';
-    flashContainer.style.marginLeft = '0';
-    flashContainer.style.marginRight = '0';
-    flashContainer.style.marginTop = '10px';
-    flashContainer.style.marginBottom = '10px';
-    flashContainer.style.boxShadow = '0 0 3px rgba(16, 185, 129, 0.5)';
-    flashContainer.style.borderLeft = '3px solid rgba(16, 185, 129, 0.5)';
-
-    // Create a visible cursor
-    const cursor = document.createElement('span');
-    cursor.className = 'typing-cursor';
-    cursor.textContent = '|';
-    cursor.style.display = 'inline-block';
-    cursor.style.animation = 'cursorBlink 1s infinite';
-    cursor.style.color = '#4F46E5';
-    cursor.style.fontWeight = 'bold';
-    cursor.style.marginLeft = '1px';
-    cursor.style.fontSize = '1.1em';
-
-    // Add to DOM
-    flashContainer.appendChild(cursor);
+    // Assemble the structure
     pre.appendChild(code);
-    container.appendChild(pre);
-
-    // Clear existing content and add our new structure
-    codeBlock.innerHTML = '';
-    codeBlock.appendChild(container);
-
-    // Add the flash container at the right position
-    code.appendChild(flashContainer);
-
-    // Add the "after" part of the code
-    const afterSpan = document.createElement('span');
-    afterSpan.innerHTML = escapeHtml(template.code.after);
-    code.appendChild(afterSpan);
-
-    // Apply syntax highlighting to the static parts
-    if (typeof Prism !== "undefined") {
-        Prism.highlightElement(code);
-    }
-
-    // More obvious typing effect with slightly slower speed
-    let i = 0;
-    let currentText = '';
-    const typingSpeed = 35; // milliseconds per character
-
-    // Function to type with human-like pacing
-    const typeWithHumanPace = () => {
-        if (i < flashCode.length) {
-            // Add one character at a time
-            const char = flashCode.charAt(i);
-            currentText += char;
-
-            // Create content span with proper escaping
-            const contentSpan = document.createElement('span');
-            contentSpan.innerHTML = escapeHtml(currentText);
-            contentSpan.style.color = '#000'; // Ensure text is visible
-
-            // Update the flash container
-            flashContainer.innerHTML = '';
-            flashContainer.appendChild(contentSpan);
-            flashContainer.appendChild(cursor);
-
-            // Progress the animation
-            i++;
-
-            // Variable typing speed for realistic effect
-            let nextDelay = typingSpeed;
-            if ([';', '.', ',', ':', ')', '}'].includes(char)) {
-                nextDelay = typingSpeed * 3; // Pause at punctuation
-            } else if (char === '\n') {
-                nextDelay = typingSpeed * 5; // Longer pause at line breaks
-            } else if (Math.random() < 0.1) {
-                nextDelay = typingSpeed * (1 + Math.random()); // Random pauses
-            }
-
-            // Continue typing
-            setTimeout(typeWithHumanPace, nextDelay);
-        } else {
-            // When done, add a subtle highlight effect
-            flashContainer.style.transition = 'background-color 1s ease';
-            flashContainer.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
-        }
-    };
-
-    // Start typing after a visible delay
-    setTimeout(() => {
-        // Pulse animation to draw attention
-        flashContainer.style.animation = 'codePulse 1s';
-
-        // Start typing
-        setTimeout(typeWithHumanPace, 300);
-    }, 300);
-}
-
-/**
- * Updates code display with option to animate only the flash code
- */
-function updateCodeDisplay(animate = false, onlyOptionsChanged = false) {
-    const currentTab = getCurrentTab();
-
-    // Get the panel for the current tab
-    const panelId = `${currentTab}-code-panel`;
-    const panel = document.getElementById(panelId);
-
-    if (!panel) return;
-
-    // Get the template and generate the flash code
-    const template = contextTemplates[state.type][currentTab];
-    const indent = currentTab === "js" ? '' : '        ';
-    const flashCode = generateFlashCode(currentTab, indent);
-
-    // Create the full code by concatenating the parts
-    const fullCode =
-        template.code.before +
-        flashCode +
-        template.code.after;
-
-    // Set the HTML directly with the complete code
-    // This allows Prism to do its highlighting on the complete code
-    panel.innerHTML = `<pre class="language-${currentTab === 'js' ? 'javascript' : 'php'}"><code class="code-block">${escapeHtml(fullCode)}</code></pre>`;
+    panel.appendChild(pre);
 
     // Apply syntax highlighting
     if (typeof Prism !== "undefined") {
-        Prism.highlightElement(panel.querySelector('code'));
+        try {
+            Prism.highlightElement(code);
+        } catch (e) {
+            console.warn("Syntax highlighting error:", e);
+        }
+    }
+
+    if (animate) {
+        // Animate the flash code section
+        animateFlashCode(currentTab);
+    }
+
+    state._animationInProgress = false;
+}
+
+/**
+ * Create and play a typing animation for the flash code section
+ */
+function animateFlashCode(framework) {
+    const template = contextTemplates[state.type][framework];
+    const panel = document.getElementById(`${framework}-code-panel`);
+    if (!panel) return;
+
+    // Find the pre/code elements
+    const codeElement = panel.querySelector('code');
+    if (!codeElement) return;
+
+    // Find the flash code - we'll highlight this section
+    const flashCode = generateFlashCode(framework, framework === 'js' ? '    ' : '        ');
+    const fullText = codeElement.textContent;
+
+    // Split the code into sections
+    const beforePart = template.code.before;
+    const afterPart = template.code.after;
+
+    // Get the position of the flash code
+    const startIndex = fullText.indexOf(flashCode);
+    if (startIndex === -1) return;
+
+    // Highlight the flash code part
+    const flashHtml = document.createElement('span');
+    flashHtml.className = 'animated-line';
+    flashHtml.textContent = flashCode;
+
+    // Use ranges to precisely replace just that section of text
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    // Clear any existing selection
+    selection.removeAllRanges();
+
+    // Try to set up the range for the flashCode text
+    try {
+        const textNodes = getTextNodesIn(codeElement);
+        let currentPos = 0;
+        let startNode, startOffset, endNode, endOffset;
+
+        // Find the nodes containing our flash code
+        for (let node of textNodes) {
+            const nodeTextLength = node.textContent.length;
+
+            // Check if this node contains the start of our target
+            if (currentPos <= startIndex && currentPos + nodeTextLength > startIndex) {
+                startNode = node;
+                startOffset = startIndex - currentPos;
+            }
+
+            // Check if this node contains the end of our target
+            if (currentPos <= startIndex + flashCode.length &&
+                currentPos + nodeTextLength >= startIndex + flashCode.length) {
+                endNode = node;
+                endOffset = startIndex + flashCode.length - currentPos;
+                break;
+            }
+
+            currentPos += nodeTextLength;
+        }
+
+        if (startNode && endNode) {
+            // Set the range and highlight it
+            range.setStart(startNode, startOffset);
+            range.setEnd(endNode, endOffset);
+
+            // Create our highlighted element
+            const highlightSpan = document.createElement('span');
+            highlightSpan.className = 'animated-line';
+            highlightSpan.style.animation = 'highlight-line 2s ease-in-out';
+
+            // Replace the range with our highlight
+            range.surroundContents(highlightSpan);
+
+            // Animate typing within the highlighted section
+            simulateTyping(highlightSpan, flashCode);
+        }
+    } catch (e) {
+        console.warn("Animation error:", e);
     }
 }
 
 /**
- * Shows the notification using the Flasher library
+ * Get all text nodes within an element
+ */
+function getTextNodesIn(element) {
+    const textNodes = [];
+    const walk = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+
+    let node;
+    while (node = walk.nextNode()) {
+        textNodes.push(node);
+    }
+
+    return textNodes;
+}
+
+/**
+ * Simulate typing effect within an element
+ */
+function simulateTyping(element, text) {
+    if (!element) return;
+
+    // Create cursor element
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    element.appendChild(cursor);
+
+    // Save original content
+    const originalContent = element.innerHTML;
+
+    // Clear content except cursor
+    element.innerHTML = '';
+    element.appendChild(cursor);
+
+    let i = 0;
+    const typingSpeed = 35; // milliseconds per character
+
+    // Type characters one by one
+    function typeCharacter() {
+        if (i < text.length) {
+            const char = document.createTextNode(text.charAt(i));
+            element.insertBefore(char, cursor);
+            i++;
+
+            // Variable speed for natural feel
+            let delay = typingSpeed;
+            const currentChar = text.charAt(i - 1);
+
+            // Pause longer at punctuation
+            if ([';', '.', ':', ',', ')', '}'].includes(currentChar)) {
+                delay = typingSpeed * 3;
+            } else if (currentChar === '\n') {
+                delay = typingSpeed * 5; // Longer at line breaks
+            } else if (Math.random() < 0.1) {
+                delay = typingSpeed * (1 + Math.random()); // Random pauses
+            }
+
+            setTimeout(typeCharacter, delay);
+        } else {
+            // Restore full content with original formatting but keep highlighting
+            setTimeout(() => {
+                cursor.remove();
+            }, 1000);
+        }
+    }
+
+    // Start typing with initial delay
+    setTimeout(typeCharacter, 300);
+}
+
+/**
+ * Updates the message and title based on the notification type
+ */
+function updateContentForType(type) {
+    const currentTab = getCurrentTab();
+    const template = contextTemplates[type][currentTab];
+
+    if (!template) return;
+
+    // Update message input
+    document.getElementById("message-input").value = template.message;
+    state.message = template.message;
+
+    // Update title input - but check if it's the same as type
+    if (template.title.toLowerCase() !== type.toLowerCase()) {
+        document.getElementById("title-input").value = template.title;
+        state.title = template.title;
+    } else {
+        document.getElementById("title-input").value = "";
+        state.title = "";
+    }
+}
+
+/**
+ * Show a notification with current settings
  */
 function showNotification() {
-    // Create a clean options object with only the necessary properties
+    // Build a clean options object
     const options = {};
 
-    // Only add properties that have values
+    // Add all configured options
     if (state.position) options.position = state.position;
     if (state.timeout) options.timeout = parseInt(state.timeout);
     if (state.theme) options.theme = state.theme;
@@ -1448,49 +1377,37 @@ function showNotification() {
     if (state.escapeHtml !== undefined) options.escapeHtml = state.escapeHtml;
 
     try {
-        // If the flasher library is available, use it
+        // Check if flasher is available
         if (typeof flasher !== "undefined") {
             if (state.theme) {
-                // When using a specific theme
+                // Use themed approach
                 const notificationOptions = {
                     type: state.type,
                     message: state.message,
                     title: state.title || undefined,
                     ...options
                 };
-                delete notificationOptions.theme; // Remove theme from options as we're using it directly
+                delete notificationOptions.theme; // Remove theme from options
                 flasher.use(state.theme).flash(notificationOptions);
             } else {
-                // Standard approach
+                // Use standard approach
                 flasher[state.type](state.message, state.title || null, options);
             }
 
-            // Show success status
-            updateStatus("Notification shown successfully!");
-
-            // Add a subtle ripple effect to the button
-            const btn = document.getElementById("show-notification-btn");
-            btn.classList.add("animate-pulse");
-            setTimeout(() => btn.classList.remove("animate-pulse"), 1000);
+            // Update status
+            updateStatus("Notification shown ✓");
 
         } else {
-            // Fallback to alert if flasher isn't available
-            let optionsText = "";
-            for (const [key, value] of Object.entries(options)) {
-                if (!["type", "message", "title"].includes(key)) {
-                    optionsText += `\n${key}: ${JSON.stringify(value)}`;
-                }
-            }
+            // Fallback to alert
+            let optionsText = Object.entries(options)
+                .map(([k, v]) => `${k}: ${JSON.stringify(v)}`)
+                .join('\n');
 
-            alert("Notification would show with these settings:\n\n" +
-                `Type: ${state.type}\n` +
-                `Message: ${state.message}\n` +
-                (state.title ? `Title: ${state.title}\n` : "")
+            alert(`Notification would display with:\n\n` +
                 `Type: ${state.type}\n` +
                 `Message: ${state.message}\n` +
                 (state.title ? `Title: ${state.title}\n` : "") +
-                (optionsText ? "\nOptions:" + optionsText : "")
-            );
+                (optionsText ? `\nOptions:\n${optionsText}` : ""));
         }
     } catch (e) {
         console.error("Error showing notification:", e);
@@ -1500,54 +1417,31 @@ function showNotification() {
 }
 
 /**
- * Updates the message and title inputs based on the selected notification type
+ * Update current time in the UI
  */
-function updateContentForType(type) {
-    const currentTab = getCurrentTab();
-    const template = contextTemplates[type][currentTab];
+function updateCurrentTime() {
+    const userInfo = document.getElementById("user-info");
+    if (userInfo) {
+        const now = new Date();
+        const formattedDate = now.toISOString().slice(0, 19).replace('T', ' ');
+        userInfo.innerHTML = `User: <span class="font-medium">yoeunes</span> • Active: ${formattedDate}`;
+    }
 
-    // Update message and title inputs
-    if (template) {
-        document.getElementById("message-input").value = template.message;
-        state.message = template.message;
-
-        // Only update title if we have one in the template
-        if (template.title) {
-            document.getElementById("title-input").value = template.title;
-            state.title = template.title;
-        }
+    // Update last update time
+    const lastUpdate = document.getElementById("last-update");
+    if (lastUpdate) {
+        lastUpdate.textContent = new Date().toISOString().split('T')[0];
     }
 }
 
 /**
- * Debug helper function for troubleshooting
- */
-function debugState() {
-    console.log("Current state:", { ...state });
-    console.log("Form values:");
-    console.log("- Title:", document.getElementById("title-input").value);
-    console.log("- Message:", document.getElementById("message-input").value);
-    console.log("- Position:", document.getElementById("position-select").value);
-    console.log("- Timeout:", document.getElementById("timeout-input").value);
-    console.log("- Theme:", document.getElementById("theme-select").value);
-    console.log("- Direction:", document.getElementById("direction-select").value);
-    console.log("- RTL:", document.getElementById("rtl-check").checked);
-    console.log("- Escape HTML:", document.getElementById("escape-html-check").checked);
-    console.log("- Current tab:", getCurrentTab());
-}
-
-// Add to window for console access
-window.debugPhpFlasher = debugState;
-
-/**
- * Initialize the application when the DOM is fully loaded
+ * Initialize the application when DOM is loaded
  */
 document.addEventListener("DOMContentLoaded", function() {
-    // Initialize form with current state values
+    // Set up initial values
     initializeFormValues();
-
-    // Initialize type buttons
     initializeTypeButtons();
+    updateCurrentTime();
 
     // Set up type button event listeners
     document.querySelectorAll(".type-button").forEach(btn => {
@@ -1555,78 +1449,64 @@ document.addEventListener("DOMContentLoaded", function() {
             const type = btn.dataset.type;
             state.type = type;
 
-            // Update message and title based on contextual templates
+            // Update content based on type
             updateContentForType(type);
 
             // Update button styling
             initializeTypeButtons();
 
-            // Update code display with animation
-            updateCodeDisplay(true);
-
             // Update status
-            updateStatus(`Type changed to: ${state.type}`);
+            updateStatus(`Type: ${state.type}`);
         });
     });
 
     // Input event listeners
     document.getElementById("title-input").addEventListener("input", (e) => {
         state.title = e.target.value.trim();
-        updateCodeDisplay(true);
     });
 
     document.getElementById("message-input").addEventListener("input", (e) => {
         state.message = e.target.value;
-        updateCodeDisplay(true);
     });
 
-    // Select event listeners with animation
+    // Select event listeners
     document.getElementById("position-select").addEventListener("change", (e) => {
         state.position = e.target.value;
-        updateCodeDisplay(true, true);
     });
 
     document.getElementById("timeout-input").addEventListener("change", (e) => {
         state.timeout = e.target.value ? parseInt(e.target.value) : "";
-        updateCodeDisplay(true, true);
     });
 
     document.getElementById("theme-select").addEventListener("change", (e) => {
         state.theme = e.target.value;
-        updateCodeDisplay(true, true);
     });
 
     document.getElementById("direction-select").addEventListener("change", (e) => {
         state.direction = e.target.value;
-        updateCodeDisplay(true, true);
     });
 
-    // Checkbox event listeners
+        // Checkbox event listeners
     document.getElementById("rtl-check").addEventListener("change", (e) => {
         state.rtl = e.target.checked;
-        updateCodeDisplay(true, true);
     });
 
     document.getElementById("escape-html-check").addEventListener("change", (e) => {
         state.escapeHtml = e.target.checked;
-        updateCodeDisplay(true, true);
     });
 
-    // Initialize code tabs with animation
+    // Code tab buttons
     document.querySelectorAll(".code-tab-btn").forEach(button => {
         button.addEventListener("click", () => {
             const tab = button.getAttribute("data-tab");
             showCodeTab(tab);
-
-            // Update content based on the current state type
-            updateContentForType(state.type);
         });
     });
 
-    // Show notification button with enhanced feedback
+    // Launch notification button
     const notificationBtn = document.getElementById("show-notification-btn");
     notificationBtn.addEventListener("click", () => {
-        // Add a subtle press effect
+        // Add press effect
         notificationBtn.classList.add("scale-95");
         setTimeout(() => notificationBtn.classList.remove("scale-95"), 150);
 
@@ -1634,16 +1514,28 @@ document.addEventListener("DOMContentLoaded", function() {
         showNotification();
     });
 
-    // Add hover shine effect to button
-    notificationBtn.addEventListener("mouseenter", () => {
-        const shineElement = notificationBtn.querySelector("div:last-child");
-        if (shineElement) {
-            shineElement.style.animation = "none";
-            setTimeout(() => {
-                shineElement.style.animation = "shine 1s forwards";
-            }, 10);
-        }
-    });
+    // Theme toggle
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+        themeToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            document.documentElement.classList.toggle("dark");
+
+            // Update icon
+            const icon = themeToggle.querySelector("i");
+            if (icon) {
+                if (document.documentElement.classList.contains("dark")) {
+                    icon.classList.remove("fa-adjust");
+                    icon.classList.add("fa-sun");
+                    themeToggle.querySelector("span").textContent = "Light";
+                } else {
+                    icon.classList.remove("fa-sun");
+                    icon.classList.add("fa-adjust");
+                    themeToggle.querySelector("span").textContent = "Theme";
+                }
+            }
+        });
+    }
 
     // Easter egg: Konami code
     let konamiCode = [];
@@ -1661,25 +1553,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Add current user info - nice personal touch
-    const userInfo = document.querySelector(".text-xs.text-gray-500");
-    if (userInfo) {
-        const today = new Date();
-        const formattedDate = today.toISOString().slice(0, 19).replace('T', ' ');
-        userInfo.innerHTML = `User: <span class="font-medium">yoeunes</span> • Last active: ${formattedDate}`;
-    }
+    // Update time periodically
+    setInterval(updateCurrentTime, 60000); // Update every minute
 
-    // Add special message to console
-    console.info("%c✨ PHPFlasher Interactive Studio v2.1.0 ✨",
-        "color: #4F46E5; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);");
+    // Add console signature
+    console.info(
+        "%c✨ PHPFlasher Interactive Studio v3.0.0 ✨",
+        "color: #4F46E5; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);"
+    );
     console.info("%cTry the Konami code for a surprise!", "color: #10B981; font-style: italic;");
 
-    // Show the initial tab
+    // Initialize the default tab
     showCodeTab("laravel");
-
-    // Initial code display update with animation after a small delay
-    setTimeout(() => {
-        updateCodeDisplay(true, false);
-    }, 300);
 });
 </script>
