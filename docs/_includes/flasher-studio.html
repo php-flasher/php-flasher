@@ -466,6 +466,30 @@
     pre code {
         font-family: 'JetBrains Mono', 'Fira Code', monospace;
     }
+
+    /* Typing container styles */
+    .typing-container {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      padding: 0.5rem;
+      border-radius: 4px;
+      overflow: visible;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    /* Make sure the cursor blinks properly */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .cursor {
+      animation: blink 1s infinite;
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      vertical-align: middle;
+    }
 </style>
 
 <script>
@@ -1131,53 +1155,161 @@ function generateCompleteExample(framework) {
  * Update code display with animation
  */
 function updateCodeDisplay(animate = true) {
-    // Don't run if animation is already in progress
-    if (state._animationInProgress) return;
-    state._animationInProgress = true;
-
     const currentTab = getCurrentTab();
     const panel = document.getElementById(`${currentTab}-code-panel`);
 
-    if (!panel) {
-        state._animationInProgress = false;
-        return;
+    if (!panel) return;
+
+    // Get template parts
+    const template = contextTemplates[state.type][currentTab];
+    const indent = currentTab === "js" ? '    ' : '        ';
+
+    // Generate the flash code
+    const flashCode = generateFlashCode(currentTab, indent);
+
+    if (animate) {
+        // Animated version
+        // First, display the "before" code with no animation
+        panel.innerHTML = `
+            <pre class="language-${currentTab === 'js' ? 'javascript' : 'php'}">
+                <code>${escapeHtml(template.code.before)}</code>
+            </pre>
+        `;
+
+        // Apply syntax highlighting to the static part
+        if (typeof Prism !== "undefined") {
+            Prism.highlightElement(panel.querySelector('code'));
+        }
+
+        // Create a typing container that will show the animated code
+        const typingContainer = document.createElement('div');
+        typingContainer.className = 'typing-container mt-2 mb-2 pl-2 border-l-2 border-green-500 bg-green-50/20';
+        typingContainer.style.fontFamily = 'monospace';
+        typingContainer.style.position = 'relative';
+        typingContainer.style.minHeight = '50px';
+
+        // Insert the typing container
+        panel.querySelector('pre').appendChild(typingContainer);
+
+        // Create container for the "after" code
+        const afterContainer = document.createElement('pre');
+        afterContainer.className = `language-${currentTab === 'js' ? 'javascript' : 'php'}`;
+        afterContainer.innerHTML = `<code>${escapeHtml(template.code.after)}</code>`;
+
+        // Add the after code
+        panel.appendChild(afterContainer);
+
+        // Apply syntax highlighting to the after part
+        if (typeof Prism !== "undefined") {
+            Prism.highlightElement(afterContainer.querySelector('code'));
+        }
+
+        // Now animate the typing of the flash code
+        typeCode(flashCode, typingContainer);
+    } else {
+        // Non-animated version - just show the complete code
+        const completeCode = template.code.before + flashCode + template.code.after;
+
+        panel.innerHTML = `
+            <pre class="language-${currentTab === 'js' ? 'javascript' : 'php'}">
+                <code>${escapeHtml(completeCode)}</code>
+            </pre>
+        `;
+
+        // Apply syntax highlighting
+        if (typeof Prism !== "undefined") {
+            Prism.highlightElement(panel.querySelector('code'));
+        }
     }
+}
 
-    // Generate the complete code example
-    const completeCode = generateCompleteExample(currentTab);
+/**
+ * Human-like typing animation
+ */
+function typeCode(code, container) {
+    // Create cursor element
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    cursor.innerHTML = '|';
+    cursor.style.display = 'inline-block';
+    cursor.style.width = '2px';
+    cursor.style.backgroundColor = '#4F46E5';
+    cursor.style.color = 'transparent';
+    cursor.style.marginLeft = '1px';
+    cursor.style.animation = 'blink 1s infinite';
 
-    // Start with an empty panel
-    panel.innerHTML = '';
+    container.appendChild(cursor);
 
-    // Create the code display elements
-    const pre = document.createElement('pre');
-    const code = document.createElement('code');
+    // Clear existing content except cursor
+    let i = 0;
+    let currentLine = document.createElement('div');
+    currentLine.style.minHeight = '1.2em';
+    container.insertBefore(currentLine, cursor);
 
-    pre.className = `language-${currentTab === 'js' ? 'javascript' : 'php'}`;
-    code.className = 'code-block';
+    // Characters typed per minute (average human typing speed)
+    const charsPerMinute = 300;
+    const baseDelay = 60000 / charsPerMinute; // milliseconds per character
 
-    // Set the code content
-    code.textContent = completeCode;
+    // Human-like typing with variable speed
+    function typeNextChar() {
+        if (i < code.length) {
+            const char = code.charAt(i);
 
-    // Assemble the structure
-    pre.appendChild(code);
-    panel.appendChild(pre);
+            // Handle newlines specially
+            if (char === '\n') {
+                currentLine = document.createElement('div');
+                currentLine.style.minHeight = '1.2em';
+                container.insertBefore(currentLine, cursor);
+            } else {
+                // Use syntax highlighting for individual characters
+                const charSpan = document.createElement('span');
 
-    // Apply syntax highlighting
-    if (typeof Prism !== "undefined") {
-        try {
-            Prism.highlightElement(code);
-        } catch (e) {
-            console.warn("Syntax highlighting error:", e);
+                // Different colors based on character type for code-like appearance
+                if ('(){}[];'.includes(char)) {
+                    charSpan.style.color = '#a626a4'; // Purple for punctuation
+                } else if ('\'"`'.includes(char)) {
+                    charSpan.style.color = '#50a14f'; // Green for strings
+                } else if (char === '-' && i > 0 && code.charAt(i-1) === '-' && code.charAt(i-2) === '>') {
+                    charSpan.style.color = '#e45649'; // Red for operators
+                } else if (char === '>') {
+                    charSpan.style.color = '#e45649'; // Red for operators
+                } else {
+                    charSpan.style.color = '#383a42'; // Default text color
+                }
+
+                charSpan.textContent = char;
+                currentLine.appendChild(charSpan);
+            }
+
+            i++;
+
+            // Variable typing speed for realism
+            let delay = baseDelay;
+
+            // Slow down for punctuation
+            if (['.', ',', ';', ')', '}', '>', '!'].includes(char)) {
+                delay *= 2.5;
+            }
+            // Even slower after line breaks
+            else if (char === '\n') {
+                delay *= 4;
+            }
+            // Add random variation (± 30%)
+            else {
+                delay *= (0.7 + Math.random() * 0.6);
+            }
+
+            // Random "thinking" pauses (5% chance)
+            if (Math.random() < 0.05) {
+                delay += Math.random() * 500;
+            }
+
+            setTimeout(typeNextChar, delay);
         }
     }
 
-    if (animate) {
-        // Animate the flash code section
-        animateFlashCode(currentTab);
-    }
-
-    state._animationInProgress = false;
+    // Start typing with slight initial delay
+    setTimeout(typeNextChar, 300);
 }
 
 /**
