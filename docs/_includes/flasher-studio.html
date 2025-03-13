@@ -537,954 +537,1149 @@ async function createProduct(productData) {
 
 <script>
     /**
-     * PHPFlasher Interactive Studio - Main Script
-     *
-     * This script powers the interactive notification demo that allows users to:
-     * - Select notification types (success, error, info, warning)
-     * - Customize notification content and options
-     * - See real-time code examples for Laravel, Symfony, and JavaScript
-     * - View typing animation effects for code generation
-     *
-     * @author PHPFlasher Team
-     * @version 2.0.0
-     * @lastUpdated 2025-03-13
-     */
+ * PHPFlasher Interactive Studio - Main Script
+ *
+ * This enhanced script brings a real IDE-like experience to the PHPFlasher demo:
+ * - Shows real code templates with the flash code being typed in real-time
+ * - Only animates the relevant flash notification code, keeping surroundings static
+ * - Contextual examples based on notification type
+ * - Human-like typing animation with realistic speed
+ *
+ * @author PHPFlasher Team
+ * @version 2.1.0
+ * @lastUpdated 2025-03-13
+ */
 
-    // Create a proxy to monitor state changes for reactive UI updates
-    const createStateProxy = () => {
-        const stateTarget = {
-            type: "success",
-            title: "",
+// Create a proxy to monitor state changes for reactive UI updates
+const createStateProxy = () => {
+    const stateTarget = {
+        type: "success",
+        title: "",
+        message: "Your product has been created successfully!",
+        timeout: "",
+        position: "",
+        direction: "",
+        rtl: false,
+        theme: "",
+        escapeHtml: true,
+        // Track what's changed to only animate that part
+        _previousState: {}
+    };
+
+    return new Proxy(stateTarget, {
+        set(target, property, value) {
+            // Store previous value before updating
+            if (property !== '_previousState') {
+                target._previousState[property] = target[property];
+            }
+
+            target[property] = value;
+
+            // When state changes, update the code display
+            if (document.readyState === "complete" && property !== '_previousState') {
+                const onlyOptionsChanged =
+                    ['position', 'timeout', 'theme', 'direction', 'rtl', 'escapeHtml'].includes(property);
+                updateCodeDisplay(true, onlyOptionsChanged);
+            }
+
+            return true;
+        }
+    });
+};
+
+// Create state object with reactive properties
+const state = createStateProxy();
+
+/**
+ * Context-specific templates for each notification type and framework
+ */
+const contextTemplates = {
+    success: {
+        laravel: {
+            title: "Success",
             message: "Your product has been created successfully!",
-            timeout: "",
-            position: "",
-            direction: "",
-            rtl: false,
-            theme: "",
-            escapeHtml: true
-        };
+            controller: "ProductController",
+            method: "store",
+            code: {
+                before: `// app/Http/Controllers/ProductController.php
 
-        return new Proxy(stateTarget, {
-            set(target, property, value) {
-                target[property] = value;
+namespace App\\Http\\Controllers;
 
-                // When state changes, update the code display
-                if (document.readyState === "complete") {
-                    updateCodeDisplay(true);
-                }
+use App\\Models\\Product;
+use App\\Http\\Requests\\StoreProductRequest;
+use Illuminate\\Http\\Request;
 
-                return true;
-            }
-        });
-    };
-
-    // Create state object with reactive properties
-    const state = createStateProxy();
-
-    /**
-     * Context-specific templates for each notification type and framework
-     *
-     * Each template contains:
-     * - title: Default title for the notification
-     * - message: Default message for the notification
-     * - controller: The controller name and context
-     * - method: The method name that would trigger this notification
-     * - code: Framework-specific code surrounding the notification
-     */
-    const contextTemplates = {
-        success: {
-            laravel: {
-                title: "Success",
-                message: "Your product has been created successfully!",
-                controller: "ProductController",
-                method: "store",
-                code: {
-                    before: `// Create new product\n$product = Product::create($request->validated());`,
-                    after: `return redirect()->route('products.index');`
-                }
-            },
-            symfony: {
-                title: "Success",
-                message: "Your product has been created successfully!",
-                controller: "ProductController",
-                method: "new",
-                code: {
-                    before: `$em->persist($product);\n$em->flush();`,
-                    after: `return $this->redirectToRoute('app_product_index');`
-                }
-            },
-            js: {
-                title: "Success",
-                message: "Your product has been created successfully!",
-                method: "createProduct",
-                code: {
-                    before: `const result = await response.json();\n\nif (!response.ok) {\n    throw new Error(result.message || 'Failed to create product');\n}`,
-                    after: `return result;`
-                }
-            }
-        },
-        error: {
-            laravel: {
-                title: "Error",
-                message: "An error occurred while processing your request.",
-                controller: "PaymentController",
-                method: "processPayment",
-                code: {
-                    before: `try {\n    $payment = $this->paymentGateway->charge($request->amount, $request->token);\n} catch (\\Exception $e) {`,
-                    after: `    return back()->withInput();\n}`
-                }
-            },
-            symfony: {
-                title: "Error",
-                message: "An error occurred while processing your payment.",
-                controller: "PaymentController",
-                method: "process",
-                code: {
-                    before: `try {\n    $payment = $this->paymentService->processPayment($request->get('token'), $amount);\n} catch (\\Exception $e) {`,
-                    after: `    return $this->redirectToRoute('app_checkout');\n}`
-                }
-            },
-            js: {
-                title: "Error",
-                message: "An error occurred while processing your payment.",
-                method: "processPayment",
-                code: {
-                    before: `try {\n    const paymentResponse = await stripeClient.createPayment({\n        amount: amount,\n        currency: 'usd',\n        payment_method: paymentMethodId\n    });\n\n    if (paymentResponse.error) {`,
-                    after: `        return { success: false };\n    }\n} catch (error) {\n    console.error('Payment error:', error);\n    flasher.error('Payment failed: ' + error.message);\n    return { success: false };\n}`
-                }
-            }
-        },
-        info: {
-            laravel: {
-                title: "Information",
-                message: "Your order has been received and is being processed.",
-                controller: "OrderController",
-                method: "create",
-                code: {
-                    before: `// Create order\n$order = Order::create([\n    'user_id' => auth()->id(),\n    'total' => $cart->total(),\n    'status' => 'pending'\n]);`,
-                    after: `// Dispatch background job\nProcessOrderJob::dispatch($order);\n\nreturn redirect()->route('orders.show', $order);`
-                }
-            },
-            symfony: {
-                title: "Information",
-                message: "Your order has been received and is being processed.",
-                controller: "OrderController",
-                method: "create",
-                code: {
-                    before: `$order = new Order();\n$order->setUser($this->getUser());\n$order->setTotal($cart->getTotal());\n$order->setStatus('pending');\n\n$em->persist($order);\n$em->flush();`,
-                    after: `// Dispatch message to queue\n$this->messageBus->dispatch(new ProcessOrderMessage($order->getId()));\n\nreturn $this->redirectToRoute('app_order_show', ['id' => $order->getId()]);`
-                }
-            },
-            js: {
-                title: "Information",
-                message: "Your order has been received and is being processed.",
-                method: "submitOrder",
-                code: {
-                    before: `// Submit order to API\nconst orderResponse = await fetch('/api/orders', {\n    method: 'POST',\n    headers: {\n        'Content-Type': 'application/json'\n    },\n    body: JSON.stringify(orderData)\n});\n\nconst order = await orderResponse.json();`,
-                    after: `// Track analytics\nanalytics.track('Order Submitted', {\n    orderId: order.id,\n    amount: order.total\n});\n\n// Navigate to order page\nnavigator.push(\`/orders/\${order.id}\`);`
-                }
-            }
-        },
-        warning: {
-            laravel: {
-                title: "Warning",
-                message: "Your subscription will expire in 3 days.",
-                controller: "SubscriptionController",
-                method: "checkStatus",
-                code: {
-                    before: `$subscription = $user->subscription();\n$daysLeft = now()->diffInDays($subscription->expires_at, false);\n\nif ($daysLeft <= 3 && $daysLeft > 0) {`,
-                    after: `}\n\nreturn view('account.subscription', compact('subscription'));`
-                }
-            },
-            symfony: {
-                title: "Warning",
-                message: "Your subscription will expire in 3 days.",
-                controller: "SubscriptionController",
-                method: "checkStatus",
-                code: {
-                    before: `$subscription = $subscriptionRepository->findByUser($this->getUser());\n$daysLeft = $subscription->getExpiresAt()->diff(new \\DateTime())->days;\n\nif ($daysLeft <= 3 && $daysLeft > 0) {`,
-                    after: `}\n\nreturn $this->render('account/subscription.html.twig', [\n    'subscription' => $subscription\n]);`
-                }
-            },
-            js: {
-                title: "Warning",
-                message: "Your subscription will expire in 3 days.",
-                method: "checkSubscriptionStatus",
-                code: {
-                    before: `const { subscription } = await api.getSubscriptionStatus();\nconst daysLeft = moment(subscription.expiresAt).diff(moment(), 'days');\n\nif (daysLeft <= 3 && daysLeft > 0) {`,
-                    after: `}\n\n// Update UI\nthis.setState({\n    subscriptionStatus: subscription.status,\n    daysLeft: daysLeft\n});`
-                }
-            }
-        }
-    };
-
-    /**
-     * Function to safely escape special characters in code strings
-     * Ensures that quotes and backslashes are properly displayed in code examples
-     */
-    function sanitizeForCode(str) {
-        if (typeof str !== "string") return str;
-        return str
-            .replace(/\\/g, "\\\\")  // Escape backslashes
-            .replace(/'/g, "\\'")    // Escape single quotes
-            .replace(/"/g, "\\\"")   // Escape double quotes
-            .replace(/\n/g, "\\n")   // Handle newlines
-            .replace(/\r/g, "\\r")   // Handle carriage returns
-            .replace(/\t/g, "\\t");  // Handle tabs
-    }
-
-    /**
-     * Function to safely escape HTML for display in code blocks
-     * Prevents XSS and ensures proper rendering of code
-     */
-    function escapeHtml(text) {
-        if (typeof text !== "string") return "";
-        return text
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-    /**
-     * Updates the styling of notification type buttons
-     * Highlights the currently selected type
-     */
-    function initializeTypeButtons() {
-        document.querySelectorAll(".type-button").forEach(btn => {
-            const type = btn.dataset.type;
-
-            // Clear existing styling
-            btn.classList.remove("border-2");
-            btn.classList.remove("border-green-500", "border-red-500", "border-blue-500", "border-amber-500");
-
-            // Apply styling for the current type
-            if (type === state.type) {
-                btn.classList.add("border-2");
-
-                // Add appropriate border color based on type
-                switch (type) {
-                    case "success":
-                        btn.classList.add("border-green-500");
-                        break;
-                    case "error":
-                        btn.classList.add("border-red-500");
-                        break;
-                    case "info":
-                        btn.classList.add("border-blue-500");
-                        break;
-                    case "warning":
-                        btn.classList.add("border-amber-500");
-                        break;
-                }
-            }
-        });
-    }
-
-    /**
-     * Initializes form fields with current state values
-     * Sets all inputs, selects, and checkboxes to match the state object
-     */
-    function initializeFormValues() {
-        // Set values for all form elements based on state
-        const template = contextTemplates[state.type];
-
-        // Set title based on current notification type's template if empty
-        if (!state.title && template) {
-            state.title = template[getCurrentTab()].title;
-        }
-        document.getElementById("title-input").value = state.title || "";
-
-        // Set message based on type if it matches a template message
-        const currentMessage = document.getElementById("message-input").value;
-        document.getElementById("message-input").value = state.message || "";
-
-        // Set all the option fields
-        if (state.position) {
-            document.getElementById("position-select").value = state.position;
-        }
-
-        if (state.timeout) {
-            document.getElementById("timeout-input").value = state.timeout;
-        }
-
-        if (state.theme) {
-            document.getElementById("theme-select").value = state.theme;
-        }
-
-        if (state.direction) {
-            document.getElementById("direction-select").value = state.direction;
-        }
-
-        document.getElementById("rtl-check").checked = !!state.rtl;
-        document.getElementById("escape-html-check").checked = state.escapeHtml !== false; // Default to true
-    }
-
-    /**
-     * Updates the status indicator in the UI
-     * Temporarily changes color and then reverts back to "Ready" state
-     */
-    function updateStatus(message) {
-        const statusText = document.getElementById("status-text");
-        statusText.textContent = message;
-
-        // Temporarily change color
-        statusText.classList.remove("text-emerald-600");
-        statusText.classList.add("text-blue-600");
-
-        // Add animation to the dot
-        const dot = document.querySelector("#status-indicator div");
-        dot.classList.remove("bg-emerald-500");
-        dot.classList.add("bg-blue-500");
-
-        // Reset after 2 seconds
-        setTimeout(() => {
-            statusText.classList.remove("text-blue-600");
-            statusText.classList.add("text-emerald-600");
-            statusText.textContent = "Ready";
-
-            dot.classList.remove("bg-blue-500");
-            dot.classList.add("bg-emerald-500");
-        }, 2000);
-    }
-
-    /**
-     * Gets the current active tab (laravel, symfony, or js)
-     */
-    function getCurrentTab() {
-        const activeTab = document.querySelector(".code-tab-btn.text-blue-600");
-        return activeTab ? activeTab.getAttribute("data-tab") : "laravel";
-    }
-
-    /**
-     * Switches to the specified code tab and updates the display
-     */
-    function showCodeTab(tab) {
-        // Hide all panels
-        document.querySelectorAll(".code-panel").forEach(panel => {
-            panel.classList.add("hidden");
-        });
-
-        // Show the selected panel
-        const activePanel = document.getElementById(`${tab}-code-panel`);
-        if (activePanel) {
-            activePanel.classList.remove("hidden");
-        }
-
-        // Update tab styling
-        document.querySelectorAll(".code-tab-btn").forEach(btn => {
-            btn.classList.remove("text-blue-600", "border-b-2", "border-blue-500");
-            btn.classList.add("text-gray-600");
-        });
-
-        // Highlight active tab
-        const activeTab = document.querySelector(`[data-tab="${tab}"]`);
-        if (activeTab) {
-            activeTab.classList.remove("text-gray-600");
-            activeTab.classList.add("text-blue-600", "border-b-2", "border-blue-500");
-        }
-
-        // Update the code based on current state
-        updateCodeDisplay(true);
-    }
-
-    /**
-     * Generates a properly formatted flash method chain for the specified framework
-     * Handles proper multi-line formatting and indentation
-     */
-    function generateFlashCode(framework, indent = '') {
-        const prefix = framework === "js" ? "flasher" : "flash()";
-        const safeMessage = sanitizeForCode(state.message);
-        const safeTitle = state.title ? sanitizeForCode(state.title) : "";
-
-        // Start with the base prefix
-        let code = prefix;
-        let hasOptions = false;
-
-        // Indentation rules
-        const baseIndent = framework === "js" ? indent + '    ' : indent + '    ';
-
-        // Create properly formatted multi-line methods
-        let formattedCode = [];
-        formattedCode.push(prefix);
-
-        // Add options if present
-        if (state.position || state.timeout || state.theme || state.direction ||
-            state.rtl || state.escapeHtml === false) {
-            hasOptions = true;
-        }
-
-        if (framework === "js") {
-            // JavaScript format with options as object
-            const options = {};
-            if (state.position) options.position = state.position;
-            if (state.timeout) options.timeout = parseInt(state.timeout);
-            if (state.theme) options.theme = state.theme;
-            if (state.direction) options.direction = state.direction;
-            if (state.rtl) options.rtl = true;
-            if (state.escapeHtml === false) options.escapeHtml = false;
-
-            // For JS, all goes on one line if no options
-            if (Object.keys(options).length === 0) {
-                let jsCode = `${prefix}.${state.type}('${safeMessage}'`;
-                if (safeTitle) jsCode += `, '${safeTitle}'`;
-                jsCode += ");";
-                return jsCode;
-            }
-
-            // Add the type and arguments
-            formattedCode.push(`${baseIndent}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''}, {`);
-
-            // Add each option on its own line with proper indentation
-            const optionsLines = [];
-            Object.entries(options).forEach(([key, value]) => {
-                if (typeof value === "string") {
-                    optionsLines.push(`${baseIndent}    ${key}: '${value}'`);
-                } else {
-                    optionsLines.push(`${baseIndent}    ${key}: ${value}`);
-                }
-            });
-
-            formattedCode = formattedCode.concat(optionsLines);
-            formattedCode.push(`${baseIndent}});`);
-        } else {
-            // PHP frameworks with method chaining - each option on a new line
-            if (state.position) {
-                formattedCode.push(`${baseIndent}->option('position', '${state.position}')`);
-            }
-            if (state.timeout) {
-                formattedCode.push(`${baseIndent}->option('timeout', ${state.timeout})`);
-            }
-            if (state.theme) {
-                formattedCode.push(`${baseIndent}->option('theme', '${state.theme}')`);
-            }
-            if (state.direction) {
-                formattedCode.push(`${baseIndent}->option('direction', '${state.direction}')`);
-            }
-            if (state.rtl) {
-                formattedCode.push(`${baseIndent}->option('rtl', true)`);
-            }
-            if (state.escapeHtml === false) {
-                formattedCode.push(`${baseIndent}->option('escapeHtml', false)`);
-            }
-
-            // Add the final method call
-            const finalLine = `${baseIndent}->${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});`;
-            formattedCode.push(finalLine);
-        }
-
-        // Join with line breaks for multi-line formatting
-        return formattedCode.join('\n');
-    }
-
-    /**
-     * Generates complete, contextual code examples for each framework
-     * Uses templates that change based on the notification type
-     */
-    function generateCodeBlock(framework) {
-        // Get the template for the current notification type and framework
-        const template = contextTemplates[state.type][framework];
-        const indent = framework === "js" ? '    ' : '            ';
-        const flashCode = generateFlashCode(framework, indent);
-
-        // Template for each framework
-        let codeTemplate = "";
-
-        if (framework === "laravel") {
-            codeTemplate = `// app/Http/Controllers/${template.controller}.php
-
-    namespace App\\Http\\Controllers;
-
-    use App\\Models\\Product;
-    use App\\Http\\Requests\\StoreProductRequest;
-    use Illuminate\\Http\\Request;
-
-    class ${template.controller} extends Controller
+class ProductController extends Controller
+{
+    public function store(StoreProductRequest $request)
     {
-        public function ${template.method}(Request $request)
-        {
-            ${template.code.before}
+        // Create new product
+        $product = Product::create($request->validated());
 
-            ${flashCode}
+        `,
+                after: `
+        return redirect()->route('products.index');
+    }
+}`
+            }
+        },
+        symfony: {
+            title: "Success",
+            message: "Your product has been created successfully!",
+            controller: "ProductController",
+            method: "new",
+            code: {
+                before: `// src/Controller/ProductController.php
 
-            ${template.code.after}
-        }
-    }`;
-        } else if (framework === "symfony") {
-            codeTemplate = `// src/Controller/${template.controller}.php
+namespace App\\Controller;
 
-    namespace App\\Controller;
+use App\\Entity\\Product;
+use App\\Form\\ProductType;
+use Doctrine\\ORM\\EntityManagerInterface;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+use Symfony\\Component\\HttpFoundation\\Request;
+use Symfony\\Component\\HttpFoundation\\Response;
+use Symfony\\Component\\Routing\\Attribute\\Route;
 
-    use App\\Entity\\Product;
-    use App\\Form\\ProductType;
-    use Doctrine\\ORM\\EntityManagerInterface;
-    use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
-    use Symfony\\Component\\HttpFoundation\\Request;
-    use Symfony\\Component\\HttpFoundation\\Response;
-    use Symfony\\Component\\Routing\\Attribute\\Route;
-
-    class ${template.controller} extends AbstractController
+class ProductController extends AbstractController
+{
+    #[Route('/products/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
-        #[Route('/${template.method}', name: 'app_${template.method}', methods: ['GET', 'POST'])]
-        public function ${template.method}(Request $request, EntityManagerInterface $em): Response
-        {
-            ${template.code.before}
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
 
-            ${flashCode}
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($product);
+            $em->flush();
 
-            ${template.code.after}
+            `,
+                after: `
+            return $this->redirectToRoute('app_product_index');
         }
-    }`;
-        } else { // JavaScript
-            codeTemplate = `// services/${template.method}.js
 
-    import flasher from '@flasher/flasher';
+        return $this->render('product/new.html.twig', [
+            'product' => $product,
+            'form' => $form,
+        ]);
+    }
+}`
+            }
+        },
+        js: {
+            title: "Success",
+            message: "Your product has been created successfully!",
+            method: "createProduct",
+            code: {
+                before: `// product-service.js
 
-    async function ${template.method}(data) {
+import flasher from '@flasher/flasher';
+
+async function createProduct(productData) {
+    try {
+        const response = await fetch('/api/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(productData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to create product');
+        }
+
+        `,
+                after: `
+        return result;
+    } catch (error) {
+        flasher.error('Error: ' + error.message);
+        throw error;
+    }
+}`
+            }
+        }
+    },
+    error: {
+        laravel: {
+            title: "Error",
+            message: "An error occurred while processing your request.",
+            controller: "PaymentController",
+            method: "processPayment",
+            code: {
+                before: `// app/Http/Controllers/PaymentController.php
+
+namespace App\\Http\\Controllers;
+
+use App\\Services\\PaymentGateway;
+use Illuminate\\Http\\Request;
+
+class PaymentController extends Controller
+{
+    protected $paymentGateway;
+
+    public function __construct(PaymentGateway $paymentGateway)
+    {
+        $this->paymentGateway = $paymentGateway;
+    }
+
+    public function processPayment(Request $request)
+    {
         try {
-            ${template.code.before}
-
-            ${flashCode}
-
-            ${template.code.after}
-        } catch (error) {
-            flasher.error('Error: ' + error.message);
-            throw error;
-        }
-    }`;
+            $payment = $this->paymentGateway->charge($request->amount, $request->token);
+        } catch (\\Exception $e) {
+            `,
+                after: `
+            return back()->withInput();
         }
 
-        return codeTemplate;
+        return redirect()->route('order.confirmation');
+    }
+}`
+            }
+        },
+        symfony: {
+            title: "Error",
+            message: "An error occurred while processing your payment.",
+            controller: "PaymentController",
+            method: "process",
+            code: {
+                before: `// src/Controller/PaymentController.php
+
+namespace App\\Controller;
+
+use App\\Service\\PaymentService;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+use Symfony\\Component\\HttpFoundation\\Request;
+use Symfony\\Component\\HttpFoundation\\Response;
+use Symfony\\Component\\Routing\\Attribute\\Route;
+
+class PaymentController extends AbstractController
+{
+    #[Route('/payment/process', name: 'app_payment_process', methods: ['POST'])]
+    public function process(Request $request, PaymentService $paymentService): Response
+    {
+        $amount = $request->get('amount');
+
+        try {
+            $payment = $paymentService->processPayment($request->get('token'), $amount);
+        } catch (\\Exception $e) {
+            `,
+                after: `
+            return $this->redirectToRoute('app_checkout');
+        }
+
+        return $this->redirectToRoute('app_confirmation');
+    }
+}`
+            }
+        },
+        js: {
+            title: "Error",
+            message: "An error occurred while processing your payment.",
+            method: "processPayment",
+            code: {
+                before: `// payment-service.js
+
+import flasher from '@flasher/flasher';
+import { stripeClient } from './stripe-client';
+
+async function processPayment({ paymentMethodId, amount }) {
+    try {
+        const paymentResponse = await stripeClient.createPayment({
+            amount: amount,
+            currency: 'usd',
+            payment_method: paymentMethodId
+        });
+
+        if (paymentResponse.error) {
+            `,
+                after: `
+            return { success: false };
+        }
+
+        return { success: true, payment: paymentResponse };
+    } catch (error) {
+        console.error('Payment error:', error);
+        flasher.error('Payment failed: ' + error.message);
+        return { success: false };
+    }
+}`
+            }
+        }
+    },
+    info: {
+        laravel: {
+            title: "Information",
+            message: "Your order has been received and is being processed.",
+            controller: "OrderController",
+            method: "create",
+            code: {
+                before: `// app/Http/Controllers/OrderController.php
+
+namespace App\\Http\\Controllers;
+
+use App\\Models\\Order;
+use App\\Jobs\\ProcessOrderJob;
+use Illuminate\\Http\\Request;
+
+class OrderController extends Controller
+{
+    public function create(Request $request)
+    {
+        $cart = app(CartService::class);
+
+        // Create order
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'total' => $cart->total(),
+            'status' => 'pending'
+        ]);
+
+        `,
+                after: `
+        // Dispatch background job
+        ProcessOrderJob::dispatch($order);
+
+        return redirect()->route('orders.show', $order);
+    }
+}`
+            }
+        },
+        symfony: {
+            title: "Information",
+            message: "Your order has been received and is being processed.",
+            controller: "OrderController",
+            method: "create",
+            code: {
+                before: `// src/Controller/OrderController.php
+
+namespace App\\Controller;
+
+use App\\Entity\\Order;
+use App\\Message\\ProcessOrderMessage;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+use Symfony\\Component\\HttpFoundation\\Response;
+use Symfony\\Component\\Messenger\\MessageBusInterface;
+use Symfony\\Component\\Routing\\Attribute\\Route;
+
+class OrderController extends AbstractController
+{
+    #[Route('/order/new', name: 'app_order_create', methods: ['POST'])]
+    public function create(CartService $cart, EntityManagerInterface $em, MessageBusInterface $messageBus): Response
+    {
+        $order = new Order();
+        $order->setUser($this->getUser());
+        $order->setTotal($cart->getTotal());
+        $order->setStatus('pending');
+
+        $em->persist($order);
+        $em->flush();
+
+        `,
+                after: `
+        // Dispatch message to queue
+        $messageBus->dispatch(new ProcessOrderMessage($order->getId()));
+
+        return $this->redirectToRoute('app_order_show', ['id' => $order->getId()]);
+    }
+}`
+            }
+        },
+        js: {
+            title: "Information",
+            message: "Your order has been received and is being processed.",
+            method: "submitOrder",
+            code: {
+                before: `// order-service.js
+
+import flasher from '@flasher/flasher';
+import { analytics } from './analytics';
+
+async function submitOrder(orderData) {
+    try {
+        // Submit order to API
+        const orderResponse = await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        const order = await orderResponse.json();
+
+        `,
+                after: `
+        // Track analytics
+        analytics.track('Order Submitted', {
+            orderId: order.id,
+            amount: order.total
+        });
+
+        // Navigate to order page
+        navigator.push(\`/orders/\${order.id}\`);
+
+        return order;
+    } catch (error) {
+        flasher.error('Error: ' + error.message);
+        throw error;
+    }
+}`
+            }
+        }
+    },
+    warning: {
+        laravel: {
+            title: "Warning",
+            message: "Your subscription will expire in 3 days.",
+            controller: "SubscriptionController",
+            method: "checkStatus",
+            code: {
+                before: `// app/Http/Controllers/SubscriptionController.php
+
+namespace App\\Http\\Controllers;
+
+use Carbon\\Carbon;
+use Illuminate\\Http\\Request;
+
+class SubscriptionController extends Controller
+{
+    public function checkStatus(Request $request)
+    {
+        $user = auth()->user();
+        $subscription = $user->subscription();
+        $daysLeft = now()->diffInDays($subscription->expires_at, false);
+
+        if ($daysLeft <= 3 && $daysLeft > 0) {
+            `,
+                after: `
+        }
+
+        return view('account.subscription', compact('subscription'));
+    }
+}`
+            }
+        },
+        symfony: {
+            title: "Warning",
+            message: "Your subscription will expire in 3 days.",
+            controller: "SubscriptionController",
+            method: "checkStatus",
+            code: {
+                before: `// src/Controller/SubscriptionController.php
+
+namespace App\\Controller;
+
+use App\\Repository\\SubscriptionRepository;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+use Symfony\\Component\\HttpFoundation\\Response;
+use Symfony\\Component\\Routing\\Attribute\\Route;
+
+class SubscriptionController extends AbstractController
+{
+    #[Route('/account/subscription', name: 'app_subscription_status')]
+    public function checkStatus(SubscriptionRepository $subscriptionRepository): Response
+    {
+        $subscription = $subscriptionRepository->findByUser($this->getUser());
+        $daysLeft = $subscription->getExpiresAt()->diff(new \\DateTime())->days;
+
+        if ($daysLeft <= 3 && $daysLeft > 0) {
+            `,
+                after: `
+        }
+
+        return $this->render('account/subscription.html.twig', [
+            'subscription' => $subscription
+        ]);
+    }
+}`
+            }
+        },
+        js: {
+            title: "Warning",
+            message: "Your subscription will expire in 3 days.",
+            method: "checkSubscriptionStatus",
+            code: {
+                before: `// subscription-service.js
+
+import flasher from '@flasher/flasher';
+import moment from 'moment';
+
+class SubscriptionService {
+    async checkSubscriptionStatus() {
+        const { subscription } = await api.getSubscriptionStatus();
+        const daysLeft = moment(subscription.expiresAt).diff(moment(), 'days');
+
+        if (daysLeft <= 3 && daysLeft > 0) {
+            `,
+                after: `
+        }
+
+        // Update UI
+        this.setState({
+            subscriptionStatus: subscription.status,
+            daysLeft: daysLeft
+        });
+
+        return subscription;
+    }
+}`
+            }
+        }
+    }
+};
+
+/**
+ * Function to safely escape special characters in code strings
+ */
+function sanitizeForCode(str) {
+    if (typeof str !== "string") return str;
+    return str
+        .replace(/\\/g, "\\\\")  // Escape backslashes
+        .replace(/'/g, "\\'")    // Escape single quotes
+        .replace(/"/g, "\\\"")   // Escape double quotes
+        .replace(/\n/g, "\\n")   // Handle newlines
+        .replace(/\r/g, "\\r")   // Handle carriage returns
+        .replace(/\t/g, "\\t");  // Handle tabs
+}
+
+/**
+ * Function to safely escape HTML for display in code blocks
+ */
+function escapeHtml(text) {
+    if (typeof text !== "string") return "";
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/**
+ * Updates the styling of notification type buttons
+ */
+function initializeTypeButtons() {
+    document.querySelectorAll(".type-button").forEach(btn => {
+        const type = btn.dataset.type;
+
+        // Clear existing styling
+        btn.classList.remove("border-2");
+        btn.classList.remove("border-green-500", "border-red-500", "border-blue-500", "border-amber-500");
+
+        // Apply styling for the current type
+        if (type === state.type) {
+            btn.classList.add("border-2");
+
+            // Add appropriate border color based on type
+            switch (type) {
+                case "success":
+                    btn.classList.add("border-green-500");
+                    break;
+                case "error":
+                    btn.classList.add("border-red-500");
+                    break;
+                case "info":
+                    btn.classList.add("border-blue-500");
+                    break;
+                case "warning":
+                    btn.classList.add("border-amber-500");
+                    break;
+            }
+        }
+    });
+}
+
+/**
+ * Initializes form fields with current state values
+ */
+function initializeFormValues() {
+    // Set values for all form elements based on state
+    const template = contextTemplates[state.type];
+
+    // Set title based on current notification type's template if empty
+    if (!state.title && template) {
+        state.title = template[getCurrentTab()].title;
+    }
+    document.getElementById("title-input").value = state.title || "";
+
+    // Set message based on type's template
+    document.getElementById("message-input").value = state.message || "";
+
+    // Set all the option fields
+    if (state.position) {
+        document.getElementById("position-select").value = state.position;
     }
 
-    /**
-     * Apply typing animation to flash code
-     * Simulates real-time human typing for flash code blocks
-     */
-    function animateFlashCode(codeBlock, flashCode, fullCode) {
-        // Create container for the pre and code elements
-        const container = document.createElement('div');
-
-        // Create temporary pre and code elements
-        const pre = document.createElement('pre');
-        const code = document.createElement('code');
-
-        // Set appropriate classes
-        pre.className = 'language-' + (codeBlock.id.includes('js') ? 'javascript' : 'php');
-        code.className = 'code-block';
-
-        // Append them to the container
-        pre.appendChild(code);
-        container.appendChild(pre);
-
-        // Get the placeholder for the flash code in the full code
-        const flashRegex = /(\s*)flash\(\)[\s\S]*?;|(\s*)flasher[\s\S]*?;/m;
-
-        // Split the code at the flash part
-        const parts = fullCode.split(flashRegex);
-
-        // Find non-empty parts (before and after flash code)
-        const beforeFlash = parts.filter((part, i) => i < parts.length - 1 && part && !part.match(/^\s*$/)).join('');
-        const afterFlash = parts.filter((part, i) => i > 0 && part && !part.match(/^\s*$/)).pop();
-
-        // Set initial content to be everything before the flash code
-        code.textContent = beforeFlash;
-        codeBlock.innerHTML = '';
-        codeBlock.appendChild(container);
-
-        // Highlight the initial code
-        if (typeof Prism !== "undefined") {
-            Prism.highlightElement(code);
-        }
-
-        // Prepare for typing animation
-        let i = 0;
-        const typingSpeed = 30; // milliseconds per character
-        let currentText = beforeFlash;
-
-        // Start typing animation
-        const typeWriter = () => {
-            if (i < flashCode.length) {
-                // Add one character at a time
-                currentText += flashCode.charAt(i);
-                code.textContent = currentText;
-
-                // Re-highlight the code
-                if (typeof Prism !== "undefined") {
-                    Prism.highlightElement(code);
-                }
-
-                i++;
-                setTimeout(typeWriter, typingSpeed);
-            } else {
-                // Typing complete, add the rest of the code
-                currentText += afterFlash;
-                code.textContent = currentText;
-
-                // Final highlighting
-                if (typeof Prism !== "undefined") {
-                    Prism.highlightElement(code);
-                }
-            }
-        };
-
-        // Start the typing animation after a small delay
-        setTimeout(typeWriter, 100);
+    if (state.timeout) {
+        document.getElementById("timeout-input").value = state.timeout;
     }
 
-    /**
-     * Update code display in all panels
-     * Optionally applies typing animation effect
-     */
-    function updateCodeDisplay(animate = false) {
-        const currentTab = getCurrentTab();
-
-        // Generate complete code blocks
-        const laravelCode = generateCodeBlock("laravel");
-        const symfonyCode = generateCodeBlock("symfony");
-        const jsCode = generateCodeBlock("js");
-
-        // Get panels
-        const laravelPanel = document.getElementById("laravel-code-panel");
-        const symfonyPanel = document.getElementById("symfony-code-panel");
-        const jsPanel = document.getElementById("js-code-panel");
-
-        // Extract just the flash code for animation
-        const getFlashCodePart = (framework) => {
-            const fullCode = generateCodeBlock(framework);
-            const flashRegex = /(\s*)flash\(\)[\s\S]*?;|(\s*)flasher[\s\S]*?;/m;
-            const match = fullCode.match(flashRegex);
-            return match ? match[0] : "";
-        };
-
-        // Update each panel with animation if requested
-        if (animate) {
-            // For Laravel panel
-            if (laravelPanel && currentTab === 'laravel') {
-                const flashCode = getFlashCodePart("laravel");
-                animateFlashCode(laravelPanel, flashCode, laravelCode);
-            } else if (laravelPanel) {
-                laravelPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(laravelCode)}</code></pre>`;
-                if (typeof Prism !== "undefined") {
-                    Prism.highlightElement(laravelPanel.querySelector('code'));
-                }
-            }
-
-            // For Symfony panel
-            if (symfonyPanel && currentTab === 'symfony') {
-                const flashCode = getFlashCodePart("symfony");
-                animateFlashCode(symfonyPanel, flashCode, symfonyCode);
-            } else if (symfonyPanel) {
-                symfonyPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(symfonyCode)}</code></pre>`;
-                if (typeof Prism !== "undefined") {
-                    Prism.highlightElement(symfonyPanel.querySelector('code'));
-                }
-            }
-
-            // For JavaScript panel
-            if (jsPanel && currentTab === 'js') {
-                const flashCode = getFlashCodePart("js");
-                animateFlashCode(jsPanel, flashCode, jsCode);
-            } else if (jsPanel) {
-                jsPanel.innerHTML = `<pre class="language-javascript"><code class="code-block">${escapeHtml(jsCode)}</code></pre>`;
-                if (typeof Prism !== "undefined") {
-                    Prism.highlightElement(jsPanel.querySelector('code'));
-                }
-            }
-        } else {
-            // Simple update without animation
-            if (laravelPanel) {
-                laravelPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(laravelCode)}</code></pre>`;
-            }
-
-            if (symfonyPanel) {
-                symfonyPanel.innerHTML = `<pre class="language-php"><code class="code-block">${escapeHtml(symfonyCode)}</code></pre>`;
-            }
-
-            if (jsPanel) {
-                jsPanel.innerHTML = `<pre class="language-javascript"><code class="code-block">${escapeHtml(jsCode)}</code></pre>`;
-            }
-
-            // Re-initialize syntax highlighting
-            if (typeof Prism !== "undefined") {
-                Prism.highlightAll();
-            }
-        }
+    if (state.theme) {
+        document.getElementById("theme-select").value = state.theme;
     }
 
-    /**
-     * Shows the notification using the Flasher library
-     * Falls back to a browser alert if Flasher isn't available
-     */
-    function showNotification() {
-        // Create a clean options object with only the necessary properties
+    if (state.direction) {
+        document.getElementById("direction-select").value = state.direction;
+    }
+
+    document.getElementById("rtl-check").checked = !!state.rtl;
+    document.getElementById("escape-html-check").checked = state.escapeHtml !== false; // Default to true
+}
+
+/**
+ * Updates the status indicator in the UI
+ */
+function updateStatus(message) {
+    const statusText = document.getElementById("status-text");
+    statusText.textContent = message;
+
+    // Temporarily change color
+    statusText.classList.remove("text-emerald-600");
+    statusText.classList.add("text-blue-600");
+
+    // Add animation to the dot
+    const dot = document.querySelector("#status-indicator div");
+    dot.classList.remove("bg-emerald-500");
+    dot.classList.add("bg-blue-500");
+
+    // Reset after 2 seconds
+    setTimeout(() => {
+        statusText.classList.remove("text-blue-600");
+        statusText.classList.add("text-emerald-600");
+        statusText.textContent = "Ready";
+
+        dot.classList.remove("bg-blue-500");
+        dot.classList.add("bg-emerald-500");
+    }, 2000);
+}
+
+/**
+ * Gets the current active tab (laravel, symfony, or js)
+ */
+function getCurrentTab() {
+    const activeTab = document.querySelector(".code-tab-btn.text-blue-600");
+    return activeTab ? activeTab.getAttribute("data-tab") : "laravel";
+}
+
+/**
+ * Switches to the specified code tab and updates the display
+ */
+function showCodeTab(tab) {
+    // Hide all panels
+    document.querySelectorAll(".code-panel").forEach(panel => {
+        panel.classList.add("hidden");
+    });
+
+    // Show the selected panel
+    const activePanel = document.getElementById(`${tab}-code-panel`);
+    if (activePanel) {
+        activePanel.classList.remove("hidden");
+    }
+
+    // Update tab styling
+    document.querySelectorAll(".code-tab-btn").forEach(btn => {
+        btn.classList.remove("text-blue-600", "border-b-2", "border-blue-500");
+        btn.classList.add("text-gray-600");
+    });
+
+    // Highlight active tab
+    const activeTab = document.querySelector(`[data-tab="${tab}"]`);
+    if (activeTab) {
+        activeTab.classList.remove("text-gray-600");
+        activeTab.classList.add("text-blue-600", "border-b-2", "border-blue-500");
+    }
+
+    // Update the code based on current state
+    updateCodeDisplay(true, false);
+}
+
+/**
+ * Generates a properly formatted flash method chain for the specified framework
+ */
+function generateFlashCode(framework, indent = '') {
+    const prefix = framework === "js" ? "flasher" : "flash()";
+    const safeMessage = sanitizeForCode(state.message);
+    const safeTitle = state.title && state.title !== state.type ? sanitizeForCode(state.title) : "";
+
+    // Create properly formatted multi-line methods
+    let formattedCode = [];
+
+    // First line - always the prefix
+    formattedCode.push(`${prefix}`);
+
+    // Add options if present
+    if (framework === "js") {
+        // JavaScript format with options as object
         const options = {};
-
-        // Only add properties that have values
         if (state.position) options.position = state.position;
         if (state.timeout) options.timeout = parseInt(state.timeout);
         if (state.theme) options.theme = state.theme;
         if (state.direction) options.direction = state.direction;
-        if (state.rtl) options.rtl = state.rtl;
-        if (state.escapeHtml !== undefined) options.escapeHtml = state.escapeHtml;
+        if (state.rtl) options.rtl = true;
+        if (state.escapeHtml === false) options.escapeHtml = false;
 
-        try {
-            // If the flasher library is available, use it
-            if (typeof flasher !== "undefined") {
-                if (state.theme) {
-                    // When using a specific theme
-                    const notificationOptions = {
-                        type: state.type,
-                        message: state.message,
-                        title: state.title || undefined,
-                        ...options
-                    };
-                    delete notificationOptions.theme; // Remove theme from options as we're using it directly
-                    flasher.use(state.theme).flash(notificationOptions);
+        // If no options, keep it simple
+        if (Object.keys(options).length === 0) {
+            formattedCode = [`${indent}${prefix}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});`];
+        } else {
+            // Add the type and arguments with options
+            formattedCode.push(`${indent}    .${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''}, {`);
+
+            // Add each option on its own line with proper indentation
+            Object.entries(options).forEach(([key, value], index, array) => {
+                const comma = index < array.length - 1 ? ',' : '';
+                if (typeof value === "string") {
+                    formattedCode.push(`${indent}        ${key}: '${value}'${comma}`);
                 } else {
-                    // Standard approach
-                    flasher[state.type](state.message, state.title || null, options);
+                    formattedCode.push(`${indent}        ${key}: ${value}${comma}`);
                 }
+            });
 
-                // Show success status
-                updateStatus("Notification shown successfully!");
+            formattedCode.push(`${indent}    });`);
+        }
+    } else {
+        // PHP frameworks with method chaining - each option on a new line
+        if (state.position) {
+            formattedCode.push(`${indent}    ->option('position', '${state.position}')`);
+        }
+        if (state.timeout) {
+            formattedCode.push(`${indent}    ->option('timeout', ${state.timeout})`);
+        }
+        if (state.theme) {
+            formattedCode.push(`${indent}    ->option('theme', '${state.theme}')`);
+        }
+        if (state.direction) {
+            formattedCode.push(`${indent}    ->option('direction', '${state.direction}')`);
+        }
+        if (state.rtl) {
+            formattedCode.push(`${indent}    ->option('rtl', true)`);
+        }
+        if (state.escapeHtml === false) {
+            formattedCode.push(`${indent}    ->option('escapeHtml', false)`);
+        }
 
-                // Add a subtle ripple effect to the button
-                const btn = document.getElementById("show-notification-btn");
-                btn.classList.add("animate-pulse");
-                setTimeout(() => btn.classList.remove("animate-pulse"), 1000);
+        // Add the final method call
+        formattedCode.push(`${indent}    ->${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ''});\n`);
+    }
 
+    // Join with line breaks for multi-line formatting
+    return formattedCode.join('\n');
+}
+
+/**
+ * Apply typing animation to only the flash code
+ */
+function animateFlashCode(codeBlock, framework) {
+    // Get template for the current type and framework
+    const template = contextTemplates[state.type][framework];
+    const indent = framework === "js" ? '' : '        ';
+
+    // Generate the flash code to be typed
+    const flashCode = generateFlashCode(framework, indent);
+
+    // Create parent container with specific visibility
+    const container = document.createElement('div');
+    container.style.position = 'relative';
+
+    // Create pre and code elements with proper classes
+    const pre = document.createElement('pre');
+    const code = document.createElement('code');
+
+    pre.className = `language-${framework === 'js' ? 'javascript' : 'php'}`;
+    code.className = 'code-block';
+
+    // Add the "before" part of the code
+    code.innerHTML = escapeHtml(template.code.before);
+
+    // Create a highly visible container for the typing animation
+    const flashContainer = document.createElement('div');
+    flashContainer.className = 'flash-code-typing';
+    flashContainer.style.position = 'relative';
+    flashContainer.style.display = 'block';
+    flashContainer.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+    flashContainer.style.borderRadius = '4px';
+    flashContainer.style.padding = '4px';
+    flashContainer.style.marginLeft = '0';
+    flashContainer.style.marginRight = '0';
+    flashContainer.style.marginTop = '10px';
+    flashContainer.style.marginBottom = '10px';
+    flashContainer.style.boxShadow = '0 0 3px rgba(16, 185, 129, 0.5)';
+    flashContainer.style.borderLeft = '3px solid rgba(16, 185, 129, 0.5)';
+
+    // Create a visible cursor
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    cursor.textContent = '|';
+    cursor.style.display = 'inline-block';
+    cursor.style.animation = 'cursorBlink 1s infinite';
+    cursor.style.color = '#4F46E5';
+    cursor.style.fontWeight = 'bold';
+    cursor.style.marginLeft = '1px';
+    cursor.style.fontSize = '1.1em';
+
+    // Add to DOM
+    flashContainer.appendChild(cursor);
+    pre.appendChild(code);
+    container.appendChild(pre);
+
+    // Clear existing content and add our new structure
+    codeBlock.innerHTML = '';
+    codeBlock.appendChild(container);
+
+    // Add the flash container at the right position
+    code.appendChild(flashContainer);
+
+    // Add the "after" part of the code
+    const afterSpan = document.createElement('span');
+    afterSpan.innerHTML = escapeHtml(template.code.after);
+    code.appendChild(afterSpan);
+
+    // Apply syntax highlighting to the static parts
+    if (typeof Prism !== "undefined") {
+        Prism.highlightElement(code);
+    }
+
+    // More obvious typing effect with slightly slower speed
+    let i = 0;
+    let currentText = '';
+    const typingSpeed = 35; // milliseconds per character
+
+    // Function to type with human-like pacing
+    const typeWithHumanPace = () => {
+        if (i < flashCode.length) {
+            // Add one character at a time
+            const char = flashCode.charAt(i);
+            currentText += char;
+
+            // Create content span with proper escaping
+            const contentSpan = document.createElement('span');
+            contentSpan.innerHTML = escapeHtml(currentText);
+            contentSpan.style.color = '#000'; // Ensure text is visible
+
+            // Update the flash container
+            flashContainer.innerHTML = '';
+            flashContainer.appendChild(contentSpan);
+            flashContainer.appendChild(cursor);
+
+            // Progress the animation
+            i++;
+
+            // Variable typing speed for realistic effect
+            let nextDelay = typingSpeed;
+            if ([';', '.', ',', ':', ')', '}'].includes(char)) {
+                nextDelay = typingSpeed * 3; // Pause at punctuation
+            } else if (char === '\n') {
+                nextDelay = typingSpeed * 5; // Longer pause at line breaks
+            } else if (Math.random() < 0.1) {
+                nextDelay = typingSpeed * (1 + Math.random()); // Random pauses
+            }
+
+            // Continue typing
+            setTimeout(typeWithHumanPace, nextDelay);
+        } else {
+            // When done, add a subtle highlight effect
+            flashContainer.style.transition = 'background-color 1s ease';
+            flashContainer.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
+        }
+    };
+
+    // Start typing after a visible delay
+    setTimeout(() => {
+        // Pulse animation to draw attention
+        flashContainer.style.animation = 'codePulse 1s';
+
+        // Start typing
+        setTimeout(typeWithHumanPace, 300);
+    }, 300);
+}
+
+/**
+ * Updates code display with option to animate only the flash code
+ */
+function updateCodeDisplay(animate = false, onlyOptionsChanged = false) {
+    const currentTab = getCurrentTab();
+
+    // Get the panel for the current tab
+    const panelId = `${currentTab}-code-panel`;
+    const panel = document.getElementById(panelId);
+
+    if (!panel) return;
+
+    // Get the template and generate the flash code
+    const template = contextTemplates[state.type][currentTab];
+    const indent = currentTab === "js" ? '' : '        ';
+    const flashCode = generateFlashCode(currentTab, indent);
+
+    // Create the full code by concatenating the parts
+    const fullCode =
+        template.code.before +
+        flashCode +
+        template.code.after;
+
+    // Set the HTML directly with the complete code
+    // This allows Prism to do its highlighting on the complete code
+    panel.innerHTML = `<pre class="language-${currentTab === 'js' ? 'javascript' : 'php'}"><code class="code-block">${escapeHtml(fullCode)}</code></pre>`;
+
+    // Apply syntax highlighting
+    if (typeof Prism !== "undefined") {
+        Prism.highlightElement(panel.querySelector('code'));
+    }
+}
+
+/**
+ * Shows the notification using the Flasher library
+ */
+function showNotification() {
+    // Create a clean options object with only the necessary properties
+    const options = {};
+
+    // Only add properties that have values
+    if (state.position) options.position = state.position;
+    if (state.timeout) options.timeout = parseInt(state.timeout);
+    if (state.theme) options.theme = state.theme;
+    if (state.direction) options.direction = state.direction;
+    if (state.rtl) options.rtl = state.rtl;
+    if (state.escapeHtml !== undefined) options.escapeHtml = state.escapeHtml;
+
+    try {
+        // If the flasher library is available, use it
+        if (typeof flasher !== "undefined") {
+            if (state.theme) {
+                // When using a specific theme
+                const notificationOptions = {
+                    type: state.type,
+                    message: state.message,
+                    title: state.title || undefined,
+                    ...options
+                };
+                delete notificationOptions.theme; // Remove theme from options as we're using it directly
+                flasher.use(state.theme).flash(notificationOptions);
             } else {
-                // Fallback to alert if flasher isn't available
-                let optionsText = "";
-                for (const [key, value] of Object.entries(options)) {
-                    if (!["type", "message", "title"].includes(key)) {
-                        optionsText += `\n${key}: ${JSON.stringify(value)}`;
-                    }
-                }
-
-                alert("Notification would show with these settings:\n\n" +
-                    `Type: ${state.type}\n` +
-                    `Message: ${state.message}\n` +
-                    (state.title ? `Title: ${state.title}\n` : "") +
-                    (optionsText ? "\nOptions:" + optionsText : "")
-                );
+                // Standard approach
+                flasher[state.type](state.message, state.title || null, options);
             }
-        } catch (e) {
-            console.error("Error showing notification:", e);
-            updateStatus("Error: " + e.message);
-            alert("Failed to show notification: " + e.message);
-        }
-    }
 
-    /**
-     * Updates the message and title inputs based on the selected notification type
-     * Uses real-world examples from the contextTemplates
-     */
-    function updateContentForType(type) {
-        const currentTab = getCurrentTab();
-        const template = contextTemplates[type][currentTab];
+            // Show success status
+            updateStatus("Notification shown successfully!");
 
-        // Update message and title inputs
-        if (template) {
-            document.getElementById("message-input").value = template.message;
-            state.message = template.message;
+            // Add a subtle ripple effect to the button
+            const btn = document.getElementById("show-notification-btn");
+            btn.classList.add("animate-pulse");
+            setTimeout(() => btn.classList.remove("animate-pulse"), 1000);
 
-            // Only update title if we have one in the template
-            if (template.title) {
-                document.getElementById("title-input").value = template.title;
-                state.title = template.title;
-            }
-        }
-    }
-
-    /**
-     * Debug helper function for troubleshooting the state
-     * Can be called from the browser console
-     */
-    function debugState() {
-        console.log("Current state:", { ...state });
-        console.log("Form values:");
-        console.log("- Title:", document.getElementById("title-input").value);
-        console.log("- Message:", document.getElementById("message-input").value);
-        console.log("- Position:", document.getElementById("position-select").value);
-        console.log("- Timeout:", document.getElementById("timeout-input").value);
-        console.log("- Theme:", document.getElementById("theme-select").value);
-        console.log("- Direction:", document.getElementById("direction-select").value);
-        console.log("- RTL:", document.getElementById("rtl-check").checked);
-        console.log("- Escape HTML:", document.getElementById("escape-html-check").checked);
-    }
-
-    // Add this to window for easy access from console
-    window.debugPhpFlasher = debugState;
-
-    /**
-     * Initialize the application when the DOM is fully loaded
-     */
-    document.addEventListener("DOMContentLoaded", function() {
-        // Initialize form with current state values
-        initializeFormValues();
-
-        // Initialize type buttons
-        initializeTypeButtons();
-
-        // Set up type button event listeners
-        document.querySelectorAll(".type-button").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const type = btn.dataset.type;
-                state.type = type;
-
-                // Update message and title based on contextual templates
-                updateContentForType(type);
-
-                // Update button styling
-                initializeTypeButtons();
-
-                // Update code display with animation
-                updateCodeDisplay(true);
-
-                // Update status
-                updateStatus(`Type changed to: ${state.type}`);
-            });
-        });
-
-        // Input event listeners
-        document.getElementById("title-input").addEventListener("input", (e) => {
-            state.title = e.target.value.trim();
-            updateCodeDisplay();
-        });
-
-        document.getElementById("message-input").addEventListener("input", (e) => {
-            state.message = e.target.value;
-            updateCodeDisplay();
-        });
-
-        // Select event listeners
-        document.getElementById("position-select").addEventListener("change", (e) => {
-            state.position = e.target.value;
-            updateCodeDisplay(true);
-        });
-
-        document.getElementById("timeout-input").addEventListener("change", (e) => {
-            state.timeout = e.target.value ? parseInt(e.target.value) : "";
-            updateCodeDisplay(true);
-        });
-
-        document.getElementById("theme-select").addEventListener("change", (e) => {
-            state.theme = e.target.value;
-            updateCodeDisplay(true);
-        });
-
-        document.getElementById("direction-select").addEventListener("change", (e) => {
-            state.direction = e.target.value;
-            updateCodeDisplay(true);
-        });
-
-        // Checkbox event listeners
-        document.getElementById("rtl-check").addEventListener("change", (e) => {
-            state.rtl = e.target.checked;
-            updateCodeDisplay(true);
-        });
-
-        document.getElementById("escape-html-check").addEventListener("change", (e) => {
-            state.escapeHtml = e.target.checked;
-            updateCodeDisplay(true);
-        });
-
-        // Initialize code tabs with enhanced animation
-        document.querySelectorAll(".code-tab-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                const tab = button.getAttribute("data-tab");
-                showCodeTab(tab);
-
-                // When changing tabs, update content based on the current state type
-                // This ensures each tab shows appropriate context for the notification type
-                updateContentForType(state.type);
-            });
-        });
-
-        // Show notification button with enhanced feedback
-        const notificationBtn = document.getElementById("show-notification-btn");
-        notificationBtn.addEventListener("click", () => {
-            // Add a subtle press effect
-            notificationBtn.classList.add("scale-95");
-            setTimeout(() => notificationBtn.classList.remove("scale-95"), 150);
-
-            updateStatus("Launching notification...");
-            showNotification();
-        });
-
-        // Add hover shine effect to button
-        notificationBtn.addEventListener("mouseenter", () => {
-            const shineElement = notificationBtn.querySelector("div:last-child");
-            if (shineElement) {
-                shineElement.style.animation = "none";
-                setTimeout(() => {
-                    shineElement.style.animation = "shine 1s forwards";
-                }, 10);
-            }
-        });
-
-        // Easter egg: Konami code to show a special notification
-        let konamiCode = [];
-        const konamiSequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
-                               "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
-
-        document.addEventListener("keydown", function(e) {
-            konamiCode.push(e.key);
-            konamiCode = konamiCode.slice(-konamiSequence.length);
-
-            if (konamiCode.join(",") === konamiSequence.join(",")) {
-                // Show special Easter egg notification
-                if (typeof flasher !== "undefined") {
-                    flasher.use("neon").success("You found the Konami code! 🎮", "Secret Unlocked");
+        } else {
+            // Fallback to alert if flasher isn't available
+            let optionsText = "";
+            for (const [key, value] of Object.entries(options)) {
+                if (!["type", "message", "title"].includes(key)) {
+                    optionsText += `\n${key}: ${JSON.stringify(value)}`;
                 }
             }
-        });
 
-        // Add special message to console
-        console.info("%c✨ PHPFlasher Interactive Studio v2.0 ✨", "color: #4F46E5; font-size: 14px; font-weight: bold;");
-        console.info("%cTry the Konami code for a surprise!", "color: #10B981; font-style: italic;");
+            alert("Notification would show with these settings:\n\n" +
+                `Type: ${state.type}\n` +
+                `Message: ${state.message}\n` +
+                (state.title ? `Title: ${state.title}\n` : "")
+                `Type: ${state.type}\n` +
+                `Message: ${state.message}\n` +
+                (state.title ? `Title: ${state.title}\n` : "") +
+                (optionsText ? "\nOptions:" + optionsText : "")
+            );
+        }
+    } catch (e) {
+        console.error("Error showing notification:", e);
+        updateStatus("Error: " + e.message);
+        alert("Failed to show notification: " + e.message);
+    }
+}
 
-        // Show the initial tab
-        showCodeTab("laravel");
+/**
+ * Updates the message and title inputs based on the selected notification type
+ */
+function updateContentForType(type) {
+    const currentTab = getCurrentTab();
+    const template = contextTemplates[type][currentTab];
 
-        // Initial code display update with animation
-        setTimeout(() => {
+    // Update message and title inputs
+    if (template) {
+        document.getElementById("message-input").value = template.message;
+        state.message = template.message;
+
+        // Only update title if we have one in the template
+        if (template.title) {
+            document.getElementById("title-input").value = template.title;
+            state.title = template.title;
+        }
+    }
+}
+
+/**
+ * Debug helper function for troubleshooting
+ */
+function debugState() {
+    console.log("Current state:", { ...state });
+    console.log("Form values:");
+    console.log("- Title:", document.getElementById("title-input").value);
+    console.log("- Message:", document.getElementById("message-input").value);
+    console.log("- Position:", document.getElementById("position-select").value);
+    console.log("- Timeout:", document.getElementById("timeout-input").value);
+    console.log("- Theme:", document.getElementById("theme-select").value);
+    console.log("- Direction:", document.getElementById("direction-select").value);
+    console.log("- RTL:", document.getElementById("rtl-check").checked);
+    console.log("- Escape HTML:", document.getElementById("escape-html-check").checked);
+    console.log("- Current tab:", getCurrentTab());
+}
+
+// Add to window for console access
+window.debugPhpFlasher = debugState;
+
+/**
+ * Initialize the application when the DOM is fully loaded
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize form with current state values
+    initializeFormValues();
+
+    // Initialize type buttons
+    initializeTypeButtons();
+
+    // Set up type button event listeners
+    document.querySelectorAll(".type-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const type = btn.dataset.type;
+            state.type = type;
+
+            // Update message and title based on contextual templates
+            updateContentForType(type);
+
+            // Update button styling
+            initializeTypeButtons();
+
+            // Update code display with animation
             updateCodeDisplay(true);
-        }, 500);
+
+            // Update status
+            updateStatus(`Type changed to: ${state.type}`);
+        });
     });
 
-    /**
-     * Special feature: Code animator
-     * Add subtle animations to the code display to make it more engaging
-     */
-    class CodeAnimator {
-        static highlight(codeElement) {
-            if (!codeElement) return;
+    // Input event listeners
+    document.getElementById("title-input").addEventListener("input", (e) => {
+        state.title = e.target.value.trim();
+        updateCodeDisplay(true);
+    });
 
-            // Add a subtle flash effect to the element
-            codeElement.style.transition = "background-color 0.5s ease";
-            codeElement.style.backgroundColor = "rgba(79, 70, 229, 0.1)";
+    document.getElementById("message-input").addEventListener("input", (e) => {
+        state.message = e.target.value;
+        updateCodeDisplay(true);
+    });
 
+    // Select event listeners with animation
+    document.getElementById("position-select").addEventListener("change", (e) => {
+        state.position = e.target.value;
+        updateCodeDisplay(true, true);
+    });
+
+    document.getElementById("timeout-input").addEventListener("change", (e) => {
+        state.timeout = e.target.value ? parseInt(e.target.value) : "";
+        updateCodeDisplay(true, true);
+    });
+
+    document.getElementById("theme-select").addEventListener("change", (e) => {
+        state.theme = e.target.value;
+        updateCodeDisplay(true, true);
+    });
+
+    document.getElementById("direction-select").addEventListener("change", (e) => {
+        state.direction = e.target.value;
+        updateCodeDisplay(true, true);
+    });
+
+    // Checkbox event listeners
+    document.getElementById("rtl-check").addEventListener("change", (e) => {
+        state.rtl = e.target.checked;
+        updateCodeDisplay(true, true);
+    });
+
+    document.getElementById("escape-html-check").addEventListener("change", (e) => {
+        state.escapeHtml = e.target.checked;
+        updateCodeDisplay(true, true);
+    });
+
+    // Initialize code tabs with animation
+    document.querySelectorAll(".code-tab-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const tab = button.getAttribute("data-tab");
+            showCodeTab(tab);
+
+            // Update content based on the current state type
+            updateContentForType(state.type);
+        });
+    });
+
+    // Show notification button with enhanced feedback
+    const notificationBtn = document.getElementById("show-notification-btn");
+    notificationBtn.addEventListener("click", () => {
+        // Add a subtle press effect
+        notificationBtn.classList.add("scale-95");
+        setTimeout(() => notificationBtn.classList.remove("scale-95"), 150);
+
+        updateStatus("Launching notification...");
+        showNotification();
+    });
+
+    // Add hover shine effect to button
+    notificationBtn.addEventListener("mouseenter", () => {
+        const shineElement = notificationBtn.querySelector("div:last-child");
+        if (shineElement) {
+            shineElement.style.animation = "none";
             setTimeout(() => {
-                codeElement.style.backgroundColor = "transparent";
-            }, 1000);
+                shineElement.style.animation = "shine 1s forwards";
+            }, 10);
         }
+    });
 
-        static pulse(element) {
-            if (!element) return;
+    // Easter egg: Konami code
+    let konamiCode = [];
+    const konamiSequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+                           "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
-            element.classList.add("animate-pulse");
-            setTimeout(() => {
-                element.classList.remove("animate-pulse");
-            }, 1000);
+    document.addEventListener("keydown", function(e) {
+        konamiCode.push(e.key);
+        konamiCode = konamiCode.slice(-konamiSequence.length);
+
+        if (konamiCode.join(",") === konamiSequence.join(",")) {
+            if (typeof flasher !== "undefined") {
+                flasher.use("neon").success("You found the Konami code! 🎮", "Secret Unlocked");
+            }
         }
+    });
+
+    // Add current user info - nice personal touch
+    const userInfo = document.querySelector(".text-xs.text-gray-500");
+    if (userInfo) {
+        const today = new Date();
+        const formattedDate = today.toISOString().slice(0, 19).replace('T', ' ');
+        userInfo.innerHTML = `User: <span class="font-medium">yoeunes</span> • Last active: ${formattedDate}`;
     }
 
-    // Initialize tooltips and other UI enhancements if available
-    if (typeof tippy !== "undefined") {
-        tippy("[data-tippy-content]");
-    }
+    // Add special message to console
+    console.info("%c✨ PHPFlasher Interactive Studio v2.1.0 ✨",
+        "color: #4F46E5; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);");
+    console.info("%cTry the Konami code for a surprise!", "color: #10B981; font-style: italic;");
+
+    // Show the initial tab
+    showCodeTab("laravel");
+
+    // Initial code display update with animation after a small delay
+    setTimeout(() => {
+        updateCodeDisplay(true, false);
+    }, 300);
+});
 </script>
