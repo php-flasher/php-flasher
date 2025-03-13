@@ -1,0 +1,1473 @@
+<!-- PHPFlasher Interactive Studio - Enhanced Edition -->
+<section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <!-- Dynamic background elements -->
+    <div class="absolute inset-0 z-0">
+        <div
+            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-float-slow"></div>
+        <div
+            class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/10 to-blue-500/10 rounded-full blur-3xl animate-float-medium"></div>
+
+        <!-- Animated floating elements -->
+        <div
+            class="floating-element absolute top-[15%] left-[10%] w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 animate-float-slow"></div>
+        <div
+            class="floating-element absolute top-[40%] left-[80%] w-20 h-20 rounded-full bg-gradient-to-br from-green-500/5 to-emerald-500/5 animate-float-medium"></div>
+        <div
+            class="floating-element absolute top-[80%] left-[20%] w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/5 to-orange-500/5 animate-float-fast"></div>
+
+        <!-- Animated lines -->
+        <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2"
+                  class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2"
+                  class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+        </svg>
+    </div>
+
+    <!-- Main content -->
+    <div class="container relative z-10 mx-auto px-4 max-w-7xl">
+        <!-- Elegant header -->
+        <header class="mb-6 text-center relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+            <h1 class="mt-6 text-3xl font-light tracking-tight">
+                PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
+            </h1>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto text-lg">Design your perfect notification, customize options,
+                and see it in action</p>
+        </header>
+
+        <!-- Main interactive area -->
+        <div
+            class="rounded-xl shadow-xl bg-white overflow-hidden backdrop-blur-sm border border-gray-100 transition-all hover:shadow-2xl">
+            <!-- Toolbar -->
+            <div
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250313</div>
+                <div id="status-indicator" class="flex items-center space-x-2">
+                    <span id="status-text" class="text-xs text-emerald-600">Ready</span>
+                    <div
+                        class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                </div>
+            </div>
+
+            <!-- Main content area with tabs -->
+            <div class="flex flex-col lg:flex-row">
+                <!-- Left panel: Options -->
+                <div class="w-full lg:w-2/5 border-r border-gray-100">
+                    <!-- Options panel -->
+                    <div class="p-4 overflow-y-auto max-h-[650px]">
+                        <!-- Notification Type Selection -->
+                        <div class="mb-6">
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
+                            <div class="grid grid-cols-4 gap-2 w-full">
+                                <button
+                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-all duration-300 active:scale-95 transform border-2 border-green-500"
+                                    data-type="success">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
+                                        <i class="fas fa-check text-lg"></i>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Success</span>
+                                </button>
+
+                                <button
+                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-all duration-300 active:scale-95 transform"
+                                    data-type="error">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
+                                        <i class="fas fa-times text-lg"></i>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Error</span>
+                                </button>
+
+                                <button
+                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-all duration-300 active:scale-95 transform"
+                                    data-type="info">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
+                                        <i class="fas fa-info-circle text-lg"></i>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Info</span>
+                                </button>
+
+                                <button
+                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-all duration-300 active:scale-95 transform"
+                                    data-type="warning">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
+                                        <i class="fas fa-exclamation-triangle text-lg"></i>
+                                    </span>
+                                    <span class="text-xs font-medium text-gray-700">Warning</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="mb-6 space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="title-input"
+                                           class="block text-sm font-medium text-gray-700">Title</label>
+                                    <span class="text-xs text-gray-400">Optional</span>
+                                </div>
+                                <input type="text" id="title-input"
+                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                                       placeholder="Enter notification title" value="">
+                            </div>
+
+                            <div>
+                                <label for="message-input"
+                                       class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <input id="message-input"
+                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                                       placeholder="Enter your notification message"
+                                       value="Your product has been created successfully!">
+                            </div>
+                        </div>
+
+                        <!-- Configuration Options -->
+                        <div
+                            class="mb-6 border border-gray-200 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <div
+                                class="bg-gradient-to-r from-gray-50 to-gray-100 px-3 py-2 flex items-center justify-between">
+                                <span class="font-medium text-gray-700">Configuration Options</span>
+                                <span class="text-xs text-gray-500">Customize appearance</span>
+                            </div>
+
+                            <div class="px-3 py-3 border-t border-gray-200">
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div>
+                                        <label for="position-select"
+                                               class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                        <select id="position-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                            <option value="">Default</option>
+                                            <option value="top-right">Top Right</option>
+                                            <option value="top-left">Top Left</option>
+                                            <option value="bottom-right">Bottom Right</option>
+                                            <option value="bottom-left">Bottom Left</option>
+                                            <option value="center-top">Center Top</option>
+                                            <option value="center-bottom">Center Bottom</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout
+                                            (ms)</label>
+                                        <select id="timeout-input"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                            <option value="">Default</option>
+                                            <option value="10000">10 seconds</option>
+                                            <option value="5000">5 seconds</option>
+                                            <option value="3000">3 seconds</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div>
+                                        <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
+                                        <select id="theme-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                            <option value="">Default</option>
+                                            <option value="amazon">Amazon</option>
+                                            <option value="amber">Amber</option>
+                                            <option value="aurora">Aurora</option>
+                                            <option value="crystal">Crystal</option>
+                                            <option value="emerald">Emerald</option>
+                                            <option value="facebook">Facebook</option>
+                                            <option value="flasher">Flasher</option>
+                                            <option value="google">Google</option>
+                                            <option value="ios">iOS</option>
+                                            <option value="jade">Jade</option>
+                                            <option value="material">Material</option>
+                                            <option value="minimal">Minimal</option>
+                                            <option value="neon">Neon</option>
+                                            <option value="onyx">Onyx</option>
+                                            <option value="ruby">Ruby</option>
+                                            <option value="sapphire">Sapphire</option>
+                                            <option value="slack">Slack</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="direction-select"
+                                               class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                        <select id="direction-select"
+                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                            <option value="">Default</option>
+                                            <option value="top">Top</option>
+                                            <option value="bottom">Bottom</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="rtl-check"
+                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                        <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="escape-html-check"
+                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape
+                                            HTML</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Launch button -->
+                        <button id="show-notification-btn"
+                                class="w-full group relative overflow-hidden rounded-md shadow-lg"
+                                data-controller="notification-demo">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
+                            <div
+                                class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
+                            <div class="relative px-5 py-3.5 flex items-center justify-center text-white font-medium">
+                                        <span class="flex items-center space-x-2">
+                                            <span>Launch Notification</span>
+                                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
+                                        </span>
+                            </div>
+                            <div
+                                class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right panel: Code Preview (wider) -->
+                <div class="w-full lg:w-3/5">
+                    <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
+                        <div class="text-sm font-medium text-gray-700">Generated Code</div>
+                        <div id="user-info" class="text-xs text-gray-500">User: <span class="font-medium">yoeunes</span>
+                        </div>
+                    </div>
+
+                    <!-- Code tabs with FontAwesome icons -->
+                    <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
+                        <button id="laravel-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5"
+                                data-tab="laravel">
+                            <i class="fab fa-laravel text-red-500"></i>
+                            <span>Laravel</span>
+                        </button>
+                        <button id="symfony-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
+                                data-tab="symfony">
+                            <i class="fab fa-symfony text-black"></i>
+                            <span>Symfony</span>
+                        </button>
+                        <button id="js-tab"
+                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
+                                data-tab="js">
+                            <i class="fab fa-js text-yellow-400"></i>
+                            <span>JavaScript</span>
+                        </button>
+                    </div>
+
+                    <!-- Code animation wrapper - Contains both the static code and the animation layer -->
+                    <div id="code-display-wrapper" class="relative">
+                        <!-- Laravel Code Panel -->
+                        <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active">
+                            <!-- Code will be inserted here by JavaScript -->
+                        </div>
+                        <!-- Symfony Code Panel -->
+                        <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel">
+                            <!-- Code will be inserted here by JavaScript -->
+                        </div>
+                        <!-- JavaScript Code Panel -->
+                        <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel">
+                            <!-- Code will be inserted here by JavaScript -->
+                        </div>
+                        <!-- Animation overlay - This stays invisible but receives animation commands -->
+                        <div id="animation-layer" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with links -->
+            <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="pulse-dot"></span>
+                    <span class="text-xs text-gray-500">Last update: <span id="last-update" class="font-medium">2025-03-13</span></span>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://phpflasher.com/docs"
+                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <i class="fas fa-book mr-1.5 text-xs"></i>
+                        Documentation
+                    </a>
+                    <a href="https://github.com/php-flasher/php-flasher"
+                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <i class="fab fa-github mr-1.5 text-xs"></i>
+                        GitHub
+                    </a>
+                    <a href="#" id="theme-toggle"
+                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <i class="fas fa-adjust mr-1.5 text-xs"></i>
+                        <span>Theme</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version badge -->
+        <div class="mt-4 flex justify-center">
+            <div
+                class="bg-white/80 backdrop-blur-sm shadow-sm border border-gray-100 rounded-full px-3 py-1 text-xs flex items-center space-x-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="text-gray-600">PHPFlasher v2.5.0</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Base styles */
+    :root {
+        --primary-color: #4F46E5;
+        --success-color: #10B981;
+        --error-color: #EF4444;
+        --info-color: #3B82F6;
+        --warning-color: #F59E0B;
+        --highlight-color: rgba(16, 185, 129, 0.1);
+    }
+
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Custom animations */
+    @keyframes shine {
+        to {
+            left: 100%;
+        }
+    }
+
+    @keyframes ping {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        75%, 100% {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    @keyframes float-slow {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    @keyframes float-medium {
+        0%, 100% {
+            transform: translateY(0) translateX(0);
+        }
+        50% {
+            transform: translateY(-10px) translateX(5px);
+        }
+    }
+
+    @keyframes float-fast {
+        0%, 100% {
+            transform: translateY(0) translateX(0);
+        }
+        25% {
+            transform: translateY(-5px) translateX(3px);
+        }
+        75% {
+            transform: translateY(5px) translateX(-3px);
+        }
+    }
+
+    @keyframes typing {
+        from {
+            width: 0
+        }
+        to {
+            width: 100%
+        }
+    }
+
+    @keyframes blink {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes pulse-bg {
+        0%, 100% {
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        50% {
+            background-color: rgba(79, 70, 229, 0.15);
+        }
+    }
+
+    @keyframes highlight-line {
+        0% {
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+        50% {
+            background-color: rgba(16, 185, 129, 0.2);
+        }
+        100% {
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+    }
+
+    /* Floating elements */
+    .animate-float-slow {
+        animation: float-slow 8s ease-in-out infinite;
+    }
+
+    .animate-float-medium {
+        animation: float-medium 6s ease-in-out infinite;
+    }
+
+    .animate-float-fast {
+        animation: float-fast 4s ease-in-out infinite;
+    }
+
+    /* Pulse dot animation in footer */
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        display: inline-block;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        position: relative;
+    }
+
+    .pulse-dot::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+        animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    /* Code display styling */
+    .code-block {
+        display: block;
+        position: relative;
+        font-size: 0.85rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .flash-code-block {
+        display: inline-block;
+        width: 100%;
+        background-color: var(--highlight-color);
+        border-radius: 4px;
+        font-weight: 600;
+        box-shadow: 0 0 2px rgba(16, 185, 129, 0.3);
+        padding: 2px 4px;
+    }
+
+    .flash-typing {
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: rgba(16, 185, 129, 0.1);
+        width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 1s steps(40, end) forwards;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 3px;
+        height: 1em;
+        background-color: var(--primary-color);
+        margin-left: 4px;
+        animation: blink 1s infinite;
+        vertical-align: middle;
+        position: relative;
+        top: -1em;
+    }
+
+    /* Animation for code typing */
+    .animated-line {
+        position: relative;
+        padding-left: 4px;
+        border-left: 2px solid var(--success-color);
+        animation: highlight-line 2s ease-in-out;
+    }
+
+    .type-button {
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .type-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .type-button::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        box-shadow: 0 0 0 2px var(--primary-color);
+    }
+
+    .type-button:focus::after {
+        opacity: 1;
+    }
+
+    /* Code panel enhancements */
+    .code-panel {
+        transition: opacity 0.3s ease;
+    }
+
+    .code-panel.hidden {
+        opacity: 0;
+    }
+
+    .code-panel.active {
+        opacity: 1;
+    }
+
+    /* Theme toggle effects */
+    #theme-toggle:hover i {
+        animation: spin 1s ease;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Add responsive adjustments */
+    @media (max-width: 768px) {
+        .code-panel {
+            height: 350px !important;
+        }
+    }
+
+    /* Concise code blocks */
+    pre code {
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    /* Typing container styles */
+    .typing-container {
+        line-height: 1.4;
+        overflow: visible;
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    /* Make sure the cursor blinks properly */
+    @keyframes blink {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    /**
+     * PHPFlasher Interactive Studio - Enhanced Edition
+     *
+     * Features:
+     * - Real-time code generation with typing animation
+     * - Context-aware examples for different notification types
+     * - Advanced animations and transitions
+     * - Clean and concise code examples
+     *
+     * @version 3.0.0
+     * @author PHPFlasher Team
+     * @lastUpdated 2025-03-13
+     */
+    const createStateProxy = () => {
+        const stateTarget = {
+            type: "success",
+            title: "",
+            message: "Your product has been created successfully!",
+            timeout: "",
+            position: "",
+            direction: "",
+            rtl: false,
+            theme: "",
+            escapeHtml: true,
+            _previousState: {},
+            _animationInProgress: false
+        };
+        return new Proxy(stateTarget, {
+            set(target, property, value) {
+                if (property !== "_previousState" && property !== "_animationInProgress") {
+                    target._previousState[property] = target[property];
+                }
+                target[property] = value;
+                if (document.readyState === "complete" &&
+                    property !== "_previousState" &&
+                    property !== "_animationInProgress") {
+                    const onlyOptionsChanged = ["position", "timeout", "theme", "direction", "rtl", "escapeHtml"].includes(property);
+                    if (property === "type") {
+                        updateStatus("Changing template...");
+                    }
+                    updateCodeDisplay(true, onlyOptionsChanged);
+                }
+                return true;
+            }
+        });
+    };
+    const state = createStateProxy();
+    const contextTemplates = {
+        success: {
+            laravel: {
+                title: "Success",
+                message: "Your product has been created successfully!",
+                controller: "ProductController",
+                method: "store",
+                code: {
+                    before: `// ProductController.php
+namespace App\\Http\\Controllers;
+use App\\Models\\Product;
+use App\\Http\\Requests\\ProductRequest;
+class ProductController extends Controller
+{
+    public function store(ProductRequest $request)
+    {
+        // Create product
+        $product = Product::create($request->validated());
+`,
+                    after: `
+        return redirect()->route('products.index');
+    }
+}`
+                }
+            },
+            symfony: {
+                title: "Success",
+                message: "Your product has been created successfully!",
+                controller: "ProductController",
+                method: "create",
+                code: {
+                    before: `// ProductController.php
+namespace App\\Controller;
+use App\\Entity\\Product;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+class ProductController extends AbstractController
+{
+    #[Route('/product/new', name: 'app_product_create')]
+    public function create(Request $request): Response
+    {
+        // Process form & save product
+        $product = new Product();
+`,
+                    after: `
+        return $this->redirectToRoute('app_product_index');
+    }
+}`
+                }
+            },
+            js: {
+                title: "Success",
+                message: "Your product has been created successfully!",
+                file: "product-service.js",
+                method: "createProduct",
+                code: {
+                    before: `// product-service.js
+import flasher from '@flasher/flasher';
+async function createProduct(data) {
+    try {
+        const response = await api.post('/products', data);
+`,
+                    after: `
+        return response.data;
+    } catch (error) {
+        flasher.error('Failed to create product');
+        throw error;
+    }
+}`
+                }
+            }
+        },
+        error: {
+            laravel: {
+                title: "Error",
+                message: "An error occurred while processing your request.",
+                controller: "PaymentController",
+                method: "process",
+                code: {
+                    before: `// PaymentController.php
+namespace App\\Http\\Controllers;
+use App\\Services\\PaymentGateway;
+class PaymentController extends Controller
+{
+    public function process(Request $request)
+    {
+        try {
+            $result = $this->paymentGateway->charge($request->token);
+        } catch (\\Exception $e) {
+`,
+                    after: `
+            return back();
+        }
+
+        return redirect()->route('payment.success');
+    }
+}`
+                }
+            },
+            symfony: {
+                title: "Error",
+                message: "An error occurred while processing your request.",
+                controller: "PaymentController",
+                method: "process",
+                code: {
+                    before: `// PaymentController.php
+namespace App\\Controller;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+class PaymentController extends AbstractController
+{
+    public function process(Request $request): Response
+    {
+        try {
+            $payment = $this->paymentService->process($request->get('token'));
+        } catch (\\Exception $e) {
+`,
+                    after: `
+            return $this->redirectToRoute('payment_form');
+        }
+
+        return $this->redirectToRoute('payment_success');
+    }
+}`
+                }
+            },
+            js: {
+                title: "Error",
+                message: "An error occurred while processing your request.",
+                file: "payment-service.js",
+                method: "processPayment",
+                code: {
+                    before: `// payment-service.js
+import flasher from '@flasher/flasher';
+async function processPayment(paymentData) {
+    try {
+        const response = await api.post('/payments', paymentData);
+        if (!response.ok) {
+`,
+                    after: `
+            return false;
+        }
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}`
+                }
+            }
+        },
+        info: {
+            laravel: {
+                title: "Information",
+                message: "Your order is being processed.",
+                controller: "OrderController",
+                method: "submit",
+                code: {
+                    before: `// OrderController.php
+namespace App\\Http\\Controllers;
+use App\\Models\\Order;
+class OrderController extends Controller
+{
+    public function submit(Request $request)
+    {
+        // Create and save order
+        $order = Order::create($request->validated());
+`,
+                    after: `
+        // Send to processing queue
+        ProcessOrderJob::dispatch($order);
+
+        return redirect()->route('orders.show', $order);
+    }
+}`
+                }
+            },
+            symfony: {
+                title: "Information",
+                message: "Your order is being processed.",
+                controller: "OrderController",
+                method: "create",
+                code: {
+                    before: `// OrderController.php
+namespace App\\Controller;
+use App\\Entity\\Order;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+class OrderController extends AbstractController
+{
+    public function create(Request $request): Response
+    {
+        // Create and save order
+        $order = new Order();
+        // ... set order properties
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+`,
+                    after: `
+        // Dispatch order processing
+        $this->messageBus->dispatch(new ProcessOrder($order->getId()));
+
+        return $this->redirectToRoute('app_order_show', [
+            'id' => $order->getId()
+        ]);
+    }
+}`
+                }
+            },
+            js: {
+                title: "Information",
+                message: "Your order is being processed.",
+                file: "order-service.js",
+                method: "submitOrder",
+                code: {
+                    before: `// order-service.js
+import flasher from '@flasher/flasher';
+async function submitOrder(orderData) {
+    try {
+        const response = await api.post('/orders', orderData);
+        const order = response.data;
+`,
+                    after: `
+        // Track order
+        analytics.trackOrder(order.id);
+        return order;
+    } catch (error) {
+        flasher.error('Order submission failed');
+        throw error;
+    }
+}`
+                }
+            }
+        },
+        warning: {
+            laravel: {
+                title: "Warning",
+                message: "Your account will expire in 3 days.",
+                controller: "AccountController",
+                method: "dashboard",
+                code: {
+                    before: `// AccountController.php
+namespace App\\Http\\Controllers;
+class AccountController extends Controller
+{
+    public function dashboard()
+    {
+        $user = auth()->user();
+        $subscription = $user->subscription;
+        if ($subscription && $subscription->daysUntilExpiration() <= 3) {
+`,
+                    after: `
+        }
+
+        return view('account.dashboard', compact('user'));
+    }
+}`
+                }
+            },
+            symfony: {
+                title: "Warning",
+                message: "Your account will expire in 3 days.",
+                controller: "AccountController",
+                method: "dashboard",
+                code: {
+                    before: `// AccountController.php
+namespace App\\Controller;
+use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+class AccountController extends AbstractController
+{
+    public function dashboard(): Response
+    {
+        $user = $this->getUser();
+        $subscription = $user->getSubscription();
+        if ($subscription && $subscription->getDaysRemaining() <= 3) {
+`,
+                    after: `
+        }
+
+        return $this->render('account/dashboard.html.twig', [
+            'user' => $user
+        ]);
+    }
+}`
+                }
+            },
+            js: {
+                title: "Warning",
+                message: "Your account will expire in 3 days.",
+                file: "account-service.js",
+                method: "checkStatus",
+                code: {
+                    before: `// account-service.js
+import flasher from '@flasher/flasher';
+async function checkStatus() {
+    const response = await api.get('/account/status');
+    const { subscription } = response.data;
+    if (subscription && subscription.daysRemaining <= 3) {
+`,
+                    after: `
+    }
+    return subscription;
+}`
+                }
+            }
+        }
+    };
+    const indentMap = {
+      js: {
+        success: "        ",
+        error: "            ",    // You can adjust these values as desired
+        info: "        ",
+        warning: "            "
+      },
+      laravel: {
+        success: "        ",
+        error: "            ", // For error, we use an extra level (8 spaces vs. 12 spaces)
+        info: "        ",
+        warning: "            "
+      },
+      symfony: {
+        success: "        ",
+        error: "            ", // Similarly, error notifications get extra indentation
+        info: "        ",
+        warning: "            "
+      }
+    };
+
+    /**
+     * Helper function to safely escape special characters in code
+     */
+    function sanitizeForCode(str) {
+        if (typeof str !== "string") {
+            return str;
+        }
+        return str
+            .replace(/\\/g, "\\\\")
+            .replace(/'/g, "\\'")
+            .replace(/"/g, "\\\"")
+            .replace(/\n/g, "\\n")
+            .replace(/\r/g, "\\r")
+            .replace(/\t/g, "\\t");
+    }
+
+    /**
+     * Function to safely escape HTML for display in code blocks
+     */
+    function escapeHtml(text) {
+        if (typeof text !== "string") {
+            return "";
+        }
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    /**
+     * Updates the visual style of notification type buttons
+     */
+    function initializeTypeButtons() {
+        document.querySelectorAll(".type-button").forEach(btn => {
+            const type = btn.dataset.type;
+            btn.classList.remove("border-2");
+            btn.classList.remove("border-green-500", "border-red-500", "border-blue-500", "border-amber-500");
+            if (type === state.type) {
+                btn.classList.add("border-2");
+                switch (type) {
+                    case "success":
+                        btn.classList.add("border-green-500");
+                        break;
+                    case "error":
+                        btn.classList.add("border-red-500");
+                        break;
+                    case "info":
+                        btn.classList.add("border-blue-500");
+                        break;
+                    case "warning":
+                        btn.classList.add("border-amber-500");
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * Initialize form fields with values from state
+     */
+    function initializeFormValues() {
+        const template = contextTemplates[state.type];
+        const currentTab = getCurrentTab();
+        if (!state.title && template) {
+            state.title = template[currentTab].title;
+        }
+        document.getElementById("title-input").value = state.title || "";
+        document.getElementById("message-input").value = state.message || "";
+        document.getElementById("position-select").value = state.position || "";
+        document.getElementById("timeout-input").value = state.timeout || "";
+        document.getElementById("theme-select").value = state.theme || "";
+        document.getElementById("direction-select").value = state.direction || "";
+        document.getElementById("rtl-check").checked = !!state.rtl;
+        document.getElementById("escape-html-check").checked = state.escapeHtml !== false;
+    }
+
+    /**
+     * Updates UI status indicator
+     */
+    function updateStatus(message) {
+        const statusText = document.getElementById("status-text");
+        if (!statusText) {
+            return;
+        }
+        statusText.textContent = message;
+        statusText.classList.remove("text-emerald-600");
+        statusText.classList.add("text-blue-600");
+        const dot = document.querySelector("#status-indicator div");
+        if (dot) {
+            dot.classList.remove("bg-emerald-500");
+            dot.classList.add("bg-blue-500");
+        }
+        setTimeout(() => {
+            statusText.classList.remove("text-blue-600");
+            statusText.classList.add("text-emerald-600");
+            statusText.textContent = "Ready";
+            if (dot) {
+                dot.classList.remove("bg-blue-500");
+                dot.classList.add("bg-emerald-500");
+            }
+        }, 2000);
+    }
+
+    /**
+     * Get the current active tab (laravel/symfony/js)
+     */
+    function getCurrentTab() {
+        const activeTab = document.querySelector(".code-tab-btn.text-blue-600");
+        return activeTab ? activeTab.getAttribute("data-tab") : "laravel";
+    }
+
+    /**
+     * Switch to a specific code tab
+     */
+    function showCodeTab(tab) {
+        document.querySelectorAll(".code-panel").forEach(panel => {
+            panel.classList.add("hidden");
+        });
+        const activePanel = document.getElementById(`${tab}-code-panel`);
+        if (activePanel) {
+            activePanel.classList.remove("hidden");
+        }
+        document.querySelectorAll(".code-tab-btn").forEach(btn => {
+            btn.classList.remove("text-blue-600", "border-b-2", "border-blue-500");
+            btn.classList.add("text-gray-600");
+        });
+        const activeTab = document.querySelector(`[data-tab="${tab}"]`);
+        if (activeTab) {
+            activeTab.classList.remove("text-gray-600");
+            activeTab.classList.add("text-blue-600", "border-b-2", "border-blue-500");
+        }
+        updateCodeDisplay(true);
+    }
+
+    /**
+     * Generate flash code for the specified framework
+     */
+    function generateFlashCode(framework, indent = "") {
+        const prefix = framework === "js" ? "flasher" : "flash()";
+        const safeMessage = sanitizeForCode(state.message);
+        const safeTitle = state.title && state.title.toLowerCase() !== state.type.toLowerCase() ? sanitizeForCode(state.title) : "";
+        let lines = [];
+        if (framework === "js") {
+            const options = {};
+            if (state.position) {
+                options.position = state.position;
+            }
+            if (state.timeout) {
+                options.timeout = parseInt(state.timeout);
+            }
+            if (state.theme) {
+                options.theme = state.theme;
+            }
+            if (state.direction) {
+                options.direction = state.direction;
+            }
+            if (state.rtl) {
+                options.rtl = true;
+            }
+            if (state.escapeHtml === false) {
+                options.escapeHtml = false;
+            }
+            if (Object.keys(options).length === 0) {
+                return `${indent}${prefix}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ""});`;
+            }
+            lines.push(`${indent}${prefix}`);
+            lines.push(`${indent}    .${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ""}, {`);
+            Object.entries(options).forEach(([key, value], index, array) => {
+                const comma = index < array.length - 1 ? "," : "";
+                if (typeof value === "string") {
+                    lines.push(`${indent}        ${key}: '${value}'${comma}`);
+                } else {
+                    lines.push(`${indent}        ${key}: ${value}${comma}`);
+                }
+            });
+            lines.push(`${indent}    });`);
+        } else {
+            lines.push(`${indent}${prefix}`);
+            if (state.position) {
+                lines.push(`${indent}    ->option('position', '${state.position}')`);
+            }
+            if (state.timeout) {
+                lines.push(`${indent}    ->option('timeout', ${state.timeout})`);
+            }
+            if (state.theme) {
+                lines.push(`${indent}    ->option('theme', '${state.theme}')`);
+            }
+            if (state.direction) {
+                lines.push(`${indent}    ->option('direction', '${state.direction}')`);
+            }
+            if (state.rtl) {
+                lines.push(`${indent}    ->option('rtl', true)`);
+            }
+            if (state.escapeHtml === false) {
+                lines.push(`${indent}    ->option('escapeHtml', false)`);
+            }
+            lines.push(`${indent}    ->${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ""});`);
+        }
+        return lines.join("\n");
+    }
+
+    /**
+     * Update code display with animation
+     */
+    function updateCodeDisplay(animate = true) {
+        const currentTab = getCurrentTab();
+        const panel = document.getElementById(`${currentTab}-code-panel`);
+        if (!panel) {
+            return;
+        }
+        const template = contextTemplates[state.type][currentTab];
+        const defaultIndent = currentTab === "js" ? "    " : "        ";
+        const indent = (indentMap[currentTab] && indentMap[currentTab][state.type]) || defaultIndent;
+        const flashCode = generateFlashCode(currentTab, indent);
+        if (animate) {
+            panel.innerHTML = `
+            <pre class="language-${currentTab === "js" ? "javascript" : "php"}">
+                <code>${escapeHtml(template.code.before)}</code>
+            </pre>
+        `;
+            if (typeof Prism !== "undefined") {
+                Prism.highlightElement(panel.querySelector("code"));
+            }
+            const typingContainer = document.createElement("div");
+            typingContainer.className = "typing-container border-l-4 border-green-500 bg-green-50/20";
+            typingContainer.style.fontFamily = "monospace";
+            typingContainer.style.position = "relative";
+            typingContainer.style.top = "-10px";
+            panel.querySelector("pre").appendChild(typingContainer);
+            const afterContainer = document.createElement("pre");
+            afterContainer.className = `language-${currentTab === "js" ? "javascript" : "php"}`;
+            afterContainer.style.marginTop = "-2em";
+            afterContainer.style.paddingTop = "0";
+            afterContainer.innerHTML = `<code>${escapeHtml(template.code.after)}</code>`;
+            panel.appendChild(afterContainer);
+            if (typeof Prism !== "undefined") {
+                Prism.highlightElement(afterContainer.querySelector("code"));
+            }
+            typeCode(flashCode, typingContainer);
+        } else {
+            const completeCode = template.code.before + flashCode + template.code.after;
+            panel.innerHTML = `
+            <pre class="language-${currentTab === "js" ? "javascript" : "php"}">
+                <code>${escapeHtml(completeCode)}</code>
+            </pre>
+        `;
+            if (typeof Prism !== "undefined") {
+                Prism.highlightElement(panel.querySelector("code"));
+            }
+        }
+    }
+
+    /**
+     * Human-like typing animation
+     */
+    function typeCode(code, container) {
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
+        container.appendChild(cursor);
+
+        let i = 0;
+        let currentLine = document.createElement("div");
+        currentLine.style.minHeight = "1.2em";
+        container.insertBefore(currentLine, cursor);
+
+        const charsPerMinute = 5000;
+        const baseDelay = 60000 / charsPerMinute;
+
+        function typeNextChar() {
+            if (i < code.length) {
+                const char = code.charAt(i);
+
+                if (char === "\n") {
+                    currentLine = document.createElement("div");
+                    currentLine.style.minHeight = "1.2em";
+                    container.insertBefore(currentLine, cursor);
+                } else {
+                    const charSpan = document.createElement("span");
+                    if ("(){}[];".includes(char)) {
+                        charSpan.style.color = "#a626a4";
+                    } else if ("'\"`".includes(char)) {
+                        charSpan.style.color = "#50a14f";
+                    } else if (char === "-" && i > 0 && code.charAt(i - 1) === "-" && code.charAt(i - 2) === ">") {
+                        charSpan.style.color = "#e45649";
+                    } else if (char === ">") {
+                        charSpan.style.color = "#e45649";
+                    } else {
+                        charSpan.style.color = "#383a42";
+                    }
+                    charSpan.textContent = char;
+                    currentLine.appendChild(charSpan);
+                }
+
+                i++;
+                let delay = baseDelay;
+
+                if ([".", ",", ";", ")", "}", ">", "!"].includes(char)) {
+                    delay *= 2.5;
+                } else if (char === "\n") {
+                    delay *= 4;
+                } else {
+                    delay *= (0.7 + Math.random() * 0.6);
+                }
+
+                if (Math.random() < 0.05) {
+                    delay += Math.random() * 500;
+                }
+
+                setTimeout(typeNextChar, delay);
+            } else {
+                setTimeout(() => {
+                    cursor.remove();
+                }, 50);
+            }
+        }
+
+        setTimeout(typeNextChar, 150);
+    }
+
+    /**
+     * Updates the message and title based on the notification type
+     */
+    function updateContentForType(type) {
+        const currentTab = getCurrentTab();
+        const template = contextTemplates[type][currentTab];
+        if (!template) {
+            return;
+        }
+        document.getElementById("message-input").value = template.message;
+        state.message = template.message;
+        if (template.title.toLowerCase() !== type.toLowerCase()) {
+            document.getElementById("title-input").value = template.title;
+            state.title = template.title;
+        } else {
+            document.getElementById("title-input").value = "";
+            state.title = "";
+        }
+    }
+
+    /**
+     * Show a notification with current settings
+     */
+    function showNotification() {
+        const options = {};
+        if (state.position) {
+            options.position = state.position;
+        }
+        if (state.timeout) {
+            options.timeout = parseInt(state.timeout);
+        }
+        if (state.theme) {
+            options.theme = state.theme;
+        }
+        if (state.direction) {
+            options.direction = state.direction;
+        }
+        if (state.rtl) {
+            options.rtl = state.rtl;
+        }
+        if (state.escapeHtml !== undefined) {
+            options.escapeHtml = state.escapeHtml;
+        }
+        try {
+            if (typeof flasher !== "undefined") {
+                if (state.theme) {
+                    const notificationOptions = {
+                        type: state.type,
+                        message: state.message,
+                        title: state.title || undefined,
+                        ...options
+                    };
+                    delete notificationOptions.theme;
+                    flasher.use(state.theme).flash(notificationOptions);
+                } else {
+                    flasher[state.type](state.message, state.title || null, options);
+                }
+                updateStatus("Notification shown ✓");
+            } else {
+                let optionsText = Object.entries(options)
+                    .map(([k, v]) => `${k}: ${JSON.stringify(v)}`)
+                    .join("\n");
+                alert(`Notification would display with:\n\n` +
+                    `Type: ${state.type}\n` +
+                    `Message: ${state.message}\n` +
+                    (state.title ? `Title: ${state.title}\n` : "") +
+                    (optionsText ? `\nOptions:\n${optionsText}` : ""));
+            }
+        } catch (e) {
+            console.error("Error showing notification:", e);
+            updateStatus("Error: " + e.message);
+            alert("Failed to show notification: " + e.message);
+        }
+    }
+
+    /**
+     * Update current time in the UI
+     */
+    function updateCurrentTime() {
+        const userInfo = document.getElementById("user-info");
+        if (userInfo) {
+            const now = new Date();
+            const formattedDate = now.toISOString().slice(0, 19).replace("T", " ");
+            userInfo.innerHTML = `User: <span class="font-medium">yoeunes</span> • Active: ${formattedDate}`;
+        }
+        const lastUpdate = document.getElementById("last-update");
+        if (lastUpdate) {
+            lastUpdate.textContent = new Date().toISOString().split("T")[0];
+        }
+    }
+
+    /**
+     * Initialize the application when DOM is loaded
+     */
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeFormValues();
+        initializeTypeButtons();
+        updateCurrentTime();
+        document.querySelectorAll(".type-button").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const type = btn.dataset.type;
+                state.type = type;
+                updateContentForType(type);
+                initializeTypeButtons();
+                updateStatus(`Type: ${state.type}`);
+            });
+        });
+        document.getElementById("title-input").addEventListener("input", (e) => {
+            state.title = e.target.value.trim();
+        });
+        document.getElementById("message-input").addEventListener("input", (e) => {
+            state.message = e.target.value;
+        });
+        document.getElementById("position-select").addEventListener("change", (e) => {
+            state.position = e.target.value;
+        });
+        document.getElementById("timeout-input").addEventListener("change", (e) => {
+            state.timeout = e.target.value ? parseInt(e.target.value) : "";
+        });
+        document.getElementById("theme-select").addEventListener("change", (e) => {
+            state.theme = e.target.value;
+        });
+        document.getElementById("direction-select").addEventListener("change", (e) => {
+            state.direction = e.target.value;
+        });
+        document.getElementById("rtl-check").addEventListener("change", (e) => {
+            state.rtl = e.target.checked;
+        });
+        document.getElementById("escape-html-check").addEventListener("change", (e) => {
+            state.escapeHtml = e.target.checked;
+        });
+        document.querySelectorAll(".code-tab-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const tab = button.getAttribute("data-tab");
+                showCodeTab(tab);
+            });
+        });
+        const notificationBtn = document.getElementById("show-notification-btn");
+        notificationBtn.addEventListener("click", () => {
+            notificationBtn.classList.add("scale-95");
+            setTimeout(() => notificationBtn.classList.remove("scale-95"), 150);
+            updateStatus("Launching notification...");
+            showNotification();
+        });
+        const themeToggle = document.getElementById("theme-toggle");
+        if (themeToggle) {
+            themeToggle.addEventListener("click", (e) => {
+                e.preventDefault();
+                document.documentElement.classList.toggle("dark");
+                const icon = themeToggle.querySelector("i");
+                if (icon) {
+                    if (document.documentElement.classList.contains("dark")) {
+                        icon.classList.remove("fa-adjust");
+                        icon.classList.add("fa-sun");
+                        themeToggle.querySelector("span").textContent = "Light";
+                    } else {
+                        icon.classList.remove("fa-sun");
+                        icon.classList.add("fa-adjust");
+                        themeToggle.querySelector("span").textContent = "Theme";
+                    }
+                }
+            });
+        }
+        let konamiCode = [];
+        const konamiSequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+            "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+        document.addEventListener("keydown", function(e) {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-konamiSequence.length);
+            if (konamiCode.join(",") === konamiSequence.join(",")) {
+                if (typeof flasher !== "undefined") {
+                    flasher.use("neon").success("You found the Konami code! 🎮", "Secret Unlocked");
+                }
+            }
+        });
+        setInterval(updateCurrentTime, 60000);
+        console.info(
+            "%c✨ PHPFlasher Interactive Studio v3.0.0 ✨",
+            "color: #4F46E5; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);"
+        );
+        console.info("%cTry the Konami code for a surprise!", "color: #10B981; font-style: italic;");
+        showCodeTab("laravel");
+    });
+</script>

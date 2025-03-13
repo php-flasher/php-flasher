@@ -7,6 +7,8 @@ module.exports = {
         './_includes/**/*.html',
         './_layouts/**/*.html',
         './assets/**/*.{js,pcss}',
+        './static/css/*.css',
+        './static/js/*.js',
 
         // Explicit exclusions
         // '!./_site/**', // Jekyll output directory

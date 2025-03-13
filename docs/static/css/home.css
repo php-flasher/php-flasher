@@ -1,0 +1,64 @@
+/* Bell animation */
+@keyframes bellRing {
+    0%, 100% {
+        transform: rotate(0);
+        transform-origin: top center;
+    }
+    20% {
+        transform: rotate(8deg);
+        transform-origin: top center;
+    }
+    40% {
+        transform: rotate(-8deg);
+        transform-origin: top center;
+    }
+    60% {
+        transform: rotate(4deg);
+        transform-origin: top center;
+    }
+    80% {
+        transform: rotate(-4deg);
+        transform-origin: top center;
+    }
+}
+
+.animate-bell {
+    animation: bellRing 2s ease-in-out;
+    animation-delay: 1s;
+    filter: drop-shadow(0 0 5px rgba(64, 82, 181, 0.5));
+}
+
+.animate-bell:hover {
+    animation: bellRing 0.5s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
