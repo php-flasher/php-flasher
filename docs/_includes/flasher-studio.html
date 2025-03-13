@@ -495,10 +495,13 @@
     .cursor {
         display: inline-block;
         width: 3px;
-        height: 1.2em;
+        height: 1em;
         background-color: var(--primary-color);
-        margin-left: 2px;
+        margin-left: 4px;
         animation: blink 1s infinite;
+        vertical-align: middle;
+        position: relative;
+        top: -1em;
     }
 
     /* Animation for code typing */
@@ -587,13 +590,6 @@
         50% {
             opacity: 0;
         }
-    }
-
-    .cursor {
-        animation: blink 1s infinite;
-        display: inline-block;
-        width: 2px;
-        height: 1.2em;
     }
 </style>
 
@@ -737,6 +733,7 @@ class PaymentController extends Controller
                     after: `
             return back();
         }
+
         return redirect()->route('payment.success');
     }
 }`
@@ -762,6 +759,7 @@ class PaymentController extends AbstractController
                     after: `
             return $this->redirectToRoute('payment_form');
         }
+
         return $this->redirectToRoute('payment_success');
     }
 }`
@@ -812,6 +810,7 @@ class OrderController extends Controller
                     after: `
         // Send to processing queue
         ProcessOrderJob::dispatch($order);
+
         return redirect()->route('orders.show', $order);
     }
 }`
@@ -840,6 +839,7 @@ class OrderController extends AbstractController
                     after: `
         // Dispatch order processing
         $this->messageBus->dispatch(new ProcessOrder($order->getId()));
+
         return $this->redirectToRoute('app_order_show', [
             'id' => $order->getId()
         ]);
@@ -891,6 +891,7 @@ class AccountController extends Controller
 `,
                     after: `
         }
+
         return view('account.dashboard', compact('user'));
     }
 }`
@@ -915,6 +916,7 @@ class AccountController extends AbstractController
 `,
                     after: `
         }
+
         return $this->render('account/dashboard.html.twig', [
             'user' => $user
         ]);
@@ -942,6 +944,26 @@ async function checkStatus() {
                 }
             }
         }
+    };
+    const indentMap = {
+      js: {
+        success: "        ",
+        error: "            ",    // You can adjust these values as desired
+        info: "        ",
+        warning: "            "
+      },
+      laravel: {
+        success: "        ",
+        error: "            ", // For error, we use an extra level (8 spaces vs. 12 spaces)
+        info: "        ",
+        warning: "            "
+      },
+      symfony: {
+        success: "        ",
+        error: "            ", // Similarly, error notifications get extra indentation
+        info: "        ",
+        warning: "            "
+      }
     };
 
     /**
@@ -1148,16 +1170,6 @@ async function checkStatus() {
     }
 
     /**
-     * Generate the complete code example
-     */
-    function generateCompleteExample(framework) {
-        const template = contextTemplates[state.type][framework];
-        const indent = framework === "js" ? "    " : "        ";
-        const flashCode = generateFlashCode(framework, indent);
-        return `${template.code.before}\n${flashCode}\n${template.code.after}`;
-    }
-
-    /**
      * Update code display with animation
      */
     function updateCodeDisplay(animate = true) {
@@ -1167,7 +1179,8 @@ async function checkStatus() {
             return;
         }
         const template = contextTemplates[state.type][currentTab];
-        const indent = currentTab === "js" ? "    " : "        ";
+        const defaultIndent = currentTab === "js" ? "    " : "        ";
+        const indent = (indentMap[currentTab] && indentMap[currentTab][state.type]) || defaultIndent;
         const flashCode = generateFlashCode(currentTab, indent);
         if (animate) {
             panel.innerHTML = `
@@ -1180,10 +1193,9 @@ async function checkStatus() {
             }
             const typingContainer = document.createElement("div");
             typingContainer.className = "typing-container border-l-4 border-green-500 bg-green-50/20";
-            typingContainer.style.marginTop = "-20px";
             typingContainer.style.fontFamily = "monospace";
             typingContainer.style.position = "relative";
-            typingContainer.style.minHeight = "50px";
+            typingContainer.style.top = "-10px";
             panel.querySelector("pre").appendChild(typingContainer);
             const afterContainer = document.createElement("pre");
             afterContainer.className = `language-${currentTab === "js" ? "javascript" : "php"}`;
@@ -1214,24 +1226,20 @@ async function checkStatus() {
     function typeCode(code, container) {
         const cursor = document.createElement("span");
         cursor.className = "cursor";
-        cursor.innerHTML = "|";
-        cursor.style.display = "inline-block";
-        cursor.style.width = "2px";
-        cursor.style.backgroundColor = "#4F46E5";
-        cursor.style.color = "transparent";
-        cursor.style.marginLeft = "1px";
-        cursor.style.animation = "blink 1s infinite";
         container.appendChild(cursor);
+
         let i = 0;
         let currentLine = document.createElement("div");
         currentLine.style.minHeight = "1.2em";
         container.insertBefore(currentLine, cursor);
+
         const charsPerMinute = 5000;
         const baseDelay = 60000 / charsPerMinute;
 
         function typeNextChar() {
             if (i < code.length) {
                 const char = code.charAt(i);
+
                 if (char === "\n") {
                     currentLine = document.createElement("div");
                     currentLine.style.minHeight = "1.2em";
@@ -1252,8 +1260,10 @@ async function checkStatus() {
                     charSpan.textContent = char;
                     currentLine.appendChild(charSpan);
                 }
+
                 i++;
                 let delay = baseDelay;
+
                 if ([".", ",", ";", ")", "}", ">", "!"].includes(char)) {
                     delay *= 2.5;
                 } else if (char === "\n") {
@@ -1261,9 +1271,11 @@ async function checkStatus() {
                 } else {
                     delay *= (0.7 + Math.random() * 0.6);
                 }
+
                 if (Math.random() < 0.05) {
                     delay += Math.random() * 500;
                 }
+
                 setTimeout(typeNextChar, delay);
             } else {
                 setTimeout(() => {
@@ -1273,119 +1285,6 @@ async function checkStatus() {
         }
 
         setTimeout(typeNextChar, 150);
-    }
-
-    /**
-     * Create and play a typing animation for the flash code section
-     */
-    function animateFlashCode(framework) {
-        const template = contextTemplates[state.type][framework];
-        const panel = document.getElementById(`${framework}-code-panel`);
-        if (!panel) {
-            return;
-        }
-        const codeElement = panel.querySelector("code");
-        if (!codeElement) {
-            return;
-        }
-        const flashCode = generateFlashCode(framework, framework === "js" ? "    " : "        ");
-        const fullText = codeElement.textContent;
-        const startIndex = fullText.indexOf(flashCode);
-        if (startIndex === -1) {
-            return;
-        }
-        const range = document.createRange();
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        try {
-            const textNodes = getTextNodesIn(codeElement);
-            let currentPos = 0;
-            let startNode, startOffset, endNode, endOffset;
-            for (let node of textNodes) {
-                const nodeTextLength = node.textContent.length;
-                if (currentPos <= startIndex && currentPos + nodeTextLength > startIndex) {
-                    startNode = node;
-                    startOffset = startIndex - currentPos;
-                }
-                if (currentPos <= startIndex + flashCode.length &&
-                    currentPos + nodeTextLength >= startIndex + flashCode.length) {
-                    endNode = node;
-                    endOffset = startIndex + flashCode.length - currentPos;
-                    break;
-                }
-                currentPos += nodeTextLength;
-            }
-            if (startNode && endNode) {
-                range.setStart(startNode, startOffset);
-                range.setEnd(endNode, endOffset);
-                const highlightSpan = document.createElement("span");
-                highlightSpan.className = "animated-line";
-                highlightSpan.style.animation = "highlight-line 2s ease-in-out";
-                range.surroundContents(highlightSpan);
-                simulateTyping(highlightSpan, flashCode);
-            }
-        } catch (e) {
-            console.warn("Animation error:", e);
-        }
-    }
-
-    /**
-     * Get all text nodes within an element
-     */
-    function getTextNodesIn(element) {
-        const textNodes = [];
-        const walk = document.createTreeWalker(
-            element,
-            NodeFilter.SHOW_TEXT,
-            null,
-            false
-        );
-        let node;
-        while (node = walk.nextNode()) {
-            textNodes.push(node);
-        }
-        return textNodes;
-    }
-
-    /**
-     * Simulate typing effect within an element
-     */
-    function simulateTyping(element, text) {
-        if (!element) {
-            return;
-        }
-        const cursor = document.createElement("span");
-        cursor.className = "cursor";
-        element.appendChild(cursor);
-        const originalContent = element.innerHTML;
-        element.innerHTML = "";
-        element.appendChild(cursor);
-        let i = 0;
-        const typingSpeed = 600;
-
-        function typeCharacter() {
-            if (i < text.length) {
-                const char = document.createTextNode(text.charAt(i));
-                element.insertBefore(char, cursor);
-                i++;
-                let delay = typingSpeed;
-                const currentChar = text.charAt(i - 1);
-                if ([";", ".", ":", ",", ")", "}"].includes(currentChar)) {
-                    delay = typingSpeed * 3;
-                } else if (currentChar === "\n") {
-                    delay = typingSpeed * 5;
-                } else if (Math.random() < 0.1) {
-                    delay = typingSpeed * (1 + Math.random());
-                }
-                setTimeout(typeCharacter, delay);
-            } else {
-                setTimeout(() => {
-                    cursor.remove();
-                }, 50);
-            }
-        }
-
-        setTimeout(typeCharacter, 30);
     }
 
     /**
