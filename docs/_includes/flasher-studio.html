@@ -2,25 +2,18 @@
 <section class="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 py-8">
     <!-- Dynamic background elements -->
     <div class="absolute inset-0 z-0">
-        <div
-            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-float-slow"></div>
-        <div
-            class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/10 to-blue-500/10 rounded-full blur-3xl animate-float-medium"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-float-slow"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-emerald-500/10 to-blue-500/10 rounded-full blur-3xl animate-float-medium"></div>
 
         <!-- Animated floating elements -->
-        <div
-            class="floating-element absolute top-[15%] left-[10%] w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 animate-float-slow"></div>
-        <div
-            class="floating-element absolute top-[40%] left-[80%] w-20 h-20 rounded-full bg-gradient-to-br from-green-500/5 to-emerald-500/5 animate-float-medium"></div>
-        <div
-            class="floating-element absolute top-[80%] left-[20%] w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/5 to-orange-500/5 animate-float-fast"></div>
+        <div class="floating-element absolute top-[15%] left-[10%] w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 animate-float-slow"></div>
+        <div class="floating-element absolute top-[40%] left-[80%] w-20 h-20 rounded-full bg-gradient-to-br from-green-500/5 to-emerald-500/5 animate-float-medium"></div>
+        <div class="floating-element absolute top-[80%] left-[20%] w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/5 to-orange-500/5 animate-float-fast"></div>
 
         <!-- Animated lines -->
         <svg class="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2"
-                  class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
-            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2"
-                  class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.2" class="text-blue-500 animate-[pulse_8s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.2" class="text-indigo-500 animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite]"></line>
         </svg>
     </div>
 
@@ -32,26 +25,21 @@
             <h1 class="mt-6 text-3xl font-light tracking-tight">
                 PHPFlasher <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Interactive</span> Studio
             </h1>
-            <p class="mt-2 text-gray-500 max-w-2xl mx-auto text-lg">Design your perfect notification, customize options,
-                and see it in action</p>
+            <p class="mt-2 text-gray-500 max-w-2xl mx-auto text-lg">Design your perfect notification, customize options, and see it in action</p>
         </header>
 
         <!-- Main interactive area -->
-        <div
-            class="rounded-xl shadow-xl bg-white overflow-hidden backdrop-blur-sm border border-gray-100 transition-all hover:shadow-2xl">
+        <div class="rounded-xl shadow-xl bg-white overflow-hidden backdrop-blur-sm border border-gray-100 transition-all hover:shadow-2xl">
             <!-- Toolbar -->
-            <div
-                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-2 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <div class="w-3 h-3 rounded-full bg-red-400"></div>
                     <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
                     <div class="w-3 h-3 rounded-full bg-green-400"></div>
                 </div>
-                <div class="text-sm text-gray-500 font-medium">PHPFlasher Studio • Build ID: FL-20250313</div>
                 <div id="status-indicator" class="flex items-center space-x-2">
                     <span id="status-text" class="text-xs text-emerald-600">Ready</span>
-                    <div
-                        class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
                 </div>
             </div>
 
@@ -65,41 +53,29 @@
                         <div class="mb-6">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Notification Type</label>
                             <div class="grid grid-cols-4 gap-2 w-full">
-                                <button
-                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-all duration-300 active:scale-95 transform border-2 border-green-500"
-                                    data-type="success">
-                                    <span
-                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
+                                <button data-type="success" class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-all duration-300 active:scale-95 transform border-2 border-green-500">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-green-100 text-green-600 mb-2">
                                         <i class="fas fa-check text-lg"></i>
                                     </span>
                                     <span class="text-xs font-medium text-gray-700">Success</span>
                                 </button>
 
-                                <button
-                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-all duration-300 active:scale-95 transform"
-                                    data-type="error">
-                                    <span
-                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
+                                <button data-type="error" class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-all duration-300 active:scale-95 transform">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-red-100 text-red-600 mb-2">
                                         <i class="fas fa-times text-lg"></i>
                                     </span>
                                     <span class="text-xs font-medium text-gray-700">Error</span>
                                 </button>
 
-                                <button
-                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-all duration-300 active:scale-95 transform"
-                                    data-type="info">
-                                    <span
-                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
+                                <button data-type="info" class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-all duration-300 active:scale-95 transform">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-blue-100 text-blue-600 mb-2">
                                         <i class="fas fa-info-circle text-lg"></i>
                                     </span>
                                     <span class="text-xs font-medium text-gray-700">Info</span>
                                 </button>
 
-                                <button
-                                    class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-all duration-300 active:scale-95 transform"
-                                    data-type="warning">
-                                    <span
-                                        class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
+                                <button data-type="warning" class="type-button flex flex-col items-center justify-center p-3 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-all duration-300 active:scale-95 transform">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-md bg-amber-100 text-amber-600 mb-2">
                                         <i class="fas fa-exclamation-triangle text-lg"></i>
                                     </span>
                                     <span class="text-xs font-medium text-gray-700">Warning</span>
@@ -111,19 +87,21 @@
                         <div class="mb-6 space-y-4">
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <label for="title-input"
-                                           class="block text-sm font-medium text-gray-700">Title</label>
+                                    <label for="title-input" class="block text-sm font-medium text-gray-700">Title</label>
                                     <span class="text-xs text-gray-400">Optional</span>
                                 </div>
-                                <input type="text" id="title-input"
-                                       class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-                                       placeholder="Enter notification title" value="">
+                                <input
+                                    id="title-input"
+                                    type="text"
+                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                                    placeholder="Enter notification title"
+                                    value="">
                             </div>
 
                             <div>
-                                <label for="message-input"
-                                       class="block mb-2 text-sm font-medium text-gray-700">Message</label>
+                                <label for="message-input" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
                                 <input id="message-input"
+                                       type="text"
                                        class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
                                        placeholder="Enter your notification message"
                                        value="Your product has been created successfully!">
@@ -131,112 +109,91 @@
                         </div>
 
                         <!-- Configuration Options -->
-                        <div
-                            class="mb-6 border border-gray-200 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <div
-                                class="bg-gradient-to-r from-gray-50 to-gray-100 px-3 py-2 flex items-center justify-between">
-                                <span class="font-medium text-gray-700">Configuration Options</span>
-                                <span class="text-xs text-gray-500">Customize appearance</span>
+                        <div class="px-3 py-3 mb-3">
+                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                <div>
+                                    <label for="position-select" class="block mb-1 text-sm font-medium text-gray-700">Position</label>
+                                    <select id="position-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                        <option value="">Default</option>
+                                        <option value="top-right">Top Right</option>
+                                        <option value="top-left">Top Left</option>
+                                        <option value="bottom-right">Bottom Right</option>
+                                        <option value="bottom-left">Bottom Left</option>
+                                        <option value="center-top">Center Top</option>
+                                        <option value="center-bottom">Center Bottom</option>
+                                        <option value="center-left">Center Left</option>
+                                        <option value="center-right">Center Right</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="timeout-select" class="block mb-1 text-sm font-medium text-gray-700">Timeout (ms)</label>
+                                    <select id="timeout-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                        <option value="">Default</option>
+                                        <option value="30000">30 seconds</option>
+                                        <option value="10000">10 seconds</option>
+                                        <option value="5000">5 seconds</option>
+                                        <option value="3000">3 seconds</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="px-3 py-3 border-t border-gray-200">
-                                <div class="grid grid-cols-2 gap-3 mb-4">
-                                    <div>
-                                        <label for="position-select"
-                                               class="block mb-1 text-sm font-medium text-gray-700">Position</label>
-                                        <select id="position-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-                                            <option value="">Default</option>
-                                            <option value="top-right">Top Right</option>
-                                            <option value="top-left">Top Left</option>
-                                            <option value="bottom-right">Bottom Right</option>
-                                            <option value="bottom-left">Bottom Left</option>
-                                            <option value="center-top">Center Top</option>
-                                            <option value="center-bottom">Center Bottom</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label for="timeout-input" class="block mb-1 text-sm font-medium text-gray-700">Timeout
-                                            (ms)</label>
-                                        <select id="timeout-input"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-                                            <option value="">Default</option>
-                                            <option value="10000">10 seconds</option>
-                                            <option value="5000">5 seconds</option>
-                                            <option value="3000">3 seconds</option>
-                                        </select>
-                                    </div>
+                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                <div>
+                                    <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
+                                    <select id="theme-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                        <option value="">Default</option>
+                                        <option value="amazon">Amazon</option>
+                                        <option value="amber">Amber</option>
+                                        <option value="aurora">Aurora</option>
+                                        <option value="crystal">Crystal</option>
+                                        <option value="emerald">Emerald</option>
+                                        <option value="facebook">Facebook</option>
+                                        <option value="flasher">Flasher</option>
+                                        <option value="google">Google</option>
+                                        <option value="ios">iOS</option>
+                                        <option value="jade">Jade</option>
+                                        <option value="material">Material</option>
+                                        <option value="minimal">Minimal</option>
+                                        <option value="neon">Neon</option>
+                                        <option value="onyx">Onyx</option>
+                                        <option value="ruby">Ruby</option>
+                                        <option value="sapphire">Sapphire</option>
+                                        <option value="slack">Slack</option>
+                                    </select>
                                 </div>
-
-                                <div class="grid grid-cols-2 gap-3 mb-4">
-                                    <div>
-                                        <label for="theme-select" class="block mb-1 text-sm font-medium text-gray-700">Theme</label>
-                                        <select id="theme-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-                                            <option value="">Default</option>
-                                            <option value="amazon">Amazon</option>
-                                            <option value="amber">Amber</option>
-                                            <option value="aurora">Aurora</option>
-                                            <option value="crystal">Crystal</option>
-                                            <option value="emerald">Emerald</option>
-                                            <option value="facebook">Facebook</option>
-                                            <option value="flasher">Flasher</option>
-                                            <option value="google">Google</option>
-                                            <option value="ios">iOS</option>
-                                            <option value="jade">Jade</option>
-                                            <option value="material">Material</option>
-                                            <option value="minimal">Minimal</option>
-                                            <option value="neon">Neon</option>
-                                            <option value="onyx">Onyx</option>
-                                            <option value="ruby">Ruby</option>
-                                            <option value="sapphire">Sapphire</option>
-                                            <option value="slack">Slack</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label for="direction-select"
-                                               class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
-                                        <select id="direction-select"
-                                                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-                                            <option value="">Default</option>
-                                            <option value="top">Top</option>
-                                            <option value="bottom">Bottom</option>
-                                        </select>
-                                    </div>
+                                <div>
+                                    <label for="direction-select" class="block mb-1 text-sm font-medium text-gray-700">Direction</label>
+                                    <select id="direction-select" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                                        <option value="">Default</option>
+                                        <option value="top">Top</option>
+                                        <option value="bottom">Bottom</option>
+                                    </select>
                                 </div>
+                            </div>
 
-                                <div class="mt-4 grid grid-cols-2 gap-3">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="rtl-check"
-                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
-                                        <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="escape-html-check"
-                                               class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
-                                        <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape
-                                            HTML</label>
-                                    </div>
+                            <div class="mt-4 grid grid-cols-2 gap-3">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="rtl-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                    <label for="rtl-check" class="ml-2 text-sm text-gray-700">RTL Layout</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="escape-html-check" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <label for="escape-html-check" class="ml-2 text-sm text-gray-700">Escape HTML</label>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Launch button -->
-                        <button id="show-notification-btn"
-                                class="w-full group relative overflow-hidden rounded-md shadow-lg"
-                                data-controller="notification-demo">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></div>
-                            <div
-                                class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
-                            <div class="relative px-5 py-3.5 flex items-center justify-center text-white font-medium">
-                                        <span class="flex items-center space-x-2">
-                                            <span>Launch Notification</span>
-                                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
-                                        </span>
-                            </div>
-                            <div
-                                class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></div>
+                        <button id="show-notification-btn" class="w-full group relative overflow-hidden rounded-md shadow-lg">
+                            <span class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-700 group-hover:to-indigo-700 transition-all duration-300"></span>
+                            <span class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></span>
+                            <span class="relative px-5 py-3.5 flex items-center justify-center text-white font-medium">
+                                <span class="flex items-center space-x-2">
+                                    <span>Launch Notification</span>
+                                    <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform ml-2"></i>
+                                </span>
+                            </span>
+                            <span class="absolute top-0 -inset-full h-full w-1/2 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s_forwards]"></span>
                         </button>
                     </div>
                 </div>
@@ -245,27 +202,19 @@
                 <div class="w-full lg:w-3/5">
                     <div class="border-b border-gray-200 px-6 py-2 flex items-center justify-between bg-gray-50">
                         <div class="text-sm font-medium text-gray-700">Generated Code</div>
-                        <div id="user-info" class="text-xs text-gray-500">User: <span class="font-medium">yoeunes</span>
-                        </div>
                     </div>
 
                     <!-- Code tabs with FontAwesome icons -->
                     <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
-                        <button id="laravel-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5"
-                                data-tab="laravel">
+                        <button id="laravel-tab" data-tab="laravel" class="code-tab-btn px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-500 flex items-center space-x-1.5">
                             <i class="fab fa-laravel text-red-500"></i>
                             <span>Laravel</span>
                         </button>
-                        <button id="symfony-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
-                                data-tab="symfony">
+                        <button id="symfony-tab" data-tab="symfony" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5">
                             <i class="fab fa-symfony text-black"></i>
                             <span>Symfony</span>
                         </button>
-                        <button id="js-tab"
-                                class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5"
-                                data-tab="js">
+                        <button id="js-tab" data-tab="js" class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 flex items-center space-x-1.5">
                             <i class="fab fa-js text-yellow-400"></i>
                             <span>JavaScript</span>
                         </button>
@@ -277,14 +226,17 @@
                         <div id="laravel-code-panel" class="p-4 bg-gray-50 overflow-y-auto code-panel active">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
+
                         <!-- Symfony Code Panel -->
                         <div id="symfony-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
+
                         <!-- JavaScript Code Panel -->
                         <div id="js-code-panel" class="p-4 bg-gray-50 overflow-y-auto hidden code-panel">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
+
                         <!-- Animation overlay - This stays invisible but receives animation commands -->
                         <div id="animation-layer" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
                     </div>
@@ -293,36 +245,15 @@
 
             <!-- Footer with links -->
             <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <span class="pulse-dot"></span>
-                    <span class="text-xs text-gray-500">Last update: <span id="last-update" class="font-medium">2025-03-13</span></span>
-                </div>
+                <div class="flex items-center space-x-2"></div>
                 <div class="flex space-x-4">
-                    <a href="https://phpflasher.com/docs"
-                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                        <i class="fas fa-book mr-1.5 text-xs"></i>
-                        Documentation
+                    <a href="https://phpflasher.com/docs" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <i class="fas fa-book mr-1.5 text-xs"></i> Documentation
                     </a>
-                    <a href="https://github.com/php-flasher/php-flasher"
-                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                        <i class="fab fa-github mr-1.5 text-xs"></i>
-                        GitHub
-                    </a>
-                    <a href="#" id="theme-toggle"
-                       class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                        <i class="fas fa-adjust mr-1.5 text-xs"></i>
-                        <span>Theme</span>
+                    <a href="https://github.com/php-flasher/php-flasher" class="text-xs text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <i class="fab fa-github mr-1.5 text-xs"></i> GitHub
                     </a>
                 </div>
-            </div>
-        </div>
-
-        <!-- Version badge -->
-        <div class="mt-4 flex justify-center">
-            <div
-                class="bg-white/80 backdrop-blur-sm shadow-sm border border-gray-100 rounded-full px-3 py-1 text-xs flex items-center space-x-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                <span class="text-gray-600">PHPFlasher v2.5.0</span>
             </div>
         </div>
     </div>
@@ -602,10 +533,6 @@
      * - Context-aware examples for different notification types
      * - Advanced animations and transitions
      * - Clean and concise code examples
-     *
-     * @version 3.0.0
-     * @author PHPFlasher Team
-     * @lastUpdated 2025-03-13
      */
     const createStateProxy = () => {
         const stateTarget = {
@@ -619,7 +546,7 @@
             theme: "",
             escapeHtml: true,
             _previousState: {},
-            _animationInProgress: false
+            _animationInProgress: false,
         };
         return new Proxy(stateTarget, {
             set(target, property, value) {
@@ -627,14 +554,11 @@
                     target._previousState[property] = target[property];
                 }
                 target[property] = value;
-                if (document.readyState === "complete" &&
-                    property !== "_previousState" &&
-                    property !== "_animationInProgress") {
-                    const onlyOptionsChanged = ["position", "timeout", "theme", "direction", "rtl", "escapeHtml"].includes(property);
+                if (document.readyState === "complete" && property !== "_previousState" && property !== "_animationInProgress") {
                     if (property === "type") {
                         updateStatus("Changing template...");
                     }
-                    updateCodeDisplay(true, onlyOptionsChanged);
+                    updateCodeDisplay(true);
                 }
                 return true;
             }
@@ -653,6 +577,7 @@
 namespace App\\Http\\Controllers;
 use App\\Models\\Product;
 use App\\Http\\Requests\\ProductRequest;
+
 class ProductController extends Controller
 {
     public function store(ProductRequest $request)
@@ -676,6 +601,7 @@ class ProductController extends Controller
 namespace App\\Controller;
 use App\\Entity\\Product;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+
 class ProductController extends AbstractController
 {
     #[Route('/product/new', name: 'app_product_create')]
@@ -698,6 +624,7 @@ class ProductController extends AbstractController
                 code: {
                     before: `// product-service.js
 import flasher from '@flasher/flasher';
+
 async function createProduct(data) {
     try {
         const response = await api.post('/products', data);
@@ -722,6 +649,7 @@ async function createProduct(data) {
                     before: `// PaymentController.php
 namespace App\\Http\\Controllers;
 use App\\Services\\PaymentGateway;
+
 class PaymentController extends Controller
 {
     public function process(Request $request)
@@ -748,6 +676,7 @@ class PaymentController extends Controller
                     before: `// PaymentController.php
 namespace App\\Controller;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+
 class PaymentController extends AbstractController
 {
     public function process(Request $request): Response
@@ -773,6 +702,7 @@ class PaymentController extends AbstractController
                 code: {
                     before: `// payment-service.js
 import flasher from '@flasher/flasher';
+
 async function processPayment(paymentData) {
     try {
         const response = await api.post('/payments', paymentData);
@@ -800,6 +730,7 @@ async function processPayment(paymentData) {
                     before: `// OrderController.php
 namespace App\\Http\\Controllers;
 use App\\Models\\Order;
+
 class OrderController extends Controller
 {
     public function submit(Request $request)
@@ -826,6 +757,7 @@ class OrderController extends Controller
 namespace App\\Controller;
 use App\\Entity\\Order;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+
 class OrderController extends AbstractController
 {
     public function create(Request $request): Response
@@ -855,6 +787,7 @@ class OrderController extends AbstractController
                 code: {
                     before: `// order-service.js
 import flasher from '@flasher/flasher';
+
 async function submitOrder(orderData) {
     try {
         const response = await api.post('/orders', orderData);
@@ -881,6 +814,7 @@ async function submitOrder(orderData) {
                 code: {
                     before: `// AccountController.php
 namespace App\\Http\\Controllers;
+
 class AccountController extends Controller
 {
     public function dashboard()
@@ -906,6 +840,7 @@ class AccountController extends Controller
                     before: `// AccountController.php
 namespace App\\Controller;
 use Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;
+
 class AccountController extends AbstractController
 {
     public function dashboard(): Response
@@ -932,6 +867,7 @@ class AccountController extends AbstractController
                 code: {
                     before: `// account-service.js
 import flasher from '@flasher/flasher';
+
 async function checkStatus() {
     const response = await api.get('/account/status');
     const { subscription } = response.data;
@@ -1031,13 +967,19 @@ async function checkStatus() {
     function initializeFormValues() {
         const template = contextTemplates[state.type];
         const currentTab = getCurrentTab();
+
         if (!state.title && template) {
             state.title = template[currentTab].title;
         }
+
+        if (state.title.toLowerCase() === state.type.toLowerCase() || "information" === state.title.toLowerCase() && "info" === state.type.toLowerCase()) {
+            state.title = "";
+        }
+
         document.getElementById("title-input").value = state.title || "";
         document.getElementById("message-input").value = state.message || "";
         document.getElementById("position-select").value = state.position || "";
-        document.getElementById("timeout-input").value = state.timeout || "";
+        document.getElementById("timeout-select").value = state.timeout || "";
         document.getElementById("theme-select").value = state.theme || "";
         document.getElementById("direction-select").value = state.direction || "";
         document.getElementById("rtl-check").checked = !!state.rtl;
@@ -1146,14 +1088,14 @@ async function checkStatus() {
             lines.push(`${indent}    });`);
         } else {
             lines.push(`${indent}${prefix}`);
+            if (state.theme) {
+                lines.push(`${indent}    ->use('theme.${state.theme}')`);
+            }
             if (state.position) {
                 lines.push(`${indent}    ->option('position', '${state.position}')`);
             }
             if (state.timeout) {
                 lines.push(`${indent}    ->option('timeout', ${state.timeout})`);
-            }
-            if (state.theme) {
-                lines.push(`${indent}    ->option('theme', '${state.theme}')`);
             }
             if (state.direction) {
                 lines.push(`${indent}    ->option('direction', '${state.direction}')`);
@@ -1183,23 +1125,22 @@ async function checkStatus() {
         const indent = (indentMap[currentTab] && indentMap[currentTab][state.type]) || defaultIndent;
         const flashCode = generateFlashCode(currentTab, indent);
         if (animate) {
-            panel.innerHTML = `
-            <pre class="language-${currentTab === "js" ? "javascript" : "php"}">
-                <code>${escapeHtml(template.code.before)}</code>
-            </pre>
-        `;
+            panel.innerHTML = `<pre class="language-${currentTab === "js" ? "javascript" : "php"}"><code>${escapeHtml(template.code.before)}</code></pre>`;
             if (typeof Prism !== "undefined") {
                 Prism.highlightElement(panel.querySelector("code"));
             }
             const typingContainer = document.createElement("div");
-            typingContainer.className = "typing-container border-l-4 border-green-500 bg-green-50/20";
+            typingContainer.className = "typing-container border-l-4 mt-4 border-green-500 bg-green-50/20";
             typingContainer.style.fontFamily = "monospace";
-            typingContainer.style.position = "relative";
-            typingContainer.style.top = "-10px";
-            panel.querySelector("pre").appendChild(typingContainer);
+
+            const panelPre = panel.querySelector("pre");
+            panelPre.appendChild(typingContainer);
+            panelPre.style.marginBottom = "0";
+            panelPre.style.paddingBottom = "0";
+
             const afterContainer = document.createElement("pre");
             afterContainer.className = `language-${currentTab === "js" ? "javascript" : "php"}`;
-            afterContainer.style.marginTop = "-2em";
+            afterContainer.style.marginTop = "0";
             afterContainer.style.paddingTop = "0";
             afterContainer.innerHTML = `<code>${escapeHtml(template.code.after)}</code>`;
             panel.appendChild(afterContainer);
@@ -1209,11 +1150,7 @@ async function checkStatus() {
             typeCode(flashCode, typingContainer);
         } else {
             const completeCode = template.code.before + flashCode + template.code.after;
-            panel.innerHTML = `
-            <pre class="language-${currentTab === "js" ? "javascript" : "php"}">
-                <code>${escapeHtml(completeCode)}</code>
-            </pre>
-        `;
+            panel.innerHTML = `<pre class="language-${currentTab === "js" ? "javascript" : "php"}"><code>${escapeHtml(completeCode)}</code></pre>`;
             if (typeof Prism !== "undefined") {
                 Prism.highlightElement(panel.querySelector("code"));
             }
@@ -1298,7 +1235,7 @@ async function checkStatus() {
         }
         document.getElementById("message-input").value = template.message;
         state.message = template.message;
-        if (template.title.toLowerCase() !== type.toLowerCase()) {
+        if (template.title.toLowerCase() !== type.toLowerCase() && !("information" === template.title.toLowerCase() && "info" === type.toLowerCase())) {
             document.getElementById("title-input").value = template.title;
             state.title = template.title;
         } else {
@@ -1317,9 +1254,6 @@ async function checkStatus() {
         }
         if (state.timeout) {
             options.timeout = parseInt(state.timeout);
-        }
-        if (state.theme) {
-            options.theme = state.theme;
         }
         if (state.direction) {
             options.direction = state.direction;
@@ -1363,28 +1297,11 @@ async function checkStatus() {
     }
 
     /**
-     * Update current time in the UI
-     */
-    function updateCurrentTime() {
-        const userInfo = document.getElementById("user-info");
-        if (userInfo) {
-            const now = new Date();
-            const formattedDate = now.toISOString().slice(0, 19).replace("T", " ");
-            userInfo.innerHTML = `User: <span class="font-medium">yoeunes</span> • Active: ${formattedDate}`;
-        }
-        const lastUpdate = document.getElementById("last-update");
-        if (lastUpdate) {
-            lastUpdate.textContent = new Date().toISOString().split("T")[0];
-        }
-    }
-
-    /**
      * Initialize the application when DOM is loaded
      */
     document.addEventListener("DOMContentLoaded", function() {
         initializeFormValues();
         initializeTypeButtons();
-        updateCurrentTime();
         document.querySelectorAll(".type-button").forEach(btn => {
             btn.addEventListener("click", () => {
                 const type = btn.dataset.type;
@@ -1403,7 +1320,7 @@ async function checkStatus() {
         document.getElementById("position-select").addEventListener("change", (e) => {
             state.position = e.target.value;
         });
-        document.getElementById("timeout-input").addEventListener("change", (e) => {
+        document.getElementById("timeout-select").addEventListener("change", (e) => {
             state.timeout = e.target.value ? parseInt(e.target.value) : "";
         });
         document.getElementById("theme-select").addEventListener("change", (e) => {
@@ -1462,11 +1379,6 @@ async function checkStatus() {
                 }
             }
         });
-        setInterval(updateCurrentTime, 60000);
-        console.info(
-            "%c✨ PHPFlasher Interactive Studio v3.0.0 ✨",
-            "color: #4F46E5; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);"
-        );
         console.info("%cTry the Konami code for a surprise!", "color: #10B981; font-style: italic;");
         showCodeTab("laravel");
     });
