@@ -119,10 +119,6 @@
                                         <span class="text-slate-300 text-sm">Laravel Installation</span>
                                     </div>
                                     <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-laravel</code></pre>
-                                    <button class="absolute top-12 right-3 text-slate-400 hover:text-slate-200 transition-colors"
-                                            onclick="navigator.clipboard.writeText('composer require php-flasher/flasher-laravel')">
-                                        <i class="fa-regular fa-copy"></i>
-                                    </button>
                                 </div>
 
                                 <div class="relative">
@@ -133,10 +129,6 @@
                                         <span class="text-slate-300 text-sm">Symfony Installation</span>
                                     </div>
                                     <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-symfony</code></pre>
-                                    <button class="absolute top-12 right-3 text-slate-400 hover:text-slate-200 transition-colors"
-                                            onclick="navigator.clipboard.writeText('composer require php-flasher/flasher-symfony')">
-                                        <i class="fa-regular fa-copy"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -421,30 +413,30 @@
                             </div>
                             <div class="text-white opacity-80 text-xs font-medium">Controller.php</div>
                         </div>
-                        <div class="p-5">
+                        <div>
                             <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
 
-            class ProfileController extends Controller
-            {
-                public function update(Request $request)
-                {
-                    // Update user profile logic
+class ProfileController extends Controller
+{
+    public function update(Request $request)
+    {
+        // Update user profile logic
 
-                    // Show success notification
-                    flash()->success('Profile updated successfully!');
+        // Show success notification
+        flash()->success('Profile updated successfully!');
 
-                    // Or add a title
-                    flash()->success('Your changes have been saved.', 'Profile Updated');
+        // Or add a title
+        flash()->success('Your changes have been saved.', 'Profile Updated');
 
-                    // Change notification options
-                    flash()->options([
-                        'timeout' => 5000,
-                        'position' => 'top-right'
-                    ])->success('Changes saved with custom settings');
+        // Change notification options
+        flash()->options([
+            'timeout' => 5000,
+            'position' => 'top-right'
+        ])->success('Changes saved with custom settings');
 
-                    return back();
-                }
-            }</code></pre>
+        return back();
+    }
+}</code></pre>
                         </div>
                     </div>
 
@@ -458,27 +450,27 @@
                             </div>
                             <div class="text-white opacity-80 text-xs font-medium">app.js</div>
                         </div>
-                        <div class="p-5">
+                        <div>
                             <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">// Form submission example
-            document.getElementById('contact-form').addEventListener('submit', async function(e) {
-                e.preventDefault();
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-                try {
-                    const response = await submitForm(this);
+    try {
+        const response = await submitForm(this);
 
-                    if (response.success) {
-                        // Show success notification
-                        flasher.success('Your message has been sent!', 'Thank You');
-                    } else {
-                        // Show error notification
-                        flasher.error('Please check your form inputs', 'Error');
-                    }
-                } catch (error) {
-                    // Show error notification with details
-                    flasher.error('Server error, please try again later.', 'Error');
-                    console.error(error);
-                }
-            });</code></pre>
+        if (response.success) {
+            // Show success notification
+            flasher.success('Your message has been sent!', 'Thank You');
+        } else {
+            // Show error notification
+            flasher.error('Please check your form inputs', 'Error');
+        }
+    } catch (error) {
+        // Show error notification with details
+        flasher.error('Server error, please try again later.', 'Error');
+        console.error(error);
+    }
+});</code></pre>
                         </div>
                     </div>
                 </div>
