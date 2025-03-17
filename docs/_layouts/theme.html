@@ -87,9 +87,9 @@ layout: default
                     </button>
                 </div>
 
-                <!-- Tab Content with Clean styling -->
-                <div class="tab-content" id="config-content">
-                    <pre class="language-php bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code>// config/flasher.php
+                <!-- Pre-rendered tab contents -->
+                <div class="framework-content" id="laravel-content">
+                    <pre class="language-php bg-slate-800 text-slate-200 text-sm overflow-x-auto"><code>// config/flasher.php
 
 return [
     'default' => '{{ page.theme_name }}',{% if page.has_assets %}
@@ -105,6 +105,28 @@ return [
         ],
     ],{% endif %}
 ];</code></pre>
+                </div>
+
+                <div class="framework-content hidden" id="symfony-content">
+                    <pre class="language-yaml bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code># config/packages/flasher.yaml
+
+flasher:
+    default: {{ page.theme_name }}{% if page.has_assets %}
+
+    themes:
+        {{ page.theme_name_short }}:
+            scripts:
+                - '/vendor/flasher/themes/{{ page.theme_name }}.min.js'
+            styles:
+                - '/vendor/flasher/themes/{{ page.theme_name }}.min.css'{% endif %}</code></pre>
+                </div>
+
+                <div class="framework-content hidden" id="javascript-content">
+                    <pre class="language-javascript bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code>// Set as default theme
+flasher.defaultPlugin = '{{ page.theme_name }}';
+
+// Then use it
+flasher.success('Well done!');</code></pre>
                 </div>
             </div>
         </section>
@@ -340,57 +362,17 @@ return [
 </div>
 
 <script>
-// Simple tab system with minimal animations
+// Simple tab system using show/hide rather than content rendering
 document.addEventListener('DOMContentLoaded', function() {
     // Framework tabs
     setupTabs('.tab-button', function(framework) {
-        const tabContent = document.getElementById('config-content');
+        // Hide all framework content divs
+        document.querySelectorAll('.framework-content').forEach(content => {
+            content.classList.add('hidden');
+        });
 
-        // Framework content objects
-        const frameworkContents = {
-            'laravel': `<pre class="language-php bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code>// config/flasher.php
-
-return [
-    'default' => '{{ page.theme_name }}',{% if page.has_assets %}
-
-    'themes' => [
-        '{{ page.theme_name_short }}' => [
-            'scripts' => [
-                '/vendor/flasher/themes/{{ page.theme_name }}.min.js',
-            ],
-            'styles' => [
-                '/vendor/flasher/themes/{{ page.theme_name }}.min.css',
-            ],
-        ],
-    ],{% endif %}
-];</code></pre>`,
-
-            'symfony': `<pre class="language-yaml bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code># config/packages/flasher.yaml
-
-flasher:
-    default: {{ page.theme_name }}{% if page.has_assets %}
-
-    themes:
-        {{ page.theme_name_short }}:
-            scripts:
-                - '/vendor/flasher/themes/{{ page.theme_name }}.min.js'
-            styles:
-                - '/vendor/flasher/themes/{{ page.theme_name }}.min.css'{% endif %}</code></pre>`,
-
-            'javascript': `<pre class="language-javascript bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code>// Set as default theme
-flasher.defaultPlugin = '{{ page.theme_name }}';
-
-// Then use it
-flasher.success('Well done!');</code></pre>`
-        };
-
-        // Change content
-        tabContent.innerHTML = frameworkContents[framework];
-
-        // Re-run Prism highlighting
-        if (window.Prism) {
-            Prism.highlightAllUnder(tabContent);
-        }
+        // Show the selected framework content
+        document.getElementById(framework + '-content').classList.remove('hidden');
     });
 
     // Language usage tabs
@@ -407,11 +389,6 @@ flasher.success('Well done!');</code></pre>`
             content.classList.add('hidden');
         });
         document.getElementById(tabId + '-content').classList.remove('hidden');
-
-        // Re-run Prism highlighting
-        if (window.Prism) {
-            Prism.highlightAllUnder(document.getElementById(tabId + '-content'));
-        }
     });
 });
 
@@ -432,8 +409,8 @@ function setupTabs(tabSelector, callback) {
 
             // Get id and execute callback
             const id = this.getAttribute('data-framework') ||
-                      this.getAttribute('data-lang') ||
-                      this.getAttribute('data-tab');
+                     this.getAttribute('data-lang') ||
+                     this.getAttribute('data-tab');
 
             if (callback) callback(id);
         });
