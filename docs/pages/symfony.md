@@ -1,24 +1,25 @@
 ---
 permalink: /symfony/
 title: Symfony
-description: Integrate PHPFlasher into your Symfony application to enhance user experience with flash notifications. This guide shows you how to add engaging messages after user actions using PHPFlasher in Symfony.
+description: Integrate PHPFlasher into your Symfony application to enhance user experience with flash notifications. This guide shows you how to add engaging messages after user actions.
 framework: symfony
+layout: symfony
 ---
 
-## <i class="fa-duotone fa-list-radio"></i> Requirements
+<a id="requirements"></a>
+## Requirements
 
-**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** helps you easily add flash notifications to your **<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony** projects, improving user feedback with minimal setup.
+**PHPFlasher** helps you easily add flash notifications to your **Symfony** projects, improving user feedback with minimal setup.
 
-To use **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** with Symfony, you need:
+To use **PHPFlasher** with Symfony, you need:
 
-> <i class="fa-brands fa-php fa-2xl text-blue-900 mr-1 mb-1"></i> **PHP** v8.2 or higher
-> <i class="fa-brands fa-symfony fa-2xl text-black mr-1 ml-4"></i> **Symfony** v7.0 or higher
+* **PHP** v8.2 or higher
+* **Symfony** v7.0 or higher
 
----
+<a id="installation"></a>
+## Installation
 
-## <i class="fa-duotone fa-list-radio"></i> Installation
-
-**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** is modular. You can install only the parts you need.
+**PHPFlasher** is modular. You can install only the parts you need.
 
 Run this command to install it:
 
@@ -32,13 +33,80 @@ After installing, run this command to set up the required assets:
 php bin/console flasher:install
 ```
 
----
+<a id="usage"></a>
+## Usage
 
-{% include _usage.md %}
+### Basic Usage
 
----
+Here's a basic example of using PHPFlasher in a Symfony controller:
 
-## <i class="fa-duotone fa-list-radio"></i> Configuration
+```php
+#/ basic usage
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ProductController extends AbstractController
+{
+    #[Route('/product/create', name: 'app_product_create')]
+    public function create(): Response
+    {
+        // Your logic to create a product
+        
+        // Add a success notification
+        flash()->success('Product created successfully!');
+        
+        return $this->redirectToRoute('app_product_list');
+    }
+}
+```
+
+### Notification Types
+
+PHPFlasher supports different types of notifications:
+
+```php
+#/ notification types
+
+// Success message
+flash()->success('Your changes have been saved!');
+
+// Error message
+flash()->error('Something went wrong!');
+
+// Warning message
+flash()->warning('Please review your data before proceeding.');
+
+// Info message
+flash()->info('The system will be down for maintenance tonight.');
+```
+
+### Adding a Title
+
+You can add a title to your notifications:
+
+```php
+flash()->success('Your profile has been updated successfully.', 'Profile Updated');
+```
+
+### Notification Options
+
+Customize your notifications with various options:
+
+```php
+#/ notification options
+
+flash()->success('Your changes have been saved!')
+    ->option('position', 'top-center')  // Position on the screen
+    ->option('timeout', 5000)           // How long to display (milliseconds)
+    ->option('rtl', true);              // Right-to-left support
+```
+
+<a id="configuration"></a>
+## Configuration
 
 If you want to change the default settings, you can publish the configuration file:
 
@@ -86,25 +154,10 @@ flasher:
       error: ['error', 'danger']
       warning: ['warning', 'alarm']
       info: ['info', 'notice', 'alert']
-  
-    # Set criteria to filter which notifications are displayed (optional)
-    # filter:
-    #     # Maximum number of notifications to show at once
-    #     limit: 5
-
-    # Define notification presets to simplify notification creation (optional)
-    # presets:
-    #     # Example preset:
-    #     entity_saved:
-    #         type: 'success'
-    #         title: 'Entity saved'
-    #         message: 'Entity saved successfully'
-
 ```
 
----
-
-## <i class="fa-duotone fa-list-radio"></i> Presets
+<a id="presets"></a>
+## Presets
 
 You can create a preset for a custom notification that you want to reuse in multiple places. Add a `presets` entry in the configuration file.
 
@@ -152,49 +205,11 @@ class BookController
         flash()->{{ type }}('{{ message }}', '{{ title }}');
 ```
 
-<p id="preset-variables"><a href="#preset-variables" class="anchor"><i class="fa-duotone fa-link"></i> Variables</a></p>
+## RTL Support
 
-Presets can also have variables that you can replace using the translation system. For example, you can have a preset that shows a personalized welcome message.
+**PHPFlasher** makes it easy to use **right-to-left** languages like `Arabic` or `Hebrew`. It automatically detects the text direction and adjusts accordingly.
 
-```yaml
-# config/packages/flasher.yaml
-
-flasher:
-    presets:
-        hello_user:
-            type: {{ type }}
-            message: welcome_back_user
-```
-
-In your translation file, define `welcome_back_user` with a message containing the variable `:username`.
-
-```yaml
-# translations/flasher.en.yaml
-
-welcome_back_user: Welcome back :username
-```
-
-To replace `:username` with the actual username in your controller, pass an array with the values to substitute as the second argument:
-
-```php
-class BookController
-{
-    public function save()
-    {
-        $username = 'John Doe';
-
-        flash()->preset('hello_user', ['username' => $username]);
-```
-
----
-
----
-
-## <i class="fa-duotone fa-list-radio"></i> RTL support
-
-**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** makes it easy to use <i class="fa-duotone fa-signs-post text-indigo-900 mr-1 fa-lg"></i> **right-to-left** languages like `Arabic` or `Hebrew`. It automatically detects the text direction and adjusts accordingly.
-
-Just make sure the translation service is enabled, and **<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** will handle the rest.
+Just make sure the translation service is enabled, and **PHPFlasher** will handle the rest.
 
 {% assign id = '#/ phpflasher rtl' %}
 {% assign type = 'success' %}
@@ -211,15 +226,11 @@ flash()
     ->{{ type }}('Your request was processed successfully.', 'Congratulations!');
 ```
 
----
+## Translation
 
-## <i class="fa-duotone fa-list-radio"></i> Translation
+**PHPFlasher** lets you translate your notification `messages` and `presets`. It comes with translations for `Arabic`, `English`, `French`, `German`, `Spanish`, `Portuguese`, `Russian`, and `Chinese`. You can also add your own translations.
 
-**<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>** lets you translate your notification `messages` and `presets`. It comes with translations for `Arabic`, `English`, `French`, `German`, `Spanish`, `Portuguese`, `Russian`, and `Chinese`. You can also add your own translations.
-
-To override the `English` translations for <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>, create a file at `translations/flasher.en.yaml`.
-
-In this file, define **only** the translation strings you want to change. Any strings you don't override will use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>'s default translations.
+To override the `English` translations for **PHPFlasher**, create a file at `translations/flasher.en.yaml`.
 
 Here are examples of the default translation keys for `Arabic`, `English`, and `French`:
 
@@ -271,106 +282,16 @@ The resource was deleted: 'La ressource :resource a été supprimée'
 resource: ''
 ```
 
-> These translation files help you localize notifications to match user preferences, so your application can communicate effectively in different languages.
-
-{% assign id = '#/ symfony arabic translations' %}
-{% assign successMessage = 'تم إنشاء الملف' %}
-{% assign errorMessage = 'حدث خطأ أثناء إرسال طلبك.' %}
-{% assign warningMessage = 'يجب إكمال جميع الحقول الإلزامية قبل إرسال النموذج' %}
-{% assign infoMessage = 'سيتم تحديث هذه الصفحة في غضون 10 دقائق.' %}
-
-<script type="text/javascript">
-    messages['{{ id }}'] = [
-        {
-            handler: 'flasher',
-            type: 'success',
-            message: '{{ successMessage }}',
-            title: 'نجاح',
-            options: {},
-        },
-        {
-            handler: 'flasher',
-            type: 'error',
-            message: '{{ errorMessage }}',
-            title: 'خطأ',
-            options: {},
-        },
-        {
-            handler: 'flasher',
-            type: 'warning',
-            message: '{{ warningMessage }}',
-            title: 'تحذير',
-            options: {},
-        },
-        {
-            handler: 'flasher',
-            type: 'info',
-            message: '{{ infoMessage }}',
-            title: 'معلومة',
-            options: {},
-        },
-        
-    ];
-</script>
+{% assign id = '#/ symfony translation examples' %}
+{% assign type = 'success' %}
+{% include example.html %}
 
 ```php
 {{ id }}
 
-// Translate the flash message using the PHPFlasher translation files
+// Translation will automatically use the correct language files
 flash()->success('The resource was created');
 
-flash()->error('{{ errorMessage }}');
-flash()->warning('{{ warningMessage }}');
-flash()->info('{{ infoMessage }}');
-```
-
-{% assign id = '#/ symfony french translations' %}
-{% assign successMessage = "La ressource a été ajoutée" %}
-{% assign errorMessage = "Une erreur s’est produite lors de l’envoi de votre demande." %}
-{% assign warningMessage = "Vous devez remplir tous les champs obligatoires avant de soumettre le formulaire." %}
-{% assign infoMessage = "Cette page sera mise à jour dans 10 minutes."%}
-
-<script type="text/javascript">
-    messages['{{ id }}'] = [
-        {
-            handler: 'flasher',
-            type: 'success',
-            message: '{{ successMessage }}',
-            title: 'Succès',
-            options: {},
-        },
-        {
-            handler: 'flasher',
-            type: 'error',
-            message: '{{ errorMessage }}',
-            title: 'Erreur',
-            options: {},
-        },
-        {
-            handler: 'flasher',
-            type: 'warning',
-            message: '{{ warningMessage }}',
-            title: 'Avertissement',
-            options: {},
-        },
-        {
-            handler: 'flasher',
-            type: 'info',
-            message: '{{ infoMessage }}',
-            title: 'Information',
-            options: {},
-        },
-        
-    ];
-</script>
-
-```php
-{{ id }}
-
-// Translate the flash message using the PHPFlasher translation files
-flash()->success('The resource was created');
-
-flash()->error('{{ errorMessage }}');
-flash()->warning('{{ warningMessage }}');
-flash()->info('{{ infoMessage }}');
+// You can also specify a different language
+flash()->translate('fr')->success('The resource was created');
 ```
