@@ -109,7 +109,7 @@ layout: default
                                 <i class="fa-solid fa-lightbulb text-amber-500"></i>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-amber-800">Using older PHP or Symfony versions?</h3>
+                                <h4 class="text-sm font-medium text-amber-800">Using older PHP or Symfony versions?</h4>
                                 <p class="text-xs text-amber-700">
                                     If you need to use PHP &lt; v8.2 or Symfony &lt; v7.0, use
                                     <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v1</strong> instead.
@@ -193,7 +193,7 @@ layout: default
                             <i class="fa-solid fa-clock text-indigo-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-indigo-800">Ready in under a minute!</h3>
+                            <h4 class="text-sm font-medium text-indigo-800">Ready in under a minute!</h4>
                             <p class="text-sm text-indigo-700 mt-1">That's it! No need for complex configuration -
                                 <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> works right out of the box with sensible defaults.
                             </p>
@@ -208,7 +208,7 @@ layout: default
                             <i class="fa-solid fa-check-circle text-green-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-green-800">Best Practice</h3>
+                            <h4 class="text-sm font-medium text-green-800">Best Practice</h4>
                             <p class="text-sm text-green-700 mt-1">
                                 Commit the installed assets to your version control system to ensure everyone on your team has the same notification experience.
                             </p>
@@ -272,7 +272,7 @@ class ProductController extends AbstractController
                             <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-sm font-medium text-indigo-800">Pro Tip: Two Ways to Use PHPFlasher</h3>
+                            <h4 class="text-sm font-medium text-indigo-800">Pro Tip: Two Ways to Use PHPFlasher</h4>
                             <p class="text-sm text-indigo-700 mt-1">
                                 <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
                                 provides two ways to create notifications:
@@ -559,7 +559,7 @@ class ArticleController extends AbstractController
                             <i class="fa-solid fa-check-circle text-green-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-green-800">Best Practice: Consistent Messaging</h3>
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Consistent Messaging</h4>
                             <p class="text-sm text-green-700 mt-1">
                                 Use the same notification style and wording for similar operations across your application. This provides a consistent user experience.
                             </p>
@@ -714,7 +714,7 @@ public function saveApi(Request $request): JsonResponse
                             <i class="fa-solid fa-lightbulb text-amber-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-slate-800">Expert Tip: AJAX Integration</h3>
+                            <h4 class="text-sm font-medium text-slate-800">Expert Tip: AJAX Integration</h4>
                             <p class="text-sm text-slate-700 mt-1">
                                 PHPFlasher automatically handles AJAX responses — notifications from the server appear without any additional code. This works with fetch, axios, jQuery, and other AJAX methods.
                             </p>
@@ -791,7 +791,7 @@ class OrderController extends AbstractController
                             <i class="fa-solid fa-check-circle text-green-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-green-800">Best Practice: Dependency Injection</h3>
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Dependency Injection</h4>
                             <p class="text-sm text-green-700 mt-1">
                                 Using dependency injection with <code class="bg-green-100 px-1.5 py-0.5 rounded text-green-700">FlasherInterface</code> makes your code more testable and follows Symfony best practices. It's ideal for services and larger applications.
                             </p>
@@ -915,7 +915,7 @@ flasher:
                             <i class="fa-solid fa-star text-indigo-600"></i>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-slate-800">Expert Advice</h3>
+                            <h4 class="text-lg font-semibold text-slate-800">Expert Advice</h4>
                             <p class="text-slate-600 mt-1">The default configuration works great for most projects. Only
                                 customize if you need specific behaviors like:</p>
                             <ul class="mt-2 space-y-1 text-slate-600">
@@ -981,7 +981,7 @@ $this->addFlash('success', 'Changes were saved!');
                             <i class="fa-solid fa-lightbulb text-amber-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-blue-800">What are presets?</h3>
+                            <h4 class="text-sm font-medium text-blue-800">What are presets?</h4>
                             <p class="text-sm text-blue-700 mt-1">
                                 Presets are pre-defined notification configurations that you can reuse throughout your application. They help maintain consistent messaging and reduce code duplication.
                             </p>
@@ -1144,7 +1144,7 @@ class PaymentController extends AbstractController
                             <i class="fa-solid fa-check-circle text-green-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-green-800">Best Practice: Centralized Message Management</h3>
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Centralized Message Management</h4>
                             <p class="text-sm text-green-700 mt-1">
                                 Store all your notification presets in one place to ensure consistent messaging across your application. This makes it easy to update notification wording or styling globally.
                             </p>
@@ -1425,7 +1425,7 @@ flash()->preset('welcome_user', ['name' => $user->getFirstName()]);</code></pre>
                             <i class="fa-solid fa-check-circle text-green-500"></i>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-green-800">Best Practice: Centralize Your Translations</h3>
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Centralize Your Translations</h4>
                             <p class="text-sm text-green-700 mt-1">
                                 Store all user-facing notification messages in translation files rather than hardcoding them. This makes it much easier to update wording or add new languages later.
                             </p>
