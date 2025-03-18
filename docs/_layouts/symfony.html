@@ -93,7 +93,551 @@ layout: default
 
     <!-- Content area with custom styling -->
     <div class="prose prose-slate max-w-none p-6 md:p-8">
-      {{ content }}
+      <!-- Requirements Section -->
+      <div id="requirements" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-list-check"></i></span>
+          Requirements
+        </h2>
+        <p class="mb-4"><strong>PHPFlasher</strong> helps you easily add flash notifications to your <strong>Symfony</strong> projects, improving user feedback with minimal setup.</p>
+        <p class="mb-4">To use <strong>PHPFlasher</strong> with Symfony, you need:</p>
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+          <li><strong>PHP</strong> v8.2 or higher</li>
+          <li><strong>Symfony</strong> v7.0 or higher</li>
+        </ul>
+      </div>
+
+      <!-- Installation Section -->
+      <div id="installation" class="mt-10 scroll-mt-20">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-download"></i></span>
+          Installation
+        </h2>
+        <p class="mb-4"><strong>PHPFlasher</strong> is modular. You can install only the parts you need.</p>
+        <p class="mb-4">Run this command to install it:</p>
+
+        <!-- Terminal code block using the user's styling -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-4">
+            <div class="bg-slate-800 p-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex space-x-1 mr-4">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <span class="text-slate-400 text-sm">Terminal</span>
+                </div>
+                <div class="text-slate-400 text-sm">Installation</div>
+            </div>
+
+            <div class="p-6 bg-slate-900">
+                <div class="flex flex-col gap-4">
+                    <div class="relative">
+                        <div class="flex items-center mb-2">
+                            <div class="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center mr-2 text-xs">
+                                <i class="fa-brands fa-symfony"></i>
+                            </div>
+                            <span class="text-slate-300 text-sm">Symfony Installation</span>
+                        </div>
+                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-symfony</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="mb-4">After installing, run this command to set up the required assets:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 p-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex space-x-1 mr-4">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <span class="text-slate-400 text-sm">Terminal</span>
+                </div>
+                <div class="text-slate-400 text-sm">Setup Assets</div>
+            </div>
+
+            <div class="p-6 bg-slate-900">
+                <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">php bin/console flasher:install</code></pre>
+            </div>
+        </div>
+      </div>
+
+      <!-- Usage Section -->
+      <div id="usage" class="mt-10 scroll-mt-20">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-code"></i></span>
+          Usage
+        </h2>
+
+        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Basic Usage</h3>
+        <p class="mb-4">Here's a basic example of using PHPFlasher in a Symfony controller:</p>
+
+        <!-- PHP Example using user's styling -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">ProductController.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ProductController extends AbstractController
+{
+    #[Route('/product/create', name: 'app_product_create')]
+    public function create(): Response
+    {
+        // Your logic to create a product
+
+        // Add a success notification
+        flash()->success('Product created successfully!');
+
+        return $this->redirectToRoute('app_product_list');
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Notification Types</h3>
+        <p class="mb-4">PHPFlasher supports different types of notifications:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">NotificationTypes.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Success message
+flash()->success('Your changes have been saved!');
+
+// Error message
+flash()->error('Something went wrong!');
+
+// Warning message
+flash()->warning('Please review your data before proceeding.');
+
+// Info message
+flash()->info('The system will be down for maintenance tonight.');</code></pre>
+            </div>
+        </div>
+
+        <!-- Preview grid of notification types -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+          <div class="p-4 border border-green-200 bg-green-50 rounded-lg">
+            <div class="flex items-center gap-2 mb-2 text-green-700">
+              <i class="fa-solid fa-circle-check text-xl"></i>
+              <strong>Success</strong>
+            </div>
+            <p class="text-green-600 text-sm">Your changes have been saved!</p>
+          </div>
+          <div class="p-4 border border-red-200 bg-red-50 rounded-lg">
+            <div class="flex items-center gap-2 mb-2 text-red-700">
+              <i class="fa-solid fa-circle-exclamation text-xl"></i>
+              <strong>Error</strong>
+            </div>
+            <p class="text-red-600 text-sm">Something went wrong!</p>
+          </div>
+          <div class="p-4 border border-amber-200 bg-amber-50 rounded-lg">
+            <div class="flex items-center gap-2 mb-2 text-amber-700">
+              <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+              <strong>Warning</strong>
+            </div>
+            <p class="text-amber-600 text-sm">Please review your data before proceeding.</p>
+          </div>
+          <div class="p-4 border border-blue-200 bg-blue-50 rounded-lg">
+            <div class="flex items-center gap-2 mb-2 text-blue-700">
+              <i class="fa-solid fa-circle-info text-xl"></i>
+              <strong>Info</strong>
+            </div>
+            <p class="text-blue-600 text-sm">The system will be down for maintenance tonight.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Adding a Title</h3>
+        <p class="mb-4">You can add a title to your notifications:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">Title.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your profile has been updated successfully.', 'Profile Updated');</code></pre>
+            </div>
+        </div>
+
+        <!-- Example with title -->
+        <div class="p-4 border border-green-200 bg-green-50 rounded-lg mb-6">
+          <div class="flex items-center gap-2 mb-2 text-green-700">
+            <i class="fa-solid fa-circle-check text-xl"></i>
+            <strong>Profile Updated</strong>
+          </div>
+          <p class="text-green-600 text-sm">Your profile has been updated successfully.</p>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Notification Options</h3>
+        <p class="mb-4">Customize your notifications with various options:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">Options.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your changes have been saved!')
+    ->option('position', 'top-center')  // Position on the screen
+    ->option('timeout', 5000)           // How long to display (milliseconds)
+    ->option('rtl', true);              // Right-to-left support</code></pre>
+            </div>
+        </div>
+      </div>
+
+      <!-- Configuration Section -->
+      <div id="configuration" class="mt-10 scroll-mt-20">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-gear"></i></span>
+          Configuration
+        </h2>
+
+        <p class="mb-4">If you want to change the default settings, you can publish the configuration file:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 p-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex space-x-1 mr-4">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <span class="text-slate-400 text-sm">Terminal</span>
+                </div>
+                <div class="text-slate-400 text-sm">Generate Config</div>
+            </div>
+
+            <div class="p-6 bg-slate-900">
+                <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">php bin/console flasher:install --config</code></pre>
+            </div>
+        </div>
+
+        <p class="mb-4">This will create a file at <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">config/packages/flasher.yaml</code> with the following content:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">config/packages/flasher.yaml</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
+
+flasher:
+    # Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
+    default: flasher
+
+    # Path to the main PHPFlasher JavaScript file
+    main_script: '/vendor/flasher/flasher.min.js'
+
+    # List of CSS files to style your notifications
+    styles:
+        - '/vendor/flasher/flasher.min.css'
+
+    # Set global options for all notifications (optional)
+    # options:
+    #     # Time in milliseconds before the notification disappears
+    #     timeout: 5000
+    #     # Where the notification appears on the screen
+    #     position: 'top-right'
+
+    # Automatically inject JavaScript and CSS assets into your HTML pages
+    inject_assets: true
+
+    # Enable message translation using Symfony's translation service
+    translate: true
+
+    # URL patterns to exclude from asset injection and flash_bag conversion
+    excluded_paths:
+        - '/^\/_profiler/'
+        - '/^\/_fragment/'
+
+    # Map Symfony flash message keys to notification types
+    flash_bag:
+      success: ['success']
+      error: ['error', 'danger']
+      warning: ['warning', 'alarm']
+      info: ['info', 'notice', 'alert']</code></pre>
+            </div>
+        </div>
+      </div>
+
+      <!-- Presets Section -->
+      <div id="presets" class="mt-10 scroll-mt-20">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-sliders"></i></span>
+          Presets
+        </h2>
+
+        <p class="mb-4">You can create a preset for a custom notification that you want to reuse in multiple places. Add a <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">presets</code> entry in the configuration file.</p>
+
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+          <p class="text-blue-700"><i class="fa-solid fa-info-circle mr-2"></i> A preset is like a pre-defined message you can use in many places.</p>
+        </div>
+
+        <p class="mb-4">For example, create a preset named <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">entity_saved</code>:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">config/packages/flasher.yaml</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
+
+flasher:
+    presets:
+        entity_saved:
+            type: 'success'
+            message: 'Entity saved successfully'
+            title: 'Entity saved'</code></pre>
+            </div>
+        </div>
+
+        <p class="mb-4">To use the preset, call the <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">preset()</code> method and pass the name of the preset:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController
+{
+    public function save()
+    {
+        flash()->preset('entity_saved');</code></pre>
+            </div>
+        </div>
+
+        <p class="mb-4">This is the same as:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController
+{
+    public function save()
+    {
+        flash()->success('Entity saved successfully', 'Entity saved');
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- RTL Support Section -->
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2 mt-10">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-language"></i></span>
+          RTL Support
+        </h2>
+
+        <p class="mb-4"><strong>PHPFlasher</strong> makes it easy to use <strong>right-to-left</strong> languages like <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Arabic</code> or <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Hebrew</code>. It automatically detects the text direction and adjusts accordingly.</p>
+
+        <p class="mb-4">Just make sure the translation service is enabled, and <strong>PHPFlasher</strong> will handle the rest.</p>
+
+        <!-- RTL Example -->
+        <div class="mb-6 flex justify-end">
+          <div class="p-4 border border-green-200 bg-green-50 rounded-lg rtl w-1/2 text-right">
+            <div class="flex items-center gap-2 mb-2 text-green-700 justify-end">
+              <strong>تهانينا</strong>
+              <i class="fa-solid fa-circle-check text-xl"></i>
+            </div>
+            <p class="text-green-600 text-sm">تمت العملية بنجاح.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">RTLExample.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()
+    ->translate('ar')
+    ->success('Your request was processed successfully.', 'Congratulations!');</code></pre>
+            </div>
+        </div>
+
+        <!-- Translation Section -->
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2 mt-10">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><i class="fa-solid fa-globe"></i></span>
+          Translation
+        </h2>
+
+        <p class="mb-4"><strong>PHPFlasher</strong> lets you translate your notification <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">messages</code> and <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">presets</code>. It comes with translations for <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Arabic</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">English</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">French</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">German</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Spanish</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Portuguese</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Russian</code>, and <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Chinese</code>. You can also add your own translations.</p>
+
+        <p class="mb-4">To override the <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">English</code> translations for <strong>PHPFlasher</strong>, create a file at <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">translations/flasher.en.yaml</code>.</p>
+
+        <p class="mb-4">Here are examples of the default translation keys for <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Arabic</code>, <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">English</code>, and <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">French</code>:</p>
+
+        <!-- Language tabs -->
+        <div class="border border-slate-200 rounded-lg mb-6 overflow-hidden">
+          <div class="flex border-b border-slate-200">
+            <button onclick="changeTab('arabic')" id="arabicTab" class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition">Arabic</button>
+            <button onclick="changeTab('english')" id="englishTab" class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition">English</button>
+            <button onclick="changeTab('french')" id="frenchTab" class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition">French</button>
+          </div>
+
+          <!-- Arabic content -->
+          <div id="arabicContent" class="hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                <div class="bg-slate-800 px-4 py-3 flex items-center">
+                    <div class="flex space-x-1.5 mr-3">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="text-white opacity-80 text-xs font-medium">translations/flasher.ar.yaml</div>
+                </div>
+                <div>
+                    <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.ar.yaml
+
+success: 'نجاح'
+error: 'خطأ'
+warning: 'تحذير'
+info: 'معلومة'
+
+The resource was created: 'تم إنشاء :resource'
+The resource was updated: 'تم تعديل :resource'
+The resource was saved: 'تم حفظ :resource'
+The resource was deleted: 'تم حذف :resource'
+
+resource: 'الملف'</code></pre>
+                </div>
+            </div>
+          </div>
+
+          <!-- English content -->
+          <div id="englishContent" class="hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                <div class="bg-slate-800 px-4 py-3 flex items-center">
+                    <div class="flex space-x-1.5 mr-3">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="text-white opacity-80 text-xs font-medium">translations/flasher.en.yaml</div>
+                </div>
+                <div>
+                    <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.en.yaml
+
+success: 'Success'
+error: 'Error'
+warning: 'Warning'
+info: 'Info'
+
+The resource was created: 'The :resource was created'
+The resource was updated: 'The :resource was updated'
+The resource was saved: 'The :resource was saved'
+The resource was deleted: 'The :resource was deleted'
+
+resource: 'resource'</code></pre>
+                </div>
+            </div>
+          </div>
+
+          <!-- French content -->
+          <div id="frenchContent" class="hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                <div class="bg-slate-800 px-4 py-3 flex items-center">
+                    <div class="flex space-x-1.5 mr-3">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="text-white opacity-80 text-xs font-medium">translations/flasher.fr.yaml</div>
+                </div>
+                <div>
+                    <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.fr.yaml
+
+success: 'Succès'
+error: 'Erreur'
+warning: 'Avertissement'
+info: 'Information'
+
+The resource was created: 'La ressource :resource a été ajoutée'
+The resource was updated: 'La ressource :resource a été mise à jour'
+The resource was saved: 'La ressource :resource a été enregistrée'
+The resource was deleted: 'La ressource :resource a été supprimée'
+
+resource: ''</code></pre>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="mb-4">Usage examples:</p>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                <div class="flex space-x-1.5 mr-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-white opacity-80 text-xs font-medium">TranslationExample.php</div>
+            </div>
+            <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Translation will automatically use the correct language files
+flash()->success('The resource was created');
+
+// You can also specify a different language
+flash()->translate('fr')->success('The resource was created');</code></pre>
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -164,4 +708,57 @@ layout: default
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /* For RTL support in examples */
+  .rtl {
+    direction: rtl;
+  }
+
+  /* Active tab styles */
+  .active-tab {
+    background-color: #f8fafc;
+    border-bottom: 2px solid #4f46e5;
+    color: #4f46e5;
+  }
 </style>
+
+<script>
+  // Function to copy code blocks
+  function copyCode(codeBlock) {
+    const code = codeBlock.textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      // Show temporary success message
+      const button = codeBlock.parentNode.querySelector('button');
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+      button.classList.add('text-green-400');
+
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.classList.remove('text-green-400');
+      }, 2000);
+    });
+  }
+
+  // Tab functionality for translation examples
+  function changeTab(tabName) {
+    // Hide all content
+    document.getElementById('arabicContent').classList.add('hidden');
+    document.getElementById('englishContent').classList.add('hidden');
+    document.getElementById('frenchContent').classList.add('hidden');
+
+    // Remove active class from all tabs
+    document.getElementById('arabicTab').classList.remove('active-tab');
+    document.getElementById('englishTab').classList.remove('active-tab');
+    document.getElementById('frenchTab').classList.remove('active-tab');
+
+    // Show selected content and activate tab
+    document.getElementById(tabName + 'Content').classList.remove('hidden');
+    document.getElementById(tabName + 'Tab').classList.add('active-tab');
+  }
+
+  // Initialize with English tab active
+  document.addEventListener('DOMContentLoaded', function() {
+    changeTab('english');
+  });
+</script>
