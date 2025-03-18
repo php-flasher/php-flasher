@@ -1,0 +1,1682 @@
+---
+layout: default
+---
+
+<div class="max-w-7xl mx-auto">
+    <!-- Main Content with Styled Sections -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <!-- Table of contents - Desktop -->
+        <div class="w-full bg-white border-b border-slate-100 shadow-sm">
+            <div class="px-2 py-4 flex items-center gap-4 overflow-x-auto no-scrollbar">
+                <a href="#requirements" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-list-check mr-1.5 text-red-500"></i> Requirements
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#installation" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-download mr-1.5 text-red-500"></i> Installation
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#usage" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-code mr-1.5 text-red-500"></i> Usage
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#examples" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-book mr-1.5 text-red-500"></i> Examples
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#configuration" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-gear mr-1.5 text-red-500"></i> Configuration
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#presets" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-sliders mr-1.5 text-red-500"></i> Presets
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#translations" class="text-sm font-medium text-slate-700 hover:text-red-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-globe mr-1.5 text-red-500"></i> Translations
+                </a>
+            </div>
+        </div>
+
+        <!-- Content area with custom styling -->
+        <div class="prose prose-slate max-w-none p-6 md:p-8">
+            <!-- Requirements Section -->
+            <div id="requirements" class="scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-list-check"></i>
+                    </span>
+                    Requirements
+                </h2>
+                <p class="mb-4">
+                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
+                    helps you easily add flash notifications to your <strong>Laravel</strong> projects, improving user feedback with minimal setup.
+                </p>
+
+                <!-- Version requirements -->
+                <div class="mb-5">
+                    <!-- Requirements Cards Container -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- PHP Card -->
+                        <div class="group relative bg-white rounded-lg border border-indigo-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <!-- Subtle accent line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600"></div>
+
+                            <div class="p-3">
+                                <div class="flex items-center">
+                                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
+                                        <i class="fa-brands fa-php text-white text-lg"></i>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <div class="text-xs uppercase tracking-wider text-indigo-500 font-semibold">Required</div>
+                                        <h4 class="font-bold text-slate-800">PHP Version</h4>
+                                        <div class="inline-block px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">
+                                            v8.2 or higher
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Laravel Card -->
+                        <div class="group relative bg-white rounded-lg border border-red-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <!-- Subtle accent line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-red-600 to-red-700"></div>
+
+                            <div class="p-3">
+                                <div class="flex items-center">
+                                    <div class="bg-gradient-to-br from-red-600 to-red-700 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
+                                        <i class="fa-brands fa-laravel text-white text-lg"></i>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <div class="text-xs uppercase tracking-wider text-red-500 font-semibold">Required</div>
+                                        <h4 class="font-bold text-slate-800">Laravel Version</h4>
+                                        <div class="inline-block px-2 py-0.5 bg-red-50 text-red-700 text-xs font-medium rounded-full">
+                                            v11.0 or higher
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legacy version note -->
+                    <div class="bg-amber-50 border-l-4 border-amber-300 rounded-r-lg p-3 mt-3">
+                        <div class="flex">
+                            <div class="flex-shrink-0 flex items-center justify-center">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-sm font-medium text-amber-800">Using older PHP or Laravel versions?</h4>
+                                <p class="text-xs text-amber-700">
+                                    If you need to use PHP &lt; v8.2 or Laravel &lt; v11.0, use
+                                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v1</strong> instead.
+                                    It supports PHP ≥ v5.3 and Laravel ≥ v5.0.
+                                    <a href="https://php-flasher.github.io/" class="text-amber-800 underline hover:text-amber-900">
+                                        Check out the v1 documentation here
+                                    </a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installation Section -->
+            <div id="installation" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-download"></i>
+                    </span>
+                    Installation
+                </h2>
+                <p class="mb-4">
+                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> is modular. You can install only the parts you need.
+                </p>
+                <p class="mb-4">Run this command to install it:</p>
+
+                <!-- Terminal code block using the user's styling -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-4">
+                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex space-x-1 mr-4">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-slate-400 text-sm">Terminal</span>
+                        </div>
+                        <div class="text-slate-400 text-sm">Installation</div>
+                    </div>
+
+                    <div class="p-6 bg-slate-900">
+                        <div class="flex flex-col gap-4">
+                            <div class="relative">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center mr-2 text-xs">
+                                        <i class="fa-brands fa-laravel"></i>
+                                    </div>
+                                    <span class="text-slate-300 text-sm">Laravel Installation</span>
+                                </div>
+                                <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-laravel</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mb-4">After installing, run this command to set up the required assets:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex space-x-1 mr-4">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-slate-400 text-sm">Terminal</span>
+                        </div>
+                        <div class="text-slate-400 text-sm">Setup Assets</div>
+                    </div>
+
+                    <div class="p-6 bg-slate-900">
+                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">php artisan flasher:install</code></pre>
+                    </div>
+                </div>
+
+                <!-- One-minute setup callout with aligned icon and text -->
+                <div class="bg-indigo-50 border-l-4 border-indigo-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-clock text-indigo-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-indigo-800">Ready in under a minute!</h4>
+                            <p class="text-sm text-indigo-700 mt-1">That's it! No need for complex configuration -
+                                <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> works right out of the box with sensible defaults.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Best Practice Tip -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-green-800">Best Practice</h4>
+                            <p class="text-sm text-green-700 mt-1">
+                                PHPFlasher works seamlessly with Laravel's service container and will be automatically discovered. No additional configuration is needed.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Section -->
+            <div id="usage" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-code"></i>
+                    </span>
+                    Usage
+                </h2>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Basic Usage</h3>
+
+                <p class="mb-4">
+                    Here's a basic example of using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> in a Laravel controller:
+                </p>
+
+                <!-- PHP Example using user's styling with 4 spaces -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">ProductController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    public function store(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+
+        // Create the product
+        Product::create($validated);
+
+        // Add a success notification
+        flash()->success('Product created successfully!');
+
+        return redirect()->route('products.index');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Pro tip box with aligned icon and text -->
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-5 mb-6 border border-indigo-100">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-medium text-indigo-800">Pro Tip: Two Ways to Use PHPFlasher</h4>
+                            <p class="text-sm text-indigo-700 mt-1">
+                                <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
+                                provides two ways to create notifications:
+                            </p>
+                            <ul class="mt-2 space-y-2 text-sm text-indigo-700">
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    <strong>Helper function:</strong> <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">flash()->success('Message');</code>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    <strong>Facade:</strong> <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">use Flasher\Laravel\Facade\Flasher; Flasher::success('Message');</code>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Notification Types</h3>
+                <p class="mb-4"><strong><span class="text-indigo-900">PHP<span
+                    class="text-indigo-500">Flasher</span></span></strong> supports different types of notifications:
+                </p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">NotificationTypes.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Success message
+flash()->success('Your changes have been saved!');
+
+// Error message
+flash()->error('Something went wrong!');
+
+// Warning message
+flash()->warning('Please review your data before proceeding.');
+
+// Info message
+flash()->info('The system will be down for maintenance tonight.');</code></pre>
+                    </div>
+                </div>
+
+                <!-- Notification types showcase -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+                    <div class="group p-4 border border-green-200 bg-gradient-to-b from-green-50 to-white rounded-lg transition-transform hover:-translate-y-1 duration-300">
+                        <div class="flex items-center gap-3 mb-2 text-green-700">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <strong>Success</strong>
+                        </div>
+                        <p class="text-green-600 text-sm">Your changes have been saved!</p>
+                    </div>
+
+                    <div class="group p-4 border border-red-200 bg-gradient-to-b from-red-50 to-white rounded-lg transition-transform hover:-translate-y-1 duration-300">
+                        <div class="flex items-center gap-3 mb-2 text-red-700">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                            </div>
+                            <strong>Error</strong>
+                        </div>
+                        <p class="text-red-600 text-sm">Something went wrong!</p>
+                    </div>
+
+                    <div class="group p-4 border border-amber-200 bg-gradient-to-b from-amber-50 to-white rounded-lg transition-transform hover:-translate-y-1 duration-300">
+                        <div class="flex items-center gap-3 mb-2 text-amber-700">
+                            <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <strong>Warning</strong>
+                        </div>
+                        <p class="text-amber-600 text-sm">Please review your data before proceeding.</p>
+                    </div>
+
+                    <div class="group p-4 border border-blue-200 bg-gradient-to-b from-blue-50 to-white rounded-lg transition-transform hover:-translate-y-1 duration-300">
+                        <div class="flex items-center gap-3 mb-2 text-blue-700">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <strong>Info</strong>
+                        </div>
+                        <p class="text-blue-600 text-sm">The system will be down for maintenance tonight.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Adding a Title</h3>
+                <p class="mb-4">You can add a title to your notifications:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">Title.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your profile has been updated successfully.', 'Profile Updated');</code></pre>
+                    </div>
+                </div>
+
+                <!-- Example with title -->
+                <div class="p-4 bg-white border-l-4 border-green-400 shadow-md rounded-r-lg mb-6 transform transition-transform hover:-translate-x-1 duration-300">
+                    <div class="flex items-center gap-3 mb-2 text-green-700">
+                        <i class="fa-solid fa-circle-check text-xl"></i>
+                        <strong class="text-lg">Profile Updated</strong>
+                    </div>
+                    <p class="text-green-600">Your profile has been updated successfully.</p>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Notification Options</h3>
+                <p class="mb-4">Customize your notifications with various options:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">Options.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()
+    ->option('position', 'top-center')  // Position on the screen
+    ->option('timeout', 5000)           // How long to display (milliseconds)
+    ->option('rtl', true)               // Right-to-left support
+    ->success('Your changes have been saved!');</code></pre>
+                    </div>
+                </div>
+
+                <!-- Options demo -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
+                        <h4 class="text-sm font-medium text-indigo-800 mb-2 flex items-center">
+                            <i class="fa-solid fa-arrows-to-dot text-indigo-500 mr-2"></i>
+                            Positioning
+                        </h4>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-slate-100 px-2 py-1 rounded-full">top-right</span>
+                            <span class="bg-slate-100 px-2 py-1 rounded-full">top-left</span>
+                            <span class="bg-slate-100 px-2 py-1 rounded-full">top-center</span>
+                            <span class="bg-slate-100 px-2 py-1 rounded-full">bottom-right</span>
+                            <span class="bg-slate-100 px-2 py-1 rounded-full">bottom-left</span>
+                            <span class="bg-slate-100 px-2 py-1 rounded-full">bottom-center</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
+                        <h4 class="text-sm font-medium text-indigo-800 mb-2 flex items-center">
+                            <i class="fa-solid fa-clock text-indigo-500 mr-2"></i>
+                            Timing
+                        </h4>
+                        <div class="text-xs text-slate-600">
+                            <p>Control how long notifications display with the <code class="bg-slate-100 px-1.5 py-0.5 rounded">timeout</code> option (milliseconds).</p>
+                            <p class="mt-1">Set to <code class="bg-slate-100 px-1.5 py-0.5 rounded">0</code> to require manual dismissal.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
+                        <h4 class="text-sm font-medium text-indigo-800 mb-2 flex items-center">
+                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-500 mr-2"></i>
+                            Animations
+                        </h4>
+                        <div class="text-xs text-slate-600">
+                            <p>Choose from various animations:</p>
+                            <div class="flex flex-wrap gap-2 mt-1">
+                                <span class="bg-slate-100 px-2 py-1 rounded-full">fade</span>
+                                <span class="bg-slate-100 px-2 py-1 rounded-full">slide</span>
+                                <span class="bg-slate-100 px-2 py-1 rounded-full">zoom</span>
+                                <span class="bg-slate-100 px-2 py-1 rounded-full">flip</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div id="examples" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-book"></i>
+                    </span>
+                    Common Examples
+                </h2>
+
+                <p class="mb-4">
+                    Here are some common examples of using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> in your Laravel applications.
+                </p>
+
+                                <!-- CRUD Examples -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">CRUD Operations</h3>
+                <p class="mb-4">A complete example showing notifications for Create, Read, Update, and Delete operations:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">PostController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        Post::create($validated);
+
+        flash()->success('Post created successfully!', 'Success');
+
+        return redirect()->route('posts.index');
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $post->update($validated);
+
+        flash()->success('Post updated successfully!');
+
+        return redirect()->route('posts.index');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        flash()->info('Post was deleted');
+
+        return redirect()->route('posts.index');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Best practice box for CRUD operations -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Consistent Messaging</h4>
+                            <p class="text-sm text-green-700 mt-1">
+                                Use the same notification style and wording for similar operations across your application. This provides a consistent user experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Validation Example -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Form Validation Feedback</h3>
+                <p class="mb-4">Show validation errors with meaningful notifications:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">RegisterController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class RegisterController extends Controller
+{
+    public function register(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8|confirmed',
+            ]);
+
+            User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
+
+            flash()->success('Your account has been created successfully!', 'Welcome!');
+
+            return redirect()->route('login');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Return back with validation errors
+            flash()->error('Please fix the errors in the form.', 'Registration Failed');
+
+            return back()->withErrors($e->validator)->withInput();
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- AJAX Example with PHPFlasher -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">AJAX Support</h3>
+                <p class="mb-4">PHPFlasher works seamlessly with AJAX requests. It automatically displays notifications from JSON responses:</p>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <!-- Backend Code -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                        <div class="bg-slate-800 px-4 py-3 flex items-center">
+                            <div class="flex space-x-1.5 mr-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-white opacity-80 text-xs font-medium">ApiController.php</div>
+                        </div>
+                        <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class ApiController extends Controller
+{
+    public function saveData(Request $request)
+    {
+        try {
+            // Process data...
+            $success = true; // Assuming operation succeeded
+
+            if ($success) {
+                flash()->success('Data saved successfully!');
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Data saved successfully!'
+                ]);
+            } else {
+                flash()->error('Failed to save data');
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Failed to save data'
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            flash()->error('An error occurred: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred'
+            ], 500);
+        }
+    }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Frontend JS Code -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                        <div class="bg-slate-800 px-4 py-3 flex items-center">
+                            <div class="flex space-x-1.5 mr-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-white opacity-80 text-xs font-medium">script.js</div>
+                        </div>
+                        <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">document.getElementById('saveForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch('/api/save', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // PHPFlasher will automatically display the notification
+        // No additional JS code needed!
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert tip for AJAX -->
+                <div class="bg-slate-50 border-l-4 border-slate-300 rounded-r-lg p-5 mb-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-slate-800">Expert Tip: AJAX Integration</h4>
+                            <p class="text-sm text-slate-700 mt-1">
+                                PHPFlasher automatically handles AJAX responses — notifications from the server appear without any additional code. This works with fetch, axios, jQuery, and other AJAX methods.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middleware Example -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Using with Laravel Middleware</h3>
+                <p class="mb-4">You can add notifications from middleware for actions like authorization:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">AdminAccessMiddleware.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class AdminAccessMiddleware
+{
+    public function handle(Request $request, Closure $next)
+    {
+        if (!$request->user() || !$request->user()->isAdmin()) {
+            flash()->error('You do not have access to this area.', 'Access Denied');
+            return redirect()->route('home');
+        }
+
+        return $next($request);
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Section -->
+            <div id="configuration" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+                    Configuration
+                </h2>
+
+                <p class="mb-4">If you want to change the default settings, you can publish the configuration file:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex space-x-1 mr-4">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-slate-400 text-sm">Terminal</span>
+                        </div>
+                        <div class="text-slate-400 text-sm">Generate Config</div>
+                    </div>
+
+                    <div class="p-6 bg-slate-900">
+<pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">php artisan flasher:install --config</code></pre>
+                    </div>
+                </div>
+
+                <p class="mb-4">
+                    This will create a file at
+                    <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">config/flasher.php</code>
+                    with the following content:
+                </p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">config/flasher.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // config/flasher.php
+
+return [
+    // Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
+    'default' => 'flasher',
+
+    // Path to the main PHPFlasher JavaScript file
+    'main_script' => '/vendor/flasher/flasher.min.js',
+
+    // List of CSS files to style your notifications
+    'styles' => [
+        '/vendor/flasher/flasher.min.css',
+    ],
+
+    // Set global options for all notifications (optional)
+    // 'options' => [
+    //     'timeout' => 5000, // Time in milliseconds before the notification disappears
+    //     'position' => 'top-right', // Where the notification appears on the screen
+    // ],
+
+    // Automatically inject JavaScript and CSS assets into your HTML pages
+    'inject_assets' => true,
+
+    // Enable message translation using Laravel's translation service
+    'translate' => true,
+
+    // Map Laravel flash message keys to notification types
+    'flash_bag' => [
+        'success' => ['success'],
+        'error' => ['error', 'danger'],
+        'warning' => ['warning', 'alarm'],
+        'info' => ['info', 'notice', 'alert'],
+    ],
+
+    // Set criteria to filter which notifications are displayed (optional)
+    // 'filter' => [
+    //     'limit' => 5, // Maximum number of notifications to show at once
+    // ],
+
+    // Define notification presets to simplify notification creation (optional)
+    // 'presets' => [
+    //     'entity_saved' => [
+    //         'type' => 'success',
+    //         'title' => 'Entity saved',
+    //         'message' => 'Entity saved successfully',
+    //     ],
+    // ],
+];</code></pre>
+                    </div>
+                </div>
+
+                <!-- Common Configuration Examples -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Common Configuration Examples</h3>
+
+                <div class="mb-6 grid md:grid-cols-2 gap-6">
+                    <!-- Example 1: Change default position -->
+                    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+                        <h4 class="text-base font-medium text-slate-800 mb-2">Change Default Position</h4>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php"><?php // config/flasher.php
+
+return [
+    'options' => [
+        'position' => 'bottom-right',
+    ],
+];</code></pre>
+                    </div>
+
+                    <!-- Example 2: Change timeout -->
+                    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+                        <h4 class="text-base font-medium text-slate-800 mb-2">Change Default Timeout</h4>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php"><?php // config/flasher.php
+
+return [
+    'options' => [
+        'timeout' => 8000,  // 8 seconds
+    ],
+];</code></pre>
+                    </div>
+                </div>
+
+                <!-- Expert advice box -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 p-2 bg-indigo-100 rounded-full">
+                            <i class="fa-solid fa-star text-indigo-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-slate-800">Expert Advice</h4>
+                            <p class="text-slate-600 mt-1">The default configuration works great for most projects. Only
+                                customize if you need specific behaviors like:</p>
+                            <ul class="mt-2 space-y-1 text-slate-600">
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    Changing the default notification theme (Toastr, SweetAlert, etc.)
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    Setting global position/timing for all notifications
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    Using custom paths for assets
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrating with Laravel Flash Messages -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Converting Laravel Session Flash Messages</h3>
+                <p class="mb-4">
+                    PHPFlasher automatically converts Laravel's native session flash messages to PHPFlasher notifications, making migration easy:
+                </p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">LegacyController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Your existing Laravel flash messages still work
+session()->flash('success', 'Changes were saved!');
+
+// Or with the helper
+$request->session()->flash('error', 'Something went wrong!');
+
+// They will be converted to PHPFlasher notifications automatically
+// You can gradually migrate your codebase to use PHPFlasher directly</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Presets Section -->
+            <div id="presets" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-sliders"></i>
+                    </span>
+                    Presets
+                </h2>
+
+                <p class="mb-4">You can create a preset for a custom notification that you want to reuse in multiple
+                    places. Add a <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">presets</code> entry in
+                    the configuration file.
+                </p>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-5 mb-6 rounded-r">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-blue-800">What are presets?</h4>
+                            <p class="text-sm text-blue-700 mt-1">
+                                Presets are pre-defined notification configurations that you can reuse throughout your application. They help maintain consistent messaging and reduce code duplication.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mb-4">
+                    For example, create a preset named <code
+                    class="bg-slate-100 px-2 py-1 rounded text-indigo-600">entity_saved</code>:
+                </p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">config/flasher.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // config/flasher.php
+
+return [
+    'presets' => [
+        'entity_saved' => [
+            'type' => 'success',
+            'message' => 'Entity saved successfully',
+            'title' => 'Entity saved',
+        ],
+
+        'payment_received' => [
+            'type' => 'success',
+            'message' => 'Payment of %amount% has been received.',
+            'title' => 'Payment Confirmed',
+            'options' => [
+                'timeout' => 8000,
+                'position' => 'top-center',
+            ],
+        ],
+
+        'account_locked' => [
+            'type' => 'error',
+            'message' => 'Your account has been locked due to multiple failed attempts.',
+            'title' => 'Security Alert',
+            'options' => [
+                'timeout' => 0,  // Requires manual dismissal
+                'position' => 'center',
+            ],
+        ],
+    ],
+];</code></pre>
+                    </div>
+                </div>
+
+                <p class="mb-4">
+                    To use the preset, call the <code
+                    class="bg-slate-100 px-2 py-1 rounded text-indigo-600">preset()</code>
+                    method and pass the name of the preset:
+                </p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+
+use App\Models\Book;
+use Illuminate\Http\Request;
+
+class BookController extends Controller
+{
+    public function store(Request $request)
+    {
+        // Save the book...
+
+        // Use a preset for the notification
+        flash()->preset('entity_saved');
+
+        return redirect()->route('books.index');
+    }
+}
+
+class PaymentController extends Controller
+{
+    public function confirm(Request $request)
+    {
+        // Process payment...
+
+        // Use a preset with parameters
+        flash()->preset('payment_received', [
+            'amount' => '€50.00'
+        ]);
+
+        return redirect()->route('payment.receipt');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <p class="mb-4">The first example is the same as:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">EquivalentCode.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+
+class BookController extends Controller
+{
+    public function store()
+    {
+        // Without preset, would need to do:
+        flash()->success('Entity saved successfully', 'Entity saved');
+
+        return redirect()->route('books.index');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Preset use cases -->
+                <div class="bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-6 mb-6 border border-indigo-200">
+                    <h4 class="text-indigo-800 text-lg font-semibold mb-3">Common Preset Use Cases</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1">
+                                <i class="fa-solid fa-check text-indigo-500 text-xs"></i>
+                            </div>
+                            <p class="ml-3 text-indigo-700">
+                                <strong>CRUD Operations:</strong>
+                                Create consistent notifications for create, update, delete operations
+                            </p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1">
+                                <i class="fa-solid fa-check text-indigo-500 text-xs"></i>
+                            </div>
+                            <p class="ml-3 text-indigo-700">
+                                <strong>User Feedback:</strong> Standardize welcome messages, payment confirmations, etc.
+                            </p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1">
+                                <i class="fa-solid fa-check text-indigo-500 text-xs"></i>
+                            </div>
+                            <p class="ml-3 text-indigo-700">
+                                <strong>Error Handling:</strong> Create consistent error notifications with custom styling
+                                                        </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Best Practice for Presets -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Centralized Message Management</h4>
+                            <p class="text-sm text-green-700 mt-1">
+                                Store all your notification presets in one place to ensure consistent messaging across your application. This makes it easy to update notification wording or styling globally.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creating Presets with Parameters -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Dynamic Presets with Parameters</h3>
+                <p class="mb-4">You can create more flexible presets using parameters:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">config/flasher.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // config/flasher.php
+
+return [
+    'presets' => [
+        'order_created' => [
+            'type' => 'success',
+            'message' => 'Order #%order_id% has been created successfully. Total: %amount%',
+            'title' => 'Order Created'
+        ],
+    ],
+];</code></pre>
+                    </div>
+                </div>
+
+                <p class="mb-4">Then use the preset with parameters:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">OrderController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Parameters are passed as an array
+flash()->preset('order_created', [
+    'order_id' => '12345',
+    'amount' => '$99.99'
+]);
+
+// This will display: "Order #12345 has been created successfully. Total: $99.99"</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Translation Section -->
+            <div id="translations" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-red-50 to-red-100 text-red-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-globe"></i>
+                    </span>
+                    Translations & RTL Support
+                </h2>
+
+                <p class="mb-4">
+                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
+                    integrates perfectly with Laravel's translation system, making it easy to display notifications in multiple languages.
+                </p>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Basic Translation</h3>
+                <p class="mb-4">Use the <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">translate()</code> method to set the language for a notification:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">TranslationExample.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Translation will automatically use the current locale from Laravel's App::getLocale()
+flash()->success('The resource was created');
+
+// Or explicitly specify a language
+flash()->translate('fr')->success('The resource was created');
+flash()->translate('ar')->success('The resource was created');</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Translation Files</h3>
+                <p class="mb-4">Define your translations in PHP files in the <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">resources/lang/vendor/flasher/</code> directory:</p>
+
+                <!-- Language tabs with flags -->
+                <div class="border border-slate-200 rounded-lg mb-6 overflow-hidden">
+                    <div class="flex border-b border-slate-200">
+                        <button onclick="changeTab('arabic')" id="arabicTab"
+                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
+                            <span class="text-lg">🇲🇦</span> Arabic
+                        </button>
+                        <button onclick="changeTab('english')" id="englishTab"
+                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
+                            <span class="text-lg">🇺🇸</span> English
+                        </button>
+                        <button onclick="changeTab('french')" id="frenchTab"
+                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
+                            <span class="text-lg">🇫🇷</span> French
+                        </button>
+                    </div>
+
+                    <!-- Arabic content -->
+                    <div id="arabicContent" class="hidden">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // resources/lang/vendor/flasher/ar/messages.php
+
+return [
+    'success' => 'نجاح',
+    'error' => 'خطأ',
+    'warning' => 'تحذير',
+    'info' => 'معلومة',
+
+    'The resource was created' => 'تم إنشاء :resource',
+    'The resource was updated' => 'تم تعديل :resource',
+    'The resource was saved' => 'تم حفظ :resource',
+    'The resource was deleted' => 'تم حذف :resource',
+
+    'resource' => 'الملف',
+];</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- English content -->
+                    <div id="englishContent" class="hidden">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // resources/lang/vendor/flasher/en/messages.php
+
+return [
+    'success' => 'Success',
+    'error' => 'Error',
+    'warning' => 'Warning',
+    'info' => 'Info',
+
+    'The resource was created' => 'The :resource was created',
+    'The resource was updated' => 'The :resource was updated',
+    'The resource was saved' => 'The :resource was saved',
+    'The resource was deleted' => 'The :resource was deleted',
+
+    'resource' => 'resource',
+];</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- French content -->
+                    <div id="frenchContent" class="hidden">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // resources/lang/vendor/flasher/fr/messages.php
+
+return [
+    'success' => 'Succès',
+    'error' => 'Erreur',
+    'warning' => 'Avertissement',
+    'info' => 'Information',
+
+    'The resource was created' => 'La ressource :resource a été ajoutée',
+    'The resource was updated' => 'La ressource :resource a été mise à jour',
+    'The resource was saved' => 'La ressource :resource a été enregistrée',
+    'The resource was deleted' => 'La ressource :resource a été supprimée',
+
+    'resource' => '',
+];</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RTL Support Section -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Right-to-Left (RTL) Support</h3>
+
+                <p class="mb-4">
+                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
+                    automatically handles right-to-left languages like Arabic and Hebrew. The layout adjusts based on the language:
+                </p>
+
+                <!-- RTL Example -->
+                <div class="mb-6 flex justify-end">
+                    <div class="p-4 border border-green-200 bg-gradient-to-b from-green-50 to-white rounded-lg rtl w-1/2 text-right shadow-md">
+                        <div class="flex items-center gap-2 mb-2 text-green-700 justify-end">
+                            <strong>تهانينا</strong>
+                            <i class="fa-solid fa-circle-check text-xl"></i>
+                        </div>
+                        <p class="text-green-600 text-sm">تمت العملية بنجاح.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">RTLExample.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Using Arabic language automatically enables RTL
+flash()
+    ->translate('ar')
+    ->success('Your request was processed successfully.', 'Congratulations!');
+
+// Or explicitly set RTL mode
+flash()
+    ->option('rtl', true)
+    ->success('Your request was processed successfully.', 'Congratulations!');</code></pre>
+                    </div>
+                </div>
+
+                <!-- Laravel-specific translations -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Using Laravel's App Locale</h3>
+                <p class="mb-4">PHPFlasher automatically uses Laravel's current locale:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-8">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">LocaleExample.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Set the locale in Laravel
+App::setLocale('fr');
+
+// PHPFlasher automatically uses the current locale
+flash()->success('The resource was created');
+
+// With parameters
+flash()->success(
+    trans('messages.welcome', ['name' => $user->name])
+);</code></pre>
+                    </div>
+                </div>
+
+                <!-- Translation with Parameters -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Translation with Parameters</h3>
+                <p class="mb-4">You can use parameters in your translations:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-8">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">TranslationWithParams.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// In resources/lang/vendor/flasher/en/messages.php:
+// 'welcome.user' => 'Welcome, :name!'
+
+flash()
+    ->success(
+        trans('welcome.user', ['name' => $user->first_name])
+    );
+
+// Or directly with PHPFlasher (if using presets with placeholders)
+flash()->preset('welcome_user', ['name' => $user->first_name]);</code></pre>
+                    </div>
+                </div>
+
+                <!-- Best Practice for Translations -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Centralize Your Translations</h4>
+                            <p class="text-sm text-green-700 mt-1">
+                                Store all user-facing notification messages in translation files rather than hardcoding them. This makes it much easier to update wording or add new languages later.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example gallery of translations -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <!-- English -->
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg">🇺🇸</span>
+                                <h4 class="font-medium text-slate-900">English</h4>
+                            </div>
+                            <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs rounded-full">en</span>
+                        </div>
+                        <div class="p-3 bg-green-50 text-green-800 rounded-md mb-2 text-sm flex items-center">
+                            <i class="fa-solid fa-circle-check text-green-500 mr-2"></i>
+                            <span>Success! Item was created.</span>
+                        </div>
+                        <div class="p-3 bg-red-50 text-red-800 rounded-md text-sm flex items-center">
+                            <i class="fa-solid fa-circle-exclamation text-red-500 mr-2"></i>
+                            <span>Error! Please try again.</span>
+                        </div>
+                    </div>
+
+                    <!-- French -->
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg">🇫🇷</span>
+                                <h4 class="font-medium text-slate-900">French</h4>
+                            </div>
+                            <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs rounded-full">fr</span>
+                        </div>
+                        <div class="p-3 bg-green-50 text-green-800 rounded-md mb-2 text-sm flex items-center">
+                            <i class="fa-solid fa-circle-check text-green-500 mr-2"></i>
+                            <span>Succès! L'élément a été créé.</span>
+                        </div>
+                        <div class="p-3 bg-red-50 text-red-800 rounded-md text-sm flex items-center">
+                            <i class="fa-solid fa-circle-exclamation text-red-500 mr-2"></i>
+                            <span>Erreur! Veuillez réessayer.</span>
+                        </div>
+                    </div>
+
+                    <!-- Arabic -->
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg">🇲🇦</span>
+                                <h4 class="font-medium text-slate-900">Arabic</h4>
+                            </div>
+                            <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs rounded-full">ar</span>
+                        </div>
+                        <div class="p-3 bg-green-50 text-green-800 rounded-md mb-2 text-sm flex items-center rtl">
+                            <span>نجاح! تم إنشاء العنصر.</span>
+                            <i class="fa-solid fa-circle-check text-green-500 ml-2"></i>
+                        </div>
+                        <div class="p-3 bg-red-50 text-red-800 rounded-md text-sm flex items-center rtl">
+                            <span>خطأ! يرجى المحاولة مرة أخرى.</span>
+                            <i class="fa-solid fa-circle-exclamation text-red-500 ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional features highlight -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mt-12">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">Additional Features</h3>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Feature 1 -->
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-puzzle-piece text-amber-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mb-2">Multiple Themes</h4>
+                            <p class="text-slate-600 text-sm">Choose from 6+ themes including Toastr, SweetAlert, Notyf, Noty and more.</p>
+                            <a href="https://php-flasher.io/themes" class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
+                                View themes <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-code text-green-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mb-2">Livewire Support</h4>
+                            <p class="text-slate-600 text-sm">Seamless integration with Laravel Livewire for dynamic notifications without page reload.</p>
+                            <a href="https://php-flasher.io/livewire" class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
+                                Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-bolt-lightning text-indigo-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mb-2">AJAX Support</h4>
+                            <p class="text-slate-600 text-sm">Show notifications from AJAX responses automatically with JSON responses.</p>
+                            <a href="https://php-flasher.io/ajax" class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
+                                Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="mt-8 mb-12">
+        <div
+            class="bg-gradient-to-tr from-red-600 to-rose-700 rounded-xl p-8 md:p-12 border border-red-500 shadow-md text-center md:text-left">
+            <div class="flex flex-col md:flex-row md:items-center">
+                <div class="md:w-3/4">
+                    <h3 class="text-3xl font-bold text-white mb-3">Ready to elevate your Laravel UI?</h3>
+                    <p class="text-red-100 mb-6 md:mb-0 text-lg">Start using <strong><span
+                        class="text-white">PHP<span class="text-red-200">Flasher</span></span></strong> today and
+                        give your users beautiful notifications in minutes!</p>
+                </div>
+                <div class="md:w-1/4 md:text-right">
+                    <a href="#installation"
+                       class="inline-block bg-white text-red-700 font-medium px-6 py-3 rounded-lg hover:bg-red-50 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-transform">
+                        Get Started Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .animate-spin-slow {
+        animation: spin 20s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .animate-pulse-delayed {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) 1s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-grid-fade {
+        animation: gridFade 20s linear infinite;
+    }
+
+    @keyframes gridFade {
+        0%, 100% {
+            opacity: 0.2;
+        }
+        50% {
+            opacity: 0.05;
+        }
+    }
+
+    .animate-slide-in {
+        opacity: 0;
+        transform: translateX(20px);
+        animation: slideIn 0.5s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .bg-grid-indigo-100 {
+        background-image: linear-gradient(to right, #e0e7ff 1px, transparent 1px),
+        linear-gradient(to bottom, #e0e7ff 1px, transparent 1px);
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For RTL support in examples */
+    .rtl {
+        direction: rtl;
+    }
+
+    /* Active tab styles */
+    .active-tab {
+        background-color: #f8fafc;
+        border-bottom: 2px solid #e11d48;
+        color: #e11d48;
+    }
+</style>
+
+<script>
+    // Tab functionality for translation examples
+    function changeTab(tabName) {
+        // Hide all content
+        document.getElementById("arabicContent").classList.add("hidden");
+        document.getElementById("englishContent").classList.add("hidden");
+        document.getElementById("frenchContent").classList.add("hidden");
+
+        // Remove active class from all tabs
+        document.getElementById("arabicTab").classList.remove("active-tab");
+        document.getElementById("englishTab").classList.remove("active-tab");
+        document.getElementById("frenchTab").classList.remove("active-tab");
+
+        // Show selected content and activate tab
+        document.getElementById(tabName + "Content").classList.remove("hidden");
+        document.getElementById(tabName + "Tab").classList.add("active-tab");
+    }
+
+    // Initialize with English tab active
+    document.addEventListener("DOMContentLoaded", function() {
+        changeTab("english");
+    });
+</script>
+
