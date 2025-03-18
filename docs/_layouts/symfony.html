@@ -20,12 +20,20 @@ layout: default
                     <i class="fa-solid fa-code mr-1.5 text-indigo-500"></i> Usage
                 </a>
                 <span class="text-slate-300">|</span>
+                <a href="#examples" class="text-sm font-medium text-slate-700 hover:text-indigo-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-book mr-1.5 text-indigo-500"></i> Examples
+                </a>
+                <span class="text-slate-300">|</span>
                 <a href="#configuration" class="text-sm font-medium text-slate-700 hover:text-indigo-600 whitespace-nowrap transition-colors">
                     <i class="fa-solid fa-gear mr-1.5 text-indigo-500"></i> Configuration
                 </a>
                 <span class="text-slate-300">|</span>
                 <a href="#presets" class="text-sm font-medium text-slate-700 hover:text-indigo-600 whitespace-nowrap transition-colors">
                     <i class="fa-solid fa-sliders mr-1.5 text-indigo-500"></i> Presets
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#translations" class="text-sm font-medium text-slate-700 hover:text-indigo-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-globe mr-1.5 text-indigo-500"></i> Translations
                 </a>
             </div>
         </div>
@@ -44,13 +52,53 @@ layout: default
                     <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
                     helps you easily add flash notifications to your <strong>Symfony</strong> projects, improving user feedback with minimal setup.
                 </p>
-                <p class="mb-4">
-                    To use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Symfony, you need:
-                </p>
-                <ul class="list-disc pl-6 mb-6 space-y-2">
-                    <li><strong>PHP</strong> v8.2 or higher</li>
-                    <li><strong>Symfony</strong> v7.0 or higher</li>
-                </ul>
+
+                <!-- Version requirements - improved design -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-gradient-to-br from-indigo-50 to-slate-50 rounded-lg border border-indigo-100 p-4 shadow-sm">
+                        <div class="flex items-center">
+                            <div class="bg-indigo-100 rounded-full h-12 w-12 flex items-center justify-center mr-4">
+                                <i class="fa-brands fa-php text-indigo-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">PHP Version</h4>
+                                <p class="text-indigo-700">v8.2 or higher</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-indigo-50 to-slate-50 rounded-lg border border-indigo-100 p-4 shadow-sm">
+                        <div class="flex items-center">
+                            <div class="bg-indigo-100 rounded-full h-12 w-12 flex items-center justify-center mr-4">
+                                <i class="fa-brands fa-symfony text-indigo-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Symfony Version</h4>
+                                <p class="text-indigo-700">v7.0 or higher</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHPFlasher v1 for older versions -->
+                <div class="bg-amber-50 border-l-4 border-amber-300 rounded-r-lg p-5 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center justify-center">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-amber-800">Using older PHP or Symfony versions?</h3>
+                            <p class="text-sm text-amber-700 mt-1">
+                                If you need to use PHP &lt; v8.2 or Symfony &lt; v7.0, you should use
+                                <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v1</strong> instead.
+                                It supports PHP ≥ v5.3 and Symfony ≥ v2.0.
+                                <a href="https://php-flasher.github.io/" class="text-amber-800 underline hover:text-amber-900">
+                                    Check out the v1 documentation here
+                                </a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Installation Section -->
@@ -84,14 +132,12 @@ layout: default
                         <div class="flex flex-col gap-4">
                             <div class="relative">
                                 <div class="flex items-center mb-2">
-                                    <div
-                                        class="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center mr-2 text-xs">
+                                    <div class="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center mr-2 text-xs">
                                         <i class="fa-brands fa-symfony"></i>
                                     </div>
                                     <span class="text-slate-300 text-sm">Symfony Installation</span>
                                 </div>
-                                <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code
-                                    class="language-bash text-slate-200">composer require php-flasher/flasher-symfony</code></pre>
+                                <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-symfony</code></pre>
                             </div>
                         </div>
                     </div>
@@ -113,21 +159,35 @@ layout: default
                     </div>
 
                     <div class="p-6 bg-slate-900">
-                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code
-                            class="language-bash text-slate-200">php bin/console flasher:install</code></pre>
+                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">php bin/console flasher:install</code></pre>
                     </div>
                 </div>
 
-                <!-- One-minute setup callout -->
+                <!-- One-minute setup callout with aligned icon and text -->
                 <div class="bg-indigo-50 border-l-4 border-indigo-400 rounded-r-lg p-5 mb-6">
-                    <div class="flex">
+                    <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <i class="fa-solid fa-clock text-indigo-500 mt-1"></i>
+                            <i class="fa-solid fa-clock text-indigo-500"></i>
                         </div>
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-indigo-800">Ready in under a minute!</h3>
                             <p class="text-sm text-indigo-700 mt-1">That's it! No need for complex configuration -
                                 <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> works right out of the box with sensible defaults.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Best Practice Tip -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-green-800">Best Practice</h3>
+                            <p class="text-sm text-green-700 mt-1">
+                                Commit the installed assets to your version control system to ensure everyone on your team has the same notification experience.
                             </p>
                         </div>
                     </div>
@@ -149,7 +209,7 @@ layout: default
                     Here's a basic example of using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> in a Symfony controller:
                 </p>
 
-                <!-- PHP Example using user's styling -->
+                <!-- PHP Example using user's styling with 4 spaces -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
@@ -160,7 +220,7 @@ layout: default
                         <div class="text-white opacity-80 text-xs font-medium">ProductController.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -182,20 +242,28 @@ class ProductController extends AbstractController
                     </div>
                 </div>
 
-                <!-- Pro tip box -->
-                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 mb-6 border border-indigo-100">
-                    <div class="flex">
+                <!-- Pro tip box with aligned icon and text -->
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-5 mb-6 border border-indigo-100">
+                    <div class="flex items-center">
                         <div class="flex-shrink-0">
                             <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-sm font-medium text-indigo-800">Pro Tip: Autowiring</h3>
+                            <h3 class="text-sm font-medium text-indigo-800">Pro Tip: Two Ways to Use PHPFlasher</h3>
                             <p class="text-sm text-indigo-700 mt-1">
                                 <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
-                                provides a global <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">flash()</code>
-                                helper function, but you can also use dependency injection with
-                                <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">FlasherInterface $flasher</code>.
+                                provides two ways to create notifications:
                             </p>
+                            <ul class="mt-2 space-y-2 text-sm text-indigo-700">
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    <strong>Helper function:</strong> <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">flash()->success('Message');</code>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    <strong>Dependency injection:</strong> <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">public function __construct(private FlasherInterface $flasher) {}</code>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -215,7 +283,7 @@ class ProductController extends AbstractController
                         <div class="text-white opacity-80 text-xs font-medium">NotificationTypes.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Success message
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Success message
 flash()->success('Your changes have been saved!');
 
 // Error message
@@ -285,7 +353,7 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                         <div class="text-white opacity-80 text-xs font-medium">Title.php</div>
                     </div>
                     <div>
-                        <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your profile has been updated successfully.', 'Profile Updated');</code></pre>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your profile has been updated successfully.', 'Profile Updated');</code></pre>
                     </div>
                 </div>
 
@@ -311,10 +379,10 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                         <div class="text-white opacity-80 text-xs font-medium">Options.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()
     ->option('position', 'top-center')  // Position on the screen
     ->option('timeout', 5000)           // How long to display (milliseconds)
-    ->option('rtl', true)              // Right-to-left support
+    ->option('rtl', true)               // Right-to-left support
     ->success('Your changes have been saved!');</code></pre>
                     </div>
                 </div>
@@ -365,6 +433,350 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                 </div>
             </div>
 
+            <!-- NEW: Common Examples Section -->
+            <div id="examples" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-book"></i>
+                    </span>
+                    Common Examples
+                </h2>
+
+                                <p class="mb-4">
+                    Here are some common examples of using <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> in your Symfony applications.
+                </p>
+
+                <!-- CRUD Examples -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">CRUD Operations</h3>
+                <p class="mb-4">A complete example showing notifications for Create, Read, Update, and Delete operations:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">ArticleController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+
+use App\Entity\Article;
+use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+#[Route('/articles')]
+class ArticleController extends AbstractController
+{
+    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ArticleRepository $articleRepository): Response
+    {
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleRepository->save($article, true);
+
+            flash()->success('Article created successfully!', 'Success');
+
+            return $this->redirectToRoute('app_article_index');
+        }
+
+        return $this->render('article/new.html.twig', [
+            'article' => $article,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleRepository->save($article, true);
+
+            flash()->success('Article updated successfully!');
+
+            return $this->redirectToRoute('app_article_index');
+        }
+
+        return $this->render('article/edit.html.twig', [
+            'article' => $article,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
+    public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+            $articleRepository->remove($article, true);
+
+            flash()->info('Article was deleted');
+        }
+
+        return $this->redirectToRoute('app_article_index');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Best practice box for CRUD operations -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-green-800">Best Practice: Consistent Messaging</h3>
+                            <p class="text-sm text-green-700 mt-1">
+                                Use the same notification style and wording for similar operations across your application. This provides a consistent user experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Validation Example -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Form Validation Feedback</h3>
+                <p class="mb-4">Show validation errors with meaningful notifications:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">RegistrationController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+
+use App\Entity\User;
+use App\Form\RegistrationType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+
+class RegistrationController extends AbstractController
+{
+    #[Route('/register', name: 'app_register')]
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher
+    ): Response {
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // Hash the password
+                $user->setPassword($passwordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                ));
+
+                // Save the user
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                flash()->success('Your account has been created successfully!', 'Welcome!');
+
+                return $this->redirectToRoute('app_login');
+            } else {
+                // Show validation errors
+                flash()->error('Please fix the errors in the form.', 'Registration Failed');
+            }
+        }
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- AJAX Example with PHPFlasher -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">AJAX Support</h3>
+                <p class="mb-4">PHPFlasher works seamlessly with AJAX requests. It automatically displays notifications from JSON responses:</p>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <!-- Backend Code -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                        <div class="bg-slate-800 px-4 py-3 flex items-center">
+                            <div class="flex space-x-1.5 mr-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-white opacity-80 text-xs font-medium">ApiController.php</div>
+                        </div>
+                        <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">#[Route('/api/save', name: 'api_save', methods: ['POST'])]
+public function saveApi(Request $request): JsonResponse
+{
+    // Process data...
+    $success = true; // Assuming operation succeeded
+
+    if ($success) {
+        flash()->success('Data saved successfully!');
+
+        return $this->json([
+            'status' => 'success',
+            'message' => 'Data saved successfully!'
+        ]);
+    } else {
+        flash()->error('Failed to save data');
+
+        return $this->json([
+            'status' => 'error',
+            'message' => 'Failed to save data'
+        ], 400);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Frontend JS Code -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                        <div class="bg-slate-800 px-4 py-3 flex items-center">
+                            <div class="flex space-x-1.5 mr-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-white opacity-80 text-xs font-medium">script.js</div>
+                        </div>
+                        <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">document.getElementById('saveForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch('/api/save', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // PHPFlasher will automatically display the notification
+        // No additional JS code needed!
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert tip for AJAX -->
+                <div class="bg-slate-50 border-l-4 border-slate-300 rounded-r-lg p-5 mb-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-slate-800">Expert Tip: AJAX Integration</h3>
+                            <p class="text-sm text-slate-700 mt-1">
+                                PHPFlasher automatically handles AJAX responses — notifications from the server appear without any additional code. This works with fetch, axios, jQuery, and other AJAX methods.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Using Dependency Injection with Autowiring -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Using Dependency Injection</h3>
+                <p class="mb-4">For more complex applications, you may prefer using dependency injection for better testability:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">OrderController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+
+use App\Service\OrderService;
+use Flasher\Prime\FlasherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class OrderController extends AbstractController
+{
+    private FlasherInterface $flasher;
+    private OrderService $orderService;
+
+    public function __construct(FlasherInterface $flasher, OrderService $orderService)
+    {
+        $this->flasher = $flasher;
+        $this->orderService = $orderService;
+    }
+
+    #[Route('/order/process', name: 'app_order_process')]
+    public function processOrder(Request $request): Response
+    {
+        try {
+            $order = $this->orderService->processOrder($request->request->all());
+
+            $this->flasher->success(
+                sprintf('Order #%s has been processed successfully!', $order->getReference()),
+                'Order Confirmed'
+            );
+
+            return $this->redirectToRoute('app_order_confirmation', [
+                'reference' => $order->getReference()
+            ]);
+
+        } catch (\Exception $e) {
+            $this->flasher->error(
+                'We could not process your order. Please try again.',
+                'Order Processing Failed'
+            );
+
+            return $this->redirectToRoute('app_order_checkout');
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Best Practice for Dependency Injection -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-green-800">Best Practice: Dependency Injection</h3>
+                            <p class="text-sm text-green-700 mt-1">
+                                Using dependency injection with <code class="bg-green-100 px-1.5 py-0.5 rounded text-green-700">FlasherInterface</code> makes your code more testable and follows Symfony best practices. It's ideal for services and larger applications.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Configuration Section -->
             <div id="configuration" class="mt-10 scroll-mt-20">
                 <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
@@ -390,8 +802,7 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                     </div>
 
                     <div class="p-6 bg-slate-900">
-                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code
-                            class="language-bash text-slate-200">php bin/console flasher:install --config</code></pre>
+<pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">php bin/console flasher:install --config</code></pre>
                     </div>
                 </div>
 
@@ -411,7 +822,7 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                         <div class="text-white opacity-80 text-xs font-medium">config/packages/flasher.yaml</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
 
 flasher:
     # Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
@@ -451,6 +862,29 @@ flasher:
                     </div>
                 </div>
 
+                <!-- Common Configuration Examples -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Common Configuration Examples</h3>
+
+                <div class="mb-6 grid md:grid-cols-2 gap-6">
+                    <!-- Example 1: Change default position -->
+                    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+                        <h4 class="text-base font-medium text-slate-800 mb-2">Change Default Position</h4>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-yaml"># config/packages/flasher.yaml
+flasher:
+    options:
+        position: 'bottom-right'</code></pre>
+                    </div>
+
+                    <!-- Example 2: Change timeout -->
+                    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+                        <h4 class="text-base font-medium text-slate-800 mb-2">Change Default Timeout</h4>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-yaml"># config/packages/flasher.yaml
+flasher:
+    options:
+        timeout: 8000  # 8 seconds</code></pre>
+                    </div>
+                </div>
+
                 <!-- Expert advice box -->
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
                     <div class="flex items-start">
@@ -478,6 +912,30 @@ flasher:
                         </div>
                     </div>
                 </div>
+
+                <!-- Integrating with Symfony Flash Messages -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Converting Symfony Flash Messages</h3>
+                <p class="mb-4">
+                    PHPFlasher automatically converts Symfony's native flash messages to PHPFlasher notifications, making migration easy:
+                </p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">LegacyController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Your existing Symfony flash messages still work
+$this->addFlash('success', 'Changes were saved!');
+
+// They will be converted to PHPFlasher notifications automatically
+// You can gradually migrate your codebase to use PHPFlasher directly</code></pre>
+                    </div>
+                </div>
             </div>
 
             <!-- Presets Section -->
@@ -494,12 +952,18 @@ flasher:
                     the configuration file.
                 </p>
 
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r">
-                    <p class="text-blue-700">
-                        <i class="fa-solid fa-lightbulb mr-2 text-amber-500"></i> A preset is like
-                        a pre-defined message you can use in many places - perfect for consistent messaging across your
-                        application!
-                    </p>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-5 mb-6 rounded-r">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-blue-800">What are presets?</h3>
+                            <p class="text-sm text-blue-700 mt-1">
+                                Presets are pre-defined notification configurations that you can reuse throughout your application. They help maintain consistent messaging and reduce code duplication.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <p class="mb-4">
@@ -517,14 +981,30 @@ flasher:
                         <div class="text-white opacity-80 text-xs font-medium">config/packages/flasher.yaml</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
 
 flasher:
     presets:
         entity_saved:
             type: 'success'
             message: 'Entity saved successfully'
-            title: 'Entity saved'</code></pre>
+            title: 'Entity saved'
+
+        payment_received:
+            type: 'success'
+            message: 'Payment of %amount% has been received.'
+            title: 'Payment Confirmed'
+            options:
+                timeout: 8000
+                position: 'top-center'
+
+        account_locked:
+            type: 'error'
+            message: 'Your account has been locked due to multiple failed attempts.'
+            title: 'Security Alert'
+            options:
+                timeout: 0  # Requires manual dismissal
+                position: 'center'</code></pre>
                     </div>
                 </div>
 
@@ -544,31 +1024,59 @@ flasher:
                         <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController extends AbstractController
 {
-    public function save()
+    #[Route('/book/save', name: 'app_book_save')]
+    public function save(): Response
     {
-        flash()->preset('entity_saved');</code></pre>
+        // Save the book...
+
+        // Use a preset for the notification
+        flash()->preset('entity_saved');
+
+        return $this->redirectToRoute('app_book_list');
+    }
+}
+
+class PaymentController extends AbstractController
+{
+    #[Route('/payment/confirm', name: 'app_payment_confirm')]
+    public function confirm(): Response
+    {
+        // Process payment...
+
+        // Use a preset with parameters
+        flash()->preset('payment_received', [
+            'amount' => '€50.00'
+        ]);
+
+        return $this->redirectToRoute('app_payment_receipt');
+    }
+}</code></pre>
                     </div>
                 </div>
 
-                <p class="mb-4">This is the same as:</p>
+                <p class="mb-4">The first example is the same as:</p>
 
                 <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
-                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                        <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
+                        <div class="text-white opacity-80 text-xs font-medium">EquivalentCode.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController extends AbstractController
 {
-    public function save()
+    #[Route('/book/save', name: 'app_book_save')]
+    public function save(): Response
     {
+        // Without preset, would need to do:
         flash()->success('Entity saved successfully', 'Entity saved');
+
+        return $this->redirectToRoute('app_book_list');
     }
 }</code></pre>
                     </div>
@@ -606,26 +1114,195 @@ flasher:
                     </ul>
                 </div>
 
-                <!-- RTL Support Section -->
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2 mt-10">
+                <!-- Best Practice for Presets -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-green-800">Best Practice: Centralized Message Management</h3>
+                            <p class="text-sm text-green-700 mt-1">
+                                Store all your notification presets in one place to ensure consistent messaging across your application. This makes it easy to update notification wording or styling globally.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creating Presets with Parameters -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Dynamic Presets with Parameters</h3>
+                <p class="mb-4">You can create more flexible presets using parameters:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">config/packages/flasher.yaml</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># config/packages/flasher.yaml
+
+flasher:
+    presets:
+        order_created:
+            type: 'success'
+            message: 'Order #%order_id% has been created successfully. Total: %amount%'
+            title: 'Order Created'</code></pre>
+                    </div>
+                </div>
+
+                <p class="mb-4">Then use the preset with parameters:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">OrderController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Parameters are passed as an array
+flash()->preset('order_created', [
+    'order_id' => '12345',
+    'amount' => '$99.99'
+]);
+
+// This will display: "Order #12345 has been created successfully. Total: $99.99"</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Translation Section -->
+            <div id="translations" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
                     <span class="p-1.5 bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-language"></i>
+                        <i class="fa-solid fa-globe"></i>
                     </span>
-                    RTL Support
+                    Translations & RTL Support
                 </h2>
 
                 <p class="mb-4">
                     <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
-                    makes it easy to use <strong>right-to-left</strong> languages like
-                    <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Arabic</code> or
-                    <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">Hebrew</code>.
-                    It automatically detects the text direction and adjusts accordingly.
+                    integrates perfectly with Symfony's translation system, making it easy to display notifications in multiple languages.
                 </p>
 
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Basic Translation</h3>
+                <p class="mb-4">Use the <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">translate()</code> method to set the language for a notification:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">TranslationExample.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Translation will automatically use the current locale
+flash()->success('The resource was created');
+
+// Or explicitly specify a language
+flash()->translate('fr')->success('The resource was created');
+flash()->translate('ar')->success('The resource was created');</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Translation Files</h3>
+                <p class="mb-4">Define your translations in YAML files in the <code class="bg-slate-100 px-2 py-1 rounded text-indigo-600">translations/</code> directory:</p>
+
+                <!-- Language tabs with flags -->
+                <div class="border border-slate-200 rounded-lg mb-6 overflow-hidden">
+                    <div class="flex border-b border-slate-200">
+                        <button onclick="changeTab('arabic')" id="arabicTab"
+                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
+                            <span class="text-lg">🇲🇦</span> Arabic
+                        </button>
+                        <button onclick="changeTab('english')" id="englishTab"
+                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
+                            <span class="text-lg">🇺🇸</span> English
+                        </button>
+                        <button onclick="changeTab('french')" id="frenchTab"
+                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
+                            <span class="text-lg">🇫🇷</span> French
+                        </button>
+                    </div>
+
+                    <!-- Arabic content -->
+                    <div id="arabicContent" class="hidden">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.ar.yaml
+
+success: 'نجاح'
+error: 'خطأ'
+warning: 'تحذير'
+info: 'معلومة'
+
+The resource was created: 'تم إنشاء :resource'
+The resource was updated: 'تم تعديل :resource'
+The resource was saved: 'تم حفظ :resource'
+The resource was deleted: 'تم حذف :resource'
+
+resource: 'الملف'</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- English content -->
+                    <div id="englishContent" class="hidden">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.en.yaml
+
+success: 'Success'
+error: 'Error'
+warning: 'Warning'
+info: 'Info'
+
+The resource was created: 'The :resource was created'
+The resource was updated: 'The :resource was updated'
+The resource was saved: 'The :resource was saved'
+The resource was deleted: 'The :resource was deleted'
+
+resource: 'resource'</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- French content -->
+                    <div id="frenchContent" class="hidden">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.fr.yaml
+
+success: 'Succès'
+error: 'Erreur'
+warning: 'Avertissement'
+info: 'Information'
+
+The resource was created: 'La ressource :resource a été ajoutée'
+The resource was updated: 'La ressource :resource a été mise à jour'
+The resource was saved: 'La ressource :resource a été enregistrée'
+The resource was deleted: 'La ressource :resource a été supprimée'
+
+resource: ''</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RTL Support Section -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Right-to-Left (RTL) Support</h3>
+
                 <p class="mb-4">
-                    Just make sure the translation service is enabled, and
                     <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
-                    will handle the rest.
+                    automatically handles right-to-left languages like Arabic and Hebrew. The layout adjusts based on the language:
                 </p>
 
                 <!-- RTL Example -->
@@ -649,113 +1326,15 @@ flasher:
                         <div class="text-white opacity-80 text-xs font-medium">RTLExample.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Using Arabic language automatically enables RTL
+flash()
     ->translate('ar')
+    ->success('Your request was processed successfully.', 'Congratulations!');
+
+// Or explicitly set RTL mode
+flash()
+    ->option('rtl', true)
     ->success('Your request was processed successfully.', 'Congratulations!');</code></pre>
-                    </div>
-                </div>
-
-                <!-- Translation Section -->
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2 mt-10">
-                    <span class="p-1.5 bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-globe"></i>
-                    </span>
-                    Translation
-                </h2>
-
-                <p class="mb-4"><strong><span class="text-indigo-900">PHP<span
-                    class="text-indigo-500">Flasher</span></span></strong> lets you translate your notification <code
-                    class="bg-slate-100 px-2 py-1 rounded text-indigo-600">messages</code> and <code
-                    class="bg-slate-100 px-2 py-1 rounded text-indigo-600">presets</code>. It comes with translations
-                    for multiple languages including Arabic, English, French, German, Spanish, Portuguese, Russian, and
-                    Chinese. You can also add your own translations.</p>
-
-                <p class="mb-4">To override the <code
-                    class="bg-slate-100 px-2 py-1 rounded text-indigo-600">English</code> translations for <strong><span
-                    class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>, create a
-                    file at <code
-                        class="bg-slate-100 px-2 py-1 rounded text-indigo-600">translations/flasher.en.yaml</code>.</p>
-
-                <p class="mb-4">Here are examples of the default translation keys:</p>
-
-                <!-- Language tabs with flags -->
-                <div class="border border-slate-200 rounded-lg mb-6 overflow-hidden">
-                    <div class="flex border-b border-slate-200">
-                        <button onclick="changeTab('arabic')" id="arabicTab"
-                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
-                            <span class="text-lg">🇲🇦</span> Arabic
-                        </button>
-                        <button onclick="changeTab('english')" id="englishTab"
-                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
-                            <span class="text-lg">🇺🇸</span> English
-                        </button>
-                        <button onclick="changeTab('french')" id="frenchTab"
-                                class="px-4 py-2 font-medium text-sm hover:bg-slate-50 transition flex items-center gap-2">
-                            <span class="text-lg">🇫🇷</span> French
-                        </button>
-                    </div>
-
-                    <!-- Arabic content -->
-                    <div id="arabicContent" class="hidden">
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
-                            <div>
-                    <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.ar.yaml
-
-success: 'نجاح'
-error: 'خطأ'
-warning: 'تحذير'
-info: 'معلومة'
-
-The resource was created: 'تم إنشاء :resource'
-The resource was updated: 'تم تعديل :resource'
-The resource was saved: 'تم حفظ :resource'
-The resource was deleted: 'تم حذف :resource'
-
-resource: 'الملف'</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- English content -->
-                    <div id="englishContent" class="hidden">
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
-                            <div>
-                    <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.en.yaml
-
-success: 'Success'
-error: 'Error'
-warning: 'Warning'
-info: 'Info'
-
-The resource was created: 'The :resource was created'
-The resource was updated: 'The :resource was updated'
-The resource was saved: 'The :resource was saved'
-The resource was deleted: 'The :resource was deleted'
-
-resource: 'resource'</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- French content -->
-                    <div id="frenchContent" class="hidden">
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
-                            <div>
-                    <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-yaml"># translations/flasher.fr.yaml
-
-success: 'Succès'
-error: 'Erreur'
-warning: 'Avertissement'
-info: 'Information'
-
-The resource was created: 'La ressource :resource a été ajoutée'
-The resource was updated: 'La ressource :resource a été mise à jour'
-The resource was saved: 'La ressource :resource a été enregistrée'
-The resource was deleted: 'La ressource :resource a été supprimée'
-
-resource: ''</code></pre>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -789,72 +1368,85 @@ resource: ''</code></pre>
                     </div>
                 </div>
 
-                <p class="mb-4">Usage examples:</p>
+                <!-- Translation with Parameters -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Translation with Parameters</h3>
+                <p class="mb-4">You can use parameters in your translations:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-8">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">TranslationExample.php</div>
+                        <div class="text-white opacity-80 text-xs font-medium">TranslationWithParams.php</div>
                     </div>
                     <div>
-                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// Translation will automatically use the correct language files
-flash()->success('The resource was created');
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">// In translations/messages.en.yaml:
+// welcome.user: 'Welcome, %name%!'
 
-// You can also specify a different language
-flash()->translate('fr')->success('The resource was created');</code></pre>
+flash()
+    ->info(
+        $this->translator->trans('welcome.user', ['%name%' => $user->getFirstName()])
+    );
+
+// Or directly with PHPFlasher (if using presets with placeholders)
+flash()->preset('welcome_user', ['name' => $user->getFirstName()]);</code></pre>
+                    </div>
+                </div>
+
+                <!-- Best Practice for Translations -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-green-800">Best Practice: Centralize Your Translations</h3>
+                            <p class="text-sm text-green-700 mt-1">
+                                Store all user-facing notification messages in translation files rather than hardcoding them. This makes it much easier to update wording or add new languages later.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Additional features highlight -->
                 <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mt-12">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">More Powerful Features</h3>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">Additional Features</h3>
 
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Feature 1 -->
-                        <div
-                            class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                             <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-puzzle-piece text-amber-600"></i>
                             </div>
                             <h4 class="font-semibold text-slate-800 mb-2">Multiple Themes</h4>
-                            <p class="text-slate-600 text-sm">Choose from 6+ themes including Toastr, SweetAlert, Notyf,
-                                Noty and more.</p>
-                            <a href="https://php-flasher.io/themes"
-                               class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
+                            <p class="text-slate-600 text-sm">Choose from 6+ themes including Toastr, SweetAlert, Notyf, Noty and more.</p>
+                            <a href="https://php-flasher.io/themes" class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
                                 View themes <i class="fa-solid fa-arrow-right ml-1"></i>
                             </a>
                         </div>
 
                         <!-- Feature 2 -->
-                        <div
-                            class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                             <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-code text-green-600"></i>
                             </div>
                             <h4 class="font-semibold text-slate-800 mb-2">Livewire Support</h4>
-                            <p class="text-slate-600 text-sm">Seamless integration with Livewire for dynamic
-                                notifications without page reload.</p>
-                            <a href="https://php-flasher.io/livewire"
-                               class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
+                            <p class="text-slate-600 text-sm">Seamless integration with Livewire for dynamic notifications without page reload.</p>
+                            <a href="https://php-flasher.io/livewire" class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
                                 Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
                             </a>
                         </div>
 
                         <!-- Feature 3 -->
-                        <div
-                            class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                             <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-bolt-lightning text-indigo-600"></i>
                             </div>
                             <h4 class="font-semibold text-slate-800 mb-2">AJAX Support</h4>
-                            <p class="text-slate-600 text-sm">Show notifications from AJAX responses automatically with
-                                JSON responses.</p>
-                            <a href="https://php-flasher.io/ajax"
-                               class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
+                            <p class="text-slate-600 text-sm">Show notifications from AJAX responses automatically with JSON responses.</p>
+                            <a href="https://php-flasher.io/ajax" class="text-indigo-600 text-xs font-medium mt-2 inline-flex items-center hover:text-indigo-800">
                                 Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
                             </a>
                         </div>
