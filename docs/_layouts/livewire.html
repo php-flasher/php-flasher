@@ -340,21 +340,21 @@ class ContactForm extends Component
             &lt;label for="name" class="block text-sm font-medium text-gray-700"&gt;Name&lt;/label&gt;
             &lt;input type="text" id="name" wire:model="name"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"&gt;
-            @error('name') &lt;span class="text-red-500 text-xs"&gt;{{ $message }}&lt;/span&gt; @enderror
+            @error('name') &lt;span class="text-red-500 text-xs"&gt;{% raw %}{{ $message }}{% endraw %}&lt;/span&gt; @enderror
         &lt;/div&gt;
 
         &lt;div&gt;
             &lt;label for="email" class="block text-sm font-medium text-gray-700"&gt;Email&lt;/label&gt;
             &lt;input type="email" id="email" wire:model="email"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"&gt;
-            @error('email') &lt;span class="text-red-500 text-xs"&gt;{{ $message }}&lt;/span&gt; @enderror
+            @error('email') &lt;span class="text-red-500 text-xs"&gt;{% raw %}{{ $message }}{% endraw %}&lt;/span&gt; @enderror
         &lt;/div&gt;
 
         &lt;div&gt;
             &lt;label for="message" class="block text-sm font-medium text-gray-700"&gt;Message&lt;/label&gt;
             &lt;textarea id="message" wire:model="message" rows="4"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"&gt;&lt;/textarea&gt;
-            @error('message') &lt;span class="text-red-500 text-xs"&gt;{{ $message }}&lt;/span&gt; @enderror
+            @error('message') &lt;span class="text-red-500 text-xs"&gt;{% raw %}{{ $message }}{% endraw %}&lt;/span&gt; @enderror
         &lt;/div&gt;
 
         &lt;div&gt;
@@ -684,7 +684,7 @@ class TasksComponent extends Component
                         <div class="text-white opacity-80 text-xs font-medium">nav-link.blade.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;a href="{{ route('dashboard') }}" wire:navigate&gt;Dashboard&lt;/a&gt;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;a href="{% raw %}{{ route('dashboard') }}{% endraw %}" wire:navigate&gt;Dashboard&lt;/a&gt;
 
 &lt;!-- In your component --&gt;
 &lt;script&gt;
@@ -827,7 +827,7 @@ class PublishArticle extends Component
 <pre class="bg-slate-50 rounded-lg p-3 text-xs overflow-x-auto"><code class="language-php">@if (session('status'))
     &lt;script&gt;
         document.addEventListener('livewire:initialized', () => {
-            flasher.success('{{ session('status') }}');
+            flasher.success('{% raw %}{{ session('status') }}{% endraw %}');
         });
     &lt;/script&gt;
 @endif</code></pre>

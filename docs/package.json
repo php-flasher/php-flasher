@@ -20,10 +20,10 @@
         "@flasher/flasher-toastr": "file:../src/Toastr/Prime/Resources",
         "@hotwired/stimulus": "^3.2.2",
         "@symfony/stimulus-bridge": "^3.2.3",
-        "@symfony/webpack-encore": "^5.0.1",
+        "@symfony/webpack-encore": "^5.1.0",
         "noty": "^3.2.0-beta-deprecated",
         "notyf": "^3.10.0",
-        "prismjs": "^1.29.0",
+        "prismjs": "^1.30.0",
         "sweetalert2": "^11.6.13",
         "toastr": "^2.1.4"
     },
