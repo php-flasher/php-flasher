@@ -146,6 +146,7 @@
                                             <option value="10000">10 seconds</option>
                                             <option value="5000">5 seconds</option>
                                             <option value="3000">3 seconds</option>
+                                            <option value="false">Sticky</option>
                                         </select>
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
                                             <i class="fas fa-chevron-down text-xs"></i>
@@ -1038,7 +1039,7 @@ async function checkStatus() {
         document.getElementById("title-input").value = state.title || "";
         document.getElementById("message-input").value = state.message || "";
         document.getElementById("position-select").value = state.position || "";
-        document.getElementById("timeout-select").value = state.timeout || "";
+        document.getElementById("timeout-select").value = state.timeout === false ? "false" : (state.timeout || "");
         document.getElementById("theme-select").value = state.theme || "";
         document.getElementById("direction-select").value = state.direction || "";
         document.getElementById("rtl-check").checked = !!state.rtl;
@@ -1116,8 +1117,8 @@ async function checkStatus() {
             if (state.position) {
                 options.position = state.position;
             }
-            if (state.timeout) {
-                options.timeout = parseInt(state.timeout);
+            if (state.timeout !== undefined && state.timeout !== "") {
+                options.timeout = state.timeout;
             }
             if (state.theme) {
                 options.theme = state.theme;
@@ -1153,8 +1154,9 @@ async function checkStatus() {
             if (state.position) {
                 lines.push(`${indent}    ->option('position', '${state.position}')`);
             }
-            if (state.timeout) {
-                lines.push(`${indent}    ->option('timeout', ${state.timeout})`);
+            if (state.timeout !== undefined && state.timeout !== "") {
+                const timeoutValue = state.timeout === false ? 'false' : state.timeout;
+                lines.push(`${indent}    ->option('timeout', ${timeoutValue})`);
             }
             if (state.direction) {
                 lines.push(`${indent}    ->option('direction', '${state.direction}')`);
@@ -1311,8 +1313,8 @@ async function checkStatus() {
         if (state.position) {
             options.position = state.position;
         }
-        if (state.timeout) {
-            options.timeout = parseInt(state.timeout);
+        if (state.timeout !== undefined && state.timeout !== "") {
+            options.timeout = state.timeout;
         }
         if (state.direction) {
             options.direction = state.direction;
@@ -1323,6 +1325,8 @@ async function checkStatus() {
         if (state.escapeHtml !== undefined) {
             options.escapeHtml = state.escapeHtml;
         }
+
+        console.log("Showing notification with options:", options);
 
         try {
             if (typeof flasher !== "undefined") {
@@ -1380,7 +1384,13 @@ async function checkStatus() {
             state.position = e.target.value;
         });
         document.getElementById("timeout-select").addEventListener("change", (e) => {
-            state.timeout = e.target.value ? parseInt(e.target.value) : "";
+            if (e.target.value === "false") {
+                state.timeout = false;
+            } else if (e.target.value) {
+                state.timeout = parseInt(e.target.value);
+            } else {
+                state.timeout = "";
+            }
         });
         document.getElementById("theme-select").addEventListener("change", (e) => {
             state.theme = e.target.value;

@@ -60,6 +60,7 @@ export default class FlasherPlugin extends AbstractPlugin {
      */
     private options: FlasherPluginOptions = {
         // Default or type-specific timeout (milliseconds, null = use type-specific)
+        // Use false for sticky notifications, or any negative number
         timeout: null,
 
         // Type-specific timeout durations
@@ -132,7 +133,7 @@ export default class FlasherPlugin extends AbstractPlugin {
                     const mergedOptions = {
                         ...this.options,
                         ...envelope.options,
-                        timeout: envelope.options.timeout ?? typeTimeout,
+                        timeout: this.normalizeTimeout(envelope.options.timeout ?? typeTimeout),
                         escapeHtml: (envelope.options.escapeHtml ?? this.options.escapeHtml) as boolean,
                     }
 
@@ -271,10 +272,45 @@ export default class FlasherPlugin extends AbstractPlugin {
             })
         }
 
-        // Add timer if timeout is specified
+        // Add timer if timeout is greater than 0 (not sticky)
         if (options.timeout > 0) {
             this.addTimer(notification, options)
+        } else {
+            // For sticky notifications, we might want to add a class
+            notification.classList.add('fl-sticky')
+
+            // For sticky notifications with progress bar, set it to full width
+            const progressBarContainer = notification.querySelector('.fl-progress-bar')
+            if (progressBarContainer) {
+                // Create progress bar element that stays at 100%
+                const progressBar = document.createElement('span')
+                progressBar.classList.add('fl-progress', 'fl-sticky-progress')
+                progressBar.style.width = '100%'
+                progressBarContainer.append(progressBar)
+            }
         }
+    }
+
+    /**
+     * Normalizes timeout value to handle different formats (number, boolean, null)
+     *
+     * @param timeout - The timeout value to normalize
+     * @returns A number representing milliseconds, or 0 for sticky notifications
+     * @private
+     */
+    private normalizeTimeout(timeout: any): number {
+        // Handle false or negative numbers as sticky notifications (0)
+        if (timeout === false || (typeof timeout === 'number' && timeout < 0)) {
+            return 0
+        }
+
+        // Handle null or undefined
+        if (timeout == null) {
+            return 0
+        }
+
+        // Convert to number (handles string numbers too)
+        return Number(timeout) || 0
     }
 
     /**

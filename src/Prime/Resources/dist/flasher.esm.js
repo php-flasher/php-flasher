@@ -153,7 +153,7 @@ class FlasherPlugin extends AbstractPlugin {
                 var _a, _b, _c, _d;
                 try {
                     const typeTimeout = (_b = (_a = this.options.timeout) !== null && _a !== void 0 ? _a : this.options.timeouts[envelope.type]) !== null && _b !== void 0 ? _b : 10000;
-                    const mergedOptions = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: (_c = envelope.options.timeout) !== null && _c !== void 0 ? _c : typeTimeout, escapeHtml: ((_d = envelope.options.escapeHtml) !== null && _d !== void 0 ? _d : this.options.escapeHtml) });
+                    const mergedOptions = Object.assign(Object.assign(Object.assign({}, this.options), envelope.options), { timeout: this.normalizeTimeout((_c = envelope.options.timeout) !== null && _c !== void 0 ? _c : typeTimeout), escapeHtml: ((_d = envelope.options.escapeHtml) !== null && _d !== void 0 ? _d : this.options.escapeHtml) });
                     const container = this.createContainer(mergedOptions);
                     const containerOptions = {
                         direction: mergedOptions.direction,
@@ -225,6 +225,25 @@ class FlasherPlugin extends AbstractPlugin {
         if (options.timeout > 0) {
             this.addTimer(notification, options);
         }
+        else {
+            notification.classList.add('fl-sticky');
+            const progressBarContainer = notification.querySelector('.fl-progress-bar');
+            if (progressBarContainer) {
+                const progressBar = document.createElement('span');
+                progressBar.classList.add('fl-progress', 'fl-sticky-progress');
+                progressBar.style.width = '100%';
+                progressBarContainer.append(progressBar);
+            }
+        }
+    }
+    normalizeTimeout(timeout) {
+        if (timeout === false || (typeof timeout === 'number' && timeout < 0)) {
+            return 0;
+        }
+        if (timeout == null) {
+            return 0;
+        }
+        return Number(timeout) || 0;
     }
     addTimer(notification, { timeout, fps }) {
         if (timeout <= 0) {

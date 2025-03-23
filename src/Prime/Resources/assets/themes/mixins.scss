@@ -78,8 +78,6 @@
  */
 @mixin rtl-support {
     &.fl-rtl {
-        direction: rtl;
-
         .fl-content {
             flex-direction: row-reverse;
         }

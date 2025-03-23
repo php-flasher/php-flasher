@@ -365,7 +365,7 @@ export type FlasherPluginOptions = {
      * Default timeout in milliseconds (0 for no timeout).
      * Set to null to use type-specific timeouts.
      */
-    timeout: number | null
+    timeout: number | boolean | null
 
     /** Type-specific timeouts in milliseconds */
     timeouts: Record<string, number>
