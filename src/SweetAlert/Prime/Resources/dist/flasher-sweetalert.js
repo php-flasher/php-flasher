@@ -74,17 +74,27 @@
           normalizedTitle = normalizedOptions.title;
           delete normalizedOptions.message;
           delete normalizedOptions.title;
-        } else if (typeof title === 'object') {
-          normalizedOptions = Object.assign({}, title);
-          normalizedType = type;
-          normalizedMessage = message;
-          normalizedTitle = normalizedOptions.title;
-          delete normalizedOptions.title;
         } else {
           normalizedType = type;
           normalizedMessage = message;
-          normalizedTitle = title;
-          normalizedOptions = options || {};
+          if (title === undefined || title === null) {
+            normalizedTitle = undefined;
+            normalizedOptions = options || {};
+          } else if (typeof title === 'string') {
+            normalizedTitle = title;
+            normalizedOptions = options || {};
+          } else if (typeof title === 'object') {
+            normalizedOptions = Object.assign({}, title);
+            if ('title' in normalizedOptions) {
+              normalizedTitle = normalizedOptions.title;
+              delete normalizedOptions.title;
+            } else {
+              normalizedTitle = undefined;
+            }
+            if (options && typeof options === 'object') {
+              normalizedOptions = Object.assign(Object.assign({}, normalizedOptions), options);
+            }
+          }
         }
         if (!normalizedType) {
           throw new Error('Type is required for notifications');
@@ -92,10 +102,13 @@
         if (normalizedMessage === undefined || normalizedMessage === null) {
           throw new Error('Message is required for notifications');
         }
+        if (normalizedTitle === undefined || normalizedTitle === null) {
+          normalizedTitle = normalizedType.charAt(0).toUpperCase() + normalizedType.slice(1);
+        }
         const envelope = {
           type: normalizedType,
           message: normalizedMessage,
-          title: normalizedTitle || normalizedType,
+          title: normalizedTitle,
           options: normalizedOptions,
           metadata: {
             plugin: ''
