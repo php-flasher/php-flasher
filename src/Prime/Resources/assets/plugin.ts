@@ -101,7 +101,7 @@ export abstract class AbstractPlugin implements PluginInterface {
      *
      * This method handles different parameter formats to provide a flexible API:
      * - flash(type, message, title, options)
-     * - flash(type, message, options) - title in options
+     * - flash(type, message, options) - title in options or just options
      * - flash(type, options) - message and title in options
      * - flash(options) - type, message, and title in options
      *
@@ -141,21 +141,37 @@ export abstract class AbstractPlugin implements PluginInterface {
             delete normalizedOptions.message
             delete normalizedOptions.title
         }
-        // Case: flash(type, message, {title, ...options})
-        else if (typeof title === 'object') {
-            normalizedOptions = { ...title }
-            normalizedType = type
-            normalizedMessage = message
-            normalizedTitle = normalizedOptions.title as string
-
-            delete normalizedOptions.title
-        }
-        // Case: flash(type, message, title, options)
+        // Case: flash(type, message, title|options, options?)
         else {
             normalizedType = type
-            normalizedMessage = message
-            normalizedTitle = title
-            normalizedOptions = options || {}
+            normalizedMessage = message as string
+
+            // Determine if the third parameter is a title string or options object
+            if (title === undefined || title === null) {
+                // No third parameter
+                normalizedTitle = undefined
+                normalizedOptions = options || {}
+            } else if (typeof title === 'string') {
+                // Third parameter is a title string
+                normalizedTitle = title
+                normalizedOptions = options || {}
+            } else if (typeof title === 'object') {
+                // Third parameter is an options object
+                normalizedOptions = { ...title }
+
+                // If options has a title property, use it and remove from options
+                if ('title' in normalizedOptions) {
+                    normalizedTitle = normalizedOptions.title as string
+                    delete normalizedOptions.title
+                } else {
+                    normalizedTitle = undefined
+                }
+
+                // Merge with any options provided in the fourth parameter
+                if (options && typeof options === 'object') {
+                    normalizedOptions = { ...normalizedOptions, ...options }
+                }
+            }
         }
 
         // Validate required parameters
@@ -167,11 +183,16 @@ export abstract class AbstractPlugin implements PluginInterface {
             throw new Error('Message is required for notifications')
         }
 
+        // Set title to type if not provided
+        if (normalizedTitle === undefined || normalizedTitle === null) {
+            normalizedTitle = normalizedType.charAt(0).toUpperCase() + normalizedType.slice(1)
+        }
+
         // Create standardized envelope
         const envelope: Envelope = {
             type: normalizedType,
             message: normalizedMessage,
-            title: normalizedTitle || normalizedType,
+            title: normalizedTitle,
             options: normalizedOptions,
             metadata: {
                 plugin: '',

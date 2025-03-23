@@ -49,6 +49,7 @@
                             Add elegant notifications to your Laravel or Symfony applications with just <span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded">one line of code</span>. Perfect for developers of all skill levels.
                         </p>
 
+                        <!--
                         <div class="flex flex-wrap gap-3 justify-center mb-8">
                             <a href="#quick-start" class="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex items-center">
                                 <i class="fa-solid fa-rocket mr-2"></i> Get Started
@@ -57,6 +58,7 @@
                                 <i class="fa-brands fa-github mr-2"></i> View on GitHub
                             </a>
                         </div>
+                        -->
 
                         <div class="flex flex-wrap justify-center gap-3">
                             <a href="https://www.linkedin.com/in/younes--ennaji/" class="text-slate-500 hover:text-indigo-700 transition-colors duration-200">
@@ -454,7 +456,7 @@
                 </div>
 
                 <div class="text-center mt-10">
-                    <a href="/libraries/" class="inline-flex items-center px-6 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg font-medium transition-colors duration-200 shadow-sm">
+                    <a href="/library/toastr/" class="inline-flex items-center px-6 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg font-medium transition-colors duration-200 shadow-sm">
                         <i class="fa-solid fa-th-large mr-2"></i> Compare all libraries
                     </a>
                 </div>
@@ -482,9 +484,9 @@
                         <div>
                             <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
 
-class ProfileController extends Controller
+class ProfileController
 {
-    public function update(Request $request)
+    public function update()
     {
         // Update user profile logic
 
@@ -493,6 +495,12 @@ class ProfileController extends Controller
 
         // Or add a title
         flash()->success('Your changes have been saved.', 'Profile Updated');
+
+        // Or add a title and options
+        flash()
+             ->option('timeout', 5000)
+             ->option('position', 'top-right')
+             ->success('Changes saved with custom settings');
 
         // Change notification options
         flash()->options([
@@ -657,7 +665,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                         </a>
 
                         <!-- Documentation -->
-                        <a href="/docs/" class="group bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-100 p-8 flex flex-col items-center text-center transform hover:-translate-y-1">
+                        <a href="/laravel" class="group bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-100 p-8 flex flex-col items-center text-center transform hover:-translate-y-1">
                             <div class="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 group-hover:bg-amber-100 transition-colors">
                                 <i class="fa-solid fa-book-open text-amber-600 text-3xl"></i>
                             </div>
