@@ -39,7 +39,7 @@ export type Asset = {
     type: AssetType;
 };
 export type FlasherPluginOptions = {
-    timeout: number | null;
+    timeout: number | boolean | null;
     timeouts: Record<string, number>;
     fps: number;
     position: string;

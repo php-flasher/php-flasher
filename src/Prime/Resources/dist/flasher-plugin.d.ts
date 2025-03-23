@@ -9,6 +9,7 @@ export default class FlasherPlugin extends AbstractPlugin {
     renderOptions(options: Options): void;
     private createContainer;
     private addToContainer;
+    private normalizeTimeout;
     private addTimer;
     private removeNotification;
     private stringToHTML;
