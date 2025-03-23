@@ -200,7 +200,7 @@ export abstract class AbstractPlugin implements PluginInterface {
         }
 
         // Apply options and render the envelope
-        this.renderOptions(normalizedOptions)
+        this.renderOptions({})
         this.renderEnvelopes([envelope])
     }
 }

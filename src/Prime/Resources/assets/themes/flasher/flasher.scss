@@ -22,6 +22,17 @@
     }
 }
 
+/* RTL animation */
+@keyframes flasherInRtl {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
 /**
  * Base theme styling
@@ -48,6 +59,11 @@
         transform: translateY(-2px);
     }
 
+    /* RTL animation */
+    &.fl-rtl {
+        animation: flasherInRtl 0.3s ease-out;
+    }
+
     /* Border radius handling for RTL and LTR */
     &.fl-rtl {
         border-radius: 0 0.375em 0.375em 0;
@@ -63,6 +79,11 @@
         align-items: center;
     }
 
+    /* RTL content ordering */
+    &.fl-rtl .fl-content {
+        flex-direction: row-reverse;
+    }
+
     /* Icon sizing */
     .fl-icon {
         font-size: 2.5em;
@@ -75,6 +96,13 @@
         margin-left: 1em;
         margin-right: 1em;
         line-height: 1.25em;
+    }
+
+    /* RTL text margin adjustments */
+    &.fl-rtl .fl-title,
+    &.fl-rtl .fl-message {
+        margin-left: 1em;
+        margin-right: 1em;
     }
 
     .fl-title {

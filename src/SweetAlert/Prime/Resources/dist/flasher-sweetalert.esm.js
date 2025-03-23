@@ -111,7 +111,7 @@ class AbstractPlugin {
         plugin: ''
       }
     };
-    this.renderOptions(normalizedOptions);
+    this.renderOptions({});
     this.renderEnvelopes([envelope]);
   }
 }
