@@ -739,7 +739,7 @@ class FlashController extends Controller
     public function getFlashMessages()
     {
         // Get all flash messages as an array
-        $messages = flash()->render([], 'array');
+        $messages = flash()->render('array');
 
         return response()->json($messages);
     }

@@ -1,5 +1,8 @@
 ---
-layout: default
+permalink: /livewire/
+title: Livewire
+description: Learn how to add flash notifications to your Livewire application using PHPFlasher. This guide walks you through installation and usage, so you can engage your users with informative messages.
+adapter: flasher
 ---
 
 <div class="max-w-7xl mx-auto">
@@ -471,9 +474,9 @@ class UserComponent extends Component
     public function render()
     {
         return <<<'HTML'
-            <div>
-                <button wire:click="deleteUser">Delete User</button>
-            </div>
+            &lt;div&gt;
+                &lt;button wire:click="deleteUser"&gt;Delete User&lt;/button&gt;
+            &lt;/div&gt;
         HTML;
     }
 
@@ -509,7 +512,7 @@ class UserComponent extends Component
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-                                                        <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
                         <div class="text-white opacity-80 text-xs font-medium">PayloadStructure.php</div>
                     </div>
@@ -736,12 +739,11 @@ class PublishArticle extends Component
     {
         sweetalert()
             ->option('title', 'Publish article?')
-            ->option('text', 'This will make the article visible to all users')
             ->option('icon', 'question')
             ->option('showCancelButton', true)
             ->option('confirmButtonText', 'Yes, publish it!')
             ->option('cancelButtonText', 'Not yet')
-            ->fire();
+            ->question('Are you sure you want to publish this article?');
     }
 
     #[On('sweetalert:confirmed')]
@@ -757,12 +759,11 @@ class PublishArticle extends Component
         // Second notification (after a delay)
         sweetalert()
             ->timer(3000)
-            ->option('title', 'Would you like to share it?')
             ->option('showCancelButton', true)
             ->option('confirmButtonText', 'Yes, share it!')
             ->option('cancelButtonText', 'No thanks')
             ->option('actionType', 'share') // Custom option to identify action
-            ->fire();
+            ->question('Do you want to share this article?');
     }
 
     #[On('sweetalert:confirmed')]
@@ -800,8 +801,8 @@ class PublishArticle extends Component
                 </p>
 
                 <!-- Alpine.js integration -->
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm">
+                <div class="mb-6">
+                    <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm mb-4">
                         <div class="flex items-center mb-3">
                             <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
                                 <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">

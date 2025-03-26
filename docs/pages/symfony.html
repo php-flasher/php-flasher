@@ -737,7 +737,7 @@ document.getElementById('saveForm').addEventListener('submit', function(e) {
 public function getFlashMessages(): JsonResponse
 {
     // Get all flash messages as an array
-    $messages = flash()->render([], 'array');
+    $messages = flash()->render('array');
 
     return $this->json($messages);
 }</code></pre>

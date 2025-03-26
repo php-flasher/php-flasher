@@ -2,5 +2,1707 @@
 permalink: /inertia/
 title: Inertia
 description: Discover how to integrate flash notifications into your Inertia.js application with PHPFlasher. Follow this guide to set up the library and enhance your user interface with dynamic messages.
-layout: inertia
 ---
+
+<div class="max-w-7xl mx-auto">
+    <!-- Main Content with Styled Sections -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <!-- Table of contents - Desktop -->
+        <div class="w-full bg-white border-b border-slate-100 shadow-sm">
+            <div class="px-6 py-4 flex items-center gap-4 overflow-x-auto no-scrollbar">
+                <a href="#installation" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-download mr-1.5 text-emerald-500"></i> Installation
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#usage" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-code mr-1.5 text-emerald-500"></i> Usage
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#examples" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-book mr-1.5 text-emerald-500"></i> Examples
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#frontend" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-code-branch mr-1.5 text-emerald-500"></i> Frontend
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="#advanced" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-gear mr-1.5 text-emerald-500"></i> Advanced
+                </a>
+            </div>
+        </div>
+
+        <!-- Content area with custom styling -->
+        <div class="prose prose-slate max-w-none p-6 md:p-8">
+            <!-- Introduction Section -->
+            <div id="introduction" class="scroll-mt-20">
+                <p class="mb-4">
+                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
+                    works seamlessly with <span class="text-emerald-600 font-semibold">Inertia.js</span>, providing a smooth way to display flash notifications in your single-page applications.
+                </p>
+
+                <!-- Version requirements -->
+                <div class="mb-5">
+                    <!-- Requirements Cards Container -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- PHP Card -->
+                        <div class="group relative bg-white rounded-lg border border-indigo-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <!-- Subtle accent line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600"></div>
+
+                            <div class="p-3">
+                                <div class="flex items-center">
+                                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
+                                        <i class="fa-brands fa-php text-white text-lg"></i>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <div class="text-xs uppercase tracking-wider text-indigo-500 font-semibold">Required</div>
+                                        <h4 class="font-bold text-slate-800">PHP Version</h4>
+                                        <div class="inline-block px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">
+                                            v8.2 or higher
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Laravel Card -->
+                        <div class="group relative bg-white rounded-lg border border-red-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <!-- Subtle accent line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-red-600 to-red-700"></div>
+
+                            <div class="p-3">
+                                <div class="flex items-center">
+                                    <div class="bg-gradient-to-br from-red-600 to-red-700 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
+                                        <i class="fa-brands fa-laravel text-white text-lg"></i>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <div class="text-xs uppercase tracking-wider text-red-500 font-semibold">Required</div>
+                                        <h4 class="font-bold text-slate-800">Laravel Version</h4>
+                                        <div class="inline-block px-2 py-0.5 bg-red-50 text-red-700 text-xs font-medium rounded-full">
+                                            v11.0 or higher
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inertia Card -->
+                        <div class="group relative bg-white rounded-lg border border-emerald-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <!-- Subtle accent line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-500 to-emerald-600"></div>
+
+                            <div class="p-3">
+                                <div class="flex items-center">
+                                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
+                                        <i class="fa-solid fa-code text-white text-lg"></i>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <div class="text-xs uppercase tracking-wider text-emerald-500 font-semibold">Required</div>
+                                        <h4 class="font-bold text-slate-800">Inertia.js</h4>
+                                        <div class="inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full">
+                                            v1.0 or higher
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legacy version note -->
+                    <div class="bg-amber-50 border-l-4 border-amber-300 rounded-r-lg p-3 mt-3">
+                        <div class="flex">
+                            <div class="flex-shrink-0 flex items-center justify-center">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-sm font-medium text-amber-800">Using older versions?</h4>
+                                <p class="text-xs text-amber-700">
+                                    If you need to use PHP &lt; v8.2, Laravel &lt; v11.0, or an older Inertia.js version, use
+                                    <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v1</strong> instead.
+                                    <a href="https://php-flasher.github.io/" class="text-amber-800 underline hover:text-amber-900">
+                                        Check out the v1 documentation here
+                                    </a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installation Section -->
+            <div id="installation" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-download"></i>
+                    </span>
+                    Installation
+                </h2>
+                <p class="mb-4">
+                    To use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Inertia.js,
+                    you'll need to install both the PHP package and JavaScript package.
+                </p>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">1. Install the PHP Package</h3>
+
+                <!-- Terminal code block -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-4">
+                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex space-x-1 mr-4">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-slate-400 text-sm">Terminal</span>
+                        </div>
+                        <div class="text-slate-400 text-sm">PHP Installation</div>
+                    </div>
+
+                    <div class="p-6 bg-slate-900">
+                        <div class="flex flex-col gap-4">
+                            <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-laravel</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">2. Add JavaScript Package</h3>
+                <p class="mb-4">Add <code class="bg-slate-100 px-2 py-1 rounded text-emerald-600">@flasher/flasher</code> to your <code class="bg-slate-100 px-2 py-1 rounded text-emerald-600">package.json</code>:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-4">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">package.json</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-json">{
+    "dependencies": {
+        "@flasher/flasher": "file:vendor/php-flasher/flasher/Resources"
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <p class="mb-4">Then, install the JavaScript dependencies:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex space-x-1 mr-4">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-slate-400 text-sm">Terminal</span>
+                        </div>
+                        <div class="text-slate-400 text-sm">JS Installation</div>
+                    </div>
+
+                    <div class="p-6 bg-slate-900">
+                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">npm install --force</code></pre>
+                    </div>
+                </div>
+
+                <!-- Integration callout -->
+                <div class="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-emerald-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-emerald-800">Why the --force flag?</h4>
+                            <p class="text-sm text-emerald-700 mt-1">
+                                The <code class="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-600">--force</code> flag is required because we're installing a local package from the filesystem
+                                rather than from npm. This is the recommended approach for PHPFlasher to ensure version compatibility.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Section -->
+            <div id="usage" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-code"></i>
+                    </span>
+                    Usage
+                </h2>
+
+                <p class="mb-4">
+                    To use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
+                    with Inertia.js, you need to:
+                </p>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">1. Modify Your Middleware</h3>
+                <p class="mb-4">Update your <code class="bg-slate-100 px-2 py-1 rounded text-emerald-600">HandleInertiaRequests</code> middleware to share flash notifications:</p>
+
+                <!-- PHP Example with full file structure -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Middleware/HandleInertiaRequests.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Http\Request;
+use Inertia\Middleware;
+
+class HandleInertiaRequests extends Middleware
+{
+    /**
+     * Defines the props that are shared by default.
+     *
+     * @see https://inertiajs.com/shared-data
+     */
+    public function share(Request $request): array
+    {
+        return array_merge(parent::share($request), [
+            // Add flash messages to Inertia shared data
+            'messages' => flash()->render('array'),
+
+            // You can include other shared data here
+            'auth' => [
+                'user' => $request->user(),
+            ],
+        ]);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Pro tip box -->
+                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-5 mb-6 border border-emerald-100">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-medium text-emerald-800">Pro Tip: Multiple Ways to Share Flash Messages</h4>
+                            <p class="text-sm text-emerald-700 mt-1">
+                                The <code class="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-600">render('array')</code> method
+                                converts flash messages to a format compatible with JavaScript. You can also use <code class="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-600">render('json')</code> and
+                                parse it in your frontend code.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">2. Set Up Your Frontend</h3>
+                <p class="mb-4">Add the code to render notifications in your layout component (example shown with Vue.js):</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">resources/js/Shared/Layout.vue</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script&gt;
+import flasher from "@flasher/flasher";
+
+export default {
+  props: {
+    messages: Object,
+  },
+  watch: {
+    messages(value) {
+      if (value) {
+        flasher.render(value);
+      }
+    }
+  },
+  mounted() {
+    // Display messages on initial load
+    if (this.messages) {
+      flasher.render(this.messages);
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;header class="bg-white shadow"&gt;
+      &lt;div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8"&gt;
+        &lt;!-- Your navigation --&gt;
+        &lt;h1 class="text-xl font-bold text-gray-900"&gt;My App&lt;/h1&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+      &lt;div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8"&gt;
+        &lt;slot /&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+
+    &lt;footer class="bg-white border-t border-gray-200 mt-auto"&gt;
+      &lt;div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8"&gt;
+        &lt;p class="text-center text-gray-500 text-sm"&gt;
+          &amp;copy; 2025 My Application
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">3. Creating Flash Messages</h3>
+                <p class="mb-4">Now you can create flash notifications in your controllers:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/UsersController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+
+class UsersController extends Controller
+{
+    /**
+     * Display a listing of users.
+     */
+    public function index()
+    {
+        return Inertia::render('Users/Index', [
+            'users' => User::all()
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new user.
+     */
+    public function create()
+    {
+        return Inertia::render('Users/Create');
+    }
+
+    /**
+     * Store a newly created user in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        // Add a success notification
+        flash()->success('User created successfully!');
+
+        // Redirect back, and Inertia will handle passing the flash message
+        return Redirect::route('users.index');
+    }
+
+    /**
+     * Display the specified user.
+     */
+    public function show(User $user)
+    {
+        return Inertia::render('Users/Show', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified user.
+     */
+    public function edit(User $user)
+    {
+        return Inertia::render('Users/Edit', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * Update the specified user in storage.
+     */
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update($validated);
+
+        flash()->success('User updated successfully!');
+
+        return Redirect::route('users.index');
+    }
+
+    /**
+     * Remove the specified user from storage.
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        flash()->info('User has been deleted.');
+
+        return Redirect::route('users.index');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Notification types showcase -->
+                <div class="my-6">
+                    <div class="bg-white rounded-lg p-4 border border-slate-200 shadow-sm mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                            </div>
+                            <h3 class="font-medium text-slate-800">Success Message</h3>
+                        </div>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php">flash()->success('Item created successfully!')</code></pre>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-4 border border-slate-200 shadow-sm mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-circle-xmark text-red-500"></i>
+                            </div>
+                            <h3 class="font-medium text-slate-800">Error Message</h3>
+                        </div>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php">flash()->error('An error occurred!')</code></pre>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-4 border border-slate-200 shadow-sm mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i>
+                            </div>
+                            <h3 class="font-medium text-slate-800">Warning Message</h3>
+                        </div>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php">flash()->warning('Please review your submission.')</code></pre>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-circle-info text-blue-500"></i>
+                            </div>
+                            <h3 class="font-medium text-slate-800">Info Message</h3>
+                        </div>
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php">flash()->info('Your session expires in 10 minutes.')</code></pre>
+                    </div>
+                </div>
+
+                <!-- Expert tips -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
+                                        <div class="flex items-start">
+                        <div class="flex-shrink-0 p-2 bg-emerald-100 rounded-full">
+                            <i class="fa-solid fa-lightbulb text-emerald-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-slate-800">Expert Tips for Inertia.js Integration</h4>
+                            <ul class="mt-2 space-y-2 text-slate-600">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <span><strong>Keep It Consistent:</strong> Use the same notification types for similar actions throughout your application for a predictable user experience.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <span><strong>Form Validation:</strong> Use flash notifications for general form status, but rely on Inertia's built-in error handling for field-specific validation errors.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <span><strong>Watch for Changes:</strong> Always use the <code class="bg-slate-100 px-1.5 py-0.5 rounded text-emerald-600">watch</code> property to detect new notifications after navigation or form submissions.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <span><strong>Package Bundling:</strong> When using Vite or Webpack, ensure @flasher/flasher is properly included in your bundle.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div id="examples" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-book"></i>
+                    </span>
+                    Examples
+                </h2>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">CRUD Operations</h3>
+                <p class="mb-4">Here's a complete example of CRUD operations with flash messages:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/ProductController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+
+class ProductController extends Controller
+{
+    /**
+     * Display a listing of products.
+     */
+    public function index()
+    {
+        return Inertia::render('Products/Index', [
+            'products' => Product::all()
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new product.
+     */
+    public function create()
+    {
+        return Inertia::render('Products/Create');
+    }
+
+    /**
+     * Store a newly created product in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable|string|max:1000',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        Product::create($validated);
+
+        flash()->success('Product created successfully!');
+
+        return Redirect::route('products.index');
+    }
+
+    /**
+     * Display the specified product.
+     */
+    public function show(Product $product)
+    {
+        return Inertia::render('Products/Show', [
+            'product' => $product->load('category')
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified product.
+     */
+    public function edit(Product $product)
+    {
+        return Inertia::render('Products/Edit', [
+            'product' => $product,
+            'categories' => \App\Models\Category::all()
+        ]);
+    }
+
+    /**
+     * Update the specified product in storage.
+     */
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable|string|max:1000',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $product->update($validated);
+
+        flash()->success('Product updated successfully!');
+
+        return Redirect::route('products.index');
+    }
+
+    /**
+     * Remove the specified product from storage.
+     */
+    public function destroy(Product $product)
+    {
+        try {
+            $product->delete();
+            flash()->info('Product has been deleted.');
+        } catch (\Exception $e) {
+            flash()->error('Cannot delete this product. It may be in use.');
+        }
+
+        return Redirect::route('products.index');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Best practice box -->
+                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-green-800">Best Practice: Error Handling</h4>
+                            <p class="text-sm text-green-700 mt-1">
+                                Always wrap database operations in try-catch blocks and provide user-friendly error messages.
+                                This helps users understand what went wrong and what actions they can take to resolve issues.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Authentication Flow</h3>
+                <p class="mb-4">Here's an example of using flash notifications in an authentication flow:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/Auth/AuthController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+
+class AuthController extends Controller
+{
+    /**
+     * Show the login form
+     */
+    public function showLogin()
+    {
+        return Inertia::render('Auth/Login');
+    }
+
+    /**
+     * Handle user login request
+     */
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+
+            flash()->success('Welcome back, ' . Auth::user()->name . '!');
+
+            return Redirect::intended(route('dashboard'));
+        }
+
+        throw ValidationException::withMessages([
+            'email' => __('auth.failed'),
+        ]);
+    }
+
+    /**
+     * Show registration form
+     */
+    public function showRegistration()
+    {
+        return Inertia::render('Auth/Register');
+    }
+
+    /**
+     * Handle user registration
+     */
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        Auth::login($user);
+
+        flash()->success('Welcome to our application! Your account has been created.');
+
+        return Redirect::route('dashboard');
+    }
+
+    /**
+     * Log the user out
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        flash()->info('You have been logged out successfully.');
+
+        return Redirect::route('login');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Form Validation</h3>
+                <p class="mb-4">Combine PHPFlasher with Inertia's validation error handling:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/FormController.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+
+class FormController extends Controller
+{
+    /**
+     * Show the contact form
+     */
+    public function showContactForm()
+    {
+        return Inertia::render('Contact/Form');
+    }
+
+    /**
+     * Handle the contact form submission
+     */
+    public function submitContactForm(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'message' => 'required|string|min:10|max:1000',
+            ]);
+
+            // Process the form data
+            // e.g., send an email, save to database, etc.
+
+            // Show success notification
+            flash()->success(
+                'Thank you for contacting us! We will get back to you soon.',
+                'Message Sent'
+            );
+
+            return Redirect::route('contact.thankyou');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // With Inertia, validation errors are automatically passed back
+            // Add a generic error message as well
+            flash()->error('Please fix the errors in your form.', 'Form Validation Error');
+
+            // With Inertia, this will redirect back with errors
+            throw $e;
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            flash()->error(
+                'Sorry, we could not process your request. Please try again later.',
+                'System Error'
+            );
+
+            return Redirect::back();
+        }
+    }
+
+    /**
+     * Show thank you page
+     */
+    public function showThankYou()
+    {
+        return Inertia::render('Contact/ThankYou');
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Vue.js form example -->
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Corresponding Vue Form Component</h3>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Contact/Form.vue</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script setup&gt;
+import { useForm } from '@inertiajs/vue3'
+import Layout from '@/Layouts/MainLayout.vue'
+
+const form = useForm({
+  name: '',
+  email: '',
+  message: ''
+})
+
+const submit = () => {
+  form.post(route('contact.submit'))
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;Layout&gt;
+    &lt;div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8"&gt;
+      &lt;h1 class="text-2xl font-semibold text-gray-900 mb-6"&gt;Contact Us&lt;/h1&gt;
+
+      &lt;form @submit.prevent="submit" class="space-y-6"&gt;
+        &lt;div&gt;
+          &lt;label for="name" class="block text-sm font-medium text-gray-700"&gt;Name&lt;/label&gt;
+          &lt;input
+            id="name"
+            v-model="form.name"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+          /&gt;
+          &lt;div v-if="form.errors.name" class="text-red-500 text-sm mt-1"&gt;{{ form.errors.name }}&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;label for="email" class="block text-sm font-medium text-gray-700"&gt;Email&lt;/label&gt;
+          &lt;input
+            id="email"
+            v-model="form.email"
+            type="email"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+          /&gt;
+          &lt;div v-if="form.errors.email" class="text-red-500 text-sm mt-1"&gt;{{ form.errors.email }}&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;label for="message" class="block text-sm font-medium text-gray-700"&gt;Message&lt;/label&gt;
+          &lt;textarea
+            id="message"
+            v-model="form.message"
+            rows="4"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+          &gt;&lt;/textarea&gt;
+          &lt;div v-if="form.errors.message" class="text-red-500 text-sm mt-1"&gt;{{ form.errors.message }}&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class="flex justify-end"&gt;
+          &lt;button
+            type="submit"
+            :disabled="form.processing"
+            class="inline-flex items-center px-4 py-2 bg-emerald-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-emerald-700 active:bg-emerald-800 focus:outline-none focus:border-emerald-800 focus:ring focus:ring-emerald-300 disabled:opacity-25 transition"
+          &gt;
+            &lt;span v-if="form.processing"&gt;Processing...&lt;/span&gt;
+            &lt;span v-else&gt;Submit&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/Layout&gt;
+&lt;/template&gt;</code></pre>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-lg p-5 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-emerald-500"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-emerald-800">Tip: Handling Both Generic and Field-Specific Errors</h4>
+                            <p class="text-sm text-emerald-700 mt-1">
+                                As shown in the example above, it's often helpful to use PHPFlasher for global form status messages
+                                while using Inertia's built-in error handling for field-specific validation errors.
+                                This gives users both context-specific and general feedback.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frontend Framework Section with Tabs -->
+            <div id="frontend" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-code-branch"></i>
+                    </span>
+                    Frontend Framework Integration
+                </h2>
+
+                <p class="mb-4">
+                    Inertia.js works with multiple frontend frameworks. Here's how to integrate PHPFlasher with each:
+                </p>
+
+                <!-- Framework tabs -->
+                <div class="mb-6">
+                    <div class="border-b border-gray-200">
+                        <nav class="flex -mb-px">
+                            <button
+                                id="vueTab"
+                                onclick="switchTab('vue')"
+                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                            >
+                                <i class="fa-brands fa-vuejs mr-1.5 text-emerald-500"></i>
+                                Vue.js
+                            </button>
+                            <button
+                                id="reactTab"
+                                onclick="switchTab('react')"
+                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                            >
+                                <i class="fa-brands fa-react mr-1.5 text-emerald-500"></i>
+                                React
+                            </button>
+                            <button
+                                id="svelteTab"
+                                onclick="switchTab('svelte')"
+                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                            >
+                                <i class="fa-solid fa-code mr-1.5 text-emerald-500"></i>
+                                Svelte
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Vue.js content -->
+                    <div id="vueContent" class="mt-4">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-3">Vue.js Integration</h3>
+
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                <div class="flex space-x-1.5 mr-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Layouts/AppLayout.vue</div>
+                            </div>
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script setup&gt;
+import { computed, watch } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+import flasher from '@flasher/flasher'
+
+// Access shared data from Inertia
+const page = usePage()
+const messages = computed(() => page.props.messages)
+
+// Watch for changes in flash messages
+watch(
+  messages,
+  (newMessages) => {
+    if (newMessages) {
+      flasher.render(newMessages)
+    }
+  },
+  { immediate: true }
+)
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div class="min-h-screen bg-gray-100"&gt;
+    &lt;nav class="bg-white border-b border-gray-100"&gt;
+      &lt;!-- Navigation content --&gt;
+    &lt;/nav&gt;
+
+    &lt;!-- Page Content --&gt;
+    &lt;main&gt;
+      &lt;slot /&gt;
+    &lt;/main&gt;
+
+    &lt;footer class="bg-white border-t border-gray-100 mt-auto"&gt;
+      &lt;!-- Footer content --&gt;
+    &lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+                            </div>
+                        </div>
+
+                        <p class="mb-4">Using flash messages in a Vue component:</p>
+
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                <div class="flex space-x-1.5 mr-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Dashboard.vue</div>
+                            </div>
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script setup&gt;
+import { useForm } from '@inertiajs/vue3'
+import AppLayout from '@/Layouts/AppLayout.vue'
+import flasher from '@flasher/flasher'
+
+const form = useForm({
+  title: '',
+  content: ''
+})
+
+const submit = () => {
+  form.post(route('posts.store'), {
+    onSuccess: () => {
+      // You can also trigger notifications directly from the frontend
+      flasher.success('Post created from the frontend!')
+
+      // Reset the form
+      form.reset()
+    }
+  })
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;AppLayout&gt;
+    &lt;div class="py-12"&gt;
+      &lt;div class="max-w-7xl mx-auto sm:px-6 lg:px-8"&gt;
+        &lt;div class="bg-white overflow-hidden shadow-sm sm:rounded-lg"&gt;
+          &lt;div class="p-6 bg-white border-b border-gray-200"&gt;
+            &lt;form @submit.prevent="submit"&gt;
+              &lt;!-- Form fields --&gt;
+              &lt;button type="submit" :disabled="form.processing"&gt;Create Post&lt;/button&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/AppLayout&gt;
+&lt;/template&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- React content -->
+                    <div id="reactContent" class="mt-4 hidden">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-3">React Integration</h3>
+
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                <div class="flex space-x-1.5 mr-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Layouts/AppLayout.jsx</div>
+                            </div>
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-jsx">import { useEffect } from 'react'
+import { usePage } from '@inertiajs/react'
+import flasher from '@flasher/flasher'
+
+export default function AppLayout({ children }) {
+  const { messages } = usePage().props
+
+  // Render flash messages whenever they change
+  useEffect(() => {
+    if (messages) {
+      flasher.render(messages)
+    }
+  }, [messages])
+
+  return (
+    &lt;div className="min-h-screen bg-gray-100"&gt;
+      &lt;nav className="bg-white border-b border-gray-100"&gt;
+        {/* Navigation content */}
+      &lt;/nav&gt;
+
+      {/* Page Content */}
+      &lt;main&gt;{children}&lt;/main&gt;
+
+      &lt;footer className="bg-white border-t border-gray-100 mt-auto"&gt;
+        {/* Footer content */}
+      &lt;/footer&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <p class="mb-4">Using flash messages in a React component:</p>
+
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                <div class="flex space-x-1.5 mr-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                                                        <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Dashboard.jsx</div>
+                            </div>
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-jsx">import { useState } from 'react'
+import { useForm } from '@inertiajs/react'
+import AppLayout from '@/Layouts/AppLayout'
+import flasher from '@flasher/flasher'
+
+export default function Dashboard() {
+  const { data, setData, post, processing, errors, reset } = useForm({
+    title: '',
+    content: ''
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    post(route('posts.store'), {
+      onSuccess: () => {
+        // You can also trigger notifications directly from the frontend
+        flasher.success('Post created from the frontend!')
+
+        // Reset the form
+        reset()
+      }
+    })
+  }
+
+  return (
+    &lt;AppLayout&gt;
+      &lt;div className="py-12"&gt;
+        &lt;div className="max-w-7xl mx-auto sm:px-6 lg:px-8"&gt;
+          &lt;div className="bg-white overflow-hidden shadow-sm sm:rounded-lg"&gt;
+            &lt;div className="p-6 bg-white border-b border-gray-200"&gt;
+              &lt;form onSubmit={handleSubmit}&gt;
+                &lt;div className="mb-4"&gt;
+                  &lt;label htmlFor="title" className="block text-sm font-medium text-gray-700"&gt;Title&lt;/label&gt;
+                  &lt;input
+                    type="text"
+                    id="title"
+                    value={data.title}
+                    onChange={e => setData('title', e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200"
+                  /&gt;
+                  {errors.title && &lt;div className="text-red-500 text-sm mt-1"&gt;{errors.title}&lt;/div&gt;}
+                &lt;/div&gt;
+
+                &lt;div className="mb-4"&gt;
+                  &lt;label htmlFor="content" className="block text-sm font-medium text-gray-700"&gt;Content&lt;/label&gt;
+                  &lt;textarea
+                    id="content"
+                    value={data.content}
+                    onChange={e => setData('content', e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200"
+                    rows="4"
+                  &gt;&lt;/textarea&gt;
+                  {errors.content && &lt;div className="text-red-500 text-sm mt-1"&gt;{errors.content}&lt;/div&gt;}
+                &lt;/div&gt;
+
+                &lt;button
+                  type="submit"
+                  disabled={processing}
+                  className="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                &gt;
+                  {processing ? 'Creating...' : 'Create Post'}
+                &lt;/button&gt;
+              &lt;/form&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/AppLayout&gt;
+  )
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Svelte content -->
+                    <div id="svelteContent" class="mt-4 hidden">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-3">Svelte Integration</h3>
+
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                <div class="flex space-x-1.5 mr-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Layouts/AppLayout.svelte</div>
+                            </div>
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script&gt;
+  import { page } from '$inertia/inertia-svelte'
+  import { onMount, afterUpdate } from 'svelte'
+  import flasher from '@flasher/flasher'
+
+  export let title = ''
+
+  // Render flash messages initially
+  onMount(() => {
+    if ($page.props.messages) {
+      flasher.render($page.props.messages)
+    }
+  })
+
+  // Watch for changes in flash messages
+  afterUpdate(() => {
+    if ($page.props.messages) {
+      flasher.render($page.props.messages)
+    }
+  })
+&lt;/script&gt;
+
+&lt;div class="min-h-screen bg-gray-100"&gt;
+  &lt;nav class="bg-white border-b border-gray-100"&gt;
+    &lt;!-- Navigation content --&gt;
+  &lt;/nav&gt;
+
+  &lt;!-- Page Content --&gt;
+  &lt;main&gt;
+    &lt;slot /&gt;
+  &lt;/main&gt;
+
+  &lt;footer class="bg-white border-t border-gray-100 mt-auto"&gt;
+    &lt;!-- Footer content --&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+                            </div>
+                        </div>
+
+                        <p class="mb-4">Using flash messages in a Svelte component:</p>
+
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                            <div class="bg-slate-800 px-4 py-3 flex items-center">
+                                <div class="flex space-x-1.5 mr-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Dashboard.svelte</div>
+                            </div>
+                            <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script&gt;
+  import { inertia, useForm } from '@inertiajs/inertia-svelte'
+  import AppLayout from '@/Layouts/AppLayout.svelte'
+  import flasher from '@flasher/flasher'
+
+  let form = useForm({
+    title: '',
+    content: ''
+  })
+
+  function submit() {
+    $form.post(route('posts.store'), {
+      onSuccess: () => {
+        // You can also trigger notifications directly from the frontend
+        flasher.success('Post created from the frontend!')
+
+        // Reset the form
+        $form.reset()
+      }
+    })
+  }
+&lt;/script&gt;
+
+&lt;AppLayout&gt;
+  &lt;div class="py-12"&gt;
+    &lt;div class="max-w-7xl mx-auto sm:px-6 lg:px-8"&gt;
+      &lt;div class="bg-white overflow-hidden shadow-sm sm:rounded-lg"&gt;
+        &lt;div class="p-6 bg-white border-b border-gray-200"&gt;
+          &lt;form on:submit|preventDefault={submit}&gt;
+            &lt;div class="mb-4"&gt;
+              &lt;label for="title" class="block text-sm font-medium text-gray-700"&gt;Title&lt;/label&gt;
+              &lt;input
+                type="text"
+                id="title"
+                bind:value={$form.title}
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200"
+              /&gt;
+              {#if $form.errors.title}
+                &lt;div class="text-red-500 text-sm mt-1"&gt;{$form.errors.title}&lt;/div&gt;
+              {/if}
+            &lt;/div&gt;
+
+            &lt;div class="mb-4"&gt;
+              &lt;label for="content" class="block text-sm font-medium text-gray-700"&gt;Content&lt;/label&gt;
+              &lt;textarea
+                id="content"
+                bind:value={$form.content}
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200"
+                rows="4"
+              &gt;&lt;/textarea&gt;
+              {#if $form.errors.content}
+                &lt;div class="text-red-500 text-sm mt-1"&gt;{$form.errors.content}&lt;/div&gt;
+              {/if}
+            &lt;/div&gt;
+
+            &lt;button
+              type="submit"
+              disabled={$form.processing}
+              class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+            &gt;
+              {$form.processing ? 'Creating...' : 'Create Post'}
+            &lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/AppLayout&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Framework-specific tips -->
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm mb-8">
+                    <h4 class="text-lg font-semibold text-slate-800 mb-3">Framework-Specific Integration Tips</h4>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 pt-1">
+                                <i class="fa-brands fa-vuejs text-emerald-500 text-lg"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="font-medium text-slate-800">Vue.js</h4>
+                                <p class="text-slate-600 text-sm">Use the <code class="bg-slate-100 px-1.5 py-0.5 rounded">watch</code> function with <code class="bg-slate-100 px-1.5 py-0.5 rounded">immediate: true</code> to ensure flash messages are shown on both initial load and after navigation.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 pt-1">
+                                <i class="fa-brands fa-react text-emerald-500 text-lg"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="font-medium text-slate-800">React</h4>
+                                <p class="text-slate-600 text-sm">With React, use <code class="bg-slate-100 px-1.5 py-0.5 rounded">useEffect</code> with <code class="bg-slate-100 px-1.5 py-0.5 rounded">messages</code> as a dependency to catch updates to flash messages.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 pt-1">
+                                <i class="fa-solid fa-code text-emerald-500 text-lg"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="font-medium text-slate-800">Svelte</h4>
+                                <p class="text-slate-600 text-sm">Combine <code class="bg-slate-100 px-1.5 py-0.5 rounded">onMount</code> and <code class="bg-slate-100 px-1.5 py-0.5 rounded">afterUpdate</code> lifecycle functions to ensure flash messages are shown both initially and after updates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Section -->
+            <div id="advanced" class="mt-10 scroll-mt-20">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
+                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+                    Advanced
+                </h2>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Custom Notification Options</h3>
+                <p class="mb-4">Customize your notifications with various options:</p>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">CustomOptions.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class NotificationController extends Controller
+{
+    public function showExamples()
+    {
+        return Inertia::render('Notifications/Examples');
+    }
+
+    public function positionExample()
+    {
+        // Position options
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Positioned at the bottom-right');
+
+        return back();
+    }
+
+    public function timeoutExample()
+    {
+        // Timeout
+        flash()
+            ->option('timeout', 8000) // 8 seconds
+            ->info('This message stays longer');
+
+        return back();
+    }
+
+    public function animationExample()
+    {
+        // Animation
+        flash()
+            ->option('showAnimation', 'fadeIn')
+            ->option('hideAnimation', 'fadeOut')
+            ->success('Custom animations');
+
+        return back();
+    }
+
+    public function multipleOptionsExample()
+    {
+        // Multiple options at once
+        flash()
+            ->options([
+                'position' => 'top-center',
+                'timeout' => 3000,
+                'closeButton' => false
+            ])
+            ->success('Multiple options at once');
+
+        return back();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Additional features highlight -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mt-12">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">Additional Features</h3>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Feature 1 -->
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-puzzle-piece text-amber-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mb-2">Multiple Themes</h4>
+                            <p class="text-slate-600 text-sm">Choose from 6+ themes including Toastr, SweetAlert, Notyf, Noty and more.</p>
+                            <a href="https://php-flasher.github.io/themes" class="text-emerald-600 text-xs font-medium mt-2 inline-flex items-center hover:text-emerald-800">
+                                View themes <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-language text-emerald-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mb-2">Internationalization</h4>
+                            <p class="text-slate-600 text-sm">Support for multiple languages and right-to-left (RTL) layouts.</p>
+                            <a href="https://php-flasher.github.io/i18n" class="text-emerald-600 text-xs font-medium mt-2 inline-flex items-center hover:text-emerald-800">
+                                Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-bolt-lightning text-indigo-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mb-2">JavaScript API</h4>
+                            <p class="text-slate-600 text-sm">Access the full JavaScript API for creating notifications directly from the frontend.</p>
+                            <a href="https://php-flasher.github.io/javascript-api" class="text-emerald-600 text-xs font-medium mt-2 inline-flex items-center hover:text-emerald-800">
+                                Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="mt-8 mb-12">
+        <div
+            class="bg-gradient-to-tr from-emerald-600 to-teal-700 rounded-xl p-8 md:p-12 border border-emerald-500 shadow-md text-center md:text-left">
+            <div class="flex flex-col md:flex-row md:items-center">
+                <div class="md:w-3/4">
+                    <h3 class="text-3xl font-bold text-white mb-3">Ready to enhance your Inertia.js app?</h3>
+                    <p class="text-emerald-100 mb-6 md:mb-0 text-lg">Start using <strong><span
+                        class="text-white">PHP<span class="text-emerald-200">Flasher</span></span></strong> today and
+                        give your users beautiful notifications in minutes!</p>
+                </div>
+                <div class="md:w-1/4 md:text-right">
+                    <a href="#installation"
+                       class="inline-block bg-white text-emerald-700 font-medium px-6 py-3 rounded-lg hover:bg-emerald-50 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-transform">
+                        Get Started Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .animate-spin-slow {
+        animation: spin 20s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+        .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .animate-pulse-delayed {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) 1s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+<script>
+    // Tab switching functionality for frontend frameworks
+    function switchTab(tabId) {
+        // Hide all content sections
+        document.getElementById('vueContent').classList.add('hidden');
+        document.getElementById('reactContent').classList.add('hidden');
+        document.getElementById('svelteContent').classList.add('hidden');
+
+        // Show the selected content
+        document.getElementById(tabId + 'Content').classList.remove('hidden');
+
+        // Update tab styling
+        document.getElementById('vueTab').classList.remove('border-emerald-500', 'text-emerald-600');
+        document.getElementById('reactTab').classList.remove('border-emerald-500', 'text-emerald-600');
+        document.getElementById('svelteTab').classList.remove('border-emerald-500', 'text-emerald-600');
+
+        document.getElementById(tabId + 'Tab').classList.add('border-emerald-500', 'text-emerald-600');
+    }
+
+    // Initialize with Vue tab selected by default
+    document.addEventListener('DOMContentLoaded', function() {
+        switchTab('vue');
+    });
+</script>
+
+
+
+
