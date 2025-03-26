@@ -68,7 +68,6 @@
     font-family: var(--fl-font), serif;
     animation: crystalIn 0.3s ease-out;           /* Entrance animation */
     box-shadow: 0 2px 8px var(--crystal-shadow);  /* Default shadow */
-    max-width: 380px;                             /* Limit width for readability */
     border-radius: var(--fl-border-radius, 4px);  /* Rounded corners */
     will-change: transform, opacity;              /* Optimize for animation performance */
     transition: box-shadow 0.3s ease;             /* Smooth transition for shadow changes */

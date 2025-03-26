@@ -57,8 +57,6 @@
 .fl-slack {
     position: relative;
     margin: 4px 0;                                /* Minimal spacing between messages */
-    width: 100%;
-    max-width: 500px;                             /* Maximum width similar to Slack */
     font-family: "Lato", "Slack-Lato", "Helvetica Neue", "Helvetica", sans-serif; /* Slack's font stack */
     animation: slackFadeIn var(--slack-animation-duration) ease-out; /* Quick fade in */
 

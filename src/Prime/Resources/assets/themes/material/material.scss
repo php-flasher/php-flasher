@@ -74,8 +74,6 @@
 .fl-material {
     position: relative;
     margin: 8px 0;                               /* Spacing between notifications */
-    width: 100%;
-    max-width: 400px;                            /* Maximum width following Material guidelines */
     font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif; /* Material uses Roboto */
     animation: mdSlideUp var(--md-animation-duration) cubic-bezier(0.4, 0, 0.2, 1); /* Material standard easing */
 

@@ -63,7 +63,6 @@
     backdrop-filter: blur(8px);                   /* Frosted glass effect */
     -webkit-backdrop-filter: blur(8px);           /* Safari support */
     border: 1px solid var(--minimal-border-color); /* Nearly invisible border */
-    max-width: 320px;                             /* Limit width for readability */
 
     /**
      * Content container
