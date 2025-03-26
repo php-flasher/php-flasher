@@ -24,7 +24,7 @@
         "noty": "^3.2.0-beta-deprecated",
         "notyf": "^3.10.0",
         "prismjs": "^1.30.0",
-        "sweetalert2": "^11.6.13",
+        "sweetalert2": "^11.17.2",
         "toastr": "^2.1.4"
     },
     "devDependencies": {

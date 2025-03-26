@@ -47,7 +47,15 @@ update_composer_dependencies() {
 check_npm_updates() {
     echo -e "${BOLD}${SEARCH} NPM Updates Check${RESET}"
 
-    if npm run ncu > /dev/null 2>&1; then
+    # Run the commands and capture their exit codes
+    ncu -u
+    NCU_EXIT_CODE=$?
+
+    npm run ncu --workspaces
+    NPM_EXIT_CODE=$?
+
+    # Check if both commands were successful
+    if [ $NCU_EXIT_CODE -eq 0 ] && [ $NPM_EXIT_CODE -eq 0 ]; then
         echo -e "${CHECK} ${GREEN}NPM check completed successfully${RESET}\n"
     else
         echo -e "${WARNING} ${YELLOW}NPM check failed, continuing...${RESET}\n"
