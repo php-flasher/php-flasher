@@ -7,7 +7,7 @@ description: Add minimalist Material Design notifications to your application wi
 theme_name: theme.material
 theme_name_short: material
 theme_class: fl-material
-icon: fa-square
+icon: fa-duotone fa-layer-group
 color: indigo
 has_assets: true
 

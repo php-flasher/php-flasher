@@ -7,7 +7,7 @@ description: Add elegant glass-like notifications to your application with the A
 theme_name: theme.aurora
 theme_name_short: aurora
 theme_class: fl-aurora
-icon: fa-sparkles
+icon: fa-duotone fa-sparkles
 color: blue
 has_assets: true
 

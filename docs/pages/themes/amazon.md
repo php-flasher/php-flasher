@@ -7,7 +7,7 @@ description: Transform your notifications with the Amazon-inspired theme for PHP
 theme_name: theme.amazon
 theme_name_short: amazon
 theme_class: fl-amazon
-icon: fa-store
+icon: fa-duotone fa-shopping-bag
 color: amber
 has_assets: true
 

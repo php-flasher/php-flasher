@@ -7,7 +7,7 @@ description: Add vibrant notifications with rich gradient backgrounds to your ap
 theme_name: theme.ruby
 theme_name_short: ruby
 theme_class: fl-ruby
-icon: fa-gem
+icon: fa-duotone fa-gem
 color: red
 has_assets: true
 

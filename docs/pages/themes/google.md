@@ -7,7 +7,7 @@ description: Add Material Design-inspired notifications to your application with
 theme_name: theme.google
 theme_name_short: google
 theme_class: fl-google
-icon: fa-google
+icon: fa-brands fa-google
 color: red
 has_assets: true
 

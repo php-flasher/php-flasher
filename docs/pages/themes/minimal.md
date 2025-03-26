@@ -7,7 +7,7 @@ description: Enhance your application with ultra-clean, distraction-free notific
 theme_name: theme.minimal
 theme_name_short: minimal
 theme_class: fl-minimal
-icon: fa-minus
+icon: fa-duotone fa-circle-minus
 color: gray
 has_assets: true
 

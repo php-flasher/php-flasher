@@ -7,7 +7,7 @@ description: The default notification theme for PHPFlasher with a clean design, 
 theme_name: theme.flasher
 theme_name_short: flasher
 theme_class: fl
-icon: fa-bolt
+icon: fa-duotone fa-bolt
 color: purple
 has_assets: false
 

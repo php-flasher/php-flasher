@@ -7,7 +7,7 @@ description: Add modern, floating notifications to your application with the Ony
 theme_name: theme.onyx
 theme_name_short: onyx
 theme_class: fl-onyx
-icon: fa-gem
+icon: fa-duotone fa-gem
 color: black
 has_assets: true
 
