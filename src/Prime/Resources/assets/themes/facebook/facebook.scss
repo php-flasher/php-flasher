@@ -71,8 +71,6 @@
 .fl-facebook {
     position: relative;
     margin: 8px 0;                           /* Spacing between notifications */
-    width: 100%;
-    max-width: 450px;                        /* Maximum width similar to Facebook */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Facebook's font stack */
     animation: fbFadeIn var(--fb-animation-duration) ease-out;
 

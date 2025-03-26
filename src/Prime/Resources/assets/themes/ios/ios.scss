@@ -72,8 +72,6 @@
 .fl-ios {
     position: relative;
     margin: 10px 0;                             /* Space between notifications */
-    width: 100%;
-    max-width: 400px;                           /* Maximum width similar to iOS */
     font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Apple system fonts */
     animation: iosSlideIn var(--ios-animation-duration) cubic-bezier(0.23, 1, 0.32, 1); /* iOS-like easing */
     will-change: transform, opacity;            /* Optimize for animation performance */
