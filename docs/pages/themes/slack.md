@@ -7,7 +7,7 @@ description: Add Slack-style notifications to your application with the Slack th
 theme_name: theme.slack
 theme_name_short: slack
 theme_class: fl-slack
-icon: fa-slack
+icon: fa-brands fa-slack
 color: purple
 has_assets: true
 

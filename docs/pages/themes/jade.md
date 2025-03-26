@@ -7,7 +7,7 @@ description: Enhance your notifications with the calm, minimalist Jade theme for
 theme_name: theme.jade
 theme_name_short: jade
 theme_class: fl-jade
-icon: fa-leaf
+icon: fa-duotone fa-leaf
 color: green
 has_assets: true
 

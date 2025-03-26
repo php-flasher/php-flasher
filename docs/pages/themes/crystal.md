@@ -7,7 +7,7 @@ description: Enhance your notifications with the elegant Crystal theme for PHPFl
 theme_name: theme.crystal
 theme_name_short: crystal
 theme_class: fl-crystal
-icon: fa-diamond
+icon: fa-duotone fa-diamond
 color: indigo
 has_assets: true
 

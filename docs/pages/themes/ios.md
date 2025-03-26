@@ -7,7 +7,7 @@ description: Add Apple iOS-style notifications to your application with the iOS 
 theme_name: theme.ios
 theme_name_short: ios
 theme_class: fl-ios
-icon: fa-apple
+icon: fa-brands fa-apple
 color: slate
 has_assets: true
 

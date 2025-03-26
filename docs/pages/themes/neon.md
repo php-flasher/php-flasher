@@ -7,7 +7,7 @@ description: Add elegant notifications with subtle glowing accents to your appli
 theme_name: theme.neon
 theme_name_short: neon
 theme_class: fl-neon
-icon: fa-lightbulb
+icon: fa-duotone fa-lightbulb
 color: purple
 has_assets: true
 

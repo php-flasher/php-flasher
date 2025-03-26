@@ -7,7 +7,7 @@ description: Enhance your notifications with the elegant Emerald theme for PHPFl
 theme_name: theme.emerald
 theme_name_short: emerald
 theme_class: fl-emerald
-icon: fa-gem
+icon: fa-duotone fa-gem
 color: emerald
 has_assets: true
 

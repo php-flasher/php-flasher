@@ -7,7 +7,7 @@ description: Add Facebook-style notifications to your application with the Faceb
 theme_name: theme.facebook
 theme_name_short: facebook
 theme_class: fl-facebook
-icon: fa-facebook
+icon: fa-brands fa-facebook
 color: blue
 has_assets: true
 

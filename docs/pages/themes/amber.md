@@ -7,7 +7,7 @@ description: Transform your notifications with the elegant Amber theme for PHPFl
 theme_name: theme.amber
 theme_name_short: amber
 theme_class: fl-amber
-icon: fa-sun
+icon: fa-duotone fa-sun
 color: amber
 has_assets: true
 

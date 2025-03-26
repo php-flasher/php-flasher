@@ -7,7 +7,7 @@ description: Add modern, glassmorphic notifications to your application with the
 theme_name: theme.sapphire
 theme_name_short: sapphire
 theme_class: fl-sapphire
-icon: fa-gem
+icon: fa-duotone fa-gem
 color: blue
 has_assets: true
 
