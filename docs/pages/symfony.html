@@ -246,7 +246,9 @@ framework: symfony
                         <div class="text-white opacity-80 text-xs font-medium">ProductController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -486,7 +488,9 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                         <div class="text-white opacity-80 text-xs font-medium">ArticleController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
@@ -584,7 +588,9 @@ class ArticleController extends AbstractController
                         <div class="text-white opacity-80 text-xs font-medium">RegistrationController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
@@ -815,7 +821,9 @@ fetchFlashMessages();</code></pre>
                         <div class="text-white opacity-80 text-xs font-medium">OrderController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Controller;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Controller;
 
 use App\Service\OrderService;
 use Flasher\Prime\FlasherInterface;
@@ -1122,7 +1130,9 @@ flasher:
                         <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">class BookController extends AbstractController
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+class BookController extends AbstractController
 {
     #[Route('/book/save', name: 'app_book_save')]
     public function save(): Response
@@ -1230,6 +1240,7 @@ class PaymentController extends AbstractController
                         </li>
                     </ul>
                 </div>
+
                 <!-- Best Practice for Presets -->
                 <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-8">
                     <div class="flex items-center">

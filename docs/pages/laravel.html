@@ -1,5 +1,9 @@
 ---
-layout: default
+permalink: /laravel/
+title: Laravel
+handler: flasher
+description: Add flash notifications to your Laravel application with PHPFlasher. Follow our step-by-step guide to install and use the library, and start informing your users with powerful flash messages.
+framework: laravel
 ---
 
 <div class="max-w-7xl mx-auto">
@@ -210,7 +214,7 @@ layout: default
                         <div class="ml-3">
                             <h4 class="text-sm font-medium text-green-800">Best Practice</h4>
                             <p class="text-sm text-green-700 mt-1">
-                                PHPFlasher works seamlessly with Laravel's service container and will be automatically discovered. No additional configuration is needed.
+                                Commit the installed assets to your version control system to ensure everyone on your team has the same notification experience.
                             </p>
                         </div>
                     </div>
@@ -243,7 +247,9 @@ layout: default
                         <div class="text-white opacity-80 text-xs font-medium">ProductController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -277,10 +283,10 @@ class ProductController extends Controller
                             <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
                         </div>
                         <div class="ml-4">
-                            <h4 class="text-sm font-medium text-indigo-800">Pro Tip: Two Ways to Use PHPFlasher</h4>
+                            <h4 class="text-sm font-medium text-indigo-800">Pro Tip: Three Ways to Use PHPFlasher</h4>
                             <p class="text-sm text-indigo-700 mt-1">
                                 <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
-                                provides two ways to create notifications:
+                                provides three ways to create notifications:
                             </p>
                             <ul class="mt-2 space-y-2 text-sm text-indigo-700">
                                 <li class="flex items-center">
@@ -290,6 +296,10 @@ class ProductController extends Controller
                                 <li class="flex items-center">
                                     <i class="fa-solid fa-check text-green-500 mr-2"></i>
                                     <strong>Facade:</strong> <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">use Flasher\Laravel\Facade\Flasher; Flasher::success('Message');</code>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fa-solid fa-check text-green-500 mr-2"></i>
+                                    <strong>Dependency injection:</strong> <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-600">public function __construct(private FlasherInterface $flasher) {}</code>
                                 </li>
                             </ul>
                         </div>
@@ -488,7 +498,9 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                         <div class="text-white opacity-80 text-xs font-medium">PostController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -564,7 +576,9 @@ class PostController extends Controller
                         <div class="text-white opacity-80 text-xs font-medium">RegisterController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers\Auth;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -604,21 +618,22 @@ class RegisterController extends Controller
 
                 <!-- AJAX Example with PHPFlasher -->
                 <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">AJAX Support</h3>
-                <p class="mb-4">PHPFlasher works seamlessly with AJAX requests. It automatically displays notifications from JSON responses:</p>
+                <p class="mb-4">PHPFlasher can be used with AJAX requests, but requires explicit handling in your JavaScript code:</p>
 
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <!-- Backend Code -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
-                        <div class="bg-slate-800 px-4 py-3 flex items-center">
-                            <div class="flex space-x-1.5 mr-3">
-                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                            </div>
-                            <div class="text-white opacity-80 text-xs font-medium">ApiController.php</div>
+                <!-- Backend Code -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers\Api;
+                        <div class="text-white opacity-80 text-xs font-medium">ApiController.php</div>
+                    </div>
+                    <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -632,45 +647,42 @@ class ApiController extends Controller
             $success = true; // Assuming operation succeeded
 
             if ($success) {
-                flash()->success('Data saved successfully!');
-
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Data saved successfully!'
                 ]);
             } else {
-                flash()->error('Failed to save data');
-
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Failed to save data'
                 ], 400);
             }
         } catch (\Exception $e) {
-            flash()->error('An error occurred: ' . $e->getMessage());
-
             return response()->json([
                 'status' => 'error',
-                'message' => 'An error occurred'
+                'message' => 'An error occurred: ' . $e->getMessage()
             ], 500);
         }
     }
 }</code></pre>
-                        </div>
                     </div>
+                </div>
 
-                    <!-- Frontend JS Code -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
-                        <div class="bg-slate-800 px-4 py-3 flex items-center">
-                            <div class="flex space-x-1.5 mr-3">
-                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                            </div>
-                            <div class="text-white opacity-80 text-xs font-medium">script.js</div>
+                <!-- Frontend JS Code -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">document.getElementById('saveForm').addEventListener('submit', function(e) {
+                        <div class="text-white opacity-80 text-xs font-medium">script.js</div>
+                    </div>
+                    <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">// Import flasher in your JS file
+import flasher from '@flasher/flasher';
+
+document.getElementById('saveForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
     const formData = new FormData(this);
@@ -685,28 +697,119 @@ class ApiController extends Controller
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // PHPFlasher will automatically display the notification
-        // No additional JS code needed!
+        // Explicitly call flasher methods based on the response
+        if (data.status === 'success') {
+            flasher.success(data.message);
+        } else {
+            flasher.error(data.message);
+        }
     })
     .catch(error => {
         console.error('Error:', error);
+        flasher.error('An unexpected error occurred');
     });
 });</code></pre>
+                    </div>
+                </div>
+
+                <!-- Alternative approach with a dedicated API endpoint -->
+                <h4 class="text-lg font-semibold text-slate-700 mt-6 mb-3">Alternative: Dedicated Flash Message API</h4>
+                <p class="mb-4">You can also create a dedicated endpoint that returns flash messages as part of your API response:</p>
+
+                <!-- Backend Code for Alternative -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
+                        <div class="text-white opacity-80 text-xs font-medium">FlashController.php</div>
+                    </div>
+                    <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class FlashController extends Controller
+{
+    public function getFlashMessages()
+    {
+        // Get all flash messages as an array
+        $messages = flash()->render([], 'array');
+
+        return response()->json($messages);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Frontend JS Code for Alternative -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white opacity-80 text-xs font-medium">fetch-flash.js</div>
+                    </div>
+                    <div>
+                <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">import flasher from '@flasher/flasher';
+
+// Function to fetch and display flash messages
+function fetchFlashMessages() {
+    fetch('/api/flash', {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(messages => {
+        // Render the flash messages using PHPFlasher
+        flasher.render(messages);
+    })
+    .catch(error => {
+        console.error('Error fetching flash messages:', error);
+    });
+}
+
+// Call this after operations that might set flash messages on the server
+// or periodically if needed
+fetchFlashMessages();</code></pre>
                     </div>
                 </div>
 
                 <!-- Expert tip for AJAX -->
-                <div class="bg-slate-50 border-l-4 border-slate-300 rounded-r-lg p-5 mb-8">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                <div class="bg-gradient-to-r from-slate-50 to-slate-100 border-l-4 border-amber-400 rounded-lg shadow-sm p-6 mb-8">
+                    <div class="flex gap-4 items-start">
+                        <div class="flex-shrink-0 p-2 bg-amber-100 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
                         </div>
-                        <div class="ml-3">
-                            <h4 class="text-sm font-medium text-slate-800">Expert Tip: AJAX Integration</h4>
-                            <p class="text-sm text-slate-700 mt-1">
-                                PHPFlasher automatically handles AJAX responses — notifications from the server appear without any additional code. This works with fetch, axios, jQuery, and other AJAX methods.
+                        <div class="flex-1">
+                            <h4 class="text-lg font-medium text-slate-800 mb-2">Expert Tip: AJAX Integration</h4>
+                            <p class="text-slate-700 mb-3 leading-relaxed">
+                                PHPFlasher requires explicit JavaScript calls to display notifications in AJAX scenarios. You have several options:
                             </p>
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex gap-2">
+                                    <span class="flex-shrink-0 inline-flex items-center justify-center w-5 h-5 bg-amber-100 text-amber-600 rounded-full font-medium text-xs">1</span>
+                                    <span>Call flasher methods directly in your JavaScript after receiving a response</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="flex-shrink-0 inline-flex items-center justify-center w-5 h-5 bg-amber-100 text-amber-600 rounded-full font-medium text-xs">2</span>
+                                    <span>Use the render() method with a dedicated endpoint that returns flash messages</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="flex-shrink-0 inline-flex items-center justify-center w-5 h-5 bg-amber-100 text-amber-600 rounded-full font-medium text-xs">3</span>
+                                    <span>Integrate with frameworks like InertiaJS to automatically include flash messages in each response</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -725,7 +828,9 @@ class ApiController extends Controller
                         <div class="text-white opacity-80 text-xs font-medium">AdminAccessMiddleware.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Middleware;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -736,6 +841,7 @@ class AdminAccessMiddleware
     {
         if (!$request->user() || !$request->user()->isAdmin()) {
             flash()->error('You do not have access to this area.', 'Access Denied');
+
             return redirect()->route('home');
         }
 
@@ -791,9 +897,22 @@ class AdminAccessMiddleware
                         <div class="text-white opacity-80 text-xs font-medium">config/flasher.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // config/flasher.php
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
 
-return [
+declare(strict_types=1);
+
+use Flasher\Prime\Configuration;
+
+/*
+ * Default PHPFlasher configuration for Laravel.
+ *
+ * This configuration file defines the default settings for PHPFlasher when
+ * used within a Laravel application. It uses the Configuration class from
+ * the core PHPFlasher library to establish type-safe configuration.
+ *
+ * @return array<string, mixed> PHPFlasher configuration
+ */
+return Configuration::from([
     // Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
     'default' => 'flasher',
 
@@ -817,6 +936,9 @@ return [
     // Enable message translation using Laravel's translation service
     'translate' => true,
 
+    // URL patterns to exclude from asset injection and flash_bag conversion
+    'excluded_paths' => [],
+
     // Map Laravel flash message keys to notification types
     'flash_bag' => [
         'success' => ['success'],
@@ -838,18 +960,18 @@ return [
     //         'message' => 'Entity saved successfully',
     //     ],
     // ],
-];</code></pre>
+]);</code></pre>
                     </div>
                 </div>
 
                 <!-- Common Configuration Examples -->
                 <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Common Configuration Examples</h3>
 
-                <div class="mb-6 grid md:grid-cols-2 gap-6">
+                <div class="mb-6">
                     <!-- Example 1: Change default position -->
-                    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+                    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm mb-4">
                         <h4 class="text-base font-medium text-slate-800 mb-2">Change Default Position</h4>
-<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php"><?php // config/flasher.php
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php">&lt;?php // config/flasher.php
 
 return [
     'options' => [
@@ -861,7 +983,7 @@ return [
                     <!-- Example 2: Change timeout -->
                     <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
                         <h4 class="text-base font-medium text-slate-800 mb-2">Change Default Timeout</h4>
-<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php"><?php // config/flasher.php
+<pre class="bg-slate-50 rounded-lg p-3 text-sm overflow-x-auto mt-2"><code class="language-php">&lt;?php // config/flasher.php
 
 return [
     'options' => [
@@ -970,7 +1092,7 @@ $request->session()->flash('error', 'Something went wrong!');
                         <div class="text-white opacity-80 text-xs font-medium">config/flasher.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // config/flasher.php
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php // config/flasher.php
 
 return [
     'presets' => [
@@ -1020,7 +1142,9 @@ return [
                         <div class="text-white opacity-80 text-xs font-medium">BookController.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
@@ -1067,7 +1191,9 @@ class PaymentController extends Controller
                         <div class="text-white opacity-80 text-xs font-medium">EquivalentCode.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">namespace App\Http\Controllers;
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
 
 class BookController extends Controller
 {
@@ -1083,33 +1209,52 @@ class BookController extends Controller
                 </div>
 
                 <!-- Preset use cases -->
-                <div class="bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-6 mb-6 border border-indigo-200">
-                    <h4 class="text-indigo-800 text-lg font-semibold mb-3">Common Preset Use Cases</h4>
-                    <ul class="space-y-2">
+                <div class="bg-indigo-50 rounded-lg p-6 mb-6 border border-indigo-200 shadow-sm">
+                    <h4 class="text-indigo-800 text-lg font-semibold mb-4">
+                        Common Preset Use Cases
+                    </h4>
+
+                    <ul class="space-y-3">
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1">
-                                <i class="fa-solid fa-check text-indigo-500 text-xs"></i>
+                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1 border border-indigo-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
                             </div>
-                            <p class="ml-3 text-indigo-700">
-                                <strong>CRUD Operations:</strong>
-                                Create consistent notifications for create, update, delete operations
-                            </p>
+                            <div class="ml-3">
+                                <p class="text-indigo-800 font-medium">CRUD Operations</p>
+                                <p class="text-indigo-600 text-sm mt-1">
+                                    Create consistent notifications for create, update, and delete operations
+                                </p>
+                            </div>
                         </li>
+
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1">
-                                <i class="fa-solid fa-check text-indigo-500 text-xs"></i>
+                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1 border border-indigo-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
                             </div>
-                            <p class="ml-3 text-indigo-700">
-                                <strong>User Feedback:</strong> Standardize welcome messages, payment confirmations, etc.
-                            </p>
+                            <div class="ml-3">
+                                <p class="text-indigo-800 font-medium">User Feedback</p>
+                                <p class="text-indigo-600 text-sm mt-1">
+                                    Standardize welcome messages, payment confirmations, and other user communications
+                                </p>
+                            </div>
                         </li>
+
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1">
-                                <i class="fa-solid fa-check text-indigo-500 text-xs"></i>
+                            <div class="flex-shrink-0 p-1 bg-white rounded-full mt-1 border border-indigo-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
                             </div>
-                            <p class="ml-3 text-indigo-700">
-                                <strong>Error Handling:</strong> Create consistent error notifications with custom styling
-                                                        </p>
+                            <div class="ml-3">
+                                <p class="text-indigo-800 font-medium">Error Handling</p>
+                                <p class="text-indigo-600 text-sm mt-1">
+                                    Create consistent error notifications with custom styling and actionable messages
+                                </p>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -1143,7 +1288,7 @@ class BookController extends Controller
                         <div class="text-white opacity-80 text-xs font-medium">config/flasher.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // config/flasher.php
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php // config/flasher.php
 
 return [
     'presets' => [
@@ -1240,7 +1385,7 @@ flash()->translate('ar')->success('The resource was created');</code></pre>
                     <div id="arabicContent" class="hidden">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
                             <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // resources/lang/vendor/flasher/ar/messages.php
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php // resources/lang/vendor/flasher/ar/messages.php
 
 return [
     'success' => 'نجاح',
@@ -1263,7 +1408,7 @@ return [
                     <div id="englishContent" class="hidden">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
                             <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // resources/lang/vendor/flasher/en/messages.php
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php // resources/lang/vendor/flasher/en/messages.php
 
 return [
     'success' => 'Success',
@@ -1286,7 +1431,7 @@ return [
                     <div id="frenchContent" class="hidden">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100">
                             <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php"><?php // resources/lang/vendor/flasher/fr/messages.php
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php // resources/lang/vendor/flasher/fr/messages.php
 
 return [
     'success' => 'Succès',
