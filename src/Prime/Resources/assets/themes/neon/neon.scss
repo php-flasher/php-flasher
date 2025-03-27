@@ -14,13 +14,13 @@
     /* Theme variables - Define the visual appearance of Neon notifications */
 
     /* Base colors and appearance */
-    --neon-bg-light: rgba(255, 255, 255, 0.9);    /* Translucent white in light mode */
-    --neon-bg-dark: rgba(15, 23, 42, 0.9);        /* Translucent slate in dark mode */
+    --neon-bg-light: rgba(255, 255, 255);    /* Translucent white in light mode */
+    --neon-bg-dark: rgba(15, 23, 42);        /* Translucent slate in dark mode */
     --neon-text-light: #334155;                   /* Slate gray text in light mode */
     --neon-text-dark: #f1f5f9;                    /* Light gray text in dark mode */
     --neon-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Soft, spread shadow */
     --neon-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25); /* Deeper shadow for dark mode */
-    --neon-border-radius: 12px;                   /* Rounded corners */
+    --neon-border-radius: 4px;                   /* Rounded corners */
 
     /* Glow colors for different notification types */
     --neon-success: #10b981;                      /* Emerald green for success */
@@ -69,7 +69,7 @@
 .fl-neon {
     background-color: var(--neon-bg-light);
     color: var(--neon-text-light);
-    border-radius: var(--neon-border-radius);
+    border-radius: var(--neon-border-radius) var(--neon-border-radius) 0 0; /* Rounded top corners */
     box-shadow: var(--neon-shadow);
     padding: 14px 18px;                           /* Comfortable padding */
     margin: 12px 0;                               /* Vertical spacing */

@@ -17,8 +17,8 @@
  */
 .fl-emerald {
     /* Base colors and appearance */
-    --emerald-bg-light: rgba(255, 255, 255, 0.9);  /* Semi-transparent white background */
-    --emerald-bg-dark: rgba(30, 30, 30, 0.9);      /* Semi-transparent dark background */
+    --emerald-bg-light: rgba(255, 255, 255);  /* Semi-transparent white background */
+    --emerald-bg-dark: rgba(30, 30, 30);      /* Semi-transparent dark background */
     --emerald-text-light: #333333;                 /* Dark text for light mode */
     --emerald-text-dark: rgba(255, 255, 255, 0.9); /* Light text for dark mode */
     --emerald-shadow: rgba(0, 0, 0, 0.1);          /* Subtle shadow */
@@ -65,7 +65,7 @@
     -webkit-backdrop-filter: blur(var(--emerald-blur)); /* Safari support */
     padding: 1rem 1.5rem 1rem 1rem;                /* Asymmetric padding for close button */
     color: var(--emerald-text-light);              /* Default text color */
-    border-radius: 10px;                           /* Rounded corners */
+    border-radius: 4px 4px 0 0;                           /* Rounded corners */
 
     /**
      * Content container

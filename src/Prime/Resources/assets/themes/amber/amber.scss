@@ -17,7 +17,7 @@
     --amber-text-dark: #f1f5f9;         /* Dark mode text color */
     --amber-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Light mode shadow */
     --amber-shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.2); /* Dark mode shadow */
-    --amber-border-radius: 0.4rem;      /* Border radius for notifications */
+    --amber-border-radius: 4px;      /* Border radius for notifications */
 
     /* Type-specific colors */
     --amber-success: #10b981;           /* Success color (green) */
@@ -52,7 +52,7 @@
     margin: 0.6rem 0;
     position: relative;
     box-shadow: var(--amber-shadow);
-    border-radius: var(--amber-border-radius);
+    border-radius: var(--amber-border-radius) var(--amber-border-radius) 0 0;
     animation: amberIn 0.3s ease-out;
     font-family: var(--fl-font), serif;
     will-change: transform, opacity;

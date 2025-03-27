@@ -18,7 +18,7 @@
     --jade-text-dark: #e2e8f0;                 /* Light gray for dark mode text */
     --jade-shadow: 0 8px 24px rgba(149, 157, 165, 0.1); /* Subtle shadow */
     --jade-shadow-dark: 0 8px 24px rgba(0, 0, 0, 0.2); /* Stronger shadow for dark mode */
-    --jade-border-radius: 1rem;                /* Large rounded corners */
+    --jade-border-radius: 4px;                /* Large rounded corners */
     --jade-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Material-inspired transition */
 
     /* Type-specific colors and backgrounds - Light mode */
@@ -61,7 +61,7 @@
     margin: 0.5rem 0;                          /* Vertical spacing */
     position: relative;
     box-shadow: var(--jade-shadow);            /* Subtle shadow for depth */
-    border-radius: var(--jade-border-radius);  /* Large rounded corners */
+    border-radius: var(--jade-border-radius) var(--jade-border-radius) 0 0;  /* Large rounded corners */
     animation: jadeIn 0.4s var(--jade-transition); /* Smooth entrance animation */
     font-family: var(--fl-font), serif;
     will-change: transform, opacity;           /* Optimize for animation performance */

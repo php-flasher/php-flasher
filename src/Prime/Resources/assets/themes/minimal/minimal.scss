@@ -14,13 +14,13 @@
     /* Theme variables - Define the visual appearance of Minimal notifications */
 
     /* Base colors and appearance */
-    --minimal-bg-light: rgba(255, 255, 255, 0.8);  /* Semi-transparent white in light mode */
-    --minimal-bg-dark: rgba(25, 25, 25, 0.8);      /* Semi-transparent dark in dark mode */
+    --minimal-bg-light: rgba(255, 255, 255);  /* Semi-transparent white in light mode */
+    --minimal-bg-dark: rgba(25, 25, 25);      /* Semi-transparent dark in dark mode */
     --minimal-text-light: #333333;                 /* Dark gray text in light mode */
     --minimal-text-dark: #f5f5f5;                  /* Off-white text in dark mode */
     --minimal-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Very subtle shadow */
     --minimal-shadow-dark: 0 2px 8px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for dark mode */
-    --minimal-border-radius: 6px;                  /* Modest border radius */
+    --minimal-border-radius: 4px;                  /* Modest border radius */
     --minimal-border-color: rgba(0, 0, 0, 0.05);   /* Nearly invisible border in light mode */
     --minimal-border-color-dark: rgba(255, 255, 255, 0.1); /* Subtle border in dark mode */
 
