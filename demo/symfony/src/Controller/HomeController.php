@@ -34,12 +34,12 @@ class HomeController extends AbstractController
             // 'ios',
             // 'slack',
             // 'facebook',
-            'amazon',
+            // 'amazon',
         ];
 
         $positions = [
             // 'top-left',
-            'top-right',
+            // 'top-right',
             // 'bottom-left',
             // 'bottom-right',
             // 'top-center',
@@ -56,18 +56,18 @@ class HomeController extends AbstractController
             'success' => 'Data has been saved successfully!',
         ];
 
-        foreach ($themes as $index => $theme) {
+        // foreach ($themes as $index => $theme) {
             foreach ($messages as $type => $message) {
-                $position = $positions[$index % \count($positions)];
+                // $position = $positions[$index % \count($positions)];
 
                 // $message = \sprintf('%s: %s', $theme, $message);
 
                 flash()
-                    ->use("theme.$theme")
-                    ->option('position', $position)
+                    // ->use("theme.$theme")
+                    // ->option('position', $position)
                     ->$type($message);
             }
-        }
+        // }
 
         $plugins = [
             // 'noty',

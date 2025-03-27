@@ -26,6 +26,7 @@ final readonly class Configuration implements ConfigurationInterface
         $this->addFlashBagSection($rootNode);
         $this->addPresetsSection($rootNode);
         $this->addPluginsSection($rootNode);
+        $this->addThemesSection($rootNode);
 
         return $treeBuilder;
     }
@@ -154,6 +155,36 @@ final readonly class Configuration implements ConfigurationInterface
                             ->end()
                             ->arrayNode('options')
                                 ->info('Plugin-specific options')
+                                ->variablePrototype()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addThemesSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->fixXmlConfig('theme')
+            ->children()
+                ->arrayNode('themes')
+                    ->info('Additional themes')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->arrayNode('styles')
+                                ->info('CSS files for the theme')
+                                ->performNoDeepMerging()
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('scripts')
+                                ->info('JavaScript files for the theme')
+                                ->performNoDeepMerging()
+                                ->scalarPrototype()->end()
+                            ->end()
+                            ->arrayNode('options')
+                                ->info('Theme-specific options')
                                 ->variablePrototype()->end()
                             ->end()
                         ->end()
