@@ -16,7 +16,7 @@
     /* Base colors and appearance */
     --ruby-text: #ffffff;                         /* White text for good contrast on gradients */
     --ruby-text-dark: #f8fafc;                    /* Slightly off-white text for dark mode */
-    --ruby-border-radius: 1.125rem;               /* Rounded corners (18px) */
+    --ruby-border-radius: 4px;               /* Rounded corners (18px) */
     --ruby-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
 
     /* Type-specific gradients - rich, vibrant color combinations */
@@ -69,7 +69,7 @@
     margin: 0.75rem 0;                            /* Vertical spacing between notifications */
     position: relative;
     box-shadow: var(--ruby-shadow);               /* Soft shadow for depth */
-    border-radius: var(--ruby-border-radius);     /* Rounded corners */
+    border-radius: var(--ruby-border-radius) var(--ruby-border-radius) 0 0;     /* Rounded corners */
     animation: rubyIn 0.35s cubic-bezier(0.21, 1.02, 0.73, 1); /* Custom easing for natural feel */
     font-family: var(--fl-font), serif;
     will-change: transform, opacity;              /* Optimize for animation performance */

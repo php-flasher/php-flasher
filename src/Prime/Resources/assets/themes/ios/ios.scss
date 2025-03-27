@@ -14,8 +14,8 @@
     /* Theme variables - Define the visual appearance of iOS notifications */
 
     /* Base colors and appearance */
-    --ios-bg-light: rgba(255, 255, 255, 0.85);  /* Semi-transparent white in light mode */
-    --ios-bg-dark: rgba(30, 30, 30, 0.85);      /* Semi-transparent dark in dark mode */
+    --ios-bg-light: rgba(255, 255, 255);  /* Semi-transparent white in light mode */
+    --ios-bg-dark: rgba(30, 30, 30);      /* Semi-transparent dark in dark mode */
     --ios-text-light: #000000;                  /* Black text in light mode */
     --ios-text-secondary-light: #6e6e6e;        /* Gray secondary text in light mode */
     --ios-text-dark: #ffffff;                   /* White text in dark mode */

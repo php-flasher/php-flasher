@@ -14,13 +14,13 @@
     /* Theme variables - Defines the visual appearance of Aurora notifications */
 
     /* Base colors and appearance */
-    --aurora-bg-light: rgba(255, 255, 255, 0.95);  /* Semi-transparent light background */
-    --aurora-bg-dark: rgba(20, 20, 28, 0.92);      /* Semi-transparent dark background */
+    --aurora-bg-light: rgba(255, 255, 255);  /* Semi-transparent light background */
+    --aurora-bg-dark: rgba(20, 20, 28);      /* Semi-transparent dark background */
     --aurora-text-light: #1e293b;                  /* Light mode text color */
     --aurora-text-dark: #f8fafc;                   /* Dark mode text color */
     --aurora-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Light mode shadow */
     --aurora-shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.16); /* Dark mode shadow */
-    --aurora-border-radius: 16px;                  /* Rounded corners radius */
+    --aurora-border-radius: 4px;                  /* Rounded corners radius */
     --aurora-blur: 15px;                           /* Amount of backdrop blur */
 
     /* Gradient overlays for each notification type - Light mode */
@@ -58,7 +58,7 @@
     /* Core appearance */
     background-color: var(--aurora-bg-light);
     color: var(--aurora-text-light);
-    border-radius: var(--aurora-border-radius);
+    border-radius: var(--aurora-border-radius) var(--aurora-border-radius) 0 0; /* Rounded top corners */
     box-shadow: var(--aurora-shadow);
     padding: 16px 18px;
     margin: 10px 0;

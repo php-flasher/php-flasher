@@ -64,7 +64,7 @@
     transition: all 0.3s ease;                     /* Smooth transitions */
     animation: sapphireIn var(--sapphire-animation); /* Entrance animation with bounce */
     font-family: Roboto, var(--fl-font), serif;    /* Prefer Roboto font */
-    border-radius: 0.5em;                          /* Rounded corners */
+    border-radius: 4px 4px 0 0;                          /* Rounded corners */
     will-change: transform, opacity;               /* Optimize for animation performance */
 
     /**

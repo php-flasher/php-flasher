@@ -20,7 +20,7 @@
     --onyx-text-dark: #f5f5f5;                    /* Light gray text in dark mode */
     --onyx-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Soft, spread shadow */
     --onyx-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25); /* Deeper shadow for dark mode */
-    --onyx-border-radius: 1rem;                   /* Generous rounded corners */
+    --onyx-border-radius: 4px;                   /* Generous rounded corners */
 
     /* Type-specific colors for accent dots and progress bar */
     --onyx-success: #10b981;                      /* Green for success */
@@ -59,7 +59,7 @@
     animation: onyxIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Refined animation with custom easing */
     font-family: var(--fl-font), serif;
     will-change: transform, opacity, filter;      /* Optimize for animation performance */
-    border-radius: var(--onyx-border-radius);     /* Rounded corners */
+    border-radius: var(--onyx-border-radius) var(--onyx-border-radius) 0 0;     /* Rounded corners */
     overflow: hidden;                             /* Contain progress bar */
 
     /**
