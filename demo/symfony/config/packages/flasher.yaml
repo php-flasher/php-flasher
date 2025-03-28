@@ -1,7 +1,7 @@
 flasher:
     # Default notification library (e.g., 'flasher', 'toastr', 'noty', etc.)
     # themes: flasher, crystal, emerald, sapphire
-    default: theme.amazon
+    default: theme.minimal
 
     # Path to the main JavaScript file of PHPFlasher
     main_script: '/vendor/flasher/flasher.min.js'
