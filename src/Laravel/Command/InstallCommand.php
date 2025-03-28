@@ -107,14 +107,14 @@ final class InstallCommand extends Command
     ];
 
     /**
-     * File type icons for visualization.
+     * File type icons for visualization (ASCII-friendly version).
      */
     private array $fileTypeIcons = [
-        'js' => '📜',
-        'css' => '🎨',
-        'json' => '📋',
-        'php' => '🐘',
-        'default' => '📄',
+        'js' => '[JS]',
+        'css' => '[CSS]',
+        'json' => '[JSON]',
+        'php' => '[PHP]',
+        'default' => '[FILE]',
     ];
 
     /**
@@ -171,8 +171,8 @@ final class InstallCommand extends Command
         $this->detectTerminalDimensions();
 
         // Ensure output is cleared and properly formatted
-        if (function_exists('pcntl_signal')) {
-            pcntl_signal(SIGINT, function () {
+        if (\function_exists('pcntl_signal')) {
+            pcntl_signal(\SIGINT, function () {
                 $this->output->writeln('');
                 $this->output->writeln('<fg=red;options=bold>Installation aborted!</>');
                 exit(1);
@@ -204,6 +204,7 @@ final class InstallCommand extends Command
                 $this->task('Preparing installation directory', function () use ($filesystem, $publicDir) {
                     $filesystem->deleteDirectory($publicDir);
                     $filesystem->makeDirectory($publicDir, 0755, true);
+
                     return true;
                 });
             }
@@ -227,7 +228,7 @@ final class InstallCommand extends Command
             $this->debugGroupStart('Plugin Discovery');
             $this->debug("Found {$providers->count()} service providers", 'info');
             $providers->each(function ($provider, $index) {
-                $this->debug("Provider #{$index}: " . get_class($provider), 'dim');
+                $this->debug("Provider #{$index}: ".$provider::class, 'dim');
             });
             $this->debug("Discovered {$providers->count()} PHPFlasher plugins", 'success');
             $this->debugGroupEnd();
@@ -260,7 +261,7 @@ final class InstallCommand extends Command
             // Update progress with spinning indicator
             if (!$this->minimalMode) {
                 $spinners = $this->asciiMode ? $this->asciiSpinnerChars : $this->spinnerChars;
-                $char = $spinners[$index % count($spinners)];
+                $char = $spinners[$index % \count($spinners)];
                 $progressBar->setMessage("<fg=blue>{$char}</> <fg=blue;options=bold>Processing:</> <fg=cyan>{$plugin->getAlias()}</>");
             }
             $progressBar->advance();
@@ -300,7 +301,7 @@ final class InstallCommand extends Command
 
                 if ($this->debugMode) {
                     $this->debug(
-                        "Published {$plugin->getAlias()} in " . $this->getElapsedTime("plugin_{$index}") . 'ms',
+                        "Published {$plugin->getAlias()} in ".$this->getElapsedTime("plugin_{$index}").'ms',
                         'success'
                     );
                     $this->debugGroupEnd();
@@ -317,8 +318,8 @@ final class InstallCommand extends Command
                 ]);
 
                 if ($this->debugMode) {
-                    $this->debug("Error publishing {$plugin->getAlias()}: " . $e->getMessage(), 'error');
-                    $this->debug('Exception trace: ' . $e->getTraceAsString(), 'dim');
+                    $this->debug("Error publishing {$plugin->getAlias()}: ".$e->getMessage(), 'error');
+                    $this->debug('Exception trace: '.$e->getTraceAsString(), 'dim');
                     $this->debugGroupEnd();
                 }
             }
@@ -343,6 +344,7 @@ final class InstallCommand extends Command
         $this->startTiming('manifest');
         $this->task('Creating asset manifest', function () use ($files) {
             $this->assetManager->createManifest(array_merge([], ...$files));
+
             return true;
         });
         $this->stopTiming('manifest');
@@ -351,11 +353,6 @@ final class InstallCommand extends Command
         $this->displayComprehensiveSummary($exitCode);
 
         $this->stopTiming('total');
-
-        // Show debug performance metrics if requested
-        if ($this->debugMode) {
-            $this->displayPerformanceMetrics();
-        }
 
         return $exitCode;
     }
@@ -385,15 +382,15 @@ final class InstallCommand extends Command
      */
     private function detectTerminalDimensions(): void
     {
-        if (function_exists('exec')) {
+        if (\function_exists('exec')) {
             @exec('tput cols 2>/dev/null', $columns, $return_var);
-            if ($return_var === 0 && isset($columns[0])) {
-                $this->terminalDimensions['width'] = (int)$columns[0];
+            if (0 === $return_var && isset($columns[0])) {
+                $this->terminalDimensions['width'] = (int) $columns[0];
             }
 
             @exec('tput lines 2>/dev/null', $lines, $return_var);
-            if ($return_var === 0 && isset($lines[0])) {
-                $this->terminalDimensions['height'] = (int)$lines[0];
+            if (0 === $return_var && isset($lines[0])) {
+                $this->terminalDimensions['height'] = (int) $lines[0];
             }
         }
     }
@@ -403,13 +400,13 @@ final class InstallCommand extends Command
      */
     private function runningInCI(): bool
     {
-        return (bool)(
-            getenv('CI') ||
-            getenv('CONTINUOUS_INTEGRATION') ||
-            getenv('GITHUB_ACTIONS') ||
-            getenv('GITLAB_CI') ||
-            getenv('TRAVIS') ||
-            getenv('CIRCLECI')
+        return (bool) (
+            getenv('CI')
+            || getenv('CONTINUOUS_INTEGRATION')
+            || getenv('GITHUB_ACTIONS')
+            || getenv('GITLAB_CI')
+            || getenv('TRAVIS')
+            || getenv('CIRCLECI')
         );
     }
 
@@ -418,8 +415,8 @@ final class InstallCommand extends Command
      */
     private function supportsUnicode(): bool
     {
-        return stripos(getenv('LANG') ?: '', 'UTF-8') !== false ||
-            stripos(getenv('LC_ALL') ?: '', 'UTF-8') !== false;
+        return false !== stripos(getenv('LANG') ?: '', 'UTF-8')
+            || false !== stripos(getenv('LC_ALL') ?: '', 'UTF-8');
     }
 
     /**
@@ -490,11 +487,11 @@ final class InstallCommand extends Command
             $this->terminalDimensions['width'] - 20 :
             60;
 
-        $title = 'PHPFLASHER RESOURCE INSTALLER v11';
-        $padding = max(0, ($titleWidth - strlen(strip_tags($title))) / 2);
-        $paddingStr = str_repeat(' ', (int)$padding);
+        $title = 'PHPFLASHER RESOURCE INSTALLER v2';
+        $padding = max(0, ($titleWidth - \strlen(strip_tags($title))) / 2);
+        $paddingStr = str_repeat(' ', (int) $padding);
 
-        $this->line('   ' . $paddingStr . '<fg=yellow;options=bold>PHPFLASHER RESOURCE INSTALLER</> <fg=blue>v11</fg=blue>');
+        $this->line('   '.$paddingStr.'<fg=yellow;options=bold>PHPFLASHER RESOURCE INSTALLER</> <fg=blue>v2</fg=blue>');
         $this->newLine();
 
         $this->stopTiming('banner');
@@ -540,6 +537,7 @@ final class InstallCommand extends Command
             if ($this->debugMode) {
                 $this->debug("Force flag enabled, cleaning directory without confirmation: {$directory}", 'notice');
             }
+
             return true;
         }
 
@@ -551,18 +549,18 @@ final class InstallCommand extends Command
         // Otherwise ask for confirmation with enhanced visuals
         if (!$this->minimalMode && !$this->asciiMode) {
             $this->newLine();
-            $this->line('   <box>╭' . str_repeat('─', 70) . '╮</box>');
-            $this->line('   <box>│</box> <box-title>CONFIRM DIRECTORY CLEANUP</box-title>' . str_repeat(' ', 47) . '<box>│</box>');
-            $this->line('   <box>│</box>' . str_repeat(' ', 70) . '<box>│</box>');
+            $this->line('   <box>╭'.str_repeat('─', 70).'╮</box>');
+            $this->line('   <box>│</box> <box-title>CONFIRM DIRECTORY CLEANUP</box-title>'.str_repeat(' ', 47).'<box>│</box>');
+            $this->line('   <box>│</box>'.str_repeat(' ', 70).'<box>│</box>');
 
             $message = 'The directory exists and needs to be cleaned before installation:';
-            $this->line('   <box>│</box> ' . $message . str_repeat(' ', 70 - strlen($message)) . '<box>│</box>');
+            $this->line('   <box>│</box> '.$message.str_repeat(' ', 70 - \strlen($message)).'<box>│</box>');
 
             $dirLine = "  <fg=yellow>{$directory}</>";
-            $this->line('   <box>│</box>' . $dirLine . str_repeat(' ', 70 - strlen(strip_tags($dirLine))) . '<box>│</box>');
+            $this->line('   <box>│</box>'.$dirLine.str_repeat(' ', 70 - \strlen(strip_tags($dirLine))).'<box>│</box>');
 
-            $this->line('   <box>│</box>' . str_repeat(' ', 70) . '<box>│</box>');
-            $this->line('   <box>╰' . str_repeat('─', 70) . '╯</box>');
+            $this->line('   <box>│</box>'.str_repeat(' ', 70).'<box>│</box>');
+            $this->line('   <box>╰'.str_repeat('─', 70).'╯</box>');
             $this->newLine();
 
             return $this->confirm('   <fg=blue>•</> Do you want to clean this directory?', true);
@@ -576,20 +574,14 @@ final class InstallCommand extends Command
     }
 
     /**
-     * Display installation configuration summary with visual enhancements.
+     * Display installation configuration summary with simplified styling.
      */
     private function displayInstallationConfig(bool $useSymlinks, bool $publishConfig, bool $force): void
     {
         $this->newLine();
 
-        // Box-style header for enhanced visual appeal
-        if (!$this->asciiMode) {
-            $this->line('   <box>╭' . str_repeat('─', 70) . '╮</box>');
-            $this->line('   <box>│</box> <box-title>INSTALLATION CONFIGURATION</box-title>' . str_repeat(' ', 46) . '<box>│</box>');
-            $this->line('   <box>╰' . str_repeat('─', 70) . '╯</box>');
-        } else {
-            $this->line('   <fg=blue;options=bold>[ INSTALLATION CONFIGURATION ]</>');
-        }
+        // Use bracketed header style for all environments
+        $this->line('   <fg=blue;options=bold>[ INSTALLATION CONFIGURATION ]</>');
 
         $this->newLine();
 
@@ -654,8 +646,8 @@ final class InstallCommand extends Command
     private function discoverPluginProviders(): Collection
     {
         $providers = collect(array_keys(App::getLoadedProviders()))
-            ->filter(fn($provider) => is_a($provider, PluginServiceProvider::class, true))
-            ->map(fn($provider) => App::getProvider($provider))
+            ->filter(fn ($provider) => is_a($provider, PluginServiceProvider::class, true))
+            ->map(fn ($provider) => App::getProvider($provider))
             ->values();
 
         return $providers;
@@ -664,7 +656,7 @@ final class InstallCommand extends Command
     /**
      * Execute a task with enhanced visual feedback.
      *
-     * @param string $title Task title
+     * @param string   $title    Task title
      * @param callable $callback Task callback
      */
     private function task(string $title, callable $callback): bool
@@ -700,7 +692,8 @@ final class InstallCommand extends Command
             }
 
             $this->stopTiming("task_{$taskName}");
-            return (bool)$result;
+
+            return (bool) $result;
         } catch (\Exception $e) {
             ob_end_flush();
 
@@ -714,10 +707,11 @@ final class InstallCommand extends Command
             }
 
             if ($this->debugMode) {
-                $this->debug('Exception trace: ' . $e->getTraceAsString(), 'dim');
+                $this->debug('Exception trace: '.$e->getTraceAsString(), 'dim');
             }
 
             $this->stopTiming("task_{$taskName}");
+
             return false;
         }
     }
@@ -725,10 +719,10 @@ final class InstallCommand extends Command
     /**
      * Publish assets from a plugin to the public directory with enhanced visual feedback.
      *
-     * @param PluginInterface $plugin The plugin to publish assets from
-     * @param string $publicDir The target public directory
-     * @param bool $useSymlinks Whether to symlink or copy assets
-     * @param bool $force Whether to force overwrite existing files
+     * @param PluginInterface $plugin      The plugin to publish assets from
+     * @param string          $publicDir   The target public directory
+     * @param bool            $useSymlinks Whether to symlink or copy assets
+     * @param bool            $force       Whether to force overwrite existing files
      *
      * @return string[] Array of published file paths
      */
@@ -740,6 +734,7 @@ final class InstallCommand extends Command
             if ($this->debugMode) {
                 $this->debug("No assets directory found for {$plugin->getAlias()}: {$originDir}", 'notice');
             }
+
             return [];
         }
 
@@ -748,7 +743,7 @@ final class InstallCommand extends Command
         $finder->files()->in($originDir);
 
         if ($this->debugMode) {
-            $this->debug("Publishing assets for {$plugin->getAlias()}: " . $finder->count() . ' files', 'info');
+            $this->debug("Publishing assets for {$plugin->getAlias()}: ".$finder->count().' files', 'info');
         }
 
         $files = [];
@@ -767,9 +762,9 @@ final class InstallCommand extends Command
 
         // Process files with a mini progress animation for debug mode
         foreach ($finder as $file) {
-            $filesCount++;
+            ++$filesCount;
             $relativePath = trim(str_replace($originDir, '', $file->getRealPath()), \DIRECTORY_SEPARATOR);
-            $targetPath = $publicDir . $relativePath;
+            $targetPath = $publicDir.$relativePath;
             $fileSize = $file->getSize();
             $totalSize += $fileSize;
             $extension = strtolower($file->getExtension());
@@ -805,7 +800,7 @@ final class InstallCommand extends Command
             }
 
             // Create a subtle pulsing animation if in debug mode
-            if ($this->debugMode && !$this->noAnimation && $filesCount % 3 === 0) {
+            if ($this->debugMode && !$this->noAnimation && 0 === $filesCount % 3) {
                 echo "\033[s"; // Save cursor position
                 echo "\033[u"; // Restore cursor position
                 usleep(5000); // Short delay for subtle animation
@@ -816,21 +811,21 @@ final class InstallCommand extends Command
 
         if ($this->debugMode) {
             if ($filesCount > $maxFilesToShow) {
-                $this->debug('  ... and ' . ($filesCount - $maxFilesToShow) . ' more files', 'dim');
+                $this->debug('  ... and '.($filesCount - $maxFilesToShow).' more files', 'dim');
             }
 
-            if (count($files) > 0) {
-                $this->debug("Total size: {$this->formatBytes($totalSize)} in " . count($files) . ' files', 'success');
+            if (\count($files) > 0) {
+                $this->debug("Total size: {$this->formatBytes($totalSize)} in ".\count($files).' files', 'success');
             }
 
             // Add file type breakdown for better visualization
             foreach ($filesByType as $type => $typeFiles) {
-                if (count($typeFiles) > 0) {
+                if (\count($typeFiles) > 0) {
                     $totalTypeSize = array_sum(array_column($typeFiles, 'size'));
                     $icon = $this->asciiMode ?
                         ($this->asciiFileTypeIcons[$type] ?? $this->asciiFileTypeIcons['default']) :
                         ($this->fileTypeIcons[$type] ?? $this->fileTypeIcons['default']);
-                    $this->debug("  {$icon} {$type}: " . count($typeFiles) . " files ({$this->formatBytes($totalTypeSize)})", 'dim');
+                    $this->debug("  {$icon} {$type}: ".\count($typeFiles)." files ({$this->formatBytes($totalTypeSize)})", 'dim');
                 }
             }
         }
@@ -841,9 +836,9 @@ final class InstallCommand extends Command
     /**
      * Publish a plugin's configuration file with enhanced visual feedback.
      *
-     * @param PluginInterface $plugin The plugin to publish configuration for
-     * @param string $configFile The source configuration file path
-     * @param bool $force Whether to force override existing files
+     * @param PluginInterface $plugin     The plugin to publish configuration for
+     * @param string          $configFile The source configuration file path
+     * @param bool            $force      Whether to force override existing files
      *
      * @return bool Whether configuration was published
      */
@@ -853,16 +848,18 @@ final class InstallCommand extends Command
             if ($this->debugMode) {
                 $this->debug("Config file not found for {$plugin->getAlias()}: {$configFile}", 'notice');
             }
+
             return false;
         }
 
-        $target = App::configPath($plugin->getName() . '.php');
+        $target = App::configPath($plugin->getName().'.php');
 
         // Only skip if file exists AND force is false
         if (file_exists($target) && !$force) {
             if ($this->debugMode) {
                 $this->debug("Config already exists for {$plugin->getAlias()}, skipping (use --force to override)", 'notice');
             }
+
             return false;
         }
 
@@ -886,42 +883,7 @@ final class InstallCommand extends Command
     }
 
     /**
-     * Create a symlink with better error handling.
-     */
-    private function createSymlink(string $source, string $target): bool
-    {
-        // Make sure the target directory exists
-        $targetDir = dirname($target);
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0755, true);
-        }
-
-        // Remove the target if it exists
-        if (file_exists($target)) {
-            @unlink($target);
-        }
-
-        // Create the symlink
-        $success = false;
-        if (PHP_OS_FAMILY === 'Windows') {
-            // Windows needs special handling for symlinks
-            $isDir = is_dir($source);
-            $success = @symlink($source, $target);
-        } else {
-            $success = @symlink($source, $target);
-        }
-
-        if (!$success) {
-            throw new \RuntimeException("Failed to create symlink from {$source} to {$target}");
-        }
-
-        return true;
-    }
-
-    /**
      * Display a comprehensive summary of the installation process with enhanced visuals.
-     *
-     * @param int $exitCode The exit code indicating success or failure
      */
     private function displayComprehensiveSummary(int $exitCode): void
     {
@@ -947,57 +909,50 @@ final class InstallCommand extends Command
             }
 
             $this->newLine();
+
             return;
         }
 
         // Enhanced with detailed results and animated success
-        if ($exitCode === self::SUCCESS) {
-            if ($this->asciiMode) {
-                $this->line('   <fg=green;options=bold>[ INSTALLATION COMPLETED SUCCESSFULLY ]</>');
-            } else {
-                // Animate the success message for extra wow effect
-                if (!$this->noAnimation) {
-                    $chars = ['⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'];
-                    for ($i = 0; $i < 5; $i++) { // 5 animation cycles
-                        echo "\033[s"; // Save cursor position
-                        $this->line('   <fg=green;options=bold>[ INSTALLATION ' . $chars[$i % count($chars)] . ' ]</>');
-                        usleep(100000); // 100ms delay
-                        echo "\033[u"; // Restore cursor position
-                    }
+        if (self::SUCCESS === $exitCode) {
+            // Animate the success message for extra wow effect
+            if (!$this->noAnimation) {
+                $chars = ['⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'];
+                for ($i = 0; $i < 5; ++$i) { // 5 animation cycles
+                    echo "\033[s"; // Save cursor position
+                    $this->line('   <fg=green;options=bold>[ INSTALLATION '.$chars[$i % \count($chars)].' ]</>');
+                    usleep(100000); // 100ms delay
+                    echo "\033[u"; // Restore cursor position
                 }
-                // Rainbow gradient for success message
-                $this->line('   <fg=green;options=bold>[ INSTALLATION COMPLETED SUCCESSFULLY ]</>');
-
-                // Show a random success message for fun
-                $randomMessage = $this->successMessages[array_rand($this->successMessages)];
-                $this->newLine();
-                $this->line('   <fg=green>' . $randomMessage . '</>');
             }
+            // Final success message
+            $this->line('   <fg=green;options=bold>[ INSTALLATION COMPLETED SUCCESSFULLY ]</>');
+
+            // Show a random success message for fun
+            $randomMessage = $this->successMessages[array_rand($this->successMessages)];
+            $this->newLine();
+            $this->line('   <fg=green>'.$randomMessage.'</>');
         } else {
             $this->line('   <fg=red;options=bold>[ INSTALLATION COMPLETED WITH ERRORS ]</>');
         }
         $this->newLine();
 
-        // Create a fancy box for the results table if not in ASCII mode
-        if (!$this->asciiMode) {
-            $tableWidth = 70;
-            $this->line('   <box>╭' . str_repeat('─', $tableWidth) . '╮</box>');
-            $this->line('   <box>│</box> <box-title>INSTALLATION RESULTS</box-title>' . str_repeat(' ', $tableWidth - 23) . '<box>│</box>');
-            $this->line('   <box>├' . str_repeat('─', $tableWidth) . '┤</box>');
-        }
+        // Results section with bracket-style header
+        $this->line('   <fg=blue;options=bold>[ INSTALLATION RESULTS ]</>');
+        $this->newLine();
 
-        // Detailed results table with color-coded status and animated icons
+        // Detailed results table with color-coded status
         $headers = ['Plugin', 'Status', 'Assets', 'Config', 'Time (ms)'];
         $rows = $this->results->map(function ($result) {
             $checkmark = $this->asciiMode ? '√' : '✓';
             $xmark = $this->asciiMode ? 'x' : '✗';
 
-            $status = $result['status'] === 'success'
-                ? '<fg=green;options=bold>' . $checkmark . ' Success</>'
-                : '<fg=red;options=bold>' . $xmark . ' Failed</>';
+            $status = 'success' === $result['status']
+                ? '<fg=green;options=bold>'.$checkmark.' Success</>'
+                : '<fg=red;options=bold>'.$xmark.' Failed</>';
 
             return [
-                '<fg=cyan;options=bold>' . $result['plugin'] . '</>',
+                '<fg=cyan;options=bold>'.$result['plugin'].'</>',
                 $status,
                 $result['assets'],
                 $result['config'],
@@ -1007,32 +962,20 @@ final class InstallCommand extends Command
 
         $this->table($headers, $rows);
 
-        // Close the box if not in ASCII mode
-        if (!$this->asciiMode) {
-            $this->line('   <box>╰' . str_repeat('─', $tableWidth) . '╯</box>');
-        }
-
-        // Statistics section with animated counting if not in no-animation mode
+        // Statistics section with bracket-style header
         $totalTime = round((microtime(true) - $this->startTime) * 1000);
         $successCount = $this->results->where('status', 'success')->count();
         $failureCount = $this->results->where('status', 'error')->count();
         $totalAssets = $this->results->sum('assets');
 
-        if (!$this->asciiMode) {
-            $this->line('   <box>╭' . str_repeat('─', $tableWidth) . '╮</box>');
-            $this->line('   <box>│</box> <box-title>INSTALLATION STATISTICS</box-title>' . str_repeat(' ', $tableWidth - 25) . '<box>│</box>');
-            $this->line('   <box>╰' . str_repeat('─', $tableWidth) . '╯</box>');
-        } else {
-            $this->line('   <fg=blue;options=bold>[ INSTALLATION STATISTICS ]</>');
-        }
-
+        $this->line('   <fg=blue;options=bold>[ INSTALLATION STATISTICS ]</>');
         $this->newLine();
 
         // Animated statistics counter for extra wow effect
         if (!$this->noAnimation && !$this->minimalMode) {
             // Animate total plugins count
             echo '   <fg=cyan;options=bold>Total Plugins</> .................................................................. ';
-            for ($i = 0; $i <= $this->results->count(); $i++) {
+            for ($i = 0; $i <= $this->results->count(); ++$i) {
                 echo "\033[s"; // Save cursor position
                 echo "<fg=yellow>{$i}</>";
                 if ($i < $this->results->count()) {
@@ -1040,11 +983,11 @@ final class InstallCommand extends Command
                     echo "\033[u"; // Restore cursor position
                 }
             }
-            echo PHP_EOL;
+            echo \PHP_EOL;
 
             // Animate successful count
             echo '   <fg=cyan;options=bold>Successful</> ................................................................... ';
-            for ($i = 0; $i <= $successCount; $i++) {
+            for ($i = 0; $i <= $successCount; ++$i) {
                 echo "\033[s"; // Save cursor position
                 echo "<fg=green>{$i}</>";
                 if ($i < $successCount) {
@@ -1052,7 +995,7 @@ final class InstallCommand extends Command
                     echo "\033[u"; // Restore cursor position
                 }
             }
-            echo PHP_EOL;
+            echo \PHP_EOL;
 
             // Other stats without animation
             $this->components->twoColumnDetail('<fg=cyan;options=bold>Failed</>', "<fg=red>{$failureCount}</>");
@@ -1067,135 +1010,14 @@ final class InstallCommand extends Command
             $this->components->twoColumnDetail('<fg=cyan;options=bold>Total Time</>', "<fg=yellow>{$totalTime}ms</>");
         }
 
-        // Next steps with animated typing effect
+        // Documentation section - simplified now that PHPFlasher auto-injects
         $this->newLine();
-        if (!$this->asciiMode) {
-            $this->line('   <box>╭' . str_repeat('─', $tableWidth) . '╮</box>');
-            $this->line('   <box>│</box> <box-title>NEXT STEPS</box-title>' . str_repeat(' ', $tableWidth - 13) . '<box>│</box>');
-            $this->line('   <box>╰' . str_repeat('─', $tableWidth) . '╯</box>');
-        } else {
-            $this->line('   <fg=blue;options=bold>[ NEXT STEPS ]</>');
-        }
+        $this->line('   <fg=blue;options=bold>[ DOCUMENTATION ]</>');
         $this->newLine();
-
-        // Animate typing effect for next steps
-        $nextSteps = [
-            '<fg=white>• Include PHPFlasher in your layouts using the Blade directive:</> <fg=yellow>@flasher_render</>',
-            '<fg=white>• For SPA/API usage, include the following in your response:</> <fg=yellow>flasher()->render()</>',
-            '<fg=white>• Documentation:</> <fg=blue>https://php-flasher.io</>',
-        ];
-
-        if (!$this->noAnimation && !$this->minimalMode) {
-            foreach ($nextSteps as $step) {
-                $plainStep = strip_tags($step);
-                echo '   ';
-
-                // Typing animation for instruction - fixed to avoid empty string error
-                for ($i = 1; $i <= strlen($plainStep); $i++) {
-                    // Get the current character to output
-                    $currentChar = $plainStep[$i-1];
-                    echo $currentChar;
-                    usleep(10000); // 10ms delay for character typing
-                }
-                echo PHP_EOL;
-            }
-        } else {
-            foreach ($nextSteps as $step) {
-                $this->line('   ' . $step);
-            }
-        }
-
+        $this->line('   <fg=white>• PHPFlasher Documentation:</> <fg=blue>https://php-flasher.io</>');
         $this->newLine();
 
         $this->stopTiming('summary');
-    }
-
-    /**
-     * Display performance metrics in debug mode with enhanced visuals.
-     */
-    private function displayPerformanceMetrics(): void
-    {
-        // Skip if not in debug mode
-        if (!$this->debugMode) {
-            return;
-        }
-
-        $this->newLine();
-        if (!$this->asciiMode) {
-            $tableWidth = 70;
-            $this->line('   <box>╭' . str_repeat('─', $tableWidth) . '╮</box>');
-            $this->line('   <box>│</box> <box-title>PERFORMANCE METRICS</box-title>' . str_repeat(' ', $tableWidth - 22) . '<box>│</box>');
-            $this->line('   <box>╰' . str_repeat('─', $tableWidth) . '╯</box>');
-        } else {
-            $this->line('   <fg=yellow;options=bold>[ PERFORMANCE METRICS ]</>');
-        }
-        $this->newLine();
-
-        // Sort timings by duration (descending)
-        $timings = [];
-        foreach ($this->metrics as $name => $timing) {
-            if (isset($timing['duration'])) {
-                $timings[$name] = $timing['duration'];
-            }
-        }
-
-        arsort($timings);
-
-        // Create a formatted table
-        $headers = ['Operation', 'Duration (ms)', 'Percentage'];
-        $rows = [];
-        $totalTime = $this->metrics['total']['duration'] ?? 1; // Prevent division by zero
-
-        foreach ($timings as $name => $duration) {
-            if ($name === 'total') {
-                continue; // Skip total, will show it separately
-            }
-
-            $percent = round(($duration / $totalTime) * 100, 1);
-            $percentDisplay = $this->getColoredPercentage($percent);
-
-            // Format operation name nicely
-            $operation = str_replace(['_', 'task_'], [' ', ''], $name);
-            $operation = ucwords($operation);
-
-            $rows[] = [
-                $operation,
-                $duration,
-                $percentDisplay,
-            ];
-        }
-
-        $this->table($headers, $rows);
-
-        // Show total time separately with visual bar
-        $this->newLine();
-        $totalDuration = $this->metrics['total']['duration'] ?? round((microtime(true) - $this->startTime) * 1000);
-
-        if (!$this->noAnimation && !$this->asciiMode) {
-            // Animated timer bar
-            $this->line('   <fg=blue>•</> Total execution time: ');
-            $barWidth = min(50, $this->terminalDimensions['width'] - 30);
-            echo '   [';
-            for ($i = 0; $i < $barWidth; $i++) {
-                echo "\033[s"; // Save cursor position
-                echo "\033[32m"; // Green color
-                for ($j = 0; $j <= $i; $j++) {
-                    echo '■';
-                }
-                echo "\033[0m"; // Reset color
-                echo str_repeat(' ', $barWidth - $i - 1);
-                echo '] ' . round(($i + 1) / $barWidth * $totalDuration) . 'ms';
-                if ($i < $barWidth - 1) {
-                    usleep(1000000 / $barWidth); // Distribute over 1 second
-                    echo "\033[u"; // Restore cursor position
-                }
-            }
-            echo PHP_EOL;
-        } else {
-            $this->line("   <fg=blue>•</> Total execution time: <fg=yellow;options=bold>{$totalDuration}ms</>");
-        }
-
-        $this->newLine();
     }
 
     /**
@@ -1209,9 +1031,9 @@ final class InstallCommand extends Command
 
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         $pow = floor(log($bytes, 1024));
-        $pow = min($pow, count($units) - 1);
+        $pow = min($pow, \count($units) - 1);
 
-        $bytes /= pow(1024, $pow);
+        $bytes /= 1024 ** $pow;
 
         // Color-code based on size
         $color = 'green';
@@ -1223,7 +1045,7 @@ final class InstallCommand extends Command
             $color = 'blue';
         }
 
-        return "<fg=$color>" . round($bytes, $precision) . ' ' . $units[$pow] . '</>';
+        return "<fg=$color>".round($bytes, $precision).' '.$units[$pow].'</>';
     }
 
     /**
@@ -1274,8 +1096,8 @@ final class InstallCommand extends Command
             return;
         }
 
-        $this->debugLineCount++;
-        $timestamp = '[' . sprintf('%.3f', (microtime(true) - $this->startTime) * 1000) . 'ms]';
+        ++$this->debugLineCount;
+        $timestamp = '['.\sprintf('%.3f', (microtime(true) - $this->startTime) * 1000).'ms]';
         $this->line("   <fg=gray>{$timestamp}</> <{$level}>{$message}</{$level}>");
     }
 
@@ -1302,20 +1124,6 @@ final class InstallCommand extends Command
         }
 
         $this->newLine();
-    }
-
-    /**
-     * Get a color-coded percentage string based on the value.
-     */
-    private function getColoredPercentage(float $percent): string
-    {
-        if ($percent > 30) {
-            return "<fg=red>{$percent}%</>";
-        } elseif ($percent > 10) {
-            return "<fg=yellow>{$percent}%</>";
-        } else {
-            return "<fg=green>{$percent}%</>";
-        }
     }
 
     /**
