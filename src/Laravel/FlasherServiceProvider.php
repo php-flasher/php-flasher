@@ -193,7 +193,16 @@ final class FlasherServiceProvider extends PluginServiceProvider
             $templateEngine = $app->make('flasher.template_engine');
             $assetManager = $app->make('flasher.asset_manager');
             $mainScript = $config->get('flasher.main_script');
-            $resources = $config->get('flasher.plugins');
+
+            $resources = [];
+
+            foreach ($config->get('flasher.plugins') as $name => $options) {
+                $resources[$name] = $options;
+            }
+
+            foreach ($config->get('flasher.themes') as $name => $options) {
+                $resources['theme.'.$name] = $options;
+            }
 
             return new ResourceManager($templateEngine, $assetManager, $mainScript, $resources);
         });

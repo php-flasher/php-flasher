@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'default' => 'theme.minimal',
+
     'inject_assets' => true,
 
     'options' => [
