@@ -1,0 +1,806 @@
+---
+layout: post
+title: 'PHPFlasher Configuration Options Explained for Beginners'
+date: 2025-03-30 07:30:35
+author: yoeunes
+github_username: yoeunes
+twitter_username: yoeunes_en
+linkedin_username: younes--ennaji
+author_bio: 'Creator and maintainer of PHPFlasher. Passionate about building elegant and intuitive PHP libraries that improve developer experience.'
+tags: [phpflasher, configuration, tutorial, beginners]
+image: /static/images/blog/phpflasher-laravel.png
+excerpt: 'A beginner-friendly guide to understanding and customizing PHPFlasher v2 configuration options for your PHP applications.'
+reading_time: 8
+featured: true
+---
+
+<div class='mb-8'>
+    <p class='text-lg text-slate-600 leading-relaxed'>
+        <span class='font-semibold text-indigo-900'>PHP<span class='text-indigo-500'>Flasher</span></span> v2 comes with
+        a powerful configuration system that helps you customize your notifications to fit your application perfectly.
+        In this beginner's guide, we'll break down each configuration option to help you understand what they do and how
+        to use them.
+    </p>
+</div>
+
+<div class='bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-6 mb-10 border border-indigo-100'>
+    <h4 class='text-xl font-semibold text-indigo-900 mb-4 flex items-center'>
+        <i class='fa-duotone fa-lightbulb text-amber-500 mr-2 fa-lg'></i> Why Configuration Matters
+    </h4>
+    <p class='mb-4 text-slate-700'>
+        While PHPFlasher works great with its default settings, understanding the configuration options gives you:
+    </p>
+    <ul class='space-y-2 mb-0'>
+        <li class='flex items-start'>
+            <i class='fa-duotone fa-circle-check text-green-500 mt-1 mr-2'></i>
+            <span><strong class='text-slate-900'>Complete control</strong> over the appearance and behavior of your notifications</span>
+        </li>
+        <li class='flex items-start'>
+            <i class='fa-duotone fa-circle-check text-green-500 mt-1 mr-2'></i>
+            <span><strong class='text-slate-900'>Consistent styling</strong> across your entire application</span>
+        </li>
+        <li class='flex items-start'>
+            <i class='fa-duotone fa-circle-check text-green-500 mt-1 mr-2'></i>
+            <span>The ability to create <strong class='text-slate-900'>reusable notification templates</strong> with presets</span>
+        </li>
+    </ul>
+</div>
+
+<h4 class='text-2xl font-bold text-slate-900 mb-4'>Getting Started with PHPFlasher Configuration</h4>
+
+<p class='mb-6'>
+    First, let's look at how to access and modify your PHPFlasher configuration. If you're using Laravel, you can
+    publish the configuration file with:
+</p>
+
+<div class='bg-slate-800 rounded-lg overflow-hidden mb-6'>
+    <div class='flex items-center justify-between px-4 py-2 bg-slate-900'>
+        <div class='text-xs text-slate-200'>Terminal</div>
+        <div class='flex space-x-2'>
+            <div class='w-3 h-3 rounded-full bg-red-500'></div>
+            <div class='w-3 h-3 rounded-full bg-yellow-500'></div>
+            <div class='w-3 h-3 rounded-full bg-green-500'></div>
+        </div>
+    </div>
+    <pre class='language-bash m-0 p-4 text-slate-50 overflow-x-auto'><code>php artisan vendor:publish --tag=flasher-config</code></pre>
+</div>
+
+<p class='mb-6'>
+    This will create a <code class='bg-slate-100 px-1.5 py-0.5 rounded text-slate-800'>config/flasher.php</code> file in
+    your project. Let's explore what's inside:
+</p>
+
+<div class='bg-slate-800 rounded-lg overflow-hidden mb-8'>
+    <div class='flex items-center justify-between px-4 py-2 bg-slate-900'>
+        <div class='text-xs text-slate-200'>config/flasher.php</div>
+        <div class='flex space-x-2'>
+            <div class='w-3 h-3 rounded-full bg-red-500'></div>
+            <div class='w-3 h-3 rounded-full bg-yellow-500'></div>
+            <div class='w-3 h-3 rounded-full bg-green-500'></div>
+        </div>
+    </div>
+    <pre class='language-php m-0 p-4 text-slate-50 overflow-x-auto'><code>&lt;?php
+
+declare(strict_types=1);
+
+use Flasher\Prime\Configuration;
+
+/*
+ * Default PHPFlasher configuration for Laravel.
+ */
+return Configuration::from([
+    // Default notification library
+    'default' => 'flasher',
+
+    // Path to the main PHPFlasher JavaScript file
+    'main_script' => '/vendor/flasher/flasher.min.js',
+
+    // List of CSS files to style your notifications
+    'styles' => [
+        '/vendor/flasher/flasher.min.css',
+    ],
+
+    // Other options...
+]);</code></pre>
+</div>
+
+<h4 class='text-2xl font-bold text-slate-900 mb-4'>Core Configuration Options Explained</h4>
+
+<div class='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10'>
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'default' Option</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>'default' => 'flasher',</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                This sets the default notification library PHPFlasher will use. Options include:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>flasher</code>: The default built-in adapter</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>toastr</code>: For Toastr-style notifications</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>noty</code>: For Noty.js notifications</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>sweetalert</code>: For SweetAlert notifications</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'main_script' & 'styles' Options</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>'main_script' => '/vendor/flasher/flasher.min.js',
+
+'styles' => [
+    '/vendor/flasher/flasher.min.css',
+],</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                These options control the JavaScript and CSS files that PHPFlasher loads:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>main_script</code>: Path to the main JavaScript file</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>styles</code>: Array of CSS files to load</span>
+                </li>
+            </ul>
+            <p class='text-slate-600 text-sm mt-3'>
+                You can change these to use CDN links or custom paths if needed.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10'>
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'options' Setting</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>// Set global options for all notifications
+'options' => [
+    'timeout' => 5000,
+    'position' => 'top-right',
+],</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                This setting defines default behavior for all notifications:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>timeout</code>: Time in milliseconds before notifications disappear (5000 = 5 seconds)</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>position</code>: Where notifications appear (top-right, top-left, bottom-right, bottom-left, etc.)</span>
+                </li>
+            </ul>
+            <div class='bg-indigo-50 p-3 mt-3 rounded-lg border border-indigo-100'>
+                <p class='text-xs text-indigo-800 mb-0'>
+                    <i class='fa-solid fa-info-circle mr-1'></i> These global options can be overridden for individual
+                    notifications.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'inject_assets' & 'translate' Options</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>'inject_assets' => true,
+
+'translate' => true,</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                These options control important PHPFlasher behaviors:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code
+                            class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>inject_assets</code>: When <code>true</code>, PHPFlasher automatically adds the required JavaScript and CSS to your pages</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>translate</code>: When <code>true</code>, PHPFlasher will try to translate notification messages using your framework's translation system</span>
+                </li>
+            </ul>
+            <div class="bg-amber-50 p-3 mt-3 rounded-lg border border-amber-100">
+                <p class="text-xs text-amber-800 mb-0">
+                    <i class="fa-solid fa-exclamation-triangle mr-1"></i> Setting <code>inject_assets</code> to <code>false</code>
+                    means you'll need to manually include the required assets in your templates.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class='text-2xl font-bold text-slate-900 mb-4'>Advanced Configuration Options</h4>
+
+<div class='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10'>
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'excluded_paths' Option</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>'excluded_paths' => [
+    'api/*',
+    'admin/reports/*',
+],</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                This option lets you specify URL patterns where PHPFlasher should not:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span>Inject JavaScript and CSS assets</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span>Convert framework flash messages to PHPFlasher notifications</span>
+                </li>
+            </ul>
+            <p class='text-slate-600 text-sm mt-3'>
+                This is useful for API routes or admin sections that don't need notifications.
+            </p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="border-b border-slate-200 px-6 py-4 bg-slate-50">
+            <h4 class="font-semibold text-slate-900">'flash_bag' Option</h4>
+        </div>
+        <div class="p-6">
+            <div class="bg-slate-800 rounded-lg overflow-hidden mb-4">
+                <pre class="language-php text-xs p-3 text-slate-50 overflow-x-auto"><code>'flash_bag' => [
+    'success' => ['success'],
+    'error' => ['error', 'danger'],
+    'warning' => ['warning', 'alarm'],
+    'info' => ['info', 'notice', 'alert'],
+],</code></pre>
+            </div>
+            <p class="text-slate-600 text-sm mb-3">
+                This option maps your framework's flash message types to PHPFlasher notification types:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span>The keys (<code>success</code>, <code>error</code>, etc.) are PHPFlasher notification types</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span>The values are arrays of framework flash types that map to each PHPFlasher type</span>
+                </li>
+            </ul>
+            <p class='text-slate-600 text-sm mt-3'>
+                This allows PHPFlasher to convert your existing flash messages automatically.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10'>
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'filter' Option</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>'filter' => [
+    'limit' => 5,
+    // You can add more filter criteria here
+],</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                This option lets you control which notifications are displayed:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span><code class='bg-slate-100 px-1 py-0.5 rounded text-slate-700'>limit</code>: Maximum number of notifications to show at once</span>
+                </li>
+            </ul>
+            <p class='text-slate-600 text-sm mt-3'>
+                This is helpful to prevent overwhelming users with too many notifications at once.
+            </p>
+        </div>
+    </div>
+
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>'presets' Option</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>'presets' => [
+    'entity_saved' => [
+        'type' => 'success',
+        'title' => 'Entity saved',
+        'message' => 'Entity saved successfully',
+    ],
+    'payment_failed' => [
+        'type' => 'error',
+        'title' => 'Payment failed',
+        'message' => 'Your payment could not be processed',
+    ],
+],</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mb-3'>
+                Presets are reusable notification templates that you can use throughout your application:
+            </p>
+            <ul class='space-y-1 text-sm text-slate-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span>Define common notifications once in your configuration</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+                    <span>Use them by name with <code>flash()->preset('entity_saved')</code></span>
+                </li>
+            </ul>
+            <p class='text-slate-600 text-sm mt-3'>
+                This reduces code duplication and ensures consistent messaging.
+            </p>
+        </div>
+    </div>
+</div>
+
+<h4 class='text-2xl font-bold text-slate-900 mb-4'>Practical Configuration Examples</h4>
+
+<p class='mb-6'>Let's look at some real-world examples to understand how these configuration options work together:</p>
+
+<div class="bg-slate-800 rounded-lg overflow-hidden mb-8">
+    <div class="flex items-center justify-between px-4 py-2 bg-slate-900">
+        <div class="text-xs text-slate-200">Basic Configuration Example</div>
+        <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+    </div>
+    <pre class="language-php m-0 p-4 text-slate-50 overflow-x-auto"><code>return Configuration::from([
+    'default' => 'toastr',
+    'main_script' => '/vendor/flasher/flasher.min.js',
+    'styles' => [
+        '/vendor/flasher/flasher.min.css',
+    ],
+    'options' => [
+        'timeout' => 5000,
+        'position' => 'top-right',
+    ],
+    'inject_assets' => true,
+    'translate' => true,
+    'flash_bag' => [
+        'success' => ['success'],
+        'error' => ['error', 'danger'],
+        'warning' => ['warning'],
+        'info' => ['info'],
+    ],
+]);</code></pre>
+</div>
+
+<div class="bg-slate-800 rounded-lg overflow-hidden mb-10">
+    <div class="flex items-center justify-between px-4 py-2 bg-slate-900">
+        <div class="text-xs text-slate-200">Advanced Configuration Example</div>
+        <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+    </div>
+    <pre class="language-php m-0 p-4 text-slate-50 overflow-x-auto"><code>return Configuration::from([
+    'default' => 'sweetalert',
+    'main_script' => 'https://cdn.example.com/flasher.min.js',
+    'styles' => [
+        'https://cdn.example.com/flasher.min.css',
+    ],
+    'options' => [
+        'timeout' => 8000,
+        'position' => 'top-center',
+    ],
+    'inject_assets' => true,
+    'translate' => true,
+    'excluded_paths' => [
+        'api/*',
+        'admin/reports/*',
+    ],
+    'flash_bag' => [
+        'success' => ['success', 'ok'],
+        'error' => ['error', 'danger', 'fail'],
+        'warning' => ['warning', 'caution'],
+        'info' => ['info', 'notice', 'note'],
+    ],
+    'filter' => [
+        'limit' => 3,
+    ],
+    'presets' => [
+        'user_created' => [
+            'type' => 'success',
+            'title' => 'User Created',
+            'message' => 'The user has been created successfully',
+        ],
+        'profile_updated' => [
+            'type' => 'success',
+            'title' => 'Profile Updated',
+            'message' => 'Your profile has been updated successfully',
+        ],
+        'login_failed' => [
+            'type' => 'error',
+            'title' => 'Login Failed',
+            'message' => 'Invalid username or password',
+            'options' => [
+                'timeout' => 10000,
+            ],
+        ],
+    ],
+]);</code></pre>
+</div>
+
+<h4 class='text-2xl font-bold text-slate-900 mb-4'>Using Configuration in Code</h4>
+
+<p class='mb-6'>Now let's see how to use these configuration options in your actual code:</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="border-b border-slate-200 px-6 py-4 bg-slate-50">
+            <h4 class="font-semibold text-slate-900">Basic Usage</h4>
+        </div>
+        <div class="p-6">
+            <div class="bg-slate-800 rounded-lg overflow-hidden mb-4">
+                <pre class="language-php text-xs p-3 text-slate-50 overflow-x-auto"><code>// Using the default adapter and settings
+flash()->success('Profile updated successfully!');
+
+// Using a specific adapter
+toastr()->error('Something went wrong!');
+
+// Using SweetAlert
+sweetalert()->info('Please check your email');</code></pre>
+            </div>
+            <p class="text-slate-600 text-sm mt-3">
+                These examples use the global configuration options you've set.
+            </p>
+        </div>
+    </div>
+
+    <div class='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+        <div class='border-b border-slate-200 px-6 py-4 bg-slate-50'>
+            <h4 class='font-semibold text-slate-900'>Overriding Options</h4>
+        </div>
+        <div class='p-6'>
+            <div class='bg-slate-800 rounded-lg overflow-hidden mb-4'>
+                <pre class='language-php text-xs p-3 text-slate-50 overflow-x-auto'><code>// Override global settings for a single notification
+flash()->option('timeout', 10000)
+       ->option('position', 'bottom-center')
+       ->error('This is important!');
+
+// Using presets
+flash()->preset('user_created');
+
+// Using presets with custom message
+flash()->preset('login_failed', [
+    'message' => 'Wrong password. Try again.'
+]);</code></pre>
+            </div>
+            <p class='text-slate-600 text-sm mt-3'>
+                You can override global settings for individual notifications when needed.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class='bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-10 border border-blue-100'>
+    <h4 class='text-lg font-semibold text-slate-900 mb-4 flex items-center'>
+        <i class='fa-duotone fa-lightbulb text-amber-500 mr-2'></i> Pro Tips for Beginners
+    </h4>
+
+    <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        <div class='bg-white p-4 rounded-lg border border-blue-100'>
+            <h4 class='font-medium text-slate-900 mb-2 flex items-center'>
+                <i class='fa-solid fa-wand-magic-sparkles text-indigo-500 mr-2'></i> Start Simple
+            </h4>
+            <p class='text-sm text-slate-600 mb-0'>
+                Begin with the default configuration and gradually customize options as you become more familiar with
+                PHPFlasher.
+            </p>
+        </div>
+
+        <div class='bg-white p-4 rounded-lg border border-blue-100'>
+            <h4 class='font-medium text-slate-900 mb-2 flex items-center'>
+                <i class='fa-solid fa-sliders text-indigo-500 mr-2'></i> Use Presets
+            </h4>
+            <p class='text-sm text-slate-600 mb-0'>
+                Create presets for commonly used notifications to ensure consistency and reduce code duplication.
+            </p>
+        </div>
+
+        <div class='bg-white p-4 rounded-lg border border-blue-100'>
+            <h4 class='font-medium text-slate-900 mb-2 flex items-center'>
+                <i class='fa-solid fa-palette text-indigo-500 mr-2'></i> Test Different Themes
+            </h4>
+            <p class='text-sm text-slate-600 mb-0'>
+                Try different adapters (toastr, sweetalert, etc.) to find the style that best matches your application's
+                design.
+            </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg border border-blue-100">
+            <h4 class="font-medium text-slate-900 mb-2 flex items-center">
+                <i class="fa-solid fa-code text-indigo-500 mr-2"></i> Check Console
+            </h4>
+            <p class="text-sm text-slate-600 mb-0">
+                If notifications aren't working, check your browser's console for JavaScript errors that might help
+                identify configuration issues.
+            </p>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Troubleshooting Common Configuration Issues</h4>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+    <div
+        class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="h-2 bg-red-500"></div>
+        <div class="p-6">
+            <div class="w-12 h-12 bg-red-50 rounded-full mb-4 flex items-center justify-center border border-red-100">
+                <i class="fa-duotone fa-bell-slash text-red-500 text-xl"></i>
+            </div>
+            <h4 class="text-lg font-semibold text-gray-900 mb-3">Missing Notifications</h4>
+            <p class="text-gray-600 text-sm mb-3">If notifications aren't appearing:</p>
+            <ul class='space-y-2 text-sm text-gray-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-green-500 mt-1 mr-2'></i>
+                    <span>Verify <code class='bg-gray-100 px-1 py-0.5 rounded text-gray-700'>inject_assets</code> is set to <code>true</code></span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-green-500 mt-1 mr-2'></i>
+                    <span>Check that your URL isn't in <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">excluded_paths</code></span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Make sure the adapter you're using is installed</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div
+        class='bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg'>
+        <div class='h-2 bg-amber-500'></div>
+        <div class='p-6'>
+            <div
+                class='w-12 h-12 bg-amber-50 rounded-full mb-4 flex items-center justify-center border border-amber-100'>
+                <i class='fa-duotone fa-file-code text-amber-500 text-xl'></i>
+            </div>
+            <h4 class='text-lg font-semibold text-gray-900 mb-3'>Script Loading Issues</h4>
+            <p class='text-gray-600 text-sm mb-3'>If you're seeing script errors:</p>
+            <ul class="space-y-2 text-sm text-gray-600">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Verify your <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">main_script</code> path is correct</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Make sure the <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">styles</code> paths exist</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Check if dependencies like jQuery are loaded first</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div
+        class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="h-2 bg-blue-500"></div>
+        <div class="p-6">
+            <div class="w-12 h-12 bg-blue-50 rounded-full mb-4 flex items-center justify-center border border-blue-100">
+                <i class="fa-duotone fa-screwdriver-wrench text-blue-500 text-xl"></i>
+            </div>
+            <h4 class="text-lg font-semibold text-gray-900 mb-3">Config Not Applied</h4>
+            <p class="text-gray-600 text-sm mb-3">If your config changes aren't taking effect:</p>
+            <ul class='space-y-2 text-sm text-gray-600'>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-green-500 mt-1 mr-2'></i>
+                    <span>Clear your framework's config cache</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Verify you're editing the correct config file</span>
+                </li>
+                <li class='flex items-start'>
+                    <i class='fa-solid fa-check text-green-500 mt-1 mr-2'></i>
+                    <span>Check the syntax of your configuration</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class='rounded-xl overflow-hidden bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-8 mb-10'>
+    <div class='flex flex-col md:flex-row items-center gap-6'>
+        <div
+            class='w-24 h-24 flex-shrink-0 bg-white/10 rounded-2xl backdrop-blur-sm flex items-center justify-center p-4 border border-white/20'>
+            <i class='fa-duotone fa-sliders text-5xl text-white'></i>
+        </div>
+        <div>
+            <h4 class='text-2xl font-bold mb-4'>Ready to customize your notifications?</h4>
+            <p class='mb-6 text-indigo-100'>
+                <span class='text-xl font-semibold text-white'>PHP<span class='text-indigo-200'>Flasher</span></span>
+                offers endless customization possibilities to make your notifications perfect for your application's
+                needs.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="https://github.com/php-flasher/php-flasher"
+                   class="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-medium rounded-lg hover:bg-indigo-50 transition-colors">
+                    <i class="fa-brands fa-github mr-2"></i> View on GitHub
+                </a>
+                <a href="/docs/configuration"
+                   class="inline-flex items-center px-6 py-3 bg-indigo-500/50 text-white font-medium rounded-lg hover:bg-indigo-500/70 transition-colors backdrop-blur-sm border border-white/10">
+                    <i class="fa-solid fa-book mr-2"></i> Read Full Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Summary: Key Configuration Options at a Glance</h4>
+
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded-lg overflow-hidden border border-slate-200 mb-10">
+        <thead class="bg-slate-50 text-left">
+        <tr>
+            <th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                Option
+            </th>
+            <th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                Description
+            </th>
+            <th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                Default
+            </th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">default</td>
+            <td class="px-6 py-4 text-sm text-slate-600">Default notification adapter</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">flasher</code></td>
+        </tr>
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">main_script</td>
+            <td class="px-6 py-4 text-sm text-slate-600">Path to main JavaScript file</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">/vendor/flasher/flasher.min.js</code></td>
+        </tr>
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">styles</td>
+            <td class="px-6 py-4 text-sm text-slate-600">CSS files for styling notifications</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">['/vendor/flasher/flasher.min.css']</code>
+            </td>
+        </tr>
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">inject_assets</td>
+            <td class="px-6 py-4 text-sm text-slate-600">Auto-inject assets into HTML</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">true</code></td>
+        </tr>
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">translate</td>
+            <td class="px-6 py-4 text-sm text-slate-600">Enable message translation</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">true</code></td>
+        </tr>
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">options.timeout</td>
+            <td class="px-6 py-4 text-sm text-slate-600">Default notification display time (ms)</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">5000</code></td>
+        </tr>
+        <tr>
+            <td class="px-6 py-4 text-sm text-slate-900 whitespace-nowrap font-medium">options.position</td>
+            <td class="px-6 py-4 text-sm text-slate-600">Where notifications appear on screen</td>
+            <td class="px-6 py-4 text-sm text-slate-600"><code
+                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">top-right</code></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Conclusion</h4>
+
+<p class="mb-6">
+    <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2 offers a
+    flexible configuration system that makes it easy to customize your notifications exactly how you want them. For
+    beginners, the most important options to understand are:
+</p>
+
+<ul class="space-y-2 text-slate-600 mb-8">
+    <li class="flex items-start">
+        <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
+        <span><strong class="text-slate-900">default</strong>: Choose which notification library you want to use</span>
+    </li>
+    <li class="flex items-start">
+        <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
+        <span><strong class="text-slate-900">inject_assets</strong>: Control whether PHPFlasher automatically adds JavaScript/CSS to your pages</span>
+    </li>
+    <li class="flex items-start">
+        <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
+        <span><strong class="text-slate-900">options</strong>: Set global defaults for notification behavior (timeout, position, etc.)</span>
+    </li>
+    <li class="flex items-start">
+        <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
+        <span><strong class="text-slate-900">presets</strong>: Create reusable notification templates for consistent messaging</span>
+    </li>
+</ul>
+
+<p class="mb-6">
+    Remember that PHPFlasher is designed with sensible defaults, so you don't need to configure everything at once.
+    Start with the basics and gradually expand your configuration as your project grows and your needs evolve.
+</p>
+
+<div class='bg-gray-50 border border-gray-200 rounded-xl p-6 mb-8'>
+    <h4 class='text-lg font-semibold text-gray-900 mb-3 flex items-center'>
+        <i class='fa-duotone fa-lightbulb text-amber-500 mr-2'></i> Final Tips
+    </h4>
+    <ul class='space-y-2 text-gray-600'>
+        <li class='flex items-start'>
+            <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+            <span>Keep your configuration DRY by using global options and presets</span>
+        </li>
+        <li class='flex items-start'>
+            <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+            <span>Position notifications consistently throughout your application</span>
+        </li>
+        <li class='flex items-start'>
+            <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+            <span>Consider accessibility when setting timeouts (longer for important messages)</span>
+        </li>
+        <li class='flex items-start'>
+            <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+            <span>Minimize the number of notifications shown at once to avoid overwhelming users</span>
+        </li>
+        <li class='flex items-start'>
+            <i class='fa-solid fa-check text-indigo-500 mt-1 mr-2'></i>
+            <span>Test your notifications on both desktop and mobile devices</span>
+        </li>
+    </ul>
+</div>
+
+<p class='text-slate-600'>
+    With the knowledge you've gained from this guide, you're now ready to customize <span
+        class='font-semibold text-indigo-900'>PHP<span class='text-indigo-500'>Flasher</span></span> to create the
+    perfect notification experience for your users. Whether you're building a simple blog or a complex application,
+    PHPFlasher's configuration options give you the flexibility to implement professional notifications that enhance
+    your user experience.
+</p>
