@@ -26,6 +26,7 @@ namespace Illuminate\Contracts\Config;
  *     flash_bag: array<string, string[]>,
  *     presets: array<string, PresetType>,
  *     plugins: array<string, PluginType>,
+ *     themes: array<string, ThemeType>,
  * }
  *
  * @phpstan-type PresetType array{
@@ -36,6 +37,12 @@ namespace Illuminate\Contracts\Config;
  * }
  *
  * @phpstan-type PluginType array{
+ *     scripts?: string[],
+ *     styles?: string[],
+ *     options?: array<string, mixed>,
+ * }
+ *
+ * @phpstan-type ThemeType array{
  *     scripts?: string[],
  *     styles?: string[],
  *     options?: array<string, mixed>,
@@ -60,9 +67,10 @@ interface Repository
      *            ($key is 'flasher.filter' ? array<string, mixed> :
      *            ($key is 'flasher.presets' ? array<string, PresetType> :
      *            ($key is 'flasher.plugins' ? array<string, PluginType> :
+     *            ($key is 'flasher.themes' ? array<string, ThemeType> :
      *            ($key is 'flasher.flash_bag' ? array<string, string[]> :
      *            ($key is 'flasher.excluded_paths' ? list<non-empty-string> :
-     *                  mixed))))))))
+     *                  mixed)))))))))
      */
     public function get(string|array $key, mixed $default = null): mixed;
 }
