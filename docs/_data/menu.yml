@@ -1,14 +1,10 @@
 <i class="fa-duotone fa-rocket"></i> Getting Started:
     <i class="fa-duotone fa-book text-indigo-900 mr-1 fa-lg"></i> Introduction: '/'
+    <i class="fa-duotone fa-square-rss text-indigo-900 mr-1 fa-lg"></i> Blog: '/blog/'
     <i class="fa-brands fa-symfony fa-lg text-black mr-1"></i> Symfony: '/symfony/'
     <i class="fa-brands fa-laravel fa-lg text-red-900 mr-1"></i> Laravel: '/laravel/'
     <i class="fa-duotone fa-ghost fa-lg text-pink-800 mr-1"></i> Livewire: '/livewire/'
     <i class="fa-duotone fa-angles-right fa-lg text-indigo-900 mr-1"></i> Inertia: '/inertia/'
-
-<i class="fa-duotone fa-blog"></i> Blog:
-    <i class="fa-duotone fa-newspaper text-indigo-900 mr-1 fa-lg"></i> All Articles: '/blog/'
-    <i class="fa-duotone fa-tags text-indigo-900 mr-1 fa-lg"></i> Categories: '/blog/categories/'
-    <i class="fa-duotone fa-star text-indigo-900 mr-1 fa-lg"></i> Featured: '/blog/featured/'
 
 <i class="fa-duotone fa-plug"></i> 3rd Party:
     <i class="fa-duotone fa-bell text-indigo-900 mr-1 fa-lg"></i> Noty: '/library/noty/'

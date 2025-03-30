@@ -15,12 +15,11 @@ featured: true
 ---
 
 <div class="mb-10">
-    <h3 class="text-xl font-bold text-slate-900 mb-4">Laravel vs. PHPFlasher</h3>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-6">
-            <h4 class="text-base font-semibold text-slate-900 mb-4 flex items-center">
-                Laravel
-            </h4>
+    <h3 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-8">Laravel vs. PHPFlasher</h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+        <!-- Laravel Column -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden p-6">
+            <h4 class="text-lg font-semibold text-slate-900 mb-4">Laravel</h4>
             <div class="border border-slate-200 rounded-lg overflow-hidden">
                 <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex justify-between items-center">
                     <div class="flex items-center space-x-2">
@@ -38,7 +37,6 @@ featured: true
                     <div class="alert alert-success border border-green-200 bg-green-50 text-green-800 p-4 rounded">
                         User updated successfully!
                     </div>
-
                     <div class="mt-6 px-2">
                         <div class="h-6 w-32 bg-slate-200 rounded mb-4"></div>
                         <div class="flex flex-col space-y-3">
@@ -65,8 +63,9 @@ featured: true
             </ul>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-6">
-            <h4 class="text-base font-semibold text-slate-900 mb-4 flex items-center">
+        <!-- PHPFlasher Column -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden p-6">
+            <h4 class="text-lg font-semibold text-slate-900 mb-4">
                 <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span>
             </h4>
             <div class="border border-slate-200 rounded-lg overflow-hidden">
@@ -138,7 +137,7 @@ featured: true
     <h2 class="text-xl font-semibold text-indigo-900 mb-4 flex items-center">
         <i class="fa-duotone fa-lightbulb text-amber-500 mr-2 fa-lg"></i> Why Use PHPFlasher in Laravel?
     </h2>
-    <p class="mb-4">
+    <p class="mb-6 text-indigo-800">
         Laravel does come with a built-in flash messaging system through its session, but it has several limitations:
     </p>
     <ul class="space-y-2 mb-0">
@@ -287,25 +286,29 @@ public function store(Request $request)
     </div>
 </div>
 
-<div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-8 flex items-start">
-    <i class="fa-duotone fa-wand-magic-sparkles text-indigo-500 text-xl mt-1 mr-3"></i>
-    <div>
-        <p class="text-indigo-800 font-medium mb-1">No Template Changes Needed</p>
-        <p class="text-indigo-700 mb-0">
-            With <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2, you don't need to add any <code class="bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-800">@flasher_render</code> directive to your templates. All required assets are automatically injected into your HTML.
-        </p>
+<div class="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-12 shadow-sm">
+    <div class="flex items-start">
+        <i class="fa-duotone fa-wand-magic-sparkles text-indigo-600 text-2xl mt-0 mr-4 flex-shrink-0"></i>
+        <div>
+            <p class="text-indigo-900 font-semibold mb-2 text-lg">No Template Changes Needed</p>
+            <p class="text-indigo-800 leading-relaxed mb-0">
+                With <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2, you don't need to add any
+                <code class="bg-indigo-100 px-2 py-0.5 rounded text-indigo-800 font-mono text-sm">@flasher_render</code>
+                directive to your templates. All required assets are automatically injected into your HTML.
+            </p>
+        </div>
     </div>
 </div>
 
-<h2 class="text-2xl font-bold text-slate-900 mb-4">Comparing Traditional Laravel Flash vs. <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></h2>
+<h2 class="text-2xl font-bold text-slate-900 mb-4">Comparing Laravel Flash vs. <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></h2>
 
 <p class="mb-6">Let's compare the traditional Laravel approach with <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> to see the difference in implementation and results:</p>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+        <div class="px-6 py-4 border-b border-red-100">
             <h4 class="font-semibold text-slate-900 flex items-center">
-                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Traditional Laravel Flash
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Laravel
             </h4>
         </div>
         <div class="p-6">
@@ -332,7 +335,7 @@ public function update(Request $request, $id)
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+        <div class="px-6 py-4 border-b border-green-100">
             <h4 class="font-semibold text-slate-900 flex items-center">
                 <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> With <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span>
             </h4>
@@ -684,63 +687,133 @@ noty()->warning('This is a Noty notification');</code></pre>
     </div>
 </div>
 
-<h2 class="text-2xl font-bold text-slate-900 mb-4">Troubleshooting</h2>
+<h2 class="text-2xl font-bold text-gray-900 mb-6">Troubleshooting Guide</h2>
 
-<div class="mb-10 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-    <div class="divide-y divide-slate-200">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+    <!-- Notifications Not Appearing Card -->
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="h-2 bg-red-500"></div>
         <div class="p-6">
-            <h3 class="text-lg font-semibold text-slate-900 mb-3 flex items-center">
-                <i class="fa-duotone fa-bug text-red-500 mr-2"></i> Notifications Not Appearing
-            </h3>
-            <p class="text-slate-600 mb-4">If your notifications aren't showing up, check these common issues:</p>
-            <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Check if you're redirecting after setting the flash message</span>
+            <div class="w-14 h-14 bg-red-50 rounded-full mb-4 flex items-center justify-center border border-red-100">
+                <!-- Bug icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2M3 12h2m14 0h2M5 5l1.414 1.414M18.586 18.586l1.414 1.414M18.586 5l-1.414 1.414M5 18.586l1.414-1.414" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Notifications Not Appearing</h3>
+            <p class="text-gray-600 mb-4">If your notifications aren't showing up, check these common issues:</p>
+            <ul class="space-y-3">
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <!-- Check icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Check if you're redirecting after setting the flash message</span>
                 </li>
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Verify that JavaScript is enabled in the browser</span>
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Verify that JavaScript is enabled in the browser</span>
                 </li>
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Check if your routes are in the <code class="bg-slate-100 px-1 py-0.5 rounded">excluded_paths</code> configuration</span>
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Check if your routes are in the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-gray-800">excluded_paths</code> configuration</span>
                 </li>
             </ul>
         </div>
+    </div>
 
+    <!-- JavaScript Errors Card -->
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="h-2 bg-amber-500"></div>
         <div class="p-6">
-            <h3 class="text-lg font-semibold text-slate-900 mb-3 flex items-center">
-                <i class="fa-duotone fa-circle-exclamation text-amber-500 mr-2"></i> JavaScript Errors
-            </h3>
-            <p class="text-slate-600 mb-3">If you're seeing JavaScript errors in the console:</p>
-            <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Make sure jQuery is loaded if using adapters that require it (like Toastr)</span>
+            <div class="w-14 h-14 bg-amber-50 rounded-full mb-4 flex items-center justify-center border border-amber-100">
+                <!-- Exclamation icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">JavaScript Errors</h3>
+            <p class="text-gray-600 mb-4">If you're seeing JavaScript errors in the console:</p>
+            <ul class="space-y-3">
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Make sure jQuery is loaded if using adapters that require it (like Toastr)</span>
                 </li>
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Check for JavaScript conflicts with other libraries</span>
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Check for JavaScript conflicts with other libraries</span>
                 </li>
             </ul>
+            <div class="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-100">
+                <p class="text-amber-800 text-sm flex items-start">
+                    <!-- Lightbulb icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <span>Opening your browser's console (F12) will help identify any JavaScript errors.</span>
+                </p>
+            </div>
         </div>
+    </div>
 
+    <!-- Styling Issues Card -->
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="h-2 bg-purple-500"></div>
         <div class="p-6">
-            <h3 class="text-lg font-semibold text-slate-900 mb-3 flex items-center">
-                <i class="fa-duotone fa-paintbrush text-purple-500 mr-2"></i> Styling Issues
-            </h3>
-            <p class="text-slate-600 mb-3">If notifications appear but don't look right:</p>
-            <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Make sure the CSS files are properly loaded</span>
+            <div class="w-14 h-14 bg-purple-50 rounded-full mb-4 flex items-center justify-center border border-purple-100">
+                <!-- Paintbrush icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Styling Issues</h3>
+            <p class="text-gray-600 mb-4">If notifications appear but don't look right:</p>
+            <ul class="space-y-3">
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Make sure the CSS files are properly loaded</span>
                 </li>
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i>
-                    <span>Check if your custom CSS is overriding <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> styles</span>
+                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="bg-green-100 p-1 rounded-full text-green-600 flex-shrink-0 mr-3 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Check if your custom CSS is overriding <span class="text-xl font-semibold text-gray-900">PHP<span class="text-indigo-500">Flasher</span></span> styles</span>
                 </li>
             </ul>
+            <div class="mt-6 p-4 bg-purple-50 rounded-lg border border-purple-100">
+                <p class="text-purple-800 text-sm flex items-start">
+                    <!-- Magic wand icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                    <span>Try adding <code class="bg-purple-100 px-1.5 py-0.5 rounded text-purple-800">!important</code> to your custom styles if you need to override defaults.</span>
+                </p>
+            </div>
         </div>
     </div>
 </div>
@@ -840,31 +913,3 @@ noty()->warning('This is a Noty notification');</code></pre>
 <p class="mb-8">
     By following the examples and best practices outlined in this guide, you'll be well on your way to implementing a professional notification system that not only looks great but also provides clear and timely information to your users.
 </p>
-
-<div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-xl p-6 mb-8 flex flex-col md:flex-row items-center gap-6">
-    <div class="w-16 h-16 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full shadow-md flex items-center justify-center flex-shrink-0">
-        <i class="fa-solid fa-code text-white text-xl"></i>
-    </div>
-    <div>
-        <h3 class="text-lg font-semibold text-slate-900 mb-2">Want to contribute?</h3>
-        <p class="text-slate-600 mb-4">
-            <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> is an open-source project. If you have ideas for improvements or new features, consider contributing to the project on GitHub.
-        </p>
-        <a href="https://github.com/php-flasher/php-flasher" class="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800">
-            Visit the GitHub repository <i class="fa-solid fa-arrow-right ml-1"></i>
-        </a>
-    </div>
-</div>
-
-<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start">
-    <i class="fa-duotone fa-lightbulb text-amber-500 text-xl mt-1 mr-3"></i>
-    <div>
-        <p class="text-amber-800 font-medium mb-1">Coming Up Next</p>
-        <p class="text-amber-700 mb-0">Using <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> with Laravel Livewire for Real-time Notifications</p>
-    </div>
-</div>
-
-<div class="mt-8 text-xs text-slate-500 text-right">
-    <p>Last updated on: {{ '2025-03-30 04:15:54' }}</p>
-    <p>Author: {{ 'yoeunes' }}</p>
-</div>
