@@ -7,7 +7,7 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "serve": "bundle exec jekyll serve --livereload",
-        "dev:jekyll": "bundle exec jekyll serve --livereload --config _config.yml,_config.dev.yml",
+        "dev:jekyll": "bundle exec jekyll serve --livereload --config _config.yml",
         "dev:webpack": "encore dev --watch --no-watch-options-stdin",
         "start": "concurrently \"npm run dev:jekyll\" \"npm run dev:webpack\"",
         "deploy": "JEKYLL_ENV=production bundle exec jekyll build"

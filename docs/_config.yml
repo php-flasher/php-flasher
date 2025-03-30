@@ -35,6 +35,14 @@ plugins:
     - jekyll-redirect-from
     - jekyll-seo-tag
 
+permalink: /blog/:year/:month/:day/:title/
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+collections:
+  posts:
+    output: true
+
 defaults:
     -   scope:
             path: ""
@@ -46,6 +54,11 @@ defaults:
             image: https://php-flasher.io/static/images/php-flasher-social-card.png
             published_at: "2019-12-01"
             updated_at: "2024-03-29"
+    -   scope:
+            path: ""
+            type: "posts"
+        values:
+            layout: "post"
 
 exclude:
     - "*.config.js"

@@ -1,0 +1,37 @@
+---
+layout: default
+title: PHPFlasher Blog Categories
+description: Browse PHPFlasher blog articles by category
+---
+
+<h1 class="text-3xl font-bold text-slate-900 mb-6">Blog Categories</h1>
+
+{% assign all_tags = "" | split: "" %}
+{% for post in site.posts %}
+  {% for tag in post.tags %}
+    {% assign all_tags = all_tags | push: tag %}
+  {% endfor %}
+{% endfor %}
+
+{% assign unique_tags = all_tags | uniq | sort %}
+
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  {% for tag in unique_tags %}
+  <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-6 hover:shadow-md transition-shadow">
+    <h2 class="text-xl font-semibold text-slate-900 mb-3">
+      <i class="fa-duotone fa-tag text-indigo-500 mr-2"></i> {{ tag | capitalize }}
+    </h2>
+    {% assign tagged_posts = site.posts | where_exp: "post", "post.tags contains tag" %}
+    <p class="text-slate-600 mb-3">{{ tagged_posts.size }} article{% if tagged_posts.size != 1 %}s{% endif %}</p>
+    <a href="/blog/tag/{{ tag | slugify }}/" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Browse Articles</a>
+  </div>
+  {% endfor %}
+</div>
+
+{% if unique_tags.size == 0 %}
+<div class="bg-indigo-50 text-indigo-700 p-6 rounded-xl text-center">
+  <i class="fa-duotone fa-tags text-4xl mb-4"></i>
+  <h3 class="text-xl font-semibold mb-2">No categories yet</h3>
+  <p>Check back soon for categorized articles!</p>
+</div>
+{% endif %}
