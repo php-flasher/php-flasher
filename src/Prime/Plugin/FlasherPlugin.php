@@ -119,6 +119,7 @@ final class FlasherPlugin extends Plugin
         $config = parent::normalizeConfig($config);
 
         $config = $this->normalizePlugins($config);
+        $config = $this->normalizeThemes($config);
         $config = $this->normalizePresets($config);
         $config = $this->addDefaultConfig($config);
         $config = $this->normalizeFlashBag($config);
@@ -183,6 +184,76 @@ final class FlasherPlugin extends Plugin
 
             if (isset($options['styles'])) {
                 $config['plugins'][$name]['styles'] = (array) $options['styles'];
+            }
+        }
+
+        return $config;
+    }
+
+    /**
+     * Normalizes the themes configuration.
+     *
+     * This method ensures that the themes configuration has the correct structure
+     * and includes default themes unless explicitly disabled.
+     *
+     * @param array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     plugins: array<string, mixed>,
+     *     themes?: array<string, array{
+     *         scripts?: string[],
+     *         styles?: string[],
+     *         options?: array<string, mixed>,
+     *     }>,
+     * } $config The raw configuration
+     *
+     * @return array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>,
+     *     plugins: array<string, mixed>,
+     *     themes: array<string, mixed>,
+     * } The normalized configuration
+     */
+    private function normalizeThemes(array $config): array
+    {
+        // Define default themes with their assets
+        $defaultThemes = $this->getDefaultThemes();
+
+        // Initialize themes config if not set
+        if (!isset($config['themes'])) {
+            $config['themes'] = [];
+        }
+
+        // Merge default themes with user-defined themes, prioritizing user configs
+        foreach ($defaultThemes as $themeName => $themeConfig) {
+            if (!isset($config['themes'][$themeName])) {
+                $config['themes'][$themeName] = $themeConfig;
+            } else {
+                // Make sure all required theme properties exist
+                if (!isset($config['themes'][$themeName]['scripts'])) {
+                    $config['themes'][$themeName]['scripts'] = $themeConfig['scripts'];
+                }
+                if (!isset($config['themes'][$themeName]['styles'])) {
+                    $config['themes'][$themeName]['styles'] = $themeConfig['styles'];
+                }
+                if (!isset($config['themes'][$themeName]['options'])) {
+                    $config['themes'][$themeName]['options'] = $themeConfig['options'];
+                }
+            }
+        }
+
+        // Normalize theme configs
+        foreach ($config['themes'] as $name => $options) {
+            if (isset($options['scripts'])) {
+                $config['themes'][$name]['scripts'] = (array) $options['scripts'];
+            }
+            if (isset($options['styles'])) {
+                $config['themes'][$name]['styles'] = (array) $options['styles'];
+            }
+            if (!isset($options['options'])) {
+                $config['themes'][$name]['options'] = [];
             }
         }
 
@@ -378,5 +449,148 @@ final class FlasherPlugin extends Plugin
         }
 
         return $config;
+    }
+
+    /**
+     * Returns the default themes configuration.
+     *
+     * @return array<string, array{
+     *     scripts: string[],
+     *     styles: string[],
+     *     options: array<string, mixed>
+     * }> The default themes configuration
+     */
+    private function getDefaultThemes(): array
+    {
+        return [
+            'amazon' => [
+                'scripts' => ['/vendor/flasher/themes/amazon/amazon.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/amazon/amazon.min.css',
+                ],
+                'options' => [],
+            ],
+            'amber' => [
+                'scripts' => ['/vendor/flasher/themes/amber/amber.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/amber/amber.min.css',
+                ],
+                'options' => [],
+            ],
+            'jade' => [
+                'scripts' => ['/vendor/flasher/themes/jade/jade.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/jade/jade.min.css',
+                ],
+                'options' => [],
+            ],
+            'crystal' => [
+                'scripts' => ['/vendor/flasher/themes/crystal/crystal.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/crystal/crystal.min.css',
+                ],
+                'options' => [],
+            ],
+            'emerald' => [
+                'scripts' => ['/vendor/flasher/themes/emerald/emerald.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/emerald/emerald.min.css',
+                ],
+                'options' => [],
+            ],
+            'sapphire' => [
+                'scripts' => ['/vendor/flasher/themes/sapphire/sapphire.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/sapphire/sapphire.min.css',
+                ],
+                'options' => [],
+            ],
+            'ruby' => [
+                'scripts' => ['/vendor/flasher/themes/ruby/ruby.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/ruby/ruby.min.css',
+                ],
+                'options' => [],
+            ],
+            'onyx' => [
+                'scripts' => ['/vendor/flasher/themes/onyx/onyx.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/onyx/onyx.min.css',
+                ],
+                'options' => [],
+            ],
+            'neon' => [
+                'scripts' => ['/vendor/flasher/themes/neon/neon.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/neon/neon.min.css',
+                ],
+                'options' => [],
+            ],
+            'aurora' => [
+                'scripts' => ['/vendor/flasher/themes/aurora/aurora.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/aurora/aurora.min.css',
+                ],
+                'options' => [],
+            ],
+            'minimal' => [
+                'scripts' => ['/vendor/flasher/themes/minimal/minimal.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/minimal/minimal.min.css',
+                ],
+                'options' => [],
+            ],
+            'material' => [
+                'scripts' => ['/vendor/flasher/themes/material/material.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/material/material.min.css',
+                ],
+                'options' => [],
+            ],
+            'google' => [
+                'scripts' => ['/vendor/flasher/themes/google/google.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/google/google.min.css',
+                ],
+                'options' => [],
+            ],
+            'ios' => [
+                'scripts' => ['/vendor/flasher/themes/ios/ios.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/ios/ios.min.css',
+                ],
+                'options' => [],
+            ],
+            'slack' => [
+                'scripts' => ['/vendor/flasher/themes/slack/slack.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/slack/slack.min.css',
+                ],
+                'options' => [],
+            ],
+            'facebook' => [
+                'scripts' => ['/vendor/flasher/themes/facebook/facebook.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    '/vendor/flasher/themes/facebook/facebook.min.css',
+                ],
+                'options' => [],
+            ],
+        ];
     }
 }

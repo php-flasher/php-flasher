@@ -127,7 +127,7 @@ return static function (ContainerConfigurator $container): void {
                 service('flasher.template_engine'),
                 service('flasher.asset_manager'),
                 param('flasher.main_script'),
-                param('flasher.plugins'),
+                param('flasher.resources'),
             ])
 
         ->set('flasher.response_manager', ResponseManager::class)

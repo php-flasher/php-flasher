@@ -1,17 +1,231 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PHPFlasher Demo{% endblock %}</title>
 
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# Tailwind CSS v4 CDN #}
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-        {% block stylesheets %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {# Prism.js for syntax highlighting #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
+
+    {# Custom styles using Tailwind #}
+    <script type="text/tailwindcss">
+        @layer components {
+            .btn {
+                @apply px-4 py-2 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-50;
+            }
+            .btn-primary {
+                @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
+            }
+            .btn-success {
+                @apply bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500;
+            }
+            .btn-danger {
+                @apply bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-500;
+            }
+            .btn-warning {
+                @apply bg-amber-500 text-white hover:bg-amber-600 focus:ring-amber-400;
+            }
+            .btn-info {
+                @apply bg-sky-500 text-white hover:bg-sky-600 focus:ring-sky-400;
+            }
+            .btn-outline {
+                @apply border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500;
+            }
+            .code-block {
+                @apply rounded-lg overflow-hidden shadow-lg my-6;
+            }
+            .code-header {
+                @apply bg-gray-800 text-gray-200 px-4 py-2 flex justify-between items-center;
+            }
+            .theme-card {
+                @apply rounded-lg overflow-hidden bg-white shadow-md hover:shadow-lg transition duration-300;
+            }
+            .theme-preview {
+                @apply h-32 flex items-center justify-center;
+            }
+        }
+    </script>
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="bg-gray-50 antialiased text-gray-900 min-h-screen flex flex-col">
+    <header class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span class="ml-2 text-2xl font-bold">PHPFlasher</span>
+                    </div>
+                    <span class="hidden md:inline text-indigo-200">Beautiful Notifications for Your PHP Applications</span>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="https://github.com/php-flasher/flasher" class="text-indigo-100 hover:text-white transition flex items-center" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a href="https://php-flasher.io" class="text-indigo-100 hover:text-white transition flex items-center" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                        Documentation
+                    </a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-indigo-700 text-white">
+        <div class="px-4 pt-2 pb-4 space-y-3">
+            <a href="{{ path('app_home') }}" class="block py-2 hover:bg-indigo-600 rounded px-2">Home</a>
+            <a href="{{ path('app_features') }}" class="block py-2 hover:bg-indigo-600 rounded px-2">Features</a>
+            <a href="{{ path('app_themes') }}" class="block py-2 hover:bg-indigo-600 rounded px-2">Themes</a>
+            <a href="{{ path('app_examples') }}" class="block py-2 hover:bg-indigo-600 rounded px-2">Examples</a>
+            <a href="{{ path('app_playground') }}" class="block py-2 hover:bg-indigo-600 rounded px-2">Playground</a>
+            <a href="https://github.com/php-flasher/flasher" class="block py-2 hover:bg-indigo-600 rounded px-2">GitHub</a>
+            <a href="https://php-flasher.io" class="block py-2 hover:bg-indigo-600 rounded px-2">Documentation</a>
+        </div>
+    </div>
+
+    <div class="flex flex-1">
+        <aside class="hidden md:block bg-white w-64 border-r border-gray-200 shadow-sm">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-800">Navigation</h2>
+                <p class="text-sm text-gray-500 mt-1">Explore PHPFlasher</p>
+            </div>
+            <nav class="py-4">
+                <div class="px-6 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Getting Started
+                </div>
+                <a href="{{ path('app_home') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_home' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Home
+                </a>
+                <a href="{{ path('app_installation') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_installation' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Installation
+                </a>
+                <a href="{{ path('app_basic_usage') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_basic_usage' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Basic Usage
+                </a>
+
+                <div class="px-6 py-2 mt-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Features
+                </div>
+                <a href="{{ path('app_types') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_types' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Notification Types
+                </a>
+                <a href="{{ path('app_positions') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_positions' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Positions
+                </a>
+                <a href="{{ path('app_themes') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_themes' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Themes
+                </a>
+                <a href="{{ path('app_options') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_options' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Options & Configuration
+                </a>
+                <a href="{{ path('app_plugins') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_plugins' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Plugins
+                </a>
+
+                <div class="px-6 py-2 mt-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Examples
+                </div>
+                <a href="{{ path('app_form_example') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_form_example' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Form Validation
+                </a>
+                <a href="{{ path('app_ajax_example') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_ajax_example' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    AJAX Requests
+                </a>
+                <a href="{{ path('app_presets') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_presets' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Presets
+                </a>
+                <a href="{{ path('app_real_world') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_real_world' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Real-World Examples
+                </a>
+
+                <div class="px-6 py-2 mt-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Interactive
+                </div>
+                <a href="{{ path('app_playground') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_playground' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Interactive Playground
+                </a>
+                <a href="{{ path('app_theme_builder') }}" class="block px-6 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 {% if app.request.get('_route') == 'app_theme_builder' %}bg-indigo-50 text-indigo-700 border-r-4 border-indigo-500{% endif %}">
+                    Theme Builder
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-x-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-6">
+                    <h1 class="text-3xl font-bold text-gray-900">{% block page_title %}Welcome to PHPFlasher{% endblock %}</h1>
+                    <p class="mt-2 text-lg text-gray-600">{% block page_subtitle %}A powerful notification system for PHP applications{% endblock %}</p>
+                </div>
+
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="text-center md:text-left">
+                    <p class="text-gray-500">
+                        &copy; {{ "now"|date("Y") }} PHPFlasher. Made with ❤️ by <a href="https://github.com/yoeunes" class="text-indigo-600 hover:text-indigo-500">Younes ENNAJI</a>
+                    </p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/php-flasher/flasher" class="text-gray-500 hover:text-gray-700">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="https://php-flasher.io" class="text-gray-500 hover:text-gray-700">
+                        <span class="sr-only">Website</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {# Prism.js for syntax highlighting #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+    {# Mobile menu toggle script #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+
+    {% block javascripts %}{% endblock %}
+</body>
 </html>

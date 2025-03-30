@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PHPFlasher - Notification Types{% endblock %}
+
+{% block page_title %}Notification Types{% endblock %}
+{% block page_subtitle %}Display different notification types to communicate various messages{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Available Notification Types</h2>
+        <p class="text-gray-600 mb-6">
+            PHPFlasher provides four primary notification types to communicate different types of messages to your users.
+            Each type has a distinct visual style to clearly convey the nature of the message.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <div class="bg-emerald-100 p-2 rounded-md mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold">Success</h3>
+                </div>
+                <p class="text-gray-600 mb-3">
+                    Used for positive feedback when an action has been completed successfully.
+                </p>
+                <div class="code-block mb-3">
+                    <div class="code-header">
+                        <span>PHP</span>
+                    </div>
+                    <pre><code class="language-php">flash()->success('Your profile has been updated successfully!');</code></pre>
+                </div>
+                <button class="btn btn-success w-full notification-demo" data-type="success" data-message="This is a success notification!">
+                    Show Success Notification
+                </button>
+            </div>
+
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <div class="bg-rose-100 p-2 rounded-md mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold">Error</h3>
+                </div>
+                <p class="text-gray-600 mb-3">
+                    Used to alert users about errors or problems that need attention.
+                </p>
+                <div class="code-block mb-3">
+                    <div class="code-header">
+                        <span>PHP</span>
+                    </div>
+                    <pre><code class="language-php">flash()->error('An error occurred while processing your request.');</code></pre>
+                </div>
+                <button class="btn btn-danger w-full notification-demo" data-type="error" data-message="This is an error notification!">
+                    Show Error Notification
+                </button>
+            </div>
+
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <div class="bg-amber-100 p-2 rounded-md mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold">Warning</h3>
+                </div>
+                <p class="text-gray-600 mb-3">
+                    Used to inform users about potential issues or actions they should be aware of.
+                </p>
+                <div class="code-block mb-3">
+                    <div class="code-header">
+                        <span>PHP</span>
+                    </div>
+                    <pre><code class="language-php">flash()->warning('Your subscription will expire in 3 days.');</code></pre>
+                </div>
+                <button class="btn btn-warning w-full notification-demo" data-type="warning" data-message="This is a warning notification!">
+                    Show Warning Notification
+                </button>
+            </div>
+
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <div class="bg-sky-100 p-2 rounded-md mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold">Info</h3>
+                </div>
+                <p class="text-gray-600 mb-3">
+                    Used to provide neutral information or updates to users.
+                </p>
+                <div class="code-block mb-3">
+                    <div class="code-header">
+                        <span>PHP</span>
+                    </div>
+                    <pre><code class="language-php">flash()->info('You have 5 unread messages.');</code></pre>
+                </div>
+                <button class="btn btn-info w-full notification-demo" data-type="info" data-message="This is an info notification!">
+                    Show Info Notification
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Usage in Controllers</h2>
+        <p class="text-gray-600 mb-4">
+            Here's how you can use notification types in your Symfony controllers:
+        </p>
+
+        <div class="code-block">
+            <div class="code-header">
+                <span>PHP</span>
+            </div>
+            <pre><code class="language-php"><?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+class ExampleController extends AbstractController
+{
+    #[Route('/process-form', name: 'app_process_form')]
+    public function processForm(): Response
+    {
+        // Simulate form processing
+        $success = true;
+
+        if ($success) {
+            // Show success notification
+            flash()->success('Form submitted successfully!');
+        } else {
+            // Show error notification
+            flash()->error('An error occurred while processing the form.');
+        }
+
+        // Show info notification
+        flash()->info('You will receive a confirmation email shortly.');
+
+        // Show warning notification
+        flash()->warning('Please verify your email within 24 hours.');
+
+        return $this->redirectToRoute('app_home');
+    }
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Advanced Usage</h2>
+        <p class="text-gray-600 mb-4">
+            You can combine notification types with other options to create more customized notifications:
+        </p>
+
+        <div class="code-block mb-6">
+            <div class="code-header">
+                <span>PHP</span>
+            </div>
+            <pre><code class="language-php">// Success notification with custom timeout
+flash()->option('timeout', 8000)
+       ->success('Changes saved successfully!');
+
+// Warning notification with custom position
+flash()->option('position', 'bottom-center')
+       ->warning('Your session will expire soon.');
+
+// Error notification with progress bar
+flash()->option('showProgressbar', true)
+       ->error('Unable to connect to the server.');</code></pre>
+        </div>
+
+        <div class="flex justify-center">
+            <a href="{{ path('app_options') }}" class="btn btn-primary">
+                Learn More About Options
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const demoButtons = document.querySelectorAll('.notification-demo');
+
+        demoButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                const message = this.getAttribute('data-message') || 'This is a notification!';
+
+                // Send AJAX request to show notification
+                fetch('{{ path('app_show_notification') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        type: type,
+                        message: message
+                    })
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

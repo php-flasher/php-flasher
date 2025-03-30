@@ -1,0 +1,302 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PHPFlasher - Themes{% endblock %}
+
+{% block page_title %}PHPFlasher Themes{% endblock %}
+{% block page_subtitle %}Beautiful notification themes to match your application's design{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Available Themes</h2>
+        <p class="text-gray-600 mb-6">
+            PHPFlasher comes with various themes to help you match the notification style to your application's design.
+            Each theme provides a distinct visual appearance while maintaining the same functionality.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="theme-card">
+                <div class="bg-indigo-600 h-2"></div>
+                <div class="theme-preview bg-indigo-50 flex items-center justify-center p-4">
+                    <div class="w-full bg-white rounded-lg shadow-md p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Flasher Default Theme</p>
+                                <p class="text-xs text-gray-500">Clean and minimal design</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2">Flasher (Default)</h3>
+                    <p class="text-gray-600 text-sm mb-4">The default theme with a clean, minimal design that works well in most applications.</p>
+                    <button class="w-full btn btn-primary theme-demo" data-theme="flasher">
+                        Preview Theme
+                    </button>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="bg-emerald-600 h-2"></div>
+                <div class="theme-preview bg-emerald-50 flex items-center justify-center p-4">
+                    <div class="w-full bg-white rounded-lg shadow-md p-4 border-l-4 border-emerald-500">
+                        <div class="flex">
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Emerald Theme</p>
+                                <p class="text-xs text-gray-500">Elegant left-border style</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2">Emerald</h3>
+                    <p class="text-gray-600 text-sm mb-4">A sleek theme with colored left borders and subtle design elements.</p>
+                    <button class="w-full btn btn-primary theme-demo" data-theme="emerald">
+                        Preview Theme
+                    </button>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="bg-blue-600 h-2"></div>
+                <div class="theme-preview bg-blue-50 flex items-center justify-center p-4">
+                    <div class="w-full bg-white rounded-lg shadow-md p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-full p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Sapphire Theme</p>
+                                <p class="text-xs text-gray-500">Modern with rounded icons</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2">Sapphire</h3>
+                    <p class="text-gray-600 text-sm mb-4">A modern theme with rounded icons and smooth animations.</p>
+                    <button class="w-full btn btn-primary theme-demo" data-theme="sapphire">
+                        Preview Theme
+                    </button>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="bg-purple-600 h-2"></div>
+                <div class="theme-preview bg-purple-50 flex items-center justify-center p-4">
+                    <div class="w-full bg-white rounded-lg shadow-md p-4 bg-opacity-80 backdrop-filter backdrop-blur-sm">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Crystal Theme</p>
+                                <p class="text-xs text-gray-500">Transparent with blur effects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2">Crystal</h3>
+                    <p class="text-gray-600 text-sm mb-4">A modern glass-like theme with transparency and blur effects.</p>
+                    <button class="w-full btn btn-primary theme-demo" data-theme="crystal">
+                        Preview Theme
+                    </button>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="bg-amber-500 h-2"></div>
+                <div class="theme-preview bg-amber-50 flex items-center justify-center p-4">
+                    <div class="w-full bg-white rounded-lg shadow-md p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0 bg-amber-100 p-1 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Amazon Theme</p>
+                                <p class="text-xs text-gray-500">Inspired by Amazon's notification style</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2">Amazon</h3>
+                    <p class="text-gray-600 text-sm mb-4">Inspired by Amazon's notification style with distinctive icons.</p>
+                    <button class="w-full btn btn-primary theme-demo" data-theme="amazon">
+                        Preview Theme
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Using Themes in Your Code</h2>
+        <p class="text-gray-600 mb-4">
+            You can specify which theme to use for each notification using the <code>option()</code> method:
+        </p>
+
+        <div class="code-block">
+            <div class="code-header">
+                <span>PHP</span>
+            </div>
+            <pre><code class="language-php">// Using the default theme
+flash()->success('Your profile has been updated successfully!');
+
+// Using the Emerald theme
+flash()->option('theme', 'emerald')
+      ->success('Your profile has been updated successfully!');
+
+// Using the Sapphire theme with additional options
+flash()->option('theme', 'sapphire')
+      ->option('position', 'bottom-right')
+      ->option('timeout', 5000)
+      ->info('You have 3 unread messages.');
+
+// Using the Amazon theme
+flash()->option('theme', 'amazon')
+      ->warning('Your subscription will expire in 3 days.');</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Theme Configuration</h2>
+        <p class="text-gray-600 mb-4">
+            You can configure themes globally in your configuration file:
+        </p>
+
+        <div class="code-block mb-6">
+            <div class="code-header">
+                <span>YAML</span>
+            </div>
+            <pre><code class="language-yaml"># config/packages/flasher.yaml
+flasher:
+    # Set the default theme for all notifications
+    default: theme.amazon
+
+    themes:
+        amazon:
+            scripts:
+                - '/vendor/flasher/themes/amazon/amazon.min.js'
+            styles:
+                - '/vendor/flasher/flasher.min.css'
+                - '/vendor/flasher/themes/amazon/amazon.min.css'
+            options:
+                position: 'bottom-right'
+                timeout: 6000
+
+        emerald:
+            scripts:
+                - '/vendor/flasher/themes/emerald/emerald.min.js'
+            styles:
+                - '/vendor/flasher/flasher.min.css'
+                - '/vendor/flasher/themes/emerald/emerald.min.css'
+            options:
+                position: 'top-right'
+                timeout: 5000</code></pre>
+        </div>
+
+        <p class="text-gray-600 mb-4">
+            Each theme can have its own default options, scripts, and styles. This allows you to create a consistent notification experience throughout your application.
+        </p>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Custom Theme Templates</h2>
+        <p class="text-gray-600 mb-4">
+            Need something more customized? PHPFlasher allows you to create your own themes:
+        </p>
+
+        <div class="code-block mb-6">
+            <div class="code-header">
+                <span>YAML</span>
+            </div>
+            <pre><code class="language-yaml"># config/packages/flasher.yaml
+flasher:
+    themes:
+        custom_theme:
+            scripts:
+                - '/assets/js/custom-theme.js'
+            styles:
+                - '/assets/css/custom-theme.css'
+            options:
+                position: 'top-center'
+                timeout: 7000
+                # Add any custom options your theme supports</code></pre>
+        </div>
+
+        <p class="text-gray-600 mb-4">
+            Then you can use your custom theme in your code:
+        </p>
+
+        <div class="code-block mb-6">
+            <div class="code-header">
+                <span>PHP</span>
+            </div>
+            <pre><code class="language-php">flash()->option('theme', 'custom_theme')
+      ->success('This uses your custom theme!');</code></pre>
+        </div>
+
+        <div class="flex justify-center">
+            <a href="{{ path('app_theme_builder') }}" class="btn btn-primary">
+                Try the Theme Builder
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeButtons = document.querySelectorAll('.theme-demo');
+
+        themeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                const messages = {
+                    'flasher': 'This notification uses the Flasher theme!',
+                    'emerald': 'This notification uses the Emerald theme!',
+                    'sapphire': 'This notification uses the Sapphire theme!',
+                    'crystal': 'This notification uses the Crystal theme!',
+                    'amazon': 'This notification uses the Amazon theme!'
+                };
+
+                // Send AJAX request to show notification
+                fetch('{{ path('app_show_notification') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        type: 'success',
+                        message: messages[theme] || 'Theme preview',
+                        options: {
+                            theme: theme
+                        }
+                    })
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

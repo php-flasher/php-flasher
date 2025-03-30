@@ -45,6 +45,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
      *     flash_bag: array<string, mixed>,
      *     filter: array<string, mixed>,
      *     plugins: array<array<string, mixed>>,
+     *     themes: array<array<string, mixed>>,
      * } $config
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
@@ -72,6 +73,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
      *     flash_bag: array<string, mixed>,
      *     filter: array<string, mixed>,
      *     plugins: array<array<string, mixed>>,
+     *     themes: array<array<string, mixed>>,
      * } $config
      */
     private function registerFlasherParameters(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
@@ -95,7 +97,8 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
             ->set('flasher.filter', $config['filter'])
             ->set('flasher.presets', $config['presets'])
             ->set('flasher.plugins', $config['plugins'])
-        ;
+            ->set('flasher.themes', $config['themes'])
+            ->set('flasher.resources', $this->getFlasherResources($config));
     }
 
     private function registerServicesForAutoconfiguration(ContainerBuilder $builder): void
@@ -140,5 +143,30 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
         }
 
         $container->removeDefinition('flasher.flasher_listener');
+    }
+
+    /**
+     * Convert the Flasher configuration into a format that can be used by the ResourceManager.
+     *
+     * @param array{
+     *     plugins: array<array<string, mixed>>,
+     *     themes: array<array<string, mixed>>,
+     * } $config
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    private function getFlasherResources(array $config): array
+    {
+        $resources = [];
+
+        foreach ($config['plugins'] as $name => $options) {
+            $resources[$name] = $options;
+        }
+
+        foreach ($config['themes'] as $name => $options) {
+            $resources['theme.'.$name] = $options;
+        }
+
+        return $resources;
     }
 }
