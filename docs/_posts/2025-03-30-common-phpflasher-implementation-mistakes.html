@@ -1,0 +1,835 @@
+---
+layout: post
+title: "Common PHPFlasher Implementation Mistakes and How to Avoid Them"
+date: 2025-03-30 05:59:56
+author: yoeunes
+github_username: yoeunes
+twitter_username: yoeunes_en
+linkedin_username: younes--ennaji
+author_bio: "Creator and maintainer of PHPFlasher. Passionate about building elegant and intuitive PHP libraries that improve developer experience."
+tags: [phpflasher, troubleshooting, best-practices, tips]
+image: /static/images/blog/phpflasher-laravel.png
+excerpt: "Learn about the most common mistakes developers make when implementing PHPFlasher and how to fix them for a better notification experience."
+reading_time: 10
+featured: true
+---
+
+<div class="mb-8">
+    <p class="text-lg text-slate-600 leading-relaxed">
+        <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> makes implementing flash notifications in your PHP applications straightforward, but even the simplest tools can be misused. In this guide, we'll explore common implementation mistakes and provide solutions to help you get the most out of PHPFlasher.
+    </p>
+</div>
+
+<div class="bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-6 mb-10 border border-indigo-100">
+    <h4 class="text-xl font-semibold text-indigo-900 mb-4 flex items-center">
+        <i class="fa-duotone fa-lightbulb text-amber-500 mr-2 fa-lg"></i> Why This Matters
+    </h4>
+    <p class="mb-4">
+        Proper implementation of flash notifications directly impacts user experience:
+    </p>
+    <ul class="space-y-2 mb-0">
+        <li class="flex items-start">
+            <i class="fa-duotone fa-circle-check text-green-500 mt-1 mr-2"></i>
+            <span><strong class="text-slate-900">Better User Experience</strong>: Correctly implemented notifications provide clear, timely feedback to users.</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-duotone fa-circle-check text-green-500 mt-1 mr-2"></i>
+            <span><strong class="text-slate-900">Reduced Confusion</strong>: Consistent notification behavior helps users understand system status.</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-duotone fa-circle-check text-green-500 mt-1 mr-2"></i>
+            <span><strong class="text-slate-900">Code Maintainability</strong>: Following best practices makes your notification code easier to maintain.</span>
+        </li>
+    </ul>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #1: Incorrect Method Chaining Order</h4>
+
+<p class="mb-6">One of the most common mistakes is incorrect method chaining order. In <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2, notification type methods (<code>success()</code>, <code>error()</code>, etc.) should be called <strong>last</strong> in the chain.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Incorrect
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Incorrect order
+flash()->success('Profile updated!')
+      ->position('bottom-right')
+      ->timeout(5000);</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Correct
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Correct order
+flash()->position('bottom-right')
+      ->timeout(5000)
+      ->success('Profile updated!');</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8 flex items-start">
+    <i class="fa-duotone fa-lightbulb text-amber-500 text-xl mt-1 mr-3"></i>
+    <div>
+        <p class="text-amber-800 font-medium mb-1">Why This Matters</p>
+        <p class="text-amber-700 mb-0">
+            In <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2, configuration methods should come first, and the notification type method should be the final call. This ensures all options are properly applied to the notification.
+        </p>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #2: Using Outdated Method Names</h4>
+
+<p class="mb-6">If you're upgrading from <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v1, you might still be using outdated method names.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Outdated (v1)
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// v1 method names
+flash()->addSuccess('Item created');
+toastr()->addInfo('Please check your email');
+noty()->addWarning('Your session is expiring');</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Current (v2)
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// v2 method names
+flash()->success('Item created');
+toastr()->info('Please check your email');
+noty()->warning('Your session is expiring');</code></pre>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #3: Missing Redirects After Flash Messages</h4>
+
+<p class="mb-6">Flash messages are designed to persist across an HTTP redirect. A common mistake is setting a flash message without redirecting afterward.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Incorrect
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Flash message without redirect
+public function store(Request $request)
+{
+    // Process the form...
+
+    flash()->success('User created successfully!');
+
+    // Missing redirect!
+    return view('users.index');
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Correct
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Flash message with redirect
+public function store(Request $request)
+{
+    // Process the form...
+
+    flash()->success('User created successfully!');
+
+    // Redirect to display the flash message
+    return redirect()->route('users.index');
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="bg-slate-50 border border-slate-200 rounded-lg p-5 mb-8">
+    <h4 class="text-base font-semibold text-slate-900 mb-2 flex items-center">
+        <i class="fa-duotone fa-code text-indigo-500 mr-2"></i> When to Skip Redirects
+    </h4>
+    <p class="text-slate-600 mb-4">
+        There are legitimate use cases for flash messages without redirects, but they're less common:
+    </p>
+    <ul class="space-y-1 text-sm text-slate-600 mb-0">
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+            <span>API responses that include flash messages</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+            <span>AJAX requests with JavaScript-rendered notifications</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+            <span>Livewire or similar component-based systems</span>
+        </li>
+    </ul>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #4: Forgetting to Auto-Inject Assets in v2</h4>
+
+<p class="mb-6">In <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2, assets are automatically injected into your HTML, but some developers still include unnecessary code from v1.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Unnecessary in v2
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-html rounded-lg text-sm overflow-x-auto"><code>&lt;!-- Unnecessary in layouts/app.blade.php -->
+&lt;!-- Your content -->
+
+@flasher_render
+
+&lt;/body>
+&lt;/html></code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Correct for v2
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-html rounded-lg text-sm overflow-x-auto"><code>&lt;!-- In layouts/app.blade.php -->
+&lt;!-- Just your normal content, no special directive needed -->
+
+&lt;/body>
+&lt;/html></code></pre>
+        <p class="mt-2 text-xs text-slate-500">Assets are automatically injected in v2</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8 flex items-start">
+    <i class="fa-duotone fa-lightbulb text-amber-500 text-xl mt-1 mr-3"></i>
+    <div>
+        <p class="text-amber-800 font-medium mb-1">Important Configuration Note</p>
+        <p class="text-amber-700 mb-0">
+            Auto-injection is enabled by default in v2 via the <code class="bg-amber-100 px-1 py-0.5 rounded text-amber-800">inject_assets</code> configuration option. If you've disabled this feature, you'll need to manually include the assets.
+        </p>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #5: Inconsistent Notification Positioning</h4>
+
+<p class="mb-6">Using different positions for similar types of notifications can confuse users and create a disjointed user experience.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Inconsistent
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Inconsistent positioning
+flash()->position('top-right')
+       ->success('Profile updated!');
+
+// Later in another action
+flash()->position('bottom-left')
+       ->success('Settings saved!');
+
+// And another action
+flash()->position('top-center')
+       ->success('Password changed!');</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Consistent
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Consistent positioning
+flash()->position('top-right')
+       ->success('Profile updated!');
+
+// Later in another action
+flash()->position('top-right')
+       ->success('Settings saved!');
+
+// And another action
+flash()->position('top-right')
+       ->success('Password changed!');</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-10">
+    <h4 class="text-lg font-semibold text-slate-900 mb-3 flex items-center">
+        <i class="fa-duotone fa-sitemap text-blue-500 mr-2"></i> Strategic Positioning Guide
+    </h4>
+
+    <p class="text-slate-600 mb-4">
+        Instead of random positioning, adopt a strategic approach:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-lg border border-blue-100">
+            <h4 class="font-medium text-slate-900 mb-2 flex items-center">
+                <i class="fa-solid fa-circle-check text-green-500 mr-2"></i> Success Messages
+            </h4>
+            <p class="text-sm text-slate-600 mb-0">
+                Use <code>top-right</code> or <code>bottom-right</code> for success notifications to be noticeable but not intrusive.
+            </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg border border-blue-100">
+            <h4 class="font-medium text-slate-900 mb-2 flex items-center">
+                <i class="fa-solid fa-circle-exclamation text-amber-500 mr-2"></i> Warnings & Errors
+            </h4>
+            <p class="text-sm text-slate-600 mb-0">
+                Use <code>top-center</code> for important warnings and errors to ensure they're seen.
+            </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg border border-blue-100">
+            <h4 class="font-medium text-slate-900 mb-2 flex items-center">
+                <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> Information
+            </h4>
+            <p class="text-sm text-slate-600 mb-0">
+                Use <code>bottom-left</code> or <code>bottom-right</code> for general information that's less critical.
+            </p>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #6: Not Utilizing Global Configurations</h4>
+
+<p class="mb-6">Repeating the same notification options in multiple places makes your code harder to maintain. <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> lets you set global configurations:</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Repetitive Code
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// Repeating the same options
+flash()->position('top-right')
+       ->timeout(5000)
+       ->success('Profile updated!');
+
+flash()->position('top-right')
+       ->timeout(5000)
+       ->error('Something went wrong!');
+
+flash()->position('top-right')
+       ->timeout(5000)
+       ->info('New features available!');</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Using Global Config
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>// In config/flasher.php
+'options' => [
+    'timeout' => 5000,
+    'position' => 'top-right',
+],
+
+// In your code
+flash()->success('Profile updated!');
+flash()->error('Something went wrong!');
+flash()->info('New features available!');</code></pre>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #7: Overloading Users with Notifications</h4>
+
+<p class="mb-6">Showing too many notifications at once can overwhelm users and diminish the importance of each message.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Too Many Notifications
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>public function checkout()
+{
+    // Too many notifications at once
+    flash()->success('Order placed successfully!');
+    flash()->info('You will receive an email confirmation.');
+    flash()->info('Your items will be shipped tomorrow.');
+    flash()->success('You earned 100 reward points!');
+    flash()->info('Check out our new products!');
+
+    return redirect()->route('orders.confirmation');
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Prioritized Notifications
+            </h4>
+        </div>
+        <div class="p-6">
+            <pre class="language-php rounded-lg text-sm overflow-x-auto"><code>public function checkout()
+{
+    // Only the most important notifications
+    flash()->success('Order placed successfully! You will receive an email confirmation.');
+
+    // Conditionally show only if it's their first order
+    if ($isFirstOrder) {
+        flash()->info('You earned 100 reward points!');
+    }
+
+    return redirect()->route('orders.confirmation');
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="bg-indigo-50 rounded-xl p-6 mb-10 border border-indigo-100">
+    <h4 class="text-lg font-semibold text-slate-900 mb-4 flex items-center">
+        <i class="fa-duotone fa-list-check text-indigo-500 mr-2"></i> Notification Prioritization Checklist
+    </h4>
+
+    <p class="mb-4 text-slate-600">When deciding which notifications to show, consider:</p>
+
+    <ul class="space-y-2">
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-indigo-500 mt-1 mr-2"></i>
+            <span class="text-slate-700"><strong>Is it actionable?</strong> Notifications requiring user action should take priority.</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-indigo-500 mt-1 mr-2"></i>
+            <span class="text-slate-700"><strong>Is it time-sensitive?</strong> Urgent information should be shown immediately.</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-indigo-500 mt-1 mr-2"></i>
+            <span class="text-slate-700"><strong>Is it contextually relevant?</strong> Show information related to the user's current task.</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-indigo-500 mt-1 mr-2"></i>
+            <span class="text-slate-700"><strong>Can it be combined?</strong> Merge related messages when possible.</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fa-solid fa-check text-indigo-500 mt-1 mr-2"></i>
+            <span class="text-slate-700"><strong>Could it be displayed elsewhere?</strong> Consider inline messages for non-critical information.</span>
+        </li>
+    </ul>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #8: Ignoring Accessibility</h4>
+
+<p class="mb-6">Many developers forget to consider accessibility when implementing notifications, making their applications less usable for people with disabilities.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Poor Accessibility
+            </h4>
+        </div>
+        <div class="p-6">
+            <ul class="space-y-3 text-sm text-slate-600">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-xmark text-red-500 mt-1 mr-2"></i>
+                    <span>Using colors alone to convey message type</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-xmark text-red-500 mt-1 mr-2"></i>
+                    <span>Setting timeouts too short for important messages</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-xmark text-red-500 mt-1 mr-2"></i>
+                    <span>Not providing clear, descriptive messages</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-xmark text-red-500 mt-1 mr-2"></i>
+                    <span>Using low contrast color combinations</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Accessible Approach
+            </h4>
+        </div>
+        <div class="p-6">
+            <ul class="space-y-3 text-sm text-slate-600">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Using icons and colors together to indicate message type</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Setting longer timeouts for important messages (8-10 seconds)</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Providing clear, specific message content</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Using high contrast colors that meet WCAG standards</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-10 flex items-start">
+    <i class="fa-duotone fa-universal-access text-amber-500 text-xl mt-1 mr-3"></i>
+    <div>
+        <p class="text-amber-800 font-medium mb-1">Accessibility Tip</p>
+        <p class="text-amber-700 mb-0">
+            For critical errors or success messages that require acknowledgment, consider using <code>timeout(0)</code> to prevent auto-dismissal, ensuring users have enough time to read the message.
+        </p>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #9: Library Conflicts</h4>
+
+<p class="mb-6">Using multiple JavaScript libraries that manipulate the DOM can sometimes cause conflicts with <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span>.</p>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-10">
+    <div class="p-6">
+        <h4 class="text-lg font-semibold text-slate-900 mb-3">Common Sources of Conflicts</h4>
+
+        <ul class="space-y-3 text-slate-600">
+            <li class="flex items-start">
+                <i class="fa-solid fa-exclamation-triangle text-amber-500 mt-1 mr-2"></i>
+                <div>
+                    <p class="font-medium text-slate-800">Multiple Notification Libraries</p>
+                    <p class="text-sm">Having both Toastr and SweetAlert loaded directly alongside PHPFlasher can cause conflicts.</p>
+                    <p class="text-sm text-indigo-600 mt-1">
+                        <strong>Solution:</strong> Use PHPFlasher's adapters instead of loading libraries separately.
+                    </p>
+                </div>
+            </li>
+            <li class="flex items-start">
+                <i class="fa-solid fa-exclamation-triangle text-amber-500 mt-1 mr-2"></i>
+                <div>
+                    <p class="font-medium text-slate-800">CSS Collisions</p>
+                    <p class="text-sm">Your application's CSS might override PHPFlasher's styles.</p>
+                    <p class="text-sm text-indigo-600 mt-1">
+                        <strong>Solution:</strong> Use more specific selectors in your CSS or customize PHPFlasher's theme.
+                    </p>
+                </div>
+            </li>
+            <li class="flex items-start">
+                <i class="fa-solid fa-exclamation-triangle text-amber-500 mt-1 mr-2"></i>
+                <div>
+                    <p class="font-medium text-slate-800">JavaScript Errors in Other Scripts</p>
+                    <p class="text-sm">Errors in other scripts might prevent PHPFlasher from initializing properly.</p>
+                    <p class="text-sm text-indigo-600 mt-1">
+                        <strong>Solution:</strong> Check your browser console for errors and fix them.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Mistake #10: Not Testing on Mobile Devices</h4>
+
+<p class="mb-6">Notifications that look great on desktop might be problematic on mobile devices if not properly tested.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden h-full">
+        <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-xmark text-red-500 mr-2"></i> Mobile Issues
+            </h4>
+        </div>
+        <div class="p-6">
+            <ul class="space-y-3 text-sm text-slate-600">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-mobile-screen text-red-500 mt-1 mr-2"></i>
+                    <span>Notifications covering important UI elements</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-mobile-screen text-red-500 mt-1 mr-2"></i>
+                    <span>Text that's too small to read on mobile screens</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-mobile-screen text-red-500 mt-1 mr-2"></i>
+                    <span>Notifications that are too wide for the mobile viewport</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-mobile-screen text-red-500 mt-1 mr-2"></i>
+                    <span>Touch targets that are too small for comfortable interaction</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden h-full">
+        <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+            <h4 class="font-semibold text-slate-900 flex items-center">
+                <i class="fa-regular fa-circle-check text-green-500 mr-2"></i> Mobile Solutions
+            </h4>
+        </div>
+        <div class="p-6">
+            <ul class="space-y-3 text-sm text-slate-600">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Use <code>top-center</code> or <code>bottom-center</code> positions on mobile</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Keep messages concise to avoid excessive wrapping</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Use responsive width settings that adapt to screen size</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>Test on real mobile devices or accurate emulators</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="rounded-xl overflow-hidden bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-8 mb-10">
+    <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="w-24 h-24 flex-shrink-0 bg-white/10 rounded-2xl backdrop-blur-sm flex items-center justify-center p-4 border border-white/20">
+            <i class="fa-duotone fa-bell-on text-5xl text-white"></i>
+        </div>
+        <div>
+            <h4 class="text-2xl font-bold mb-4">Want to avoid these mistakes in your projects?</h4>
+            <p class="mb-6 text-indigo-100">
+                <span class="text-xl font-semibold text-white">PHP<span class="text-indigo-200">Flasher</span></span> provides an elegant, powerful solution for notifications with minimal potential for implementation errors.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="https://github.com/php-flasher/php-flasher" class="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-medium rounded-lg hover:bg-indigo-50 transition-colors">
+                    <i class="fa-brands fa-github mr-2"></i> View on GitHub
+                </a>
+                <a href="/docs/" class="inline-flex items-center px-6 py-3 bg-indigo-500/50 text-white font-medium rounded-lg hover:bg-indigo-500/70 transition-colors backdrop-blur-sm border border-white/10">
+                    <i class="fa-solid fa-book mr-2"></i> Read Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Bonus: Using Presets for Consistent Notifications</h4>
+
+<p class="mb-6">In <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v2, you can define presets in your configuration to ensure consistent notifications across your application:</p>
+
+<div class="bg-slate-800 rounded-lg overflow-hidden mb-8">
+    <div class="flex items-center justify-between px-4 py-2 bg-slate-900">
+        <div class="text-xs text-slate-200">config/flasher.php</div>
+        <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+    </div>
+    <pre class="language-php m-0 p-4 text-slate-50 overflow-x-auto"><code>'presets' => [
+    'entity_saved' => [
+        'type' => 'success',
+        'message' => 'Entity saved successfully',
+        'options' => [
+            'timeout' => 3000,
+            'position' => 'top-right',
+        ],
+    ],
+    'entity_deleted' => [
+        'type' => 'success',
+        'message' => 'Entity deleted successfully',
+        'options' => [
+            'timeout' => 3000,
+            'position' => 'top-right',
+        ],
+    ],
+    'validation_error' => [
+        'type' => 'error',
+        'message' => 'Please check the form for errors',
+        'options' => [
+            'timeout' => 5000,
+            'position' => 'top-center',
+        ],
+    ],
+],</code></pre>
+</div>
+
+<p class="mb-6">Then in your controllers, you can use these presets like this:</p>
+
+<div class="bg-slate-800 rounded-lg overflow-hidden mb-10">
+    <div class="flex items-center justify-between px-4 py-2 bg-slate-900">
+        <div class="text-xs text-slate-200">Using Presets</div>
+        <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+    </div>
+    <pre class="language-php m-0 p-4 text-slate-50 overflow-x-auto"><code>// Use the preset directly
+flash()->preset('entity_saved');
+
+// Or customize the preset message
+flash()->preset('entity_saved', ['message' => 'User saved successfully']);
+
+// Or with placeholders in your preset message
+// If your preset has: 'message' => 'Entity :name saved successfully'
+flash()->preset('entity_saved', ['name' => 'User']);</code></pre>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Recap: Top 10 PHPFlasher Implementation Mistakes</h4>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-10">
+    <div class="p-6">
+        <ol class="space-y-4">
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">1</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Incorrect Method Chaining Order</h4>
+                    <p class="text-slate-600 text-sm">Always put notification type methods (success, error, etc.) at the end of the chain.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">2</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Using Outdated Method Names</h4>
+                    <p class="text-slate-600 text-sm">Use <code>success()</code> instead of <code>addSuccess()</code>, etc. in v2.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">3</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Missing Redirects After Flash Messages</h4>
+                    <p class="text-slate-600 text-sm">Flash messages are designed to survive redirects; use them appropriately.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">4</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Forgetting Auto-Inject Assets Feature in v2</h4>
+                    <p class="text-slate-600 text-sm">No need for <code>@flasher_render</code> in v2 as assets are auto-injected.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">5</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Inconsistent Notification Positioning</h4>
+                    <p class="text-slate-600 text-sm">Use consistent positioning for similar notification types.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">6</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Not Utilizing Global Configurations</h4>
+                    <p class="text-slate-600 text-sm">Set common options in the configuration file to reduce repetition.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">7</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Overloading Users with Notifications</h4>
+                    <p class="text-slate-600 text-sm">Show only the most important notifications to avoid overwhelming users.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">8</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Ignoring Accessibility</h4>
+                    <p class="text-slate-600 text-sm">Ensure notifications are accessible to all users, including those with disabilities.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">9</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Library Conflicts</h4>
+                    <p class="text-slate-600 text-sm">Be mindful of JavaScript library conflicts that might affect PHPFlasher's functionality.</p>
+                </div>
+            </li>
+
+            <li class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-3 mt-0.5">
+                    <span class="font-semibold text-indigo-600">10</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900">Not Testing on Mobile Devices</h4>
+                    <p class="text-slate-600 text-sm">Ensure notifications look and function properly on mobile devices.</p>
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<h4 class="text-2xl font-bold text-slate-900 mb-4">Conclusion</h4>
+
+<p class="mb-6">
+    <span class="font-semibold text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> is a powerful tool for implementing notifications in your PHP applications. By avoiding these common mistakes, you can ensure your notifications are effective, consistent, and enhance the user experience rather than detract from it.
+</p>
+
+<p class="mb-6">
+    Remember that notifications are a communication tool between your application and your users. Keep them clear, relevant, and appropriately timed, and they'll contribute to a positive user experience.
+</p>
