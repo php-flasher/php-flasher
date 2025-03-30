@@ -97,6 +97,7 @@ return [
     'themes' => [
         '{{ page.theme_name_short }}' => [
             'scripts' => [
+                '/vendor/flasher/flasher.min.css',
                 '/vendor/flasher/themes/{{ page.theme_name }}.min.js',
             ],
             'styles' => [
@@ -123,10 +124,8 @@ flasher:
 
                 <div class="framework-content hidden" id="javascript-content">
                     <pre class="language-javascript bg-slate-800 text-slate-200 p-4 text-sm overflow-x-auto"><code>// Set as default theme
-flasher.defaultPlugin = '{{ page.theme_name }}';
-
 // Then use it
-flasher.success('Well done!');</code></pre>
+flasher.use('{{ page.theme_name }}').success('Well done!');</code></pre>
                 </div>
             </div>
         </section>
