@@ -1,0 +1,44 @@
+---
+layout: default
+title: Featured PHPFlasher Articles
+description: Our best and most useful articles about PHPFlasher
+---
+
+<h1 class="text-3xl font-bold text-slate-900 mb-6">Featured Articles</h1>
+<p class="text-slate-600 mb-8">Our most helpful guides and tutorials to get the most out of PHPFlasher.</p>
+
+<div class="grid gap-8 md:grid-cols-2">
+    {% assign featured_posts = site.posts | where: "featured", true %}
+    {% for post in featured_posts %}
+    <div class="bg-white border border-slate-200 shadow-sm rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+        {% if post.image %}
+        <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+        {% else %}
+        <div class="bg-indigo-100 flex items-center justify-center h-48">
+            <i class="fa-duotone fa-star text-indigo-400 text-4xl"></i>
+        </div>
+        {% endif %}
+        <div class="p-6">
+            <div class="flex flex-wrap gap-2 mb-3">
+                {% for tag in post.tags limit:3 %}
+                <span class="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <h2 class="text-xl font-semibold text-slate-900 mb-2">{{ post.title }}</h2>
+            <p class="text-slate-600 mb-4">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+            <div class="flex justify-between items-center">
+                <time class="text-sm text-slate-500" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+                <a href="{{ post.url }}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if featured_posts.size == 0 %}
+<div class="bg-indigo-50 text-indigo-700 p-6 rounded-xl text-center">
+    <i class="fa-duotone fa-star text-4xl mb-4"></i>
+    <h3 class="text-xl font-semibold mb-2">No featured articles yet</h3>
+    <p>Check back soon for our featured content!</p>
+</div>
+{% endif %}

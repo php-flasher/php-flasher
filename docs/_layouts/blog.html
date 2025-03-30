@@ -1,0 +1,162 @@
+---
+layout: default
+data-controller: blog
+---
+
+<div class="mb-10">
+    {% if page.image %}
+        <div class="relative h-64 sm:h-80 md:h-96 w-full mb-8 rounded-xl overflow-hidden shadow-md">
+            <img src="{{ page.image }}" alt="{{ page.title }}" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                {% if page.tags.size > 0 %}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tag in page.tags %}
+                            <span class="bg-indigo-500/90 text-white text-xs px-2.5 py-1 rounded-full font-medium">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">{{ page.title }}</h1>
+                {% if page.date %}
+                    <div class="flex items-center text-white/90 text-sm">
+                        <i class="fa-regular fa-calendar-days mr-2"></i>
+                        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+                        {% if page.author %}
+                            <span class="mx-2">•</span>
+                            <i class="fa-regular fa-user mr-2"></i>
+                            <span>{{ page.author }}</span>
+                        {% endif %}
+
+                        {% if page.reading_time %}
+                            <span class="mx-2">•</span>
+                            <i class="fa-regular fa-clock mr-2"></i>
+                            <span>{{ page.reading_time }} min read</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight">{{ page.title }}</h1>
+            {% if page.date %}
+                <div class="flex items-center text-slate-500 text-sm mb-4">
+                    <i class="fa-regular fa-calendar-days mr-2"></i>
+                    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+
+                    {% if page.author %}
+                        <span class="mx-2">•</span>
+                        <i class="fa-regular fa-user mr-2"></i>
+                        <span>{{ page.author }}</span>
+                    {% endif %}
+
+                    {% if page.reading_time %}
+                        <span class="mx-2">•</span>
+                        <i class="fa-regular fa-clock mr-2"></i>
+                        <span>{{ page.reading_time }} min read</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if page.tags.size > 0 %}
+                <div class="flex flex-wrap gap-2 mb-6">
+                    {% for tag in page.tags %}
+                        <span class="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-medium">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="prose prose-slate max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-slate-900 prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:text-indigo-800 prose-a:font-medium prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:hidden prose-code:after:hidden prose-pre:bg-slate-800 prose-pre:text-slate-100 prose-img:rounded-xl prose-img:shadow-md">
+        {{ content }}
+    </div>
+
+    {% if page.layout == 'post' %}
+        <div class="mt-16 pt-8 border-t border-slate-200">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex-1 min-w-0">
+                    {% if page.previous.url %}
+                        <a href="{{ page.previous.url }}" class="group">
+                            <div class="text-xs uppercase tracking-wider text-slate-500 flex items-center mb-1.5">
+                                <i class="fa-solid fa-arrow-left mr-1.5 group-hover:text-indigo-600 transition-colors"></i> Previous Article
+                            </div>
+                            <div class="text-base font-medium text-slate-800 group-hover:text-indigo-600 transition-colors truncate">{{ page.previous.title }}</div>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="flex-1 min-w-0 text-right">
+                    {% if page.next.url %}
+                    <a href="{{ page.next.url }}" class="group">
+                        <div class="text-xs uppercase tracking-wider text-slate-500 flex items-center justify-end mb-1.5">
+                            Next Article <i class="fa-solid fa-arrow-right ml-1.5 group-hover:text-indigo-600 transition-colors"></i>
+                        </div>
+                        <div class="text-base font-medium text-slate-800 group-hover:text-indigo-600 transition-colors truncate">{{ page.next.title }}</div>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Author Bio Section -->
+        <div class="mt-12 bg-gradient-to-br from-indigo-50 to-indigo-100/50 p-6 rounded-xl shadow-sm border border-indigo-100">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white shadow-md">
+                    <img src="https://github.com/{{ page.github_username | default: 'yoeunes' }}.png" alt="{{ page.author }}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name={{ page.author }}&background=6366f1&color=fff'">
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">About {{ page.author }}</h3>
+                    <p class="text-slate-600 text-sm mb-4">
+                        {{ page.author_bio | default: "Creator and maintainer of PHPFlasher, passionate about building elegant and user-friendly PHP libraries." }}
+                    </p>
+                    <div class="flex justify-center md:justify-start gap-3">
+                        <a href="https://github.com/{{ page.github_username | default: 'yoeunes' }}" class="text-slate-500 hover:text-slate-900 transition-colors">
+                            <i class="fa-brands fa-github text-lg"></i>
+                        </a>
+                        <a href="https://twitter.com/{{ page.twitter_username | default: 'yoeunes_en' }}" class="text-slate-500 hover:text-blue-500 transition-colors">
+                            <i class="fa-brands fa-twitter text-lg"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/{{ page.linkedin_username | default: 'younes--ennaji' }}" class="text-slate-500 hover:text-blue-700 transition-colors">
+                            <i class="fa-brands fa-linkedin text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Posts -->
+        {% if site.related_posts.size > 0 %}
+            <div class="mt-12">
+                <h3 class="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+                    <i class="fa-duotone fa-books text-indigo-500 mr-3"></i> Related Articles
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for post in site.related_posts limit:2 %}
+                        <a href="{{ post.url }}" class="group bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="aspect-w-16 aspect-h-9 bg-slate-100">
+                            {% if post.image %}
+                            <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center bg-indigo-50">
+                                <i class="fa-duotone fa-newspaper text-indigo-300 text-4xl"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="p-4">
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                {% for tag in post.tags limit:2 %}
+                                <span class="bg-indigo-50 text-indigo-600 text-xs px-2 py-0.5 rounded-full">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            <h4 class="text-base font-medium text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">{{ post.title }}</h4>
+                            <div class="text-xs text-slate-500">
+                                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
