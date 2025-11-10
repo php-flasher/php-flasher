@@ -96,8 +96,8 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - { symfony: 8.0.*, php: 8.4, phpunit: 10.5.* }
-                    - { symfony: 7.4.*, php: 8.2, phpunit: 10.5.* }
+                    - { symfony: 8.0.x-dev, php: 8.4, phpunit: 10.5.* }
+                    - { symfony: 7.4.x-dev, php: 8.2, phpunit: 10.5.* }
                     - { symfony: 7.3.*, php: 8.5, phpunit: 10.5.* }
                     - { symfony: 7.3.*, php: 8.4, phpunit: 10.5.* }
                     - { symfony: 7.3.*, php: 8.3, phpunit: 10.5.* }
@@ -130,8 +130,22 @@ jobs:
                     sed -i '/"require": {/,/},/d; /"require-dev": {/,/},/d' composer.json
                     composer config --global allow-plugins true
                     composer config extra.symfony.require "${{ matrix.symfony }}"
+
+                    if [[ "${{ matrix.symfony }}" == *"-dev"* ]]; then
+                        echo "Setting minimum-stability to dev for ${{ matrix.symfony }}"
+                        composer config minimum-stability "dev"
+                        composer config prefer-stable true
+                    fi
+
                     composer require "symfony/config:${{ matrix.symfony }}" "symfony/console:${{ matrix.symfony }}" "symfony/dependency-injection:${{ matrix.symfony }}" "symfony/framework-bundle:${{ matrix.symfony }}" "symfony/http-kernel:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/twig-bundle:${{ matrix.symfony }}" "phpunit/phpunit:${{ matrix.phpunit }}" "mockery/mockery" "psr/container" "monolog/monolog" --no-interaction --no-update
-                    composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
+
+                    if [[ "${{ matrix.symfony }}" == *"-dev"* ]]; then
+                        echo "Running composer update (latest dependencies)"
+                        composer update -W --no-interaction --prefer-dist --optimize-autoloader
+                    else
+                        echo "Running composer update --prefer-lowest"
+                        composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
+                    fi
 
             -   name: ✅ Execute tests
                 run: vendor/bin/phpunit --testsuite symfony
