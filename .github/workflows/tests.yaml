@@ -96,6 +96,8 @@ jobs:
             fail-fast: false
             matrix:
                 include:
+                    - { symfony: 8.0.*, php: 8.4, phpunit: 10.5.* }
+                    - { symfony: 7.4.*, php: 8.2, phpunit: 10.5.* }
                     - { symfony: 7.3.*, php: 8.5, phpunit: 10.5.* }
                     - { symfony: 7.3.*, php: 8.4, phpunit: 10.5.* }
                     - { symfony: 7.3.*, php: 8.3, phpunit: 10.5.* }
