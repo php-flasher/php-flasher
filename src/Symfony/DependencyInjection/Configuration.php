@@ -45,7 +45,6 @@ final readonly class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default')
                     ->info('Default notification library (e.g., "flasher", "toastr", "noty", "notyf", "sweetalert")')
-                    ->isRequired()
                     ->cannotBeEmpty()
                     ->defaultValue($this->plugin->getDefault())
                 ->end()
