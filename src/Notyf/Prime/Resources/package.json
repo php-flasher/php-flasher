@@ -1,6 +1,6 @@
 {
     "name": "@flasher/flasher-notyf",
-    "version": "2.1.6",
+    "version": "2.2.0",
     "type": "module",
     "license": "MIT",
     "main": "dist/flasher-notyf.cjs.js",
@@ -11,7 +11,7 @@
         "ncu": "ncu -u"
     },
     "peerDependencies": {
-        "@flasher/flasher": "^2.1.6",
+        "@flasher/flasher": "^2.2.0",
         "notyf": "^3.10.0"
     }
 }

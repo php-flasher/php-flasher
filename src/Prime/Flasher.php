@@ -29,7 +29,7 @@ final readonly class Flasher implements FlasherInterface
     /**
      * Current version of PHPFlasher.
      */
-    public const VERSION = '2.1.6';
+    public const VERSION = '2.2.0';
 
     /**
      * Creates a new Flasher instance.
