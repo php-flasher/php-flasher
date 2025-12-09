@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "445c712d9432d7d96ea60e65c614647a",
+    "content-hash": "ee738536880fa5f95868d958a5f6e80f",
     "packages": [
         {
             "name": "brick/math",
@@ -6941,6 +6941,107 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.0.0"
             },
             "time": "2015-05-12T12:40:29+00:00"
+        },
+        {
+            "name": "yoeunes/regex-parser",
+            "version": "v0.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yoeunes/regex-parser.git",
+                "reference": "23d0053d4b9497ad569594635a99ab363b0ae8f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yoeunes/regex-parser/zipball/23d0053d4b9497ad569594635a99ab363b0ae8f9",
+                "reference": "23d0053d4b9497ad569594635a99ab363b0ae8f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^11.0|^12.0",
+                "psr/cache": "^3.0",
+                "psr/log": "^3.0",
+                "psr/simple-cache": "^3.0",
+                "rector/rector": "^2.0",
+                "symfony/config": "^7.4|^8.0",
+                "symfony/console": "^7.4|^8.0",
+                "symfony/dependency-injection": "^7.4|^8.0",
+                "symfony/http-foundation": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0",
+                "symfony/routing": "^7.4|^8.0",
+                "symfony/validator": "^7.4|^8.0"
+            },
+            "suggest": {
+                "phpstan/extension-installer": "To automatically enable the PHPStan rule for regex validation.",
+                "phpstan/phpstan": "To run static analysis and detect invalid regex patterns.",
+                "psr/cache": "To share AST cache via PSR-6 pools.",
+                "psr/simple-cache": "To share AST cache via PSR-16 caches.",
+                "rector/rector": "To automatically refactor and optimize regex patterns."
+            },
+            "bin": [
+                "bin/regex"
+            ],
+            "type": "library",
+            "extra": {
+                "rector": {
+                    "sets": [
+                        "config/rector/regex-parser.php"
+                    ]
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RegexParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Younes ENNAJI",
+                    "email": "younes.ennaji.pro@gmail.com",
+                    "homepage": "https://www.linkedin.com/in/younes--ennaji/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A powerful PCRE regex parser with lexer, AST builder, validation, ReDoS analysis, and syntax highlighting. Zero dependencies, blazing fast, and production-ready.",
+            "homepage": "https://github.com/yoeunes/regex-parser",
+            "keywords": [
+                "PCRE",
+                "ast",
+                "cli",
+                "lexer",
+                "parser",
+                "php",
+                "redos",
+                "regex",
+                "security",
+                "syntax-highlighting",
+                "validation"
+            ],
+            "support": {
+                "docs": "https://github.com/yoeunes/regex-parser#readme",
+                "issues": "https://github.com/yoeunes/regex-parser/issues",
+                "source": "https://github.com/yoeunes/regex-parser"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/yoeunes",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-09T10:14:25+00:00"
         }
     ],
     "packages-dev": [
@@ -10966,11 +11067,11 @@
     "minimum-stability": "dev",
     "stability-flags": {},
     "prefer-stable": true,
-    "prefer-lowest": true,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=8.2",
         "ext-intl": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
