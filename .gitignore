@@ -17,3 +17,6 @@
 /npm-debug.log
 
 /tests/Symfony/Fixtures/project/public/vendor/
+
+src/**/vendor/
+src/**/composer.lock
