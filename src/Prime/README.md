@@ -19,22 +19,20 @@ composer require php-flasher/flasher
 ## Quick Start
 
 ```php
-use Flasher\Prime\Flasher;
-
 // Success notification
-Flasher::success('Operation completed successfully!');
+flash('Operation completed successfully!', 'success');
 
 // Error notification
-Flasher::error('An error occurred.');
+flash('An error occurred.', 'error');
 
 // With options
-Flasher::success('Profile updated!', [
+flash('Profile updated!', 'success', [
     'timeout' => 5000,
     'position' => 'top-right',
 ]);
 
 // With translation
-Flasher::info('Welcome back!', [
+flash('Welcome back!', 'info', [
     'translate' => true,
     'locale' => 'en',
 ]);
