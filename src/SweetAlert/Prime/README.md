@@ -1,80 +1,83 @@
-<div align="center">
-    <a href="https://github.com/php-flasher/php-flasher/blob/2.x/docs/palestine.md">
-        <img src="https://raw.githubusercontent.com/php-flasher/art/main/palestine-banner-support.svg" width="800px"  alt="Help Palestine"/>
-    </a>
-</div>
+# PHPFlasher SweetAlert Adapter (Prime)
 
-<p align="center">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-github-dark.png">
-      <img src="https://raw.githubusercontent.com/php-flasher/art/main/php-flasher-github.png" alt="PHPFlasher Logo">
-    </picture>
-</p>
+[![Latest Version](https://img.shields.io/packagist/v/php-flasher/flasher-sweetalert.svg)](https://packagist.org/packages/php-flasher/flasher-sweetalert)
+[![Total Downloads](https://img.shields.io/packagist/dt/php-flasher/flasher-sweetalert.svg)](https://packagist.org/packages/php-flasher/flasher-sweetalert)
+[![License](https://img.shields.io/packagist/l/php-flasher/flasher-sweetalert.svg)](https://packagist.org/packages/php-flasher/flasher-sweetalert)
 
-## About PHPFlasher
+SweetAlert2 adapter for PHPFlasher. Beautiful alert dialogs with modal and toast support.
 
-PHPFlasher is a powerful and easy-to-use package that allows you to quickly and easily add flash messages to your Laravel or Symfony projects. 
-Whether you need to alert users of a successful form submission, an error, or any other important information, flash messages are a simple and effective solution for providing feedback to your users. 
+## Requirements
 
-With PHPFlasher, you can easily record and store messages within the session, making it simple to retrieve and display them on the current or next page. 
-This improves user engagement and enhances the overall user experience on your website or application. 
+- PHP >= 8.2
+- PHPFlasher ^2.4.0
 
-Whether you're a beginner or an experienced developer, PHPFlasher's intuitive and straightforward design makes it easy to integrate into your projects. 
-So, if you're looking for a reliable, flexible and easy to use flash messages solution, PHPFlasher is the perfect choice.
+## Installation
 
+```bash
+composer require php-flasher/flasher-sweetalert
+```
 
-## Official Documentation
+## Quick Start
 
-Documentation for PHPFlasher can be found on the [https://php-flasher.io](https://php-flasher.io).
+```php
+use Flasher\SweetAlert\Prime\SweetAlertFactory;
 
-## Contributors and sponsors
+// Basic usage
+SweetAlert::success('Operation completed successfully!');
+SweetAlert::error('An error occurred.');
+SweetAlert::info('Information message.');
+SweetAlert::warning('Warning message.');
 
-Join our team of contributors and make a lasting impact on our project!
+// With options
+SweetAlert::success('Success message', [
+    'timer' => 3000,
+    'toast' => true,
+    'position' => 'top-end',
+]);
 
-We are always looking for passionate individuals who want to contribute their skills and ideas.
-Whether you're a developer, designer, or simply have a great idea, we welcome your participation and collaboration.
+// Modal dialog
+SweetAlert::success('Profile updated!')
+    ->confirmButtonText('Great!')
+    ->timer(5000);
+```
 
-Shining stars of our community:
+## Features
 
-<!-- ALL-CONTRIBUTORS-LIST:START -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/younes--ennaji//"><img src="https://avatars.githubusercontent.com/u/10859693?v=4?s=100" width="100px;" alt="Younes ENNAJI"/><br /><sub><b>Younes ENNAJI</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Code">💻</a> <a href="https://github.com/php-flasher/php-flasher/commits?author=yoeunes" title="Documentation">📖</a> <a href="#maintenance-yoeunes" title="Maintenance">🚧</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/salmayno"><img src="https://avatars.githubusercontent.com/u/27933199?v=4?s=100" width="100px;" alt="Salma Mourad"/><br /><sub><b>Salma Mourad</b></sub></a><br /><a href="#financial-salmayno" title="Financial">💵</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.youtube.com/rstacode"><img src="https://avatars.githubusercontent.com/u/35005761?v=4?s=100" width="100px;" alt="Nashwan Abdullah"/><br /><sub><b>Nashwan Abdullah</b></sub></a><br /><a href="#financial-codenashwan" title="Financial">💵</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://darvis.nl/"><img src="https://avatars.githubusercontent.com/u/7394837?v=4?s=100" width="100px;" alt="Arvid de Jong"/><br /><sub><b>Arvid de Jong</b></sub></a><br /><a href="#financial-darviscommerce" title="Financial">💵</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://ashallendesign.co.uk/"><img src="https://avatars.githubusercontent.com/u/39652331?v=4?s=100" width="100px;" alt="Ash Allen"/><br /><sub><b>Ash Allen</b></sub></a><br /><a href="#design-ash-jc-allen" title="Design">🎨</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://about.me/murrant"><img src="https://avatars.githubusercontent.com/u/39462?v=4?s=100" width="100px;" alt="Tony Murray"/><br /><sub><b>Tony Murray</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=murrant" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/n3wborn"><img src="https://avatars.githubusercontent.com/u/10246722?v=4?s=100" width="100px;" alt="Stéphane P"/><br /><sub><b>Stéphane P</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=n3wborn" title="Documentation">📖</a></td>
-    </tr>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.instagram.com/lucas.maciel_z"><img src="https://avatars.githubusercontent.com/u/80225404?v=4?s=100" width="100px;" alt="Lucas Maciel"/><br /><sub><b>Lucas Maciel</b></sub></a><br /><a href="#design-LucasStorm" title="Design">🎨</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://siek.io/"><img src="https://avatars.githubusercontent.com/u/5730766?v=4?s=100" width="100px;" alt="Antoni Siek"/><br /><sub><b>Antoni Siek</b></sub></a><br /><a href="https://github.com/php-flasher/php-flasher/commits?author=ImJustToNy" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
+- **Simple API**: `success()`, `error()`, `info()`, `warning()`, `flash()`
+- **SweetAlert2 Options**: `timer`, `toast`, `position`, `showConfirmButton`, `showCancelButton`
+- **Modal Support**: Full SweetAlert2 modal dialogs and toasts
+- **Type Safety**: Full PHP type hints and PHPStan support
+- **Helper Functions**: Global `sweetalert()` helper for quick access
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+## Available Methods
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+```php
+// Success notification
+SweetAlert::success($message, $title, $options);
 
-## Contact
+// Error notification
+SweetAlert::error($message, $title, $options);
 
-PHPFlasher is being actively developed by <a href="https://github.com/yoeunes">yoeunes</a>. 
-You can reach out with questions, bug reports, or feature requests on any of the following:
+// Info notification
+SweetAlert::info($message, $title, $options);
 
-- [Github Issues](https://github.com/php-flasher/php-flasher/issues) 
-- [Github](https://github.com/yoeunes)
-- [Twitter](https://twitter.com/yoeunes)
-- [Linkedin](https://www.linkedin.com/in/younes--ennaji//)
-- [Email me directly](mailto:younes.ennaji.pro@gmail.com)
+// Warning notification
+SweetAlert::warning($message, $title, $options);
+
+// Custom notification type
+SweetAlert::flash($type, $message, $title, $options);
+
+// Set options
+SweetAlert::success($message)
+    ->timer(3000)
+    ->toast(true)
+    ->position('top-end');
+```
+
+## Documentation
+
+Complete documentation: [php-flasher.io](https://php-flasher.io)
 
 ## License
 
-PHPFlasher is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-<p align="center"> <b>Made with ❤️ by <a href="https://www.linkedin.com/in/younes--ennaji//">Younes ENNAJI</a> </b> </p>
+[MIT](https://opensource.org/licenses/MIT)
