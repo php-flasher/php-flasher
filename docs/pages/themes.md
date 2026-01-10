@@ -2,7 +2,7 @@
 
 ## Overview
 
-The PHPFlasher theme system allows for consistent, customizable notification designs across your application. Themes define both the visual appearance (using CSS/SCSS) and the HTML structure (using template functions) of notifications.
+The PHPFlasher theme system allows for consistent, customizable notification designs across your application. Themes define both the visual appearance (CSS/SCSS) and HTML structure of notifications.
 
 ## Core Concepts
 

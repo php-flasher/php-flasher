@@ -5,7 +5,7 @@ title: JavaScript
 description: Easily add flash notification messages to your JavaScript application with PHPFlasher. Follow our step-by-step guide to install the library using npm or include it in your project using CDN links, and start engaging and informing your users with powerful flash messages.
 ---
 
-<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> assets can be installed from a cdn or using npm
+<strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> assets can be installed from a CDN or using npm
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 Quick start guide for installing the <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> from cdn or npm.
@@ -68,7 +68,7 @@ or if you are using a cdn like this:
 
 ### <i class="fa-duotone fa-list-radio"></i> Other adapters
 
-First grad the cdn for any js library adapter supported by <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> or install it with npm
+First grab the CDN for any js library adapter supported by <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> or install it with npm
 and then call the `create()` method on flasher object :
 
 ```html

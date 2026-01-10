@@ -39,9 +39,9 @@ final class Notification implements NotificationInterface
     private array $options = [];
 
     /**
-     * Gets the title of the notification.
+     * Gets the title.
      *
-     * @return string The notification title
+     * @return string
      */
     public function getTitle(): string
     {
@@ -49,9 +49,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Sets the title of the notification.
+     * Sets the title.
      *
-     * @param string $title The title to set
+     * @param string $title
      */
     public function setTitle(string $title): void
     {
@@ -59,9 +59,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Gets the message of the notification.
+     * Gets the message.
      *
-     * @return string The notification message
+     * @return string
      */
     public function getMessage(): string
     {
@@ -69,9 +69,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Sets the message of the notification.
+     * Sets the message.
      *
-     * @param string $message The message to set
+     * @param string $message
      */
     public function setMessage(string $message): void
     {
@@ -79,9 +79,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Gets the type of the notification.
+     * Gets the type.
      *
-     * @return string The notification type
+     * @return string
      */
     public function getType(): string
     {
@@ -89,9 +89,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Sets the type of the notification.
+     * Sets the type.
      *
-     * @param string $type The type to set
+     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -99,9 +99,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Gets all options of the notification.
+     * Gets all options.
      *
-     * @return array<string, mixed> The notification options
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -122,12 +122,12 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Gets a specific option of the notification with a default fallback.
+     * Gets a specific option with a default fallback.
      *
-     * @param string $name    The name of the option
-     * @param mixed  $default The default value to return if the option is not set
+     * @param string $name
+     * @param mixed  $default
      *
-     * @return mixed The option value or the default value
+     * @return mixed
      */
     public function getOption(string $name, mixed $default = null): mixed
     {
@@ -137,10 +137,10 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Sets a specific option for the notification.
+     * Sets a specific option.
      *
-     * @param string $name  The name of the option
-     * @param mixed  $value The value of the option
+     * @param string $name
+     * @param mixed  $value
      */
     public function setOption(string $name, mixed $value): void
     {
@@ -148,9 +148,9 @@ final class Notification implements NotificationInterface
     }
 
     /**
-     * Unsets a specific option of the notification.
+     * Unsets a specific option.
      *
-     * @param string $name The name of the option to unset
+     * @param string $name
      */
     public function unsetOption(string $name): void
     {

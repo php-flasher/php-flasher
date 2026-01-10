@@ -378,8 +378,7 @@ flash()
 |-----------|------------------------------------------------------------------------------|
 | `$locale` | The locale to be used for the translation, or null to use the default locale |
 
-It is **important** to note that the `translate()` method only sets the locale to be used for the translation of the flash message.
-It does not actually perform the translation itself.
+Note that the `translate()` method only sets the locale; it does not perform the translation itself.
 
 In order to translate the flash message, you will need to provide the appropriate translation keys in your translation files.
 

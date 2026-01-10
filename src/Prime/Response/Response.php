@@ -108,7 +108,7 @@ final class Response
     /**
      * Gets the main script path.
      *
-     * @return string The path to the main JavaScript file
+     * @return string
      */
     public function getMainScript(): string
     {
@@ -118,7 +118,7 @@ final class Response
     /**
      * Sets the main script path.
      *
-     * @param string $mainScript The path to the main JavaScript file
+     * @param string $mainScript
      */
     public function setMainScript(string $mainScript): void
     {
@@ -128,7 +128,7 @@ final class Response
     /**
      * Gets the CSS stylesheets.
      *
-     * @return string[] The stylesheet paths
+     * @return string[]
      */
     public function getStyles(): array
     {
@@ -138,7 +138,7 @@ final class Response
     /**
      * Gets the JavaScript scripts.
      *
-     * @return string[] The script paths
+     * @return string[]
      */
     public function getScripts(): array
     {

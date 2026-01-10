@@ -25,7 +25,7 @@ use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 final class EventDispatcher implements EventDispatcherInterface
 {
     /**
-     * Mapping of event names to their registered listeners.
+     * Mapping of event names to listeners.
      *
      * @var array<string, EventListenerInterface[]>
      */
@@ -54,7 +54,7 @@ final class EventDispatcher implements EventDispatcherInterface
      * that implement StoppableEventInterface. It calls each listener in
      * registration order until all listeners are called or propagation is stopped.
      *
-     * @throws \InvalidArgumentException If a listener is not callable
+     * @throws \InvalidArgumentException
      */
     public function dispatch(object $event): object
     {
@@ -77,9 +77,6 @@ final class EventDispatcher implements EventDispatcherInterface
 
     /**
      * {@inheritdoc}
-     *
-     * This implementation registers a listener for all events it declares
-     * interest in through its getSubscribedEvents() method.
      */
     public function addListener(EventListenerInterface $listener): void
     {

@@ -46,9 +46,9 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Retrieves all stored notification envelopes.
+     * Retrieves all stored envelopes.
      *
-     * @return Envelope[] Array of notification envelopes
+     * @return Envelope[]
      */
     public function all(): array
     {
@@ -56,17 +56,17 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Filters notifications based on provided criteria.
+     * Filters notifications by criteria.
      *
-     * This method combines default criteria with the provided criteria,
-     * creates a filter using the filter factory, and applies it to the envelopes.
+     * This method combines default criteria with provided criteria,
+     * creates a filter using the filter factory, and applies it to envelopes.
      * Before applying the filter, it dispatches a FilterEvent to allow modification.
      *
-     * @param array<string, mixed> $criteria Filtering criteria
+     * @param array<string, mixed> $criteria
      *
-     * @return Envelope[] Array of filtered notification envelopes
+     * @return Envelope[]
      *
-     * @throws CriteriaNotRegisteredException If a requested filter criterion doesn't exist
+     * @throws CriteriaNotRegisteredException
      */
     public function filter(array $criteria = []): array
     {
@@ -80,12 +80,12 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Adds one or more notification envelopes to storage.
+     * Adds notification envelopes to storage.
      *
      * Before adding envelopes, it dispatches a PersistEvent to allow modification
      * of the envelopes. After storage, it dispatches a PostPersistEvent.
      *
-     * @param Envelope ...$envelopes One or more notification envelopes to store
+     * @param Envelope ...$envelopes
      */
     public function add(Envelope ...$envelopes): void
     {
@@ -99,12 +99,12 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Updates one or more notification envelopes in storage.
+     * Updates notification envelopes in storage.
      *
      * Before updating envelopes, it dispatches an UpdateEvent to allow modification
      * of the envelopes. After update, it dispatches a PostUpdateEvent.
      *
-     * @param Envelope ...$envelopes One or more notification envelopes to update
+     * @param Envelope ...$envelopes
      */
     public function update(Envelope ...$envelopes): void
     {
@@ -118,13 +118,13 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Removes one or more notification envelopes from storage.
+     * Removes notification envelopes from storage.
      *
      * Before removal, it dispatches a RemoveEvent to allow listeners to modify
      * which envelopes should be removed or kept. After removal, it dispatches
      * a PostRemoveEvent.
      *
-     * @param Envelope ...$envelopes One or more notification envelopes to remove
+     * @param Envelope ...$envelopes
      */
     public function remove(Envelope ...$envelopes): void
     {

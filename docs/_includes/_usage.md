@@ -31,9 +31,9 @@ class BookController
 
 <br />
 
-Choose a message that is clear and tells the user what happened. For example, `"Book has been created successfully!"` is a good message, but you can adjust it to fit your application's context and language.
+Choose a clear message that tells the user what happened. For example, `"Book has been created successfully!"` is a good message, but you can adjust it to fit your application's context and language.
 
-> Using this package is easy. You can add notifications to your application with just one line of code.
+> This package is easy to use. You can add notifications to your application with just one line of code.
 
 {% assign id = '#/ usage success' %}
 {% assign type = 'success' %}

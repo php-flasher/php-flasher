@@ -112,13 +112,13 @@ final class ResponseManager implements ResponseManagerInterface
     /**
      * Creates a Response object with notifications and context.
      *
-     * This method creates a basic Response object and then populates it with
-     * resources (scripts, styles, options) using the ResourceManager.
+     * This method creates a Response object and populates it with resources
+     * (scripts, styles, options) using the ResourceManager.
      *
-     * @param Envelope[]           $envelopes The notification envelopes
-     * @param array<string, mixed> $context   Additional context for the presentation
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $context
      *
-     * @return Response The populated response object
+     * @return Response
      */
     private function createResponse(array $envelopes, array $context): Response
     {
