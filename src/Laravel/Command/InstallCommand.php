@@ -149,7 +149,7 @@ final class InstallCommand extends Command
             if ($useSymlinks) {
                 $message .= ' Assets were symlinked.';
             }
-            $output->writeln("<bg=green;options=bold> SUCCESS </> <fg=blue;options=bold>$message</>");
+            $output->writeln("<bg=green;options=bold> SUCCESS </> {$message}");
         } else {
             $output->writeln('<bg=red;options=bold> ERROR </> An error occurred during the installation of <fg=blue;options=bold>PHPFlasher</> resources.');
         }

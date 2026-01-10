@@ -75,14 +75,14 @@ final class FlasherContainer
      *
      * @return FlasherInterface|NotificationFactoryInterface The requested service
      *
-     * @throws \InvalidArgumentException If the service doesn't exist or has an invalid type
-     *
      * @phpstan-return ($id is 'flasher' ? \Flasher\Prime\FlasherInterface :
      *          ($id is 'flasher.noty' ? \Flasher\Noty\Prime\NotyInterface :
      *          ($id is 'flasher.notyf' ? \Flasher\Notyf\Prime\NotyfInterface :
      *          ($id is 'flasher.sweetalert' ? \Flasher\SweetAlert\Prime\SweetAlertInterface :
      *          ($id is 'flasher.toastr' ? \Flasher\Toastr\Prime\ToastrInterface :
      *                  \Flasher\Prime\Factory\NotificationFactoryInterface)))))
+     *
+     * @throws \InvalidArgumentException If the service doesn't exist or has an invalid type
      */
     public static function create(string $id): FlasherInterface|NotificationFactoryInterface
     {

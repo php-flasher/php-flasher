@@ -40,8 +40,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Gets the title.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -50,8 +48,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Sets the title.
-     *
-     * @param string $title
      */
     public function setTitle(string $title): void
     {
@@ -60,8 +56,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Gets the message.
-     *
-     * @return string
      */
     public function getMessage(): string
     {
@@ -70,8 +64,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Sets the message.
-     *
-     * @param string $message
      */
     public function setMessage(string $message): void
     {
@@ -80,8 +72,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Gets the type.
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -90,8 +80,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Sets the type.
-     *
-     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -123,11 +111,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Gets a specific option with a default fallback.
-     *
-     * @param string $name
-     * @param mixed  $default
-     *
-     * @return mixed
      */
     public function getOption(string $name, mixed $default = null): mixed
     {
@@ -138,9 +121,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Sets a specific option.
-     *
-     * @param string $name
-     * @param mixed  $value
      */
     public function setOption(string $name, mixed $value): void
     {
@@ -149,8 +129,6 @@ final class Notification implements NotificationInterface
 
     /**
      * Unsets a specific option.
-     *
-     * @param string $name
      */
     public function unsetOption(string $name): void
     {

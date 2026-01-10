@@ -117,8 +117,6 @@ final class ResponseManager implements ResponseManagerInterface
      *
      * @param Envelope[]           $envelopes
      * @param array<string, mixed> $context
-     *
-     * @return Response
      */
     private function createResponse(array $envelopes, array $context): Response
     {

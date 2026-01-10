@@ -37,14 +37,14 @@ interface FlasherInterface
      *
      * @param string $alias The alias of the factory to retrieve (e.g., 'toastr', 'sweetalert')
      *
-     * @throws \InvalidArgumentException When the requested factory cannot be resolved
-     *
      * @phpstan-return ($alias is 'flasher' ? \Flasher\Prime\Factory\FlasherFactoryInterface :
      *          ($alias is 'noty' ? \Flasher\Noty\Prime\NotyInterface :
      *          ($alias is 'notyf' ? \Flasher\Notyf\Prime\NotyfInterface :
      *          ($alias is 'sweetalert' ? \Flasher\SweetAlert\Prime\SweetAlertInterface :
      *          ($alias is 'toastr' ? \Flasher\Toastr\Prime\ToastrInterface :
      *                  \Flasher\Prime\Factory\NotificationFactoryInterface)))))
+     *
+     * @throws \InvalidArgumentException When the requested factory cannot be resolved
      */
     public function use(string $alias): NotificationFactoryInterface;
 
@@ -61,14 +61,14 @@ interface FlasherInterface
      *
      * @param string $alias The alias of the factory to retrieve (e.g., 'toastr', 'sweetalert')
      *
-     * @throws \InvalidArgumentException When the requested factory cannot be resolved
-     *
      * @phpstan-return ($alias is 'flasher' ? \Flasher\Prime\Factory\FlasherFactoryInterface :
      *          ($alias is 'noty' ? \Flasher\Noty\Prime\NotyInterface :
      *          ($alias is 'notyf' ? \Flasher\Notyf\Prime\NotyfInterface :
      *          ($alias is 'sweetalert' ? \Flasher\SweetAlert\Prime\SweetAlertInterface :
      *          ($alias is 'toastr' ? \Flasher\Toastr\Prime\ToastrInterface :
      *                  \Flasher\Prime\Factory\NotificationFactoryInterface)))))
+     *
+     * @throws \InvalidArgumentException When the requested factory cannot be resolved
      */
     public function create(string $alias): NotificationFactoryInterface;
 

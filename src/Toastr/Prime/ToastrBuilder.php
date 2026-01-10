@@ -129,13 +129,13 @@ final class ToastrBuilder extends NotificationBuilder
     /**
      * Creates a notification of the specified type with Toastr-specific options.
      *
-     * @phpstan-param NotificationType|null $type    The notification type
-     * @phpstan-param OptionsType           $options Toastr-specific options
-     *
      * @param string|null $type    The notification type
      * @param string|null $message The notification message
      * @param array       $options Toastr-specific options
      * @param string|null $title   The notification title
+     *
+     * @phpstan-param NotificationType|null $type    The notification type
+     * @phpstan-param OptionsType           $options Toastr-specific options
      *
      * @return Envelope The notification envelope
      */
@@ -163,11 +163,11 @@ final class ToastrBuilder extends NotificationBuilder
      * @template T of OptionsType
      * @template K of key-of<T>
      *
-     * @phpstan-param K $name
-     * @phpstan-param T[K] $value
-     *
      * @param string $name  The option name
      * @param mixed  $value The option value
+     *
+     * @phpstan-param K $name
+     * @phpstan-param T[K] $value
      *
      * @return static The builder instance
      */
@@ -447,9 +447,9 @@ final class ToastrBuilder extends NotificationBuilder
     /**
      * Sets the position class for the toast.
      *
-     * @phpstan-param OptionsType['positionClass'] $positionClass Position class name
-     *
      * @param string $positionClass Position class (e.g., 'toast-top-right')
+     *
+     * @phpstan-param OptionsType['positionClass'] $positionClass Position class name
      *
      * @return self The builder instance
      */

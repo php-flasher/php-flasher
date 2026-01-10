@@ -84,8 +84,6 @@ final readonly class StorageManager implements StorageManagerInterface
      *
      * Before adding envelopes, it dispatches a PersistEvent to allow modification
      * of the envelopes. After storage, it dispatches a PostPersistEvent.
-     *
-     * @param Envelope ...$envelopes
      */
     public function add(Envelope ...$envelopes): void
     {
@@ -103,8 +101,6 @@ final readonly class StorageManager implements StorageManagerInterface
      *
      * Before updating envelopes, it dispatches an UpdateEvent to allow modification
      * of the envelopes. After update, it dispatches a PostUpdateEvent.
-     *
-     * @param Envelope ...$envelopes
      */
     public function update(Envelope ...$envelopes): void
     {
@@ -123,8 +119,6 @@ final readonly class StorageManager implements StorageManagerInterface
      * Before removal, it dispatches a RemoveEvent to allow listeners to modify
      * which envelopes should be removed or kept. After removal, it dispatches
      * a PostRemoveEvent.
-     *
-     * @param Envelope ...$envelopes
      */
     public function remove(Envelope ...$envelopes): void
     {

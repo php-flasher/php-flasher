@@ -33,14 +33,14 @@ interface NotificationFactoryLocatorInterface
      *
      * @return NotificationFactoryInterface The requested notification factory
      *
-     * @throws \Flasher\Prime\Exception\FactoryNotFoundException If no factory is registered with the given identifier
-     *
      * @phpstan-return ($id is 'flasher' ? \Flasher\Prime\Factory\FlasherFactoryInterface :
      *          ($id is 'noty' ? \Flasher\Noty\Prime\NotyInterface :
      *          ($id is 'notyf' ? \Flasher\Notyf\Prime\NotyfInterface :
      *          ($id is 'sweetalert' ? \Flasher\SweetAlert\Prime\SweetAlertInterface :
      *          ($id is 'toastr' ? \Flasher\Toastr\Prime\ToastrInterface :
      *                  \Flasher\Prime\Factory\NotificationFactoryInterface)))))
+     *
+     * @throws \Flasher\Prime\Exception\FactoryNotFoundException If no factory is registered with the given identifier
      */
     public function get(string $id): NotificationFactoryInterface;
 }

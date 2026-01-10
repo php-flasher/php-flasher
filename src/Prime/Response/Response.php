@@ -107,8 +107,6 @@ final class Response
 
     /**
      * Gets the main script path.
-     *
-     * @return string
      */
     public function getMainScript(): string
     {
@@ -117,8 +115,6 @@ final class Response
 
     /**
      * Sets the main script path.
-     *
-     * @param string $mainScript
      */
     public function setMainScript(string $mainScript): void
     {

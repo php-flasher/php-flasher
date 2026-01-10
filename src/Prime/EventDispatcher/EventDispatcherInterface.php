@@ -29,9 +29,9 @@ interface EventDispatcherInterface
      *
      * @param T $event The event to dispatch
      *
-     * @return T The event after it has been processed by all listeners
-     *
      * @phpstan-param T $event
+     *
+     * @return T The event after it has been processed by all listeners
      *
      * @phpstan-return T
      */

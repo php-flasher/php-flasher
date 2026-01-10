@@ -31,8 +31,6 @@ final class FlasherBuilder extends NotificationBuilder
      * Sets the notification type.
      *
      * @phpstan-param NotificationType $type
-     *
-     * @return static
      */
     public function type(string $type): static
     {
@@ -42,11 +40,7 @@ final class FlasherBuilder extends NotificationBuilder
     /**
      * Creates and stores a success notification.
      *
-     * @param string      $message
      * @param OptionsType $options
-     * @param string|null $title
-     *
-     * @return Envelope
      */
     public function success(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -56,11 +50,7 @@ final class FlasherBuilder extends NotificationBuilder
     /**
      * Creates and stores an error notification.
      *
-     * @param string      $message
      * @param OptionsType $options
-     * @param string|null $title
-     *
-     * @return Envelope
      */
     public function error(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -70,11 +60,7 @@ final class FlasherBuilder extends NotificationBuilder
     /**
      * Creates and stores an info notification.
      *
-     * @param string      $message
      * @param OptionsType $options
-     * @param string|null $title
-     *
-     * @return Envelope
      */
     public function info(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -84,11 +70,7 @@ final class FlasherBuilder extends NotificationBuilder
     /**
      * Creates and stores a warning notification.
      *
-     * @param string      $message
      * @param OptionsType $options
-     * @param string|null $title
-     *
-     * @return Envelope
      */
     public function warning(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -100,11 +82,6 @@ final class FlasherBuilder extends NotificationBuilder
      *
      * @phpstan-param NotificationType|null $type
      * @phpstan-param OptionsType           $options
-     *
-     * @param string|null $message
-     * @param string|null $title
-     *
-     * @return Envelope
      */
     public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
     {
@@ -115,9 +92,6 @@ final class FlasherBuilder extends NotificationBuilder
      * Sets multiple options.
      *
      * @param OptionsType $options
-     * @param bool        $append
-     *
-     * @return static
      */
     public function options(array $options, bool $append = true): static
     {
@@ -132,8 +106,6 @@ final class FlasherBuilder extends NotificationBuilder
      *
      * @phpstan-param K    $name
      * @phpstan-param T[K] $value
-     *
-     * @return static
      */
     public function option(string $name, mixed $value): static
     {
@@ -142,10 +114,6 @@ final class FlasherBuilder extends NotificationBuilder
 
     /**
      * Sets the display timeout.
-     *
-     * @param int $milliseconds
-     *
-     * @return self
      */
     public function timeout(int $milliseconds): self
     {
@@ -158,8 +126,6 @@ final class FlasherBuilder extends NotificationBuilder
      * Sets the stacking direction.
      *
      * @param "top"|"bottom" $direction
-     *
-     * @return self
      */
     public function direction(string $direction): self
     {
@@ -172,8 +138,6 @@ final class FlasherBuilder extends NotificationBuilder
      * Sets the display position.
      *
      * @phpstan-param OptionsType['position'] $position
-     *
-     * @return self
      */
     public function position(string $position): self
     {

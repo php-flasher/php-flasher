@@ -1,0 +1,24 @@
+<?php
+
+namespace Illuminate\Foundation\Testing;
+
+/**
+ * TestCase - PHPStan stub for Laravel's testing case.
+ *
+ * This stub file enhances PHPStan's static analysis for PHPFlasher by
+ * providing type information for Laravel's testing helper methods.
+ *
+ * Design pattern: Type Annotation - Provides type information for static analysis
+ */
+trait TestCase
+{
+    /**
+     * Call artisan command and return a tester instance.
+     *
+     * @param string  $command
+     * @param array   $parameters
+     *
+     * @return \Illuminate\Testing\PendingCommand
+     */
+    abstract public function artisan(string $command, array $parameters = []);
+}

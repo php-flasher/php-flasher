@@ -21,7 +21,6 @@ final class FlasherTest extends MockeryTestCase
 {
     private MockInterface&NotificationFactoryLocatorInterface $factoryLocatorMock;
     private MockInterface&ResponseManagerInterface $responseManagerMock;
-    private MockInterface&StorageManagerInterface $storageManagerMock;
     private Flasher $flasher;
 
     protected function setUp(): void
@@ -30,9 +29,9 @@ final class FlasherTest extends MockeryTestCase
 
         $this->factoryLocatorMock = \Mockery::mock(NotificationFactoryLocatorInterface::class);
         $this->responseManagerMock = \Mockery::mock(ResponseManagerInterface::class);
-        $this->storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
 
-        $this->flasher = new Flasher('default', $this->factoryLocatorMock, $this->responseManagerMock, $this->storageManagerMock);
+        $this->flasher = new Flasher('default', $this->factoryLocatorMock, $this->responseManagerMock, $storageManagerMock);
     }
 
     public function testUseWithEmptyFactory(): void

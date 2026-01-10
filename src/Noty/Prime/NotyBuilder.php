@@ -121,13 +121,13 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Creates a notification of the specified type with Noty-specific options.
      *
-     * @phpstan-param NotificationType|null $type    The notification type
-     * @phpstan-param OptionsType           $options Noty-specific options
-     *
      * @param string|null $type    The notification type
      * @param string|null $message The notification message
      * @param array       $options Noty-specific options
      * @param string|null $title   The notification title
+     *
+     * @phpstan-param NotificationType|null $type    The notification type
+     * @phpstan-param OptionsType           $options Noty-specific options
      *
      * @return Envelope The notification envelope
      */
@@ -155,11 +155,11 @@ final class NotyBuilder extends NotificationBuilder
      * @template T of OptionsType
      * @template K of key-of<T>
      *
-     * @phpstan-param K $name
-     * @phpstan-param T[K] $value
-     *
      * @param string $name  The option name
      * @param mixed  $value The option value
+     *
+     * @phpstan-param K $name
+     * @phpstan-param T[K] $value
      *
      * @return static The builder instance
      */
@@ -213,11 +213,11 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Sets the notification layout.
      *
+     * @param string $layout The layout position
+     *
      * @phpstan-param OptionsType['layout'] $layout The layout position
      *
      * - ClassName generator uses this value → noty_layout__${layout}
-     *
-     * @param string $layout The layout position
      *
      * @return self The builder instance
      */
@@ -231,11 +231,11 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Sets the notification theme.
      *
+     * @param string $theme The theme name
+     *
      * @phpstan-param OptionsType['theme'] $theme The theme name
      *
      * ClassName generator uses this value → noty_theme__${theme}
-     *
-     * @param string $theme The theme name
      *
      * @return self The builder instance
      */
@@ -321,14 +321,14 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Sets sound options for the notification.
      *
+     * @param string $option The sound option to set
+     * @param mixed  $value  The option value
+     *
      * @phpstan-param "sources"|"volume"|"conditions" $option The sound option to set
      * @phpstan-param ($option is "sources" ? string[] :
      *        ($option is "volume" ? int :
      *        ($option is "conditions" ? string[] :
      *        mixed))) $value The option value
-     *
-     * @param string $option The sound option to set
-     * @param mixed  $value  The option value
      *
      * @return self The builder instance
      */
@@ -346,11 +346,11 @@ final class NotyBuilder extends NotificationBuilder
     /**
      * Sets document title options for the notification.
      *
-     * @phpstan-param "conditions"|string $option The document title option
-     * @phpstan-param ($option is "conditions" ? string[] : mixed) $value The option value
-     *
      * @param string $option The document title option
      * @param mixed  $value  The option value
+     *
+     * @phpstan-param "conditions"|string $option The document title option
+     * @phpstan-param ($option is "conditions" ? string[] : mixed) $value The option value
      *
      * @return self The builder instance
      */

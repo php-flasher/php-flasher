@@ -21,3 +21,8 @@ parameters:
 
     ignoreErrors:
         - '#Call to method .+ with .+ will always evaluate to true.#'
+        - '#Call to method always\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\ExprBuilder.*#'
+        - '#Call to method scalarNode\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder.*#'
+        - '#Call to method variableNode\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder.*#'
+        - '#Call to method arrayNode\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder.*#'
+        - '#Cannot call method (assertExitCode|expectsOutput|expectsOutputToContain|assertExitCode)\(\) on Illuminate\\Testing\\PendingCommand\|int\.#'

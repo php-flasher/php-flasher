@@ -75,9 +75,6 @@ final class EventDispatcher implements EventDispatcherInterface
         return $event;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addListener(EventListenerInterface $listener): void
     {
         foreach ((array) $listener->getSubscribedEvents() as $eventName) {
