@@ -20,25 +20,24 @@ composer require php-flasher/flasher-sweetalert
 ## Quick Start
 
 ```php
-use Flasher\SweetAlert\Prime\SweetAlertFactory;
-
 // Basic usage
-SweetAlert::success('Operation completed successfully!');
-SweetAlert::error('An error occurred.');
-SweetAlert::info('Information message.');
-SweetAlert::warning('Warning message.');
+sweetalert('Operation completed successfully!', 'success');
+sweetalert('An error occurred.', 'error');
+sweetalert('Information message.', 'info');
+sweetalert('Warning message.', 'warning');
 
 // With options
-SweetAlert::success('Success message', [
+sweetalert('Success message', 'success', [
     'timer' => 3000,
     'toast' => true,
     'position' => 'top-end',
 ]);
 
-// Modal dialog
-SweetAlert::success('Profile updated!')
-    ->confirmButtonText('Great!')
-    ->timer(5000);
+// Modal dialog with options
+sweetalert('Profile updated!', 'success', [
+    'confirmButtonText' => 'Great!',
+    'timer' => 5000,
+]);
 ```
 
 ## Features
@@ -53,25 +52,26 @@ SweetAlert::success('Profile updated!')
 
 ```php
 // Success notification
-SweetAlert::success($message, $title, $options);
+sweetalert($message, 'success', $options, $title);
 
 // Error notification
-SweetAlert::error($message, $title, $options);
+sweetalert($message, 'error', $options, $title);
 
 // Info notification
-SweetAlert::info($message, $title, $options);
+sweetalert($message, 'info', $options, $title);
 
 // Warning notification
-SweetAlert::warning($message, $title, $options);
+sweetalert($message, 'warning', $options, $title);
 
 // Custom notification type
-SweetAlert::flash($type, $message, $title, $options);
+sweetalert($message, $type, $options, $title);
 
-// Set options
-SweetAlert::success($message)
-    ->timer(3000)
-    ->toast(true)
-    ->position('top-end');
+// With options
+sweetalert($message, 'success', [
+    'timer' => 3000,
+    'toast' => true,
+    'position' => 'top-end',
+], $title);
 ```
 
 ## Documentation

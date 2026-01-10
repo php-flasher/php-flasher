@@ -20,23 +20,21 @@ composer require php-flasher/flasher-noty
 ## Quick Start
 
 ```php
-use Flasher\Noty\Prime\NotyFactory;
-
 // Basic usage
-Noty::success('Operation completed successfully!');
-Noty::error('An error occurred.');
-Noty::info('Information message.');
-Noty::warning('Warning message.');
+noty('Operation completed successfully!', 'success');
+noty('An error occurred.', 'error');
+noty('Information message.', 'info');
+noty('Warning message.', 'warning');
 
 // With options
-Noty::success('Success message', [
+noty('Success message', 'success', [
     'timeout' => 3000,
     'layout' => 'topCenter',
     'progressBar' => true,
 ]);
 
 // Custom notification
-Noty::flash('custom-type', 'Custom message');
+noty('Custom message', 'custom-type');
 ```
 
 ## Features
@@ -51,25 +49,26 @@ Noty::flash('custom-type', 'Custom message');
 
 ```php
 // Success notification
-Noty::success($message, $title, $options);
+noty($message, 'success', $options, $title);
 
 // Error notification
-Noty::error($message, $title, $options);
+noty($message, 'error', $options, $title);
 
 // Info notification
-Noty::info($message, $title, $options);
+noty($message, 'info', $options, $title);
 
 // Warning notification
-Noty::warning($message, $title, $options);
+noty($message, 'warning', $options, $title);
 
 // Custom notification type
-Noty::flash($type, $message, $title, $options);
+noty($message, $type, $options, $title);
 
-// Set options
-Noty::success($message)
-    ->layout('topCenter')
-    ->timeout(3000)
-    ->theme('mint');
+// With options
+noty($message, 'success', [
+    'layout' => 'topCenter',
+    'timeout' => 3000,
+    'theme' => 'mint',
+], $title);
 ```
 
 ## Documentation

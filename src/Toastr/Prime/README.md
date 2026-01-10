@@ -20,23 +20,21 @@ composer require php-flasher/flasher-toastr
 ## Quick Start
 
 ```php
-use Flasher\Toastr\Prime\ToastrFactory;
-
 // Basic usage
-Toastr::success('Operation completed successfully!');
-Toastr::error('An error occurred.');
-Toastr::info('Information message.');
-Toastr::warning('Warning message.');
+toastr('Operation completed successfully!', 'success');
+toastr('An error occurred.', 'error');
+toastr('Information message.', 'info');
+toastr('Warning message.', 'warning');
 
 // With options
-Toastr::success('Success message', [
+toastr('Success message', 'success', [
     'timeOut' => 5000,
     'positionClass' => 'toast-top-right',
     'progressBar' => true,
 ]);
 
 // Custom notification
-Toastr::flash('custom-type', 'Custom message');
+toastr('Custom message', 'custom-type');
 ```
 
 ## Features

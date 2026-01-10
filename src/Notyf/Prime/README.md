@@ -20,22 +20,23 @@ composer require php-flasher/flasher-notyf
 ## Quick Start
 
 ```php
-use Flasher\Notyf\Prime\NotyfFactory;
-
 // Basic usage
-Notyf::success('Operation completed successfully!');
-Notyf::error('An error occurred.');
-Notyf::info('Information message.');
-Notyf::warning('Warning message.');
+notyf('Operation completed successfully!', 'success');
+notyf('An error occurred.', 'error');
+notyf('Information message.', 'info');
+notyf('Warning message.', 'warning');
 
 // With options
-Notyf::success('Success message', [
+notyf('Success message', 'success', [
     'duration' => 4000,
-    'position' => 'top-right',
+    'position' => [
+        'x' => 'right',
+        'y' => 'top',
+    ],
 ]);
 
 // Custom notification
-Notyf::flash('custom-type', 'Custom message');
+notyf('Custom message', 'custom-type');
 ```
 
 ## Features
@@ -50,24 +51,28 @@ Notyf::flash('custom-type', 'Custom message');
 
 ```php
 // Success notification
-Notyf::success($message, $title, $options);
+notyf($message, 'success', $options, $title);
 
 // Error notification
-Notyf::error($message, $title, $options);
+notyf($message, 'error', $options, $title);
 
 // Info notification
-Notyf::info($message, $title, $options);
+notyf($message, 'info', $options, $title);
 
 // Warning notification
-Notyf::warning($message, $title, $options);
+notyf($message, 'warning', $options, $title);
 
 // Custom notification type
-Notyf::flash($type, $message, $title, $options);
+notyf($message, $type, $options, $title);
 
-// Set options
-Notyf::success($message)
-    ->duration(4000)
-    ->position('top-right');
+// With options
+notyf($message, 'success', [
+    'duration' => 4000,
+    'position' => [
+        'x' => 'right',
+        'y' => 'top',
+    ],
+], $title);
 ```
 
 ## Documentation
