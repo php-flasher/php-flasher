@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Jade Theme
- *
- * Calm, soothing notification style with elegant minimalism.
- * Features soft colors, generous rounded corners, and subtle animations.
- */
 .fl-jade {
     /* Theme variables - Define the visual appearance of Jade notifications */
     /* Base colors and appearance */
@@ -28,9 +22,6 @@
     --jade-warning-bg-dark: rgba(245, 158, 11, 0.15); /* Semi-transparent orange */
     --jade-error-bg-dark: rgba(220, 38, 38, 0.15);    /* Semi-transparent red */
 }
- * Entrance animation for Jade theme
- * Combines subtle upward movement with scaling for a refined appearance
- */
 @keyframes jadeIn {
     0% {
         opacity: 0;
@@ -41,8 +32,6 @@
         transform: translateY(0) scale(1);        /* End at normal size and position */
     }
 }
- * Base Jade theme styling
- */
 .fl-jade {
     padding: 1rem 1.25rem;                     /* Comfortable padding */
     margin: 0.5rem 0;                          /* Vertical spacing */
@@ -214,9 +203,6 @@
         animation: none;                       /* Disable animation */
     }
 }
- * Dark mode support
- * Different styling when in dark mode
- */
 body.fl-dark .fl-jade,
 html.fl-dark .fl-jade,
 .fl-jade.fl-auto-dark {

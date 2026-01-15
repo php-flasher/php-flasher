@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Slack Theme
- *
- * Familiar notifications inspired by Slack's popular messaging platform.
- * Used by millions of professionals worldwide.
- */
 .fl-slack {
     /* Theme variables - Define the visual appearance of Slack notifications */
     /* Base colors and appearance */
@@ -28,9 +22,6 @@
     /* Animation timing */
     --slack-animation-duration: 150ms;            /* Quick animation for responsive feel */
 }
- * Simple fade in animation
- * Quick and subtle to match Slack's responsive feel
- */
 @keyframes slackFadeIn {
     from {
         opacity: 0;                               /* Start invisible */
@@ -39,8 +30,6 @@
         opacity: 1;                               /* End fully visible */
     }
 }
- * Base Slack theme styling
- */
 .fl-slack {
     position: relative;
     margin: 4px 0;                                /* Minimal spacing between messages */
@@ -198,9 +187,6 @@
         animation: none;                        /* Disable animation */
     }
 }
- * Dark mode support
- * Slack-like dark theme
- */
 body.fl-dark .fl-slack,
 html.fl-dark .fl-slack,
 .fl-slack.fl-auto-dark {

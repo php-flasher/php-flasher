@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Onyx Theme
- *
- * Modern notification style with floating appearance and subtle accents.
- * Features elegant shadows, accent dots, and smooth animations.
- */
 .fl-onyx {
     /* Theme variables - Define the visual appearance of Onyx notifications */
     /* Base colors and appearance */
@@ -20,9 +14,6 @@
     --onyx-warning: #f59e0b;                      /* Amber for warning */
     --onyx-error: #ef4444;                        /* Red for error */
 }
- * Entrance animation for Onyx theme
- * Combines upward movement, fade, and blur transitions
- */
 @keyframes onyxIn {
     0% {
         opacity: 0;
@@ -35,8 +26,6 @@
         filter: blur(0);                          /* End with clear focus */
     }
 }
- * Base Onyx theme styling
- */
 .fl-onyx {
     background-color: var(--onyx-bg-light);
     color: var(--onyx-text-light);
@@ -208,9 +197,6 @@
         animation: none;                          /* Disable animation */
     }
 }
- * Dark mode support
- * Different styling when in dark mode
- */
 body.fl-dark .fl-onyx,
 html.fl-dark .fl-onyx,
 .fl-onyx.fl-auto-dark {

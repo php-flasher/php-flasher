@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Google Theme
- *
- * Google's Material Design-inspired notifications.
- * One of the most recognized design systems worldwide.
- */
 .fl-google {
     /* Theme variables - Define the visual appearance of Material Design notifications */
     /* Base colors and appearance for light and dark modes */
@@ -30,9 +24,6 @@
     --md-animation-duration: 0.3s;               /* Standard Material motion duration */
     --md-ripple-duration: 0.6s;                  /* Ripple effect duration */
 }
- * Entrance animation for Google theme
- * Material Design-style slide up with easing
- */
 @keyframes mdSlideUp {
     0% {
         opacity: 0;
@@ -43,17 +34,12 @@
         transform: translateY(0);                /* End at final position */
     }
 }
- * Material Design ripple effect animation
- * Creates expanding circle from point of interaction
- */
 @keyframes mdRipple {
     to {
         transform: scale(4);                     /* Expand to 4x original size */
         opacity: 0;                              /* Fade out completely */
     }
 }
- * Base Google Material Design theme styling
- */
 .fl-google {
     position: relative;
     margin: 8px 0;                               /* Spacing between notifications */
@@ -264,9 +250,6 @@
         }
     }
 }
- * Dark mode support
- * Material Design dark theme implementation
- */
 body.fl-dark .fl-google,
 html.fl-dark .fl-google,
 .fl-google.fl-auto-dark {

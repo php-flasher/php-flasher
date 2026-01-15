@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Aurora Theme
- *
- * Elegant notifications with subtle gradients, backdrop blur, and soft edges.
- * Features a modern "glass morphism" style with translucent backgrounds.
- */
 .fl-aurora {
     /* Theme variables - Defines the visual appearance of Aurora notifications */
     /* Base colors and appearance */
@@ -26,9 +20,6 @@
     --aurora-warning: #f59e0b;                     /* Warning color (orange) */
     --aurora-error: #ef4444;                       /* Error color (red) */
 }
- * Entrance animation for Aurora theme
- * Combines fade-in with a subtle scale effect
- */
 @keyframes auroraFadeIn {
     from {
         opacity: 0;
@@ -39,8 +30,6 @@
         transform: translateY(0) scale(1);         /* End at full size */
     }
 }
- * Base Aurora theme styling
- */
 .fl-aurora {
     /* Core appearance */
     background-color: var(--aurora-bg-light);
@@ -179,9 +168,6 @@
         animation: none;                           /* Disable animation */
     }
 }
- * Dark mode support
- * Different styling when in dark mode
- */
 body.fl-dark .fl-aurora,
 html.fl-dark .fl-aurora,
 .fl-aurora.fl-auto-dark {

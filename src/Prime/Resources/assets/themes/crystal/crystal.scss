@@ -1,12 +1,3 @@
- */
- * PHPFlasher - Crystal Theme
- *
- * A clean, elegant notification theme with subtle animations
- * and a focus on simplicity and readability.
- */
- * Theme-specific variables
- * Define the color palette and styling attributes for Crystal theme
- */
 .fl-crystal {
     /* Base colors for light and dark modes */
     --crystal-bg-light: #ffffff;                  /* Pure white background in light mode */
@@ -17,9 +8,6 @@
     --crystal-shadow: rgba(0, 0, 0, 0.08);        /* Subtle shadow for light mode */
     --crystal-shadow-dark: rgba(0, 0, 0, 0.25);   /* Stronger shadow for dark mode */
 }
- * Entrance animation
- * Slides in from the top with a fade effect
- */
 @keyframes crystalIn {
     from {
         opacity: 0;
@@ -30,9 +18,6 @@
         transform: translateY(0);                 /* End at natural position */
     }
 }
- * Hover animation
- * Creates a subtle pulsing shadow effect
- */
 @keyframes crystalPulse {
     0% {
         box-shadow: 0 2px 8px var(--crystal-shadow);  /* Start with normal shadow */
@@ -44,8 +29,6 @@
         box-shadow: 0 2px 8px var(--crystal-shadow);  /* Return to normal shadow */
     }
 }
- * Base Crystal theme styling
- */
 .fl-crystal {
     position: relative;
     background: var(--crystal-bg-light, var(--fl-bg-light));
@@ -184,9 +167,6 @@
         }
     }
 }
- * Dark mode support
- * Different styling when in dark mode
- */
 body.fl-dark .fl-crystal,
 html.fl-dark .fl-crystal,
 .fl-crystal.fl-auto-dark {

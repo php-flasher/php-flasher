@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Minimal Theme
- *
- * Ultra-clean and minimal notifications that stay out of the way.
- * Features semi-transparent backgrounds, subtle blur effects, and compact design.
- */
 .fl-minimal {
     /* Theme variables - Define the visual appearance of Minimal notifications */
     /* Base colors and appearance */
@@ -22,9 +16,6 @@
     --minimal-warning: rgba(245, 158, 11, 0.9);    /* Orange with slight transparency */
     --minimal-error: rgba(239, 68, 68, 0.9);       /* Red with slight transparency */
 }
- * Entrance animation for Minimal theme
- * Quick, subtle slide-in from above
- */
 @keyframes minimalIn {
     from {
         opacity: 0;
@@ -35,8 +26,6 @@
         transform: translateY(0);                 /* End at natural position */
     }
 }
- * Base Minimal theme styling
- */
 .fl-minimal {
     background-color: var(--minimal-bg-light);
     color: var(--minimal-text-light);
@@ -164,9 +153,6 @@
         animation: none;                          /* Disable animation */
     }
 }
- * Dark mode support
- * Different styling when in dark mode
- */
 body.fl-dark .fl-minimal,
 html.fl-dark .fl-minimal,
 .fl-minimal.fl-auto-dark {

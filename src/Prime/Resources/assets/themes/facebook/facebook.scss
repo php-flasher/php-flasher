@@ -1,9 +1,3 @@
- */
- * PHPFlasher - Facebook Theme
- *
- * Classic notifications inspired by Facebook's instantly recognizable interface.
- * Familiar to billions of users worldwide.
- */
 .fl-facebook {
     /* Theme variables - Define the visual appearance of Facebook notifications */
     /* Base colors for light and dark modes */
@@ -38,9 +32,6 @@
     /* Animation timing */
     --fb-animation-duration: 0.2s;           /* Duration for entrance animation */
 }
- * Entrance animation for Facebook theme
- * Slides in from above with a fade effect
- */
 @keyframes fbFadeIn {
     from {
         opacity: 0;
@@ -51,8 +42,6 @@
         transform: translateY(0);            /* End at natural position */
     }
 }
- * Base Facebook theme styling
- */
 .fl-facebook {
     position: relative;
     margin: 8px 0;                           /* Spacing between notifications */
@@ -226,9 +215,6 @@
         animation: none;                     /* Disable animation */
     }
 }
- * Dark mode support
- * Different styling when in dark mode
- */
 body.fl-dark .fl-facebook,
 html.fl-dark .fl-facebook,
 .fl-facebook.fl-auto-dark {

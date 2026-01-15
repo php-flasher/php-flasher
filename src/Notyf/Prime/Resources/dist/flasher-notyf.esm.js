@@ -523,8 +523,9 @@ class NotyfPlugin extends AbstractPlugin {
         });
         try {
             if (this.notyf) {
-                const container = this.notyf.view.container;
-                const a11yContainer = this.notyf.view.a11yContainer;
+                const view = this.notyf.view;
+                const container = view.container;
+                const a11yContainer = view.a11yContainer;
                 if (container && container.dataset) {
                     container.dataset.turboTemporary = '';
                 }

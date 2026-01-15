@@ -1,9 +1,3 @@
- */
- * PHPFlasher - iOS Theme
- *
- * Clean, sleek notifications inspired by Apple's iOS design language.
- * Mimics the native notifications seen on iPhone and iPad devices.
- */
 .fl-ios {
     /* Theme variables - Define the visual appearance of iOS notifications */
     /* Base colors and appearance */
@@ -26,9 +20,6 @@
     /* Animation timing */
     --ios-animation-duration: 0.4s;             /* Duration for entrance animation */
 }
- * Slide-in entrance animation for iOS theme
- * Combines movement, scaling, and fade for realistic iOS appearance
- */
 @keyframes iosSlideIn {
     0% {
         opacity: 0;
@@ -39,9 +30,6 @@
         transform: translateY(0) scale(1);        /* End at normal size and position */
     }
 }
- * Content expansion animation
- * Creates a subtle unfold effect for the notification content
- */
 @keyframes iosExpand {
     0% {
         max-height: 0;                          /* Start collapsed */
@@ -52,8 +40,6 @@
         opacity: 1;                             /* Fade in */
     }
 }
- * Base iOS theme styling
- */
 .fl-ios {
     position: relative;
     margin: 10px 0;                             /* Space between notifications */
@@ -254,9 +240,6 @@
         width: 100%;                            /* Full width on mobile */
     }
 }
- * Dark mode support
- * iOS-style dark appearance
- */
 body.fl-dark .fl-ios,
 html.fl-dark .fl-ios,
 .fl-ios.fl-auto-dark {
