@@ -1,101 +1,28 @@
-/**
- * @file FlasherPlugin Implementation
- * @description Default implementation for displaying notifications using custom themes
- * @author Younes ENNAJI
- */
 import './themes/index.scss'
 
 import type { Properties } from 'csstype'
 import type { Envelope, FlasherPluginOptions, Options, Theme } from './types'
 import { AbstractPlugin } from './plugin'
 
-/**
- * Default FlasherPlugin implementation using custom themes.
- *
- * FlasherPlugin is the built-in renderer for PHPFlasher that creates DOM-based
- * notifications with a customizable appearance. It uses themes to determine
- * the HTML structure and styling of notifications.
- *
- * Features:
- * - Theme-based notification rendering
- * - Container management for different positions
- * - Auto-dismissal with progress bars
- * - RTL language support
- * - HTML escaping for security
- * - Mouse-over pause of auto-dismissal
- *
- * @example
- * ```typescript
- * // Create a simple theme
- * const myTheme: Theme = {
- *   styles: ['my-theme.css'],
- *   render: (envelope) => `
- *     <div class="my-notification my-notification-${envelope.type}">
- *       <h4>${envelope.title}</h4>
- *       <p>${envelope.message}</p>
- *       <button class="fl-close">&times;</button>
- *       <div class="fl-progress-bar"></div>
- *     </div>
- *   `
- * };
- *
- * // Create a plugin with the theme
- * const plugin = new FlasherPlugin(myTheme);
- *
- * // Show a notification
- * plugin.success('Operation completed');
- * ```
- */
 export default class FlasherPlugin extends AbstractPlugin {
-    /**
-     * Theme configuration used for rendering notifications.
-     * @private
-     */
     private theme: Theme
 
-    /**
-     * Default configuration options for notifications.
-     * These can be overridden globally or per notification.
-     * @private
-     */
     private options: FlasherPluginOptions = {
-        // Default or type-specific timeout (milliseconds, null = use type-specific)
-        // Use false for sticky notifications, or any negative number
         timeout: null,
-
-        // Type-specific timeout durations
         timeouts: {
             success: 10000,
             info: 10000,
             error: 10000,
             warning: 10000,
         },
-
-        // Animation frames per second (higher = smoother but more CPU intensive)
         fps: 30,
-
-        // Default position on screen
         position: 'top-right',
-
-        // Stacking direction (top = newest first, bottom = newest last)
         direction: 'top',
-
-        // Right-to-left text direction
         rtl: false,
-
-        // Custom container styles
         style: {} as Properties,
-
-        // Whether to escape HTML in message content (security feature)
         escapeHtml: false,
     }
 
-    /**
-     * Creates a new FlasherPlugin with a specific theme.
-     *
-     * @param theme - Theme configuration to use for rendering notifications
-     * @throws {Error} If theme is missing or invalid
-     */
     constructor(theme: Theme) {
         super()
 
@@ -110,14 +37,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         this.theme = theme
     }
 
-    /**
-     * Renders notification envelopes using the configured theme.
-     *
-     * This method creates and displays notifications in the DOM based on
-     * the provided envelopes and the plugin's theme.
-     *
-     * @param envelopes - Array of notification envelopes to render
-     */
     public renderEnvelopes(envelopes: Envelope[]): void {
         if (!envelopes?.length) {
             return
@@ -165,11 +84,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         }
     }
 
-    /**
-     * Updates the plugin options.
-     *
-     * @param options - New options to apply
-     */
     public renderOptions(options: Options): void {
         if (!options) {
             return
@@ -177,16 +91,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         this.options = { ...this.options, ...options }
     }
 
-    /**
-     * Creates or gets the container for notifications.
-     *
-     * This method ensures that each position has its own container for notifications.
-     * If a container for the specified position doesn't exist yet, it creates one.
-     *
-     * @param options - Options containing position and style information
-     * @returns The container element
-     * @private
-     */
     private createContainer(options: { position: string, style: Properties }): HTMLDivElement {
         // Look for existing container for this position
         let container = document.querySelector(`.fl-wrapper[data-position="${options.position}"]`) as HTMLDivElement
@@ -213,20 +117,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         return container
     }
 
-    /**
-     * Adds a notification to the container.
-     *
-     * This method:
-     * 1. Creates a notification element using the theme's render function
-     * 2. Adds necessary classes and event listeners
-     * 3. Appends it to the container in the right position
-     * 4. Sets up auto-dismissal if a timeout is specified
-     *
-     * @param container - Container to add the notification to
-     * @param envelope - Notification information
-     * @param options - Display options
-     * @private
-     */
     private addToContainer(
         container: HTMLDivElement,
         envelope: Envelope,
@@ -291,13 +181,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         }
     }
 
-    /**
-     * Normalizes timeout value to handle different formats (number, boolean, null)
-     *
-     * @param timeout - The timeout value to normalize
-     * @returns A number representing milliseconds, or 0 for sticky notifications
-     * @private
-     */
     private normalizeTimeout(timeout: any): number {
         // Handle false or negative numbers as sticky notifications (0)
         if (timeout === false || (typeof timeout === 'number' && timeout < 0)) {
@@ -313,16 +196,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         return Number(timeout) || 0
     }
 
-    /**
-     * Adds a progress timer to the notification.
-     *
-     * This method creates a visual progress bar that shows the remaining time
-     * before auto-dismissal. The timer pauses when the user hovers over the notification.
-     *
-     * @param notification - Notification element
-     * @param options - Timer options
-     * @private
-     */
     private addTimer(notification: HTMLElement, { timeout, fps }: { timeout: number, fps: number }): void {
         if (timeout <= 0) {
             return
@@ -368,18 +241,6 @@ export default class FlasherPlugin extends AbstractPlugin {
         notification.addEventListener('mouseover', () => clearInterval(intervalId))
     }
 
-    /**
-     * Removes a notification with animation.
-     *
-     * This method:
-     * 1. Removes the 'show' class to trigger the hide animation
-     * 2. Waits for the animation to complete
-     * 3. Removes the notification from the DOM
-     * 4. Cleans up the container if it's now empty
-     *
-     * @param notification - Notification element to remove
-     * @private
-     */
     private removeNotification(notification: HTMLElement): void {
         if (!notification) {
             return
@@ -398,29 +259,12 @@ export default class FlasherPlugin extends AbstractPlugin {
         }
     }
 
-    /**
-     * Converts an HTML string to a DOM element.
-     *
-     * @param str - HTML string to convert
-     * @returns The created DOM element
-     * @private
-     */
     private stringToHTML(str: string): HTMLElement {
         const template = document.createElement('template')
         template.innerHTML = str.trim()
         return template.content.firstElementChild as HTMLElement
     }
 
-    /**
-     * Safely escapes HTML special characters.
-     *
-     * This method replaces special characters with their HTML entities
-     * to prevent XSS attacks when displaying user-provided content.
-     *
-     * @param str - String to escape
-     * @returns Escaped string
-     * @private
-     */
     private escapeHtml(str: string | null | undefined): string {
         if (str == null) {
             return ''

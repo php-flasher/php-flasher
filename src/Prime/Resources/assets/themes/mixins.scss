@@ -1,24 +1,5 @@
-/**
- * @file PHPFlasher SASS Mixins
- * @description Reusable styling patterns for notification themes
- * @author Younes ENNAJI
- */
-
 @use "sass:color";
 
-/**
- * @mixin variants
- *
- * Apply styles to each notification type (success, info, warning, error).
- * Passes the type name to the content block for use in selectors.
- *
- * @example
- * ```scss
- * @include variants using($type) {
- *   background-color: var(--#{\$type}-color);
- * }
- * ```
- */
 @mixin variants {
     @each $type in success, info, warning, error {
         &.fl-#{$type} {
@@ -27,19 +8,6 @@
     }
 }
 
-/**
- * @mixin close-button
- *
- * Standard close button styling used across themes.
- * Creates a close button with hover effects and positioning.
- *
- * @example
- * ```scss
- * .my-notification {
- *   @include close-button;
- * }
- * ```
- */
 @mixin close-button {
     .fl-close {
         position: absolute;
@@ -63,19 +31,6 @@
     }
 }
 
-/**
- * @mixin rtl-support
- *
- * Add support for right-to-left languages.
- * Adjusts layout, alignment, and button positioning for RTL display.
- *
- * @example
- * ```scss
- * .my-notification {
- *   @include rtl-support;
- * }
- * ```
- */
 @mixin rtl-support {
     &.fl-rtl {
         .fl-content {
@@ -89,21 +44,6 @@
     }
 }
 
-/**
- * @mixin progress-bar
- *
- * Add a progress bar with type-specific colors.
- * Shows remaining time before notification is automatically closed.
- *
- * @param {Length} $height - Height of the progress bar (default: 0.125em)
- *
- * @example
- * ```scss
- * .my-notification {
- *   @include progress-bar(0.2em);
- * }
- * ```
- */
 @mixin progress-bar($height: 0.125em) {
     .fl-progress-bar {
         display: flex;
@@ -128,22 +68,6 @@
     }
 }
 
-/**
- * @mixin dark-mode
- *
- * Add dark mode styling support.
- * Applies styles when dark mode is active (either via media query or class).
- *
- * @example
- * ```scss
- * .my-notification {
- *   @include dark-mode {
- *     background-color: #222;
- *     color: white;
- *   }
- * }
- * ```
- */
 @mixin dark-mode {
     @media (prefers-color-scheme: dark) {
         &.fl-auto-dark {

@@ -1,16 +1,6 @@
-/**
- * @file PHPFlasher Default Theme
- * @description Classic bordered notification style with colorful accents
- * @author Younes ENNAJI
- */
-
 @use "sass:color";
 @use '../mixins' as *;
 
-/**
- * Animation for flasher theme
- * Slides in from the left with a fade effect
- */
 @keyframes flasherIn {
     from {
         opacity: 0;
@@ -22,7 +12,6 @@
     }
 }
 
-/* RTL animation */
 @keyframes flasherInRtl {
     from {
         opacity: 0;
@@ -34,10 +23,6 @@
     }
 }
 
-/**
- * Base theme styling
- * The default PHPFlasher notification appearance
- */
 .fl-flasher {
     /* Base appearance */
     line-height: 1.5;
