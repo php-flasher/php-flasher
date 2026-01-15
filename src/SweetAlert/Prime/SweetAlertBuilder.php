@@ -8,21 +8,6 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\NotificationBuilder;
 
 /**
- * SweetAlertBuilder - Builder implementation for SweetAlert2 notifications.
- *
- * This class provides a comprehensive fluent interface for configuring
- * SweetAlert2 notifications. It extends the core notification builder with
- * SweetAlert2's extensive range of options, including modal dialogs, custom
- * styling, input forms, and interactive features.
- *
- * SweetAlert2 is a complete replacement for JavaScript's alert(), confirm(),
- * and prompt() functions, offering far more customization and interactivity.
- *
- * Design patterns:
- * - Builder: Provides a fluent interface for constructing complex objects
- * - Fluent Interface: Methods return $this for method chaining
- * - Type Safety: Uses PHPStan annotations for compile-time type checking
- *
  * @phpstan-type NotificationType "success"|"info"|"warning"|"error"|"question"
  * @phpstan-type CustomClassType "container"|"popup"|"header"|"title"|"closeButton"|"icon"|"image"|"content"|"input"|"inputLabel"|"validationMessage"|"actions"|"confirmButton"|"denyButton"|"cancelButton"|"loader"|"footer"
  * @phpstan-type OptionsType array{
@@ -98,11 +83,7 @@ use Flasher\Prime\Notification\NotificationBuilder;
 final class SweetAlertBuilder extends NotificationBuilder
 {
     /**
-     * Sets the notification type with SweetAlert-specific type checking.
-     *
-     * @phpstan-param NotificationType $type The notification type
-     *
-     * @return static The builder instance
+     * @phpstan-param NotificationType $type
      */
     public function type(string $type): static
     {
@@ -110,13 +91,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Creates a success notification with SweetAlert-specific options.
-     *
-     * @param string      $message The notification message
-     * @param OptionsType $options SweetAlert-specific options
-     * @param string|null $title   The notification title
-     *
-     * @return Envelope The notification envelope
+     * @phpstan-param OptionsType $options
      */
     public function success(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -124,13 +99,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Creates an error notification with SweetAlert-specific options.
-     *
-     * @param string      $message The notification message
-     * @param OptionsType $options SweetAlert-specific options
-     * @param string|null $title   The notification title
-     *
-     * @return Envelope The notification envelope
+     * @phpstan-param OptionsType $options
      */
     public function error(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -138,13 +107,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Creates an info notification with SweetAlert-specific options.
-     *
-     * @param string      $message The notification message
-     * @param OptionsType $options SweetAlert-specific options
-     * @param string|null $title   The notification title
-     *
-     * @return Envelope The notification envelope
+     * @phpstan-param OptionsType $options
      */
     public function info(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -152,13 +115,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Creates a warning notification with SweetAlert-specific options.
-     *
-     * @param string      $message The notification message
-     * @param OptionsType $options SweetAlert-specific options
-     * @param string|null $title   The notification title
-     *
-     * @return Envelope The notification envelope
+     * @phpstan-param OptionsType $options
      */
     public function warning(string $message, array $options = [], ?string $title = null): Envelope
     {
@@ -166,17 +123,8 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Creates a notification of the specified type with SweetAlert-specific options.
-     *
-     * @param string|null $type    The notification type
-     * @param string|null $message The notification message
-     * @param array       $options SweetAlert-specific options
-     * @param string|null $title   The notification title
-     *
-     * @phpstan-param NotificationType|null $type    The notification type
-     * @phpstan-param OptionsType           $options SweetAlert-specific options
-     *
-     * @return Envelope The notification envelope
+     * @phpstan-param NotificationType|null $type
+     * @phpstan-param OptionsType $options
      */
     public function flash(?string $type = null, ?string $message = null, array $options = [], ?string $title = null): Envelope
     {
@@ -184,12 +132,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Sets notification options with SweetAlert-specific type checking.
-     *
-     * @param OptionsType $options The notification options
-     * @param bool        $append  Whether to append or replace existing options
-     *
-     * @return static The builder instance
+     * @phpstan-param OptionsType $options
      */
     public function options(array $options, bool $append = true): static
     {
@@ -197,18 +140,11 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Sets a specific notification option with SweetAlert-specific type checking.
-     *
      * @template T of OptionsType
      * @template K of key-of<T>
      *
-     * @param string $name  The option name
-     * @param mixed  $value The option value
-     *
      * @phpstan-param K $name
      * @phpstan-param T[K] $value
-     *
-     * @return static The builder instance
      */
     public function option(string $name, mixed $value): static
     {
@@ -216,15 +152,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Creates a question type dialog with a cancel button.
-     *
-     * SweetAlert2 provides a specific question type for creating confirmation dialogs,
-     * which is a common UI pattern for actions that need user confirmation.
-     *
-     * @param string|null          $message The question message
-     * @param array<string, mixed> $options Additional options
-     *
-     * @return self The builder instance
+     * @phpstan-param array<string, mixed> $options
      */
     public function question(?string $message = null, array $options = []): self
     {
@@ -241,13 +169,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this->type('question');
     }
 
-    /**
-     * Sets the title of the popup as HTML.
-     *
-     * @param string $title The title content
-     *
-     * @return static The builder instance
-     */
     public function title(string $title): static
     {
         parent::title($title);
@@ -257,15 +178,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Sets the title of the popup as plain text.
-     *
-     * Useful to avoid HTML injection.
-     *
-     * @param string $text The title text
-     *
-     * @return self The builder instance
-     */
     public function titleText(string $text): self
     {
         $this->option('titleText', $text);
@@ -273,17 +185,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Sets HTML content for the popup.
-     *
-     * [Security] SweetAlert2 does NOT sanitize this parameter. It is the developer's
-     * responsibility to escape any user input when using the html option,
-     * so XSS attacks would be prevented.
-     *
-     * @param string $html The HTML content
-     *
-     * @return self The builder instance
-     */
     public function html(string $html): self
     {
         $this->option('html', $html);
@@ -291,9 +192,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * A description for the popup. If "text" and "html" parameters are provided in the same time, "text" will be used.
-     */
     public function text(string $text): self
     {
         $this->option('text', $text);
@@ -308,11 +206,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this->text($message);
     }
 
-    /**
-     * The icon of the popup. SweetAlert2 comes with 5 built-in icon which will show a corresponding icon animation:
-     * warning, error, success, info, and question. It can either be put in the array under the key "icon" or passed as
-     * the third parameter of the function.
-     */
     public function icon(string $icon): self
     {
         $this->option('icon', $icon);
@@ -320,9 +213,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the color of the icon.
-     */
     public function iconColor(string $color): self
     {
         $this->option('iconColor', $color);
@@ -330,9 +220,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * The custom HTML content for an icon.
-     */
     public function iconHtml(string $html): self
     {
         $this->option('iconHtml', $html);
@@ -340,9 +227,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * CSS classes for animations when showing a popup (fade in).
-     */
     public function showClass(string $showClass, string $value): self
     {
         $option = $this->getEnvelope()->getOption('showClass', []);
@@ -353,9 +237,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * CSS classes for animations when hiding a popup (fade out).
-     */
     public function hideClass(string $hideClass, string $value): self
     {
         $option = $this->getEnvelope()->getOption('hideClass', []);
@@ -366,9 +247,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * The footer of the popup. Can be either plain text or HTML.
-     */
     public function footer(string $footer): self
     {
         $this->option('footer', $footer);
@@ -376,10 +254,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Whether or not SweetAlert2 should show a full screen click-to-dismiss backdrop. Can be either a boolean or a
-     * string which will be assigned to the CSS background property.
-     */
     public function backdrop(bool|string $backdrop = true): self
     {
         $this->option('backdrop', $backdrop);
@@ -388,17 +262,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * Configures a toast notification.
-     *
-     *  Toast notifications are smaller, less intrusive notifications typically
-     *  shown at the screen edge. This is a convenience method that configures
-     *  several properties at once for toast behavior.
-     *
-     * @param bool                                                                                                  $toast             Whether to enable toast mode
-     * @param "top"|"top-start"|"top-end"|"center"|"center-start"|"center-end"|"bottom"|"bottom-start"|"bottom-end" $position
-     * @param bool                                                                                                  $showConfirmButton Whether to show the confirm button
-     *
-     * @return self The builder instance
+     * @param 'top'|'top-start'|'top-end'|'center'|'center-start'|'center-end'|'bottom'|'bottom-start'|'bottom-end' $position
      */
     public function toast(bool $toast = true, string $position = 'top-end', bool $showConfirmButton = false): self
     {
@@ -413,9 +277,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * The container element for adding popup into.
-     */
     public function target(string $target): self
     {
         $this->option('target', $target);
@@ -425,9 +286,6 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     /**
      * @phpstan-param OptionsType['input'] $input
-     *
-     * Input field type, can be text, email, password, number, tel, range, textarea, select, radio, checkbox, file and
-     * url
      */
     public function input(string $input): self
     {
@@ -436,9 +294,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Popup window width, including paddings (box-sizing: border-box). Can be in px or %. The default width is 32rem.
-     */
     public function width(string $width): self
     {
         $this->option('width', $width);
@@ -446,9 +301,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Popup window padding. The default padding is 1.25rem.
-     */
     public function padding(string $padding): self
     {
         $this->option('padding', $padding);
@@ -456,9 +308,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Popup window background (CSS background property). The default background is '#fff'.
-     */
     public function background(string $background): self
     {
         $this->option('background', $background);
@@ -468,9 +317,6 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     /**
      * @phpstan-param OptionsType['position'] $position
-     *
-     * Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom',
-     * 'bottom-start', or 'bottom-end'
      */
     public function position(string $position): self
     {
@@ -481,9 +327,6 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     /**
      * @phpstan-param "column"|"fullscreen"|"row"|false $grow
-     *
-     * Paired with window position, sets the direction the popup should grow in, can be set to 'row', 'column',
-     * 'fullscreen', or false
      */
     public function grow(string|false $grow): self
     {
@@ -494,8 +337,6 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     /**
      * @phpstan-param CustomClassType $customClass
-     *
-     * A custom CSS class for the popup
      */
     public function customClass(string $customClass, string $value): self
     {
@@ -508,9 +349,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Auto close timer of the popup. Set in ms (milliseconds).
-     */
     public function timer(int $timer): self
     {
         $this->option('timer', $timer);
@@ -518,10 +356,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to true, the timer will have a progress bar at the bottom of a popup. Mostly, this feature is useful with
-     * toasts.
-     */
     public function timerProgressBar(bool $timerProgressBar = true): self
     {
         $this->option('timerProgressBar', $timerProgressBar);
@@ -529,10 +363,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * By default, SweetAlert2 sets html's and body's CSS height to auto !important. If this behavior isn't compatible
-     * with your project's layout, set heightAuto to false.
-     */
     public function heightAuto(bool $heightAuto = true): self
     {
         $this->option('heightAuto', $heightAuto);
@@ -540,10 +370,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to false, the user can't dismiss the popup by clicking outside it. You can also pass a custom function
-     * returning a boolean value, e.g. if you want to disable outside clicks for the loading state of a popup.
-     */
     public function allowOutsideClick(bool|string $allowOutsideClick = true): self
     {
         $this->option('allowOutsideClick', $allowOutsideClick);
@@ -551,10 +377,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to false, the user can't dismiss the popup by pressing the Esc key. You can also pass a custom function
-     * returning a boolean value, e.g. if you want to disable the Esc key for the loading state of a popup.
-     */
     public function allowEscapeKey(bool|string $allowEscapeKey = true): self
     {
         $this->option('allowEscapeKey', $allowEscapeKey);
@@ -562,10 +384,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to false, the user can't confirm the popup by pressing the Enter or Space keys, unless they manually focus
-     * the confirm button. You can also pass a custom function returning a boolean value.
-     */
     public function allowEnterKey(bool|string $allowEnterKey = true): self
     {
         $this->option('allowEnterKey', $allowEnterKey);
@@ -573,9 +391,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to false, SweetAlert2 will allow keydown events propagation to the document.
-     */
     public function stopKeydownPropagation(bool $stop = true): self
     {
         $this->option('stopKeydownPropagation', $stop);
@@ -583,11 +398,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Useful for those who are using SweetAlert2 along with Bootstrap modals. By default keydownListenerCapture is
-     * false which means when a user hits Esc, both SweetAlert2 and Bootstrap modals will be closed. Set
-     * keydownListenerCapture to true to fix that behavior.
-     */
     public function keydownListenerCapture(bool $capture = true): self
     {
         $this->option('keydownListenerCapture', $capture);
@@ -595,9 +405,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to false, a "Confirm"-button will not be shown.
-     */
     public function showConfirmButton(bool $showConfirmButton = true, ?string $confirmButtonText = null, ?string $confirmButtonColor = null, ?string $confirmButtonAriaLabel = null): self
     {
         $this->option('showConfirmButton', $showConfirmButton);
@@ -617,9 +424,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to true, a "Deny"-button will be shown. It can be useful when you want a popup with 3 buttons.
-     */
     public function showDenyButton(bool $showDenyButton = true, ?string $denyButtonText = null, ?string $denyButtonColor = null, ?string $denyButtonAriaLabel = null): self
     {
         $this->option('showDenyButton', $showDenyButton);
@@ -639,9 +443,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If set to true, a "Cancel"-button will be shown, which the user can click on to dismiss the modal.
-     */
     public function showCancelButton(bool $showCancelButton = true, ?string $cancelButtonText = null, ?string $cancelButtonColor = null, ?string $cancelButtonAriaLabel = null): self
     {
         $this->option('showCancelButton', $showCancelButton);
@@ -661,9 +462,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the text on the "Confirm"-button.
-     */
     public function confirmButtonText(string $confirmButtonText, ?string $confirmButtonColor = null, ?string $confirmButtonAriaLabel = null): self
     {
         $this->option('confirmButtonText', $confirmButtonText);
@@ -679,9 +477,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the text on the "Deny"-button.
-     */
     public function denyButtonText(string $denyButtonText, ?string $denyButtonColor = null, ?string $denyButtonAriaLabel = null): self
     {
         $this->option('denyButtonText', $denyButtonText);
@@ -697,9 +492,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the text on the "Cancel"-button.
-     */
     public function cancelButtonText(string $cancelButtonText, ?string $cancelButtonColor = null, ?string $cancelButtonAriaLabel = null): self
     {
         $this->option('cancelButtonText', $cancelButtonText);
@@ -715,9 +507,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the background color of the "Confirm"-button. The default color is #3085d6.
-     */
     public function confirmButtonColor(string $confirmButtonColor): self
     {
         $this->option('confirmButtonColor', $confirmButtonColor);
@@ -725,9 +514,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the background color of the "Deny"-button. The default color is #dd6b55.
-     */
     public function denyButtonColor(string $denyButtonColor): self
     {
         $this->option('denyButtonColor', $denyButtonColor);
@@ -735,9 +521,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the background color of the "Cancel"-button. The default color is #aaa.
-     */
     public function cancelButtonColor(string $cancelButtonColor): self
     {
         $this->option('cancelButtonColor', $cancelButtonColor);
@@ -745,9 +528,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the aria-label for the "Confirm"-button.
-     */
     public function confirmButtonAriaLabel(string $label): self
     {
         $this->option('confirmButtonAriaLabel', $label);
@@ -755,9 +535,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the aria-label for the "Deny"-button.
-     */
     public function denyButtonAriaLabel(string $denyButtonAriaLabel): self
     {
         $this->option('denyButtonAriaLabel', $denyButtonAriaLabel);
@@ -765,9 +542,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the aria-label for the "Cancel"-button.
-     */
     public function cancelButtonAriaLabel(string $label): self
     {
         $this->option('cancelButtonAriaLabel', $label);
@@ -775,10 +549,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Apply default styling to buttons. If you want to use your own classes (e.g. Bootstrap classes) set this parameter
-     * to false.
-     */
     public function buttonsStyling(bool $buttonsStyling = true): self
     {
         $this->option('buttonsStyling', $buttonsStyling);
@@ -786,9 +556,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to true if you want to invert default buttons positions ("Confirm"-button on the right side).
-     */
     public function reverseButtons(bool $reverseButtons = true): self
     {
         $this->option('reverseButtons', $reverseButtons);
@@ -796,9 +563,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to false if you want to focus the first element in tab order instead of "Confirm"-button by default.
-     */
     public function focusConfirm(bool $focusConfirm = true): self
     {
         $this->option('focusConfirm', $focusConfirm);
@@ -806,9 +570,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to true if you want to focus the "Deny"-button by default.
-     */
     public function focusDeny(bool $focusDeny = true): self
     {
         $this->option('focusDeny', $focusDeny);
@@ -816,9 +577,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to true if you want to focus the "Cancel"-button by default.
-     */
     public function focusCancel(bool $focusCancel = true): self
     {
         $this->option('focusCancel', $focusCancel);
@@ -826,9 +584,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to true to show close button in top right corner of the popup.
-     */
     public function showCloseButton(bool $showCloseButton = true): self
     {
         $this->option('showCloseButton', $showCloseButton);
@@ -836,9 +591,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the content of the close button.
-     */
     public function closeButtonHtml(string $closeButtonHtml): self
     {
         $this->option('closeButtonHtml', $closeButtonHtml);
@@ -846,9 +598,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the aria-label for the close button.
-     */
     public function closeButtonAriaLabel(string $closeButtonAriaLabel): self
     {
         $this->option('closeButtonAriaLabel', $closeButtonAriaLabel);
@@ -856,9 +605,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Use this to change the HTML content of the loader.
-     */
     public function loaderHtml(string $loaderHtml): self
     {
         $this->option('loaderHtml', $loaderHtml);
@@ -866,10 +612,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to true to disable buttons and show that something is loading. Use it in combination with the preConfirm
-     * parameter.
-     */
     public function showLoaderOnConfirm(bool $showLoaderOnConfirm = true): self
     {
         $this->option('showLoaderOnConfirm', $showLoaderOnConfirm);
@@ -877,9 +619,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Set to false to disable body padding adjustment when the page scrollbar gets hidden while the popup is shown.
-     */
     public function scrollbarPadding(bool $scrollbarPadding = true): self
     {
         $this->option('scrollbarPadding', $scrollbarPadding);
@@ -887,13 +626,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Function to execute before confirming, may be async (Promise-returning) or sync.
-     * Returned (or resolved) value can be:
-     *  - false to prevent a popup from closing
-     *  - anything else to pass that value as the result.value of Swal.fire()
-     *  - undefined to keep the default result.value.
-     */
     public function preConfirm(bool|string $preConfirm): self
     {
         $this->option('preConfirm', $preConfirm);
@@ -901,13 +633,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Function to execute before denying, may be async (Promise-returning) or sync.
-     * Returned (or resolved) value can be:
-     *  - false to prevent a popup from closing
-     *  - anything else to pass that value as the result.value of Swal.fire()
-     *  - undefined to keep the default result.value.
-     */
     public function preDeny(string $preDeny): self
     {
         $this->option('preDeny', $preDeny);
@@ -915,10 +640,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If you want to return the input value as result.value when denying the popup, set to true. Otherwise, the denying
-     * will set result.value to false.
-     */
     public function returnInputValueOnDeny(bool $inputValue = true): self
     {
         $this->option('returnInputValueOnDeny', $inputValue);
@@ -933,16 +654,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Makes the dialog persistent, requiring the user to interact with it.
-     *
-     * This prevents the dialog from being dismissed via outside clicks or escape key.
-     *
-     * @param bool $showConfirmBtn Whether to show the confirm button
-     * @param bool $showCloseBtn   Whether to show the close button
-     *
-     * @return self The builder instance
-     */
     public function persistent(bool $showConfirmBtn = true, bool $showCloseBtn = false): self
     {
         $this->allowEscapeKey(false);
@@ -954,9 +665,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Add a customized icon for the popup. Should contain a string with the path or URL to the image.
-     */
     public function imageUrl(string $imageUrl, ?int $imageWidth = null, ?int $imageHeight = null, ?string $imageAlt = null): self
     {
         $this->option('imageUrl', $imageUrl);
@@ -976,9 +684,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If imageUrl is set, you can specify imageWidth to describes image width in px.
-     */
     public function imageWidth(int $imageWidth): self
     {
         $this->option('imageWidth', $imageWidth);
@@ -986,9 +691,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Custom int height in px.
-     */
     public function imageHeight(int $imageHeight): self
     {
         $this->option('imageHeight', $imageHeight);
@@ -996,9 +698,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * An alternative text for the custom image icon.
-     */
     public function imageAlt(string $imageAlt): self
     {
         $this->option('imageAlt', $imageAlt);
@@ -1006,20 +705,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Configures an image dialog with customizable dimensions.
-     *
-     * This method configures a dialog with an image as the main content.
-     *
-     * @param string      $title       The dialog title
-     * @param string      $text        The dialog text
-     * @param string      $imageUrl    The URL of the image
-     * @param int         $imageWidth  The width of the image in pixels
-     * @param int         $imageHeight The height of the image in pixels
-     * @param string|null $imageAlt    Alternative text for the image
-     *
-     * @return self The builder instance
-     */
     public function image(string $title, string $text, string $imageUrl, int $imageWidth = 400, int $imageHeight = 200, ?string $imageAlt = null): self
     {
         $this->title($title);
@@ -1038,20 +723,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Creates and immediately pushes an image notification.
-     *
-     * This is a shortcut method that combines image configuration and pushing.
-     *
-     * @param string      $title       The dialog title
-     * @param string      $text        The dialog text
-     * @param string      $imageUrl    The URL of the image
-     * @param int         $imageWidth  The width of the image in pixels
-     * @param int         $imageHeight The height of the image in pixels
-     * @param string|null $imageAlt    Alternative text for the image
-     *
-     * @return Envelope The notification envelope
-     */
     public function addImage(string $title, string $text, string $imageUrl, int $imageWidth = 400, int $imageHeight = 200, ?string $imageAlt = null): Envelope
     {
         $this->image($title, $text, $imageUrl, $imageWidth, $imageHeight, $imageAlt);
@@ -1059,9 +730,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this->push();
     }
 
-    /**
-     * Input field label.
-     */
     public function inputLabel(string $inputLabel): self
     {
         $this->option('inputLabel', $inputLabel);
@@ -1069,9 +737,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Input field placeholder.
-     */
     public function inputPlaceholder(string $inputPlaceholder): self
     {
         $this->option('inputPlaceholder', $inputPlaceholder);
@@ -1079,12 +744,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Input field initial value.
-     *  - If the input type is select, inputValue will represent the selected <option> tag.
-     *  - If the input type is checkbox, inputValue will represent the checked state.
-     *  - If the input type is text, email, number, tel or textarea a Promise can be accepted as inputValue.
-     */
     public function inputValue(string $inputValue): self
     {
         $this->option('inputValue', $inputValue);
@@ -1092,12 +751,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * If input parameter is set to "select" or "radio", you can provide options. Can be a Map or a plain object, with
-     * keys that represent option values and values that represent option text. You can also provide plain object or Map
-     * as values that will represented a group of options, being the label of this <optgroup> the key. Finally, you can
-     * also provide a Promise that resolves with one of those types.
-     */
     public function inputOptions(string $inputOptions): self
     {
         $this->option('inputOptions', $inputOptions);
@@ -1105,10 +758,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Automatically remove whitespaces from both ends of a result string. Set this parameter to false to disable
-     * auto-trimming.
-     */
     public function inputAutoTrim(bool $inputAutoTrim = true): self
     {
         $this->option('inputAutoTrim', $inputAutoTrim);
@@ -1116,10 +765,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * HTML input attributes (e.g. min, max, autocomplete, accept), that are added to the input field. Object keys will
-     * represent attributes names, object values will represent attributes values.
-     */
     public function inputAttributes(string $inputAttributes): self
     {
         $this->option('inputAttributes', $inputAttributes);
@@ -1127,12 +772,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * Validator for input field, may be async (Promise-returning) or sync.
-     * Returned (or resolved) value can be:
-     *  - a falsy value (undefined, null, false) for indicating success
-     *  - a string value (error message) for indicating failure.
-     */
     public function inputValidator(string $inputValidator): self
     {
         $this->option('inputValidator', $inputValidator);
@@ -1140,9 +779,6 @@ final class SweetAlertBuilder extends NotificationBuilder
         return $this;
     }
 
-    /**
-     * A custom validation message for default validators (email, url).
-     */
     public function validationMessage(string $validationMessage): self
     {
         $this->option('validationMessage', $validationMessage);
