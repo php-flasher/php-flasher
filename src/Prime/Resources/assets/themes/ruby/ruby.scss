@@ -1,10 +1,4 @@
-/**
- * @file PHPFlasher Ruby Theme Styles
- * @description CSS styling for vibrant gradient notifications with gemstone effects
- * @author Younes ENNAJI
  */
-
-/**
  * PHPFlasher - Ruby Theme
  *
  * Vibrant notification style with gradient backgrounds and gemstone effects.
@@ -12,21 +6,17 @@
  */
 .fl-ruby {
     /* Theme variables - Define the visual appearance of Ruby notifications */
-
     /* Base colors and appearance */
     --ruby-text: #ffffff;                         /* White text for good contrast on gradients */
     --ruby-text-dark: #f8fafc;                    /* Slightly off-white text for dark mode */
     --ruby-border-radius: 4px;               /* Rounded corners (18px) */
     --ruby-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-
     /* Type-specific gradients - rich, vibrant color combinations */
     --ruby-success-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%); /* Green gradient */
     --ruby-info-gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);    /* Blue gradient */
     --ruby-warning-gradient: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); /* Amber gradient */
     --ruby-error-gradient: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);   /* Red gradient */
 }
-
-/**
  * Shine animation for Ruby theme
  * Creates a moving highlight effect like light reflecting off a gemstone
  */
@@ -44,8 +34,6 @@
         opacity: 0;                               /* Fade out at the end */
     }
 }
-
-/**
  * Entrance animation for Ruby theme
  * Smooth scale-in effect
  */
@@ -59,8 +47,6 @@
         transform: scale(1);                      /* End at normal size */
     }
 }
-
-/**
  * Base Ruby theme styling
  */
 .fl-ruby {
@@ -74,7 +60,6 @@
     font-family: var(--fl-font), serif;
     will-change: transform, opacity;              /* Optimize for animation performance */
     overflow: hidden;                             /* Contain the shine effect and progress bar */
-
     /**
      * Shine effect overlay
      * Creates the gemstone-like reflecting light animation
@@ -96,7 +81,6 @@
         animation-delay: 1s;                      /* Delay before first shine */
         z-index: 1;                               /* Above the background, below content */
     }
-
     /**
      * Content container
      * Holds icon, message and close button
@@ -108,7 +92,6 @@
         position: relative;
         z-index: 2;                               /* Ensure content is above shine effect */
     }
-
     /**
      * Circular icon container
      * Translucent white circle holding the icon
@@ -124,7 +107,6 @@
         align-items: center;
         justify-content: center;
     }
-
     /**
      * Icon styling
      * Icon within the circular container
@@ -135,7 +117,6 @@
         color: var(--ruby-text);                 /* White icon */
         background-color: transparent;
     }
-
     /**
      * Text container
      * Holds the message
@@ -143,7 +124,6 @@
     .fl-text {
         flex: 1;                                 /* Take available space */
     }
-
     /**
      * Message styling
      * Main notification text
@@ -153,7 +133,6 @@
         line-height: 1.5;                        /* Comfortable line height */
         font-weight: 500;                        /* Medium weight for better readability on colored backgrounds */
     }
-
     /**
      * Close button styling
      * Circular button with hover effect
@@ -175,14 +154,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
         &:hover, &:focus {
             opacity: 1;                          /* Full opacity on hover/focus */
             background: rgba(255, 255, 255, 0.3); /* Lighter background on hover */
             transform: scale(1.05);              /* Subtle grow effect on hover */
         }
     }
-
     /**
      * Progress bar container
      * Holds the animated progress indicator
@@ -196,7 +173,6 @@
         background-color: rgba(0, 0, 0, 0.1);    /* Slightly dark background */
         overflow: hidden;
         z-index: 3;                              /* Above other elements */
-
         /**
          * Progress indicator
          * Animated by JavaScript to show remaining time
@@ -207,7 +183,6 @@
             background: rgba(255, 255, 255, 0.4); /* Translucent white progress */
         }
     }
-
     /**
      * Type-specific styling
      * Each notification type gets its own gradient background
@@ -215,52 +190,42 @@
     &.fl-success {
         background: var(--ruby-success-gradient); /* Green gradient */
     }
-
     &.fl-info {
         background: var(--ruby-info-gradient);    /* Blue gradient */
     }
-
     &.fl-warning {
         background: var(--ruby-warning-gradient); /* Amber gradient */
     }
-
     &.fl-error {
         background: var(--ruby-error-gradient);   /* Red gradient */
     }
-
     /**
      * RTL Support
      * Right-to-left language direction support
      */
     &.fl-rtl {
         direction: rtl;
-
         .fl-icon-circle {
             margin-right: 0;
             margin-left: 1rem;                   /* Swap margins for RTL */
         }
-
         .fl-close {
             margin-left: 0;
             margin-right: 0.75rem;               /* Swap margins for RTL */
         }
-
         .fl-shine {
             transform: skewX(20deg);             /* Reverse shine angle for RTL */
         }
-
         .fl-progress .fl-progress {
             transform-origin: right center;      /* Animation starts from right */
         }
     }
-
     /**
      * Accessibility
      * Respects reduced motion preferences
      */
     @media (prefers-reduced-motion: reduce) {
         animation: none;                         /* Disable entrance animation */
-
         .fl-shine {
             display: none;                       /* Remove shine effect for reduced motion */
         }

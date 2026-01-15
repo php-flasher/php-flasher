@@ -1,17 +1,9 @@
-/**
- * @file PHPFlasher Crystal Theme Styles
- * @description CSS styling for the elegant Crystal theme
- * @author Younes ENNAJI
  */
-
-/**
  * PHPFlasher - Crystal Theme
  *
  * A clean, elegant notification theme with subtle animations
  * and a focus on simplicity and readability.
  */
-
-/**
  * Theme-specific variables
  * Define the color palette and styling attributes for Crystal theme
  */
@@ -21,13 +13,10 @@
     --crystal-bg-dark: rgba(30, 30, 30, 0.95);    /* Near-black in dark mode */
     --crystal-text-light: #2c3e50;                /* Deep blue-gray text for light mode */
     --crystal-text-dark: rgba(255, 255, 255, 0.95); /* Off-white text for dark mode */
-
     /* Shadow colors for animations and effects */
     --crystal-shadow: rgba(0, 0, 0, 0.08);        /* Subtle shadow for light mode */
     --crystal-shadow-dark: rgba(0, 0, 0, 0.25);   /* Stronger shadow for dark mode */
 }
-
-/**
  * Entrance animation
  * Slides in from the top with a fade effect
  */
@@ -41,8 +30,6 @@
         transform: translateY(0);                 /* End at natural position */
     }
 }
-
-/**
  * Hover animation
  * Creates a subtle pulsing shadow effect
  */
@@ -57,8 +44,6 @@
         box-shadow: 0 2px 8px var(--crystal-shadow);  /* Return to normal shadow */
     }
 }
-
-/**
  * Base Crystal theme styling
  */
 .fl-crystal {
@@ -71,7 +56,6 @@
     border-radius: var(--fl-border-radius, 4px) var(--fl-border-radius, 4px) 0 0;  /* Rounded corners */
     will-change: transform, opacity;              /* Optimize for animation performance */
     transition: box-shadow 0.3s ease;             /* Smooth transition for shadow changes */
-
     /**
      * Hover effect
      * Applies pulsing animation when notification is hovered
@@ -79,7 +63,6 @@
     &:hover {
         animation: crystalPulse 2s ease-in-out infinite;
     }
-
     /**
      * Content container
      * Holds the message and close button
@@ -90,7 +73,6 @@
         align-items: center;
         gap: 0.75rem;                             /* Space between elements */
     }
-
     /**
      * Text container
      * Holds the message paragraph
@@ -98,7 +80,6 @@
     .fl-text {
         flex: 1;                                  /* Take available space */
     }
-
     /**
      * Message styling
      * The primary notification text
@@ -109,7 +90,6 @@
         line-height: 1.4;                         /* Improved readability */
         color: var(--crystal-text-light, var(--fl-text-light));
     }
-
     /**
      * Close button styling
      * Positioned absolutely to maintain consistent layout
@@ -129,13 +109,11 @@
         transition: all 0.2s ease;
         color: currentColor;                      /* Inherit color from parent */
         touch-action: manipulation;               /* Better touch behavior */
-
         &:hover, &:focus {
             opacity: 1;                           /* Full opacity on interaction */
             transform: translateY(-50%) scale(1.1); /* Slight grow effect */
         }
     }
-
     /**
      * Progress bar container
      * Holds the animated progress indicator
@@ -147,7 +125,6 @@
         right: 0;
         height: 3px;
         overflow: hidden;
-
         /**
          * Progress indicator
          * Animated by JavaScript to show remaining time
@@ -158,7 +135,6 @@
             transform-origin: left center;        /* Animation starts from left */
         }
     }
-
     /**
      * Type-specific styling
      * Each notification type gets its own text color
@@ -167,58 +143,47 @@
         color: var(--success-color, var(--fl-success));
         .fl-message { color: var(--success-color, var(--fl-success)); }
     }
-
     &.fl-error {
         color: var(--error-color, var(--fl-error));
         .fl-message { color: var(--error-color, var(--fl-error)); }
     }
-
     &.fl-warning {
         color: var(--warning-color, var(--fl-warning));
         .fl-message { color: var(--warning-color, var(--fl-warning)); }
     }
-
     &.fl-info {
         color: var(--info-color, var(--fl-info));
         .fl-message { color: var(--info-color, var(--fl-info)); }
     }
-
     /**
      * RTL support
      * Right-to-left language direction support
      */
     &.fl-rtl {
         direction: rtl;
-
         .fl-content {
             padding: 1rem 1rem 1rem 2.5rem;       /* Swap padding for close button on left */
         }
-
         .fl-close {
             right: auto;
             left: 0.75rem;                        /* Move close button to left side */
         }
-
         .fl-progress .fl-progress {
             transform-origin: right center;       /* Animation starts from right */
         }
     }
-
     /**
      * Accessibility
      * Respects reduced motion preferences
      */
     @media (prefers-reduced-motion: reduce) {
         animation: none;                          /* Disable entrance animation */
-
         &:hover {
             animation: none;                      /* Disable pulse animation */
             box-shadow: 0 2px 8px var(--crystal-shadow); /* Keep default shadow */
         }
     }
 }
-
-/**
  * Dark mode support
  * Different styling when in dark mode
  */
@@ -227,11 +192,9 @@ html.fl-dark .fl-crystal,
 .fl-crystal.fl-auto-dark {
     background-color: var(--crystal-bg-dark, var(--fl-bg-dark));
     box-shadow: 0 2px 8px var(--crystal-shadow-dark);
-
     .fl-message {
         color: var(--crystal-text-dark, var(--fl-text-dark));
     }
-
     &:hover {
         animation: none;                          /* Disable pulse in dark mode */
         box-shadow: 0 4px 16px var(--crystal-shadow-dark); /* Use static enhanced shadow instead */

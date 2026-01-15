@@ -1,10 +1,4 @@
-/**
- * @file PHPFlasher Material Design Theme Styles
- * @description CSS styling for minimalist Material Design notifications
- * @author Younes ENNAJI
  */
-
-/**
  * PHPFlasher - Material Design Theme
  *
  * Google's Material Design-inspired notifications with a minimalist approach.
@@ -12,7 +6,6 @@
  */
 .fl-material {
     /* Theme variables - Define the visual appearance of Material Design notifications */
-
     /* Base colors and appearance for light and dark modes */
     --md-bg-light: #ffffff;                      /* Card background in light mode */
     --md-bg-dark: #2d2d2d;                       /* Card background in dark mode */
@@ -20,29 +13,23 @@
     --md-text-secondary-light: rgba(0, 0, 0, 0.6); /* Secondary text in light mode (60% black) */
     --md-text-dark: rgba(255, 255, 255, 0.87);   /* Primary text in dark mode (87% white) */
     --md-text-secondary-dark: rgba(255, 255, 255, 0.6); /* Secondary text in dark mode (60% white) */
-
     /* Material Design elevation - multi-layered shadows */
     --md-elevation: 0 3px 5px -1px rgba(0,0,0,0.2),   /* Ambient shadow */
                     0 6px 10px 0 rgba(0,0,0,0.14),    /* Penumbra shadow */
                     0 1px 18px 0 rgba(0,0,0,0.12);    /* Umbra shadow */
-
     --md-elevation-dark: 0 3px 5px -1px rgba(0,0,0,0.4),  /* Darker ambient shadow */
                          0 6px 10px 0 rgba(0,0,0,0.28),   /* Darker penumbra shadow */
                          0 1px 18px 0 rgba(0,0,0,0.24);   /* Darker umbra shadow */
     --md-border-radius: 4px;                     /* Material Design default corner radius */
-
     /* Material Design color palette for notification types */
     --md-success: #43a047;                       /* Green 600 from Material palette */
     --md-info: #1e88e5;                          /* Blue 600 from Material palette */
     --md-warning: #fb8c00;                       /* Orange 600 from Material palette */
     --md-error: #e53935;                         /* Red 600 from Material palette */
-
     /* Animation timing variables */
     --md-animation-duration: 0.3s;               /* Standard Material motion duration */
     --md-ripple-duration: 0.6s;                  /* Ripple effect duration */
 }
-
-/**
  * Entrance animation for Material theme
  * Material Design-style slide up with easing
  */
@@ -56,8 +43,6 @@
         transform: translateY(0);                /* End at final position */
     }
 }
-
-/**
  * Material Design ripple effect animation
  * Creates expanding circle from point of interaction
  */
@@ -67,8 +52,6 @@
         opacity: 0;                              /* Fade out completely */
     }
 }
-
-/**
  * Base Material Design theme styling
  */
 .fl-material {
@@ -76,7 +59,6 @@
     margin: 8px 0;                               /* Spacing between notifications */
     font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif; /* Material uses Roboto */
     animation: mdSlideUp var(--md-animation-duration) cubic-bezier(0.4, 0, 0.2, 1); /* Material standard easing */
-
     /**
      * Main card container
      * Follows Material Design card component styling
@@ -88,7 +70,6 @@
         box-shadow: var(--md-elevation);         /* Multi-layered shadow for depth */
         overflow: hidden;                        /* Contains progress bar */
     }
-
     /**
      * Content section
      * Contains message text
@@ -98,7 +79,6 @@
         display: flex;
         align-items: flex-start;                 /* Align items to top */
     }
-
     /**
      * Text content container
      * Holds message
@@ -106,7 +86,6 @@
     .fl-text-content {
         flex: 1;                                 /* Take available space */
     }
-
     /**
      * Message styling
      * Following Material Design typography
@@ -116,7 +95,6 @@
         line-height: 1.43;                       /* Material line height for body 2 */
         color: var(--md-text-secondary-light);   /* Secondary text color (60% opacity) */
     }
-
     /**
      * Action buttons section
      * Contains dismiss button
@@ -126,7 +104,6 @@
         justify-content: flex-end;               /* Align buttons to right */
         padding: 8px;                            /* Standard Material padding */
     }
-
     /**
      * Action button styling
      * Following Material Design "text button" guidelines
@@ -146,11 +123,9 @@
         transition: background-color 0.2s;       /* Smooth hover effect */
         position: relative;                      /* For ripple positioning */
         overflow: hidden;                        /* Contain ripple effect */
-
         &:hover, &:focus {
             background-color: rgba(0, 0, 0, 0.04); /* Material hover state - 4% opacity */
         }
-
         /**
          * Ripple effect
          * Material Design's signature ink ripple on interaction
@@ -166,13 +141,11 @@
             transform: scale(1);
             pointer-events: none;                /* Don't interfere with clicks */
         }
-
         &:active::after {
             opacity: 0.3;                        /* Material ripple opacity */
             animation: mdRipple var(--md-ripple-duration) linear; /* Expand and fade */
         }
     }
-
     /**
      * Type-specific styling
      * Each notification type has its own color based on Material palette
@@ -181,42 +154,34 @@
         .fl-icon-wrapper {
             color: var(--md-success);            /* Green icon */
         }
-
         .fl-action-button {
             color: var(--md-success);            /* Green button */
         }
     }
-
     &.fl-info {
         .fl-icon-wrapper {
             color: var(--md-info);               /* Blue icon */
         }
-
         .fl-action-button {
             color: var(--md-info);               /* Blue button */
         }
     }
-
     &.fl-warning {
         .fl-icon-wrapper {
             color: var(--md-warning);            /* Orange icon */
         }
-
         .fl-action-button {
             color: var(--md-warning);            /* Orange button */
         }
     }
-
     &.fl-error {
         .fl-icon-wrapper {
             color: var(--md-error);              /* Red icon */
         }
-
         .fl-action-button {
             color: var(--md-error);              /* Red button */
         }
     }
-
     /**
      * Progress bar
      * Material Design linear progress indicator
@@ -228,14 +193,12 @@
         right: 0;
         height: 4px;                             /* Material's standard progress height */
         overflow: hidden;
-
         .fl-progress {
             height: 100%;
             width: 100%;
             transform-origin: left center;       /* Animation starts from left */
         }
     }
-
     /**
      * Type-specific progress colors
      * Each notification type has its own progress bar color
@@ -243,58 +206,46 @@
     &.fl-success .fl-progress {
         background-color: var(--md-success);     /* Green progress */
     }
-
     &.fl-info .fl-progress {
         background-color: var(--md-info);        /* Blue progress */
     }
-
     &.fl-warning .fl-progress {
         background-color: var(--md-warning);     /* Orange progress */
     }
-
     &.fl-error .fl-progress {
         background-color: var(--md-error);       /* Red progress */
     }
-
     /**
      * RTL Support
      * Right-to-left language direction support
      */
     &.fl-rtl {
         direction: rtl;
-
         .fl-content {
             flex-direction: row-reverse;         /* Reverse flex direction */
         }
-
         .fl-icon-wrapper {
             margin-right: 0;
             margin-left: 16px;                   /* Swap margins for RTL */
         }
-
         .fl-actions {
             justify-content: flex-start;         /* Align buttons to left in RTL */
         }
-
         .fl-progress {
             transform-origin: right center;      /* Animation starts from right */
         }
     }
-
     /**
      * Accessibility
      * Respects reduced motion preferences
      */
     @media (prefers-reduced-motion: reduce) {
         animation: none;                         /* Disable slide animation */
-
         .fl-action-button:active::after {
             animation: none;                     /* Disable ripple animation */
         }
     }
 }
-
-/**
  * Dark mode support
  * Material Design dark theme implementation
  */
@@ -306,11 +257,9 @@ html.fl-dark .fl-material,
         color: var(--md-text-dark);              /* Lighter text */
         box-shadow: var(--md-elevation-dark);    /* Stronger shadows */
     }
-
     .fl-message {
         color: var(--md-text-secondary-dark);    /* Lighter secondary text */
     }
-
     .fl-action-button {
         &:hover, &:focus {
             background-color: rgba(255, 255, 255, 0.08); /* Material dark hover - 8% opacity */

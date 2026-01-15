@@ -1,32 +1,17 @@
-/**
- * @file PHPFlasher Core Theme Styles
- * @description Root styling and CSS variables for the PHPFlasher notification system
- * @author Younes ENNAJI
- */
-
 @use "sass:color";
 @use "sass:meta";
 
-/**
- * PHPFlasher CSS Variable System
- *
- * This defines the design token system used throughout all themes.
- * By changing these variables, you can customize the appearance of all themes.
- */
 :root {
-    // State Colors - Used for different notification types
-    --fl-success: #10b981; // Green for success messages
-    --fl-info: #3b82f6;    // Blue for information messages
-    --fl-warning: #f59e0b; // Amber for warning messages
-    --fl-error: #ef4444;   // Red for error messages
+    --fl-success: #10b981;
+    --fl-info: #3b82f6;
+    --fl-warning: #f59e0b;
+    --fl-error: #ef4444;
 
-    // Light variants - Used for backgrounds and progress bars
     --fl-success-light: color-mix(in srgb, var(--fl-success) 10%, transparent);
     --fl-info-light: color-mix(in srgb, var(--fl-info) 10%, transparent);
     --fl-warning-light: color-mix(in srgb, var(--fl-warning) 10%, transparent);
     --fl-error-light: color-mix(in srgb, var(--fl-error) 10%, transparent);
 
-    // Base colors - Used for text and backgrounds
     --fl-white: #ffffff;
     --fl-black: #000000;
     --fl-bg-light: var(--fl-white);
@@ -34,14 +19,12 @@
     --fl-text-light: rgb(75, 85, 99);
     --fl-text-dark: var(--fl-white);
 
-    // Appearance - Used for consistent styling across themes
     --fl-font: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --fl-border-radius: 4px;
     --fl-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     --fl-shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.35);
     --fl-transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 
-    // Legacy Support - For backward compatibility
     --background-color: var(--fl-bg-light);
     --text-color: var(--fl-text-light);
     --dark-background-color: var(--fl-bg-dark);
@@ -56,7 +39,6 @@
     --error-color-light: var(--fl-error-light);
 }
 
-// Import component styles
 @include meta.load-css("wrapper");
 @include meta.load-css("container");
 @include meta.load-css("progress");

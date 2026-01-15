@@ -1,10 +1,4 @@
-/**
- * @file PHPFlasher Jade Theme Styles
- * @description CSS styling for minimalist Jade theme
- * @author Younes ENNAJI
  */
-
-/**
  * PHPFlasher - Jade Theme
  *
  * Calm, soothing notification style with elegant minimalism.
@@ -12,7 +6,6 @@
  */
 .fl-jade {
     /* Theme variables - Define the visual appearance of Jade notifications */
-
     /* Base colors and appearance */
     --jade-text-light: #5f6c7b;                /* Soft slate gray for text */
     --jade-text-dark: #e2e8f0;                 /* Light gray for dark mode text */
@@ -20,7 +13,6 @@
     --jade-shadow-dark: 0 8px 24px rgba(0, 0, 0, 0.2); /* Stronger shadow for dark mode */
     --jade-border-radius: 4px;                /* Large rounded corners */
     --jade-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Material-inspired transition */
-
     /* Type-specific colors and backgrounds - Light mode */
     --jade-success-bg: #f0fdf4;                /* Very light green background */
     --jade-success-color: #16a34a;             /* Green text */
@@ -30,15 +22,12 @@
     --jade-warning-color: #f59e0b;             /* Orange text */
     --jade-error-bg: #fef2f2;                  /* Very light red background */
     --jade-error-color: #dc2626;               /* Red text */
-
     /* Dark mode backgrounds - Semi-transparent colored overlays */
     --jade-success-bg-dark: rgba(22, 163, 74, 0.15);  /* Semi-transparent green */
     --jade-info-bg-dark: rgba(59, 130, 246, 0.15);    /* Semi-transparent blue */
     --jade-warning-bg-dark: rgba(245, 158, 11, 0.15); /* Semi-transparent orange */
     --jade-error-bg-dark: rgba(220, 38, 38, 0.15);    /* Semi-transparent red */
 }
-
-/**
  * Entrance animation for Jade theme
  * Combines subtle upward movement with scaling for a refined appearance
  */
@@ -52,8 +41,6 @@
         transform: translateY(0) scale(1);        /* End at normal size and position */
     }
 }
-
-/**
  * Base Jade theme styling
  */
 .fl-jade {
@@ -67,7 +54,6 @@
     will-change: transform, opacity;           /* Optimize for animation performance */
     border: 1px solid transparent;             /* Border for type-specific colors */
     overflow: hidden;                          /* Contain progress bar */
-
     /**
      * Content container
      * Holds message and close button
@@ -76,7 +62,6 @@
         display: flex;
         align-items: center;                   /* Vertically center content */
     }
-
     /**
      * Message styling
      * Main notification text
@@ -88,7 +73,6 @@
         font-weight: 500;                      /* Medium weight for better readability */
         padding-right: 0.75rem;                /* Space between text and close button */
     }
-
     /**
      * Close button styling
      * Circular button with hover effect
@@ -108,13 +92,11 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;                        /* Prevent button from shrinking */
-
         &:hover, &:focus {
             opacity: 1;                        /* Full opacity on hover/focus */
             background-color: rgba(0, 0, 0, 0.05); /* Subtle background on hover */
         }
     }
-
     /**
      * Progress bar container
      * Holds the animated progress indicator
@@ -128,7 +110,6 @@
         overflow: hidden;
         border-radius: 0 0 var(--jade-border-radius) var(--jade-border-radius); /* Match parent corners */
         opacity: 0.7;                          /* Slightly transparent */
-
         /**
          * Progress indicator
          * Animated by JavaScript to show remaining time
@@ -138,9 +119,7 @@
             width: 100%;
         }
     }
-
     /* Type-specific styling for each notification type */
-
     /**
      * Success notification styling
      * Green theme with appropriate hover states
@@ -149,20 +128,16 @@
         background-color: var(--jade-success-bg);
         color: var(--jade-success-color);
         border-color: rgba(22, 163, 74, 0.1);  /* Very subtle border */
-
         .fl-close {
             color: var(--jade-success-color);  /* Green close button */
-
             &:hover, &:focus {
                 background-color: rgba(22, 163, 74, 0.1); /* Green hover state */
             }
         }
-
         .fl-progress-bar .fl-progress {
             background-color: var(--jade-success-color); /* Green progress bar */
         }
     }
-
     /**
      * Info notification styling
      * Blue theme with appropriate hover states
@@ -171,20 +146,16 @@
         background-color: var(--jade-info-bg);
         color: var(--jade-info-color);
         border-color: rgba(59, 130, 246, 0.1); /* Very subtle border */
-
         .fl-close {
             color: var(--jade-info-color);     /* Blue close button */
-
             &:hover, &:focus {
                 background-color: rgba(59, 130, 246, 0.1); /* Blue hover state */
             }
         }
-
         .fl-progress-bar .fl-progress {
             background-color: var(--jade-info-color); /* Blue progress bar */
         }
     }
-
     /**
      * Warning notification styling
      * Orange theme with appropriate hover states
@@ -193,20 +164,16 @@
         background-color: var(--jade-warning-bg);
         color: var(--jade-warning-color);
         border-color: rgba(245, 158, 11, 0.1); /* Very subtle border */
-
         .fl-close {
             color: var(--jade-warning-color);  /* Orange close button */
-
             &:hover, &:focus {
                 background-color: rgba(245, 158, 11, 0.1); /* Orange hover state */
             }
         }
-
         .fl-progress-bar .fl-progress {
             background-color: var(--jade-warning-color); /* Orange progress bar */
         }
     }
-
     /**
      * Error notification styling
      * Red theme with appropriate hover states
@@ -215,37 +182,30 @@
         background-color: var(--jade-error-bg);
         color: var(--jade-error-color);
         border-color: rgba(220, 38, 38, 0.1);  /* Very subtle border */
-
         .fl-close {
             color: var(--jade-error-color);    /* Red close button */
-
             &:hover, &:focus {
                 background-color: rgba(220, 38, 38, 0.1); /* Red hover state */
             }
         }
-
         .fl-progress-bar .fl-progress {
             background-color: var(--jade-error-color); /* Red progress bar */
         }
     }
-
     /**
      * RTL Support
      * Right-to-left language direction support
      */
     &.fl-rtl {
         direction: rtl;
-
         .fl-message {
             padding-right: 0;
             padding-left: 0.75rem;             /* Swap padding for RTL */
         }
-
         .fl-progress .fl-progress {
             transform-origin: right center;    /* Animation starts from right */
         }
     }
-
     /**
      * Accessibility
      * Respects reduced motion preferences
@@ -254,8 +214,6 @@
         animation: none;                       /* Disable animation */
     }
 }
-
-/**
  * Dark mode support
  * Different styling when in dark mode
  */
@@ -264,7 +222,6 @@ html.fl-dark .fl-jade,
 .fl-jade.fl-auto-dark {
     box-shadow: var(--jade-shadow-dark);       /* Stronger shadow in dark mode */
     color: var(--jade-text-dark);              /* Lighter text */
-
     /**
      * Type-specific backgrounds for dark mode
      * Uses semi-transparent colored overlays
@@ -273,22 +230,18 @@ html.fl-dark .fl-jade,
         background-color: var(--jade-success-bg-dark);
         border-color: rgba(22, 163, 74, 0.2);  /* Slightly stronger border */
     }
-
     &.fl-info {
         background-color: var(--jade-info-bg-dark);
         border-color: rgba(59, 130, 246, 0.2); /* Slightly stronger border */
     }
-
     &.fl-warning {
         background-color: var(--jade-warning-bg-dark);
         border-color: rgba(245, 158, 11, 0.2); /* Slightly stronger border */
     }
-
     &.fl-error {
         background-color: var(--jade-error-bg-dark);
         border-color: rgba(220, 38, 38, 0.2);  /* Slightly stronger border */
     }
-
     /**
      * Dark mode hover states
      * Lighter background for better visibility

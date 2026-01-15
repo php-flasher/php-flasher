@@ -1,15 +1,3 @@
-/**
- * @file PHPFlasher Progress Bar Styles
- * @description Styling for notification progress bars
- * @author Younes ENNAJI
- */
-
-/**
- * .fl-progress-bar
- *
- * Container for the progress indicator that shows remaining time.
- * This styles the progress bar container across all notification types.
- */
 .fl-progress-bar {
     display: flex;
     height: 0.125em;
@@ -20,20 +8,10 @@
     overflow: hidden;
 }
 
-/**
- * Type-specific progress bar styling
- * Ensures progress bars match the notification type color scheme
- */
 @each $type in success, info, warning, error {
     .fl-#{$type} .fl-progress-bar {
         background-color: var(--#{$type}-color-light, var(--fl-#{$type}-light));
 
-        /**
-         * .fl-progress
-         *
-         * The actual progress indicator that animates as time passes.
-         * Width is controlled by JavaScript.
-         */
         .fl-progress {
             background-color: var(--#{$type}-color, var(--fl-#{$type}));
             width: 100%;
@@ -44,10 +22,6 @@
     }
 }
 
-/**
- * RTL support for progress bars
- * Ensures animation works correctly in right-to-left layouts
- */
 .fl-rtl .fl-progress .fl-progress {
     transform-origin: right center;
 }

@@ -1,56 +1,14 @@
-/**
- * @file PHPFlasher Amazon Theme Implementation
- * @description Notification style inspired by Amazon's e-commerce platform
- * @author Younes ENNAJI
- */
 import './amazon.scss'
 import type { Envelope } from '../../types'
 
-/**
- * Amazon-inspired notification theme for PHPFlasher.
- *
- * This theme mimics the design language of Amazon's alert and notification
- * components with:
- * - Type-specific icons and colors
- * - Clear visual hierarchy
- * - Accessible structure
- * - Responsive layout
- * - Dark mode support
- * - RTL language support
- *
- * @example
- * ```typescript
- * import flasher from '@flasher/flasher';
- * import { amazonTheme } from '@flasher/flasher/themes';
- *
- * // Register the theme (if not already registered)
- * flasher.addTheme('amazon', amazonTheme);
- *
- * // Use the theme
- * flasher.use('theme.amazon').success('Your order has been placed');
- * ```
- */
 export const amazonTheme = {
-    /**
-     * Renders a notification envelope as HTML.
-     *
-     * @param envelope - The notification envelope to render
-     * @returns HTML string representation of the notification
-     */
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
 
-        // Set appropriate ARIA roles based on notification type
         const isAlert = type === 'error' || type === 'warning'
         const role = isAlert ? 'alert' : 'status'
         const ariaLive = isAlert ? 'assertive' : 'polite'
 
-        /**
-         * Gets the SVG icon based on notification type.
-         * Each notification type has a unique icon for visual distinction.
-         *
-         * @returns SVG markup for the icon
-         */
         const getAlertIcon = () => {
             switch (type) {
                 case 'success':
@@ -73,12 +31,6 @@ export const amazonTheme = {
             return ''
         }
 
-        /**
-         * Gets the title text based on notification type.
-         * Provides consistent and recognizable heading text for each type.
-         *
-         * @returns Title string for the notification
-         */
         const getAlertTitle = () => {
             switch (type) {
                 case 'success': return 'Success!'

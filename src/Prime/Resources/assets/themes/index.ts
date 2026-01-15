@@ -1,24 +1,3 @@
-/**
- * @file PHPFlasher Theme Exports
- * @description Exports all available notification themes
- * @author Younes ENNAJI
- */
-
-/**
- * Export all available themes for PHPFlasher.
- *
- * These themes provide different visual styles for notifications and can be
- * used by specifying the theme name when showing a notification:
- *
- * @example
- * ```typescript
- * // Use a specific theme
- * flasher.use('theme.material').success('Operation completed');
- *
- * // Set a theme as default
- * flasher.addPlugin('flasher', flasher.use('theme.slack'));
- * ```
- */
 export { amazonTheme } from './amazon/amazon'
 export { amberTheme } from './amber/amber'
 export { auroraTheme } from './aurora/aurora'

@@ -1,68 +1,19 @@
-/**
- * @file PHPFlasher iOS Theme Implementation
- * @description Apple iOS-style notification interface
- * @author Younes ENNAJI
- */
 import './ios.scss'
 import type { Envelope } from '../../types'
 
-/**
- * iOS-inspired notification theme for PHPFlasher.
- *
- * This theme replicates Apple's iOS notification style with:
- * - Frosted glass appearance with backdrop blur
- * - App icon and name header
- * - Current time display
- * - Subtle animations and transitions
- * - Close button in iOS style
- * - Full dark mode support (resembles iOS dark mode)
- *
- * The theme aims to provide a native-like experience for users familiar with
- * iOS devices, creating notifications that feel integrated with the platform.
- *
- * @example
- * ```typescript
- * import flasher from '@flasher/flasher';
- * import { iosTheme } from '@flasher/flasher/themes';
- *
- * // Register the theme (if not already registered)
- * flasher.addTheme('ios', iosTheme);
- *
- * // Use the theme
- * flasher.use('theme.ios').success('Your photo was uploaded successfully');
- * ```
- */
 export const iosTheme = {
-    /**
-     * Renders a notification envelope as HTML.
-     *
-     * Creates an iOS-style notification with app icon, title/app name,
-     * timestamp, message content, and close button.
-     *
-     * @param envelope - The notification envelope to render
-     * @returns HTML string representation of the notification
-     */
     render: (envelope: Envelope): string => {
         const { type, message, title } = envelope
 
-        // Set appropriate ARIA roles based on notification type
         const isAlert = type === 'error' || type === 'warning'
         const role = isAlert ? 'alert' : 'status'
         const ariaLive = isAlert ? 'assertive' : 'polite'
 
-        // Default app name (used if no title is provided)
         const appName = 'PHPFlasher'
 
-        // Format current time in iOS style (hour:minute)
         const now = new Date()
         const timeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 
-        /**
-         * Gets the appropriate icon based on notification type.
-         * Each type has a specific icon matching iOS visual style.
-         *
-         * @returns SVG markup for the notification icon
-         */
         const getIcon = () => {
             switch (type) {
                 case 'success':
@@ -85,7 +36,6 @@ export const iosTheme = {
             return ''
         }
 
-        // Use provided title or default to the app name
         const displayTitle = title || appName
 
         return `

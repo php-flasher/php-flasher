@@ -1,49 +1,14 @@
-/**
- * @file Toastr Plugin Implementation
- * @description PHPFlasher integration with the Toastr notification library
- * @author Younes ENNAJI
- */
 import { AbstractPlugin } from '@flasher/flasher/dist/plugin'
 import type { Envelope, Options } from '@flasher/flasher/dist/types'
 
 import toastr from 'toastr'
 
-/**
- * Plugin implementation for Toastr notification library.
- *
- * The ToastrPlugin integrates the popular Toastr library with PHPFlasher,
- * allowing for customizable toast notifications in various positions.
- *
- * This plugin requires jQuery and Toastr to be loaded in the page. These
- * dependencies are automatically loaded by the PHP plugin's getScripts method.
- *
- * @example
- * ```typescript
- * import flasher from '@flasher/flasher';
- * import ToastrPlugin from '@flasher/flasher-toastr';
- *
- * // Register the plugin
- * flasher.addPlugin('toastr', new ToastrPlugin());
- *
- * // Show a notification
- * flasher.use('toastr').success('Operation completed');
- * ```
- */
 export default class ToastrPlugin extends AbstractPlugin {
-    /**
-     * Creates Toastr notifications from envelopes.
-     *
-     * This method transforms PHPFlasher envelopes into Toastr notifications
-     * and displays them using the Toastr library.
-     *
-     * @param envelopes - Array of notification envelopes to render
-     */
     public renderEnvelopes(envelopes: Envelope[]): void {
         if (!envelopes?.length) {
             return
         }
 
-        // Check for dependencies
         if (!this.isDependencyAvailable()) {
             return
         }
@@ -52,10 +17,8 @@ export default class ToastrPlugin extends AbstractPlugin {
             try {
                 const { message, title, type, options } = envelope
 
-                // Display the toast notification
                 const instance = toastr[type as ToastrType](message, title, options as ToastrOptions)
 
-                // Handle Turbo/Hotwire compatibility
                 if (instance && instance.parent) {
                     try {
                         const parent = instance.parent()
@@ -72,25 +35,15 @@ export default class ToastrPlugin extends AbstractPlugin {
         })
     }
 
-    /**
-     * Apply global options to Toastr.
-     *
-     * This method configures the Toastr library with the provided options,
-     * which will affect all subsequently created notifications.
-     *
-     * @param options - Configuration options for Toastr
-     */
     public renderOptions(options: Options): void {
-        // Check for dependencies
         if (!this.isDependencyAvailable()) {
             return
         }
 
         try {
-            // Apply default options and merge with provided options
             toastr.options = {
-                timeOut: (options.timeOut || 10000) as number, // Default 10 seconds
-                progressBar: (options.progressBar || true) as boolean, // Show progress bar by default
+                timeOut: (options.timeOut || 10000) as number,
+                progressBar: (options.progressBar || true) as boolean,
                 ...options,
             } as ToastrOptions
         } catch (error) {
@@ -98,14 +51,7 @@ export default class ToastrPlugin extends AbstractPlugin {
         }
     }
 
-    /**
-     * Check if jQuery and Toastr dependencies are available
-     *
-     * @returns True if dependencies are available
-     * @private
-     */
     private isDependencyAvailable(): boolean {
-        // Check for jQuery (handle both window.jQuery and window.$ usage)
         const jQuery = window.jQuery || window.$
 
         if (!jQuery) {

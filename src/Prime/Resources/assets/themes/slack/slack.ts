@@ -1,60 +1,14 @@
-/**
- * @file PHPFlasher Slack Theme Implementation
- * @description Notifications styled after Slack's messaging interface
- * @author Younes ENNAJI
- */
 import './slack.scss'
 import type { Envelope } from '../../types'
 
-/**
- * Slack notification theme for PHPFlasher.
- *
- * The Slack theme replicates the familiar messaging interface from Slack with:
- * - Message bubbles with subtle borders and shadows
- * - Avatar-like colored icons indicating notification type
- * - Clean typography matching Slack's text style
- * - Hover effects that reveal action buttons
- * - Simple, fast animations for a responsive feel
- *
- * This theme creates a familiar experience for users accustomed to Slack's
- * widely-used interface, providing a sense of comfort and familiarity.
- *
- * @example
- * ```typescript
- * import flasher from '@flasher/flasher';
- * import { slackTheme } from '@flasher/flasher/themes';
- *
- * // Register the theme (if not already registered)
- * flasher.addTheme('slack', slackTheme);
- *
- * // Use the theme
- * flasher.use('theme.slack').success('Your changes have been saved');
- * ```
- */
 export const slackTheme = {
-    /**
-     * Renders a notification envelope as HTML.
-     *
-     * Creates a Slack-styled message bubble with colored avatar icon,
-     * message text, and a close button that appears on hover.
-     *
-     * @param envelope - The notification envelope to render
-     * @returns HTML string representation of the notification
-     */
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
 
-        // Set appropriate ARIA roles based on notification type
         const isAlert = type === 'error' || type === 'warning'
         const role = isAlert ? 'alert' : 'status'
         const ariaLive = isAlert ? 'assertive' : 'polite'
 
-        /**
-         * Gets the appropriate type icon based on notification type.
-         * Each type has a simple symbol within a colored background.
-         *
-         * @returns HTML markup for the type icon
-         */
         const getTypeIcon = () => {
             switch (type) {
                 case 'success':

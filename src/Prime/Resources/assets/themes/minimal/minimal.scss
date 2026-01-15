@@ -1,10 +1,4 @@
-/**
- * @file PHPFlasher Minimal Theme Styles
- * @description CSS styling for ultra-clean, distraction-free notifications
- * @author Younes ENNAJI
  */
-
-/**
  * PHPFlasher - Minimal Theme
  *
  * Ultra-clean and minimal notifications that stay out of the way.
@@ -12,7 +6,6 @@
  */
 .fl-minimal {
     /* Theme variables - Define the visual appearance of Minimal notifications */
-
     /* Base colors and appearance */
     --minimal-bg-light: rgba(255, 255, 255);  /* Semi-transparent white in light mode */
     --minimal-bg-dark: rgba(25, 25, 25);      /* Semi-transparent dark in dark mode */
@@ -23,15 +16,12 @@
     --minimal-border-radius: 4px;                  /* Modest border radius */
     --minimal-border-color: rgba(0, 0, 0, 0.05);   /* Nearly invisible border in light mode */
     --minimal-border-color-dark: rgba(255, 255, 255, 0.1); /* Subtle border in dark mode */
-
     /* Type-specific colors - semi-transparent for subtlety */
     --minimal-success: rgba(34, 197, 94, 0.9);     /* Green with slight transparency */
     --minimal-info: rgba(14, 165, 233, 0.9);       /* Blue with slight transparency */
     --minimal-warning: rgba(245, 158, 11, 0.9);    /* Orange with slight transparency */
     --minimal-error: rgba(239, 68, 68, 0.9);       /* Red with slight transparency */
 }
-
-/**
  * Entrance animation for Minimal theme
  * Quick, subtle slide-in from above
  */
@@ -45,8 +35,6 @@
         transform: translateY(0);                 /* End at natural position */
     }
 }
-
-/**
  * Base Minimal theme styling
  */
 .fl-minimal {
@@ -63,7 +51,6 @@
     backdrop-filter: blur(8px);                   /* Frosted glass effect */
     -webkit-backdrop-filter: blur(8px);           /* Safari support */
     border: 1px solid var(--minimal-border-color); /* Nearly invisible border */
-
     /**
      * Content container
      * Holds message and close button
@@ -73,7 +60,6 @@
         align-items: center;                      /* Vertically center content */
         gap: 0.75rem;                             /* Space between elements */
     }
-
     /**
      * Small colored dot indicator
      * Used instead of large icons for minimal appearance
@@ -84,7 +70,6 @@
         border-radius: 50%;                       /* Perfectly circular */
         flex-shrink: 0;                           /* Prevent dot from shrinking */
     }
-
     /**
      * Message styling
      * Main notification text
@@ -96,7 +81,6 @@
         flex: 1;                                  /* Take available space */
         margin: 0;
     }
-
     /**
      * Close button styling
      * Simple, minimal close button
@@ -116,12 +100,10 @@
         height: 1.5rem;
         font-size: 1rem;                          /* 16px × symbol */
         flex-shrink: 0;                           /* Prevent button from shrinking */
-
         &:hover, &:focus {
             opacity: 0.8;                         /* More visible on hover/focus, but still subtle */
         }
     }
-
     /**
      * Progress bar container
      * Holds the animated progress indicator
@@ -135,7 +117,6 @@
         overflow: hidden;
         border-radius: 0 0 var(--minimal-border-radius) var(--minimal-border-radius); /* Match parent corners */
         opacity: 0.7;                             /* Slightly transparent */
-
         /**
          * Progress indicator
          * Animated by JavaScript to show remaining time
@@ -145,7 +126,6 @@
             width: 100%;
         }
     }
-
     /**
      * Type-specific styling
      * Each notification type gets its own color for the dot and progress bar
@@ -154,34 +134,28 @@
         .fl-dot { background-color: var(--minimal-success); }
         .fl-progress-bar .fl-progress { background-color: var(--minimal-success); }
     }
-
     &.fl-info {
         .fl-dot { background-color: var(--minimal-info); }
         .fl-progress-bar .fl-progress { background-color: var(--minimal-info); }
     }
-
     &.fl-warning {
         .fl-dot { background-color: var(--minimal-warning); }
         .fl-progress-bar .fl-progress { background-color: var(--minimal-warning); }
     }
-
     &.fl-error {
         .fl-dot { background-color: var(--minimal-error); }
         .fl-progress-bar .fl-progress { background-color: var(--minimal-error); }
     }
-
     /**
      * RTL Support
      * Right-to-left language direction support
      */
     &.fl-rtl {
         direction: rtl;
-
         .fl-progress .fl-progress {
             transform-origin: right center;       /* Animation starts from right */
         }
     }
-
     /**
      * Accessibility
      * Respects reduced motion preferences
@@ -190,8 +164,6 @@
         animation: none;                          /* Disable animation */
     }
 }
-
-/**
  * Dark mode support
  * Different styling when in dark mode
  */

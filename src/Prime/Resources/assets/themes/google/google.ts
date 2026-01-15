@@ -1,65 +1,16 @@
-/**
- * @file PHPFlasher Google Theme Implementation
- * @description Material Design-inspired notification theme
- * @author Younes ENNAJI
- */
 import './google.scss'
 import type { Envelope } from '../../types'
 
-/**
- * Google Material Design-inspired notification theme for PHPFlasher.
- *
- * This theme replicates Google's Material Design aesthetics with:
- * - Elevated card component with proper shadow depth
- * - Material Design iconography
- * - Google's typography system with Roboto font
- * - Material "ink ripple" effect on buttons
- * - UPPERCASE action buttons following Material guidelines
- * - Smooth animation with Material Design's motion patterns
- *
- * The theme follows Material Design specifications for components like
- * cards, buttons, typography and iconography, creating a familiar experience
- * for users of Google products.
- *
- * @example
- * ```typescript
- * import flasher from '@flasher/flasher';
- * import { googleTheme } from '@flasher/flasher/themes';
- *
- * // Register the theme (if not already registered)
- * flasher.addTheme('google', googleTheme);
- *
- * // Use the theme
- * flasher.use('theme.google').success('Operation completed successfully');
- * ```
- */
 export const googleTheme = {
-    /**
-     * Renders a notification envelope as HTML.
-     *
-     * Creates a Google Material Design-style notification with icon, title (optional),
-     * message, dismissal button, and progress indicator.
-     *
-     * @param envelope - The notification envelope to render
-     * @returns HTML string representation of the notification
-     */
     render: (envelope: Envelope): string => {
         const { type, message, title } = envelope
 
-        // Set appropriate ARIA roles based on notification type
         const isAlert = type === 'error' || type === 'warning'
         const role = isAlert ? 'alert' : 'status'
         const ariaLive = isAlert ? 'assertive' : 'polite'
 
-        // Action button text in Material Design style (uppercase)
         const actionText = 'DISMISS'
 
-        /**
-         * Gets the appropriate Material Design icon based on notification type.
-         * Each icon follows Google's Material Design iconography guidelines.
-         *
-         * @returns SVG markup for the notification icon
-         */
         const getIcon = () => {
             switch (type) {
                 case 'success':
@@ -82,7 +33,6 @@ export const googleTheme = {
             return ''
         }
 
-        // Generate title section if title is provided
         const titleSection = title ? `<div class="fl-title">${title}</div>` : ''
 
         return `

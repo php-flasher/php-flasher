@@ -1,69 +1,44 @@
-/**
- * @file PHPFlasher Amazon Theme Styles
- * @description CSS styling for Amazon-inspired notifications
- * @author Younes ENNAJI
- */
-
-/**
- * Amazon Theme
- *
- * A notification style inspired by Amazon's e-commerce platform.
- * Features distinct color scheme and design language that mimics
- * Amazon's alert components.
- */
 .fl-amazon {
-    /* Theme-specific variables
-     * These define the color palette and styling attributes unique to the Amazon theme
-     */
+    --amazon-bg-light: #ffffff;
+    --amazon-bg-dark: #202124;
+    --amazon-text-light: #0f1111;
+    --amazon-text-secondary-light: #565959;
+    --amazon-text-dark: #ffffff;
+    --amazon-text-secondary-dark: #b6b6b6;
+    --amazon-border-light: #ddd;
+    --amazon-border-dark: #3f3f3f;
+    --amazon-yellow: #ffd814;
+    --amazon-orange: #ff9900;
 
-    /* Base colors */
-    --amazon-bg-light: #ffffff;           /* Light mode background */
-    --amazon-bg-dark: #202124;            /* Dark mode background */
-    --amazon-text-light: #0f1111;         /* Light mode primary text */
-    --amazon-text-secondary-light: #565959; /* Light mode secondary text */
-    --amazon-text-dark: #ffffff;          /* Dark mode primary text */
-    --amazon-text-secondary-dark: #b6b6b6; /* Dark mode secondary text */
-    --amazon-border-light: #ddd;          /* Light mode border */
-    --amazon-border-dark: #3f3f3f;        /* Dark mode border */
-    --amazon-yellow: #ffd814;             /* Amazon's signature yellow */
-    --amazon-orange: #ff9900;             /* Amazon's signature orange */
+    --amazon-success-bg: #f0fff5;
+    --amazon-success-border: #7fda95;
+    --amazon-success-icon: #007600;
+    --amazon-info-bg: #f3f9ff;
+    --amazon-info-border: #7fb4da;
+    --amazon-info-icon: #0066c0;
+    --amazon-warning-bg: #fffcf3;
+    --amazon-warning-border: #ffd996;
+    --amazon-warning-icon: #c45500;
+    --amazon-error-bg: #fff5f5;
+    --amazon-error-border: #ff8f8f;
+    --amazon-error-icon: #c40000;
 
-    /* Type-specific colors - Light mode */
-    --amazon-success-bg: #f0fff5;         /* Success background */
-    --amazon-success-border: #7fda95;     /* Success border */
-    --amazon-success-icon: #007600;       /* Success icon color */
-    --amazon-info-bg: #f3f9ff;            /* Info background */
-    --amazon-info-border: #7fb4da;        /* Info border */
-    --amazon-info-icon: #0066c0;          /* Info icon color */
-    --amazon-warning-bg: #fffcf3;         /* Warning background */
-    --amazon-warning-border: #ffd996;     /* Warning border */
-    --amazon-warning-icon: #c45500;       /* Warning icon color */
-    --amazon-error-bg: #fff5f5;           /* Error background */
-    --amazon-error-border: #ff8f8f;       /* Error border */
-    --amazon-error-icon: #c40000;         /* Error icon color */
+    --amazon-success-bg-dark: #082d11;
+    --amazon-success-border-dark: #1e6e2c;
+    --amazon-success-icon-dark: #7fda95;
+    --amazon-info-bg-dark: #0a1c2e;
+    --amazon-info-border-dark: #1a5183;
+    --amazon-info-icon-dark: #7fb4da;
+    --amazon-warning-bg-dark: #342a0a;
+    --amazon-warning-border-dark: #705711;
+    --amazon-warning-icon-dark: #ffd996;
+    --amazon-error-bg-dark: #2b0c0c;
+    --amazon-error-border-dark: #721c1c;
+    --amazon-error-icon-dark: #ff8f8f;
 
-    /* Type-specific colors - Dark mode */
-    --amazon-success-bg-dark: #082d11;    /* Dark mode success background */
-    --amazon-success-border-dark: #1e6e2c; /* Dark mode success border */
-    --amazon-success-icon-dark: #7fda95;   /* Dark mode success icon */
-    --amazon-info-bg-dark: #0a1c2e;        /* Dark mode info background */
-    --amazon-info-border-dark: #1a5183;    /* Dark mode info border */
-    --amazon-info-icon-dark: #7fb4da;      /* Dark mode info icon */
-    --amazon-warning-bg-dark: #342a0a;     /* Dark mode warning background */
-    --amazon-warning-border-dark: #705711; /* Dark mode warning border */
-    --amazon-warning-icon-dark: #ffd996;   /* Dark mode warning icon */
-    --amazon-error-bg-dark: #2b0c0c;       /* Dark mode error background */
-    --amazon-error-border-dark: #721c1c;   /* Dark mode error border */
-    --amazon-error-icon-dark: #ff8f8f;     /* Dark mode error icon */
-
-    /* Animation timing */
-    --amazon-animation-duration: 0.2s;     /* Duration for all animations */
+    --amazon-animation-duration: 0.2s;
 }
 
-/**
- * Entrance animation for Amazon theme
- * Slides in from the top with a fade effect
- */
 @keyframes amazonSlideDown {
     from {
         opacity: 0;
@@ -75,19 +50,12 @@
     }
 }
 
-/**
- * Base Amazon theme styling
- */
 .fl-amazon {
     position: relative;
     margin: 10px 0;
     font-family: Arial, sans-serif;
     animation: amazonSlideDown var(--amazon-animation-duration) ease-out;
 
-    /**
-     * Main alert container
-     * Contains all notification elements
-     */
     .fl-amazon-alert {
         background-color: var(--amazon-bg-light);
         color: var(--amazon-text-light);
@@ -99,64 +67,39 @@
         border-left-width: 4px;
     }
 
-    /**
-     * Content area
-     * Contains icon and text elements
-     */
     .fl-alert-content {
         display: flex;
         align-items: flex-start;
         flex: 1;
     }
 
-    /**
-     * Icon container
-     * Holds the SVG icon
-     */
     .fl-icon-container {
         margin-right: 12px;
         flex-shrink: 0;
         color: currentColor;
     }
 
-    /**
-     * Text content container
-     * Holds title and message
-     */
     .fl-text-content {
         flex: 1;
         min-width: 0;
     }
 
-    /**
-     * Alert title styling
-     */
     .fl-alert-title {
         font-weight: 700;
         font-size: 16px;
         margin-bottom: 4px;
     }
 
-    /**
-     * Alert message styling
-     */
     .fl-alert-message {
         font-size: 14px;
         line-height: 20px;
         color: var(--amazon-text-secondary-light);
     }
 
-    /**
-     * Action buttons container
-     * Currently holds only the close button
-     */
     .fl-alert-actions {
         margin-left: 16px;
     }
 
-    /**
-     * Close button styling
-     */
     .fl-close {
         background: none;
         border: none;
@@ -177,10 +120,6 @@
         }
     }
 
-    /**
-     * Type-specific styling
-     * Each notification type has its own color scheme
-     */
     &.fl-success {
         .fl-amazon-alert {
             background-color: var(--amazon-success-bg);
@@ -225,10 +164,6 @@
         }
     }
 
-    /**
-     * Right-to-Left language support
-     * Adjusts layout for RTL text direction
-     */
     &.fl-rtl {
         direction: rtl;
 
@@ -248,19 +183,11 @@
         }
     }
 
-    /**
-     * Accessibility support
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
         animation: none;
     }
 }
 
-/**
- * Dark mode support
- * Different styling applied in dark mode
- */
 body.fl-dark .fl-amazon,
 html.fl-dark .fl-amazon,
 .fl-amazon.fl-auto-dark {
@@ -284,9 +211,6 @@ html.fl-dark .fl-amazon,
         }
     }
 
-    /**
-     * Type-specific dark mode styling
-     */
     &.fl-success {
         .fl-amazon-alert {
             background-color: var(--amazon-success-bg-dark);

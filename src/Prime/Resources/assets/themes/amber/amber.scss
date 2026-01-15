@@ -1,10 +1,4 @@
-/**
- * @file PHPFlasher Amber Theme Styles
- * @description CSS styling for the modern, elegant Amber theme
- * @author Younes ENNAJI
  */
-
-/**
  * Amber Theme Variables
  *
  * Custom properties that define the appearance of Amber theme notifications.
@@ -18,15 +12,12 @@
     --amber-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Light mode shadow */
     --amber-shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.2); /* Dark mode shadow */
     --amber-border-radius: 4px;      /* Border radius for notifications */
-
     /* Type-specific colors */
     --amber-success: #10b981;           /* Success color (green) */
     --amber-info: #3b82f6;              /* Info color (blue) */
     --amber-warning: #f59e0b;           /* Warning color (orange) */
     --amber-error: #ef4444;             /* Error color (red) */
 }
-
-/**
  * Entrance animation for Amber theme
  * Slides in from the top with a subtle fade effect
  */
@@ -40,8 +31,6 @@
         transform: translateY(0);
     }
 }
-
-/**
  * Base Amber theme styling
  * Defines the core appearance and behavior of notifications
  */
@@ -56,7 +45,6 @@
     animation: amberIn 0.3s ease-out;
     font-family: var(--fl-font), serif;
     will-change: transform, opacity;
-
     /**
      * Content container
      * Holds all notification elements in a flexbox layout
@@ -65,7 +53,6 @@
         display: flex;
         align-items: center;
     }
-
     /**
      * Icon styling
      * The icon is rendered by the core icons.scss
@@ -74,7 +61,6 @@
         font-size: 1.85em;
         margin-right: 0.8rem;
     }
-
     /**
      * Text container
      * Takes up available space with flex: 1
@@ -82,7 +68,6 @@
     .fl-text {
         flex: 1;
     }
-
     /**
      * Message styling
      * Main notification text with optimized readability
@@ -91,7 +76,6 @@
         font-size: 0.875em;
         line-height: 1.4;
     }
-
     /**
      * Close button styling
      * Minimal button with hover effect
@@ -108,12 +92,10 @@
         flex-shrink: 0;
         color: currentColor;
         touch-action: manipulation;
-
         &:hover, &:focus {
             opacity: 1;
         }
     }
-
     /**
      * Progress bar container
      * Positioned at the bottom of the notification
@@ -125,7 +107,6 @@
         bottom: 0;
         height: 3px;
         overflow: hidden;
-
         /**
          * Progress indicator
          * Animated by JavaScript to show remaining time
@@ -135,7 +116,6 @@
             width: 100%;
         }
     }
-
     /**
      * Type-specific styling for close button
      * Each notification type gets its own color for the close button
@@ -145,47 +125,39 @@
             color: var(--amber-success);
         }
     }
-
     &.fl-info {
         .fl-close {
             color: var(--amber-info);
         }
     }
-
     &.fl-warning {
         .fl-close {
             color: var(--amber-warning);
         }
     }
-
     &.fl-error {
         .fl-close {
             color: var(--amber-error);
         }
     }
-
     /**
      * RTL (Right-to-Left) language support
      * Adjusts layout for RTL text direction
      */
     &.fl-rtl {
         direction: rtl;
-
         .fl-icon {
             margin-right: 0;
             margin-left: 0.8rem;
         }
-
         .fl-close {
             margin-left: 0;
             margin-right: 1rem;
         }
-
         .fl-progress .fl-progress {
             transform-origin: right center;
         }
     }
-
     /**
      * Accessibility support
      * Respects reduced motion preferences
@@ -194,8 +166,6 @@
         animation: none;
     }
 }
-
-/**
  * Dark mode support
  * Applies dark theme colors when in dark mode
  */

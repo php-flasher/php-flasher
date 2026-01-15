@@ -1,65 +1,17 @@
-/**
- * @file PHPFlasher Facebook Theme Implementation
- * @description Social media style notifications inspired by Facebook's interface
- * @author Younes ENNAJI
- */
 import './facebook.scss'
 import type { Envelope } from '../../types'
 
-/**
- * Facebook-inspired notification theme for PHPFlasher.
- *
- * This theme replicates the familiar notification style from Facebook's interface,
- * featuring:
- * - Rounded notification cards with subtle shadows
- * - Circular icons with type-specific colors
- * - Message content with time information
- * - Close button with hover effect
- * - Facebook's signature font and color scheme
- *
- * The theme is designed to be immediately recognizable to users familiar with
- * the Facebook platform, providing a sense of familiarity and consistency.
- *
- * @example
- * ```typescript
- * import flasher from '@flasher/flasher';
- * import { facebookTheme } from '@flasher/flasher/themes';
- *
- * // Register the theme (if not already registered)
- * flasher.addTheme('facebook', facebookTheme);
- *
- * // Use the theme
- * flasher.use('theme.facebook').success('Your post was published successfully');
- * ```
- */
 export const facebookTheme = {
-    /**
-     * Renders a notification envelope as HTML.
-     *
-     * Creates a Facebook-style notification with icon, message, timestamp, and close button.
-     * The layout mimics Facebook's notification design for a familiar user experience.
-     *
-     * @param envelope - The notification envelope to render
-     * @returns HTML string representation of the notification
-     */
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
 
-        // Set appropriate ARIA roles based on notification type
         const isAlert = type === 'error' || type === 'warning'
         const role = isAlert ? 'alert' : 'status'
         const ariaLive = isAlert ? 'assertive' : 'polite'
 
-        // Format current time in Facebook style (hour:minute)
         const now = new Date()
         const timeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 
-        /**
-         * Gets the appropriate icon based on notification type.
-         * Each type has a specific icon matching Facebook's visual language.
-         *
-         * @returns SVG markup for the notification icon
-         */
         const getNotificationIcon = () => {
             switch (type) {
                 case 'success':
@@ -108,7 +60,7 @@ export const facebookTheme = {
                         <button class="fl-button fl-close" aria-label="Close ${type} message">
                             <div class="fl-button-icon">
                                 <svg viewBox="0 0 24 24" width="20" height="20">
-                                    <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                                    <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                                 </svg>
                             </div>
                         </button>
