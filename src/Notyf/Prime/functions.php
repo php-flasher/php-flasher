@@ -10,6 +10,7 @@ use Flasher\Prime\Notification\Type;
 
 if (!\function_exists('Flasher\Notyf\Prime\notyf')) {
     /**
+     * @param 'success'|'info'|'warning'|'error' $type
      * @param array{
      *     duration?: int,
      *     ripple?: bool,

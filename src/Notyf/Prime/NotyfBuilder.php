@@ -36,6 +36,9 @@ final class NotyfBuilder extends NotificationBuilder
     }
 
     /**
+     * @param 'x'|'y' $position
+     * @param 'left'|'center'|'right'|'top'|'bottom' $value
+     *
      * @phpstan-param ($position is 'x' ? "left"|"center"|"right" : "top"|"center"|"bottom") $value
      */
     public function position(string $position, string $value): self

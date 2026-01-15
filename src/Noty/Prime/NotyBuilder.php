@@ -180,7 +180,8 @@ final class NotyBuilder extends NotificationBuilder
     }
 
     /**
-     * @param "open"|"close" $option
+     * @param 'open'|'close' $option
+     * @param 'noty_effects_open'|'noty_effects_close'|string $effect
      */
     public function animation(string $option, string $effect): self
     {
