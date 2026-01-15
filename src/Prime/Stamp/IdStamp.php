@@ -6,9 +6,6 @@ namespace Flasher\Prime\Stamp;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Provides a unique identifier for notifications.
- */
 final readonly class IdStamp implements PresentableStampInterface, StampInterface
 {
     private string $id;
@@ -23,8 +20,6 @@ final readonly class IdStamp implements PresentableStampInterface, StampInterfac
         try {
             return bin2hex(random_bytes(16));
         } catch (\Exception) {
-            // Handle the exception or fallback to another method of ID generation
-            // For example, using uniqid() as a fallback
             return uniqid('', true);
         }
     }

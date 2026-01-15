@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-/**
- * Controls notification persistence across requests.
- */
 final readonly class HopsStamp implements StampInterface
 {
     public function __construct(private int $amount)

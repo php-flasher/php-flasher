@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-/**
- * Associates a notification with a predefined template.
- */
 final readonly class PresetStamp implements StampInterface
 {
     /**

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-/**
- * Controls notification priority for ordering.
- */
 final readonly class PriorityStamp implements OrderableStampInterface, PresentableStampInterface, StampInterface
 {
     public function __construct(private int $priority)

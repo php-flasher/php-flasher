@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-/**
- * Provides translation parameters and locale for a notification.
- */
 final readonly class TranslationStamp implements StampInterface
 {
     /**

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-/**
- * Stores additional context data for a notification.
- */
 final readonly class ContextStamp implements PresentableStampInterface, StampInterface
 {
     /**
