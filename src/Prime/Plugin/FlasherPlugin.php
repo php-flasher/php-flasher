@@ -9,16 +9,6 @@ use Flasher\Prime\FlasherInterface;
 use Flasher\Prime\Notification\Type;
 
 /**
- * FlasherPlugin - Core plugin for PHPFlasher.
- *
- * This class represents the core PHPFlasher plugin, which provides the basic
- * notification functionality. It serves as the default plugin and the foundation
- * for other plugins to build upon.
- *
- * Design patterns:
- * - Core Plugin: Provides essential functionality that other plugins extend
- * - Configuration Management: Handles normalization and defaults for system config
- *
  * @phpstan-type ConfigType array{
  *     default: string,
  *     main_script: string,
@@ -70,21 +60,11 @@ final class FlasherPlugin extends Plugin
         return FlasherInterface::class;
     }
 
-    /**
-     * Gets the default plugin name.
-     *
-     * @return string The default plugin name
-     */
     public function getDefault(): string
     {
         return 'flasher';
     }
 
-    /**
-     * Gets the path to the main PHPFlasher script.
-     *
-     * @return string The script path
-     */
     public function getRootScript(): string
     {
         return '/vendor/flasher/flasher.min.js';
@@ -103,17 +83,6 @@ final class FlasherPlugin extends Plugin
         return '/vendor/flasher/flasher.min.css';
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * This overridden method extends the parent's normalization process with
-     * additional steps specific to the core plugin:
-     * - Normalizing plugin configurations
-     * - Normalizing preset configurations
-     * - Adding default configuration values
-     * - Normalizing flash bag mappings
-     * - Setting preset defaults
-     */
     public function normalizeConfig(array $config = []): array
     {
         $config = parent::normalizeConfig($config);
@@ -129,11 +98,6 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Normalizes the plugins configuration.
-     *
-     * This method ensures the core plugin is properly configured, merges global options
-     * with plugin-specific options, and normalizes array formats for scripts and styles.
-     *
      * @param array{
      *     scripts: string[],
      *     styles: string[],
@@ -143,14 +107,14 @@ final class FlasherPlugin extends Plugin
      *         styles?: string[],
      *         options?: array<string, mixed>,
      *     }>,
-     * } $config The raw configuration
+     * } $config
      *
      * @return array{
      *     scripts: string[],
      *     styles: string[],
      *     options: array<string, mixed>,
      *     plugins: array<string, mixed>,
-     * } The normalized configuration
+     * }
      */
     private function normalizePlugins(array $config): array
     {
@@ -191,11 +155,6 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Normalizes the themes configuration.
-     *
-     * This method ensures that the themes configuration has the correct structure
-     * and includes default themes unless explicitly disabled.
-     *
      * @param array{
      *     scripts: string[],
      *     styles: string[],
@@ -206,7 +165,7 @@ final class FlasherPlugin extends Plugin
      *         styles?: string[],
      *         options?: array<string, mixed>,
      *     }>,
-     * } $config The raw configuration
+     * } $config
      *
      * @return array{
      *     scripts: string[],
@@ -214,7 +173,7 @@ final class FlasherPlugin extends Plugin
      *     options: array<string, mixed>,
      *     plugins: array<string, mixed>,
      *     themes: array<string, mixed>,
-     * } The normalized configuration
+     * }
      */
     private function normalizeThemes(array $config): array
     {
@@ -261,18 +220,13 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Normalizes the presets configuration.
-     *
-     * This method ensures that string-only preset definitions are expanded to full arrays
-     * with the string value as the message.
-     *
      * @param array{
      *     scripts: string[],
      *     styles: string[],
      *     options: array<string, mixed>,
      *     presets?: array<string, string|array<string, mixed>>,
      *     plugins: array<string, mixed>,
-     * } $config The raw configuration
+     * } $config
      *
      * @return array{
      *     scripts: string[],
@@ -280,7 +234,7 @@ final class FlasherPlugin extends Plugin
      *     options: array<string, mixed>,
      *     presets?: array<string, array<string, mixed>>,
      *     plugins: array<string, mixed>,
-     * } The normalized configuration
+     * }
      */
     private function normalizePresets(array $config): array
     {
@@ -296,11 +250,6 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Adds default configuration values.
-     *
-     * This method ensures that all required configuration keys have values,
-     * providing defaults for any that are missing.
-     *
      * @param array{
      *     default?: string|null,
      *     main_script?: string|null,
@@ -313,7 +262,7 @@ final class FlasherPlugin extends Plugin
      *     options: array<string, mixed>,
      *     presets?: array<string, array<string, mixed>>,
      *     plugins: array<string, mixed>,
-     * } $config The raw configuration
+     * } $config
      *
      * @return array{
      *     default: string|null,
@@ -327,7 +276,7 @@ final class FlasherPlugin extends Plugin
      *     options: array<string, mixed>,
      *     presets: array<string, array<string, mixed>>,
      *     plugins: array<string, mixed>,
-     * } The configuration with defaults added
+     * }
      */
     private function addDefaultConfig(array $config): array
     {
@@ -349,11 +298,6 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Normalizes the flash bag configuration.
-     *
-     * This method ensures that the flash bag mapping has the correct structure
-     * and includes default mappings unless explicitly disabled.
-     *
      * @param array{
      *     default: string|null,
      *     main_script: string|null,
@@ -367,7 +311,7 @@ final class FlasherPlugin extends Plugin
      *     presets: array<string, array<string, mixed>>,
      *     plugins: array<string, mixed>,
      *     flash_bag?: bool|array<string, string[]>,
-     * } $config The raw configuration
+     * } $config
      *
      * @return array{
      *      default: string|null,
@@ -382,7 +326,7 @@ final class FlasherPlugin extends Plugin
      *      presets: array<string, array<string, mixed>>,
      *      plugins: array<string, mixed>,
      *      flash_bag: false|array<string, string[]>,
-     * } The normalized configuration
+     * }
      */
     private function normalizeFlashBag(array $config): array
     {
@@ -407,10 +351,6 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Sets default values for presets.
-     *
-     * This method ensures that all presets have required fields with default values.
-     *
      * @param array{
      *      default: string|null,
      *      main_script: string|null,
@@ -424,7 +364,7 @@ final class FlasherPlugin extends Plugin
      *      presets: array<string, array<string, mixed>>,
      *      plugins: array<string, mixed>,
      *      flash_bag: false|array<string, string[]>,
-     * } $config The raw configuration
+     * } $config
      *
      * @return array{
      *      default: string|null,
@@ -439,7 +379,7 @@ final class FlasherPlugin extends Plugin
      *      presets: array<string, array<string, mixed>>,
      *      plugins: array<string, mixed>,
      *      flash_bag: false|array<string, string[]>,
-     * } The normalized configuration
+     * }
      */
     private function setPresetsDefaults(array $config): array
     {
@@ -452,13 +392,11 @@ final class FlasherPlugin extends Plugin
     }
 
     /**
-     * Returns the default themes configuration.
-     *
      * @return array<string, array{
      *     scripts: string[],
      *     styles: string[],
      *     options: array<string, mixed>
-     * }> The default themes configuration
+     * }>
      */
     private function getDefaultThemes(): array
     {

@@ -7,40 +7,13 @@ namespace Flasher\Prime\Http\Csp;
 use Flasher\Prime\Http\RequestInterface;
 use Flasher\Prime\Http\ResponseInterface;
 
-/**
- * ContentSecurityPolicyHandler - Manages Content Security Policy for PHPFlasher.
- *
- * This class handles the complex task of managing Content Security Policy (CSP) headers
- * to allow PHPFlasher's JavaScript and CSS to run securely. It generates nonces for
- * scripts and styles, modifies CSP headers to include these nonces, and ensures that
- * inline code can execute without being blocked by CSP.
- *
- * Design patterns:
- * - Strategy: Implements a specific approach to CSP handling
- * - Adapter: Works with different request and response implementations
- */
 final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandlerInterface
 {
-    /**
-     * Header for passing script nonce between components.
-     */
     private const SCRIPT_NONCE_HEADER = 'X-PHPFlasher-Script-Nonce';
-
-    /**
-     * Header for passing style nonce between components.
-     */
     private const STYLE_NONCE_HEADER = 'X-PHPFlasher-Style-Nonce';
 
-    /**
-     * Whether CSP handling is disabled.
-     */
     private bool $cspDisabled = false;
 
-    /**
-     * Creates a new ContentSecurityPolicyHandler instance.
-     *
-     * @param NonceGeneratorInterface $nonceGenerator The generator for creating secure nonces
-     */
     public function __construct(private readonly NonceGeneratorInterface $nonceGenerator)
     {
     }
@@ -87,14 +60,7 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Returns nonces from headers if existing, otherwise null.
-     *
-     * This method checks if the necessary nonce headers are present in the provided
-     * request or response object and returns their values if found.
-     *
-     * @param RequestInterface|ResponseInterface $object The object to check for nonce headers
-     *
-     * @return array{csp_script_nonce: ?string, csp_style_nonce: ?string}|null Nonce values or null if not found
+     * @return array{csp_script_nonce: ?string, csp_style_nonce: ?string}|null
      */
     private function getHeaderNonces(RequestInterface|ResponseInterface $object): ?array
     {
@@ -108,27 +74,12 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
         return null;
     }
 
-    /**
-     * Removes temporary nonce headers from the response.
-     *
-     * These headers are used internally to pass nonces between components but
-     * should not be sent to the client.
-     *
-     * @param ResponseInterface $response The response to clean
-     */
     private function cleanHeaders(ResponseInterface $response): void
     {
         $response->removeHeader(self::SCRIPT_NONCE_HEADER);
         $response->removeHeader(self::STYLE_NONCE_HEADER);
     }
 
-    /**
-     * Removes all CSP headers from the response.
-     *
-     * This is used when CSP handling is disabled to ensure no CSP restrictions are applied.
-     *
-     * @param ResponseInterface $response The response to modify
-     */
     private function removeCspHeaders(ResponseInterface $response): void
     {
         $response->removeHeader('X-Content-Security-Policy');
@@ -137,15 +88,9 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Updates Content-Security-Policy headers in a response.
+     * @param array{csp_script_nonce?: ?string, csp_style_nonce?: ?string} $nonces
      *
-     * This method modifies existing CSP headers to include nonces for PHPFlasher's
-     * JavaScript and CSS, allowing them to execute without being blocked by CSP.
-     *
-     * @param ResponseInterface                                            $response The response to modify
-     * @param array{csp_script_nonce?: ?string, csp_style_nonce?: ?string} $nonces   The nonces to add to CSP
-     *
-     * @return array{csp_script_nonce?: ?string, csp_style_nonce?: ?string} The nonces used
+     * @return array{csp_script_nonce?: ?string, csp_style_nonce?: ?string}
      */
     private function updateCspHeaders(ResponseInterface $response, array $nonces = []): array
     {
@@ -202,22 +147,13 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
         return $nonces;
     }
 
-    /**
-     * Generates a valid Content-Security-Policy nonce.
-     *
-     * @return string The generated nonce
-     */
     private function generateNonce(): string
     {
         return $this->nonceGenerator->generate();
     }
 
     /**
-     * Converts a directive set array into Content-Security-Policy header value.
-     *
-     * @param array<string, string[]> $directives The CSP directives to convert
-     *
-     * @return string The formatted CSP header value
+     * @param array<string, string[]> $directives
      */
     private function generateCspHeader(array $directives): string
     {
@@ -225,11 +161,7 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Converts a Content-Security-Policy header value into a directive set array.
-     *
-     * @param string|null $header The CSP header value to parse
-     *
-     * @return array<string, string[]> The parsed directive set
+     * @return array<string, string[]>
      */
     private function parseDirectives(?string $header): array
     {
@@ -248,15 +180,7 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Detects if the 'unsafe-inline' is permitted for a directive within the directive set.
-     *
-     * This method checks if a specific CSP directive allows inline scripts or styles,
-     * taking into account CSP level 2+ hash and nonce exceptions.
-     *
-     * @param array<string, string[]> $directivesSet The directives to check
-     * @param string                  $type          The directive type to check
-     *
-     * @return bool True if inline content is permitted
+     * @param array<string, string[]> $directivesSet
      */
     private function authorizesInline(array $directivesSet, string $type): bool
     {
@@ -270,14 +194,7 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Checks if a directive list contains hash or nonce restrictions.
-     *
-     * This is important for CSP processing because in CSP Level 2+, the presence of a
-     * hash or nonce invalidates 'unsafe-inline' even if it's present.
-     *
-     * @param string[] $directives The CSP directive values to check
-     *
-     * @return bool True if the directive list contains a hash or nonce restriction
+     * @param string[] $directives
      */
     private function hasHashOrNonce(array $directives): bool
     {
@@ -297,15 +214,9 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Finds the fallback directive for a specific directive type.
+     * @param array<string, string[]> $directiveSet
      *
-     * In CSP, if a specific directive isn't defined, browsers fall back to default-src.
-     * This method implements that behavior for the PHPFlasher CSP handler.
-     *
-     * @param array<string, string[]> $directiveSet The complete directive set
-     * @param string                  $type         The directive type to find a fallback for
-     *
-     * @return string[]|null The fallback directive values, or null if no fallback exists
+     * @return string[]|null
      */
     private function getDirectiveFallback(array $directiveSet, string $type): ?array
     {
@@ -318,18 +229,11 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
     }
 
     /**
-     * Retrieves the Content-Security-Policy headers from a response.
-     *
-     * This method extracts all CSP-related headers from the response
-     * and parses their values into directive sets.
-     *
-     * @param ResponseInterface $response The response to extract CSP headers from
-     *
      * @return array{
      *     Content-Security-Policy?: array<string, string[]>,
      *     Content-Security-Policy-Report-Only?: array<string, string[]>,
      *     X-Content-Security-Policy?: array<string, string[]>,
-     * } Mapped CSP headers and their parsed directive sets
+     * }
      */
     private function getCspHeaders(ResponseInterface $response): array
     {
