@@ -14,26 +14,10 @@ use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 
-/**
- * Core notification builder methods.
- *
- * This trait implements the core builder methods for configuring notifications.
- * It provides the fluent API for setting notification properties and attaching stamps.
- */
 trait NotificationBuilderMethods
 {
-    /**
-     * The notification envelope being built.
-     */
     protected readonly Envelope $envelope;
 
-    /**
-     * Sets the notification title.
-     *
-     * @param string $title The title to set
-     *
-     * @return static The builder instance for method chaining
-     */
     public function title(string $title): static
     {
         $this->envelope->setTitle($title);
@@ -41,13 +25,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Sets the notification message.
-     *
-     * @param string $message The message to set
-     *
-     * @return static The builder instance for method chaining
-     */
     public function message(string $message): static
     {
         $this->envelope->setMessage($message);
@@ -55,13 +32,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Sets the notification type.
-     *
-     * @param string $type The type to set (e.g., "success", "error", "info", "warning")
-     *
-     * @return static The builder instance for method chaining
-     */
     public function type(string $type): static
     {
         $this->envelope->setType($type);
@@ -70,12 +40,7 @@ trait NotificationBuilderMethods
     }
 
     /**
-     * Sets multiple options for the notification.
-     *
-     * @param array<string, mixed> $options The options to set
-     * @param bool                 $append  Whether to merge with existing options (true) or replace them (false)
-     *
-     * @return static The builder instance for method chaining
+     * @param array<string, mixed> $options
      */
     public function options(array $options, bool $append = true): static
     {
@@ -88,14 +53,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Sets a single option for the notification.
-     *
-     * @param string $name  The option name
-     * @param mixed  $value The option value
-     *
-     * @return static The builder instance for method chaining
-     */
     public function option(string $name, mixed $value): static
     {
         $this->envelope->setOption($name, $value);
@@ -103,15 +60,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Sets the notification priority.
-     *
-     * Higher priority notifications are typically displayed before lower priority ones.
-     *
-     * @param int $priority The priority value (higher values indicate higher priority)
-     *
-     * @return static The builder instance for method chaining
-     */
     public function priority(int $priority): static
     {
         $this->envelope->withStamp(new PriorityStamp($priority));
@@ -119,15 +67,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Increases the number of request hops the notification will persist.
-     *
-     * This method is useful for keeping a notification across multiple redirects.
-     * It increments the current hop count by 1, ensuring the notification persists
-     * for one additional request.
-     *
-     * @return static The builder instance for method chaining
-     */
     public function keep(): static
     {
         $stamp = $this->envelope->get(HopsStamp::class);
@@ -136,17 +75,6 @@ trait NotificationBuilderMethods
         return $this->hops(1 + $amount);
     }
 
-    /**
-     * Sets the exact number of request hops the notification will persist.
-     *
-     * This determines how many redirects/page loads a notification will survive.
-     * For example, a value of 2 means the notification will be shown on the current
-     * request and the next request, then be removed.
-     *
-     * @param int $amount The number of hops to keep the notification
-     *
-     * @return static The builder instance for method chaining
-     */
     public function hops(int $amount): static
     {
         $this->envelope->withStamp(new HopsStamp($amount));
@@ -154,13 +82,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Sets a delay before showing the notification.
-     *
-     * @param int $delay The delay in milliseconds
-     *
-     * @return static The builder instance for method chaining
-     */
     public function delay(int $delay): static
     {
         $this->envelope->withStamp(new DelayStamp($delay));
@@ -169,15 +90,7 @@ trait NotificationBuilderMethods
     }
 
     /**
-     * Configures translation parameters for the notification.
-     *
-     * This allows the message and title to be translated according to the current locale.
-     * Parameters can be used for variable substitution in translation strings.
-     *
-     * @param array<string, mixed> $parameters Translation parameters
-     * @param string|null          $locale     Specific locale to use, or null for default
-     *
-     * @return static The builder instance for method chaining
+     * @param array<string, mixed> $parameters
      */
     public function translate(array $parameters = [], ?string $locale = null): static
     {
@@ -186,16 +99,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Sets the handler (plugin) that should process the notification.
-     *
-     * This specifies which adapter (e.g., 'toastr', 'sweetalert') should be used
-     * to render the notification.
-     *
-     * @param string $handler The handler/plugin name
-     *
-     * @return static The builder instance for method chaining
-     */
     public function handler(string $handler): static
     {
         $this->envelope->withStamp(new PluginStamp($handler));
@@ -204,14 +107,7 @@ trait NotificationBuilderMethods
     }
 
     /**
-     * Sets additional context data for the notification.
-     *
-     * Context data can be used for customizing the rendering of notifications
-     * or providing additional information to handlers.
-     *
-     * @param array<string, mixed> $context The context data
-     *
-     * @return static The builder instance for method chaining
+     * @param array<string, mixed> $context
      */
     public function context(array $context): static
     {
@@ -220,15 +116,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Adds a condition that must be true for the notification to be displayed.
-     *
-     * When multiple when() conditions are used, all must be true (AND logic).
-     *
-     * @param bool|\Closure $condition A boolean or closure returning a boolean
-     *
-     * @return static The builder instance for method chaining
-     */
     public function when(bool|\Closure $condition): static
     {
         $condition = $this->validateCallableCondition($condition);
@@ -243,15 +130,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Adds a condition that must be false for the notification to be displayed.
-     *
-     * When multiple unless() conditions are used, all must be false (OR logic for the negation).
-     *
-     * @param bool|\Closure $condition A boolean or closure returning a boolean
-     *
-     * @return static The builder instance for method chaining
-     */
     public function unless(bool|\Closure $condition): static
     {
         $condition = $this->validateCallableCondition($condition);
@@ -266,13 +144,6 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Adds one or more stamps to the notification envelope.
-     *
-     * @param StampInterface[]|StampInterface $stamps The stamps to add
-     *
-     * @return static The builder instance for method chaining
-     */
     public function with(array|StampInterface $stamps): static
     {
         if ($stamps instanceof StampInterface) {
@@ -284,26 +155,13 @@ trait NotificationBuilderMethods
         return $this;
     }
 
-    /**
-     * Gets the current notification envelope.
-     *
-     * @return Envelope The notification envelope
-     */
     public function getEnvelope(): Envelope
     {
         return $this->envelope;
     }
 
     /**
-     * Validates that a condition is either a boolean or a closure returning a boolean.
-     *
-     * If the condition is a closure, it is evaluated with the current envelope as parameter.
-     *
-     * @param bool|\Closure $condition The condition to validate
-     *
-     * @return bool The evaluated boolean condition
-     *
-     * @throws \InvalidArgumentException If the condition is not a boolean or doesn't return a boolean
+     * @throws \InvalidArgumentException
      */
     protected function validateCallableCondition(bool|\Closure $condition): bool
     {
