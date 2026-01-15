@@ -7,25 +7,9 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Type;
 use Flasher\Toastr\Prime\ToastrInterface;
 
-/*
- * Global helper functions for Toastr notifications.
- *
- * This file provides a global helper function that simplifies
- * the creation of Toastr notifications from any PHP code.
- *
- * Design pattern: Facade - Provides a simplified interface to a complex subsystem
- */
-
 if (!function_exists('toastr')) {
     /**
-     * Creates a Toastr notification or returns the Toastr factory.
-     *
-     * This function simplifies the process of creating Toastr notifications.
-     * When called with no arguments, it returns an instance of ToastrInterface.
-     * When called with arguments, it creates a Toastr notification and returns an Envelope.
-     *
-     * @param string|null                        $message the message content of the notification
-     * @param "success"|"info"|"warning"|"error" $type    The type of the notification (e.g., success, error, warning, info).
+     * @param 'success'|'info'|'warning'|'error' $type
      * @param array{
      *     closeButton?: bool,
      *     closeClass?: string,
@@ -59,24 +43,9 @@ if (!function_exists('toastr')) {
      *     timeOut?: int,
      *     titleClass?: string,
      *     toastClass?: string,
-     * } $options additional options for the Toastr notification
-     * @param string|null $title the title of the notification
-     *
-     * @return Envelope|ToastrInterface Returns an Envelope containing the notification details when arguments are provided .
-     *                                  Returns an instance of ToastrInterface when no arguments are provided .
+     * } $options
      *
      * @phpstan-return ($message is empty ? ToastrInterface : Envelope)
-     *
-     * Usage:
-     * 1. Without arguments - Get the Toastr factory: $toastr = toastr();
-     * 2. With arguments - Create and return a Toastr notification:
-     *    toastr('Message', Type::SUCCESS, ['option' => 'value'], 'Title');
-     *
-     * Example:
-     *    toastr('Operation completed!', 'success', [
-     *        'positionClass' => 'toast-top-right',
-     *        'progressBar' => true,
-     *    ]);
      */
     function toastr(?string $message = null, string $type = Type::SUCCESS, array $options = [], ?string $title = null): Envelope|ToastrInterface
     {
