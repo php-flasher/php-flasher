@@ -4,39 +4,11 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Translation;
 
-/**
- * Language - Utility class for determining text direction based on locale.
- *
- * This class provides static methods for working with language directionality,
- * particularly for determining if a language uses left-to-right (LTR) or
- * right-to-left (RTL) text direction.
- *
- * Design patterns:
- * - Utility: Provides a collection of static methods for a specific purpose
- * - Service: Provides functionality related to a specific domain concept
- */
 final readonly class Language
 {
-    /**
-     * Constant representing left-to-right text direction.
-     */
     public const LTR = 'ltr';
-
-    /**
-     * Constant representing right-to-left text direction.
-     */
     public const RTL = 'rtl';
 
-    /**
-     * Determines the text direction for a given locale.
-     *
-     * This method uses the PHP intl extension to access ICU data about text direction.
-     * If the extension is not available or the locale data is missing, it defaults to LTR.
-     *
-     * @param string $locale The locale code to check (e.g., 'en', 'ar')
-     *
-     * @return string Either 'ltr' for left-to-right or 'rtl' for right-to-left
-     */
     public static function direction(string $locale): string
     {
         if (!\extension_loaded('intl')) {
