@@ -10,29 +10,6 @@ use Flasher\Prime\Stamp\StampInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Noty - Laravel facade for Noty notifications.
- *
- * This facade provides a static interface to Noty's functionality within Laravel,
- * following Laravel's facade pattern. It offers comprehensive IDE autocompletion
- * for all Noty builder methods.
- *
- * Design patterns:
- * - Facade: Provides a simplified, static interface to a complex subsystem
- * - Proxy: Acts as a proxy to the underlying Noty service
- *
- * Usage examples:
- * ```php
- * // Simple notification
- * Noty::success('Operation completed successfully');
- *
- * // Chained configuration
- * Noty::layout('topRight')
- *     ->theme('mint')
- *     ->timeout(5000)
- *     ->progressBar(true)
- *     ->success('Record saved');
- * ```
- *
  * @method static NotyBuilder success(string $message, array<string, mixed> $options = array())
  * @method static NotyBuilder error(string $message, array<string, mixed> $options = array())
  * @method static NotyBuilder warning(string $message, array<string, mixed> $options = array())
@@ -71,11 +48,6 @@ use Illuminate\Support\Facades\Facade;
  */
 final class Noty extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string The service container binding key for Noty
-     */
     protected static function getFacadeAccessor(): string
     {
         return 'flasher.noty';
