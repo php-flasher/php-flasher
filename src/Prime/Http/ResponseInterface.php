@@ -24,6 +24,9 @@ interface ResponseInterface
 
     public function getHeader(string $key): ?string;
 
+    /**
+     * @param string|string[]|null $values
+     */
     public function setHeader(string $key, string|array|null $values): void;
 
     public function removeHeader(string $key): void;

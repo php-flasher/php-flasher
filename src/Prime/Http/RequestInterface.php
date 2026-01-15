@@ -19,6 +19,9 @@ interface RequestInterface
 
     public function hasType(string $type): bool;
 
+    /**
+     * @return string|string[]
+     */
     public function getType(string $type): string|array;
 
     public function forgetType(string $type): void;

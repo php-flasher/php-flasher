@@ -45,6 +45,9 @@ interface NotificationBuilderInterface
 
     public function unless(bool|\Closure $condition): static;
 
+    /**
+     * @param StampInterface[]|StampInterface $stamps
+     */
     public function with(array|StampInterface $stamps): static;
 
     public function getEnvelope(): Envelope;

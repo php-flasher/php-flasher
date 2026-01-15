@@ -19,10 +19,19 @@ interface PluginInterface
      */
     public function getFactory(): string;
 
+    /**
+     * @return string|string[]
+     */
     public function getServiceAliases(): string|array;
 
+    /**
+     * @return string|string[]
+     */
     public function getScripts(): string|array;
 
+    /**
+     * @return string|string[]
+     */
     public function getStyles(): string|array;
 
     /**
