@@ -8,8 +8,6 @@ use Flasher\Prime\Notification\FlasherBuilder;
 use Flasher\Prime\Notification\NotificationBuilderInterface;
 
 /**
- * Default implementation of FlasherFactoryInterface.
- *
  * @mixin \Flasher\Prime\Notification\FlasherBuilder
  */
 final class FlasherFactory extends NotificationFactory implements FlasherFactoryInterface

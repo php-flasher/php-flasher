@@ -10,9 +10,6 @@ use Flasher\Prime\EventDispatcher\EventListener\AttachDefaultStampsListener;
 use Flasher\Prime\EventDispatcher\EventListener\EnvelopeRemovalListener;
 use Flasher\Prime\EventDispatcher\EventListener\EventListenerInterface;
 
-/**
- * Default implementation of the event dispatcher interface.
- */
 final class EventDispatcher implements EventDispatcherInterface
 {
     /**

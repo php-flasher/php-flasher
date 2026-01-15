@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Flasher\Prime;
 
 /**
- * Type-safe configuration for PHPFlasher.
- *
  * @phpstan-type ConfigType array{
  *     default: string,
  *     main_script?: string,
