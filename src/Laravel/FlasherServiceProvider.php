@@ -43,27 +43,10 @@ use Laravel\Octane\Events\RequestReceived;
 use Livewire\LivewireManager;
 
 /**
- * FlasherServiceProvider - Main service provider for Laravel integration.
- *
- * This class serves as the entry point for integrating PHPFlasher with Laravel.
- * It registers all necessary services, components, commands, and middleware
- * to provide a seamless Laravel experience.
- *
- * Design patterns:
- * - Service Provider: Implements Laravel's service provider pattern for registration
- * - Adapter: Adapts Laravel-specific components to PHPFlasher interfaces
- * - Bridge: Connects the framework-agnostic PHPFlasher core to Laravel
+ * Main service provider for Laravel integration.
  */
 final class FlasherServiceProvider extends PluginServiceProvider
 {
-    /**
-     * Register PHPFlasher services with the Laravel container.
-     *
-     * This method follows Laravel's service provider registration phase by:
-     * 1. Creating the core plugin
-     * 2. Registering configuration
-     * 3. Registering core services and adapters
-     */
     public function register(): void
     {
         $this->plugin = $this->createPlugin();
@@ -80,17 +63,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->registerAssetManager();
     }
 
-    /**
-     * Boot PHPFlasher services after all providers are registered.
-     *
-     * This method follows Laravel's service provider boot phase by:
-     * 1. Setting up the service container bridge
-     * 2. Registering commands
-     * 3. Loading translations
-     * 4. Registering middleware
-     * 5. Registering Blade directives and components
-     * 6. Setting up Livewire integration
-     */
     public function boot(): void
     {
         FlasherContainer::from(static fn () => Container::getInstance());
@@ -102,22 +74,11 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->registerLivewire();
     }
 
-    /**
-     * Create the PHPFlasher core plugin instance.
-     *
-     * @return FlasherPlugin The core PHPFlasher plugin
-     */
     public function createPlugin(): FlasherPlugin
     {
         return new FlasherPlugin();
     }
 
-    /**
-     * Register the main Flasher service with Laravel's container.
-     *
-     * This service is the main entry point for all PHPFlasher functionality
-     * and is made available via the 'flasher' service binding.
-     */
     private function registerFlasher(): void
     {
         $this->app->singleton('flasher', static function (Application $app) {
@@ -135,12 +96,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->app->bind(FlasherInterface::class, 'flasher');
     }
 
-    /**
-     * Register the factory locator service.
-     *
-     * The factory locator is responsible for locating and providing
-     * notification factory instances.
-     */
     private function registerFactoryLocator(): void
     {
         $this->app->singleton('flasher.factory_locator', static function () {
@@ -148,12 +103,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the response manager service.
-     *
-     * The response manager is responsible for rendering notifications
-     * into different formats (HTML, JSON, etc.).
-     */
     private function registerResponseManager(): void
     {
         $this->app->singleton('flasher.response_manager', static function (Application $app) {
@@ -165,11 +114,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the template engine adapter for Blade.
-     *
-     * This adapter allows PHPFlasher to render templates using Laravel's Blade engine.
-     */
     private function registerTemplateEngine(): void
     {
         $this->app->singleton('flasher.template_engine', static function (Application $app) {
@@ -179,12 +123,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the resource manager service.
-     *
-     * The resource manager is responsible for managing assets (JS, CSS)
-     * needed by notifications.
-     */
     private function registerResourceManager(): void
     {
         $this->app->singleton('flasher.resource_manager', static function (Application $app) {
@@ -208,12 +146,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the storage manager service.
-     *
-     * The storage manager is responsible for storing and retrieving
-     * notifications from storage (session in Laravel's case).
-     */
     private function registerStorageManager(): void
     {
         $this->app->singleton('flasher.storage_manager', static function (Application $app) {
@@ -228,12 +160,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the event dispatcher and event listeners.
-     *
-     * The event dispatcher is responsible for dispatching events during
-     * the notification lifecycle.
-     */
     private function registerEventDispatcher(): void
     {
         $this->app->singleton('flasher.notification_logger_listener', fn () => new NotificationLoggerListener());
@@ -259,11 +185,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the Artisan commands for PHPFlasher.
-     *
-     * Commands are only registered when running in console mode.
-     */
     private function registerCommands(): void
     {
         if (!$this->app->runningInConsole()) {
@@ -281,11 +202,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->commands(InstallCommand::class);
     }
 
-    /**
-     * Register PHPFlasher information with Laravel's about command.
-     *
-     * This adds PHPFlasher information to the output of the `php artisan about` command.
-     */
     private function registerAboutCommand(): void
     {
         if (!class_exists(AboutCommand::class)) {
@@ -310,22 +226,12 @@ final class FlasherServiceProvider extends PluginServiceProvider
         ]);
     }
 
-    /**
-     * Register PHPFlasher middleware with Laravel.
-     *
-     * Middleware includes session processing and response modification.
-     */
     private function registerMiddlewares(): void
     {
         $this->registerSessionMiddleware();
         $this->registerFlasherMiddleware();
     }
 
-    /**
-     * Register the response middleware.
-     *
-     * This middleware injects notification assets into responses.
-     */
     private function registerFlasherMiddleware(): void
     {
         if (!$this->getConfig('inject_assets')) {
@@ -345,11 +251,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->pushMiddlewareToGroup(FlasherMiddleware::class);
     }
 
-    /**
-     * Register the session middleware.
-     *
-     * This middleware processes flash messages from the session.
-     */
     private function registerSessionMiddleware(): void
     {
         if (!$this->getConfig('flash_bag')) {
@@ -368,11 +269,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $this->pushMiddlewareToGroup(SessionMiddleware::class);
     }
 
-    /**
-     * Push middleware to the web middleware group.
-     *
-     * @param string $middleware The middleware class name
-     */
     private function pushMiddlewareToGroup(string $middleware): void
     {
         $this->callAfterResolving(HttpKernel::class, function (HttpKernel $kernel) use ($middleware) {
@@ -380,11 +276,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the Content Security Policy handler.
-     *
-     * This service handles CSP headers when injecting assets.
-     */
     private function registerCspHandler(): void
     {
         $this->app->singleton('flasher.csp_handler', static function () {
@@ -392,11 +283,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register the asset manager service.
-     *
-     * The asset manager is responsible for managing asset paths and manifests.
-     */
     private function registerAssetManager(): void
     {
         $this->app->singleton('flasher.asset_manager', static function () {
@@ -407,11 +293,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         });
     }
 
-    /**
-     * Register Blade directives and components.
-     *
-     * @param BladeCompiler $blade The Blade compiler instance
-     */
     private function registerBladeDirectives(BladeCompiler $blade): void
     {
         $blade->directive('flasher_render', function (string $expression = '') {
@@ -425,11 +306,6 @@ final class FlasherServiceProvider extends PluginServiceProvider
         $blade->component(FlasherComponent::class, 'flasher');
     }
 
-    /**
-     * Register Livewire integration.
-     *
-     * This sets up listeners for Livewire component lifecycle events.
-     */
     private function registerLivewire(): void
     {
         if (class_exists(LivewireManager::class) && !$this->app->bound('livewire')) {

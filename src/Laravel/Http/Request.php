@@ -9,24 +9,10 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request as LaravelRequest;
 
 /**
- * Request - Adapter for Laravel HTTP requests.
- *
- * This adapter implements PHPFlasher's RequestInterface for Laravel HTTP requests,
- * providing a consistent interface for request inspection and session interaction
- * regardless of the underlying framework.
- *
- * Design patterns:
- * - Adapter: Adapts framework-specific request objects to PHPFlasher's interface
- * - Decorator: Adds PHPFlasher-specific functionality to request objects
- * - Composition: Uses composition to delegate to the underlying request object
+ * Adapter for Laravel HTTP requests.
  */
 final readonly class Request implements RequestInterface
 {
-    /**
-     * Creates a new Request adapter.
-     *
-     * @param LaravelRequest $request The underlying Laravel request object
-     */
     public function __construct(private LaravelRequest $request)
     {
     }
@@ -90,11 +76,6 @@ final readonly class Request implements RequestInterface
         $session?->forget($type);
     }
 
-    /**
-     * Gets the session from the request, with graceful handling of missing sessions.
-     *
-     * @return Session|null The session or null if not available
-     */
     private function getSession(): ?Session
     {
         try {

@@ -10,24 +10,10 @@ use Symfony\Component\HttpFoundation\JsonResponse as SymfonyJsonResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
- * Response - Adapter for Laravel/Symfony HTTP responses.
- *
- * This adapter implements PHPFlasher's ResponseInterface for Laravel and Symfony
- * HTTP responses, providing a consistent interface for response manipulation
- * regardless of the underlying framework.
- *
- * Design patterns:
- * - Adapter: Adapts framework-specific response objects to PHPFlasher's interface
- * - Decorator: Adds PHPFlasher-specific functionality to response objects
- * - Composition: Uses composition to delegate to the underlying response object
+ * Adapter for Laravel/Symfony HTTP responses.
  */
 final readonly class Response implements ResponseInterface
 {
-    /**
-     * Creates a new Response adapter.
-     *
-     * @param SymfonyResponse $response The underlying Symfony/Laravel response object
-     */
     public function __construct(private SymfonyResponse $response)
     {
     }
@@ -74,12 +60,6 @@ final readonly class Response implements ResponseInterface
         return $this->response->getContent() ?: '';
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * This implementation preserves the original content in Laravel responses,
-     * ensuring compatibility with Laravel's view system and JSON responses.
-     */
     public function setContent(string $content): void
     {
         $original = null;

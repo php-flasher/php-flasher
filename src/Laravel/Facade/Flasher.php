@@ -10,28 +10,7 @@ use Flasher\Prime\Stamp\StampInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Flasher - Laravel Facade for the PHPFlasher service.
- *
- * This facade provides a static interface to PHPFlasher's functionality within Laravel,
- * following Laravel's facade pattern. It offers comprehensive IDE autocompletion for all
- * PHPFlasher methods by providing method signatures in PHPDoc comments.
- *
- * Design patterns:
- * - Facade: Provides a simplified, static interface to a complex subsystem
- * - Proxy: Acts as a proxy to the underlying PHPFlasher service
- *
- * Usage examples:
- * ```php
- * // Simple notification
- * Flasher::success('Operation completed successfully');
- *
- * // Chained configuration
- * Flasher::type('success')
- *     ->title('Success')
- *     ->message('Record saved')
- *     ->option('timeout', 5000)
- *     ->push();
- * ```
+ * Laravel facade for PHPFlasher with IDE autocompletion support.
  *
  * @method static NotificationBuilder title(string $message)
  * @method static NotificationBuilder message(string $message)
@@ -71,11 +50,6 @@ use Illuminate\Support\Facades\Facade;
  */
 final class Flasher extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string The name of the facade's service binding ('flasher')
-     */
     protected static function getFacadeAccessor(): string
     {
         return 'flasher';

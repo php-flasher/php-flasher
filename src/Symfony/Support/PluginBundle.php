@@ -11,40 +11,14 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 /**
- * PluginBundle - Base class for PHPFlasher plugin bundles.
- *
- * This abstract class provides common functionality for all PHPFlasher plugin bundles.
- * It extends Symfony's AbstractBundle to integrate with the kernel bundle system,
- * while implementing PluginBundleInterface to provide PHPFlasher-specific functionality.
- *
- * Design patterns:
- * - Template Method: Defines skeleton of common bundle operations
- * - Factory Method: Creates plugin instances
- * - Bridge: Connects Symfony bundle system with PHPFlasher plugin system
- * - Extension: Extends AbstractBundle with PHPFlasher-specific functionality
+ * Base class for PHPFlasher plugin bundles.
  */
 abstract class PluginBundle extends AbstractBundle implements PluginBundleInterface
 {
-    /**
-     * Creates an instance of the plugin.
-     *
-     * This factory method must be implemented by child classes to instantiate
-     * the specific plugin that the bundle integrates.
-     *
-     * @return PluginInterface The plugin instance
-     */
     abstract public function createPlugin(): PluginInterface;
 
     /**
-     * Loads bundle configuration into the Symfony container.
-     *
-     * This method registers the plugin's factory service in the container and
-     * configures it appropriately. The core FlasherSymfonyBundle is exempt from
-     * this process since it has special handling.
-     *
-     * @param array<string, mixed>  $config    The processed bundle configuration
-     * @param ContainerConfigurator $container The container configurator
-     * @param ContainerBuilder      $builder   The container builder
+     * @param array<string, mixed> $config
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
@@ -67,15 +41,6 @@ abstract class PluginBundle extends AbstractBundle implements PluginBundleInterf
         }
     }
 
-    /**
-     * Prepends default plugin configuration for Flasher.
-     *
-     * This method adds the plugin's scripts, styles, and options to the Flasher
-     * configuration before the container is compiled.
-     *
-     * @param ContainerConfigurator $container The container configurator
-     * @param ContainerBuilder      $builder   The container builder
-     */
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         if ($this instanceof FlasherSymfonyBundle) {
@@ -95,27 +60,11 @@ abstract class PluginBundle extends AbstractBundle implements PluginBundleInterf
         ]);
     }
 
-    /**
-     * Gets the path to the plugin's configuration file.
-     *
-     * Returns the absolute path to the plugin's configuration file
-     * based on the bundle's path.
-     *
-     * @return string Absolute path to the configuration file
-     */
     public function getConfigurationFile(): string
     {
         return rtrim($this->getPath(), '/').'/Resources/config/config.yaml';
     }
 
-    /**
-     * Gets the bundle's directory path.
-     *
-     * Uses reflection to determine the location of the bundle class file,
-     * then returns its directory.
-     *
-     * @return string The bundle directory path
-     */
     public function getPath(): string
     {
         if (!isset($this->path)) {

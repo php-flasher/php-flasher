@@ -15,16 +15,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\VarDumper\Cloner\Data;
 
 /**
- * FlasherDataCollector - Collects PHPFlasher data for the Symfony profiler.
- *
- * This data collector captures information about PHPFlasher notifications,
- * both dispatched and displayed, for the Symfony web profiler. It also collects
- * configuration and version information.
- *
- * Design patterns:
- * - Data Collector: Implements Symfony's data collector pattern for profiling
- * - Late Collection: Collects data after a request is completed
- * - Type Safety: Uses PHPDoc annotations for complex type declarations
+ * Collects PHPFlasher data for the Symfony profiler.
  *
  * @phpstan-type NotificationShape array{
  *     title: string,
@@ -62,11 +53,6 @@ use Symfony\Component\VarDumper\Cloner\Data;
 final class FlasherDataCollector extends AbstractDataCollector implements LateDataCollectorInterface
 {
     /**
-     * Creates a new FlasherDataCollector instance.
-     *
-     * @param NotificationLoggerListener $logger The notification logger for accessing dispatched notifications
-     * @param array<string, mixed>       $config The PHPFlasher configuration
-     *
      * @phpstan-param ConfigShare $config
      */
     public function __construct(
@@ -75,25 +61,11 @@ final class FlasherDataCollector extends AbstractDataCollector implements LateDa
     ) {
     }
 
-    /**
-     * Initial data collection - called during request processing.
-     *
-     * This implementation doesn't collect data here, deferring to lateCollect.
-     *
-     * @param Request         $request   The request object
-     * @param Response        $response  The response object
-     * @param \Throwable|null $exception Any exception that occurred
-     */
     public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
         // No action needed here since we're collecting data in lateCollect
     }
 
-    /**
-     * Late data collection - called after response is sent.
-     *
-     * Collects information about notifications, configuration, and versions.
-     */
     public function lateCollect(): void
     {
         $this->data = [
@@ -111,28 +83,18 @@ final class FlasherDataCollector extends AbstractDataCollector implements LateDa
     }
 
     /**
-     * Gets the collector data.
-     *
-     * @return DataShape|Data<DataShape>
+     * @return array<string, mixed>|Data
      */
     public function getData(): array|Data
     {
         return $this->data;
     }
 
-    /**
-     * Gets the collector name for the profiler panel.
-     *
-     * @return string The collector name
-     */
     public function getName(): string
     {
         return 'flasher';
     }
 
-    /**
-     * Resets the collector between requests when using kernel.reset.
-     */
     public function reset(): void
     {
         $this->logger->reset();
@@ -140,9 +102,7 @@ final class FlasherDataCollector extends AbstractDataCollector implements LateDa
     }
 
     /**
-     * Gets the displayed notification envelopes.
-     *
-     * @return NotificationShape[]|Data<NotificationShape>
+     * @return array<NotificationShape>|Data
      */
     public function getDisplayedEnvelopes(): array|Data
     {
@@ -150,9 +110,7 @@ final class FlasherDataCollector extends AbstractDataCollector implements LateDa
     }
 
     /**
-     * Gets the dispatched notification envelopes.
-     *
-     * @return NotificationShape[]|Data<NotificationShape>
+     * @return array<NotificationShape>|Data
      */
     public function getDispatchedEnvelopes(): array|Data
     {
@@ -160,8 +118,6 @@ final class FlasherDataCollector extends AbstractDataCollector implements LateDa
     }
 
     /**
-     * Gets the PHPFlasher configuration.
-     *
      * @phpstan-return ConfigShare|Data
      */
     public function getConfig(): array|Data
@@ -170,20 +126,13 @@ final class FlasherDataCollector extends AbstractDataCollector implements LateDa
     }
 
     /**
-     * Gets version information.
-     *
-     * @return array{php_flasher: string, php: string, symfony: string}|Data
+     * @return array<string, string>|Data
      */
     public function getVersions(): array|Data
     {
         return $this->data['versions'] ?? [];
     }
 
-    /**
-     * Gets the template path for the profiler panel.
-     *
-     * @return string The template path
-     */
     public static function getTemplate(): string
     {
         return '@FlasherSymfony/profiler/flasher.html.twig';
