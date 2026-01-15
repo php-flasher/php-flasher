@@ -37,6 +37,7 @@ if (!\function_exists('Flasher\Noty\Prime\noty')) {
      *     buttons?: string[],
      *     visibilityControl?: bool,
      * } $options
+     * @param 'success'|'info'|'warning'|'error'|'alert'|'information' $type
      *
      * @phpstan-return ($message is empty ? NotyInterface : Envelope)
      */
@@ -48,6 +49,6 @@ if (!\function_exists('Flasher\Noty\Prime\noty')) {
             return $factory;
         }
 
-        return $factory->flash($type, $message, $options, $title); // @phpstan-ignore-line
+        return $factory->flash($type, $message, $options, $title);
     }
 }
