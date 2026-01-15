@@ -9,19 +9,13 @@ use Flasher\Prime\Storage\Filter\Filter;
 use Flasher\Prime\Storage\Filter\FilterInterface;
 
 /**
- * FilterEvent - Event dispatched when notifications are being filtered.
- *
- * This event is dispatched during the filtering process, allowing listeners
- * to modify the filter, the envelopes being filtered, or the filter criteria.
+ * Event dispatched when notifications are being filtered.
  */
 final class FilterEvent
 {
     /**
-     * Creates a new FilterEvent instance.
-     *
-     * @param FilterInterface      $filter    The filter being applied
-     * @param Envelope[]           $envelopes The notification envelopes to filter
-     * @param array<string, mixed> $criteria  The filtering criteria
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $criteria
      */
     public function __construct(
         private FilterInterface $filter,
@@ -30,32 +24,18 @@ final class FilterEvent
     ) {
     }
 
-    /**
-     * Gets the filter being applied.
-     *
-     * @return FilterInterface The filter
-     */
     public function getFilter(): FilterInterface
     {
         return $this->filter;
     }
 
-    /**
-     * Sets the filter to be applied.
-     *
-     * This allows listeners to replace the filter with a custom implementation.
-     *
-     * @param Filter $filter The new filter
-     */
     public function setFilter(Filter $filter): void
     {
         $this->filter = $filter;
     }
 
     /**
-     * Gets the notification envelopes being filtered.
-     *
-     * @return Envelope[] The notification envelopes
+     * @return Envelope[]
      */
     public function getEnvelopes(): array
     {
@@ -63,11 +43,7 @@ final class FilterEvent
     }
 
     /**
-     * Sets the notification envelopes to be filtered.
-     *
-     * This allows listeners to modify the collection of envelopes before filtering.
-     *
-     * @param Envelope[] $envelopes The notification envelopes to filter
+     * @param Envelope[] $envelopes
      */
     public function setEnvelopes(array $envelopes): void
     {
@@ -75,11 +51,7 @@ final class FilterEvent
     }
 
     /**
-     * Gets the filtering criteria.
-     *
-     * These criteria determine how notifications will be filtered.
-     *
-     * @return array<string, mixed> The filtering criteria
+     * @return array<string, mixed>
      */
     public function getCriteria(): array
     {

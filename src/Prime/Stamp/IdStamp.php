@@ -7,42 +7,17 @@ namespace Flasher\Prime\Stamp;
 use Flasher\Prime\Notification\Envelope;
 
 /**
- * IdStamp - Provides a unique identifier for notifications.
- *
- * This stamp assigns a unique identifier to each notification, which can be
- * used for referencing, tracking, or manipulating specific notifications. It
- * also provides utility methods for working with collections of notifications.
- *
- * Design patterns:
- * - Value Object: Immutable object representing a specific concept
- * - Identity: Provides a unique identifier for domain objects
- * - Collection Utility: Provides methods for working with notification collections
+ * Provides a unique identifier for notifications.
  */
 final readonly class IdStamp implements PresentableStampInterface, StampInterface
 {
-    /**
-     * The unique identifier.
-     */
     private string $id;
 
-    /**
-     * Creates a new IdStamp instance.
-     *
-     * @param string|null $id The identifier. If not provided, a unique identifier is generated.
-     */
     public function __construct(?string $id = null)
     {
         $this->id = $id ?? $this->generateUniqueId();
     }
 
-    /**
-     * Generates a unique identifier.
-     *
-     * This method attempts to use cryptographically secure random bytes for the ID,
-     * with a fallback to uniqid() if random_bytes() fails.
-     *
-     * @return string The generated unique identifier
-     */
     private function generateUniqueId(): string
     {
         try {
@@ -55,14 +30,9 @@ final readonly class IdStamp implements PresentableStampInterface, StampInterfac
     }
 
     /**
-     * Indexes an array of envelopes by their ID.
+     * @param Envelope[] $envelopes
      *
-     * This utility method creates a map of envelopes keyed by their unique IDs,
-     * adding IdStamps to envelopes that don't already have them.
-     *
-     * @param Envelope[] $envelopes An array of envelopes to index
-     *
-     * @return array<string, Envelope> An associative array of envelopes indexed by their ID
+     * @return array<string, Envelope>
      */
     public static function indexById(array $envelopes): array
     {
@@ -83,22 +53,13 @@ final readonly class IdStamp implements PresentableStampInterface, StampInterfac
         return $map;
     }
 
-    /**
-     * Gets the identifier.
-     *
-     * @return string The identifier
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * Converts the stamp to an array representation.
-     *
-     * This method implements the serialization logic required by PresentableStampInterface.
-     *
-     * @return array{id: string} The array representation
+     * @return array{id: string}
      */
     public function toArray(): array
     {

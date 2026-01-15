@@ -7,26 +7,19 @@ namespace Flasher\Prime\EventDispatcher\Event;
 use Flasher\Prime\Notification\Envelope;
 
 /**
- * PersistEvent - Event dispatched when notifications are being persisted.
- *
- * This event is dispatched when notifications are about to be added to storage.
- * It allows listeners to modify the notifications before they are stored.
+ * Event dispatched when notifications are being persisted.
  */
 final class PersistEvent
 {
     /**
-     * Creates a new PersistEvent instance.
-     *
-     * @param Envelope[] $envelopes The notification envelopes to be persisted
+     * @param Envelope[] $envelopes
      */
     public function __construct(private array $envelopes)
     {
     }
 
     /**
-     * Gets the notification envelopes to be persisted.
-     *
-     * @return Envelope[] The notification envelopes
+     * @return Envelope[]
      */
     public function getEnvelopes(): array
     {
@@ -34,11 +27,7 @@ final class PersistEvent
     }
 
     /**
-     * Sets the notification envelopes to be persisted.
-     *
-     * This allows listeners to filter or modify the notifications before storage.
-     *
-     * @param Envelope[] $envelopes The notification envelopes to persist
+     * @param Envelope[] $envelopes
      */
     public function setEnvelopes(array $envelopes): void
     {

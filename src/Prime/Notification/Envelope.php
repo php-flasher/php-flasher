@@ -9,31 +9,19 @@ use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Support\Traits\ForwardsCalls;
 
 /**
- * Envelope - A wrapper for notifications with metadata.
- *
- * Wraps a notification object with "stamps" that provide additional
- * metadata and behavior. This allows attaching cross-cutting concerns
- * to notifications without modifying the notification itself.
- *
- * Design pattern: Decorator + Envelope - Extends functionality of
- * notifications by wrapping them in a container with additional capabilities.
+ * Wraps a notification with metadata stamps.
  */
 final class Envelope implements NotificationInterface
 {
     use ForwardsCalls;
 
     /**
-     * Collection of stamps attached to this envelope, indexed by class name.
-     *
      * @var array<class-string<StampInterface>, StampInterface>
      */
     private array $stamps = [];
 
     /**
-     * Creates a new Envelope instance.
-     *
-     * @param NotificationInterface           $notification The notification to wrap
-     * @param StampInterface[]|StampInterface $stamps       One or more stamps to attach to the envelope
+     * @param StampInterface[]|StampInterface $stamps
      */
     public function __construct(private readonly NotificationInterface $notification, array|StampInterface $stamps = [])
     {
@@ -43,23 +31,7 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * Wraps a notification in an Envelope and adds the given stamps.
-     *
-     * This static factory method provides a convenient way to create and configure
-     * an envelope in a single operation.
-     *
-     * Example:
-     * ```php
-     * $envelope = Envelope::wrap(new Notification(), [
-     *     new PriorityStamp(10),
-     *     new HopsStamp(2)
-     * ]);
-     * ```
-     *
-     * @param NotificationInterface           $notification The notification to wrap
-     * @param StampInterface[]|StampInterface $stamps       One or more stamps to attach to the envelope
-     *
-     * @return self The created envelope
+     * @param StampInterface[]|StampInterface $stamps
      */
     public static function wrap(NotificationInterface $notification, array|StampInterface $stamps = []): self
     {
@@ -71,11 +43,6 @@ final class Envelope implements NotificationInterface
         return $envelope;
     }
 
-    /**
-     * Adds multiple stamps to the envelope.
-     *
-     * @param StampInterface ...$stamps The stamps to add
-     */
     public function with(StampInterface ...$stamps): void
     {
         foreach ($stamps as $stamp) {
@@ -83,18 +50,6 @@ final class Envelope implements NotificationInterface
         }
     }
 
-    /**
-     * Adds or replaces a stamp in the envelope.
-     *
-     * Each stamp class can only have one instance in the envelope at a time.
-     * When adding a stamp of a class that already exists, the behavior depends
-     * on the $replace parameter:
-     * - If true (default), the new stamp replaces the existing one
-     * - If false, the existing stamp is preserved
-     *
-     * @param StampInterface $stamp   The stamp to add
-     * @param bool           $replace Whether to replace an existing stamp of the same type
-     */
     public function withStamp(StampInterface $stamp, bool $replace = true): void
     {
         if (!isset($this->stamps[$stamp::class]) || $replace) {
@@ -102,11 +57,6 @@ final class Envelope implements NotificationInterface
         }
     }
 
-    /**
-     * Removes specified stamps from the envelope.
-     *
-     * @param StampInterface ...$stamps The stamps to remove
-     */
     public function without(StampInterface ...$stamps): void
     {
         foreach ($stamps as $stamp) {
@@ -115,9 +65,7 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * Removes a specific type of stamp from the envelope.
-     *
-     * @param class-string<StampInterface>|StampInterface $type The type of stamp to remove
+     * @param class-string<StampInterface>|StampInterface $type
      */
     public function withoutStamp(string|StampInterface $type): void
     {
@@ -127,13 +75,9 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * Retrieves a stamp by its type.
-     *
      * @template T of StampInterface
      *
-     * @phpstan-param class-string<T> $type The class name of the stamp to retrieve
-     *
-     * @return StampInterface|null The stamp if found, null otherwise
+     * @phpstan-param class-string<T> $type
      *
      * @phpstan-return T|null
      */
@@ -146,148 +90,81 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * Returns all stamps by their class name.
-     *
-     * @return array<class-string<StampInterface>, StampInterface> Map of stamp class names to stamp instances
+     * @return array<class-string<StampInterface>, StampInterface>
      */
     public function all(): array
     {
         return $this->stamps;
     }
 
-    /**
-     * Gets the original notification contained in the envelope.
-     *
-     * @return NotificationInterface The wrapped notification
-     */
     public function getNotification(): NotificationInterface
     {
         return $this->notification;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function getTitle(): string
     {
         return $this->notification->getTitle();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function setTitle(string $title): void
     {
         $this->notification->setTitle($title);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function getMessage(): string
     {
         return $this->notification->getMessage();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function setMessage(string $message): void
     {
         $this->notification->setMessage($message);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function getType(): string
     {
         return $this->notification->getType();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function setType(string $type): void
     {
         $this->notification->setType($type);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function getOptions(): array
     {
         return $this->notification->getOptions();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function setOptions(array $options): void
     {
         $this->notification->setOptions($options);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function getOption(string $name, mixed $default = null): mixed
     {
         return $this->notification->getOption($name, $default);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function setOption(string $name, mixed $value): void
     {
         $this->notification->setOption($name, $value);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Delegates to the wrapped notification.
-     */
     public function unsetOption(string $name): void
     {
         $this->notification->unsetOption($name);
     }
 
     /**
-     * Converts the envelope and its contents to an array format.
-     *
-     * This method combines the notification data with metadata from all
-     * presentable stamps attached to the envelope.
-     *
      * @return array{
      *     title: string,
      *     message: string,
      *     type: string,
      *     options: array<string, mixed>,
      *     metadata: array<string, mixed>,
-     * } The notification data with metadata
+     * }
      */
     public function toArray(): array
     {
@@ -306,15 +183,7 @@ final class Envelope implements NotificationInterface
     }
 
     /**
-     * Dynamically call methods on the wrapped notification.
-     *
-     * This magic method allows calling methods directly on the envelope
-     * which will be forwarded to the wrapped notification.
-     *
-     * @param string  $method     The method name to call
-     * @param mixed[] $parameters The parameters to pass to the method
-     *
-     * @return mixed The result of the method call
+     * @param mixed[] $parameters
      */
     public function __call(string $method, array $parameters): mixed
     {

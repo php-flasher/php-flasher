@@ -7,26 +7,19 @@ namespace Flasher\Prime\EventDispatcher\Event;
 use Flasher\Prime\Notification\Envelope;
 
 /**
- * PostUpdateEvent - Event dispatched after notification envelopes are updated.
- *
- * This event is dispatched after notification envelopes have been updated in storage.
- * It allows listeners to perform actions based on the updated notifications.
+ * Event dispatched after notification envelopes are updated.
  */
 final readonly class PostUpdateEvent
 {
     /**
-     * Creates a new PostUpdateEvent instance.
-     *
-     * @param Envelope[] $envelopes The updated notification envelopes
+     * @param Envelope[] $envelopes
      */
     public function __construct(private array $envelopes)
     {
     }
 
     /**
-     * Gets the updated notification envelopes.
-     *
-     * @return Envelope[] The updated notification envelopes
+     * @return Envelope[]
      */
     public function getEnvelopes(): array
     {

@@ -7,19 +7,13 @@ namespace Flasher\Prime\EventDispatcher\Event;
 use Flasher\Prime\Notification\Envelope;
 
 /**
- * PresentationEvent - Event dispatched when notifications are being prepared for presentation.
- *
- * This event is dispatched during the rendering process, before notifications are
- * converted to their final format. It allows listeners to modify notifications
- * right before they are presented to the user (e.g., for translation or formatting).
+ * Event dispatched when notifications are being prepared for presentation.
  */
 final readonly class PresentationEvent
 {
     /**
-     * Creates a new PresentationEvent instance.
-     *
-     * @param Envelope[]           $envelopes The notification envelopes being presented
-     * @param array<string, mixed> $context   Additional context for presentation
+     * @param Envelope[]           $envelopes
+     * @param array<string, mixed> $context
      */
     public function __construct(
         private array $envelopes,
@@ -28,9 +22,7 @@ final readonly class PresentationEvent
     }
 
     /**
-     * Gets the notification envelopes being presented.
-     *
-     * @return Envelope[] The notification envelopes
+     * @return Envelope[]
      */
     public function getEnvelopes(): array
     {
@@ -38,12 +30,7 @@ final readonly class PresentationEvent
     }
 
     /**
-     * Gets the presentation context.
-     *
-     * This context provides additional information that may be useful
-     * for listeners during the presentation process.
-     *
-     * @return array<string, mixed> The presentation context
+     * @return array<string, mixed>
      */
     public function getContext(): array
     {

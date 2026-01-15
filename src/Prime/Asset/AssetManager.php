@@ -4,45 +4,19 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Asset;
 
-/**
- * AssetManager - Manages asset files and their versioning via a manifest file.
- *
- * This class provides functionality for handling asset versioning through a manifest
- * file that maps original asset paths to versioned paths with hash parameters.
- * The asset versioning helps with cache busting by appending a content hash to the URL.
- *
- * Design patterns:
- * - Resource Manager: Centralized management of web asset resources
- * - Cache Buster: Handles versioning of assets to ensure browser cache invalidation
- */
 final class AssetManager implements AssetManagerInterface
 {
     /**
-     * Cached manifest entries mapping original paths to versioned paths.
-     *
      * @var array<string, string>
      */
     private array $entries = [];
 
-    /**
-     * Creates a new AssetManager instance.
-     *
-     * @param string $publicDir    The public directory where assets are located
-     * @param string $manifestPath The path to the manifest file
-     */
     public function __construct(
         private readonly string $publicDir,
         private readonly string $manifestPath,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * This implementation first checks for an exact match in the manifest,
-     * then tries with directory separators normalized, and falls back to the
-     * original path if no match is found.
-     */
     public function getPath(string $path): string
     {
         $entriesData = $this->getEntriesData();
@@ -55,16 +29,6 @@ final class AssetManager implements AssetManagerInterface
         return array_map(fn (string $path) => $this->getPath($path), $paths);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * This method:
-     * 1. Processes each file to calculate its content hash
-     * 2. Creates a mapping from relative paths to versioned paths
-     * 3. Writes the mapping to the manifest file as JSON
-     *
-     * @throws \RuntimeException If unable to write to the manifest file
-     */
     public function createManifest(array $files): void
     {
         foreach ($files as $file) {
@@ -87,14 +51,7 @@ final class AssetManager implements AssetManagerInterface
     }
 
     /**
-     * Loads and returns the entries from the manifest file.
-     *
-     * This method lazily loads the manifest data and caches it for subsequent calls.
-     * If no manifest file exists or it cannot be parsed, an empty array is returned.
-     *
-     * @return array<string, string> The manifest entries mapping original to versioned paths
-     *
-     * @throws \InvalidArgumentException If the manifest file contains invalid JSON
+     * @return array<string, string>
      */
     private function getEntriesData(): array
     {
@@ -116,16 +73,6 @@ final class AssetManager implements AssetManagerInterface
         return $this->entries = $entries; // @phpstan-ignore-line
     }
 
-    /**
-     * Computes a hash for a file based on its contents.
-     *
-     * This method normalizes line endings to ensure consistent hashing
-     * across different platforms.
-     *
-     * @param string $path The path to the file
-     *
-     * @return string The MD5 hash of the file contents or empty string if file cannot be read
-     */
     private function computeHash(string $path): string
     {
         $contents = file_get_contents($path);

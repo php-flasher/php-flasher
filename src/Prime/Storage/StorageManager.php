@@ -12,30 +12,13 @@ use Flasher\Prime\EventDispatcher\Event\PostUpdateEvent;
 use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\EventDispatcher\Event\UpdateEvent;
 use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
-use Flasher\Prime\Exception\CriteriaNotRegisteredException;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Filter\FilterFactoryInterface;
 
-/**
- * StorageManager - Manages notification storage with event dispatch and filtering.
- *
- * This class orchestrates the storage of notifications, dispatching events before and
- * after storage operations, and filtering notifications based on criteria. It acts as
- * a mediator between the storage implementation and the rest of the system.
- *
- * Design patterns:
- * - Mediator: Coordinates operations between storage, filters, and event dispatcher
- * - Decorator: Adds event dispatching and filtering capabilities to the core storage
- */
 final readonly class StorageManager implements StorageManagerInterface
 {
     /**
-     * Creates a new StorageManager instance.
-     *
-     * @param StorageInterface         $storage         The underlying storage implementation
-     * @param EventDispatcherInterface $eventDispatcher Event dispatcher for notification lifecycle events
-     * @param FilterFactoryInterface   $filterFactory   Factory for creating notification filters
-     * @param array<string, mixed>     $criteria        Default criteria for filtering notifications
+     * @param array<string, mixed> $criteria
      */
     public function __construct(
         private StorageInterface $storage,
@@ -46,8 +29,6 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Retrieves all stored envelopes.
-     *
      * @return Envelope[]
      */
     public function all(): array
@@ -56,17 +37,9 @@ final readonly class StorageManager implements StorageManagerInterface
     }
 
     /**
-     * Filters notifications by criteria.
-     *
-     * This method combines default criteria with provided criteria,
-     * creates a filter using the filter factory, and applies it to envelopes.
-     * Before applying the filter, it dispatches a FilterEvent to allow modification.
-     *
      * @param array<string, mixed> $criteria
      *
      * @return Envelope[]
-     *
-     * @throws CriteriaNotRegisteredException
      */
     public function filter(array $criteria = []): array
     {
@@ -79,12 +52,6 @@ final readonly class StorageManager implements StorageManagerInterface
         return $event->getFilter()->apply($event->getEnvelopes());
     }
 
-    /**
-     * Adds notification envelopes to storage.
-     *
-     * Before adding envelopes, it dispatches a PersistEvent to allow modification
-     * of the envelopes. After storage, it dispatches a PostPersistEvent.
-     */
     public function add(Envelope ...$envelopes): void
     {
         $event = new PersistEvent($envelopes);
@@ -96,12 +63,6 @@ final readonly class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * Updates notification envelopes in storage.
-     *
-     * Before updating envelopes, it dispatches an UpdateEvent to allow modification
-     * of the envelopes. After update, it dispatches a PostUpdateEvent.
-     */
     public function update(Envelope ...$envelopes): void
     {
         $event = new UpdateEvent($envelopes);
@@ -113,13 +74,6 @@ final readonly class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * Removes notification envelopes from storage.
-     *
-     * Before removal, it dispatches a RemoveEvent to allow listeners to modify
-     * which envelopes should be removed or kept. After removal, it dispatches
-     * a PostRemoveEvent.
-     */
     public function remove(Envelope ...$envelopes): void
     {
         $event = new RemoveEvent($envelopes);
@@ -132,9 +86,6 @@ final readonly class StorageManager implements StorageManagerInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * Clears all notification envelopes from storage.
-     */
     public function clear(): void
     {
         $this->storage->clear();

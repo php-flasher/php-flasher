@@ -16,31 +16,15 @@ use Flasher\Prime\Storage\Filter\Criteria\PriorityCriteria;
 use Flasher\Prime\Storage\Filter\Criteria\StampsCriteria;
 
 /**
- * FilterFactory - Creates and configures filter instances.
- *
- * This class is responsible for creating filter instances with the appropriate
- * criteria based on configuration. It maintains a registry of available criteria
- * implementations that can be used to build filters.
- *
- * Design patterns:
- * - Factory: Creates and configures filters based on configuration
- * - Registry: Maintains a collection of available criteria implementations
+ * Creates and configures filter instances.
  */
 final class FilterFactory implements FilterFactoryInterface
 {
     /**
-     * Registry of available criteria implementations.
-     *
      * @var array<string, callable|CriteriaInterface>
      */
     private array $criteria = [];
 
-    /**
-     * Creates a new FilterFactory instance with default criteria.
-     *
-     * This constructor registers all the standard criteria types that can
-     * be used for filtering notifications.
-     */
     public function __construct()
     {
         $criteriaClasses = [
@@ -60,16 +44,9 @@ final class FilterFactory implements FilterFactoryInterface
     }
 
     /**
-     * Creates a filter based on the provided configuration.
+     * @param array<string, mixed> $config
      *
-     * This method creates a new filter and adds criteria to it based on
-     * the provided configuration keys and values.
-     *
-     * @param array<string, mixed> $config Configuration for the filter criteria
-     *
-     * @return Filter The created filter with configured criteria
-     *
-     * @throws CriteriaNotRegisteredException If a requested criterion doesn't exist
+     * @throws CriteriaNotRegisteredException
      */
     public function createFilter(array $config): Filter
     {
@@ -84,33 +61,14 @@ final class FilterFactory implements FilterFactoryInterface
         return $filter;
     }
 
-    /**
-     * Registers a new criterion implementation.
-     *
-     * This method allows adding custom criteria to the factory. The criterion
-     * can be provided either as an instance or as a factory callback.
-     *
-     * @param string                     $name     The name of the criterion
-     * @param callable|CriteriaInterface $criteria The criterion implementation or factory
-     */
     public function addCriteria(string $name, callable|CriteriaInterface $criteria): void
     {
         $this->criteria[$name] = $criteria;
     }
 
     /**
-     * Internal helper to create a criterion instance.
-     *
-     * This method looks up the requested criterion by name and creates an
-     * instance with the provided value.
-     *
-     * @param string $name  The name of the criterion
-     * @param mixed  $value The configuration value for the criterion
-     *
-     * @return CriteriaInterface The created criterion instance
-     *
-     * @throws CriteriaNotRegisteredException If the requested criterion doesn't exist
-     * @throws \UnexpectedValueException      If the factory doesn't return a CriteriaInterface
+     * @throws CriteriaNotRegisteredException
+     * @throws \UnexpectedValueException
      */
     private function createCriteria(string $name, mixed $value): CriteriaInterface
     {

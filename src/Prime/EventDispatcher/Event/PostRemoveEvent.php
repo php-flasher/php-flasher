@@ -7,19 +7,13 @@ namespace Flasher\Prime\EventDispatcher\Event;
 use Flasher\Prime\Notification\Envelope;
 
 /**
- * PostRemoveEvent - Event dispatched after notifications are removed.
- *
- * This event is dispatched after notification envelopes have been removed from or
- * kept in storage. It provides information about which envelopes were removed
- * and which were kept.
+ * Event dispatched after notifications are removed.
  */
 final readonly class PostRemoveEvent
 {
     /**
-     * Creates a new PostRemoveEvent instance.
-     *
-     * @param Envelope[] $envelopesToRemove The notification envelopes that were removed
-     * @param Envelope[] $envelopesToKeep   The notification envelopes that were kept
+     * @param Envelope[] $envelopesToRemove
+     * @param Envelope[] $envelopesToKeep
      */
     public function __construct(
         private array $envelopesToRemove = [],
@@ -28,9 +22,7 @@ final readonly class PostRemoveEvent
     }
 
     /**
-     * Gets the notification envelopes that were removed.
-     *
-     * @return Envelope[] The removed notification envelopes
+     * @return Envelope[]
      */
     public function getEnvelopesToRemove(): array
     {
@@ -38,9 +30,7 @@ final readonly class PostRemoveEvent
     }
 
     /**
-     * Gets the notification envelopes that were kept.
-     *
-     * @return Envelope[] The kept notification envelopes
+     * @return Envelope[]
      */
     public function getEnvelopesToKeep(): array
     {
