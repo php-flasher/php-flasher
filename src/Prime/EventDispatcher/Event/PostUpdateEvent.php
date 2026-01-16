@@ -6,9 +6,6 @@ namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Event dispatched after notification envelopes are updated.
- */
 final readonly class PostUpdateEvent
 {
     /**

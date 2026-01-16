@@ -6,9 +6,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Contract for notification filtering criteria.
- */
 interface CriteriaInterface
 {
     /**

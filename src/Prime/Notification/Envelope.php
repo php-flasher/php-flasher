@@ -8,9 +8,6 @@ use Flasher\Prime\Stamp\PresentableStampInterface;
 use Flasher\Prime\Stamp\StampInterface;
 use Flasher\Prime\Support\Traits\ForwardsCalls;
 
-/**
- * Wraps a notification with metadata stamps.
- */
 final class Envelope implements NotificationInterface
 {
     use ForwardsCalls;

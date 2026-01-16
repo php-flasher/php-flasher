@@ -7,9 +7,6 @@ namespace Flasher\Symfony\Template;
 use Flasher\Prime\Template\TemplateEngineInterface;
 use Twig\Environment;
 
-/**
- * Adapter for Symfony's Twig template engine.
- */
 final readonly class TwigTemplateEngine implements TemplateEngineInterface
 {
     public function __construct(private ?Environment $twig = null)

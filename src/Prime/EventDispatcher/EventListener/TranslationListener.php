@@ -12,9 +12,6 @@ use Flasher\Prime\Translation\EchoTranslator;
 use Flasher\Prime\Translation\Language;
 use Flasher\Prime\Translation\TranslatorInterface;
 
-/**
- * Applies translations to notifications during presentation.
- */
 final readonly class TranslationListener implements EventListenerInterface
 {
     private TranslatorInterface $translator;

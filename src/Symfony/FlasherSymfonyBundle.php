@@ -13,9 +13,6 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Main bundle for PHPFlasher Symfony integration.
- */
 final class FlasherSymfonyBundle extends Support\PluginBundle // Symfony\Component\HttpKernel\Bundle\Bundle
 {
     public function boot(): void

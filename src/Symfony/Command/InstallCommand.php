@@ -16,9 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * Console command for installing PHPFlasher resources.
- */
 final class InstallCommand extends Command
 {
     public function __construct(private readonly AssetManagerInterface $assetManager)

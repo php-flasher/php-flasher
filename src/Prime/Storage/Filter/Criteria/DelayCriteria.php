@@ -7,9 +7,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\DelayStamp;
 
-/**
- * Filters notifications by delay time.
- */
 final readonly class DelayCriteria implements CriteriaInterface
 {
     use RangeExtractor;

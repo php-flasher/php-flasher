@@ -9,9 +9,6 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 
-/**
- * Filters notifications before storage based on conditions.
- */
 final readonly class AddToStorageListener implements EventListenerInterface
 {
     public function __invoke(PersistEvent $event): void

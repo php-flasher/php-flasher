@@ -6,9 +6,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Applies custom closure-based filters to notifications.
- */
 final class FilterCriteria implements CriteriaInterface
 {
     /**

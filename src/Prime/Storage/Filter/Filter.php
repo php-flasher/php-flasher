@@ -7,9 +7,6 @@ namespace Flasher\Prime\Storage\Filter;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Filter\Criteria\CriteriaInterface;
 
-/**
- * Default implementation of the filter interface.
- */
 final class Filter implements FilterInterface
 {
     /**

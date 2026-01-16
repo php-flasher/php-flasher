@@ -10,8 +10,6 @@ use Flasher\Prime\Stamp\StampInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Laravel facade for PHPFlasher with IDE autocompletion support.
- *
  * @method static NotificationBuilder title(string $message)
  * @method static NotificationBuilder message(string $message)
  * @method static NotificationBuilder type(string $message)

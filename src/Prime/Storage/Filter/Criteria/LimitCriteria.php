@@ -6,9 +6,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Limits the number of notifications returned.
- */
 final readonly class LimitCriteria implements CriteriaInterface
 {
     private int $limit;

@@ -8,9 +8,6 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Filter\Filter;
 use Flasher\Prime\Storage\Filter\FilterInterface;
 
-/**
- * Event dispatched when notifications are being filtered.
- */
 final class FilterEvent
 {
     /**

@@ -42,9 +42,6 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Laravel\Octane\Events\RequestReceived;
 use Livewire\LivewireManager;
 
-/**
- * Main service provider for Laravel integration.
- */
 final class FlasherServiceProvider extends PluginServiceProvider
 {
     public function register(): void

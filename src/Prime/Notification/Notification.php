@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Notification;
 
-/**
- * Default implementation of NotificationInterface.
- */
 final class Notification implements NotificationInterface
 {
     private string $title = '';

@@ -9,9 +9,6 @@ use Illuminate\Http\Response as LaravelResponse;
 use Symfony\Component\HttpFoundation\JsonResponse as SymfonyJsonResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * Adapter for Laravel/Symfony HTTP responses.
- */
 final readonly class Response implements ResponseInterface
 {
     public function __construct(private SymfonyResponse $response)

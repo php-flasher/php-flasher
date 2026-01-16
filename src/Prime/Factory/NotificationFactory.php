@@ -8,8 +8,6 @@ use Flasher\Prime\Storage\StorageManagerInterface;
 use Flasher\Prime\Support\Traits\ForwardsCalls;
 
 /**
- * Base abstract class for notification factories.
- *
  * @mixin \Flasher\Prime\Notification\NotificationBuilderInterface
  */
 abstract class NotificationFactory implements NotificationFactoryInterface

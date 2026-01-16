@@ -6,9 +6,6 @@ namespace Flasher\Symfony\Support;
 
 use Flasher\Prime\Plugin\PluginInterface;
 
-/**
- * Contract for PHPFlasher plugin bundles.
- */
 interface PluginBundleInterface
 {
     public function createPlugin(): PluginInterface;

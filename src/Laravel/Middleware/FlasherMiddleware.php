@@ -10,9 +10,6 @@ use Flasher\Prime\Http\ResponseExtensionInterface;
 use Illuminate\Http\Request as LaravelRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * Middleware for injecting PHPFlasher assets into responses.
- */
 final readonly class FlasherMiddleware
 {
     public function __construct(private ResponseExtensionInterface $responseExtension)

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Stamp;
 
-/**
- * Records when a notification was created.
- */
 final readonly class CreatedAtStamp implements OrderableStampInterface, PresentableStampInterface, StampInterface
 {
     private \DateTimeImmutable $createdAt;

@@ -7,9 +7,6 @@ namespace Flasher\Laravel\Template;
 use Flasher\Prime\Template\TemplateEngineInterface;
 use Illuminate\View\Factory;
 
-/**
- * Laravel Blade adapter for PHPFlasher templates.
- */
 final readonly class BladeTemplateEngine implements TemplateEngineInterface
 {
     public function __construct(private Factory $blade)

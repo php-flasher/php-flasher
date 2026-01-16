@@ -13,9 +13,6 @@ use Livewire\Component;
 use Livewire\LivewireManager;
 use Livewire\Mechanisms\HandleComponents\ComponentContext;
 
-/**
- * Integrates PHPFlasher with Livewire component lifecycle.
- */
 final readonly class LivewireListener
 {
     public function __construct(

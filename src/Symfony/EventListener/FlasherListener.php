@@ -10,9 +10,6 @@ use Flasher\Symfony\Http\Response;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-/**
- * Injects PHPFlasher assets into responses.
- */
 final readonly class FlasherListener implements EventSubscriberInterface
 {
     public function __construct(private ResponseExtensionInterface $responseExtension)

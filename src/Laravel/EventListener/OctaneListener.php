@@ -7,9 +7,6 @@ namespace Flasher\Laravel\EventListener;
 use Flasher\Prime\EventDispatcher\EventListener\NotificationLoggerListener;
 use Laravel\Octane\Events\RequestReceived;
 
-/**
- * Resets notification logger between Octane requests.
- */
 final readonly class OctaneListener
 {
     public function handle(RequestReceived $event): void

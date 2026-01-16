@@ -6,9 +6,6 @@ namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Event dispatched when notifications are being prepared for presentation.
- */
 final readonly class PresentationEvent
 {
     /**

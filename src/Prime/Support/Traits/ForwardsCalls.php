@@ -2,23 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * ForwardsCalls Trait.
- *
- * This file contains the ForwardsCalls trait, which is used to forward method calls
- * to another object. This trait is originally part of the Laravel framework.
- *
- * @see https://github.com/laravel/framework/blob/10.x/src/Illuminate/Support/Traits/ForwardsCalls.php
- *
- * Laravel is an open-source PHP framework, which this trait is a part of. The original
- * source code has been modified to suit the needs of the PHP-Flasher project.
- *
- * @copyright Laravel
- * @license MIT License
- *
- * @see https://laravel.com/docs/10.x/
- */
-
 namespace Flasher\Prime\Support\Traits;
 
 trait ForwardsCalls

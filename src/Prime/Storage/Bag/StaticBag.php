@@ -6,9 +6,6 @@ namespace Flasher\Prime\Storage\Bag;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Static/global storage bag for notifications.
- */
 final class StaticBag implements BagInterface
 {
     /**

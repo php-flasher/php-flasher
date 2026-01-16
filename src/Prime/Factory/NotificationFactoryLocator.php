@@ -6,9 +6,6 @@ namespace Flasher\Prime\Factory;
 
 use Flasher\Prime\Exception\FactoryNotFoundException;
 
-/**
- * Registry of available factories.
- */
 final class NotificationFactoryLocator implements NotificationFactoryLocatorInterface
 {
     /**

@@ -15,9 +15,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-/**
- * Artisan command for installing PHPFlasher resources.
- */
 final class InstallCommand extends Command
 {
     /**

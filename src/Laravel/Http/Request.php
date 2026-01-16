@@ -8,9 +8,6 @@ use Flasher\Prime\Http\RequestInterface;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request as LaravelRequest;
 
-/**
- * Adapter for Laravel HTTP requests.
- */
 final readonly class Request implements RequestInterface
 {
     public function __construct(private LaravelRequest $request)

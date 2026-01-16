@@ -7,9 +7,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PriorityStamp;
 
-/**
- * Filters notifications by priority.
- */
 final readonly class PriorityCriteria implements CriteriaInterface
 {
     use RangeExtractor;

@@ -6,9 +6,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Filters notifications by the presence of specific stamps.
- */
 final class StampsCriteria implements CriteriaInterface
 {
     public const STRATEGY_AND = 'and';

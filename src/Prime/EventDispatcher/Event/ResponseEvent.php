@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\Event;
 
-/**
- * Event dispatched when a response is being prepared.
- */
 final class ResponseEvent
 {
     public function __construct(

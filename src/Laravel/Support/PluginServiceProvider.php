@@ -11,9 +11,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Foundation\CachesConfiguration;
 use Illuminate\Support\ServiceProvider;
 
-/**
- * Base service provider for PHPFlasher plugins in Laravel.
- */
 abstract class PluginServiceProvider extends ServiceProvider
 {
     /**

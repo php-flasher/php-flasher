@@ -15,8 +15,6 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\VarDumper\Cloner\Data;
 
 /**
- * Collects PHPFlasher data for the Symfony profiler.
- *
  * @phpstan-type NotificationShape array{
  *     title: string,
  *     message: string,

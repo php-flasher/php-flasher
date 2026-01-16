@@ -6,9 +6,6 @@ namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * Event dispatched after notifications are removed.
- */
 final readonly class PostRemoveEvent
 {
     /**

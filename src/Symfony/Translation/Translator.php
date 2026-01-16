@@ -8,9 +8,6 @@ use Flasher\Prime\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
-/**
- * Adapter for Symfony's translation service.
- */
 final readonly class Translator implements TranslatorInterface
 {
     public function __construct(private SymfonyTranslatorInterface $translator)

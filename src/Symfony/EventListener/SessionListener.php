@@ -10,9 +10,6 @@ use Flasher\Symfony\Http\Response;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-/**
- * Processes session flash messages.
- */
 final readonly class SessionListener implements EventSubscriberInterface
 {
     public function __construct(private RequestExtensionInterface $requestExtension)

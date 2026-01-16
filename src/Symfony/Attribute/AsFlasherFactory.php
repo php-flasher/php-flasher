@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Symfony\Attribute;
 
-/**
- * Attribute for tagging notification factories.
- */
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final readonly class AsFlasherFactory
 {

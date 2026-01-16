@@ -8,9 +8,6 @@ use Flasher\Prime\Http\ResponseInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * Adapter for Symfony's HTTP response.
- */
 final readonly class Response implements ResponseInterface
 {
     public function __construct(private SymfonyResponse $response)

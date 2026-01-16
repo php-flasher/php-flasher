@@ -7,8 +7,6 @@ namespace Flasher\Prime\EventDispatcher\Event;
 use Flasher\Prime\Notification\Envelope;
 
 /**
- * Collector for notification envelopes.
- *
  * @internal
  */
 final class NotificationEvents

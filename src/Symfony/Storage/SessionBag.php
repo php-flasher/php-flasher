@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-/**
- * Symfony session storage for PHPFlasher notifications.
- */
 final readonly class SessionBag implements BagInterface
 {
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';

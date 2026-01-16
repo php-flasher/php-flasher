@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-/**
- * Adapter for Symfony's HTTP request.
- */
 final readonly class Request implements RequestInterface
 {
     public function __construct(private SymfonyRequest $request)

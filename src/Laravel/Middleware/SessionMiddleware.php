@@ -10,9 +10,6 @@ use Flasher\Prime\Http\RequestExtensionInterface;
 use Illuminate\Http\Request as LaravelRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * Middleware for processing session flash messages.
- */
 final readonly class SessionMiddleware
 {
     public function __construct(private RequestExtensionInterface $requestExtension)

@@ -8,9 +8,6 @@ use Flasher\Prime\FlasherInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * Twig extension for rendering PHPFlasher notifications.
- */
 final class FlasherTwigExtension extends AbstractExtension
 {
     public function __construct(private readonly FlasherInterface $flasher)

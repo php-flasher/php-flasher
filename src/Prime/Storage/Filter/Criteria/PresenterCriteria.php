@@ -7,9 +7,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PresenterStamp;
 
-/**
- * Filters notifications by presenter compatibility.
- */
 final class PresenterCriteria implements CriteriaInterface
 {
     private string $presenter;

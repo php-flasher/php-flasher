@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-/**
- * Base class for PHPFlasher plugin bundles.
- */
 abstract class PluginBundle extends AbstractBundle implements PluginBundleInterface
 {
     abstract public function createPlugin(): PluginInterface;

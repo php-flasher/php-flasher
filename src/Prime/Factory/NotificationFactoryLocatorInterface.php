@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\Factory;
 
-/**
- * Interface for the notification factory locator service.
- */
 interface NotificationFactoryLocatorInterface
 {
     /**

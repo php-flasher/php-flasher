@@ -10,8 +10,6 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\PresetStamp;
 
 /**
- * Applies preset configurations to notifications.
- *
  * @phpstan-type PresetType array{
  *     type: string,
  *     title: string,

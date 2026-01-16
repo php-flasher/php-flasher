@@ -6,9 +6,6 @@ namespace Flasher\Laravel\Component;
 
 use Illuminate\View\Component;
 
-/**
- * Blade component for rendering PHPFlasher notifications.
- */
 final class FlasherComponent extends Component
 {
     public function __construct(public string $criteria = '', public string $context = '')

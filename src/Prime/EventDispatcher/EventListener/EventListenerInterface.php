@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Prime\EventDispatcher\EventListener;
 
-/**
- * Contract for event listeners.
- */
 interface EventListenerInterface
 {
     /**

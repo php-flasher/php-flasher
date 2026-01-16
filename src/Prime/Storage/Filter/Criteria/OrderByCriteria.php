@@ -19,9 +19,6 @@ use Flasher\Prime\Stamp\TranslationStamp;
 use Flasher\Prime\Stamp\UnlessStamp;
 use Flasher\Prime\Stamp\WhenStamp;
 
-/**
- * Sorts notifications based on stamp attributes.
- */
 final class OrderByCriteria implements CriteriaInterface
 {
     public const ASC = 'ASC';

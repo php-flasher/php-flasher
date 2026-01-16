@@ -8,9 +8,6 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
 use Illuminate\Session\SessionManager;
 
-/**
- * Laravel session storage for PHPFlasher notifications.
- */
 final readonly class SessionBag implements BagInterface
 {
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';

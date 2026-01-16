@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Flasher\Symfony\Storage;
 
-/**
- * In-memory session storage fallback.
- */
 final class FallbackSession implements FallbackSessionInterface
 {
     /** @var array<string, mixed> */

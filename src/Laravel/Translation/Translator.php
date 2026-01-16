@@ -7,9 +7,6 @@ namespace Flasher\Laravel\Translation;
 use Flasher\Prime\Translation\TranslatorInterface;
 use Illuminate\Translation\Translator as LaravelTranslator;
 
-/**
- * Laravel adapter for PHPFlasher translations.
- */
 final readonly class Translator implements TranslatorInterface
 {
     public function __construct(private LaravelTranslator $translator)

@@ -9,8 +9,6 @@ use Flasher\Prime\EventDispatcher\Event\PersistEvent;
 use Flasher\Prime\EventDispatcher\Event\PresentationEvent;
 
 /**
- * Logs all notifications that are dispatched and displayed.
- *
  * @internal
  */
 final class NotificationLoggerListener implements EventListenerInterface

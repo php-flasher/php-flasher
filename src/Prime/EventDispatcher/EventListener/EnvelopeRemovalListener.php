@@ -8,9 +8,6 @@ use Flasher\Prime\EventDispatcher\Event\RemoveEvent;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\HopsStamp;
 
-/**
- * Manages notification lifecycle across requests.
- */
 final readonly class EnvelopeRemovalListener implements EventListenerInterface
 {
     public function __invoke(RemoveEvent $event): void

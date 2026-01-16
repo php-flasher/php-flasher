@@ -13,9 +13,6 @@ use Flasher\Prime\Stamp\HopsStamp;
 use Flasher\Prime\Stamp\IdStamp;
 use Flasher\Prime\Stamp\PriorityStamp;
 
-/**
- * Ensures notifications have required stamps.
- */
 final readonly class AttachDefaultStampsListener implements EventListenerInterface
 {
     public function __invoke(PersistEvent|UpdateEvent $event): void

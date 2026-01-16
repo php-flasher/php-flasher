@@ -7,9 +7,6 @@ namespace Flasher\Prime\Storage\Filter\Criteria;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Stamp\HopsStamp;
 
-/**
- * Filters notifications by hops count.
- */
 final readonly class HopsCriteria implements CriteriaInterface
 {
     use RangeExtractor;

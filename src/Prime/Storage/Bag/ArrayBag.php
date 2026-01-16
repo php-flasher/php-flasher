@@ -6,9 +6,6 @@ namespace Flasher\Prime\Storage\Bag;
 
 use Flasher\Prime\Notification\Envelope;
 
-/**
- * In-memory storage bag for notifications.
- */
 final class ArrayBag implements BagInterface
 {
     /**
