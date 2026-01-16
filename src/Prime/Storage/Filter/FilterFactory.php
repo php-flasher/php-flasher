@@ -15,9 +15,6 @@ use Flasher\Prime\Storage\Filter\Criteria\PresenterCriteria;
 use Flasher\Prime\Storage\Filter\Criteria\PriorityCriteria;
 use Flasher\Prime\Storage\Filter\Criteria\StampsCriteria;
 
-/**
- * Creates and configures filter instances.
- */
 final class FilterFactory implements FilterFactoryInterface
 {
     /**
