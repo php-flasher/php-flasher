@@ -1,96 +1,74 @@
 .fl-facebook {
-    /* Theme variables - Define the visual appearance of Facebook notifications */
-    /* Base colors for light and dark modes */
-    --fb-bg-light: #ffffff;                  /* White background in light mode */
-    --fb-bg-dark: #242526;                   /* Dark gray in dark mode */
-    --fb-text-light: #050505;                /* Near-black text in light mode */
-    --fb-text-secondary-light: #65676b;      /* Gray secondary text in light mode */
-    --fb-text-dark: #e4e6eb;                 /* Off-white text in dark mode */
-    --fb-text-secondary-dark: #b0b3b8;       /* Light gray secondary text in dark mode */
-    --fb-hover-light: #f0f2f5;               /* Light gray hover state in light mode */
-    --fb-hover-dark: #3a3b3c;                /* Dark gray hover state in dark mode */
-    --fb-border-light: #e4e6eb;              /* Light gray borders in light mode */
-    --fb-border-dark: #3e4042;               /* Dark gray borders in dark mode */
-    --fb-blue: #1876f2;                      /* Facebook's signature blue */
-    --fb-name-color: #050505;                /* Username color in light mode */
-    --fb-name-color-dark: #e4e6eb;           /* Username color in dark mode */
-    /* Type-specific colors for icons */
-    --fb-success: #31a24c;                   /* Green for success notifications */
-    --fb-info: #1876f2;                      /* Blue for info notifications */
-    --fb-warning: #f7b928;                   /* Yellow for warning notifications */
-    --fb-error: #e41e3f;                     /* Red for error notifications */
-    /* Icon background colors - Light mode */
-    --fb-success-bg: #e7f3ff;                /* Light blue background for success icons */
-    --fb-info-bg: #e7f3ff;                   /* Light blue background for info icons */
-    --fb-warning-bg: #fff5cc;                /* Light yellow background for warning icons */
-    --fb-error-bg: #ffebe9;                  /* Light red background for error icons */
-    /* Icon background colors - Dark mode */
-    --fb-success-bg-dark: #263c4b;           /* Dark blue background for success icons */
-    --fb-info-bg-dark: #263c4b;              /* Dark blue background for info icons */
-    --fb-warning-bg-dark: #3e3c26;           /* Dark yellow background for warning icons */
-    --fb-error-bg-dark: #472835;             /* Dark red background for error icons */
-    /* Animation timing */
-    --fb-animation-duration: 0.2s;           /* Duration for entrance animation */
+    --fb-bg-light: #ffffff;
+    --fb-bg-dark: #242526;
+    --fb-text-light: #050505;
+    --fb-text-secondary-light: #65676b;
+    --fb-text-dark: #e4e6eb;
+    --fb-text-secondary-dark: #b0b3b8;
+    --fb-hover-light: #f0f2f5;
+    --fb-hover-dark: #3a3b3c;
+    --fb-border-light: #e4e6eb;
+    --fb-border-dark: #3e4042;
+    --fb-blue: #1876f2;
+    --fb-name-color: #050505;
+    --fb-name-color-dark: #e4e6eb;
+    --fb-success: #31a24c;
+    --fb-info: #1876f2;
+    --fb-warning: #f7b928;
+    --fb-error: #e41e3f;
+    --fb-success-bg: #e7f3ff;
+    --fb-info-bg: #e7f3ff;
+    --fb-warning-bg: #fff5cc;
+    --fb-error-bg: #ffebe9;
+    --fb-success-bg-dark: #263c4b;
+    --fb-info-bg-dark: #263c4b;
+    --fb-warning-bg-dark: #3e3c26;
+    --fb-error-bg-dark: #472835;
+    --fb-animation-duration: 0.2s;
 }
 @keyframes fbFadeIn {
     from {
         opacity: 0;
-        transform: translateY(-8px);         /* Start slightly above final position */
+        transform: translateY(-8px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);            /* End at natural position */
+        transform: translateY(0);
     }
 }
 .fl-facebook {
     position: relative;
-    margin: 8px 0;                           /* Spacing between notifications */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Facebook's font stack */
+    margin: 8px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     animation: fbFadeIn var(--fb-animation-duration) ease-out;
-    /**
-     * Main notification card
-     * Contains icon, message, and actions
-     */
     .fl-fb-notification {
         background-color: var(--fb-bg-light);
         color: var(--fb-text-light);
-        border-radius: 8px;                  /* Rounded corners */
+        border-radius: 8px;
         padding: 12px;
         display: flex;
-        align-items: flex-start;             /* Align items to top for proper icon alignment */
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        transition: background-color 0.1s ease; /* Smooth hover transition */
+        align-items: flex-start;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.1s ease;
         &:hover {
-            background-color: var(--fb-hover-light); /* Background change on hover */
+            background-color: var(--fb-hover-light);
         }
     }
-    /**
-     * Icon container
-     * Holds the notification type icon
-     */
     .fl-icon-container {
         margin-right: 12px;
-        flex-shrink: 0;                      /* Prevent icon from shrinking */
+        flex-shrink: 0;
     }
-    /**
-     * Icon styling
-     * Circular background with centered icon
-     */
     .fl-fb-icon {
         width: 36px;
         height: 36px;
-        border-radius: 50%;                  /* Perfectly circular */
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        justify-content: center;             /* Center the SVG icon */
+        justify-content: center;
         svg {
-            color: white;                    /* Icon color is white in light mode */
+            color: white;
         }
     }
-    /**
-     * Type-specific icon styling
-     * Each notification type has its own icon color
-     */
     .fl-fb-icon-success {
         background-color: var(--fb-success);
     }
@@ -103,65 +81,37 @@
     .fl-fb-icon-error {
         background-color: var(--fb-error);
     }
-    /**
-     * Content container
-     * Holds message and timestamp
-     */
     .fl-content {
-        flex: 1;                             /* Take available space */
-        min-width: 0;                        /* Enable text truncation */
+        flex: 1;
+        min-width: 0;
     }
-    /**
-     * Message styling
-     * Main notification text
-     */
     .fl-message {
-        font-size: 15px;                     /* Facebook's standard text size */
-        line-height: 1.33;                   /* Improved readability */
+        font-size: 15px;
+        line-height: 1.33;
         margin-bottom: 4px;
     }
-    /**
-     * Username styling
-     * For displaying user names in bold
-     */
     .fl-user-name {
-        font-weight: 600;                    /* Bold weight for usernames */
+        font-weight: 600;
         color: var(--fb-name-color);
         margin-right: 4px;
     }
-    /**
-     * Metadata container
-     * Holds timestamp and additional info
-     */
     .fl-meta {
         display: flex;
         align-items: center;
     }
-    /**
-     * Timestamp styling
-     * Shows when the notification was created
-     */
     .fl-time {
-        font-size: 13px;                     /* Smaller text for timestamp */
-        color: var(--fb-text-secondary-light); /* Gray secondary text color */
+        font-size: 13px;
+        color: var(--fb-text-secondary-light);
     }
-    /**
-     * Action buttons container
-     * Holds interactive buttons like close
-     */
     .fl-actions {
         display: flex;
         margin-left: 12px;
         align-items: center;
     }
-    /**
-     * Button styling
-     * Circular buttons with hover effect
-     */
     .fl-button {
         width: 32px;
         height: 32px;
-        border-radius: 50%;                  /* Circular button */
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -170,49 +120,37 @@
         cursor: pointer;
         color: var(--fb-text-secondary-light);
         margin-left: 8px;
-        transition: background-color 0.1s;   /* Quick hover transition */
+        transition: background-color 0.1s;
         &:hover {
-            background-color: var(--fb-border-light); /* Darker background on hover */
+            background-color: var(--fb-border-light);
         }
     }
-    /**
-     * Button icon container
-     * Centers SVG icons within buttons
-     */
     .fl-button-icon {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    /**
-     * RTL Support
-     * Right-to-left language direction support
-     */
     &.fl-rtl {
         direction: rtl;
         .fl-icon-container {
             margin-right: 0;
-            margin-left: 12px;               /* Swap margins for RTL */
+            margin-left: 12px;
         }
         .fl-user-name {
             margin-right: 0;
-            margin-left: 4px;                /* Swap margins for RTL */
+            margin-left: 4px;
         }
         .fl-actions {
             margin-left: 0;
-            margin-right: 12px;              /* Swap margins for RTL */
+            margin-right: 12px;
         }
         .fl-button {
             margin-left: 0;
-            margin-right: 8px;               /* Swap margins for RTL */
+            margin-right: 8px;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                     /* Disable animation */
+        animation: none;
     }
 }
 body.fl-dark .fl-facebook,
@@ -221,7 +159,7 @@ html.fl-dark .fl-facebook,
     .fl-fb-notification {
         background-color: var(--fb-bg-dark);
         color: var(--fb-text-dark);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Stronger shadow in dark mode */
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         &:hover {
             background-color: var(--fb-hover-dark);
         }
@@ -239,13 +177,9 @@ html.fl-dark .fl-facebook,
             background-color: var(--fb-border-dark);
         }
     }
-    /**
-     * Type-specific icon styling for dark mode
-     * Uses darker backgrounds with colored icons for better visibility
-     */
     .fl-fb-icon-success {
         background-color: var(--fb-success-bg-dark);
-        svg { color: var(--fb-success); }    /* Icon color matches type in dark mode */
+        svg { color: var(--fb-success); }
     }
     .fl-fb-icon-info {
         background-color: var(--fb-info-bg-dark);

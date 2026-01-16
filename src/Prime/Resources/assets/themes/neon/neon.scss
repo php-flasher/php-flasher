@@ -1,113 +1,90 @@
 .fl-neon {
-    /* Theme variables - Define the visual appearance of Neon notifications */
-    /* Base colors and appearance */
-    --neon-bg-light: rgba(255, 255, 255);    /* Translucent white in light mode */
-    --neon-bg-dark: rgba(15, 23, 42);        /* Translucent slate in dark mode */
-    --neon-text-light: #334155;                   /* Slate gray text in light mode */
-    --neon-text-dark: #f1f5f9;                    /* Light gray text in dark mode */
-    --neon-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Soft, spread shadow */
-    --neon-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25); /* Deeper shadow for dark mode */
-    --neon-border-radius: 4px;                   /* Rounded corners */
-    /* Glow colors for different notification types */
-    --neon-success: #10b981;                      /* Emerald green for success */
-    --neon-info: #3b82f6;                         /* Blue for info */
-    --neon-warning: #f59e0b;                      /* Amber for warning */
-    --neon-error: #ef4444;                        /* Red for error */
-    /* Glow and animation properties */
-    --neon-glow-strength: 10px;                   /* How far the glow extends */
-    --neon-animation-duration: 0.35s;             /* Duration for entrance animation */
+    --neon-bg-light: rgba(255, 255, 255);
+    --neon-bg-dark: rgba(15, 23, 42);
+    --neon-text-light: #334155;
+    --neon-text-dark: #f1f5f9;
+    --neon-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --neon-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25);
+    --neon-border-radius: 4px;
+    --neon-success: #10b981;
+    --neon-info: #3b82f6;
+    --neon-warning: #f59e0b;
+    --neon-error: #ef4444;
+    --neon-glow-strength: 10px;
+    --neon-animation-duration: 0.35s;
 }
 @keyframes neonEntrance {
     0% {
         opacity: 0;
-        transform: translateY(-15px);             /* Start above final position */
-        filter: blur(3px);                        /* Start blurred */
+        transform: translateY(-15px);
+        filter: blur(3px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0);                 /* End at natural position */
-        filter: blur(0);                          /* End with clear focus */
+        transform: translateY(0);
+        filter: blur(0);
     }
 }
 @keyframes neonGlow {
     0%, 100% {
-        filter: drop-shadow(0 0 var(--neon-glow-strength) currentColor); /* Full glow */
+        filter: drop-shadow(0 0 var(--neon-glow-strength) currentColor);
     }
     50% {
-        filter: drop-shadow(0 0 calc(var(--neon-glow-strength) * 0.7) currentColor); /* Reduced glow */
+        filter: drop-shadow(0 0 calc(var(--neon-glow-strength) * 0.7) currentColor);
     }
 }
 .fl-neon {
     background-color: var(--neon-bg-light);
     color: var(--neon-text-light);
-    border-radius: var(--neon-border-radius) var(--neon-border-radius) 0 0; /* Rounded top corners */
+    border-radius: var(--neon-border-radius) var(--neon-border-radius) 0 0;
     box-shadow: var(--neon-shadow);
-    padding: 14px 18px;                           /* Comfortable padding */
-    margin: 12px 0;                               /* Vertical spacing */
+    padding: 14px 18px;
+    margin: 12px 0;
     position: relative;
     animation: neonEntrance var(--neon-animation-duration) ease-out;
-    font-family: 'Inter', var(--fl-font), sans-serif; /* Prefer Inter font for elegant typography */
-    will-change: transform, opacity, filter;      /* Optimize for animation performance */
-    overflow: hidden;                             /* Contain progress bar */
-    /* Frosted glass effect */
+    font-family: 'Inter', var(--fl-font), sans-serif;
+    will-change: transform, opacity, filter;
+    overflow: hidden;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    /**
-     * Floating illuminated indicator
-     * Creates a glowing circle that appears to float above the notification
-     */
     .fl-icon-box {
         position: absolute;
-        top: -12px;                               /* Position above the notification */
+        top: -12px;
         left: 16px;
         width: 24px;
         height: 24px;
-        border-radius: 50%;                       /* Perfectly circular */
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        animation: neonGlow 3s ease-in-out infinite; /* Continuous gentle pulsing */
-        /* Semi-transparent circular background */
+        animation: neonGlow 3s ease-in-out infinite;
         &::before {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            opacity: 0.4;                         /* Subtle background */
+            opacity: 0.4;
         }
-        /* Solid colored center dot */
         &::after {
             content: '';
             width: 10px;
             height: 10px;
             border-radius: 50%;
             position: relative;
-            z-index: 1;                           /* Ensure dot appears above the glow */
+            z-index: 1;
         }
     }
-    /**
-     * Content container
-     * Holds message and close button
-     */
     .fl-content {
         display: flex;
-        align-items: center;                      /* Vertically center content */
+        align-items: center;
     }
-    /**
-     * Message styling
-     * Main notification text
-     */
     .fl-message {
-        flex: 1;                                  /* Take available space */
-        font-size: 0.9375rem;                     /* 15px at default font size */
-        line-height: 1.5;                         /* Comfortable line height */
-        font-weight: 500;                         /* Medium weight for better readability */
+        flex: 1;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        font-weight: 500;
     }
-    /**
-     * Close button styling
-     * Circular button with hover effect
-     */
     .fl-close {
         background: none;
         border: none;
@@ -115,25 +92,21 @@
         margin-left: 16px;
         width: 28px;
         height: 28px;
-        border-radius: 50%;                       /* Circular button */
+        border-radius: 50%;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: inherit;                           /* Inherit text color */
-        opacity: 0.6;                             /* Subtle appearance by default */
-        transition: all 0.2s ease;                /* Smooth hover transition */
+        color: inherit;
+        opacity: 0.6;
+        transition: all 0.2s ease;
         font-size: 1.2rem;
-        flex-shrink: 0;                           /* Prevent button from shrinking */
+        flex-shrink: 0;
         &:hover, &:focus {
-            opacity: 1;                           /* Full opacity on hover/focus */
-            background-color: rgba(0, 0, 0, 0.06); /* Subtle background on hover */
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.06);
         }
     }
-    /**
-     * Progress bar container
-     * Holds the animated progress indicator
-     */
     .fl-progress-bar {
         position: absolute;
         left: 0;
@@ -141,91 +114,71 @@
         bottom: 0;
         height: 3px;
         overflow: hidden;
-        border-radius: 0 0 var(--neon-border-radius) var(--neon-border-radius); /* Match parent corners */
-        /**
-         * Progress indicator
-         * Animated by JavaScript to show remaining time
-         */
+        border-radius: 0 0 var(--neon-border-radius) var(--neon-border-radius);
         .fl-progress {
             height: 100%;
             width: 100%;
         }
     }
-    /**
-     * Type-specific styling for each notification type
-     * Each type gets its own color for the indicator and progress bar
-     */
     &.fl-success {
         .fl-icon-box {
-            color: var(--neon-success);           /* Green glow */
-            &::before { background-color: var(--neon-success); } /* Transparent green circle */
-            &::after { background-color: var(--neon-success); }  /* Solid green dot */
+            color: var(--neon-success);
+            &::before { background-color: var(--neon-success); }
+            &::after { background-color: var(--neon-success); }
         }
-        .fl-progress { background-color: var(--neon-success); }  /* Green progress bar */
+        .fl-progress { background-color: var(--neon-success); }
     }
     &.fl-info {
         .fl-icon-box {
-            color: var(--neon-info);              /* Blue glow */
-            &::before { background-color: var(--neon-info); }    /* Transparent blue circle */
-            &::after { background-color: var(--neon-info); }     /* Solid blue dot */
+            color: var(--neon-info);
+            &::before { background-color: var(--neon-info); }
+            &::after { background-color: var(--neon-info); }
         }
-        .fl-progress { background-color: var(--neon-info); }     /* Blue progress bar */
+        .fl-progress { background-color: var(--neon-info); }
     }
     &.fl-warning {
         .fl-icon-box {
-            color: var(--neon-warning);           /* Amber glow */
-            &::before { background-color: var(--neon-warning); } /* Transparent amber circle */
-            &::after { background-color: var(--neon-warning); }  /* Solid amber dot */
+            color: var(--neon-warning);
+            &::before { background-color: var(--neon-warning); }
+            &::after { background-color: var(--neon-warning); }
         }
-        .fl-progress { background-color: var(--neon-warning); }  /* Amber progress bar */
+        .fl-progress { background-color: var(--neon-warning); }
     }
     &.fl-error {
         .fl-icon-box {
-            color: var(--neon-error);             /* Red glow */
-            &::before { background-color: var(--neon-error); }   /* Transparent red circle */
-            &::after { background-color: var(--neon-error); }    /* Solid red dot */
+            color: var(--neon-error);
+            &::before { background-color: var(--neon-error); }
+            &::after { background-color: var(--neon-error); }
         }
-        .fl-progress { background-color: var(--neon-error); }    /* Red progress bar */
+        .fl-progress { background-color: var(--neon-error); }
     }
-    /**
-     * RTL Support
-     * Right-to-left language direction support
-     */
     &.fl-rtl {
         direction: rtl;
         .fl-icon-box {
             left: auto;
-            right: 16px;                          /* Move icon to right side */
+            right: 16px;
         }
         .fl-close {
             margin-left: 0;
-            margin-right: 16px;                   /* Swap margins */
+            margin-right: 16px;
         }
         .fl-progress {
-            transform-origin: right center;       /* Animation starts from right */
+            transform-origin: right center;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                          /* Disable entrance animation */
+        animation: none;
         .fl-icon-box {
-            animation: none;                      /* Disable glow animation */
+            animation: none;
         }
     }
 }
 body.fl-dark .fl-neon,
 html.fl-dark .fl-neon,
 .fl-neon.fl-auto-dark {
-    background-color: var(--neon-bg-dark);        /* Darker, semi-transparent background */
-    color: var(--neon-text-dark);                 /* Light text */
-    box-shadow: var(--neon-shadow-dark);          /* Stronger shadow */
-    /**
-     * Adjust hover effect for dark mode
-     * Use white instead of black with appropriate opacity
-     */
+    background-color: var(--neon-bg-dark);
+    color: var(--neon-text-dark);
+    box-shadow: var(--neon-shadow-dark);
     .fl-close:hover, .fl-close:focus {
         background-color: rgba(255, 255, 255, 0.1);
     }

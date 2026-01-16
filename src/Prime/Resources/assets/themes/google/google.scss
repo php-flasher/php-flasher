@@ -1,252 +1,191 @@
 .fl-google {
-    /* Theme variables - Define the visual appearance of Material Design notifications */
-    /* Base colors and appearance for light and dark modes */
-    --md-bg-light: #ffffff;                      /* Card background in light mode */
-    --md-bg-dark: #2d2d2d;                       /* Card background in dark mode */
-    --md-text-light: rgba(0, 0, 0, 0.87);        /* Primary text in light mode (87% black) */
-    --md-text-secondary-light: rgba(0, 0, 0, 0.6); /* Secondary text in light mode (60% black) */
-    --md-text-dark: rgba(255, 255, 255, 0.87);   /* Primary text in dark mode (87% white) */
-    --md-text-secondary-dark: rgba(255, 255, 255, 0.6); /* Secondary text in dark mode (60% white) */
-    /* Material Design elevation - multi-layered shadows */
-    --md-elevation: 0 3px 5px -1px rgba(0,0,0,0.2),   /* Ambient shadow */
-                    0 6px 10px 0 rgba(0,0,0,0.14),    /* Penumbra shadow */
-                    0 1px 18px 0 rgba(0,0,0,0.12);    /* Umbra shadow */
-    --md-elevation-dark: 0 3px 5px -1px rgba(0,0,0,0.4),  /* Darker ambient shadow */
-                         0 6px 10px 0 rgba(0,0,0,0.28),   /* Darker penumbra shadow */
-                         0 1px 18px 0 rgba(0,0,0,0.24);   /* Darker umbra shadow */
-    --md-border-radius: 4px;                     /* Material Design default corner radius */
-    /* Material Design color palette for notification types */
-    --md-success: #43a047;                       /* Green 600 from Material palette */
-    --md-info: #1e88e5;                          /* Blue 600 from Material palette */
-    --md-warning: #fb8c00;                       /* Orange 600 from Material palette */
-    --md-error: #e53935;                         /* Red 600 from Material palette */
-    /* Animation timing variables */
-    --md-animation-duration: 0.3s;               /* Standard Material motion duration */
-    --md-ripple-duration: 0.6s;                  /* Ripple effect duration */
+    --md-bg-light: #ffffff;
+    --md-bg-dark: #2d2d2d;
+    --md-text-light: rgba(0, 0, 0, 0.87);
+    --md-text-secondary-light: rgba(0, 0, 0, 0.6);
+    --md-text-dark: rgba(255, 255, 255, 0.87);
+    --md-text-secondary-dark: rgba(255, 255, 255, 0.6);
+    --md-elevation: 0 3px 5px -1px rgba(0,0,0,0.2),
+                    0 6px 10px 0 rgba(0,0,0,0.14),
+                    0 1px 18px 0 rgba(0,0,0,0.12);
+    --md-elevation-dark: 0 3px 5px -1px rgba(0,0,0,0.4),
+                         0 6px 10px 0 rgba(0,0,0,0.28),
+                         0 1px 18px 0 rgba(0,0,0,0.24);
+    --md-border-radius: 4px;
+    --md-success: #43a047;
+    --md-info: #1e88e5;
+    --md-warning: #fb8c00;
+    --md-error: #e53935;
+    --md-animation-duration: 0.3s;
+    --md-ripple-duration: 0.6s;
 }
 @keyframes mdSlideUp {
     0% {
         opacity: 0;
-        transform: translateY(20px);             /* Start below final position */
+        transform: translateY(20px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0);                /* End at final position */
+        transform: translateY(0);
     }
 }
 @keyframes mdRipple {
     to {
-        transform: scale(4);                     /* Expand to 4x original size */
-        opacity: 0;                              /* Fade out completely */
+        transform: scale(4);
+        opacity: 0;
     }
 }
 .fl-google {
     position: relative;
-    margin: 8px 0;                               /* Spacing between notifications */
-    font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif; /* Material uses Roboto */
-    animation: mdSlideUp var(--md-animation-duration) cubic-bezier(0.4, 0, 0.2, 1); /* Material standard easing */
-    /**
-     * Main card container
-     * Follows Material Design card component styling
-     */
+    margin: 8px 0;
+    font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+    animation: mdSlideUp var(--md-animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
     .fl-md-card {
         background-color: var(--md-bg-light);
         color: var(--md-text-light);
         border-radius: var(--md-border-radius);
-        box-shadow: var(--md-elevation);         /* Multi-layered shadow for depth */
-        overflow: hidden;                        /* Contains progress bar */
+        box-shadow: var(--md-elevation);
+        overflow: hidden;
     }
-    /**
-     * Content section
-     * Contains icon and text content
-     */
     .fl-content {
-        padding: 16px;                           /* Standard Material padding */
+        padding: 16px;
         display: flex;
-        align-items: flex-start;                 /* Align items to top */
+        align-items: flex-start;
     }
-    /**
-     * Icon container
-     * Holds the Material Design SVG icon
-     */
     .fl-icon-wrapper {
-        margin-right: 16px;                      /* Space between icon and text */
-        color: var(--md-text-secondary-light);   /* Default icon color */
-        flex-shrink: 0;                          /* Prevent icon from shrinking */
+        margin-right: 16px;
+        color: var(--md-text-secondary-light);
+        flex-shrink: 0;
     }
-    /**
-     * Text content container
-     * Holds title and message
-     */
     .fl-text-content {
-        flex: 1;                                 /* Take available space */
+        flex: 1;
     }
-    /**
-     * Title styling
-     * Following Material Design typography
-     */
     .fl-title {
-        font-size: 1rem;                         /* 16px - Material body 1 */
-        font-weight: 500;                        /* Medium weight per Material guidelines */
+        font-size: 1rem;
+        font-weight: 500;
         margin-bottom: 4px;
     }
-    /**
-     * Message styling
-     * Following Material Design typography
-     */
     .fl-message {
-        font-size: 0.875rem;                     /* 14px - Material body 2 */
-        line-height: 1.43;                       /* Material line height for body 2 */
-        color: var(--md-text-secondary-light);   /* Secondary text color (60% opacity) */
+        font-size: 0.875rem;
+        line-height: 1.43;
+        color: var(--md-text-secondary-light);
     }
-    /**
-     * Action buttons section
-     * Contains dismiss button
-     */
     .fl-actions {
         display: flex;
-        justify-content: flex-end;               /* Align buttons to right */
-        padding: 8px;                            /* Standard Material padding */
+        justify-content: flex-end;
+        padding: 8px;
     }
-    /**
-     * Action button styling
-     * Following Material Design "text button" guidelines
-     */
     .fl-action-button {
         background: transparent;
         border: none;
-        color: currentColor;                     /* Inherit color from parent */
+        color: currentColor;
         font-family: inherit;
-        font-weight: 500;                        /* Medium weight per Material specs */
-        font-size: 0.8125rem;                    /* 13px - Material button text size */
-        text-transform: uppercase;               /* Material buttons use uppercase */
-        letter-spacing: 0.0892857143em;          /* Material's letter spacing for buttons */
-        padding: 8px 12px;                       /* Material button padding */
-        border-radius: 4px;                      /* Rounded corners per Material */
+        font-weight: 500;
+        font-size: 0.8125rem;
+        text-transform: uppercase;
+        letter-spacing: 0.0892857143em;
+        padding: 8px 12px;
+        border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.2s;       /* Smooth hover effect */
-        position: relative;                      /* For ripple positioning */
-        overflow: hidden;                        /* Contain ripple effect */
+        transition: background-color 0.2s;
+        position: relative;
+        overflow: hidden;
         &:hover, &:focus {
-            background-color: rgba(0, 0, 0, 0.04); /* Material hover state - 4% opacity */
+            background-color: rgba(0, 0, 0, 0.04);
         }
-        /**
-         * Ripple effect
-         * Material Design's signature ink ripple on interaction
-         */
         &::after {
             content: "";
             position: absolute;
-            width: 5px;                          /* Initial small circle */
+            width: 5px;
             height: 5px;
-            background: currentColor;            /* Use button text color */
+            background: currentColor;
             opacity: 0;
-            border-radius: 50%;                  /* Perfect circle */
+            border-radius: 50%;
             transform: scale(1);
-            pointer-events: none;                /* Don't interfere with clicks */
+            pointer-events: none;
         }
         &:active::after {
-            opacity: 0.3;                        /* Material ripple opacity */
-            animation: mdRipple var(--md-ripple-duration) linear; /* Expand and fade */
+            opacity: 0.3;
+            animation: mdRipple var(--md-ripple-duration) linear;
         }
     }
-    /**
-     * Type-specific styling
-     * Each notification type has its own color based on Material palette
-     */
     &.fl-success {
         .fl-icon-wrapper {
-            color: var(--md-success);            /* Green icon */
+            color: var(--md-success);
         }
         .fl-action-button {
-            color: var(--md-success);            /* Green button */
+            color: var(--md-success);
         }
     }
     &.fl-info {
         .fl-icon-wrapper {
-            color: var(--md-info);               /* Blue icon */
+            color: var(--md-info);
         }
         .fl-action-button {
-            color: var(--md-info);               /* Blue button */
+            color: var(--md-info);
         }
     }
     &.fl-warning {
         .fl-icon-wrapper {
-            color: var(--md-warning);            /* Orange icon */
+            color: var(--md-warning);
         }
         .fl-action-button {
-            color: var(--md-warning);            /* Orange button */
+            color: var(--md-warning);
         }
     }
     &.fl-error {
         .fl-icon-wrapper {
-            color: var(--md-error);              /* Red icon */
+            color: var(--md-error);
         }
         .fl-action-button {
-            color: var(--md-error);              /* Red button */
+            color: var(--md-error);
         }
     }
-    /**
-     * Progress bar
-     * Material Design linear progress indicator
-     */
     .fl-progress-bar {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        height: 4px;                             /* Material's standard progress height */
+        height: 4px;
         overflow: hidden;
         .fl-progress {
             height: 100%;
             width: 100%;
-            transform-origin: left center;       /* Animation starts from left */
+            transform-origin: left center;
         }
     }
-    /**
-     * Type-specific progress colors
-     * Each notification type has its own progress bar color
-     */
     &.fl-success .fl-progress {
-        background-color: var(--md-success);     /* Green progress */
+        background-color: var(--md-success);
     }
     &.fl-info .fl-progress {
-        background-color: var(--md-info);        /* Blue progress */
+        background-color: var(--md-info);
     }
     &.fl-warning .fl-progress {
-        background-color: var(--md-warning);     /* Orange progress */
+        background-color: var(--md-warning);
     }
     &.fl-error .fl-progress {
-        background-color: var(--md-error);       /* Red progress */
+        background-color: var(--md-error);
     }
-    /**
-     * RTL Support
-     * Right-to-left language direction support
-     */
     &.fl-rtl {
         direction: rtl;
         .fl-content {
-            flex-direction: row-reverse;         /* Reverse flex direction */
+            flex-direction: row-reverse;
         }
         .fl-icon-wrapper {
             margin-right: 0;
-            margin-left: 16px;                   /* Swap margins for RTL */
+            margin-left: 16px;
         }
         .fl-actions {
-            justify-content: flex-start;         /* Align buttons to left in RTL */
+            justify-content: flex-start;
         }
         .fl-progress {
-            transform-origin: right center;      /* Animation starts from right */
+            transform-origin: right center;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                         /* Disable slide animation */
+        animation: none;
         .fl-action-button:active::after {
-            animation: none;                     /* Disable ripple animation */
+            animation: none;
         }
     }
 }
@@ -254,16 +193,16 @@ body.fl-dark .fl-google,
 html.fl-dark .fl-google,
 .fl-google.fl-auto-dark {
     .fl-md-card {
-        background-color: var(--md-bg-dark);     /* Darker background */
-        color: var(--md-text-dark);              /* Lighter text */
-        box-shadow: var(--md-elevation-dark);    /* Stronger shadows */
+        background-color: var(--md-bg-dark);
+        color: var(--md-text-dark);
+        box-shadow: var(--md-elevation-dark);
     }
     .fl-message {
-        color: var(--md-text-secondary-dark);    /* Lighter secondary text */
+        color: var(--md-text-secondary-dark);
     }
     .fl-action-button {
         &:hover, &:focus {
-            background-color: rgba(255, 255, 255, 0.08); /* Material dark hover - 8% opacity */
+            background-color: rgba(255, 255, 255, 0.08);
         }
     }
 }

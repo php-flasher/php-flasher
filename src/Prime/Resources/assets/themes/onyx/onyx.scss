@@ -1,182 +1,140 @@
 .fl-onyx {
-    /* Theme variables - Define the visual appearance of Onyx notifications */
-    /* Base colors and appearance */
-    --onyx-bg-light: #ffffff;                     /* Pure white background in light mode */
-    --onyx-bg-dark: #1e1e1e;                      /* Dark background in dark mode */
-    --onyx-text-light: #333333;                   /* Dark gray text in light mode */
-    --onyx-text-dark: #f5f5f5;                    /* Light gray text in dark mode */
-    --onyx-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Soft, spread shadow */
-    --onyx-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25); /* Deeper shadow for dark mode */
-    --onyx-border-radius: 4px;                   /* Generous rounded corners */
-    /* Type-specific colors for accent dots and progress bar */
-    --onyx-success: #10b981;                      /* Green for success */
-    --onyx-info: #3b82f6;                         /* Blue for info */
-    --onyx-warning: #f59e0b;                      /* Amber for warning */
-    --onyx-error: #ef4444;                        /* Red for error */
+    --onyx-bg-light: #ffffff;
+    --onyx-bg-dark: #1e1e1e;
+    --onyx-text-light: #333333;
+    --onyx-text-dark: #f5f5f5;
+    --onyx-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --onyx-shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.25);
+    --onyx-border-radius: 4px;
+    --onyx-success: #10b981;
+    --onyx-info: #3b82f6;
+    --onyx-warning: #f59e0b;
+    --onyx-error: #ef4444;
 }
 @keyframes onyxIn {
     0% {
         opacity: 0;
-        transform: translateY(15px);              /* Start below final position */
-        filter: blur(3px);                        /* Start blurred */
+        transform: translateY(15px);
+        filter: blur(3px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0);                 /* End at natural position */
-        filter: blur(0);                          /* End with clear focus */
+        transform: translateY(0);
+        filter: blur(0);
     }
 }
 .fl-onyx {
     background-color: var(--onyx-bg-light);
     color: var(--onyx-text-light);
-    padding: 1rem 1.25rem;                        /* Comfortable padding */
-    margin: 0.75rem 0;                            /* Vertical spacing */
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
     position: relative;
-    box-shadow: var(--onyx-shadow);               /* Elegant floating shadow */
-    animation: onyxIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Refined animation with custom easing */
+    box-shadow: var(--onyx-shadow);
+    animation: onyxIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: var(--fl-font), serif;
-    will-change: transform, opacity, filter;      /* Optimize for animation performance */
-    border-radius: var(--onyx-border-radius) var(--onyx-border-radius) 0 0;     /* Rounded corners */
-    overflow: hidden;                             /* Contain progress bar */
-    /**
-     * Accent dots at the corners
-     * Small circular indicators of notification type
-     */
+    will-change: transform, opacity, filter;
+    border-radius: var(--onyx-border-radius) var(--onyx-border-radius) 0 0;
+    overflow: hidden;
     &::before, &::after {
         content: '';
         position: absolute;
-        width: 6px;                               /* Small dot size */
+        width: 6px;
         height: 6px;
-        border-radius: 50%;                       /* Perfectly circular */
-        z-index: 1;                               /* Ensure dots appear above content */
+        border-radius: 50%;
+        z-index: 1;
     }
-    /* Top-left dot */
     &::before {
         top: 10px;
         left: 10px;
     }
-    /* Bottom-right dot */
     &::after {
         bottom: 10px;
         right: 10px;
     }
-    /**
-     * Content container
-     * Holds message and close button
-     */
     .fl-content {
         display: flex;
-        align-items: center;                      /* Vertically center content */
-        padding-left: 0.4rem;                     /* Space after the dot */
+        align-items: center;
+        padding-left: 0.4rem;
     }
-    /**
-     * Text container
-     * Wraps the message
-     */
     .fl-text {
-        flex: 1;                                  /* Take available space */
+        flex: 1;
         position: relative;
     }
-    /**
-     * Message styling
-     * Main notification text
-     */
     .fl-message {
-        font-size: 0.925rem;                      /* Slightly smaller than 15px */
-        line-height: 1.5;                         /* Comfortable line height */
-        font-weight: 400;                         /* Regular weight for clean appearance */
-        letter-spacing: 0.01rem;                  /* Slight letter spacing for readability */
+        font-size: 0.925rem;
+        line-height: 1.5;
+        font-weight: 400;
+        letter-spacing: 0.01rem;
     }
-    /**
-     * Close button styling
-     * Circular button with hover effect
-     */
     .fl-close {
         background: none;
         border: none;
-        font-size: 1.25rem;                       /* 20px × symbol */
+        font-size: 1.25rem;
         padding: 0.25rem;
         cursor: pointer;
-        opacity: 0.6;                             /* Subtle appearance by default */
-        transition: all 0.2s ease;                /* Smooth hover transition */
-        color: currentColor;                      /* Inherit text color */
-        margin-left: 1rem;                        /* Space between message and button */
-        flex-shrink: 0;                           /* Prevent button from shrinking */
-        border-radius: 50%;                       /* Circular button */
+        opacity: 0.6;
+        transition: all 0.2s ease;
+        color: currentColor;
+        margin-left: 1rem;
+        flex-shrink: 0;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 1.75rem;                           /* 28px diameter */
+        width: 1.75rem;
         height: 1.75rem;
         &:hover, &:focus {
-            opacity: 1;                           /* Full opacity on hover/focus */
-            background-color: rgba(0, 0, 0, 0.05); /* Subtle background on hover */
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.05);
         }
     }
-    /**
-     * Progress bar container
-     * Holds the animated progress indicator
-     */
     .fl-progress-bar {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
-        height: 3px;                              /* Thin progress bar */
+        height: 3px;
         overflow: hidden;
-        /**
-         * Progress indicator
-         * Animated by JavaScript to show remaining time
-         */
         .fl-progress {
             height: 100%;
             width: 100%;
-            transform-origin: left center;        /* Animation starts from left */
+            transform-origin: left center;
         }
     }
-    /**
-     * Type-specific styling for each notification type
-     * Each type gets its own color for the dots and progress bar
-     */
     &.fl-success {
-        &::before, &::after { background-color: var(--onyx-success); } /* Green dots */
+        &::before, &::after { background-color: var(--onyx-success); }
         .fl-progress-bar .fl-progress {
-            background-color: var(--onyx-success); /* Green progress bar */
+            background-color: var(--onyx-success);
         }
     }
     &.fl-info {
-        &::before, &::after { background-color: var(--onyx-info); } /* Blue dots */
+        &::before, &::after { background-color: var(--onyx-info); }
         .fl-progress-bar .fl-progress {
-            background-color: var(--onyx-info); /* Blue progress bar */
+            background-color: var(--onyx-info);
         }
     }
     &.fl-warning {
-        &::before, &::after { background-color: var(--onyx-warning); } /* Amber dots */
+        &::before, &::after { background-color: var(--onyx-warning); }
         .fl-progress-bar .fl-progress {
-            background-color: var(--onyx-warning); /* Amber progress bar */
+            background-color: var(--onyx-warning);
         }
     }
     &.fl-error {
-        &::before, &::after { background-color: var(--onyx-error); } /* Red dots */
+        &::before, &::after { background-color: var(--onyx-error); }
         .fl-progress-bar .fl-progress {
-            background-color: var(--onyx-error); /* Red progress bar */
+            background-color: var(--onyx-error);
         }
     }
-    /**
-     * RTL Support
-     * Right-to-left language direction support
-     */
     &.fl-rtl {
         direction: rtl;
         .fl-content {
             padding-left: 0;
-            padding-right: 0.4rem;                /* Swap padding for RTL */
+            padding-right: 0.4rem;
         }
         .fl-close {
             margin-left: 0;
-            margin-right: 1rem;                   /* Swap margins for RTL */
+            margin-right: 1rem;
         }
-        /* Swap dot positions for RTL */
         &::before {
             left: auto;
             right: 10px;
@@ -186,27 +144,19 @@
             left: 10px;
         }
         .fl-progress .fl-progress {
-            transform-origin: right center;       /* Animation starts from right */
+            transform-origin: right center;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                          /* Disable animation */
+        animation: none;
     }
 }
 body.fl-dark .fl-onyx,
 html.fl-dark .fl-onyx,
 .fl-onyx.fl-auto-dark {
-    background-color: var(--onyx-bg-dark);        /* Dark background */
-    color: var(--onyx-text-dark);                 /* Light text */
-    box-shadow: var(--onyx-shadow-dark);          /* Stronger shadow */
-    /**
-     * Adjust hover effect for dark mode
-     * Use white instead of black with appropriate opacity
-     */
+    background-color: var(--onyx-bg-dark);
+    color: var(--onyx-text-dark);
+    box-shadow: var(--onyx-shadow-dark);
     .fl-close:hover, .fl-close:focus {
         background-color: rgba(255, 255, 255, 0.1);
     }

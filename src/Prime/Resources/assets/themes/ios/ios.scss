@@ -1,55 +1,47 @@
 .fl-ios {
-    /* Theme variables - Define the visual appearance of iOS notifications */
-    /* Base colors and appearance */
-    --ios-bg-light: rgba(255, 255, 255);  /* Semi-transparent white in light mode */
-    --ios-bg-dark: rgba(30, 30, 30);      /* Semi-transparent dark in dark mode */
-    --ios-text-light: #000000;                  /* Black text in light mode */
-    --ios-text-secondary-light: #6e6e6e;        /* Gray secondary text in light mode */
-    --ios-text-dark: #ffffff;                   /* White text in dark mode */
-    --ios-text-secondary-dark: #a8a8a8;         /* Light gray secondary text in dark mode */
-    --ios-border-radius: 13px;                  /* iOS notification corner radius */
-    --ios-shadow: 0 2px 12px rgba(0, 0, 0, 0.15); /* Light shadow in light mode */
-    --ios-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.35); /* Darker shadow in dark mode */
-    --ios-icon-size: 18px;                      /* Size for icons */
-    --ios-blur: 30px;                           /* Amount of backdrop blur for glass effect */
-    /* Type-specific colors following iOS palette */
-    --ios-success: #34c759;                     /* iOS green */
-    --ios-info: #007aff;                        /* iOS blue */
-    --ios-warning: #ff9500;                     /* iOS orange */
-    --ios-error: #ff3b30;                       /* iOS red */
-    /* Animation timing */
-    --ios-animation-duration: 0.4s;             /* Duration for entrance animation */
+    --ios-bg-light: rgba(255, 255, 255);
+    --ios-bg-dark: rgba(30, 30, 30);
+    --ios-text-light: #000000;
+    --ios-text-secondary-light: #6e6e6e;
+    --ios-text-dark: #ffffff;
+    --ios-text-secondary-dark: #a8a8a8;
+    --ios-border-radius: 13px;
+    --ios-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    --ios-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.35);
+    --ios-icon-size: 18px;
+    --ios-blur: 30px;
+    --ios-success: #34c759;
+    --ios-info: #007aff;
+    --ios-warning: #ff9500;
+    --ios-error: #ff3b30;
+    --ios-animation-duration: 0.4s;
 }
 @keyframes iosSlideIn {
     0% {
         opacity: 0;
-        transform: translateY(-15px) scale(0.96); /* Start smaller and above */
+        transform: translateY(-15px) scale(0.96);
     }
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);        /* End at normal size and position */
+        transform: translateY(0) scale(1);
     }
 }
 @keyframes iosExpand {
     0% {
-        max-height: 0;                          /* Start collapsed */
-        opacity: 0;                             /* Start hidden */
+        max-height: 0;
+        opacity: 0;
     }
     100% {
-        max-height: 100px;                      /* Expand to fit content */
-        opacity: 1;                             /* Fade in */
+        max-height: 100px;
+        opacity: 1;
     }
 }
 .fl-ios {
     position: relative;
-    margin: 10px 0;                             /* Space between notifications */
-    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Apple system fonts */
-    animation: iosSlideIn var(--ios-animation-duration) cubic-bezier(0.23, 1, 0.32, 1); /* iOS-like easing */
-    will-change: transform, opacity;            /* Optimize for animation performance */
-    /**
-     * Main notification container
-     * Replicates iOS notification card with frosted glass effect
-     */
+    margin: 10px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    animation: iosSlideIn var(--ios-animation-duration) cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, opacity;
     .fl-ios-notification {
         background-color: var(--ios-bg-light);
         color: var(--ios-text-light);
@@ -57,202 +49,149 @@
         box-shadow: var(--ios-shadow);
         padding: 12px 15px;
         position: relative;
-        /* iOS-typical frosted glass effect */
         backdrop-filter: blur(var(--ios-blur));
         -webkit-backdrop-filter: blur(var(--ios-blur));
     }
-    /**
-     * Header section
-     * Contains app icon, app name, and timestamp
-     */
     .fl-header {
         display: flex;
         align-items: center;
         margin-bottom: 8px;
-        padding-right: 20px;                    /* Space for close button */
+        padding-right: 20px;
     }
-    /**
-     * App icon container
-     * Square with rounded corners like iOS app icons
-     */
     .fl-app-icon {
-        width: 22px;                            /* Standard iOS notification icon size */
+        width: 22px;
         height: 22px;
-        border-radius: 5px;                     /* iOS app icon corner radius */
-        background-color: currentColor;         /* Color based on notification type */
+        border-radius: 5px;
+        background-color: currentColor;
         margin-right: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;                         /* Prevent icon from shrinking */
+        flex-shrink: 0;
     }
-    /**
-     * SVG icon styling
-     * White icon on colored background
-     */
     .fl-icon-svg {
-        color: white;                           /* Icon is always white */
+        color: white;
         width: 14px;
         height: 14px;
     }
-    /**
-     * App info container
-     * Holds app name and timestamp
-     */
     .fl-app-info {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
         flex: 1;
     }
-    /**
-     * App name styling
-     * Bold text like in iOS notifications
-     */
     .fl-app-name {
-        font-weight: 600;                       /* Semi-bold like iOS */
-        font-size: 0.85rem;                     /* iOS app name size */
+        font-weight: 600;
+        font-size: 0.85rem;
     }
-    /**
-     * Time display
-     * Shows current time in iOS style
-     */
     .fl-time {
-        font-size: 0.75rem;                     /* Smaller text for time */
-        color: var(--ios-text-secondary-light); /* Gray secondary text */
+        font-size: 0.75rem;
+        color: var(--ios-text-secondary-light);
         margin-left: 5px;
-        flex-shrink: 0;                         /* Prevent time from wrapping */
+        flex-shrink: 0;
     }
-    /**
-     * Content/message area
-     * Contains the notification message
-     */
     .fl-content {
-        animation: iosExpand 0.3s forwards;     /* Expand content after header appears */
-        animation-delay: 0.1s;                  /* Slight delay for sequenced animation */
-        overflow: hidden;                       /* Contain expansion animation */
+        animation: iosExpand 0.3s forwards;
+        animation-delay: 0.1s;
+        overflow: hidden;
     }
-    /**
-     * Message styling
-     * Main notification text
-     */
     .fl-message {
-        font-size: 0.95rem;                     /* iOS notification text size */
+        font-size: 0.95rem;
         line-height: 1.3;
         margin: 0;
-        padding-right: 15px;                    /* Space for close button */
+        padding-right: 15px;
     }
-    /**
-     * Close button styling
-     * Circular close button like in iOS
-     */
     .fl-close {
-        position: absolute;                     /* Positioned in top right */
+        position: absolute;
         top: 10px;
         right: 12px;
-        width: 18px;                            /* Small circular button */
+        width: 18px;
         height: 18px;
-        border-radius: 50%;                     /* Perfectly circular */
+        border-radius: 50%;
         border: none;
-        background-color: rgba(0, 0, 0, 0.1);   /* Subtle background */
+        background-color: rgba(0, 0, 0, 0.1);
         color: var(--ios-text-light);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 14px;
         line-height: 1;
-        opacity: 0.7;                           /* Semi-transparent by default */
+        opacity: 0.7;
         cursor: pointer;
         transition: opacity 0.2s;
         padding: 0;
         &:hover, &:focus {
-            opacity: 1;                         /* Full opacity on hover/focus */
+            opacity: 1;
         }
     }
-    /**
-     * Type-specific styling
-     * Each notification type gets its own app icon color
-     */
     &.fl-success {
         .fl-app-icon {
-            color: var(--ios-success);          /* Green for success */
+            color: var(--ios-success);
         }
     }
     &.fl-info {
         .fl-app-icon {
-            color: var(--ios-info);             /* Blue for info */
+            color: var(--ios-info);
         }
     }
     &.fl-warning {
         .fl-app-icon {
-            color: var(--ios-warning);          /* Orange for warning */
+            color: var(--ios-warning);
         }
     }
     &.fl-error {
         .fl-app-icon {
-            color: var(--ios-error);            /* Red for error */
+            color: var(--ios-error);
         }
     }
-    /**
-     * RTL Support
-     * Right-to-left language direction support
-     */
     &.fl-rtl {
         direction: rtl;
         .fl-header {
             padding-right: 0;
-            padding-left: 20px;                 /* Swap padding for RTL */
+            padding-left: 20px;
         }
         .fl-app-icon {
             margin-right: 0;
-            margin-left: 8px;                   /* Swap margins for RTL */
+            margin-left: 8px;
         }
         .fl-time {
             margin-left: 0;
-            margin-right: 5px;                  /* Swap margins for RTL */
+            margin-right: 5px;
         }
         .fl-message {
             padding-right: 0;
-            padding-left: 15px;                 /* Swap padding for RTL */
+            padding-left: 15px;
         }
         .fl-close {
             right: auto;
-            left: 12px;                         /* Move close button to left for RTL */
+            left: 12px;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                        /* Disable entrance animation */
+        animation: none;
         .fl-content {
-            animation: none;                    /* Disable content expansion */
-            max-height: none;                   /* Show full content */
-            opacity: 1;                         /* Ensure content is visible */
+            animation: none;
+            max-height: none;
+            opacity: 1;
         }
     }
-    /**
-     * Mobile optimization
-     * Full width on small screens
-     */
     @media screen and (max-width: 480px) {
-        width: 100%;                            /* Full width on mobile */
+        width: 100%;
     }
 }
 body.fl-dark .fl-ios,
 html.fl-dark .fl-ios,
 .fl-ios.fl-auto-dark {
     .fl-ios-notification {
-        background-color: var(--ios-bg-dark);   /* Dark, semi-transparent background */
-        color: var(--ios-text-dark);            /* Light text */
-        box-shadow: var(--ios-shadow-dark);     /* Stronger shadow */
+        background-color: var(--ios-bg-dark);
+        color: var(--ios-text-dark);
+        box-shadow: var(--ios-shadow-dark);
     }
     .fl-time {
-        color: var(--ios-text-secondary-dark);  /* Lighter secondary text */
+        color: var(--ios-text-secondary-dark);
     }
     .fl-close {
-        background-color: rgba(255, 255, 255, 0.2); /* Lighter background for close button */
-        color: var(--ios-text-dark);            /* Light text color */
+        background-color: rgba(255, 255, 255, 0.2);
+        color: var(--ios-text-dark);
     }
 }

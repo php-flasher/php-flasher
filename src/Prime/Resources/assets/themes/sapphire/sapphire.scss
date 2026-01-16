@@ -1,117 +1,83 @@
-/* Theme-specific variables - override these to customize the sapphire theme */
 .fl-sapphire {
-    /* Base appearance */
-    --sapphire-bg-base: rgba(30, 30, 30, 0.9);    /* Dark semi-transparent background */
-    --sapphire-text: #f0f0f0;                     /* Light text for contrast */
-    --sapphire-shadow: rgba(0, 0, 0, 0.15);       /* Subtle shadow */
-    /* Progress bar colors */
-    --sapphire-progress-bg: rgba(255, 255, 255, 0.2); /* Light translucent background */
-    --sapphire-progress-fill: rgba(255, 255, 255, 0.9); /* Nearly white progress indicator */
-    /* Notification type colors - all with high transparency */
-    --sapphire-success: rgba(16, 185, 129, 0.95);  /* Transparent green */
-    --sapphire-error: rgba(239, 68, 68, 0.95);     /* Transparent red */
-    --sapphire-warning: rgba(245, 158, 11, 0.95);  /* Transparent amber */
-    --sapphire-info: rgba(59, 130, 246, 0.95);     /* Transparent blue */
-    /* Animation timing */
-    --sapphire-animation: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth bounce easing */
+    --sapphire-bg-base: rgba(30, 30, 30, 0.9);
+    --sapphire-text: #f0f0f0;
+    --sapphire-shadow: rgba(0, 0, 0, 0.15);
+    --sapphire-progress-bg: rgba(255, 255, 255, 0.2);
+    --sapphire-progress-fill: rgba(255, 255, 255, 0.9);
+    --sapphire-success: rgba(16, 185, 129, 0.95);
+    --sapphire-error: rgba(239, 68, 68, 0.95);
+    --sapphire-warning: rgba(245, 158, 11, 0.95);
+    --sapphire-info: rgba(59, 130, 246, 0.95);
+    --sapphire-animation: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 @keyframes sapphireIn {
     0% {
-        opacity: 0;                               /* Start invisible */
-        transform: translateY(10px);               /* Start below final position */
+        opacity: 0;
+        transform: translateY(10px);
     }
     60% {
-        transform: translateY(-3px);               /* Slight overshoot (bounce) */
+        transform: translateY(-3px);
     }
     100% {
-        opacity: 1;                               /* End fully visible */
-        transform: translateY(0);                  /* End at natural position */
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 .fl-sapphire {
-    /* Base appearance */
-    background-color: var(--sapphire-bg-base);     /* Semi-transparent background */
-    color: var(--sapphire-text);                   /* Light text color */
-    padding: 1em 1.5em;                            /* Comfortable padding */
-    margin: 0 0 0.75em 0;                          /* Bottom spacing between notifications */
+    background-color: var(--sapphire-bg-base);
+    color: var(--sapphire-text);
+    padding: 1em 1.5em;
+    margin: 0 0 0.75em 0;
     position: relative;
-    box-shadow: 0 6px 16px var(--sapphire-shadow); /* Soft shadow for depth */
-    transition: all 0.3s ease;                     /* Smooth transitions */
-    animation: sapphireIn var(--sapphire-animation); /* Entrance animation with bounce */
-    font-family: Roboto, var(--fl-font), serif;    /* Prefer Roboto font */
-    border-radius: 4px 4px 0 0;                          /* Rounded corners */
-    will-change: transform, opacity;               /* Optimize for animation performance */
-    /**
-     * Glassmorphism effect
-     * Creates the frosted glass appearance
-     */
-    backdrop-filter: blur(12px);                   /* Strong blur effect */
-    -webkit-backdrop-filter: blur(12px);           /* Safari support */
-    /**
-     * Message styling
-     * Clean, readable text
-     */
+    box-shadow: 0 6px 16px var(--sapphire-shadow);
+    transition: all 0.3s ease;
+    animation: sapphireIn var(--sapphire-animation);
+    font-family: Roboto, var(--fl-font), serif;
+    border-radius: 4px 4px 0 0;
+    will-change: transform, opacity;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     .fl-message {
-        font-size: 0.925em;                        /* ~15px at default font size */
-        line-height: 1.4;                          /* Comfortable line height */
-        color: var(--sapphire-text);               /* Consistent text color */
+        font-size: 0.925em;
+        line-height: 1.4;
+        color: var(--sapphire-text);
     }
-    /**
-     * Progress bar styling
-     * Indicates time remaining before dismissal
-     */
     .fl-progress-bar {
         position: absolute;
-        bottom: 0;                                 /* Positioned at the bottom */
+        bottom: 0;
         left: 0;
         right: 0;
-        height: 4px;                               /* Thin progress bar */
-        background-color: var(--sapphire-progress-bg); /* Semi-transparent background */
+        height: 4px;
+        background-color: var(--sapphire-progress-bg);
         overflow: hidden;
-        border-radius: 0 0 0.375em 0.375em;        /* Rounded bottom corners */
-        /**
-         * Progress indicator
-         * The actual moving part of the progress bar
-         */
+        border-radius: 0 0 0.375em 0.375em;
         .fl-progress {
-            background-color: var(--sapphire-progress-fill); /* Lighter fill color */
+            background-color: var(--sapphire-progress-fill);
             height: 100%;
             width: 100%;
-            transform-origin: left center;          /* Animation starts from left */
-            will-change: transform;                 /* Optimize animation performance */
+            transform-origin: left center;
+            will-change: transform;
         }
     }
-    /**
-     * Type-specific colors
-     * Each notification type gets its own semi-transparent background
-     */
     &.fl-success {
-        background-color: var(--sapphire-success);  /* Green background */
+        background-color: var(--sapphire-success);
     }
     &.fl-error {
-        background-color: var(--sapphire-error);    /* Red background */
+        background-color: var(--sapphire-error);
     }
     &.fl-warning {
-        background-color: var(--sapphire-warning);  /* Amber background */
+        background-color: var(--sapphire-warning);
     }
     &.fl-info {
-        background-color: var(--sapphire-info);     /* Blue background */
+        background-color: var(--sapphire-info);
     }
-    /**
-     * RTL language support
-     * Right-to-left text direction
-     */
     &.fl-rtl {
-        direction: rtl;                             /* Right-to-left text */
+        direction: rtl;
         .fl-progress .fl-progress {
-            transform-origin: right center;         /* Animation starts from right */
+            transform-origin: right center;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                            /* Disable animation */
+        animation: none;
     }
 }

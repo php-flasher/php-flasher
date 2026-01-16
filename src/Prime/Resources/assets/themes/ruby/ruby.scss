@@ -1,219 +1,168 @@
 .fl-ruby {
-    /* Theme variables - Define the visual appearance of Ruby notifications */
-    /* Base colors and appearance */
-    --ruby-text: #ffffff;                         /* White text for good contrast on gradients */
-    --ruby-text-dark: #f8fafc;                    /* Slightly off-white text for dark mode */
-    --ruby-border-radius: 4px;               /* Rounded corners (18px) */
-    --ruby-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    /* Type-specific gradients - rich, vibrant color combinations */
-    --ruby-success-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%); /* Green gradient */
-    --ruby-info-gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);    /* Blue gradient */
-    --ruby-warning-gradient: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); /* Amber gradient */
-    --ruby-error-gradient: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);   /* Red gradient */
+    --ruby-text: #ffffff;
+    --ruby-text-dark: #f8fafc;
+    --ruby-border-radius: 4px;
+    --ruby-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.2);
+    --ruby-success-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    --ruby-info-gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    --ruby-warning-gradient: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    --ruby-error-gradient: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
 }
 @keyframes rubyShine {
     0% {
-        left: -100%;                              /* Start off-screen left */
-        opacity: 0.6;                             /* Semi-transparent */
+        left: -100%;
+        opacity: 0.6;
     }
     60% {
-        left: 100%;                               /* Move to right edge */
-        opacity: 0.6;                             /* Maintain opacity during animation */
+        left: 100%;
+        opacity: 0.6;
     }
     100% {
-        left: 100%;                               /* Stay at right edge */
-        opacity: 0;                               /* Fade out at the end */
+        left: 100%;
+        opacity: 0;
     }
 }
 @keyframes rubyIn {
     0% {
-        opacity: 0;                               /* Start invisible */
-        transform: scale(0.96);                   /* Start slightly smaller */
+        opacity: 0;
+        transform: scale(0.96);
     }
     100% {
-        opacity: 1;                               /* End fully visible */
-        transform: scale(1);                      /* End at normal size */
+        opacity: 1;
+        transform: scale(1);
     }
 }
 .fl-ruby {
-    color: var(--ruby-text);                      /* White text for readability on gradients */
-    padding: 0;                                   /* No padding at the container level */
-    margin: 0.75rem 0;                            /* Vertical spacing between notifications */
+    color: var(--ruby-text);
+    padding: 0;
+    margin: 0.75rem 0;
     position: relative;
-    box-shadow: var(--ruby-shadow);               /* Soft shadow for depth */
-    border-radius: var(--ruby-border-radius) var(--ruby-border-radius) 0 0;     /* Rounded corners */
-    animation: rubyIn 0.35s cubic-bezier(0.21, 1.02, 0.73, 1); /* Custom easing for natural feel */
+    box-shadow: var(--ruby-shadow);
+    border-radius: var(--ruby-border-radius) var(--ruby-border-radius) 0 0;
+    animation: rubyIn 0.35s cubic-bezier(0.21, 1.02, 0.73, 1);
     font-family: var(--fl-font), serif;
-    will-change: transform, opacity;              /* Optimize for animation performance */
-    overflow: hidden;                             /* Contain the shine effect and progress bar */
-    /**
-     * Shine effect overlay
-     * Creates the gemstone-like reflecting light animation
-     */
+    will-change: transform, opacity;
+    overflow: hidden;
     .fl-shine {
         position: absolute;
         top: 0;
-        left: -100%;                              /* Start off-screen */
-        width: 50%;                               /* Cover half the width */
+        left: -100%;
+        width: 50%;
         height: 100%;
         background: linear-gradient(
             90deg,
-            rgba(255,255,255,0) 0%,               /* Transparent at edges */
-            rgba(255,255,255,0.3) 50%,            /* Semi-transparent white in middle */
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,0.3) 50%,
             rgba(255,255,255,0) 100%
         );
-        transform: skewX(-20deg);                 /* Angle the shine effect */
-        animation: rubyShine 6s infinite;         /* Repeating shine animation */
-        animation-delay: 1s;                      /* Delay before first shine */
-        z-index: 1;                               /* Above the background, below content */
+        transform: skewX(-20deg);
+        animation: rubyShine 6s infinite;
+        animation-delay: 1s;
+        z-index: 1;
     }
-    /**
-     * Content container
-     * Holds icon, message and close button
-     */
     .fl-content {
         display: flex;
-        align-items: center;                      /* Vertically center content */
-        padding: 0.9rem 1.1rem;                   /* Content padding */
+        align-items: center;
+        padding: 0.9rem 1.1rem;
         position: relative;
-        z-index: 2;                               /* Ensure content is above shine effect */
+        z-index: 2;
     }
-    /**
-     * Circular icon container
-     * Translucent white circle holding the icon
-     */
     .fl-icon-circle {
-        flex-shrink: 0;                          /* Prevent circle from shrinking */
-        width: 2.25rem;                          /* 36px diameter */
+        flex-shrink: 0;
+        width: 2.25rem;
         height: 2.25rem;
-        margin-right: 1rem;                      /* Space between icon and text */
-        background-color: rgba(255, 255, 255, 0.25); /* Translucent white */
-        border-radius: 50%;                      /* Perfectly circular */
+        margin-right: 1rem;
+        background-color: rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    /**
-     * Icon styling
-     * Icon within the circular container
-     */
     .fl-icon {
         margin: 0;
-        font-size: 1rem;                         /* 16px icon size */
-        color: var(--ruby-text);                 /* White icon */
+        font-size: 1rem;
+        color: var(--ruby-text);
         background-color: transparent;
     }
-    /**
-     * Text container
-     * Holds the message
-     */
     .fl-text {
-        flex: 1;                                 /* Take available space */
+        flex: 1;
     }
-    /**
-     * Message styling
-     * Main notification text
-     */
     .fl-message {
-        font-size: 0.925rem;                     /* ~15px at default font size */
-        line-height: 1.5;                        /* Comfortable line height */
-        font-weight: 500;                        /* Medium weight for better readability on colored backgrounds */
+        font-size: 0.925rem;
+        line-height: 1.5;
+        font-weight: 500;
     }
-    /**
-     * Close button styling
-     * Circular button with hover effect
-     */
     .fl-close {
-        background: rgba(255, 255, 255, 0.2);    /* Translucent white background */
+        background: rgba(255, 255, 255, 0.2);
         border: none;
-        font-size: 1.1rem;                       /* ~17.6px × symbol */
+        font-size: 1.1rem;
         padding: 0.1rem;
-        width: 1.6rem;                           /* ~25.6px diameter */
+        width: 1.6rem;
         height: 1.6rem;
-        border-radius: 50%;                      /* Perfectly circular */
+        border-radius: 50%;
         cursor: pointer;
-        opacity: 0.8;                            /* Slightly transparent by default */
-        transition: all 0.2s;                    /* Smooth hover transition */
-        color: var(--ruby-text);                 /* White text */
-        margin-left: 0.75rem;                    /* Space between message and button */
-        flex-shrink: 0;                          /* Prevent button from shrinking */
+        opacity: 0.8;
+        transition: all 0.2s;
+        color: var(--ruby-text);
+        margin-left: 0.75rem;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         &:hover, &:focus {
-            opacity: 1;                          /* Full opacity on hover/focus */
-            background: rgba(255, 255, 255, 0.3); /* Lighter background on hover */
-            transform: scale(1.05);              /* Subtle grow effect on hover */
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
     }
-    /**
-     * Progress bar container
-     * Holds the animated progress indicator
-     */
     .fl-progress-bar {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
-        height: 5px;                             /* Taller than typical progress bars */
-        background-color: rgba(0, 0, 0, 0.1);    /* Slightly dark background */
+        height: 5px;
+        background-color: rgba(0, 0, 0, 0.1);
         overflow: hidden;
-        z-index: 3;                              /* Above other elements */
-        /**
-         * Progress indicator
-         * Animated by JavaScript to show remaining time
-         */
+        z-index: 3;
         .fl-progress {
             height: 100%;
             width: 100%;
-            background: rgba(255, 255, 255, 0.4); /* Translucent white progress */
+            background: rgba(255, 255, 255, 0.4);
         }
     }
-    /**
-     * Type-specific styling
-     * Each notification type gets its own gradient background
-     */
     &.fl-success {
-        background: var(--ruby-success-gradient); /* Green gradient */
+        background: var(--ruby-success-gradient);
     }
     &.fl-info {
-        background: var(--ruby-info-gradient);    /* Blue gradient */
+        background: var(--ruby-info-gradient);
     }
     &.fl-warning {
-        background: var(--ruby-warning-gradient); /* Amber gradient */
+        background: var(--ruby-warning-gradient);
     }
     &.fl-error {
-        background: var(--ruby-error-gradient);   /* Red gradient */
+        background: var(--ruby-error-gradient);
     }
-    /**
-     * RTL Support
-     * Right-to-left language direction support
-     */
     &.fl-rtl {
         direction: rtl;
         .fl-icon-circle {
             margin-right: 0;
-            margin-left: 1rem;                   /* Swap margins for RTL */
+            margin-left: 1rem;
         }
         .fl-close {
             margin-left: 0;
-            margin-right: 0.75rem;               /* Swap margins for RTL */
+            margin-right: 0.75rem;
         }
         .fl-shine {
-            transform: skewX(20deg);             /* Reverse shine angle for RTL */
+            transform: skewX(20deg);
         }
         .fl-progress .fl-progress {
-            transform-origin: right center;      /* Animation starts from right */
+            transform-origin: right center;
         }
     }
-    /**
-     * Accessibility
-     * Respects reduced motion preferences
-     */
     @media (prefers-reduced-motion: reduce) {
-        animation: none;                         /* Disable entrance animation */
+        animation: none;
         .fl-shine {
-            display: none;                       /* Remove shine effect for reduced motion */
+            display: none;
         }
     }
 }
