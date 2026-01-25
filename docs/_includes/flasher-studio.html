@@ -23,18 +23,6 @@
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Notification Studio</span>
             </h2>
             <p class="mt-2 text-slate-500 max-w-2xl mx-auto">Design your perfect notification and see the code instantly</p>
-
-            <!-- Quick Actions -->
-            <div class="flex flex-wrap justify-center gap-3 mt-6">
-                <button id="reset-btn" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
-                    <i class="fas fa-rotate-left mr-2 text-slate-500"></i>
-                    Reset All
-                </button>
-                <button id="animation-toggle-btn" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
-                    <i class="fas fa-magic mr-2 text-indigo-500"></i>
-                    <span>Animations On</span>
-                </button>
-            </div>
         </header>
 
         <!-- Quick Presets -->
@@ -125,54 +113,6 @@
                                     <span class="text-xs font-medium text-slate-700">Warning</span>
                                 </button>
                             </div>
-                        </div>
-
-                        <!-- Icon Selection (New) -->
-                        <div class="mb-6">
-                            <div class="mb-2">
-                                <div class="inline-block px-2 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium mb-2">Custom Icon</div>
-                            </div>
-                            <div class="grid grid-cols-6 gap-2">
-                                <button data-icon="fa-bell" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-bell text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-check-circle" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-check-circle text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-exclamation-circle" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-exclamation-circle text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-heart" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-heart text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-star" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-star text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-trash" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-trash text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-download" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-download text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-upload" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-upload text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-cog" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-cog text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-plus-circle" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-plus-circle text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-minus-circle" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-minus-circle text-slate-600"></i>
-                                </button>
-                                <button data-icon="fa-question-circle" class="icon-btn p-2 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
-                                    <i class="fas fa-question-circle text-slate-600"></i>
-                                </button>
-                            </div>
-                            <button id="clear-icon-btn" class="mt-2 text-xs text-slate-500 hover:text-red-500 transition-colors">
-                                <i class="fas fa-times mr-1"></i> Clear icon
-                            </button>
                         </div>
 
                         <div class="mb-1">
@@ -489,24 +429,6 @@
         font-size: 0.9rem;
     }
 
-    /* Icon button styles */
-    .icon-btn {
-        transition: all 0.2s ease;
-    }
-
-    .icon-btn:hover {
-        transform: scale(1.1);
-    }
-
-    .icon-btn.active {
-        background-color: #EEF2FF;
-        border-color: #6366F1;
-    }
-
-    .icon-btn.active i {
-        color: #4F46E5;
-    }
-
     /* Preset button styles */
     .preset-btn {
         transition: all 0.2s ease;
@@ -658,12 +580,9 @@
      * - Clean and concise code examples
      * - Copy to clipboard functionality
      * - Quick presets for common use cases
-     * - Icon selection
      * - Multiple adapter support (Laravel, Symfony, JS, Noty, Toastr, SweetAlert)
      * - Code comparison view
      * - Mobile responsive design
-     * - Animation toggle
-     * - Reset functionality
      */
 
     // Quick Presets Configuration
@@ -671,38 +590,32 @@
         'user-created': {
             type: 'success',
             title: 'User Created',
-            message: 'User account created successfully! You can now log in.',
-            icon: 'fa-user-plus'
+            message: 'User account created successfully! You can now log in.'
         },
         'payment-failed': {
             type: 'error',
             title: 'Payment Failed',
-            message: 'Your payment could not be processed. Please try again or use a different payment method.',
-            icon: 'fa-credit-card'
+            message: 'Your payment could not be processed. Please try again or use a different payment method.'
         },
         'login-success': {
             type: 'success',
             title: 'Welcome Back!',
-            message: 'You have successfully logged in.',
-            icon: 'fa-sign-in-alt'
+            message: 'You have successfully logged in.'
         },
         'validation-error': {
             type: 'warning',
             title: 'Validation Error',
-            message: 'Please check the form for errors and try again.',
-            icon: 'fa-exclamation-triangle'
+            message: 'Please check the form for errors and try again.'
         },
         'order-processing': {
             type: 'info',
             title: 'Order Processing',
-            message: 'Your order is being processed. You will receive a confirmation email shortly.',
-            icon: 'fa-shopping-cart'
+            message: 'Your order is being processed. You will receive a confirmation email shortly.'
         },
         'welcome-message': {
             type: 'success',
             title: 'Welcome!',
-            message: 'Thank you for joining us. Get started by exploring our features.',
-            icon: 'fa-heart'
+            message: 'Thank you for joining us. Get started by exploring our features.'
         }
     };
 
@@ -780,8 +693,6 @@ flash()->warning('Your account will expire in 3 days.', 'Account Expiring');
             rtl: false,
             theme: "",
             escapeHtml: true,
-            icon: "",
-            animationsEnabled: true,
             _previousState: {},
             _animationInProgress: false,
         };
@@ -795,7 +706,7 @@ flash()->warning('Your account will expire in 3 days.', 'Account Expiring');
                     if (property === "type") {
                         updateStatus("Changing template...");
                     }
-                    updateCodeDisplay(target.animationsEnabled);
+                    updateCodeDisplay(true);
                 }
                 return true;
             }
@@ -1355,16 +1266,6 @@ Swal.fire({
         });
     }
 
-    function initializeIconButtons() {
-        document.querySelectorAll(".icon-btn").forEach(btn => {
-            const icon = btn.dataset.icon;
-            btn.classList.remove("active");
-            if (state.icon === icon) {
-                btn.classList.add("active");
-            }
-        });
-    }
-
     function initializeFormValues() {
         const template = contextTemplates[state.type];
         const currentTab = getCurrentTab();
@@ -1480,7 +1381,6 @@ Swal.fire({
             if (state.direction) options.direction = state.direction;
             if (state.rtl) options.rtl = true;
             if (state.escapeHtml === false) options.escapeHtml = false;
-            if (state.icon) options.icon = `fa ${state.icon}`;
 
             if (Object.keys(options).length === 0) {
                 return `${indent}${prefix}.${state.type}('${safeMessage}'${safeTitle ? `, '${safeTitle}'` : ""});`;
@@ -1499,7 +1399,6 @@ Swal.fire({
         } else {
             lines.push(`${indent}${prefix}`);
             if (state.theme) lines.push(`${indent}    ->use('theme.${state.theme}')`);
-            if (state.icon) lines.push(`${indent}    ->option('icon', 'fa ${state.icon}')`);
             if (state.position) lines.push(`${indent}    ->option('position', '${state.position}')`);
             if (state.timeout !== undefined && state.timeout !== "") {
                 const timeoutValue = state.timeout === false ? 'false' : state.timeout;
@@ -1688,24 +1587,6 @@ Swal.fire({
         });
     }
 
-    function resetAllOptions() {
-        state.type = "success";
-        state.title = "";
-        state.message = "Your product has been created successfully!";
-        state.timeout = "";
-        state.position = "";
-        state.direction = "";
-        state.rtl = false;
-        state.theme = "";
-        state.escapeHtml = true;
-        state.icon = "";
-
-        initializeFormValues();
-        initializeTypeButtons();
-        initializeIconButtons();
-        updateStatus("Reset complete ✓");
-    }
-
     function applyPreset(presetKey) {
         const preset = presets[presetKey];
         if (!preset) return;
@@ -1713,13 +1594,11 @@ Swal.fire({
         state.type = preset.type;
         state.title = preset.title;
         state.message = preset.message;
-        state.icon = preset.icon;
 
         document.getElementById("title-input").value = preset.title;
         document.getElementById("message-input").value = preset.message;
 
         initializeTypeButtons();
-        initializeIconButtons();
         updateStatus(`Preset applied: ${presetKey} ✓`);
     }
 
@@ -1749,7 +1628,6 @@ Swal.fire({
         if (state.direction) options.direction = state.direction;
         if (state.rtl) options.rtl = state.rtl;
         if (state.escapeHtml !== undefined) options.escapeHtml = state.escapeHtml;
-        if (state.icon) options.icon = `fa ${state.icon}`;
 
         console.log("Showing notification with options:", options);
 
@@ -1776,7 +1654,6 @@ Swal.fire({
                     `Type: ${state.type}\n` +
                     `Message: ${state.message}\n` +
                     (state.title ? `Title: ${state.title}\n` : "") +
-                    (state.icon ? `Icon: ${state.icon}\n` : "") +
                     (optionsText ? `\nOptions:\n${optionsText}` : ""));
             }
         } catch (e) {
@@ -1789,7 +1666,6 @@ Swal.fire({
     document.addEventListener("DOMContentLoaded", function() {
         initializeFormValues();
         initializeTypeButtons();
-        initializeIconButtons();
 
         // Type buttons
         document.querySelectorAll(".type-button").forEach(btn => {
@@ -1802,50 +1678,12 @@ Swal.fire({
             });
         });
 
-        // Icon buttons
-        document.querySelectorAll(".icon-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const icon = btn.dataset.icon;
-                state.icon = state.icon === icon ? "" : icon;
-                initializeIconButtons();
-                updateStatus(state.icon ? `Icon selected: ${icon}` : "Icon cleared");
-            });
-        });
-
-        // Clear icon button
-        document.getElementById("clear-icon-btn").addEventListener("click", () => {
-            state.icon = "";
-            initializeIconButtons();
-            updateStatus("Icon cleared");
-        });
-
         // Preset buttons
         document.querySelectorAll(".preset-btn").forEach(btn => {
             btn.addEventListener("click", () => {
                 const preset = btn.dataset.preset;
                 applyPreset(preset);
             });
-        });
-
-        // Reset button
-        document.getElementById("reset-btn").addEventListener("click", resetAllOptions);
-
-        // Animation toggle button
-        const animationToggleBtn = document.getElementById("animation-toggle-btn");
-        animationToggleBtn.addEventListener("click", () => {
-            state.animationsEnabled = !state.animationsEnabled;
-            const text = animationToggleBtn.querySelector("span");
-            const icon = animationToggleBtn.querySelector("i");
-            if (state.animationsEnabled) {
-                text.textContent = "Animations On";
-                icon.classList.remove("text-slate-400");
-                icon.classList.add("text-indigo-500");
-            } else {
-                text.textContent = "Animations Off";
-                icon.classList.remove("text-indigo-500");
-                icon.classList.add("text-slate-400");
-            }
-            updateStatus(`Animations ${state.animationsEnabled ? "enabled" : "disabled"}`);
         });
 
         // Form inputs
