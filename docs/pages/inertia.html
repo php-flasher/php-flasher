@@ -5,107 +5,77 @@ description: Discover how to integrate flash notifications into your Inertia.js 
 ---
 
 <div class="max-w-7xl mx-auto">
-    <!-- Main Content with Styled Sections -->
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <!-- Table of contents - Desktop -->
-        <div class="w-full bg-white border-b border-slate-100 shadow-sm">
-            <div class="px-6 py-4 flex items-center gap-4 overflow-x-auto no-scrollbar">
-                <a href="#installation" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
-                    <i class="fa-solid fa-download mr-1.5 text-emerald-500"></i> Installation
-                </a>
-                <span class="text-slate-300">|</span>
-                <a href="#usage" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
-                    <i class="fa-solid fa-code mr-1.5 text-emerald-500"></i> Usage
-                </a>
-                <span class="text-slate-300">|</span>
-                <a href="#examples" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
-                    <i class="fa-solid fa-book mr-1.5 text-emerald-500"></i> Examples
-                </a>
-                <span class="text-slate-300">|</span>
-                <a href="#frontend" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
-                    <i class="fa-solid fa-code-branch mr-1.5 text-emerald-500"></i> Frontend
-                </a>
-                <span class="text-slate-300">|</span>
-                <a href="#advanced" class="text-sm font-medium text-slate-700 hover:text-emerald-600 whitespace-nowrap transition-colors">
-                    <i class="fa-solid fa-gear mr-1.5 text-emerald-500"></i> Advanced
-                </a>
+        <div class="w-full bg-white border-b border-slate-100">
+            <div class="px-2 py-4 flex items-center gap-4 overflow-x-auto no-scrollbar">
+                <a href="#installation" class="text-sm font-medium text-slate-600 hover:text-indigo-600 whitespace-nowrap transition-colors">Installation</a>
+                <span class="text-slate-200">|</span>
+                <a href="#usage" class="text-sm font-medium text-slate-600 hover:text-indigo-600 whitespace-nowrap transition-colors">Usage</a>
+                <span class="text-slate-200">|</span>
+                <a href="#examples" class="text-sm font-medium text-slate-600 hover:text-indigo-600 whitespace-nowrap transition-colors">Examples</a>
+                <span class="text-slate-200">|</span>
+                <a href="#frontend" class="text-sm font-medium text-slate-600 hover:text-indigo-600 whitespace-nowrap transition-colors">Frontend</a>
+                <span class="text-slate-200">|</span>
+                <a href="#advanced" class="text-sm font-medium text-slate-600 hover:text-indigo-600 whitespace-nowrap transition-colors">Advanced</a>
             </div>
         </div>
 
-        <!-- Content area with custom styling -->
+        <!-- Content area -->
         <div class="prose prose-slate max-w-none p-6 md:p-8">
             <!-- Introduction Section -->
             <div id="introduction" class="scroll-mt-20">
                 <p class="mb-4">
                     <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
-                    works seamlessly with <span class="text-emerald-600 font-semibold">Inertia.js</span>, providing a smooth way to display flash notifications in your single-page applications.
+                    works seamlessly with <strong>Inertia.js</strong>, providing a smooth way to display flash notifications in your single-page applications.
                 </p>
 
                 <!-- Version requirements -->
                 <div class="mb-5">
-                    <!-- Requirements Cards Container -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <!-- PHP Card -->
-                        <div class="group relative bg-white rounded-lg border border-indigo-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                            <!-- Subtle accent line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600"></div>
-
-                            <div class="p-3">
-                                <div class="flex items-center">
-                                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
-                                        <i class="fa-brands fa-php text-white text-lg"></i>
-                                    </div>
-
-                                    <div class="ml-3">
-                                        <div class="text-xs uppercase tracking-wider text-indigo-500 font-semibold">Required</div>
-                                        <h4 class="font-bold text-slate-800">PHP Version</h4>
-                                        <div class="inline-block px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">
-                                            v8.2 or higher
-                                        </div>
+                        <div class="bg-white rounded-lg border border-slate-200 p-4">
+                            <div class="flex items-center">
+                                <div class="bg-indigo-100 rounded-full h-10 w-10 flex items-center justify-center">
+                                    <i class="fa-brands fa-php text-indigo-600 text-lg"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">Required</div>
+                                    <h4 class="font-semibold text-slate-800">PHP Version</h4>
+                                    <div class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs font-medium rounded-full mt-1">
+                                        v8.2 or higher
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Laravel Card -->
-                        <div class="group relative bg-white rounded-lg border border-red-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                            <!-- Subtle accent line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-red-600 to-red-700"></div>
-
-                            <div class="p-3">
-                                <div class="flex items-center">
-                                    <div class="bg-gradient-to-br from-red-600 to-red-700 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
-                                        <i class="fa-brands fa-laravel text-white text-lg"></i>
-                                    </div>
-
-                                    <div class="ml-3">
-                                        <div class="text-xs uppercase tracking-wider text-red-500 font-semibold">Required</div>
-                                        <h4 class="font-bold text-slate-800">Laravel Version</h4>
-                                        <div class="inline-block px-2 py-0.5 bg-red-50 text-red-700 text-xs font-medium rounded-full">
-                                            v11.0 or higher
-                                        </div>
+                        <div class="bg-white rounded-lg border border-slate-200 p-4">
+                            <div class="flex items-center">
+                                <div class="bg-red-600 rounded-full h-10 w-10 flex items-center justify-center">
+                                    <i class="fa-brands fa-laravel text-white text-lg"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">Required</div>
+                                    <h4 class="font-semibold text-slate-800">Laravel Version</h4>
+                                    <div class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs font-medium rounded-full mt-1">
+                                        v11.0 or higher
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Inertia Card -->
-                        <div class="group relative bg-white rounded-lg border border-emerald-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                            <!-- Subtle accent line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-500 to-emerald-600"></div>
-
-                            <div class="p-3">
-                                <div class="flex items-center">
-                                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full h-10 w-10 flex items-center justify-center shadow-sm group-hover:shadow transition-all">
-                                        <i class="fa-solid fa-code text-white text-lg"></i>
-                                    </div>
-
-                                    <div class="ml-3">
-                                        <div class="text-xs uppercase tracking-wider text-emerald-500 font-semibold">Required</div>
-                                        <h4 class="font-bold text-slate-800">Inertia.js</h4>
-                                        <div class="inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full">
-                                            v1.0 or higher
-                                        </div>
+                        <div class="bg-white rounded-lg border border-slate-200 p-4">
+                            <div class="flex items-center">
+                                <div class="bg-emerald-600 rounded-full h-10 w-10 flex items-center justify-center">
+                                    <i class="fa-solid fa-code text-white text-lg"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">Required</div>
+                                    <h4 class="font-semibold text-slate-800">Inertia.js</h4>
+                                    <div class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs font-medium rounded-full mt-1">
+                                        v1.0 or higher
                                     </div>
                                 </div>
                             </div>
@@ -113,14 +83,14 @@ description: Discover how to integrate flash notifications into your Inertia.js 
                     </div>
 
                     <!-- Legacy version note -->
-                    <div class="bg-amber-50 border-l-4 border-amber-300 rounded-r-lg p-3 mt-3">
+                    <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-4 mt-4">
                         <div class="flex">
-                            <div class="flex-shrink-0 flex items-center justify-center">
-                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                            <div class="flex-shrink-0">
+                                <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
                             </div>
                             <div class="ml-3">
                                 <h4 class="text-sm font-medium text-amber-800">Using older versions?</h4>
-                                <p class="text-xs text-amber-700">
+                                <p class="text-sm text-amber-700 mt-1">
                                     If you need to use PHP &lt; v8.2, Laravel &lt; v11.0, or an older Inertia.js version, use
                                     <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span> v1</strong> instead.
                                     <a href="https://php-flasher.github.io/" class="text-amber-800 underline hover:text-amber-900">
@@ -135,12 +105,7 @@ description: Discover how to integrate flash notifications into your Inertia.js 
 
             <!-- Installation Section -->
             <div id="installation" class="mt-10 scroll-mt-20">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
-                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-download"></i>
-                    </span>
-                    Installation
-                </h2>
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Installation</h2>
                 <p class="mb-4">
                     To use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong> with Inertia.js,
                     you'll need to install both the PHP package and JavaScript package.
@@ -149,37 +114,35 @@ description: Discover how to integrate flash notifications into your Inertia.js 
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">1. Install the PHP Package</h3>
 
                 <!-- Terminal code block -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-4">
-                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-4">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
                         <div class="flex items-center">
-                            <div class="flex space-x-1 mr-4">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            <div class="flex space-x-1.5 mr-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                             </div>
-                            <span class="text-slate-400 text-sm">Terminal</span>
+                            <span class="text-white text-sm">Terminal</span>
                         </div>
                         <div class="text-slate-400 text-sm">PHP Installation</div>
                     </div>
 
-                    <div class="p-6 bg-slate-900">
-                        <div class="flex flex-col gap-4">
-                            <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">composer require php-flasher/flasher-laravel</code></pre>
-                        </div>
+                    <div class="p-4 bg-slate-900">
+                        <pre class="text-sm text-slate-200"><code class="language-bash">composer require php-flasher/flasher-laravel</code></pre>
                     </div>
                 </div>
 
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">2. Add JavaScript Package</h3>
-                <p class="mb-4">Add <code class="bg-slate-100 px-2 py-1 rounded text-emerald-600">@flasher/flasher</code> to your <code class="bg-slate-100 px-2 py-1 rounded text-emerald-600">package.json</code>:</p>
+                <p class="mb-4">Add <code class="bg-slate-200 px-2 py-1 rounded text-slate-700">@flasher/flasher</code> to your <code class="bg-slate-200 px-2 py-1 rounded text-slate-700">package.json</code>:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-4">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-4">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">package.json</div>
+                        <div class="text-white text-sm">package.json</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-json">{
@@ -192,34 +155,34 @@ description: Discover how to integrate flash notifications into your Inertia.js 
 
                 <p class="mb-4">Then, install the JavaScript dependencies:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
-                    <div class="bg-slate-800 p-4 flex items-center justify-between">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
                         <div class="flex items-center">
-                            <div class="flex space-x-1 mr-4">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            <div class="flex space-x-1.5 mr-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                             </div>
-                            <span class="text-slate-400 text-sm">Terminal</span>
+                            <span class="text-white text-sm">Terminal</span>
                         </div>
                         <div class="text-slate-400 text-sm">JS Installation</div>
                     </div>
 
-                    <div class="p-6 bg-slate-900">
-                        <pre class="bg-slate-800 p-4 rounded-lg text-sm overflow-x-auto"><code class="language-bash text-slate-200">npm install --force</code></pre>
+                    <div class="p-4 bg-slate-900">
+                        <pre class="text-sm text-slate-200"><code class="language-bash">npm install --force</code></pre>
                     </div>
                 </div>
 
                 <!-- Integration callout -->
-                <div class="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-lg p-5 mb-6">
-                    <div class="flex items-center">
+                <div class="bg-slate-50 border-l-4 border-emerald-500 rounded-r-lg p-4 mb-6">
+                    <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i class="fa-solid fa-lightbulb text-emerald-500"></i>
+                            <i class="fa-solid fa-lightbulb text-emerald-600 mt-0.5"></i>
                         </div>
                         <div class="ml-3">
-                            <h4 class="text-sm font-medium text-emerald-800">Why the --force flag?</h4>
-                            <p class="text-sm text-emerald-700 mt-1">
-                                The <code class="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-600">--force</code> flag is required because we're installing a local package from the filesystem
+                            <h4 class="text-sm font-medium text-slate-800">Why the --force flag?</h4>
+                            <p class="text-sm text-slate-600 mt-1">
+                                The <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700">--force</code> flag is required because we're installing a local package from the filesystem
                                 rather than from npm. This is the recommended approach for PHPFlasher to ensure version compatibility.
                             </p>
                         </div>
@@ -229,12 +192,7 @@ description: Discover how to integrate flash notifications into your Inertia.js 
 
             <!-- Usage Section -->
             <div id="usage" class="mt-10 scroll-mt-20">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
-                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-code"></i>
-                    </span>
-                    Usage
-                </h2>
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Usage</h2>
 
                 <p class="mb-4">
                     To use <strong><span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span></strong>
@@ -242,17 +200,17 @@ description: Discover how to integrate flash notifications into your Inertia.js 
                 </p>
 
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">1. Modify Your Middleware</h3>
-                <p class="mb-4">Update your <code class="bg-slate-100 px-2 py-1 rounded text-emerald-600">HandleInertiaRequests</code> middleware to share flash notifications:</p>
+                <p class="mb-4">Update your <code class="bg-slate-200 px-2 py-1 rounded text-slate-700">HandleInertiaRequests</code> middleware to share flash notifications:</p>
 
                 <!-- PHP Example with full file structure -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Middleware/HandleInertiaRequests.php</div>
+                        <div class="text-white text-sm">app/Http/Middleware/HandleInertiaRequests.php</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
@@ -286,16 +244,16 @@ class HandleInertiaRequests extends Middleware
                 </div>
 
                 <!-- Pro tip box -->
-                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-5 mb-6 border border-emerald-100">
-                    <div class="flex items-center">
+                <div class="bg-slate-50 rounded-lg p-4 mb-6 border border-slate-200">
+                    <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
+                            <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
                         </div>
-                        <div class="ml-4">
-                            <h4 class="text-sm font-medium text-emerald-800">Pro Tip: Multiple Ways to Share Flash Messages</h4>
-                            <p class="text-sm text-emerald-700 mt-1">
-                                The <code class="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-600">render('array')</code> method
-                                converts flash messages to a format compatible with JavaScript. You can also use <code class="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-600">render('json')</code> and
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-slate-800">Pro Tip: Multiple Ways to Share Flash Messages</h4>
+                            <p class="text-sm text-slate-600 mt-1">
+                                The <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700">render('array')</code> method
+                                converts flash messages to a format compatible with JavaScript. You can also use <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700">render('json')</code> and
                                 parse it in your frontend code.
                             </p>
                         </div>
@@ -305,14 +263,14 @@ class HandleInertiaRequests extends Middleware
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">2. Set Up Your Frontend</h3>
                 <p class="mb-4">Add the code to render notifications in your layout component (example shown with Vue.js):</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">resources/js/Shared/Layout.vue</div>
+                        <div class="text-white text-sm">resources/js/Shared/Layout.vue</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script&gt;
@@ -365,17 +323,17 @@ export default {
                     </div>
                 </div>
 
-                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">3. Creating Flash Messages</h3>
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">3. Creating Flash Messages</h3>
                 <p class="mb-4">Now you can create flash notifications in your controllers:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/UsersController.php</div>
+                        <div class="text-white text-sm">app/Http/Controllers/UsersController.php</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
@@ -508,8 +466,8 @@ class UsersController extends Controller
 
                     <div class="bg-white rounded-lg p-4 border border-slate-200 shadow-sm mb-4">
                         <div class="flex items-center mb-2">
-                            <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
-                                <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i>
+                            <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
                             </div>
                             <h3 class="font-medium text-slate-800">Warning Message</h3>
                         </div>
@@ -518,8 +476,8 @@ class UsersController extends Controller
 
                     <div class="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
                         <div class="flex items-center mb-2">
-                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                                <i class="fa-solid fa-circle-info text-blue-500"></i>
+                            <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-circle-info text-indigo-500"></i>
                             </div>
                             <h3 class="font-medium text-slate-800">Info Message</h3>
                         </div>
@@ -529,27 +487,27 @@ class UsersController extends Controller
 
                 <!-- Expert tips -->
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
-                                        <div class="flex items-start">
-                        <div class="flex-shrink-0 p-2 bg-emerald-100 rounded-full">
-                            <i class="fa-solid fa-lightbulb text-emerald-600"></i>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 p-2 bg-indigo-100 rounded-full">
+                            <i class="fa-solid fa-lightbulb text-indigo-600"></i>
                         </div>
                         <div class="ml-4">
                             <h4 class="text-lg font-semibold text-slate-800">Expert Tips for Inertia.js Integration</h4>
                             <ul class="mt-2 space-y-2 text-slate-600">
                                 <li class="flex items-start">
-                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
                                     <span><strong>Keep It Consistent:</strong> Use the same notification types for similar actions throughout your application for a predictable user experience.</span>
                                 </li>
                                 <li class="flex items-start">
-                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
                                     <span><strong>Form Validation:</strong> Use flash notifications for general form status, but rely on Inertia's built-in error handling for field-specific validation errors.</span>
                                 </li>
                                 <li class="flex items-start">
-                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
-                                    <span><strong>Watch for Changes:</strong> Always use the <code class="bg-slate-100 px-1.5 py-0.5 rounded text-emerald-600">watch</code> property to detect new notifications after navigation or form submissions.</span>
+                                    <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span><strong>Watch for Changes:</strong> Always use the <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700">watch</code> property to detect new notifications after navigation or form submissions.</span>
                                 </li>
                                 <li class="flex items-start">
-                                    <i class="fa-solid fa-check text-emerald-500 mr-2 mt-1"></i>
+                                    <i class="fa-solid fa-check text-green-500 mr-2 mt-1"></i>
                                     <span><strong>Package Bundling:</strong> When using Vite or Webpack, ensure @flasher/flasher is properly included in your bundle.</span>
                                 </li>
                             </ul>
@@ -560,24 +518,19 @@ class UsersController extends Controller
 
             <!-- Examples Section -->
             <div id="examples" class="mt-10 scroll-mt-20">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
-                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-book"></i>
-                    </span>
-                    Examples
-                </h2>
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Examples</h2>
 
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">CRUD Operations</h3>
                 <p class="mb-4">Here's a complete example of CRUD operations with flash messages:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/ProductController.php</div>
+                        <div class="text-white text-sm">app/Http/Controllers/ProductController.php</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
@@ -687,14 +640,14 @@ class ProductController extends Controller
                 </div>
 
                 <!-- Best practice box -->
-                <div class="bg-green-50 border-l-4 border-green-400 rounded-r-lg p-5 mb-6">
-                    <div class="flex items-center">
+                <div class="bg-slate-50 border-l-4 border-green-500 rounded-r-lg p-4 mb-6">
+                    <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i class="fa-solid fa-check-circle text-green-500"></i>
+                            <i class="fa-solid fa-check-circle text-green-600 mt-0.5"></i>
                         </div>
                         <div class="ml-3">
-                            <h4 class="text-sm font-medium text-green-800">Best Practice: Error Handling</h4>
-                            <p class="text-sm text-green-700 mt-1">
+                            <h4 class="text-sm font-medium text-slate-800">Best Practice: Error Handling</h4>
+                            <p class="text-sm text-slate-600 mt-1">
                                 Always wrap database operations in try-catch blocks and provide user-friendly error messages.
                                 This helps users understand what went wrong and what actions they can take to resolve issues.
                             </p>
@@ -702,17 +655,17 @@ class ProductController extends Controller
                     </div>
                 </div>
 
-                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Authentication Flow</h3>
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Authentication Flow</h3>
                 <p class="mb-4">Here's an example of using flash notifications in an authentication flow:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/Auth/AuthController.php</div>
+                        <div class="text-white text-sm">app/Http/Controllers/Auth/AuthController.php</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
@@ -811,17 +764,17 @@ class AuthController extends Controller
                     </div>
                 </div>
 
-                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-3">Form Validation</h3>
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Form Validation</h3>
                 <p class="mb-4">Combine PHPFlasher with Inertia's validation error handling:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">app/Http/Controllers/FormController.php</div>
+                        <div class="text-white text-sm">app/Http/Controllers/FormController.php</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
@@ -897,14 +850,14 @@ class FormController extends Controller
                 <!-- Vue.js form example -->
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Corresponding Vue Form Component</h3>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Contact/Form.vue</div>
+                        <div class="text-white text-sm">resources/js/Pages/Contact/Form.vue</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script setup&gt;
@@ -978,14 +931,14 @@ const submit = () => {
                     </div>
                 </div>
 
-                <div class="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-lg p-5 mb-6">
-                    <div class="flex items-center">
+                <div class="bg-slate-50 border-l-4 border-emerald-500 rounded-r-lg p-4 mb-6">
+                    <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i class="fa-solid fa-lightbulb text-emerald-500"></i>
+                            <i class="fa-solid fa-lightbulb text-emerald-600 mt-0.5"></i>
                         </div>
                         <div class="ml-3">
-                            <h4 class="text-sm font-medium text-emerald-800">Tip: Handling Both Generic and Field-Specific Errors</h4>
-                            <p class="text-sm text-emerald-700 mt-1">
+                            <h4 class="text-sm font-medium text-slate-800">Tip: Handling Both Generic and Field-Specific Errors</h4>
+                            <p class="text-sm text-slate-600 mt-1">
                                 As shown in the example above, it's often helpful to use PHPFlasher for global form status messages
                                 while using Inertia's built-in error handling for field-specific validation errors.
                                 This gives users both context-specific and general feedback.
@@ -997,12 +950,7 @@ const submit = () => {
 
             <!-- Frontend Framework Section with Tabs -->
             <div id="frontend" class="mt-10 scroll-mt-20">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
-                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-code-branch"></i>
-                    </span>
-                    Frontend Framework Integration
-                </h2>
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Frontend Framework Integration</h2>
 
                 <p class="mb-4">
                     Inertia.js works with multiple frontend frameworks. Here's how to integrate PHPFlasher with each:
@@ -1015,7 +963,7 @@ const submit = () => {
                             <button
                                 id="vueTab"
                                 onclick="switchTab('vue')"
-                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-600 transition-colors"
                             >
                                 <i class="fa-brands fa-vuejs mr-1.5 text-emerald-500"></i>
                                 Vue.js
@@ -1023,7 +971,7 @@ const submit = () => {
                             <button
                                 id="reactTab"
                                 onclick="switchTab('react')"
-                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-600 transition-colors"
                             >
                                 <i class="fa-brands fa-react mr-1.5 text-emerald-500"></i>
                                 React
@@ -1031,7 +979,7 @@ const submit = () => {
                             <button
                                 id="svelteTab"
                                 onclick="switchTab('svelte')"
-                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-emerald-500 hover:text-emerald-600 transition-colors"
+                                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-600 transition-colors"
                             >
                                 <i class="fa-solid fa-code mr-1.5 text-emerald-500"></i>
                                 Svelte
@@ -1043,14 +991,14 @@ const submit = () => {
                     <div id="vueContent" class="mt-4">
                         <h3 class="text-xl font-semibold text-slate-700 mb-3">Vue.js Integration</h3>
 
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                             <div class="bg-slate-800 px-4 py-3 flex items-center">
                                 <div class="flex space-x-1.5 mr-3">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Layouts/AppLayout.vue</div>
+                                <div class="text-white text-sm">resources/js/Layouts/AppLayout.vue</div>
                             </div>
                             <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script setup&gt;
@@ -1095,14 +1043,14 @@ watch(
 
                         <p class="mb-4">Using flash messages in a Vue component:</p>
 
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                             <div class="bg-slate-800 px-4 py-3 flex items-center">
                                 <div class="flex space-x-1.5 mr-3">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Dashboard.vue</div>
+                                <div class="text-white text-sm">resources/js/Pages/Dashboard.vue</div>
                             </div>
                             <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script setup&gt;
@@ -1152,14 +1100,14 @@ const submit = () => {
                     <div id="reactContent" class="mt-4 hidden">
                         <h3 class="text-xl font-semibold text-slate-700 mb-3">React Integration</h3>
 
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                             <div class="bg-slate-800 px-4 py-3 flex items-center">
                                 <div class="flex space-x-1.5 mr-3">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Layouts/AppLayout.jsx</div>
+                                <div class="text-white text-sm">resources/js/Layouts/AppLayout.jsx</div>
                             </div>
                             <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-jsx">import { useEffect } from 'react'
@@ -1196,14 +1144,14 @@ export default function AppLayout({ children }) {
 
                         <p class="mb-4">Using flash messages in a React component:</p>
 
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                             <div class="bg-slate-800 px-4 py-3 flex items-center">
                                 <div class="flex space-x-1.5 mr-3">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-                                                                        <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Dashboard.jsx</div>
+                                <div class="text-white text-sm">resources/js/Pages/Dashboard.jsx</div>
                             </div>
                             <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-jsx">import { useState } from 'react'
@@ -1285,14 +1233,14 @@ export default function Dashboard() {
                     <div id="svelteContent" class="mt-4 hidden">
                         <h3 class="text-xl font-semibold text-slate-700 mb-3">Svelte Integration</h3>
 
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                             <div class="bg-slate-800 px-4 py-3 flex items-center">
                                 <div class="flex space-x-1.5 mr-3">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Layouts/AppLayout.svelte</div>
+                                <div class="text-white text-sm">resources/js/Layouts/AppLayout.svelte</div>
                             </div>
                             <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script&gt;
@@ -1336,14 +1284,14 @@ export default function Dashboard() {
 
                         <p class="mb-4">Using flash messages in a Svelte component:</p>
 
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                             <div class="bg-slate-800 px-4 py-3 flex items-center">
                                 <div class="flex space-x-1.5 mr-3">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="text-white opacity-80 text-xs font-medium">resources/js/Pages/Dashboard.svelte</div>
+                                <div class="text-white text-sm">resources/js/Pages/Dashboard.svelte</div>
                             </div>
                             <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-html">&lt;script&gt;
@@ -1430,7 +1378,7 @@ export default function Dashboard() {
                             </div>
                             <div class="ml-3">
                                 <h4 class="font-medium text-slate-800">Vue.js</h4>
-                                <p class="text-slate-600 text-sm">Use the <code class="bg-slate-100 px-1.5 py-0.5 rounded">watch</code> function with <code class="bg-slate-100 px-1.5 py-0.5 rounded">immediate: true</code> to ensure flash messages are shown on both initial load and after navigation.</p>
+                                <p class="text-slate-600 text-sm">Use the <code class="bg-slate-200 px-1.5 py-0.5 rounded">watch</code> function with <code class="bg-slate-200 px-1.5 py-0.5 rounded">immediate: true</code> to ensure flash messages are shown on both initial load and after navigation.</p>
                             </div>
                         </div>
 
@@ -1440,7 +1388,7 @@ export default function Dashboard() {
                             </div>
                             <div class="ml-3">
                                 <h4 class="font-medium text-slate-800">React</h4>
-                                <p class="text-slate-600 text-sm">With React, use <code class="bg-slate-100 px-1.5 py-0.5 rounded">useEffect</code> with <code class="bg-slate-100 px-1.5 py-0.5 rounded">messages</code> as a dependency to catch updates to flash messages.</p>
+                                <p class="text-slate-600 text-sm">With React, use <code class="bg-slate-200 px-1.5 py-0.5 rounded">useEffect</code> with <code class="bg-slate-200 px-1.5 py-0.5 rounded">messages</code> as a dependency to catch updates to flash messages.</p>
                             </div>
                         </div>
 
@@ -1450,7 +1398,7 @@ export default function Dashboard() {
                             </div>
                             <div class="ml-3">
                                 <h4 class="font-medium text-slate-800">Svelte</h4>
-                                <p class="text-slate-600 text-sm">Combine <code class="bg-slate-100 px-1.5 py-0.5 rounded">onMount</code> and <code class="bg-slate-100 px-1.5 py-0.5 rounded">afterUpdate</code> lifecycle functions to ensure flash messages are shown both initially and after updates.</p>
+                                <p class="text-slate-600 text-sm">Combine <code class="bg-slate-200 px-1.5 py-0.5 rounded">onMount</code> and <code class="bg-slate-200 px-1.5 py-0.5 rounded">afterUpdate</code> lifecycle functions to ensure flash messages are shown both initially and after updates.</p>
                             </div>
                         </div>
                     </div>
@@ -1459,24 +1407,19 @@ export default function Dashboard() {
 
             <!-- Advanced Section -->
             <div id="advanced" class="mt-10 scroll-mt-20">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-4 border-b border-slate-100 pb-2">
-                    <span class="p-1.5 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-lg shadow-sm">
-                        <i class="fa-solid fa-gear"></i>
-                    </span>
-                    Advanced
-                </h2>
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Advanced</h2>
 
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Custom Notification Options</h3>
                 <p class="mb-4">Customize your notifications with various options:</p>
 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 mb-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
                     <div class="bg-slate-800 px-4 py-3 flex items-center">
                         <div class="flex space-x-1.5 mr-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="text-white opacity-80 text-xs font-medium">CustomOptions.php</div>
+                        <div class="text-white text-sm">CustomOptions.php</div>
                     </div>
                     <div>
 <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
@@ -1541,121 +1484,11 @@ class NotificationController extends Controller
                     </div>
                 </div>
 
-                <!-- Additional features highlight -->
-                <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mt-12">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">Additional Features</h3>
-
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Feature 1 -->
-                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-3">
-                                <i class="fa-solid fa-puzzle-piece text-amber-600"></i>
-                            </div>
-                            <h4 class="font-semibold text-slate-800 mb-2">Multiple Themes</h4>
-                            <p class="text-slate-600 text-sm">Choose from 6+ themes including Toastr, SweetAlert, Notyf, Noty and more.</p>
-                            <a href="https://php-flasher.github.io/themes" class="text-emerald-600 text-xs font-medium mt-2 inline-flex items-center hover:text-emerald-800">
-                                View themes <i class="fa-solid fa-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-
-                        <!-- Feature 2 -->
-                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mb-3">
-                                <i class="fa-solid fa-language text-emerald-600"></i>
-                            </div>
-                            <h4 class="font-semibold text-slate-800 mb-2">Internationalization</h4>
-                            <p class="text-slate-600 text-sm">Support for multiple languages and right-to-left (RTL) layouts.</p>
-                            <a href="https://php-flasher.github.io/i18n" class="text-emerald-600 text-xs font-medium mt-2 inline-flex items-center hover:text-emerald-800">
-                                Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-
-                        <!-- Feature 3 -->
-                        <div class="bg-white rounded-lg p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mb-3">
-                                <i class="fa-solid fa-bolt-lightning text-indigo-600"></i>
-                            </div>
-                            <h4 class="font-semibold text-slate-800 mb-2">JavaScript API</h4>
-                            <p class="text-slate-600 text-sm">Access the full JavaScript API for creating notifications directly from the frontend.</p>
-                            <a href="https://php-flasher.github.io/javascript-api" class="text-emerald-600 text-xs font-medium mt-2 inline-flex items-center hover:text-emerald-800">
-                                Learn more <i class="fa-solid fa-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
+
         </div>
     </div>
 </div>
-
-<style>
-    .animate-float {
-        animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
-    }
-
-    .animate-spin-slow {
-        animation: spin 20s linear infinite;
-    }
-
-    @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-        .animate-pulse-slow {
-        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    .animate-pulse-delayed {
-        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) 1s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.5;
-        }
-    }
-
-    .animate-fade-in {
-        animation: fadeIn 1s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-    }
-
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-</style>
 
 <script>
     // Tab switching functionality for frontend frameworks
@@ -1669,11 +1502,11 @@ class NotificationController extends Controller
         document.getElementById(tabId + 'Content').classList.remove('hidden');
 
         // Update tab styling
-        document.getElementById('vueTab').classList.remove('border-emerald-500', 'text-emerald-600');
-        document.getElementById('reactTab').classList.remove('border-emerald-500', 'text-emerald-600');
-        document.getElementById('svelteTab').classList.remove('border-emerald-500', 'text-emerald-600');
+        document.getElementById('vueTab').classList.remove('border-indigo-500', 'text-indigo-600');
+        document.getElementById('reactTab').classList.remove('border-indigo-500', 'text-indigo-600');
+        document.getElementById('svelteTab').classList.remove('border-indigo-500', 'text-indigo-600');
 
-        document.getElementById(tabId + 'Tab').classList.add('border-emerald-500', 'text-emerald-600');
+        document.getElementById(tabId + 'Tab').classList.add('border-indigo-500', 'text-indigo-600');
     }
 
     // Initialize with Vue tab selected by default
@@ -1681,7 +1514,3 @@ class NotificationController extends Controller
         switchTab('vue');
     });
 </script>
-
-
-
-
