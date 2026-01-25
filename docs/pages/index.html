@@ -481,30 +481,30 @@ namespace App\Http\Controllers;
 
 class ProfileController
 {
-public function update()
-{
-// Update user profile logic
+    public function update()
+    {
+        // Update user profile logic
 
-// Show success notification
-flash()->success('Profile updated successfully!');
+        // Show success notification
+        flash()->success('Profile updated successfully!');
 
-// Or add a title
-flash()->success('Your changes have been saved.', 'Profile Updated');
+        // Or add a title
+        flash()->success('Your changes have been saved.', 'Profile Updated');
 
-// Or add a title and options
-flash()
-     ->option('timeout', 5000)
-     ->option('position', 'top-right')
-     ->success('Changes saved with custom settings');
+        // Or add a title and options
+        flash()
+            ->option('timeout', 5000)
+            ->option('position', 'top-right')
+            ->success('Changes saved with custom settings');
 
-// Change notification options
-flash()->options([
-    'timeout' => 5000,
-    'position' => 'top-right'
-])->success('Changes saved with custom settings');
+        // Change notification options
+        flash()->options([
+            'timeout' => 5000,
+            'position' => 'top-right'
+        ])->success('Changes saved with custom settings');
 
-return back();
-}
+        return back();
+    }
 }</code></pre>
                 </div>
             </div>
@@ -522,23 +522,23 @@ return back();
                 <div>
                     <pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-javascript">// Form submission example
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
-e.preventDefault();
+    e.preventDefault();
 
-try {
-const response = await submitForm(this);
+    try {
+        const response = await submitForm(this);
 
-if (response.success) {
-    // Show success notification
-    flasher.success('Your message has been sent!', 'Thank You');
-} else {
-    // Show error notification
-    flasher.error('Please check your form inputs', 'Error');
-}
-} catch (error) {
-// Show error notification with details
-flasher.error('Server error, please try again later.', 'Error');
-console.error(error);
-}
+        if (response.success) {
+            // Show success notification
+            flasher.success('Your message has been sent!', 'Thank You');
+        } else {
+            // Show error notification
+            flasher.error('Please check your form inputs', 'Error');
+        }
+    } catch (error) {
+        // Show error notification with details
+        flasher.error('Server error, please try again later.', 'Error');
+        console.error(error);
+    }
 });</code></pre>
                 </div>
             </div>
