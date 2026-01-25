@@ -34,6 +34,7 @@ plugins:
     - jekyll-sitemap
     - jekyll-redirect-from
     - jekyll-seo-tag
+    - jekyll-paginate
 
 permalink: /blog/:year/:month/:day/:title/
 paginate: 10
