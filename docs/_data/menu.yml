@@ -11,7 +11,7 @@
     <i class="fa-duotone fa-exclamation-circle text-indigo-900 mr-1 fa-lg"></i> Sweetalert: '/library/sweetalert/'
     <i class="fa-duotone fa-bread-loaf text-indigo-900 mr-1 fa-lg"></i> Toastr: '/library/toastr/'
 
-<i class="fa-duotone fa-palette"></i> Themes <i class="fa-duotone fa-clock-rotate-left text-gray-500" title="Coming soon"></i> <span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full font-medium ml-1">soon</span>:
+<i class="fa-duotone fa-palette"></i> Themes <span class="text-xs bg-indigo-500 text-white px-2 py-0.5 rounded-full font-medium ml-1">NEW</span>:
     <i class="fa-duotone fa-circle-minus text-indigo-900 mr-1 fa-lg"></i> Minimal: '/theme/minimal/'
     <i class="fa-duotone fa-sun text-yellow-600 mr-1 fa-lg"></i> Amber: '/theme/amber/'
     <i class="fa-duotone fa-diamond text-indigo-900 mr-1 fa-lg"></i> Crystal: '/theme/crystal/'
