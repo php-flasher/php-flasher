@@ -327,8 +327,8 @@ public function update(Request $request, $id)
 
             <h4 class="text-sm font-semibold text-slate-900 my-3">In your Blade template:</h4>
             <pre class="language-html rounded-lg text-sm overflow-x-auto"><code>@if (session('message'))
-    &lt;div class="alert alert-{{ session('alert-type') ?? 'info' }}"&gt;
-        {{ session('message') }}
+    &lt;div class="alert alert-{% raw %}{{{% endraw %} session('alert-type') ?? 'info' }}"&gt;
+        {% raw %}{{{% endraw %} session('message') }}
     &lt;/div&gt;
 @endif</code></pre>
         </div>
