@@ -13,18 +13,6 @@
 
     <!-- Main content -->
     <div class="container relative z-10 mx-auto px-4 max-w-7xl">
-        <!-- Elegant header -->
-        <header class="mb-8 text-center relative">
-            <div class="flex justify-center mb-3">
-                <div class="h-1 w-24 bg-gradient-to-r from-indigo-500/0 via-indigo-500 to-indigo-500/0"></div>
-            </div>
-
-            <h2 class="mt-2 text-3xl md:text-4xl font-bold text-slate-800 mb-2">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Notification Studio</span>
-            </h2>
-            <p class="mt-2 text-slate-500 max-w-2xl mx-auto">Design your perfect notification and see the code instantly</p>
-        </header>
-
         <!-- Quick Presets -->
         <div class="mb-6 bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <div class="flex items-center justify-between mb-3">
@@ -298,39 +286,33 @@
 
                     <!-- Code animation wrapper with improved styles -->
                     <div id="code-display-wrapper" class="relative">
-                        <!-- Copy Button (New) -->
-                        <button id="copy-code-btn" class="absolute top-4 right-4 z-10 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-600 transition-all shadow-sm flex items-center">
-                            <i class="fas fa-copy mr-1.5"></i>
-                            <span id="copy-text">Copy</span>
-                        </button>
-
                         <!-- Laravel Code Panel -->
-                        <div id="laravel-code-panel" class="bg-gray-50 overflow-y-auto code-panel active p-4 pt-10">
+                        <div id="laravel-code-panel" class="bg-gray-50 overflow-y-auto code-panel active p-4">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
 
                         <!-- Symfony Code Panel -->
-                        <div id="symfony-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4 pt-10">
+                        <div id="symfony-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
 
                         <!-- JavaScript Code Panel -->
-                        <div id="js-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4 pt-10">
+                        <div id="js-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
 
                         <!-- Noty Code Panel (New) -->
-                        <div id="noty-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4 pt-10">
+                        <div id="noty-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
 
                         <!-- Toastr Code Panel (New) -->
-                        <div id="toastr-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4 pt-10">
+                        <div id="toastr-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
 
                         <!-- SweetAlert Code Panel (New) -->
-                        <div id="sweetalert-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4 pt-10">
+                        <div id="sweetalert-code-panel" class="bg-gray-50 overflow-y-auto hidden code-panel p-4">
                             <!-- Code will be inserted here by JavaScript -->
                         </div>
 
@@ -540,13 +522,6 @@
         to {
             opacity: 1;
         }
-    }
-
-    /* Copy button feedback */
-    .copy-success {
-        background-color: #D1FAE5 !important;
-        border-color: #10B981 !important;
-        color: #065F46 !important;
     }
 
     /* Scrollbar styling for code panels */
@@ -1548,45 +1523,6 @@ Swal.fire({
         }
     }
 
-    function copyCodeToClipboard() {
-        const currentTab = getCurrentTab();
-        const template = contextTemplates[state.type][currentTab];
-        if (!template) return;
-
-        const defaultIndent = indentMap[currentTab] && indentMap[currentTab][state.type] ? indentMap[currentTab][state.type] : "    ";
-        const flashCode = generateFlashCode(currentTab, defaultIndent);
-
-        let completeCode = "";
-        if (template.code && template.code.before) {
-            completeCode = template.code.before + flashCode;
-            if (template.code.after) {
-                completeCode += template.code.after;
-            }
-        } else {
-            completeCode = flashCode;
-        }
-
-        // Remove ANSI color codes and copy plain text
-        const plainCode = completeCode.replace(/\x1b\[[0-9;]*m/g, '');
-
-        navigator.clipboard.writeText(plainCode).then(() => {
-            const copyBtn = document.getElementById("copy-code-btn");
-            const copyText = document.getElementById("copy-text");
-
-            copyBtn.classList.add("copy-success");
-            copyText.textContent = "Copied!";
-
-            setTimeout(() => {
-                copyBtn.classList.remove("copy-success");
-                copyText.textContent = "Copy";
-            }, 2000);
-            updateStatus("Code copied to clipboard ✓");
-        }).catch(err => {
-            console.error("Failed to copy:", err);
-            updateStatus("Failed to copy code");
-        });
-    }
-
     function applyPreset(presetKey) {
         const preset = presets[presetKey];
         if (!preset) return;
@@ -1725,9 +1661,6 @@ Swal.fire({
                 showCodeTab(tab);
             });
         });
-
-        // Copy code button
-        document.getElementById("copy-code-btn").addEventListener("click", copyCodeToClipboard);
 
         // Compare button
         document.getElementById("compare-btn").addEventListener("click", showComparison);
