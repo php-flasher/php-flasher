@@ -20,7 +20,7 @@ final readonly class HopsCriteria implements CriteriaInterface
      */
     public function __construct(mixed $criteria)
     {
-        $criteria = $this->extractRange('priority', $criteria);
+        $criteria = $this->extractRange('hops', $criteria);
 
         $this->minAmount = $criteria['min'];
         $this->maxAmount = $criteria['max'];

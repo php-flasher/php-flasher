@@ -20,7 +20,7 @@ final readonly class DelayCriteria implements CriteriaInterface
      */
     public function __construct(mixed $criteria)
     {
-        $criteria = $this->extractRange('priority', $criteria);
+        $criteria = $this->extractRange('delay', $criteria);
 
         $this->minDelay = $criteria['min'];
         $this->maxDelay = $criteria['max'];
