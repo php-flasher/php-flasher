@@ -43,7 +43,7 @@ final class StampsCriteria implements CriteriaInterface
 
     public function match(Envelope $envelope): bool
     {
-        $diff = array_diff($this->stamps, array_keys($envelope->all()));
+        $diff = array_diff(array_keys($this->stamps), array_keys($envelope->all()));
 
         if (self::STRATEGY_AND === $this->strategy) {
             return [] === $diff;
