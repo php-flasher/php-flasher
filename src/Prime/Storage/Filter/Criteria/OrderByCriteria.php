@@ -98,12 +98,16 @@ final class OrderByCriteria implements CriteriaInterface
                 $stampB = $second->get($field);
 
                 if (!$stampA instanceof OrderableStampInterface || !$stampB instanceof OrderableStampInterface) {
-                    return 0;
+                    continue;
                 }
 
-                return self::ASC === $ordering
+                $comparison = self::ASC === $ordering
                     ? $stampA->compare($stampB)
                     : $stampB->compare($stampA);
+
+                if (0 !== $comparison) {
+                    return $comparison;
+                }
             }
 
             return 0;
