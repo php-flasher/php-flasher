@@ -6,26 +6,45 @@ namespace Flasher\Laravel\Storage;
 
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Session\SessionManager;
 
 final readonly class SessionBag implements BagInterface
 {
     public const ENVELOPES_NAMESPACE = 'flasher::envelopes';
 
-    public function __construct(private SessionManager $session)
+    private FallbackSessionInterface $fallbackSession;
+
+    public function __construct(private SessionManager $sessionManager, ?FallbackSessionInterface $fallbackSession = null)
     {
+        $this->fallbackSession = $fallbackSession ?? new FallbackSession();
     }
 
     public function get(): array
     {
+        $session = $this->getSession();
+
         /** @var Envelope[] $envelopes */
-        $envelopes = $this->session->get(self::ENVELOPES_NAMESPACE, []);
+        $envelopes = $session->get(self::ENVELOPES_NAMESPACE, []);
 
         return $envelopes;
     }
 
     public function set(array $envelopes): void
     {
-        $this->session->put(self::ENVELOPES_NAMESPACE, $envelopes);
+        $session = $this->getSession();
+
+        $session->set(self::ENVELOPES_NAMESPACE, $envelopes);
+    }
+
+    private function getSession(): Session|FallbackSessionInterface
+    {
+        $session = $this->sessionManager->driver();
+
+        if ($session->isStarted()) {
+            return $session;
+        }
+
+        return $this->fallbackSession;
     }
 }
