@@ -57,5 +57,14 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <file>src/Prime/.phpstorm.meta.php</file>
+            <file>src/Laravel/.phpstorm.meta.php</file>
+            <file>src/Symfony/.phpstorm.meta.php</file>
+            <file>src/Noty/Prime/.phpstorm.meta.php</file>
+            <file>src/Notyf/Prime/.phpstorm.meta.php</file>
+            <file>src/SweetAlert/Prime/.phpstorm.meta.php</file>
+            <file>src/Toastr/Prime/.phpstorm.meta.php</file>
+        </exclude>
     </source>
 </phpunit>
