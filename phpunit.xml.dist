@@ -46,7 +46,12 @@
         </testsuite>
     </testsuites>
 
-    <coverage/>
+    <coverage>
+        <report>
+            <html outputDirectory="coverage/phpunit/html"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false"/>
+        </report>
+    </coverage>
 
     <source>
         <include>

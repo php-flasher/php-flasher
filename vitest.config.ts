@@ -9,6 +9,7 @@ export default defineConfig({
         coverage: {
             provider: 'v8',
             reporter: ['text', 'json', 'html'],
+            reportsDirectory: 'coverage/vitest',
             include: ['src/*/Resources/assets/**/*.ts'],
             exclude: [
                 '**/index.ts',

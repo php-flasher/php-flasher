@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+# PHP binary to use (defaults to PHP 8.2)
+PHP_BINARY="${PHP_BINARY:-/opt/homebrew/opt/php@8.2/bin/php}"
+
+# Colors and styles
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly BLUE='\033[34m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly YELLOW='\033[33m'
+readonly CYAN='\033[36m'
+readonly MAGENTA='\033[35m'
+
+# Essential emojis
+readonly ROCKET="🚀"
+readonly CHECK="✓"
+readonly ERROR="❌"
+readonly WARNING="⚠️"
+readonly CHART="📊"
+readonly TEST_TUBE="🧪"
+readonly SPARKLES="✨"
+readonly GLOBE="🌐"
+
+print_header() {
+    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Test Coverage ${ROCKET}${RESET}\n"
+    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
+    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+}
+
+cleanup_coverage() {
+    echo -e "${BOLD}${DIM}Cleaning up old coverage reports...${RESET}"
+    rm -rf coverage/phpunit coverage/vitest
+    mkdir -p coverage/phpunit coverage/vitest
+    echo -e "${CHECK} ${GREEN}Cleanup complete${RESET}\n"
+}
+
+run_phpunit_coverage() {
+    echo -e "${BOLD}${TEST_TUBE} Running PHPUnit with Coverage${RESET}"
+
+    if $PHP_BINARY vendor/bin/phpunit --coverage-html coverage/phpunit/html --coverage-text=coverage/phpunit/report.txt; then
+        echo -e "${CHECK} ${GREEN}PHPUnit coverage generated${RESET}"
+        echo -e "   ${DIM}HTML Report: coverage/phpunit/html/index.html${RESET}\n"
+        return 0
+    else
+        echo -e "${WARNING} ${YELLOW}PHPUnit coverage generation failed${RESET}\n"
+        return 1
+    fi
+}
+
+run_vitest_coverage() {
+    echo -e "${BOLD}${TEST_TUBE} Running Vitest with Coverage${RESET}"
+
+    if npm run test:coverage; then
+        echo -e "${CHECK} ${GREEN}Vitest coverage generated${RESET}"
+        echo -e "   ${DIM}HTML Report: coverage/vitest/index.html${RESET}\n"
+        return 0
+    else
+        echo -e "${WARNING} ${YELLOW}Vitest coverage generation failed${RESET}\n"
+        return 1
+    fi
+}
+
+print_summary() {
+    echo -e "${BOLD}${CYAN}${CHART} Coverage Reports Summary${RESET}\n"
+
+    echo -e "${BOLD}PHPUnit Coverage:${RESET}"
+    if [ -f "coverage/phpunit/html/index.html" ]; then
+        echo -e "  ${GREEN}${CHECK} HTML: ${RESET}coverage/phpunit/html/index.html"
+        if [ -f "coverage/phpunit/report.txt" ]; then
+            echo -e "  ${GREEN}${CHECK} Text: ${RESET}coverage/phpunit/report.txt"
+        fi
+    else
+        echo -e "  ${RED}${ERROR} No coverage report generated${RESET}"
+    fi
+
+    echo -e "\n${BOLD}Vitest Coverage:${RESET}"
+    if [ -f "coverage/vitest/index.html" ]; then
+        echo -e "  ${GREEN}${CHECK} HTML: ${RESET}coverage/vitest/index.html"
+        if [ -f "coverage/vitest/coverage-final.json" ]; then
+            echo -e "  ${GREEN}${CHECK} JSON: ${RESET}coverage/vitest/coverage-final.json"
+        fi
+    else
+        echo -e "  ${RED}${ERROR} No coverage report generated${RESET}"
+    fi
+
+    echo -e "\n${BOLD}${GLOBE} Open Reports:${RESET}"
+    echo -e "  ${CYAN}npm run coverage:open${RESET}"
+    echo -e "  ${DIM}Or manually open the HTML files in your browser${RESET}\n"
+}
+
+open_reports() {
+    if [ "$1" == "--open" ] || [ "$1" == "-o" ]; then
+        echo -e "${BOLD}${GLOBE} Opening coverage reports...${RESET}\n"
+
+        if [ -f "coverage/phpunit/html/index.html" ]; then
+            open coverage/phpunit/html/index.html 2>/dev/null || xdg-open coverage/phpunit/html/index.html 2>/dev/null
+        fi
+
+        if [ -f "coverage/vitest/index.html" ]; then
+            open coverage/vitest/index.html 2>/dev/null || xdg-open coverage/vitest/index.html 2>/dev/null
+        fi
+    fi
+}
+
+main() {
+    local start_time=$(date +%s)
+
+    print_header
+    cleanup_coverage
+    run_phpunit_coverage
+    run_vitest_coverage
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    print_summary
+
+    echo -e "${SPARKLES} ${BOLD}Coverage Complete${RESET}"
+    echo -e "Duration: ${YELLOW}${duration}s${RESET}\n"
+
+    open_reports "$1"
+}
+
+main "$@"

@@ -45,7 +45,11 @@
         "test": "vitest run",
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage",
-        "test:ui": "vitest --ui"
+        "test:ui": "vitest --ui",
+        "coverage": "npm run coverage:php && npm run coverage:js",
+        "coverage:php": "/opt/homebrew/opt/php@8.2/bin/php vendor/bin/phpunit --coverage-html coverage/phpunit/html",
+        "coverage:js": "vitest run --coverage",
+        "coverage:open": "open coverage/vitest/index.html && open coverage/phpunit/html/index.html"
     },
     "devDependencies": {
         "@antfu/eslint-config": "^2.27.3",
