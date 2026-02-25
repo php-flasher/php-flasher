@@ -8,6 +8,7 @@ use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Storage\Bag\BagInterface;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Session\SessionManager;
+use Illuminate\Session\Store;
 
 final readonly class SessionBag implements BagInterface
 {
@@ -34,14 +35,20 @@ final readonly class SessionBag implements BagInterface
     {
         $session = $this->getSession();
 
-        $session->set(self::ENVELOPES_NAMESPACE, $envelopes);
+        if ($session instanceof FallbackSessionInterface) {
+            $session->set(self::ENVELOPES_NAMESPACE, $envelopes);
+
+            return;
+        }
+
+        $session->put(self::ENVELOPES_NAMESPACE, $envelopes);
     }
 
     private function getSession(): Session|FallbackSessionInterface
     {
         $session = $this->sessionManager->driver();
 
-        if ($session->isStarted()) {
+        if ($session instanceof Store && $session->isStarted()) {
             return $session;
         }
 

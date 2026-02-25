@@ -65,7 +65,7 @@ final class SessionBagTest extends TestCase
         $sessionMock = \Mockery::mock(Store::class);
         $sessionMock->allows()->isStarted()->andReturns(true);
         $sessionMock->allows()->get(SessionBag::ENVELOPES_NAMESPACE, [])->andReturns($envelopes);
-        $sessionMock->expects()->set(SessionBag::ENVELOPES_NAMESPACE, $envelopes);
+        $sessionMock->expects()->put(SessionBag::ENVELOPES_NAMESPACE, $envelopes);
 
         $this->sessionManagerMock->allows()->driver()->andReturns($sessionMock);
 
@@ -92,7 +92,8 @@ final class SessionBagTest extends TestCase
 
     public function testCustomFallbackSession(): void
     {
-        $customFallback = new class() implements FallbackSessionInterface {
+        $customFallback = new class implements FallbackSessionInterface {
+            /** @var array<string, mixed> */
             private array $data = [];
 
             public function get(string $name, mixed $default = null): mixed
@@ -183,7 +184,7 @@ final class SessionBagTest extends TestCase
         $sessionMock = \Mockery::mock(Store::class);
         $sessionMock->allows()->isStarted()->andReturns(true);
         $sessionMock->allows()->get(SessionBag::ENVELOPES_NAMESPACE, [])->andReturns($envelopes2);
-        $sessionMock->allows()->set(SessionBag::ENVELOPES_NAMESPACE, \Mockery::any())->twice();
+        $sessionMock->allows()->put(SessionBag::ENVELOPES_NAMESPACE, \Mockery::any())->twice();
 
         $this->sessionManagerMock->allows()->driver()->andReturns($sessionMock);
 
