@@ -66,6 +66,7 @@ final class FlasherServiceProvider extends PluginServiceProvider
 
         $this->registerCommands();
         $this->loadTranslationsFrom(__DIR__.'/Translation/lang', 'flasher');
+        $this->loadViewsFrom(__DIR__.'/Resources/views', 'flasher');
         $this->registerMiddlewares();
         $this->callAfterResolving('blade.compiler', $this->registerBladeDirectives(...));
         $this->registerLivewire();
