@@ -132,4 +132,65 @@ final class ResponseTest extends TestCase
         $response = new Response($this->responseMock);
         $response->removeHeader($headerKey);
     }
+
+    public function testIsHtmlWithNullContentType(): void
+    {
+        $this->responseHeaderBagMock->expects()->get('Content-Type')->andReturns(null);
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isHtml());
+    }
+
+    public function testIsAttachmentWithEmptyContentDisposition(): void
+    {
+        $this->responseHeaderBagMock->expects()->get('Content-Disposition', '')->andReturns('');
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isAttachment());
+    }
+
+    public function testIsAttachmentWithInlineDisposition(): void
+    {
+        $this->responseHeaderBagMock->expects()->get('Content-Disposition', '')->andReturns('inline; filename="file.jpg"');
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isAttachment());
+    }
+
+    public function testIsHtmlWithNonHtmlContentType(): void
+    {
+        $this->responseHeaderBagMock->expects()->get('Content-Type')->andReturns('application/json');
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isHtml());
+    }
+
+    public function testGetContentWithFalseReturnsEmptyString(): void
+    {
+        $this->responseMock->expects()->getContent()->andReturns(false);
+
+        $response = new Response($this->responseMock);
+
+        $this->assertSame('', $response->getContent());
+    }
+
+    public function testIsJsonWithNonJsonResponse(): void
+    {
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isJson());
+    }
+
+    public function testIsRedirectionFalse(): void
+    {
+        $this->responseMock->expects()->isRedirection()->andReturns(false);
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isRedirection());
+    }
 }

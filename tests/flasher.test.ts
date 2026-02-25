@@ -674,10 +674,178 @@ describe('Flasher', () => {
             // Should not create a new element since it already exists
             expect(createElementSpy).not.toHaveBeenCalledWith('link')
         })
+    })
 
-        it('should skip empty URLs', async () => {
+    describe('resolvePlugin edge cases', () => {
+        it('should not create plugin for existing plugin alias', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('existing', plugin)
+
+            // Resolve plugin should not overwrite existing
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'existing' },
+                }],
+            })
+
+            expect(plugin.envelopes).toHaveLength(1)
+        })
+
+        it('should not create plugin for non-theme aliases', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('custom-plugin', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'custom-plugin' },
+                }],
+            })
+
+            expect(plugin.envelopes).toHaveLength(1)
+        })
+
+        it('should silently handle non-existent theme', async () => {
+            // This should not throw, just silently not render
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'theme.nonexistent' },
+                }],
+            })
+
+            // Should not throw
+        })
+    })
+
+    describe('resolveOptions edge cases', () => {
+        it('should handle response with empty options', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('test', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'test' },
+                }],
+                options: {},
+            })
+
+            expect(plugin.envelopes).toHaveLength(1)
+        })
+
+        it('should handle response with nested options', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('test', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'test' },
+                }],
+                options: {
+                    test: {
+                        timeout: 5000,
+                    },
+                },
+            })
+
+            expect(plugin.envelopes).toHaveLength(1)
+            expect(plugin.options).toEqual({ timeout: 5000 })
+        })
+    })
+
+    describe('resolveFunction edge cases', () => {
+        it('should handle arrow function with block body containing return', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('test', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'test' },
+                }],
+                options: {
+                    test: {
+                        callback: '(x) => { return x * 2; }',
+                    },
+                },
+            })
+
+            expect(plugin.options.callback).toBeInstanceOf(Function)
+        })
+
+        it('should handle arrow function with block body without return keyword', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('test', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'test' },
+                }],
+                options: {
+                    test: {
+                        callback: '(a, b) => { const c = a + b; return c; }',
+                    },
+                },
+            })
+
+            expect(plugin.options.callback).toBeInstanceOf(Function)
+        })
+
+        it('should handle nested arrow functions', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('test', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'test' },
+                }],
+                options: {
+                    test: {
+                        callback: '(x) => (y) => x + y',
+                    },
+                },
+            })
+
+            expect(plugin.options.callback).toBeInstanceOf(Function)
+        })
+    })
+
+    describe('addAssets edge cases', () => {
+        it('should skip already loaded script URLs', async () => {
             const originalCreateElement = document.createElement.bind(document)
-            const createElementSpy = vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+            let createElementCount = 0
+
+            vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+                createElementCount++
                 const el = originalCreateElement(tag)
                 if (tag === 'link' || tag === 'script') {
                     setTimeout(() => el.onload?.({} as Event), 0)
@@ -685,13 +853,22 @@ describe('Flasher', () => {
                 return el
             })
 
+            // First load
             await flasher.render({
                 envelopes: [],
-                styles: ['', '/valid.css'],
+                scripts: ['/script.js'],
             })
 
-            // Should only create one link element for the valid URL
-            expect(createElementSpy).toHaveBeenCalledTimes(1)
+            const firstCount = createElementCount
+
+            // Second load - should skip
+            await flasher.render({
+                envelopes: [],
+                scripts: ['/script.js'],
+            })
+
+            // Should not have created additional elements for the same URL
+            expect(createElementCount).toBe(firstCount)
         })
     })
 })

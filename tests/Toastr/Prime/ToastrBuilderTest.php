@@ -449,4 +449,93 @@ final class ToastrBuilderTest extends TestCase
 
         $this->assertSame(['tapToDismiss' => true], $options);
     }
+
+    public function testTypeMethod(): void
+    {
+        $this->toastrBuilder->type('success');
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $this->assertSame('success', $envelope->getNotification()->getType());
+    }
+
+    public function testSuccessMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new ToastrBuilder('toastr', $storageManagerMock);
+        $envelope = $builder->success('Success message', ['timeout' => 3000], 'Title');
+
+        $this->assertSame('success', $envelope->getNotification()->getType());
+        $this->assertSame('Success message', $envelope->getNotification()->getMessage());
+        $this->assertSame('Title', $envelope->getNotification()->getTitle());
+        $this->assertSame(3000, $envelope->getNotification()->getOption('timeout'));
+    }
+
+    public function testErrorMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new ToastrBuilder('toastr', $storageManagerMock);
+        $envelope = $builder->error('Error message');
+
+        $this->assertSame('error', $envelope->getNotification()->getType());
+        $this->assertSame('Error message', $envelope->getNotification()->getMessage());
+    }
+
+    public function testInfoMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new ToastrBuilder('toastr', $storageManagerMock);
+        $envelope = $builder->info('Info message');
+
+        $this->assertSame('info', $envelope->getNotification()->getType());
+    }
+
+    public function testWarningMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new ToastrBuilder('toastr', $storageManagerMock);
+        $envelope = $builder->warning('Warning message');
+
+        $this->assertSame('warning', $envelope->getNotification()->getType());
+    }
+
+    public function testFlashMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new ToastrBuilder('toastr', $storageManagerMock);
+        $envelope = $builder->flash('info', 'Flash message', ['debug' => true], 'Flash Title');
+
+        $this->assertSame('info', $envelope->getNotification()->getType());
+        $this->assertSame('Flash message', $envelope->getNotification()->getMessage());
+        $this->assertSame('Flash Title', $envelope->getNotification()->getTitle());
+        $this->assertTrue($envelope->getNotification()->getOption('debug'));
+    }
+
+    public function testOptionsMethod(): void
+    {
+        $this->toastrBuilder->options(['timeout' => 5000, 'debug' => true]);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(5000, $options['timeout']);
+        $this->assertTrue($options['debug']);
+    }
+
+    public function testOptionMethod(): void
+    {
+        $this->toastrBuilder->option('customOption', 'customValue');
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $this->assertSame('customValue', $envelope->getNotification()->getOption('customOption'));
+    }
 }

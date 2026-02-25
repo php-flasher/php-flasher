@@ -265,9 +265,23 @@ final class ResponseExtensionTest extends TestCase
                 return false;
             }
 
-            public function getSession(): ?\Flasher\Prime\Storage\Bag\BagInterface
+            public function isSessionStarted(): bool
             {
-                return null;
+                return false;
+            }
+
+            public function hasType(string $type): bool
+            {
+                return false;
+            }
+
+            public function getType(string $type): string|array
+            {
+                return [];
+            }
+
+            public function forgetType(string $type): void
+            {
             }
 
             public function hasHeader(string $name): bool
@@ -275,19 +289,9 @@ final class ResponseExtensionTest extends TestCase
                 return false;
             }
 
-            public function getHeader(string $name, ?string $default = null): ?string
+            public function getHeader(string $name): ?string
             {
-                return $default;
-            }
-
-            public function getContentType(): ?string
-            {
-                return 'text/html';
-            }
-
-            public function isFormatAcceptable(string $format): bool
-            {
-                return true;
+                return null;
             }
         };
 
@@ -328,9 +332,23 @@ final class ResponseExtensionTest extends TestCase
                 return false;
             }
 
-            public function getSession(): ?\Flasher\Prime\Storage\Bag\BagInterface
+            public function isSessionStarted(): bool
             {
-                return null;
+                return false;
+            }
+
+            public function hasType(string $type): bool
+            {
+                return false;
+            }
+
+            public function getType(string $type): string|array
+            {
+                return [];
+            }
+
+            public function forgetType(string $type): void
+            {
             }
 
             public function hasHeader(string $name): bool
@@ -338,19 +356,9 @@ final class ResponseExtensionTest extends TestCase
                 return false;
             }
 
-            public function getHeader(string $name, ?string $default = null): ?string
+            public function getHeader(string $name): ?string
             {
-                return $default;
-            }
-
-            public function getContentType(): ?string
-            {
-                return 'text/html';
-            }
-
-            public function isFormatAcceptable(string $format): bool
-            {
-                return true;
+                return null;
             }
         };
 

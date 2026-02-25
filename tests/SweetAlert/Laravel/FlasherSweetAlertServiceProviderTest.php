@@ -44,6 +44,22 @@ final class FlasherSweetAlertServiceProviderTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
+    public function testBootWithoutLivewire(): void
+    {
+        $this->app->expects()->make('config')->andReturns($configMock = \Mockery::mock(Repository::class));
+        $configMock->expects('get')->andReturns([]);
+        $configMock->expects('set');
+
+        $this->app->expects('singleton');
+        $this->app->expects('alias');
+        $this->app->expects('extend');
+        $this->app->expects('bound')->with('livewire')->andReturn(false);
+
+        $this->serviceProvider->register();
+        $this->serviceProvider->boot();
+        $this->addToAssertionCount(1);
+    }
+
     public function testBoot(): void
     {
         $this->app->expects()->make('config')->andReturns($configMock = \Mockery::mock(Repository::class));

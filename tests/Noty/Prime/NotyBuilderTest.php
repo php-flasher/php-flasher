@@ -334,4 +334,88 @@ final class NotyBuilderTest extends TestCase
 
         $this->assertFalse($options['force']);
     }
+
+    public function testTypeMethod(): void
+    {
+        $this->notyBuilder->type('error');
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $this->assertSame('error', $envelope->getNotification()->getType());
+    }
+
+    public function testSuccessMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new NotyBuilder('noty', $storageManagerMock);
+        $envelope = $builder->success('Success message', ['timeout' => 3000], 'Title');
+
+        $this->assertSame('success', $envelope->getNotification()->getType());
+        $this->assertSame('Success message', $envelope->getNotification()->getMessage());
+    }
+
+    public function testErrorMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new NotyBuilder('noty', $storageManagerMock);
+        $envelope = $builder->error('Error message');
+
+        $this->assertSame('error', $envelope->getNotification()->getType());
+    }
+
+    public function testInfoMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new NotyBuilder('noty', $storageManagerMock);
+        $envelope = $builder->info('Info message');
+
+        $this->assertSame('info', $envelope->getNotification()->getType());
+    }
+
+    public function testWarningMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new NotyBuilder('noty', $storageManagerMock);
+        $envelope = $builder->warning('Warning message');
+
+        $this->assertSame('warning', $envelope->getNotification()->getType());
+    }
+
+    public function testFlashMethod(): void
+    {
+        $storageManagerMock = \Mockery::mock(StorageManagerInterface::class);
+        $storageManagerMock->expects('add')->once();
+
+        $builder = new NotyBuilder('noty', $storageManagerMock);
+        $envelope = $builder->flash('info', 'Flash message', ['timeout' => 5000]);
+
+        $this->assertSame('info', $envelope->getNotification()->getType());
+        $this->assertSame(5000, $envelope->getNotification()->getOption('timeout'));
+    }
+
+    public function testOptionsMethod(): void
+    {
+        $this->notyBuilder->options(['timeout' => 5000, 'modal' => true]);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(5000, $options['timeout']);
+        $this->assertTrue($options['modal']);
+    }
+
+    public function testOptionMethod(): void
+    {
+        $this->notyBuilder->option('customOption', 'customValue');
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $this->assertSame('customValue', $envelope->getNotification()->getOption('customOption'));
+    }
 }

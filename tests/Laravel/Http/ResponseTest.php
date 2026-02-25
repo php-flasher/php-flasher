@@ -167,4 +167,38 @@ final class ResponseTest extends TestCase
         $response = new Response($this->responseMock);
         $response->removeHeader($headerKey);
     }
+
+    public function testIsHtmlWithNullContentType(): void
+    {
+        $this->responseHeaderBagMock->expects()->get('Content-Type')->andReturns(null);
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isHtml());
+    }
+
+    public function testIsAttachmentWithEmptyContentDisposition(): void
+    {
+        $this->responseHeaderBagMock->expects()->get('Content-Disposition', '')->andReturns('');
+
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isAttachment());
+    }
+
+    public function testIsJsonWithNonJsonResponse(): void
+    {
+        $response = new Response($this->responseMock);
+
+        $this->assertFalse($response->isJson());
+    }
+
+    public function testGetContentWithFalseReturnsEmptyString(): void
+    {
+        $this->responseMock->expects()->getContent()->andReturns(false);
+
+        $response = new Response($this->responseMock);
+
+        $this->assertSame('', $response->getContent());
+    }
 }

@@ -28,6 +28,8 @@ final class MessagesTest extends TestCase
         yield 'Spanish' => ['es', false];
         yield 'French' => ['fr', false];
         yield 'Portuguese' => ['pt', false];
+        yield 'Russian' => ['ru', false];
+        yield 'Chinese' => ['zh', false];
         yield 'Non-Existing' => ['non-existing', true];
     }
 }

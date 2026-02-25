@@ -143,6 +143,39 @@ final class HtmlPresenterTest extends TestCase
         $this->assertSame($response, $presenter->render(new Response($envelopes, ['envelopes_only' => true])));
     }
 
+    public function testRenderWithCspScriptNonce(): void
+    {
+        $envelopes = [];
+
+        $notification = new Notification();
+        $notification->setMessage('success message');
+        $envelopes[] = new Envelope($notification);
+
+        $presenter = new HtmlPresenter();
+        $response = new Response($envelopes, ['csp_script_nonce' => 'test-nonce-123']);
+
+        $result = $presenter->render($response);
+
+        $this->assertStringContainsString("nonce='test-nonce-123'", $result);
+        $this->assertStringContainsString("tag.setAttribute('nonce', 'test-nonce-123');", $result);
+    }
+
+    public function testRenderWithHtmlMetadata(): void
+    {
+        $notification = new Notification();
+        $notification->setMessage('success message');
+        $notification->setOption('metadata', ['html' => '<div>Custom HTML</div>']);
+
+        $envelope = new Envelope($notification);
+
+        $presenter = new HtmlPresenter();
+        $response = new Response([$envelope], []);
+
+        $result = $presenter->render($response);
+
+        $this->assertStringContainsString('<script type="text/javascript" class="flasher-js">', $result);
+    }
+
     /**
      * Generate the script for Livewire event handling.
      */

@@ -117,4 +117,22 @@ final class FlasherTest extends MockeryTestCase
 
         $this->assertSame('Mocked method call', $result);
     }
+
+    public function testUseWithFlasherAliasReturnsNewFactory(): void
+    {
+        $result = $this->flasher->use('flasher');
+
+        $this->assertInstanceOf(NotificationFactoryInterface::class, $result);
+    }
+
+    public function testUseWithNullAlias(): void
+    {
+        $this->factoryLocatorMock->expects()
+            ->has('default')
+            ->andReturns(false);
+
+        $result = $this->flasher->use(null);
+
+        $this->assertInstanceOf(NotificationFactoryInterface::class, $result);
+    }
 }
