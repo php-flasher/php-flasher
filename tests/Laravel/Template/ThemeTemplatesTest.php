@@ -231,9 +231,13 @@ final class ThemeTemplatesTest extends TestCase
 
     public function testAllTemplatesExist(): void
     {
+        // @phpstan-ignore-next-line
         $this->assertTrue(view()->exists('flasher::bootstrap'));
+        // @phpstan-ignore-next-line
         $this->assertTrue(view()->exists('flasher::tailwindcss'));
+        // @phpstan-ignore-next-line
         $this->assertTrue(view()->exists('flasher::tailwindcss_bg'));
+        // @phpstan-ignore-next-line
         $this->assertTrue(view()->exists('flasher::tailwindcss_r'));
     }
 }
