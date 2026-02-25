@@ -104,7 +104,9 @@ export default class FlasherPlugin extends AbstractPlugin {
             // Apply custom styles
             Object.entries(options.style).forEach(([key, value]) => {
                 if (value !== undefined && value !== null) {
-                    container.style.setProperty(key, String(value))
+                    // Convert camelCase to kebab-case for CSS property names
+                    const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase()
+                    container.style.setProperty(cssKey, String(value))
                 }
             })
 

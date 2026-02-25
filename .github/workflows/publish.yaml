@@ -5,7 +5,28 @@ on:
         types: [ published ]
 
 jobs:
+    test:
+        runs-on: ubuntu-latest
+        name: Run Tests Before Publishing
+
+        steps:
+            -   name: 📥 Checkout Code
+                uses: actions/checkout@v4
+
+            -   name: 🔧 Setup Node.js
+                uses: actions/setup-node@v4
+                with:
+                    node-version: '20.x'
+                    cache: 'npm'
+
+            -   name: 📦 Install Dependencies
+                run: npm ci
+
+            -   name: ✅ Run Tests
+                run: npm run test
+
     publish-prime:
+        needs: test
         runs-on: ubuntu-latest
         defaults:
             run:
@@ -30,6 +51,7 @@ jobs:
                     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     publish-plugin:
+        needs: test
         runs-on: ubuntu-latest
         permissions:
             contents: read

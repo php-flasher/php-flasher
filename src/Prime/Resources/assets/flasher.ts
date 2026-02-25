@@ -128,7 +128,7 @@ export default class Flasher extends AbstractPlugin {
             envelope.metadata.plugin = this.resolvePluginAlias(envelope.metadata.plugin)
             this.addThemeStyles(resolved, envelope.metadata.plugin)
             envelope.options = this.resolveOptions(envelope.options)
-            envelope.context = response.context as Context
+            envelope.context = resolved.context
         })
 
         return resolved
@@ -156,17 +156,32 @@ export default class Flasher extends AbstractPlugin {
         const functionRegex = /^function\s*(\w*)\s*\(([^)]*)\)\s*\{([\s\S]*)\}$/
         const arrowFunctionRegex = /^\s*(\(([^)]*)\)|[^=]+)\s*=>\s*([\s\S]+)$/
 
-        const match = func.match(functionRegex) || func.match(arrowFunctionRegex)
-        if (!match) {
+        const functionMatch = func.match(functionRegex)
+        const arrowMatch = func.match(arrowFunctionRegex)
+
+        if (!functionMatch && !arrowMatch) {
             return func
         }
 
-        const args = match[2]?.split(',').map((arg) => arg.trim()) ?? []
-        let body = match[3].trim()
+        let args: string[]
+        let body: string
 
-        // Arrow functions with a single expression can omit the curly braces and the return keyword
-        if (!body.startsWith('{')) {
-            body = `{ return ${body}; }`
+        if (functionMatch) {
+            // Regular function: body is already complete statements
+            args = functionMatch[2]?.split(',').map((arg) => arg.trim()).filter(Boolean) ?? []
+            body = functionMatch[3].trim()
+        } else {
+            // Arrow function: may need to wrap expression body with return
+            args = arrowMatch![2]?.split(',').map((arg) => arg.trim()).filter(Boolean) ?? []
+            body = arrowMatch![3].trim()
+
+            // Arrow functions with a single expression need return added
+            if (!body.startsWith('{')) {
+                body = `return ${body};`
+            } else {
+                // Remove outer braces for arrow functions with block body
+                body = body.slice(1, -1).trim()
+            }
         }
 
         try {

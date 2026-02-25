@@ -196,7 +196,8 @@
                 container.dataset.position = options.position;
                 Object.entries(options.style).forEach(([key, value]) => {
                     if (value !== undefined && value !== null) {
-                        container.style.setProperty(key, String(value));
+                        const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+                        container.style.setProperty(cssKey, String(value));
                     }
                 });
                 document.body.appendChild(container);
@@ -419,7 +420,7 @@
                 envelope.metadata.plugin = this.resolvePluginAlias(envelope.metadata.plugin);
                 this.addThemeStyles(resolved, envelope.metadata.plugin);
                 envelope.options = this.resolveOptions(envelope.options);
-                envelope.context = response.context;
+                envelope.context = resolved.context;
             });
             return resolved;
         }
@@ -434,20 +435,32 @@
             return resolved;
         }
         resolveFunction(func) {
-            var _a, _b;
+            var _a, _b, _c, _d;
             if (typeof func !== 'string') {
                 return func;
             }
             const functionRegex = /^function\s*(\w*)\s*\(([^)]*)\)\s*\{([\s\S]*)\}$/;
             const arrowFunctionRegex = /^\s*(\(([^)]*)\)|[^=]+)\s*=>\s*([\s\S]+)$/;
-            const match = func.match(functionRegex) || func.match(arrowFunctionRegex);
-            if (!match) {
+            const functionMatch = func.match(functionRegex);
+            const arrowMatch = func.match(arrowFunctionRegex);
+            if (!functionMatch && !arrowMatch) {
                 return func;
             }
-            const args = (_b = (_a = match[2]) === null || _a === void 0 ? void 0 : _a.split(',').map((arg) => arg.trim())) !== null && _b !== void 0 ? _b : [];
-            let body = match[3].trim();
-            if (!body.startsWith('{')) {
-                body = `{ return ${body}; }`;
+            let args;
+            let body;
+            if (functionMatch) {
+                args = (_b = (_a = functionMatch[2]) === null || _a === void 0 ? void 0 : _a.split(',').map((arg) => arg.trim()).filter(Boolean)) !== null && _b !== void 0 ? _b : [];
+                body = functionMatch[3].trim();
+            }
+            else {
+                args = (_d = (_c = arrowMatch[2]) === null || _c === void 0 ? void 0 : _c.split(',').map((arg) => arg.trim()).filter(Boolean)) !== null && _d !== void 0 ? _d : [];
+                body = arrowMatch[3].trim();
+                if (!body.startsWith('{')) {
+                    body = `return ${body};`;
+                }
+                else {
+                    body = body.slice(1, -1).trim();
+                }
             }
             try {
                 return new Function(...args, body);

@@ -4,6 +4,8 @@
 /vendor/
 /node_modules/
 
+/coverage/
+
 /.cache/php-cs-fixer/
 /.cache/phplint/
 /.cache/phpstan/
