@@ -349,4 +349,104 @@ final class ToastrBuilderTest extends TestCase
 
         $this->assertSame(['timeOut' => 0, 'extendedTimeOut' => 0], $options);
     }
+
+    public function testTimeOutWithoutExtended(): void
+    {
+        $this->toastrBuilder->timeOut(5000);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['timeOut' => 5000], $options);
+    }
+
+    public function testCloseButtonFalse(): void
+    {
+        $this->toastrBuilder->closeButton(false);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['closeButton' => false], $options);
+    }
+
+    public function testCloseOnHoverTrue(): void
+    {
+        $this->toastrBuilder->closeOnHover(true);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['closeOnHover' => true], $options);
+    }
+
+    public function testDebugTrue(): void
+    {
+        $this->toastrBuilder->debug(true);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['debug' => true], $options);
+    }
+
+    public function testEscapeHtmlTrue(): void
+    {
+        $this->toastrBuilder->escapeHtml(true);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['escapeHtml' => true], $options);
+    }
+
+    public function testNewestOnTopTrue(): void
+    {
+        $this->toastrBuilder->newestOnTop(true);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['newestOnTop' => true], $options);
+    }
+
+    public function testPreventDuplicatesFalse(): void
+    {
+        $this->toastrBuilder->preventDuplicates(false);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['preventDuplicates' => false], $options);
+    }
+
+    public function testProgressBarFalse(): void
+    {
+        $this->toastrBuilder->progressBar(false);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['progressBar' => false], $options);
+    }
+
+    public function testRtlFalse(): void
+    {
+        $this->toastrBuilder->rtl(false);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['rtl' => false], $options);
+    }
+
+    public function testTapToDismissTrue(): void
+    {
+        $this->toastrBuilder->tapToDismiss(true);
+
+        $envelope = $this->toastrBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['tapToDismiss' => true], $options);
+    }
 }

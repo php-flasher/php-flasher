@@ -56,4 +56,25 @@ final class PriorityStampTest extends TestCase
         // Check if the result of toArray is as expected
         $this->assertSame(['priority' => $priority], $stamp->toArray());
     }
+
+    public function testCompareWithNonPriorityStamp(): void
+    {
+        $priorityStamp = new PriorityStamp(5);
+        $otherStamp = new \Flasher\Prime\Stamp\CreatedAtStamp();
+        $this->assertSame(1, $priorityStamp->compare($otherStamp));
+    }
+
+    public function testCompareWithSamePriority(): void
+    {
+        $stamp1 = new PriorityStamp(5);
+        $stamp2 = new PriorityStamp(5);
+        $this->assertSame(0, $stamp1->compare($stamp2));
+    }
+
+    public function testNegativePriority(): void
+    {
+        $stamp = new PriorityStamp(-10);
+        $this->assertSame(-10, $stamp->getPriority());
+        $this->assertSame(['priority' => -10], $stamp->toArray());
+    }
 }

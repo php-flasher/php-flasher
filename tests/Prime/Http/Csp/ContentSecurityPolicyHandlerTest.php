@@ -244,4 +244,214 @@ final class ContentSecurityPolicyHandlerTest extends TestCase
         $result = $this->cspHandler->getNonces($this->requestMock, $this->responseMock);
         $this->assertSame($nonces, $result);
     }
+
+    public function testUpdateResponseHeadersWithCspPolicies(): void
+    {
+        $this->nonceGeneratorMock->method('generate')
+            ->willReturnOnConsecutiveCalls('nonce1', 'nonce2', 'nonce3', 'nonce4');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        // Set an initial CSP header
+        $headers['Content-Security-Policy'] = "script-src 'self'; style-src 'self'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertArrayHasKey('csp_script_nonce', $nonces);
+        $this->assertArrayHasKey('csp_style_nonce', $nonces);
+    }
+
+    public function testUpdateResponseHeadersWithDefaultSrcNone(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('testnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        // Set CSP with default-src 'none'
+        $headers['Content-Security-Policy'] = "default-src 'none'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces);
+    }
+
+    public function testUpdateResponseHeadersWithUnsafeInlineAndNonce(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('testnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        // CSP with 'unsafe-inline' already present but with nonce (nonce takes precedence)
+        $headers['Content-Security-Policy'] = "script-src 'self' 'unsafe-inline' 'nonce-existing'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces);
+    }
+
+    public function testUpdateResponseHeadersWithReportOnlyHeader(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('reportnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        $headers['Content-Security-Policy-Report-Only'] = "script-src 'self'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces);
+    }
+
+    public function testUpdateResponseHeadersWithHashDirective(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('hashnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        // CSP with sha256 hash
+        $headers['Content-Security-Policy'] = "script-src 'self' 'sha256-abc123'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces);
+    }
+
+    public function testUpdateResponseHeadersWithXContentSecurityPolicy(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('xcsplnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        // Legacy X-Content-Security-Policy header
+        $headers['X-Content-Security-Policy'] = "script-src 'self'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces);
+    }
+
+    public function testUpdateResponseHeadersWithStyleSrcElem(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('stylnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        $headers['Content-Security-Policy'] = "style-src-elem 'self'";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces);
+    }
+
+    public function testGetNoncesWithoutResponse(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('noresponsenonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $nonces = $this->cspHandler->getNonces($this->requestMock);
+
+        $this->assertSame([
+            'csp_script_nonce' => 'noresponsenonce',
+            'csp_style_nonce' => 'noresponsenonce',
+        ], $nonces);
+    }
 }

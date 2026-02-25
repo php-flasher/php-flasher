@@ -60,4 +60,34 @@ final class NotyfBuilderTest extends TestCase
 
         $this->assertSame(['dismissible' => true], $options);
     }
+
+    public function testBackground(): void
+    {
+        $this->notyfBuilder->background('#ff0000');
+
+        $envelope = $this->notyfBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['background' => '#ff0000'], $options);
+    }
+
+    public function testRippleFalse(): void
+    {
+        $this->notyfBuilder->ripple(false);
+
+        $envelope = $this->notyfBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['ripple' => false], $options);
+    }
+
+    public function testDismissibleFalse(): void
+    {
+        $this->notyfBuilder->dismissible(false);
+
+        $envelope = $this->notyfBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['dismissible' => false], $options);
+    }
 }

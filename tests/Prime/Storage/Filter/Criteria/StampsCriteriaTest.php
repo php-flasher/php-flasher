@@ -73,4 +73,48 @@ final class StampsCriteriaTest extends TestCase
 
         $this->assertCount(2, $result);
     }
+
+    public function testInvalidCriteriaType(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid type for criteria 'stamps'");
+
+        new StampsCriteria('invalid');
+    }
+
+    public function testOrStrategyWithNoMatches(): void
+    {
+        $notification = new Notification();
+        $envelope = new Envelope($notification);
+
+        $criteria = new StampsCriteria([
+            HopsStamp::class => true,
+        ], StampsCriteria::STRATEGY_OR);
+
+        $this->assertFalse($criteria->match($envelope));
+    }
+
+    public function testDefaultAndStrategy(): void
+    {
+        $notification = new Notification();
+        $envelope = new Envelope($notification, [
+            new HopsStamp(1),
+        ]);
+
+        $criteria = new StampsCriteria([
+            HopsStamp::class => true,
+        ]);
+
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testEmptyStamps(): void
+    {
+        $notification = new Notification();
+        $envelope = new Envelope($notification);
+
+        $criteria = new StampsCriteria([]);
+
+        $this->assertTrue($criteria->match($envelope));
+    }
 }

@@ -16,63 +16,143 @@ final class TranslatorTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    private MockInterface&SymfonyTranslatorInterface $symfonyTranslatorMock;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class);
-        if (interface_exists(TranslatorBagInterface::class)) {
-            $this->symfonyTranslatorMock->allows('getCatalogue')->andReturnUndefined();
-        }
-    }
-
     public function testTranslateWithoutTranslatorBagInterface(): void
     {
-        $this->symfonyTranslatorMock->expects('trans')
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class);
+        $symfonyTranslatorMock->expects('trans')
             ->with('key', ['some_param' => 1], 'flasher', null)
             ->andReturns('translation');
 
-        $translator = new Translator($this->symfonyTranslatorMock);
+        $translator = new Translator($symfonyTranslatorMock);
         $this->assertSame('translation', $translator->translate('key', ['some_param' => 1]));
     }
 
-    public function testTranslateWithTranslatorBagInterfaceAndExistingTranslation(): void
+    public function testTranslateWithoutTranslatorBagInterfaceAndLocale(): void
+    {
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class);
+        $symfonyTranslatorMock->expects('trans')
+            ->with('key', [], 'flasher', 'fr')
+            ->andReturns('traduction');
+
+        $translator = new Translator($symfonyTranslatorMock);
+        $this->assertSame('traduction', $translator->translate('key', [], 'fr'));
+    }
+
+    public function testTranslateWithTranslatorBagInterfaceFoundInFlasherDomain(): void
     {
         $messageCatalogMock = \Mockery::mock(MessageCatalogueInterface::class);
-        $messageCatalogMock->allows('has')->with('key', 'flasher')->andReturnTrue();
+        $messageCatalogMock->expects('has')->with('key', 'flasher')->andReturnTrue();
 
-        $this->symfonyTranslatorMock->allows('getCatalogue')->andReturns($messageCatalogMock);
-        $this->symfonyTranslatorMock->allows('trans')->with('key', ['some_param' => 1], 'flasher', null)->andReturns('translation');
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class, TranslatorBagInterface::class);
+        $symfonyTranslatorMock->expects('getCatalogue')->with(null)->andReturns($messageCatalogMock);
+        $symfonyTranslatorMock->expects('trans')->with('key', ['some_param' => 1], 'flasher', null)->andReturns('translation');
 
-        $translator = new Translator($this->symfonyTranslatorMock);
+        $translator = new Translator($symfonyTranslatorMock);
         $this->assertSame('translation', $translator->translate('key', ['some_param' => 1]));
     }
 
-    public function testTranslateWithTranslatorBagInterfaceAndNonExistingTranslation(): void
+    public function testTranslateWithTranslatorBagInterfaceFoundInMessagesDomain(): void
     {
-        $this->symfonyTranslatorMock->allows('getCatalogue')
-            ->andReturnUsing(function () {
-                $messageCatalogMock = \Mockery::mock(MessageCatalogueInterface::class);
-                $messageCatalogMock->allows('has')->andReturnFalse();
+        $messageCatalogMock = \Mockery::mock(MessageCatalogueInterface::class);
+        $messageCatalogMock->expects('has')->with('key', 'flasher')->andReturnFalse();
+        $messageCatalogMock->expects('has')->with('key', 'messages')->andReturnTrue();
 
-                return $messageCatalogMock;
-            });
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class, TranslatorBagInterface::class);
+        $symfonyTranslatorMock->expects('getCatalogue')->with(null)->andReturns($messageCatalogMock);
+        $symfonyTranslatorMock->expects('trans')->with('key', ['some_param' => 1], 'messages', null)->andReturns('translation from messages');
 
-        $this->symfonyTranslatorMock->allows('trans')
-            ->with('key', ['some_param' => 1], 'flasher', null)
-            ->andReturns('key');
+        $translator = new Translator($symfonyTranslatorMock);
+        $this->assertSame('translation from messages', $translator->translate('key', ['some_param' => 1]));
+    }
 
-        $translator = new Translator($this->symfonyTranslatorMock);
+    public function testTranslateWithTranslatorBagInterfaceNotFoundReturnsId(): void
+    {
+        $messageCatalogMock = \Mockery::mock(MessageCatalogueInterface::class);
+        $messageCatalogMock->expects('has')->with('key', 'flasher')->andReturnFalse();
+        $messageCatalogMock->expects('has')->with('key', 'messages')->andReturnFalse();
+
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class, TranslatorBagInterface::class);
+        $symfonyTranslatorMock->expects('getCatalogue')->with(null)->andReturns($messageCatalogMock);
+
+        $translator = new Translator($symfonyTranslatorMock);
         $this->assertSame('key', $translator->translate('key', ['some_param' => 1]));
     }
 
-    public function testGetLocale(): void
+    public function testTranslateWithTranslatorBagInterfaceAndSpecificLocale(): void
     {
-        $this->symfonyTranslatorMock->allows('getLocale')->andReturns('en_US');
+        $messageCatalogMock = \Mockery::mock(MessageCatalogueInterface::class);
+        $messageCatalogMock->expects('has')->with('greeting', 'flasher')->andReturnTrue();
 
-        $translator = new Translator($this->symfonyTranslatorMock);
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class, TranslatorBagInterface::class);
+        $symfonyTranslatorMock->expects('getCatalogue')->with('de')->andReturns($messageCatalogMock);
+        $symfonyTranslatorMock->expects('trans')->with('greeting', [], 'flasher', 'de')->andReturns('Hallo');
+
+        $translator = new Translator($symfonyTranslatorMock);
+        $this->assertSame('Hallo', $translator->translate('greeting', [], 'de'));
+    }
+
+    public function testGetLocaleWithGetLocaleMethod(): void
+    {
+        // Create a class that has getLocale method
+        $symfonyTranslatorMock = new class implements SymfonyTranslatorInterface {
+            public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
+            {
+                return $id;
+            }
+
+            public function getLocale(): string
+            {
+                return 'en_US';
+            }
+        };
+
+        $translator = new Translator($symfonyTranslatorMock);
         $this->assertSame('en_US', str_replace('_POSIX', '', $translator->getLocale()));
+    }
+
+    public function testGetLocaleWithoutGetLocaleMethodUsesLocaleClass(): void
+    {
+        // Create a translator mock that doesn't have getLocale method
+        $symfonyTranslatorMock = new class implements SymfonyTranslatorInterface {
+            public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
+            {
+                return $id;
+            }
+        };
+
+        $translator = new Translator($symfonyTranslatorMock);
+        $locale = $translator->getLocale();
+
+        // Should return a valid locale string (either from \Locale::getDefault() or 'en')
+        $this->assertIsString($locale);
+        $this->assertNotEmpty($locale);
+    }
+
+    public function testTranslateWithEmptyParameters(): void
+    {
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class);
+        $symfonyTranslatorMock->expects('trans')
+            ->with('simple.message', [], 'flasher', null)
+            ->andReturns('Simple Message');
+
+        $translator = new Translator($symfonyTranslatorMock);
+        $this->assertSame('Simple Message', $translator->translate('simple.message'));
+    }
+
+    public function testTranslateWithComplexParameters(): void
+    {
+        $parameters = [
+            ':count' => 5,
+            ':name' => 'John',
+            ':resource' => 'users',
+        ];
+
+        $symfonyTranslatorMock = \Mockery::mock(SymfonyTranslatorInterface::class);
+        $symfonyTranslatorMock->expects('trans')
+            ->with('resource.created', $parameters, 'flasher', null)
+            ->andReturns('5 users created by John');
+
+        $translator = new Translator($symfonyTranslatorMock);
+        $this->assertSame('5 users created by John', $translator->translate('resource.created', $parameters));
     }
 }

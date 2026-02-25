@@ -264,7 +264,8 @@ export default class Flasher extends AbstractPlugin {
 
     private loadAsset(url: string, nonce: string, type: 'style' | 'script'): Promise<void> {
         // Check if asset is already loaded
-        if (document.querySelector(`${type === 'style' ? 'link' : 'script'}[src="${url}"]`)) {
+        const selector = type === 'style' ? `link[href="${url}"]` : `script[src="${url}"]`
+        if (document.querySelector(selector)) {
             return Promise.resolve()
         }
 

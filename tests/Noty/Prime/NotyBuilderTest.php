@@ -201,4 +201,137 @@ final class NotyBuilderTest extends TestCase
 
         $this->assertSame(['visibilityControl' => true], $options);
     }
+
+    public function testAlertWithTitleAndOptions(): void
+    {
+        $this->notyBuilder->alert('Alert message', 'Alert Title', ['timeout' => 3000]);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $notification = $envelope->getNotification();
+
+        $this->assertSame('alert', $notification->getType());
+        $this->assertSame('Alert message', $notification->getMessage());
+        $this->assertSame('Alert Title', $notification->getTitle());
+        $this->assertSame(3000, $notification->getOptions()['timeout']);
+    }
+
+    public function testAlertWithoutMessage(): void
+    {
+        $this->notyBuilder->alert();
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $notification = $envelope->getNotification();
+
+        $this->assertSame('alert', $notification->getType());
+    }
+
+    public function testTimeoutFalse(): void
+    {
+        $this->notyBuilder->timeout(false);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertFalse($options['timeout']);
+    }
+
+    public function testCloseWithArray(): void
+    {
+        $this->notyBuilder->closeWith(['click', 'button']);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['closeWith' => ['click', 'button']], $options);
+    }
+
+    public function testAnimationClose(): void
+    {
+        $this->notyBuilder->animation('close', 'fadeOut');
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['animation' => ['close' => 'fadeOut']], $options);
+    }
+
+    public function testSoundsVolume(): void
+    {
+        $this->notyBuilder->sounds('volume', 50);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['sounds' => ['volume' => 50]], $options);
+    }
+
+    public function testSoundsConditions(): void
+    {
+        $this->notyBuilder->sounds('conditions', ['docVisible', 'docHidden']);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['sounds' => ['conditions' => ['docVisible', 'docHidden']]], $options);
+    }
+
+    public function testDocTitleConditions(): void
+    {
+        $this->notyBuilder->docTitle('conditions', ['docVisible']);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['docTitle' => ['conditions' => ['docVisible']]], $options);
+    }
+
+    public function testIdBoolean(): void
+    {
+        $this->notyBuilder->id(false);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertFalse($options['id']);
+    }
+
+    public function testKillerString(): void
+    {
+        $this->notyBuilder->killer('my-noty');
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['killer' => 'my-noty'], $options);
+    }
+
+    public function testContainerFalse(): void
+    {
+        $this->notyBuilder->container(false);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertFalse($options['container']);
+    }
+
+    public function testModalFalse(): void
+    {
+        $this->notyBuilder->modal(false);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertFalse($options['modal']);
+    }
+
+    public function testForceFalse(): void
+    {
+        $this->notyBuilder->force(false);
+
+        $envelope = $this->notyBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertFalse($options['force']);
+    }
 }

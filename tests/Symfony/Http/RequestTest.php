@@ -9,15 +9,13 @@ use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-/**
- * This class is responsible for testing Flasher\Symfony\Http\Request.
- */
 final class RequestTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
@@ -29,6 +27,16 @@ final class RequestTest extends TestCase
         parent::setUp();
 
         $this->symfonyRequestMock = \Mockery::mock(SymfonyRequest::class);
+    }
+
+    public function testGetUri(): void
+    {
+        $expectedUri = '/some/path?query=value';
+        $this->symfonyRequestMock->expects('getRequestUri')->once()->andReturns($expectedUri);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertSame($expectedUri, $request->getUri());
     }
 
     public static function xmlHttpRequestProvider(): \Iterator
@@ -47,9 +55,6 @@ final class RequestTest extends TestCase
         $this->assertSame($isXmlHttpRequest, $request->isXmlHttpRequest());
     }
 
-    /**
-     * Test isHtmlRequestFormat method.
-     */
     public function testIsHtmlRequestFormat(): void
     {
         $this->symfonyRequestMock->expects('getRequestFormat')->once()->andReturns('html');
@@ -59,9 +64,24 @@ final class RequestTest extends TestCase
         $this->assertTrue($request->isHtmlRequestFormat());
     }
 
-    /**
-     * Test hasSession method.
-     */
+    public function testIsHtmlRequestFormatReturnsFalseForJson(): void
+    {
+        $this->symfonyRequestMock->expects('getRequestFormat')->once()->andReturns('json');
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->isHtmlRequestFormat());
+    }
+
+    public function testIsHtmlRequestFormatReturnsFalseForXml(): void
+    {
+        $this->symfonyRequestMock->expects('getRequestFormat')->once()->andReturns('xml');
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->isHtmlRequestFormat());
+    }
+
     public function testHasSession(): void
     {
         $this->symfonyRequestMock->expects('hasSession')->andReturns(true);
@@ -71,16 +91,21 @@ final class RequestTest extends TestCase
         $this->assertTrue($request->hasSession());
     }
 
+    public function testHasSessionReturnsFalse(): void
+    {
+        $this->symfonyRequestMock->expects('hasSession')->andReturns(false);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->hasSession());
+    }
+
     public static function sessionStatusProvider(): \Iterator
     {
         yield 'Session Started' => [true];
         yield 'Session Not Started' => [false];
-        yield 'No Session' => [false];
     }
 
-    /**
-     * Test getSession method.
-     */
     #[DataProvider('sessionStatusProvider')]
     public function testIsSessionStarted(bool $isStarted): void
     {
@@ -93,9 +118,15 @@ final class RequestTest extends TestCase
         $this->assertSame($isStarted, $request->isSessionStarted());
     }
 
-    /**
-     * Test hasType method.
-     */
+    public function testIsSessionStartedReturnsFalseWhenSessionNotFound(): void
+    {
+        $this->symfonyRequestMock->expects()->getSession()->andThrow(new SessionNotFoundException());
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->isSessionStarted());
+    }
+
     public function testHasType(): void
     {
         $type = 'info';
@@ -112,6 +143,41 @@ final class RequestTest extends TestCase
 
         $request = new Request($this->symfonyRequestMock);
         $this->assertTrue($request->hasType($type));
+    }
+
+    public function testHasTypeReturnsFalseWhenNoSession(): void
+    {
+        $this->symfonyRequestMock->expects()->hasSession()->andReturnFalse();
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->hasType('info'));
+    }
+
+    public function testHasTypeReturnsFalseWhenSessionNotStarted(): void
+    {
+        $sessionMock = \Mockery::mock(SessionInterface::class);
+        $sessionMock->expects()->isStarted()->andReturnFalse();
+
+        $this->symfonyRequestMock->expects()->hasSession()->andReturnTrue();
+        $this->symfonyRequestMock->expects()->getSession()->andReturns($sessionMock);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->hasType('info'));
+    }
+
+    public function testHasTypeReturnsFalseWhenSessionNotFlashBagAware(): void
+    {
+        $sessionMock = \Mockery::mock(SessionInterface::class);
+        $sessionMock->expects()->isStarted()->andReturnTrue();
+
+        $this->symfonyRequestMock->expects()->hasSession()->andReturnTrue();
+        $this->symfonyRequestMock->expects()->getSession()->twice()->andReturns($sessionMock);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->hasType('info'));
     }
 
     public function testGetType(): void
@@ -131,13 +197,79 @@ final class RequestTest extends TestCase
         $this->assertSame($expected, $request->getType('info'));
     }
 
-    /**
-     * Test hasHeader method.
-     */
+    public function testGetTypeReturnsEmptyArrayWhenSessionNotFlashBagAware(): void
+    {
+        $sessionMock = \Mockery::mock(SessionInterface::class);
+
+        $this->symfonyRequestMock->expects()->getSession()->once()->andReturns($sessionMock);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertSame([], $request->getType('info'));
+    }
+
+    public function testGetTypeReturnsEmptyArrayWhenSessionNotFound(): void
+    {
+        $this->symfonyRequestMock->expects()->getSession()->andThrow(new SessionNotFoundException());
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertSame([], $request->getType('info'));
+    }
+
+    public function testGetTypeWithMultipleMessages(): void
+    {
+        $expected = ['message1', 'message2', 'message3'];
+
+        $flashBagMock = \Mockery::mock(FlashBagInterface::class);
+        $flashBagMock->expects()->get('success')->andReturns($expected);
+
+        $sessionMock = \Mockery::mock(FlashBagAwareSessionInterface::class);
+        $sessionMock->expects()->getFlashBag()->andReturns($flashBagMock);
+
+        $this->symfonyRequestMock->expects()->getSession()->once()->andReturns($sessionMock);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertSame($expected, $request->getType('success'));
+    }
+
+    public function testForgetType(): void
+    {
+        $expected = ['message to forget'];
+
+        $flashBagMock = \Mockery::mock(FlashBagInterface::class);
+        $flashBagMock->expects()->get('warning')->andReturns($expected);
+
+        $sessionMock = \Mockery::mock(FlashBagAwareSessionInterface::class);
+        $sessionMock->expects()->getFlashBag()->andReturns($flashBagMock);
+
+        $this->symfonyRequestMock->expects()->getSession()->once()->andReturns($sessionMock);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        // forgetType calls getType internally which clears the flash bag
+        $request->forgetType('warning');
+        $this->assertTrue(true); // No exception thrown
+    }
+
+    public function testForgetTypeWithNonFlashBagSession(): void
+    {
+        $sessionMock = \Mockery::mock(SessionInterface::class);
+
+        $this->symfonyRequestMock->expects()->getSession()->once()->andReturns($sessionMock);
+
+        $request = new Request($this->symfonyRequestMock);
+
+        // Should not throw
+        $request->forgetType('error');
+        $this->assertTrue(true);
+    }
+
     public function testHasHeader(): void
     {
         $headersMock = \Mockery::mock(HeaderBag::class);
-        $headersMock->expects()->has('Authorization')->andReturns('Bearer token');
+        $headersMock->expects()->has('Authorization')->andReturns(true);
 
         $this->symfonyRequestMock->headers = $headersMock;
 
@@ -146,9 +278,18 @@ final class RequestTest extends TestCase
         $this->assertTrue($request->hasHeader('Authorization'));
     }
 
-    /**
-     * Test getHeader method.
-     */
+    public function testHasHeaderReturnsFalse(): void
+    {
+        $headersMock = \Mockery::mock(HeaderBag::class);
+        $headersMock->expects()->has('X-Custom-Header')->andReturns(false);
+
+        $this->symfonyRequestMock->headers = $headersMock;
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertFalse($request->hasHeader('X-Custom-Header'));
+    }
+
     public function testGetHeader(): void
     {
         $headersMock = \Mockery::mock(HeaderBag::class);
@@ -159,5 +300,29 @@ final class RequestTest extends TestCase
         $request = new Request($this->symfonyRequestMock);
 
         $this->assertSame('Bearer token', $request->getHeader('Authorization'));
+    }
+
+    public function testGetHeaderReturnsNull(): void
+    {
+        $headersMock = \Mockery::mock(HeaderBag::class);
+        $headersMock->expects('get')->with('Non-Existent')->andReturns(null);
+
+        $this->symfonyRequestMock->headers = $headersMock;
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertNull($request->getHeader('Non-Existent'));
+    }
+
+    public function testGetHeaderWithContentType(): void
+    {
+        $headersMock = \Mockery::mock(HeaderBag::class);
+        $headersMock->expects('get')->with('Content-Type')->andReturns('application/json');
+
+        $this->symfonyRequestMock->headers = $headersMock;
+
+        $request = new Request($this->symfonyRequestMock);
+
+        $this->assertSame('application/json', $request->getHeader('Content-Type'));
     }
 }

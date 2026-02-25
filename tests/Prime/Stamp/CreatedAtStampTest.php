@@ -73,4 +73,25 @@ final class CreatedAtStampTest extends TestCase
         $this->assertArrayHasKey('created_at', $arrayForm);
         $this->assertSame($this->time->format($this->format), $arrayForm['created_at']);
     }
+
+    public function testCompareWithNonCreatedAtStamp(): void
+    {
+        $otherStamp = new \Flasher\Prime\Stamp\PriorityStamp(5);
+        $this->assertSame(1, $this->createdAtStamp->compare($otherStamp));
+    }
+
+    public function testConstructorWithDefaultValues(): void
+    {
+        $stamp = new CreatedAtStamp();
+        $this->assertInstanceOf(\DateTimeImmutable::class, $stamp->getCreatedAt());
+        $arrayForm = $stamp->toArray();
+        $this->assertArrayHasKey('created_at', $arrayForm);
+    }
+
+    public function testToArrayWithCustomFormat(): void
+    {
+        $stamp = new CreatedAtStamp($this->time, 'd/m/Y');
+        $arrayForm = $stamp->toArray();
+        $this->assertSame('01/01/2023', $arrayForm['created_at']);
+    }
 }

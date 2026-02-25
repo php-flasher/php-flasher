@@ -549,5 +549,149 @@ describe('Flasher', () => {
             expect(document.head.querySelector('link[href="/style1.css"]')).toBeTruthy()
             expect(document.head.querySelector('link[href="/style2.css"]')).toBeTruthy()
         })
+
+        it('should handle theme without styles', async () => {
+            flasher.addTheme('no-styles', {
+                render: () => '<div></div>',
+            })
+
+            const originalCreateElement = document.createElement.bind(document)
+            vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+                const el = originalCreateElement(tag)
+                if (tag === 'link' || tag === 'script') {
+                    setTimeout(() => el.onload?.({} as Event), 0)
+                }
+                return el
+            })
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'theme.no-styles' },
+                }],
+            })
+
+            // Should not throw
+        })
+
+        it('should handle non-theme plugins without adding styles', async () => {
+            const plugin = new MockPlugin()
+            flasher.addPlugin('custom-plugin', plugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'custom-plugin' },
+                }],
+            })
+
+            expect(plugin.envelopes).toHaveLength(1)
+        })
+    })
+
+    describe('error handling', () => {
+        it('should handle errors in render() gracefully', async () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+            // Create a plugin that will throw during renderEnvelopes
+            const badPlugin: PluginInterface = {
+                success: vi.fn(),
+                error: vi.fn(),
+                info: vi.fn(),
+                warning: vi.fn(),
+                flash: vi.fn(),
+                renderEnvelopes: () => {
+                    throw new Error('Render error')
+                },
+                renderOptions: vi.fn(),
+            }
+
+            flasher.addPlugin('bad', badPlugin)
+
+            await flasher.render({
+                envelopes: [{
+                    type: 'success',
+                    message: 'Test',
+                    title: 'Test',
+                    options: {},
+                    metadata: { plugin: 'bad' },
+                }],
+            })
+
+            expect(consoleSpy).toHaveBeenCalled()
+        })
+
+        it('should handle asset loading errors', async () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+            const originalCreateElement = document.createElement.bind(document)
+            vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+                const el = originalCreateElement(tag)
+                if (tag === 'link' || tag === 'script') {
+                    setTimeout(() => el.onerror?.({} as Event), 0)
+                }
+                return el
+            })
+
+            await flasher.render({
+                envelopes: [],
+                styles: ['/nonexistent.css'],
+            })
+
+            // Should handle error gracefully
+            expect(consoleSpy).toHaveBeenCalled()
+        })
+    })
+
+    describe('asset deduplication', () => {
+        it('should skip loading if asset already exists in DOM', async () => {
+            // Pre-add a link element to the DOM
+            const existingLink = document.createElement('link')
+            existingLink.rel = 'stylesheet'
+            existingLink.href = '/existing.css'
+            document.head.appendChild(existingLink)
+
+            const originalCreateElement = document.createElement.bind(document)
+            const createElementSpy = vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+                const el = originalCreateElement(tag)
+                if (tag === 'link' || tag === 'script') {
+                    setTimeout(() => el.onload?.({} as Event), 0)
+                }
+                return el
+            })
+
+            await flasher.render({
+                envelopes: [],
+                styles: ['/existing.css'],
+            })
+
+            // Should not create a new element since it already exists
+            expect(createElementSpy).not.toHaveBeenCalledWith('link')
+        })
+
+        it('should skip empty URLs', async () => {
+            const originalCreateElement = document.createElement.bind(document)
+            const createElementSpy = vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+                const el = originalCreateElement(tag)
+                if (tag === 'link' || tag === 'script') {
+                    setTimeout(() => el.onload?.({} as Event), 0)
+                }
+                return el
+            })
+
+            await flasher.render({
+                envelopes: [],
+                styles: ['', '/valid.css'],
+            })
+
+            // Should only create one link element for the valid URL
+            expect(createElementSpy).toHaveBeenCalledTimes(1)
+        })
     })
 })

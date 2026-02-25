@@ -517,10 +517,321 @@ final class FlasherBuilderTest extends TestCase
         $this->assertSame('Called from a macro', $response);
     }
 
+    public function testTimeout(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $result = $builder->timeout(5000);
+
+        $this->assertSame($builder, $result);
+        $this->assertSame(5000, $builder->getEnvelope()->getOption('timeout'));
+    }
+
+    public function testTimeoutWithZero(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $builder->timeout(0);
+
+        $this->assertSame(0, $builder->getEnvelope()->getOption('timeout'));
+    }
+
+    public function testDirection(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $result = $builder->direction('top');
+
+        $this->assertSame($builder, $result);
+        $this->assertSame('top', $builder->getEnvelope()->getOption('direction'));
+    }
+
+    public function testDirectionBottom(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $builder->direction('bottom');
+
+        $this->assertSame('bottom', $builder->getEnvelope()->getOption('direction'));
+    }
+
+    public function testPosition(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $result = $builder->position('top-right');
+
+        $this->assertSame($builder, $result);
+        $this->assertSame('top-right', $builder->getEnvelope()->getOption('position'));
+    }
+
+    public function testPositionTopLeft(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $builder->position('top-left');
+
+        $this->assertSame('top-left', $builder->getEnvelope()->getOption('position'));
+    }
+
+    public function testPositionBottomCenter(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $builder->position('bottom-center');
+
+        $this->assertSame('bottom-center', $builder->getEnvelope()->getOption('position'));
+    }
+
+    public function testChainingTimeoutDirectionPosition(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $builder
+            ->timeout(3000)
+            ->direction('top')
+            ->position('top-center');
+
+        $envelope = $builder->getEnvelope();
+        $this->assertSame(3000, $envelope->getOption('timeout'));
+        $this->assertSame('top', $envelope->getOption('direction'));
+        $this->assertSame('top-center', $envelope->getOption('position'));
+    }
+
+    public function testFlasherBuilderType(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $result = $builder->type('success');
+
+        $this->assertSame($builder, $result);
+        $this->assertSame(Type::SUCCESS, $builder->getEnvelope()->getType());
+    }
+
+    public function testFlasherBuilderSuccessWithOptions(): void
+    {
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
+        $storageManager->expects($this->once())->method('add');
+
+        $builder = $this->getFlasherBuilder($storageManager);
+        $envelope = $builder->success('Success!', ['timeout' => 2000], 'Title');
+
+        $this->assertSame(Type::SUCCESS, $envelope->getType());
+        $this->assertSame('Success!', $envelope->getMessage());
+        $this->assertSame('Title', $envelope->getTitle());
+        $this->assertSame(2000, $envelope->getOption('timeout'));
+    }
+
+    public function testFlasherBuilderErrorWithOptions(): void
+    {
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
+        $storageManager->expects($this->once())->method('add');
+
+        $builder = $this->getFlasherBuilder($storageManager);
+        $envelope = $builder->error('Error!', ['position' => 'top-left']);
+
+        $this->assertSame(Type::ERROR, $envelope->getType());
+        $this->assertSame('top-left', $envelope->getOption('position'));
+    }
+
+    public function testFlasherBuilderInfoWithOptions(): void
+    {
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
+        $storageManager->expects($this->once())->method('add');
+
+        $builder = $this->getFlasherBuilder($storageManager);
+        $envelope = $builder->info('Info!', ['rtl' => true]);
+
+        $this->assertSame(Type::INFO, $envelope->getType());
+        $this->assertTrue($envelope->getOption('rtl'));
+    }
+
+    public function testFlasherBuilderWarningWithOptions(): void
+    {
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
+        $storageManager->expects($this->once())->method('add');
+
+        $builder = $this->getFlasherBuilder($storageManager);
+        $envelope = $builder->warning('Warning!', ['escapeHtml' => false]);
+
+        $this->assertSame(Type::WARNING, $envelope->getType());
+        $this->assertFalse($envelope->getOption('escapeHtml'));
+    }
+
+    public function testFlasherBuilderFlashWithAllParameters(): void
+    {
+        $storageManager = $this->getMockBuilder(StorageManagerInterface::class)->getMock();
+        $storageManager->expects($this->once())->method('add');
+
+        $builder = $this->getFlasherBuilder($storageManager);
+        $envelope = $builder->flash('error', 'Flash message', ['fps' => 60], 'Flash Title');
+
+        $this->assertSame(Type::ERROR, $envelope->getType());
+        $this->assertSame('Flash message', $envelope->getMessage());
+        $this->assertSame('Flash Title', $envelope->getTitle());
+        $this->assertSame(60, $envelope->getOption('fps'));
+    }
+
+    public function testFlasherBuilderOptions(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $result = $builder->options(['timeout' => 1000, 'position' => 'bottom-right']);
+
+        $this->assertSame($builder, $result);
+        $this->assertSame(1000, $builder->getEnvelope()->getOption('timeout'));
+        $this->assertSame('bottom-right', $builder->getEnvelope()->getOption('position'));
+    }
+
+    public function testFlasherBuilderOption(): void
+    {
+        $builder = $this->getFlasherBuilder();
+        $result = $builder->option('style', ['background' => '#fff']);
+
+        $this->assertSame($builder, $result);
+        $this->assertSame(['background' => '#fff'], $builder->getEnvelope()->getOption('style'));
+    }
+
+    public function testKeepWithExistingHopsStamp(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->hops(3); // First set hops to 3
+        $builder->keep();  // Should add 1 to existing 3 = 4
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(HopsStamp::class);
+
+        $this->assertInstanceOf(HopsStamp::class, $stamp);
+        $this->assertSame(4, $stamp->getAmount());
+    }
+
+    public function testWhenWithExistingWhenStamp(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->when(true);
+        $builder->when(true);
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(WhenStamp::class);
+
+        $this->assertInstanceOf(WhenStamp::class, $stamp);
+        $this->assertTrue($stamp->getCondition());
+    }
+
+    public function testWhenWithExistingWhenStampBecomesFalse(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->when(true);
+        $builder->when(false);
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(WhenStamp::class);
+
+        $this->assertInstanceOf(WhenStamp::class, $stamp);
+        $this->assertFalse($stamp->getCondition());
+    }
+
+    public function testUnlessWithExistingUnlessStamp(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->unless(false);
+        $builder->unless(false);
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(UnlessStamp::class);
+
+        $this->assertInstanceOf(UnlessStamp::class, $stamp);
+        $this->assertFalse($stamp->getCondition());
+    }
+
+    public function testUnlessWithExistingUnlessStampBecomesTrue(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->unless(false);
+        $builder->unless(true);
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(UnlessStamp::class);
+
+        $this->assertInstanceOf(UnlessStamp::class, $stamp);
+        $this->assertTrue($stamp->getCondition());
+    }
+
+    public function testWhenWithClosure(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->when(fn () => true);
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(WhenStamp::class);
+
+        $this->assertInstanceOf(WhenStamp::class, $stamp);
+        $this->assertTrue($stamp->getCondition());
+    }
+
+    public function testUnlessWithClosure(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->unless(fn () => false);
+
+        $envelope = $builder->getEnvelope();
+        $stamp = $envelope->get(UnlessStamp::class);
+
+        $this->assertInstanceOf(UnlessStamp::class, $stamp);
+        $this->assertFalse($stamp->getCondition());
+    }
+
+    public function testWhenWithClosureReturningNonBoolean(): void
+    {
+        $builder = $this->getNotificationBuilder();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The condition must be a boolean or a closure that returns a boolean');
+
+        $builder->when(fn () => 'string');
+    }
+
+    public function testUnlessWithClosureReturningNonBoolean(): void
+    {
+        $builder = $this->getNotificationBuilder();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The condition must be a boolean or a closure that returns a boolean');
+
+        $builder->unless(fn () => 123);
+    }
+
+    public function testOptionsWithAppendFalse(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->options(['timeout' => 5000, 'direction' => 'top']);
+        // With append=false, we pass only new options but setOptions uses array_replace
+        $builder->options(['timeout' => 3000], false);
+
+        $envelope = $builder->getEnvelope();
+
+        // array_replace replaces existing keys, so timeout changes but direction remains
+        $this->assertSame(3000, $envelope->getOption('timeout'));
+        $this->assertSame('top', $envelope->getOption('direction'));
+    }
+
+    public function testOptionsWithAppendTrue(): void
+    {
+        $builder = $this->getNotificationBuilder();
+        $builder->options(['timeout' => 5000]);
+        $builder->options(['position' => 'top-right'], true);
+
+        $envelope = $builder->getEnvelope();
+
+        $this->assertSame(5000, $envelope->getOption('timeout'));
+        $this->assertSame('top-right', $envelope->getOption('position'));
+    }
+
     /**
      * @phpstan-param MockObject|StorageManagerInterface $storageManager
      */
     private function getNotificationBuilder(?StorageManagerInterface $storageManager = null): NotificationBuilderInterface
+    {
+        /** @var StorageManagerInterface $storageManager */
+        $storageManager = $storageManager ?: $this->createMock(StorageManagerInterface::class);
+
+        return new FlasherBuilder(new Notification(), $storageManager);
+    }
+
+    /**
+     * @phpstan-param MockObject|StorageManagerInterface $storageManager
+     */
+    private function getFlasherBuilder(?StorageManagerInterface $storageManager = null): FlasherBuilder
     {
         /** @var StorageManagerInterface $storageManager */
         $storageManager = $storageManager ?: $this->createMock(StorageManagerInterface::class);

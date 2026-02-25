@@ -202,4 +202,252 @@ final class ResponseExtensionTest extends TestCase
         yield [HtmlPresenter::HEAD_END_PLACE_HOLDER];
         yield [HtmlPresenter::BODY_END_PLACE_HOLDER];
     }
+
+    public function testRenderWithEmptyHtmlResponse(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $contentBefore = 'content '.HtmlPresenter::BODY_END_PLACE_HOLDER;
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->expects()->render('html', [], \Mockery::any())->andReturn('');
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->shouldNotHaveReceived('setContent');
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertSame($response, $result);
+    }
+
+    public function testRenderWithExcludedPath(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        // Create a concrete request class with getUri method for method_exists to work
+        $request = new class implements RequestInterface {
+            public function isXmlHttpRequest(): bool
+            {
+                return false;
+            }
+
+            public function isHtmlRequestFormat(): bool
+            {
+                return true;
+            }
+
+            public function getUri(): string
+            {
+                return '/admin/dashboard';
+            }
+
+            public function hasSession(): bool
+            {
+                return false;
+            }
+
+            public function getSession(): ?\Flasher\Prime\Storage\Bag\BagInterface
+            {
+                return null;
+            }
+
+            public function hasHeader(string $name): bool
+            {
+                return false;
+            }
+
+            public function getHeader(string $name, ?string $default = null): ?string
+            {
+                return $default;
+            }
+
+            public function getContentType(): ?string
+            {
+                return 'text/html';
+            }
+
+            public function isFormatAcceptable(string $format): bool
+            {
+                return true;
+            }
+        };
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler, ['#^/admin#']);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertSame($response, $result);
+    }
+
+    public function testRenderWithExcludedPathNotMatching(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+        $htmlResponse = '<div>Flasher</div>';
+
+        $contentBefore = 'content '.HtmlPresenter::BODY_END_PLACE_HOLDER;
+
+        // Create a concrete request class with getUri method for method_exists to work
+        $request = new class implements RequestInterface {
+            public function isXmlHttpRequest(): bool
+            {
+                return false;
+            }
+
+            public function isHtmlRequestFormat(): bool
+            {
+                return true;
+            }
+
+            public function getUri(): string
+            {
+                return '/user/profile';
+            }
+
+            public function hasSession(): bool
+            {
+                return false;
+            }
+
+            public function getSession(): ?\Flasher\Prime\Storage\Bag\BagInterface
+            {
+                return null;
+            }
+
+            public function hasHeader(string $name): bool
+            {
+                return false;
+            }
+
+            public function getHeader(string $name, ?string $default = null): ?string
+            {
+                return $default;
+            }
+
+            public function getContentType(): ?string
+            {
+                return 'text/html';
+            }
+
+            public function isFormatAcceptable(string $format): bool
+            {
+                return true;
+            }
+        };
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($htmlResponse);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+            'setContent' => \Mockery::any(),
+        ]);
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler, ['#^/admin#']);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertInstanceOf(ResponseInterface::class, $result);
+    }
+
+    public function testRenderNotRenderableDueToRedirection(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => true,
+            'isAttachment' => false,
+            'isJson' => false,
+        ]);
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertSame($response, $result);
+    }
+
+    public function testRenderNotRenderableDueToJson(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => true,
+        ]);
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertSame($response, $result);
+    }
+
+    public function testRenderNotRenderableDueToAttachment(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => true,
+            'isJson' => false,
+        ]);
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertSame($response, $result);
+    }
 }

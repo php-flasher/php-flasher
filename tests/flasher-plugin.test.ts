@@ -488,4 +488,80 @@ describe('FlasherPlugin', () => {
             )
         })
     })
+
+    describe('normalizeTimeout edge cases', () => {
+        it('should use default timeout when envelope timeout is null', () => {
+            plugin.renderEnvelopes([createEnvelope({ options: { timeout: null } })])
+
+            const notification = document.querySelector('.fl-container')
+            expect(notification).toBeTruthy()
+            // Should use default timeout (10000ms), so NOT sticky
+            expect(notification?.classList.contains('fl-sticky')).toBe(false)
+        })
+
+        it('should use default timeout when envelope timeout is undefined', () => {
+            plugin.renderEnvelopes([createEnvelope({ options: { timeout: undefined } })])
+
+            const notification = document.querySelector('.fl-container')
+            expect(notification).toBeTruthy()
+            // Should use default timeout (10000ms), so NOT sticky
+            expect(notification?.classList.contains('fl-sticky')).toBe(false)
+        })
+
+        it('should handle string timeout', () => {
+            plugin.renderEnvelopes([createEnvelope({ options: { timeout: '5000' } })])
+
+            const notification = document.querySelector('.fl-container')
+            expect(notification).toBeTruthy()
+
+            // Should auto-remove after timeout
+            vi.advanceTimersByTime(5100)
+            expect(notification?.classList.contains('fl-show')).toBe(false)
+        })
+
+        it('should handle invalid string timeout as sticky', () => {
+            plugin.renderEnvelopes([createEnvelope({ options: { timeout: 'invalid' } })])
+
+            const notification = document.querySelector('.fl-container')
+            expect(notification?.classList.contains('fl-sticky')).toBe(true)
+        })
+    })
+
+    describe('removeNotification edge cases', () => {
+        it('should handle null notification gracefully', () => {
+            // Access private method via any
+            const result = (plugin as any).removeNotification(null)
+
+            // Should not throw and return undefined
+            expect(result).toBeUndefined()
+        })
+
+        it('should handle undefined notification gracefully', () => {
+            const result = (plugin as any).removeNotification(undefined)
+
+            expect(result).toBeUndefined()
+        })
+    })
+
+    describe('progress bar edge cases', () => {
+        it('should create progress bar if not present', () => {
+            const themeWithoutProgressBar: Theme = {
+                render: () => '<div class="fl-notification"><div class="fl-progress-bar"></div></div>',
+            }
+
+            const customPlugin = new FlasherPlugin(themeWithoutProgressBar)
+            vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+                cb(performance.now())
+                return 0
+            })
+
+            customPlugin.renderOptions({ timeout: 1000, fps: 10 })
+            customPlugin.renderEnvelopes([createEnvelope()])
+
+            vi.advanceTimersByTime(100)
+
+            const progressBar = document.querySelector('.fl-progress')
+            expect(progressBar).toBeTruthy()
+        })
+    })
 })

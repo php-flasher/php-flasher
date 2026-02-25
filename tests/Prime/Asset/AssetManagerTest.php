@@ -48,6 +48,34 @@ final class AssetManagerTest extends TestCase
         $this->assertSame($expectedPath, $assetManager->getPath('/test.css'));
     }
 
+    public function testGetPathWithoutLeadingSlashReturnsOriginal(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $filePath = __DIR__.'/../Fixtures/Asset/test.css';
+
+        $assetManager->createManifest([$filePath]);
+
+        // Path without leading slash won't match manifest entries (which have leading /)
+        // The ltrim fallback only works if manifest stores without slash
+        $result = $assetManager->getPath('test.css');
+
+        // Returns original path since 'test.css' doesn't match '/test.css' in manifest
+        $this->assertSame('test.css', $result);
+    }
+
+    public function testGetPathReturnsOriginalWhenNotInManifest(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        // Create an empty manifest
+        $assetManager->createManifest([]);
+
+        $result = $assetManager->getPath('/non-existent.css');
+
+        $this->assertSame('/non-existent.css', $result);
+    }
+
     public function testGetPaths(): void
     {
         $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
@@ -66,6 +94,15 @@ final class AssetManagerTest extends TestCase
         ];
 
         $this->assertSame($expectedPaths, $assetManager->getPaths($files));
+    }
+
+    public function testGetPathsWithEmptyArray(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $result = $assetManager->getPaths([]);
+
+        $this->assertSame([], $result);
     }
 
     public function testCreateManifest(): void
@@ -92,5 +129,181 @@ final class AssetManagerTest extends TestCase
         $entriesData = $method->invoke($assetManager);
 
         $this->assertSame($expectedEntries, $entriesData);
+    }
+
+    public function testCreateManifestSkipsNonExistentFiles(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $files = [
+            __DIR__.'/../Fixtures/Asset/test1.css',
+            __DIR__.'/../Fixtures/Asset/non-existent-file.css',
+            __DIR__.'/../Fixtures/Asset/test2.css',
+        ];
+
+        $assetManager->createManifest($files);
+
+        $reflection = new \ReflectionClass(AssetManager::class);
+        $method = $reflection->getMethod('getEntriesData');
+        $method->setAccessible(true);
+
+        $entriesData = $method->invoke($assetManager);
+
+        // Should only contain the two existing files
+        $this->assertCount(2, $entriesData);
+        $this->assertArrayHasKey('/test1.css', $entriesData);
+        $this->assertArrayHasKey('/test2.css', $entriesData);
+        $this->assertArrayNotHasKey('/non-existent-file.css', $entriesData);
+    }
+
+    public function testCreateManifestWithEmptyArray(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $assetManager->createManifest([]);
+
+        $this->assertFileExists($this->manifestPath);
+        $content = file_get_contents($this->manifestPath);
+        $this->assertSame('[]', $content);
+    }
+
+    public function testGetEntriesDataCaching(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $assetManager->createManifest([
+            __DIR__.'/../Fixtures/Asset/test1.css',
+        ]);
+
+        // First call loads from file
+        $result1 = $assetManager->getPath('/test1.css');
+
+        // Second call should use cached data
+        $result2 = $assetManager->getPath('/test1.css');
+
+        $this->assertSame($result1, $result2);
+    }
+
+    public function testGetEntriesDataWithNoManifestFile(): void
+    {
+        // Make sure manifest doesn't exist
+        if (file_exists($this->manifestPath)) {
+            unlink($this->manifestPath);
+        }
+
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        // Should return original path when no manifest exists
+        $result = $assetManager->getPath('/some-file.css');
+
+        $this->assertSame('/some-file.css', $result);
+    }
+
+    public function testGetEntriesDataWithInvalidJson(): void
+    {
+        // Create a manifest with invalid JSON
+        file_put_contents($this->manifestPath, 'not valid json');
+
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('There was a problem JSON decoding');
+
+        $assetManager->getPath('/test.css');
+    }
+
+    public function testGetPathWithAndWithoutLeadingSlash(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $assetManager->createManifest([
+            __DIR__.'/../Fixtures/Asset/test1.css',
+        ]);
+
+        // With leading slash - should find versioned path
+        $result1 = $assetManager->getPath('/test1.css');
+        $this->assertStringContainsString('id=', $result1);
+
+        // Without leading slash - returns original (no match in manifest)
+        $result2 = $assetManager->getPath('test1.css');
+        $this->assertSame('test1.css', $result2);
+    }
+
+    public function testCreateManifestOverwritesExisting(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        // First create with test1.css
+        $assetManager->createManifest([
+            __DIR__.'/../Fixtures/Asset/test1.css',
+        ]);
+
+        // Verify first entry
+        $this->assertStringContainsString('id=', $assetManager->getPath('/test1.css'));
+
+        // Create new manager to clear cache
+        $assetManager2 = new AssetManager($this->publicDir, $this->manifestPath);
+
+        // Create with test2.css only
+        $assetManager2->createManifest([
+            __DIR__.'/../Fixtures/Asset/test2.css',
+        ]);
+
+        // The new manifest should only have test2.css
+        $content = json_decode(file_get_contents($this->manifestPath), true);
+        $this->assertArrayHasKey('/test2.css', $content);
+    }
+
+    public function testComputeHashNormalizesLineEndings(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        // The test files should produce consistent hashes regardless of line endings
+        $assetManager->createManifest([
+            __DIR__.'/../Fixtures/Asset/test1.css',
+        ]);
+
+        $result = $assetManager->getPath('/test1.css');
+
+        // Hash should be consistent
+        $this->assertSame('/test1.css?id=38eeac10df68fe4b49c30f8c6af0b1cc', $result);
+    }
+
+    public function testGetPathsPreservesOrder(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $assetManager->createManifest([
+            __DIR__.'/../Fixtures/Asset/test1.css',
+            __DIR__.'/../Fixtures/Asset/test2.css',
+            __DIR__.'/../Fixtures/Asset/test3.css',
+        ]);
+
+        $files = ['/test3.css', '/test1.css', '/test2.css'];
+        $results = $assetManager->getPaths($files);
+
+        // Order should be preserved
+        $this->assertStringContainsString('test3.css', $results[0]);
+        $this->assertStringContainsString('test1.css', $results[1]);
+        $this->assertStringContainsString('test2.css', $results[2]);
+    }
+
+    public function testManifestFileFormat(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath);
+
+        $assetManager->createManifest([
+            __DIR__.'/../Fixtures/Asset/test1.css',
+        ]);
+
+        $content = file_get_contents($this->manifestPath);
+        $decoded = json_decode($content, true);
+
+        // Should be valid JSON
+        $this->assertNotNull($decoded);
+        $this->assertIsArray($decoded);
+
+        // Should use forward slashes in keys
+        $this->assertArrayHasKey('/test1.css', $decoded);
     }
 }

@@ -84,6 +84,95 @@ final class OrderByCriteriaTest extends TestCase
         new OrderByCriteria(['NonExistentStamp' => OrderByCriteria::ASC]);
     }
 
+    public function testInvalidCriteriaType(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid type for criteria "order_by"');
+
+        new OrderByCriteria(123);
+    }
+
+    public function testInvalidFieldType(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid Field value, must be "string"');
+
+        // When using an integer key with an array value, $field becomes the array
+        new OrderByCriteria([['not_a_string']]);
+    }
+
+    public function testInvalidDirectionType(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid Direction value, must be "string"');
+
+        new OrderByCriteria(['priority' => 123]);
+    }
+
+    public function testSortingSkipsNonOrderableStamps(): void
+    {
+        $notification1 = new Notification();
+        $notification1->setTitle('a');
+        $envelope1 = new Envelope($notification1, [new PriorityStamp(1)]);
+
+        $notification2 = new Notification();
+        $notification2->setTitle('b');
+        $envelope2 = new Envelope($notification2); // No OrderableStamp
+
+        $envelopes = [$envelope1, $envelope2];
+
+        $criteria = new OrderByCriteria(['priority' => OrderByCriteria::ASC]);
+        $result = $criteria->apply($envelopes);
+
+        $this->assertCount(2, $result);
+    }
+
+    public function testSortingWithAliases(): void
+    {
+        $envelopes = [
+            $this->createEnvelope('a', 3, new \DateTimeImmutable('2024-01-01')),
+            $this->createEnvelope('b', 1, new \DateTimeImmutable('2024-01-02')),
+            $this->createEnvelope('c', 2, new \DateTimeImmutable('2024-01-03')),
+        ];
+
+        $criteria = new OrderByCriteria([
+            'created_at' => OrderByCriteria::ASC,
+        ]);
+
+        $result = $criteria->apply($envelopes);
+        $ids = array_map(fn (Envelope $e) => $e->getTitle(), $result);
+
+        $this->assertSame(['a', 'b', 'c'], $ids);
+    }
+
+    public function testSortingWithSameValues(): void
+    {
+        $envelopes = [
+            $this->createEnvelope('a', 1),
+            $this->createEnvelope('b', 1),
+            $this->createEnvelope('c', 1),
+        ];
+
+        $criteria = new OrderByCriteria('priority');
+        $result = $criteria->apply($envelopes);
+
+        $this->assertCount(3, $result);
+    }
+
+    public function testLowercaseDirection(): void
+    {
+        $envelopes = [
+            $this->createEnvelope('a', 3),
+            $this->createEnvelope('b', 1),
+        ];
+
+        $criteria = new OrderByCriteria(['priority' => 'asc']);
+        $result = $criteria->apply($envelopes);
+        $ids = array_map(fn (Envelope $e) => $e->getTitle(), $result);
+
+        $this->assertSame(['b', 'a'], $ids);
+    }
+
     private function createEnvelope(string $id, int $priority, ?\DateTimeImmutable $createdAt = null): Envelope
     {
         $notification = new Notification();

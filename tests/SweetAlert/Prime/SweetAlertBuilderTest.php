@@ -615,4 +615,224 @@ final class SweetAlertBuilderTest extends TestCase
 
         $this->assertSame(['scrollbarPadding' => false], $options);
     }
+
+    public function testShowConfirmButtonWithAllParameters(): void
+    {
+        $this->sweetAlertBuilder->showConfirmButton(true, 'OK', '#3085d6', 'Confirm button');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame([
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'OK',
+            'confirmButtonColor' => '#3085d6',
+            'confirmButtonAriaLabel' => 'Confirm button',
+        ], $options);
+    }
+
+    public function testShowCancelButtonWithAllParameters(): void
+    {
+        $this->sweetAlertBuilder->showCancelButton(true, 'Cancel', '#d33', 'Cancel button');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame([
+            'showCancelButton' => true,
+            'cancelButtonText' => 'Cancel',
+            'cancelButtonColor' => '#d33',
+            'cancelButtonAriaLabel' => 'Cancel button',
+        ], $options);
+    }
+
+    public function testConfirmButtonTextWithAllParameters(): void
+    {
+        $this->sweetAlertBuilder->confirmButtonText('Confirm', '#28a745', 'Confirm action');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame([
+            'confirmButtonText' => 'Confirm',
+            'confirmButtonColor' => '#28a745',
+            'confirmButtonAriaLabel' => 'Confirm action',
+        ], $options);
+    }
+
+    public function testDenyButtonTextWithAllParameters(): void
+    {
+        $this->sweetAlertBuilder->denyButtonText('Deny', '#dc3545', 'Deny action');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame([
+            'denyButtonText' => 'Deny',
+            'denyButtonColor' => '#dc3545',
+            'denyButtonAriaLabel' => 'Deny action',
+        ], $options);
+    }
+
+    public function testCancelButtonTextWithAllParameters(): void
+    {
+        $this->sweetAlertBuilder->cancelButtonText('No', '#6c757d', 'Cancel and go back');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame([
+            'cancelButtonText' => 'No',
+            'cancelButtonColor' => '#6c757d',
+            'cancelButtonAriaLabel' => 'Cancel and go back',
+        ], $options);
+    }
+
+    public function testImageUrlWithPartialParameters(): void
+    {
+        $this->sweetAlertBuilder->imageUrl('path/to/image.jpg', 100);
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame([
+            'imageUrl' => 'path/to/image.jpg',
+            'imageWidth' => 100,
+        ], $options);
+    }
+
+    public function testImageWithoutAltUsesTitle(): void
+    {
+        $this->sweetAlertBuilder->image('My Title', 'My Text', 'image.jpg', 400, 200);
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame('My Title', $options['imageAlt']);
+    }
+
+    public function testMessages(): void
+    {
+        $this->sweetAlertBuilder->messages('Test message');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $notification = $envelope->getNotification();
+
+        $this->assertSame('Test message', $notification->getMessage());
+        $this->assertSame('Test message', $notification->getOptions()['text']);
+    }
+
+    public function testPosition(): void
+    {
+        $this->sweetAlertBuilder->position('top-start');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['position' => 'top-start'], $options);
+    }
+
+    public function testShowCloseButton(): void
+    {
+        $this->sweetAlertBuilder->showCloseButton(true);
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['showCloseButton' => true], $options);
+    }
+
+    public function testToastWithExistingTitle(): void
+    {
+        $this->sweetAlertBuilder->title('Existing Title');
+        $this->sweetAlertBuilder->toast(true, 'bottom-end', true);
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        // Title should remain as set, not be overridden with ' '
+        $this->assertSame('Existing Title', $options['title']);
+    }
+
+    public function testQuestionWithoutMessage(): void
+    {
+        $this->sweetAlertBuilder->question();
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame('question', $envelope->getType());
+        $this->assertTrue($options['showCancelButton']);
+    }
+
+    public function testQuestionWithOptions(): void
+    {
+        $this->sweetAlertBuilder->question('Are you sure?', ['timer' => 5000]);
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $notification = $envelope->getNotification();
+
+        $this->assertSame('question', $envelope->getType());
+        $this->assertSame('Are you sure?', $notification->getMessage());
+    }
+
+    public function testDenyButtonColor(): void
+    {
+        $this->sweetAlertBuilder->denyButtonColor('#dc3545');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['denyButtonColor' => '#dc3545'], $options);
+    }
+
+    public function testCancelButtonColor(): void
+    {
+        $this->sweetAlertBuilder->cancelButtonColor('#6c757d');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['cancelButtonColor' => '#6c757d'], $options);
+    }
+
+    public function testDenyButtonAriaLabel(): void
+    {
+        $this->sweetAlertBuilder->denyButtonAriaLabel('Deny this action');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['denyButtonAriaLabel' => 'Deny this action'], $options);
+    }
+
+    public function testCancelButtonAriaLabel(): void
+    {
+        $this->sweetAlertBuilder->cancelButtonAriaLabel('Cancel this action');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['cancelButtonAriaLabel' => 'Cancel this action'], $options);
+    }
+
+    public function testConfirmButtonAriaLabel(): void
+    {
+        $this->sweetAlertBuilder->confirmButtonAriaLabel('Confirm this action');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['confirmButtonAriaLabel' => 'Confirm this action'], $options);
+    }
+
+    public function testConfirmButtonColor(): void
+    {
+        $this->sweetAlertBuilder->confirmButtonColor('#28a745');
+
+        $envelope = $this->sweetAlertBuilder->getEnvelope();
+        $options = $envelope->getNotification()->getOptions();
+
+        $this->assertSame(['confirmButtonColor' => '#28a745'], $options);
+    }
 }
