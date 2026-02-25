@@ -713,7 +713,9 @@ describe('Flasher', () => {
         })
 
         it('should silently handle non-existent theme', async () => {
-            // This should not throw, just silently not render
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+            // This should not throw, just log error and continue
             await flasher.render({
                 envelopes: [{
                     type: 'success',
@@ -724,7 +726,13 @@ describe('Flasher', () => {
                 }],
             })
 
-            // Should not throw
+            // Should not throw and should log error
+            expect(consoleSpy).toHaveBeenCalledWith(
+                expect.stringContaining('PHPFlasher: Error rendering envelopes'),
+                expect.any(Error),
+            )
+
+            consoleSpy.mockRestore()
         })
     })
 
