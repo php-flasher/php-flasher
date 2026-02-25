@@ -6,7 +6,6 @@ namespace Flasher\Tests\Symfony\Translation;
 
 use Flasher\Symfony\Translation\Translator;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\MessageCatalogueInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;

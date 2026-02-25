@@ -15,7 +15,7 @@ final class RangeExtractorTest extends TestCase
     {
         parent::setUp();
 
-        $this->traitInstance = new class() {
+        $this->traitInstance = new class {
             use RangeExtractor;
 
             public function testExtractRange(string $name, mixed $criteria): array

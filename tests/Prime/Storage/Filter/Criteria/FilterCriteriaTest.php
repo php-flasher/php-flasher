@@ -60,7 +60,7 @@ final class FilterCriteriaTest extends TestCase
             new Envelope(new Notification()),
         ];
 
-        $criteria = new FilterCriteria(fn ($e) => array_slice($e, 0, 2));
+        $criteria = new FilterCriteria(fn ($e) => \array_slice($e, 0, 2));
 
         $result = $criteria->apply($envelopes);
 
@@ -84,7 +84,7 @@ final class FilterCriteriaTest extends TestCase
 
         $criteria = new FilterCriteria([
             fn ($e) => array_filter($e, fn (Envelope $envelope) => 'success' === $envelope->getType()),
-            fn ($e) => array_slice($e, 0, 1),
+            fn ($e) => \array_slice($e, 0, 1),
         ]);
 
         $result = $criteria->apply($envelopes);
@@ -157,7 +157,7 @@ final class FilterCriteriaTest extends TestCase
             function ($e) use (&$order) {
                 $order[] = 'second';
 
-                return array_slice($e, 0, 2);
+                return \array_slice($e, 0, 2);
             },
         ]);
 
