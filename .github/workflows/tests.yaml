@@ -156,6 +156,9 @@ jobs:
             fail-fast: false
             matrix:
                 include:
+                    - { laravel: 13.x-dev, testbench: 11.x-dev, php: 8.5, phpunit: 11.5.* }
+                    - { laravel: 13.x-dev, testbench: 11.x-dev, php: 8.4, phpunit: 11.5.* }
+                    - { laravel: 13.x-dev, testbench: 11.x-dev, php: 8.3, phpunit: 11.5.* }
                     - { laravel: 12.*,  testbench: 10.*, php: 8.5, phpunit: 11.5.* }
                     - { laravel: 12.*,  testbench: 10.*, php: 8.4, phpunit: 11.5.* }
                     - { laravel: 12.*,  testbench: 10.*, php: 8.3, phpunit: 11.5.* }
@@ -186,8 +189,22 @@ jobs:
                 run: |
                     sed -i '/\"require\": {/,/},/d; /\"require-dev\": {/,/},/d' composer.json
                     composer config --global allow-plugins true
+
+                    if [[ "${{ matrix.laravel }}" == *"-dev"* ]]; then
+                        echo "Setting minimum-stability to dev for ${{ matrix.laravel }}"
+                        composer config minimum-stability "dev"
+                        composer config prefer-stable true
+                    fi
+
                     composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                    composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
+
+                    if [[ "${{ matrix.laravel }}" == *"-dev"* ]]; then
+                        echo "Running composer update (latest dependencies)"
+                        composer update -W --no-interaction --prefer-dist --optimize-autoloader
+                    else
+                        echo "Running composer update --prefer-lowest"
+                        composer update --prefer-lowest -W --no-interaction --prefer-dist --optimize-autoloader
+                    fi
 
             -   name: ✅ Execute tests
                 run: vendor/bin/phpunit --testsuite laravel
