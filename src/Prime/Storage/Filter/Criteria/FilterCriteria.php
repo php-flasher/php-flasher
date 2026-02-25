@@ -25,7 +25,7 @@ final class FilterCriteria implements CriteriaInterface
         $criteria = $criteria instanceof \Closure ? [$criteria] : $criteria;
         foreach ($criteria as $callback) {
             if (!$callback instanceof \Closure) {
-                throw new \InvalidArgumentException(\sprintf('Each element must be a closure, got got "%s".', get_debug_type($callback)));
+                throw new \InvalidArgumentException(\sprintf('Each element must be a closure, got "%s".', get_debug_type($callback)));
             }
 
             $this->callbacks[] = $callback;
