@@ -2,6 +2,9 @@
 
 set -o pipefail
 
+# PHP binary to use (defaults to PHP 8.2)
+PHP_BINARY="${PHP_BINARY:-/opt/homebrew/opt/php@8.2/bin/php}"
+
 # Colors and styles
 readonly RESET='\033[0m'
 readonly BOLD='\033[1m'
@@ -38,7 +41,7 @@ print_header() {
 run_rector() {
     echo -e "${BOLD}${SEARCH} Running Rector${RESET}"
 
-    if php vendor/bin/rector; then
+    if $PHP_BINARY vendor/bin/rector; then
         echo -e "${CHECK} ${GREEN}Rector completed successfully${RESET}\n"
         return 0
     else
@@ -50,7 +53,7 @@ run_rector() {
 run_php_cs_fixer() {
     echo -e "${BOLD}${PALETTE} Running PHP-CS-Fixer${RESET}"
 
-    if php vendor/bin/php-cs-fixer fix -v; then
+    if $PHP_BINARY vendor/bin/php-cs-fixer fix -v; then
         echo -e "${CHECK} ${GREEN}PHP-CS-Fixer completed successfully${RESET}\n"
         return 0
     else
@@ -62,7 +65,7 @@ run_php_cs_fixer() {
 run_phpstan() {
     echo -e "${BOLD}${MICROSCOPE} Running PHPStan${RESET}"
 
-    if php vendor/bin/phpstan analyse --memory-limit=-1; then
+    if $PHP_BINARY vendor/bin/phpstan analyse --memory-limit=-1; then
         echo -e "${CHECK} ${GREEN}PHPStan analysis completed successfully${RESET}\n"
         return 0
     else
@@ -101,7 +104,7 @@ validate_composer_files() {
 run_phplint() {
     echo -e "${BOLD}${MAGNIFIER} Running PHPLint${RESET}"
 
-    if php vendor/bin/phplint; then
+    if $PHP_BINARY vendor/bin/phplint; then
         echo -e "${CHECK} ${GREEN}PHPLint completed successfully${RESET}\n"
         return 0
     else
@@ -113,7 +116,7 @@ run_phplint() {
 run_phpunit() {
     echo -e "${BOLD}${TEST_TUBE} Running PHPUnit Tests${RESET}"
 
-    if php vendor/bin/phpunit; then
+    if $PHP_BINARY vendor/bin/phpunit; then
         echo -e "${CHECK} ${GREEN}All tests passed successfully${RESET}\n"
         return 0
     else
