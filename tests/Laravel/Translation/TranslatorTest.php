@@ -78,4 +78,46 @@ final class TranslatorTest extends TestCase
         $translator = new Translator($this->laravelTranslatorMock);
         $this->assertSame('en', $translator->getLocale());
     }
+
+    public function testTranslateReturnsIdWhenTranslationIsNotString(): void
+    {
+        $this->laravelTranslatorMock->allows('has')
+            ->andReturnFalse();
+
+        $this->laravelTranslatorMock->allows('get')
+            ->andReturn(['array', 'value']);
+
+        $translator = new Translator($this->laravelTranslatorMock);
+        $this->assertSame('key', $translator->translate('key'));
+    }
+
+    public function testTranslateWithLocale(): void
+    {
+        $this->laravelTranslatorMock->expects()
+            ->has('flasher::messages.key', 'fr')
+            ->andReturnTrue();
+
+        $this->laravelTranslatorMock->expects()
+            ->get('flasher::messages.key', [], 'fr')
+            ->andReturns('message en français');
+
+        $translator = new Translator($this->laravelTranslatorMock);
+        $this->assertSame('message en français', $translator->translate('key', [], 'fr'));
+    }
+
+    public function testTranslateWithColonPrefixParameters(): void
+    {
+        $this->laravelTranslatorMock->expects()
+            ->has('flasher::messages.key', null)
+            ->andReturnTrue();
+
+        $this->laravelTranslatorMock->expects()
+            ->get('flasher::messages.key', \Mockery::on(function ($params) {
+                return isset($params['name']) && $params['name'] === 'John';
+            }), null)
+            ->andReturns('Hello John');
+
+        $translator = new Translator($this->laravelTranslatorMock);
+        $this->assertSame('Hello John', $translator->translate('key', [':name' => 'John']));
+    }
 }
