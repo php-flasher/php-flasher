@@ -15,11 +15,31 @@ final class FlasherComponent extends Component
     public function render(): string
     {
         /** @var array<string, mixed> $criteria */
-        $criteria = json_decode($this->criteria, true, 512, \JSON_THROW_ON_ERROR) ?: [];
+        $criteria = $this->decodeJson($this->criteria);
 
         /** @var array<string, mixed> $context */
-        $context = json_decode($this->context, true, 512, \JSON_THROW_ON_ERROR) ?: [];
+        $context = $this->decodeJson($this->context);
 
         return app('flasher')->render('html', $criteria, $context);
+    }
+
+    /**
+     * Safely decode JSON string, returning empty array on failure.
+     *
+     * @return array<string, mixed>
+     */
+    private function decodeJson(string $json): array
+    {
+        if ('' === $json) {
+            return [];
+        }
+
+        try {
+            $decoded = json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
+
+            return \is_array($decoded) ? $decoded : [];
+        } catch (\JsonException) {
+            return [];
+        }
     }
 }

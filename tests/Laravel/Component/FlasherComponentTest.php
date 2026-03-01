@@ -38,4 +38,48 @@ final class FlasherComponentTest extends TestCase
         $actualResult = $this->flasherComponent->render();
         $this->assertSame($expectedResult, $actualResult);
     }
+
+    public function testRenderWithInvalidJsonCriteriaDoesNotThrow(): void
+    {
+        // Invalid JSON should not throw exception - should gracefully return empty array
+        $component = new FlasherComponent('{"invalid json', '{}');
+
+        // Should not throw JsonException
+        $result = $component->render();
+
+        $this->assertSame('Your expected result', $result);
+    }
+
+    public function testRenderWithInvalidJsonContextDoesNotThrow(): void
+    {
+        // Invalid JSON should not throw exception - should gracefully return empty array
+        $component = new FlasherComponent('{}', '{"invalid json');
+
+        // Should not throw JsonException
+        $result = $component->render();
+
+        $this->assertSame('Your expected result', $result);
+    }
+
+    public function testRenderWithEmptyStringsDoesNotThrow(): void
+    {
+        // Empty strings should be handled gracefully
+        $component = new FlasherComponent('', '');
+
+        // Should not throw JsonException
+        $result = $component->render();
+
+        $this->assertSame('Your expected result', $result);
+    }
+
+    public function testRenderWithNonArrayJsonReturnsEmptyArray(): void
+    {
+        // Non-array JSON values should return empty array
+        $component = new FlasherComponent('"just a string"', '123');
+
+        // Should not throw and should use empty arrays
+        $result = $component->render();
+
+        $this->assertSame('Your expected result', $result);
+    }
 }
