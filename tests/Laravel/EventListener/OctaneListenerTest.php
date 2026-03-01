@@ -15,7 +15,7 @@ final class OctaneListenerTest extends TestCase
 
         // Verify the listener is invokable (has __invoke method)
         // This is crucial for Laravel's event dispatcher to call it correctly
-        $this->assertTrue(is_callable($listener));
+        $this->assertIsCallable($listener);
     }
 
     public function testListenerHasInvokeMethod(): void

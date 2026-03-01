@@ -113,7 +113,7 @@ final class TranslatorTest extends TestCase
 
         $this->laravelTranslatorMock->expects()
             ->get('flasher::messages.key', \Mockery::on(function ($params) {
-                return isset($params['name']) && $params['name'] === 'John';
+                return isset($params['name']) && 'John' === $params['name'];
             }), null)
             ->andReturns('Hello John');
 

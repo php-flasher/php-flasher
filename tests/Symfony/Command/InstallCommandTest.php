@@ -83,7 +83,7 @@ final class InstallCommandTest extends MockeryTestCase
     {
         // Create a kernel that returns a non-existent project directory
         // This will cause getPublicDir() to return null
-        $kernel = new class() extends Kernel {
+        $kernel = new class extends Kernel {
             public function __construct()
             {
                 parent::__construct('test', true);
