@@ -1,0 +1,273 @@
+---
+permalink: /playground/
+title: Interactive Playground
+description: Try PHPFlasher notifications live in your browser. Experiment with different types, themes, positions, and options - no installation required.
+---
+
+<div class="container max-w-7xl mx-auto px-4 lg:px-6 py-8">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 rounded-3xl mb-12 shadow-2xl">
+        <!-- Animated background elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+            <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-indigo-400/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+
+            <!-- Floating notification icons -->
+            <div class="absolute top-[20%] left-[10%] opacity-20 animate-bounce" style="animation-delay: 0s; animation-duration: 3s;">
+                <i class="fas fa-check-circle text-4xl text-white"></i>
+            </div>
+            <div class="absolute top-[30%] right-[15%] opacity-20 animate-bounce" style="animation-delay: 0.5s; animation-duration: 2.5s;">
+                <i class="fas fa-bell text-3xl text-white"></i>
+            </div>
+            <div class="absolute bottom-[25%] left-[20%] opacity-20 animate-bounce" style="animation-delay: 1s; animation-duration: 3.5s;">
+                <i class="fas fa-info-circle text-3xl text-white"></i>
+            </div>
+            <div class="absolute bottom-[30%] right-[10%] opacity-20 animate-bounce" style="animation-delay: 1.5s; animation-duration: 2.8s;">
+                <i class="fas fa-exclamation-triangle text-3xl text-white"></i>
+            </div>
+        </div>
+
+        <div class="relative z-10 px-8 py-16 text-center">
+            <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-6">
+                <i class="fas fa-flask mr-2"></i>
+                Interactive Playground
+            </div>
+
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
+                Try PHPFlasher <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-300">Live</span>
+            </h1>
+
+            <p class="text-xl text-indigo-100 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Experiment with notifications in real-time. Choose types, themes, positions, and see the generated code instantly.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#studio" class="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-semibold rounded-xl hover:bg-indigo-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                    <i class="fas fa-play mr-2"></i>
+                    Start Experimenting
+                </a>
+                <a href="/themes/" class="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all duration-300">
+                    <i class="fas fa-palette mr-2"></i>
+                    Browse Themes
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-3xl font-bold text-indigo-600 mb-1">4</div>
+            <div class="text-slate-600 text-sm">Notification Types</div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-3xl font-bold text-indigo-600 mb-1">26</div>
+            <div class="text-slate-600 text-sm">Beautiful Themes</div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-3xl font-bold text-indigo-600 mb-1">6</div>
+            <div class="text-slate-600 text-sm">Position Options</div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-3xl font-bold text-indigo-600 mb-1">5</div>
+            <div class="text-slate-600 text-sm">Adapters</div>
+        </div>
+    </section>
+
+    <!-- Interactive Studio -->
+    <section id="studio" class="scroll-mt-8">
+        {% include flasher-studio.html %}
+    </section>
+
+    <!-- Theme Quick Select -->
+    <section class="mt-16 mb-12">
+        <div class="text-center mb-8">
+            <div class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm font-medium mb-3">
+                Quick Theme Preview
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">Popular Themes</h2>
+            <p class="text-slate-600">Click any theme to see it in action</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="theme-quick-select">
+            <!-- Theme buttons will trigger notifications -->
+            <button onclick="showThemeDemo('flasher')" class="group relative overflow-hidden bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-bolt"></i></div>
+                <div class="font-medium text-sm">Flasher</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('material')" class="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fab fa-google"></i></div>
+                <div class="font-medium text-sm">Material</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('ios')" class="group relative overflow-hidden bg-gradient-to-br from-slate-600 to-slate-700 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fab fa-apple"></i></div>
+                <div class="font-medium text-sm">iOS</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('slack')" class="group relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fab fa-slack"></i></div>
+                <div class="font-medium text-sm">Slack</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('amazon')" class="group relative overflow-hidden bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fab fa-amazon"></i></div>
+                <div class="font-medium text-sm">Amazon</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('minimal')" class="group relative overflow-hidden bg-gradient-to-br from-slate-400 to-slate-500 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-minus"></i></div>
+                <div class="font-medium text-sm">Minimal</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('neon')" class="group relative overflow-hidden bg-gradient-to-br from-pink-500 to-rose-500 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-lightbulb"></i></div>
+                <div class="font-medium text-sm">Neon</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('emerald')" class="group relative overflow-hidden bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-gem"></i></div>
+                <div class="font-medium text-sm">Emerald</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('sapphire')" class="group relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-gem"></i></div>
+                <div class="font-medium text-sm">Sapphire</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('ruby')" class="group relative overflow-hidden bg-gradient-to-br from-red-500 to-red-600 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-gem"></i></div>
+                <div class="font-medium text-sm">Ruby</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('onyx')" class="group relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-moon"></i></div>
+                <div class="font-medium text-sm">Onyx</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <button onclick="showThemeDemo('aurora')" class="group relative overflow-hidden bg-gradient-to-br from-green-400 via-blue-500 to-purple-500 text-white rounded-xl p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-2xl mb-2"><i class="fas fa-sun"></i></div>
+                <div class="font-medium text-sm">Aurora</div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="/themes/" class="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium">
+                View all 26 themes
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Keyboard Shortcuts -->
+    <section class="bg-slate-50 rounded-2xl p-8 mb-12">
+        <div class="text-center mb-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-2">
+                <i class="fas fa-keyboard text-indigo-500 mr-2"></i>
+                Pro Tips
+            </h3>
+            <p class="text-slate-600">Make the most of the playground</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl p-5 shadow-sm">
+                <div class="flex items-center mb-3">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-800">Quick Presets</h4>
+                </div>
+                <p class="text-slate-600 text-sm">Use the preset buttons for common notification scenarios like "User Created" or "Payment Failed".</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 shadow-sm">
+                <div class="flex items-center mb-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-800">Copy Code</h4>
+                </div>
+                <p class="text-slate-600 text-sm">The code panel updates in real-time. Switch between Laravel, Symfony, and JavaScript tabs.</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 shadow-sm">
+                <div class="flex items-center mb-3">
+                    <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-800">Easter Egg</h4>
+                </div>
+                <p class="text-slate-600 text-sm">Try the Konami code for a surprise! <span class="text-xs text-slate-400">(Hint: it's a classic)</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 md:p-12 text-center text-white">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to use PHPFlasher?</h2>
+        <p class="text-indigo-100 mb-8 max-w-2xl mx-auto">
+            Install PHPFlasher in your Laravel or Symfony project and start showing beautiful notifications in minutes.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="/laravel/" class="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-semibold rounded-xl hover:bg-indigo-50 transition-colors shadow-lg">
+                <i class="fab fa-laravel mr-2 text-red-500"></i>
+                Laravel Guide
+            </a>
+            <a href="/symfony/" class="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-colors">
+                <i class="fab fa-symfony mr-2"></i>
+                Symfony Guide
+            </a>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Theme demo function
+    function showThemeDemo(themeName) {
+        if (typeof flasher !== 'undefined') {
+            const messages = {
+                success: 'Operation completed successfully!',
+                info: 'Here is some useful information.',
+                warning: 'Please review before continuing.',
+                error: 'Something went wrong!'
+            };
+
+            const types = ['success', 'info', 'warning', 'error'];
+            const randomType = types[Math.floor(Math.random() * types.length)];
+
+            flasher.use(`theme.${themeName}`).flash({
+                type: randomType,
+                message: messages[randomType],
+                title: themeName.charAt(0).toUpperCase() + themeName.slice(1) + ' Theme'
+            });
+        }
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
