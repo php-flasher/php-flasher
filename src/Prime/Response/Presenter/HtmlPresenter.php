@@ -42,9 +42,15 @@ final class HtmlPresenter implements PresenterInterface
         $nonce = $context['csp_script_nonce'] ?? null;
 
         $mainScript = $response->getMainScript();
+        // Escape mainScript for JavaScript string context (prevent XSS)
+        $escapedMainScript = json_encode($mainScript ?? '', \JSON_THROW_ON_ERROR);
         $replaceMe = self::FLASHER_REPLACE_ME;
-        $nonceAttribute = $nonce ? " nonce='{$nonce}'" : '';
-        $scriptTagWithNonce = $nonce ? "tag.setAttribute('nonce', '{$nonce}');" : '';
+        // Escape nonce for HTML attribute context (prevent XSS)
+        $escapedNonceHtml = $nonce ? htmlspecialchars($nonce, \ENT_QUOTES | \ENT_HTML5, 'UTF-8') : '';
+        $nonceAttribute = $nonce ? " nonce='{$escapedNonceHtml}'" : '';
+        // Escape nonce for JavaScript string context (prevent XSS)
+        $escapedNonceJs = $nonce ? json_encode($nonce, \JSON_THROW_ON_ERROR) : '""';
+        $scriptTagWithNonce = $nonce ? "tag.setAttribute('nonce', {$escapedNonceJs});" : '';
         $livewireListener = $this->getLivewireListenerScript();
 
         return $html.<<<JAVASCRIPT
@@ -98,7 +104,7 @@ final class HtmlPresenter implements PresenterInterface
                     };
 
                     const addScriptAndRender = (options) => {
-                        const mainScript = '{$mainScript}';
+                        const mainScript = {$escapedMainScript};
 
                         if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
                             render(options);

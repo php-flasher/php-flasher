@@ -83,7 +83,7 @@ final class HtmlPresenterTest extends TestCase
                     };
 
                     const addScriptAndRender = (options) => {
-                        const mainScript = '';
+                        const mainScript = "";
 
                         if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
                             render(options);
@@ -156,8 +156,56 @@ final class HtmlPresenterTest extends TestCase
 
         $result = $presenter->render($response);
 
+        // Nonce should be HTML-escaped in attribute context
         $this->assertStringContainsString("nonce='test-nonce-123'", $result);
-        $this->assertStringContainsString("tag.setAttribute('nonce', 'test-nonce-123');", $result);
+        // Nonce should be JSON-encoded in JavaScript context (uses double quotes)
+        $this->assertStringContainsString('tag.setAttribute(\'nonce\', "test-nonce-123");', $result);
+    }
+
+    public function testRenderEscapesXssInNonce(): void
+    {
+        $envelopes = [];
+
+        $notification = new Notification();
+        $notification->setMessage('success message');
+        $envelopes[] = new Envelope($notification);
+
+        $presenter = new HtmlPresenter();
+        // Attempt XSS injection via nonce
+        $maliciousNonce = "'; alert('xss'); //";
+        $response = new Response($envelopes, ['csp_script_nonce' => $maliciousNonce]);
+
+        $result = $presenter->render($response);
+
+        // The malicious payload should be escaped, not executed as code
+        // HTML attribute should use htmlspecialchars escaping (ENT_HTML5 uses &apos;)
+        $this->assertStringContainsString("nonce='&apos;; alert(&apos;xss&apos;); //'", $result);
+        // JavaScript should use JSON encoding which escapes the single quotes
+        $this->assertStringContainsString('tag.setAttribute(\'nonce\', "\'; alert(\'xss\'); \/\/");', $result);
+        // The raw malicious string should NOT appear unescaped
+        $this->assertStringNotContainsString("nonce=''; alert('xss');", $result);
+    }
+
+    public function testRenderEscapesXssInMainScript(): void
+    {
+        $envelopes = [];
+
+        $notification = new Notification();
+        $notification->setMessage('success message');
+        $envelopes[] = new Envelope($notification);
+
+        $presenter = new HtmlPresenter();
+        // Attempt XSS injection via mainScript
+        $maliciousScript = "'; alert('xss'); //";
+        $response = new Response($envelopes, []);
+        $response->setMainScript($maliciousScript);
+
+        $result = $presenter->render($response);
+
+        // The malicious payload should be JSON-encoded, preventing code execution
+        $this->assertStringContainsString('const mainScript = "\'; alert(\'xss\'); \/\/";', $result);
+        // The raw malicious string should NOT appear unescaped
+        $this->assertStringNotContainsString("const mainScript = ''; alert('xss');", $result);
     }
 
     public function testRenderWithHtmlMetadata(): void
