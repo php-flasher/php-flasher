@@ -101,7 +101,7 @@ final class ResponseManagerTest extends TestCase
                     };
 
                     const addScriptAndRender = (options) => {
-                        const mainScript = '';
+                        const mainScript = "";
 
                         if (window.flasher || !mainScript || document.querySelector('script[src="' + mainScript + '"]')) {
                             render(options);

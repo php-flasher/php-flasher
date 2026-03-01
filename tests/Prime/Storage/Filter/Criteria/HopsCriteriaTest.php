@@ -216,14 +216,14 @@ final class HopsCriteriaTest extends TestCase
         $this->assertCount(1, $result);
     }
 
-    public function testApplyWithZeroHops(): void
+    public function testApplyFiltersEnvelopesWithExactHopsCount(): void
     {
         $envelopes = [
-            new Envelope(new Notification(), [new HopsStamp(0)]),
             new Envelope(new Notification(), [new HopsStamp(1)]),
+            new Envelope(new Notification(), [new HopsStamp(2)]),
         ];
 
-        $criteria = new HopsCriteria(['min' => 0, 'max' => 0]);
+        $criteria = new HopsCriteria(['min' => 1, 'max' => 1]);
 
         $result = $criteria->apply($envelopes);
 

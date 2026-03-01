@@ -457,7 +457,7 @@ final class FlasherBuilderTest extends TestCase
 
         $stamps = [
             new PriorityStamp(1),
-            new HopsStamp(0),
+            new HopsStamp(2),
         ];
         $builder->with($stamps);
 
