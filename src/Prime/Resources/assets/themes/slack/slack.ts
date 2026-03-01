@@ -1,42 +1,34 @@
 import './slack.scss'
 import type { Envelope } from '../../types'
+import { getCloseIcon } from '../shared/icons'
+import { getA11yString, getCloseButtonA11y } from '../shared/accessibility'
+import { CLASS_NAMES } from '../shared/constants'
+
+const TYPE_ICONS: Record<string, string> = {
+    success: '✓',
+    error: '✕',
+    warning: '!',
+    info: 'i',
+}
 
 export const slackTheme = {
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
 
-        const isAlert = type === 'error' || type === 'warning'
-        const role = isAlert ? 'alert' : 'status'
-        const ariaLive = isAlert ? 'assertive' : 'polite'
-
-        const getTypeIcon = () => {
-            switch (type) {
-                case 'success':
-                    return `<div class="fl-type-icon fl-success-icon">✓</div>`
-                case 'error':
-                    return `<div class="fl-type-icon fl-error-icon">✕</div>`
-                case 'warning':
-                    return `<div class="fl-type-icon fl-warning-icon">!</div>`
-                case 'info':
-                    return `<div class="fl-type-icon fl-info-icon">i</div>`
-            }
-            return ''
-        }
+        const iconChar = TYPE_ICONS[type] || ''
 
         return `
-            <div class="fl-slack fl-${type}" role="${role}" aria-live="${ariaLive}" aria-atomic="true">
+            <div class="${CLASS_NAMES.theme('slack')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
                 <div class="fl-slack-message">
                     <div class="fl-avatar">
-                        ${getTypeIcon()}
+                        <div class="fl-type-icon fl-${type}-icon">${iconChar}</div>
                     </div>
                     <div class="fl-message-content">
                         <div class="fl-message-text">${message}</div>
                     </div>
-                    <div class="fl-actions">
-                        <button class="fl-close" aria-label="Close ${type} message">
-                            <svg viewBox="0 0 20 20" width="16" height="16">
-                                <path fill="currentColor" d="M10 8.586L6.707 5.293a1 1 0 00-1.414 1.414L8.586 10l-3.293 3.293a1 1 0 101.414 1.414L10 11.414l3.293 3.293a1 1 0 001.414-1.414L11.414 10l3.293-3.293a1 1 0 00-1.414-1.414L10 8.586z"/>
-                            </svg>
+                    <div class="${CLASS_NAMES.actions}">
+                        <button class="${CLASS_NAMES.close}" ${getCloseButtonA11y(type)}>
+                            ${getCloseIcon()}
                         </button>
                     </div>
                 </div>

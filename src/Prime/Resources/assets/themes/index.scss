@@ -2,6 +2,7 @@
 @use "sass:meta";
 
 :root {
+    // Colors
     --fl-success: #10b981;
     --fl-info: #3b82f6;
     --fl-warning: #f59e0b;
@@ -19,12 +20,56 @@
     --fl-text-light: rgb(75, 85, 99);
     --fl-text-dark: var(--fl-white);
 
+    // Typography
     --fl-font: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --fl-font-size-xs: 0.75rem;
+    --fl-font-size-sm: 0.875rem;
+    --fl-font-size-base: 1rem;
+    --fl-font-size-lg: 1.125rem;
+    --fl-font-size-xl: 1.25rem;
+
+    // Spacing scale (rem for consistency)
+    --fl-spacing-xs: 0.25rem;
+    --fl-spacing-sm: 0.5rem;
+    --fl-spacing-md: 0.75rem;
+    --fl-spacing-lg: 1rem;
+    --fl-spacing-xl: 1.5rem;
+    --fl-spacing-2xl: 2rem;
+
+    // Close button sizes
+    --fl-close-sm: 1.125rem;
+    --fl-close-md: 1.5rem;
+    --fl-close-lg: 1.875rem;
+
+    // Border radius
     --fl-border-radius: 4px;
+    --fl-radius-sm: 0.25rem;
+    --fl-radius-md: 0.5rem;
+    --fl-radius-lg: 0.75rem;
+    --fl-radius-xl: 1rem;
+    --fl-radius-full: 9999px;
+
+    // Shadows
     --fl-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     --fl-shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.35);
-    --fl-transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --fl-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --fl-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --fl-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
+    // Animation
+    --fl-transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --fl-duration-fast: 0.15s;
+    --fl-duration-base: 0.3s;
+    --fl-duration-slow: 0.5s;
+    --fl-easing-spring: cubic-bezier(0.23, 1, 0.32, 1);
+    --fl-easing-material: cubic-bezier(0.4, 0, 0.2, 1);
+
+    // Animation distances
+    --fl-slide-sm: 8px;
+    --fl-slide-md: 12px;
+    --fl-slide-lg: 20px;
+
+    // Legacy aliases (for backwards compatibility)
     --background-color: var(--fl-bg-light);
     --text-color: var(--fl-text-light);
     --dark-background-color: var(--fl-bg-dark);

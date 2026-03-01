@@ -1,16 +1,17 @@
 import './facebook.scss'
 import type { Envelope } from '../../types'
+import { getCloseIcon } from '../shared/icons'
+import { getA11yString, getCloseButtonA11y } from '../shared/accessibility'
+import { CLASS_NAMES } from '../shared/constants'
+
+function getTimeString(): string {
+    const now = new Date()
+    return now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+}
 
 export const facebookTheme = {
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
-
-        const isAlert = type === 'error' || type === 'warning'
-        const role = isAlert ? 'alert' : 'status'
-        const ariaLive = isAlert ? 'assertive' : 'polite'
-
-        const now = new Date()
-        const timeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 
         const getNotificationIcon = () => {
             switch (type) {
@@ -43,25 +44,23 @@ export const facebookTheme = {
         }
 
         return `
-            <div class="fl-facebook fl-${type}" role="${role}" aria-live="${ariaLive}" aria-atomic="true">
+            <div class="${CLASS_NAMES.theme('facebook')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
                 <div class="fl-fb-notification">
                     <div class="fl-icon-container">
                         ${getNotificationIcon()}
                     </div>
-                    <div class="fl-content">
-                        <div class="fl-message">
+                    <div class="${CLASS_NAMES.content}">
+                        <div class="${CLASS_NAMES.message}">
                             ${message}
                         </div>
                         <div class="fl-meta">
-                            <span class="fl-time">${timeString}</span>
+                            <span class="fl-time">${getTimeString()}</span>
                         </div>
                     </div>
-                    <div class="fl-actions">
-                        <button class="fl-button fl-close" aria-label="Close ${type} message">
+                    <div class="${CLASS_NAMES.actions}">
+                        <button class="fl-button ${CLASS_NAMES.close}" ${getCloseButtonA11y(type)}>
                             <div class="fl-button-icon">
-                                <svg viewBox="0 0 24 24" width="20" height="20">
-                                    <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                                </svg>
+                                ${getCloseIcon({ size: 'md' })}
                             </div>
                         </button>
                     </div>

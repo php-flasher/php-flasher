@@ -1,19 +1,17 @@
 import './emerald.scss'
 import type { Envelope } from '../../types'
+import { getA11yString, getCloseButtonA11y } from '../shared/accessibility'
+import { CLASS_NAMES } from '../shared/constants'
 
 export const emeraldTheme = {
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
 
-        const isAlert = type === 'error' || type === 'warning'
-        const role = isAlert ? 'alert' : 'status'
-        const ariaLive = isAlert ? 'assertive' : 'polite'
-
         return `
-            <div class="fl-emerald fl-${type}" role="${role}" aria-live="${ariaLive}" aria-atomic="true">
-                <div class="fl-content">
-                    <div class="fl-message">${message}</div>
-                    <button class="fl-close" aria-label="Close ${type} message">×</button>
+            <div class="${CLASS_NAMES.theme('emerald')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
+                <div class="${CLASS_NAMES.content}">
+                    <div class="${CLASS_NAMES.message}">${message}</div>
+                    <button class="${CLASS_NAMES.close}" ${getCloseButtonA11y(type)}>×</button>
                 </div>
             </div>`
     },

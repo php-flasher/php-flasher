@@ -1,28 +1,26 @@
 import './flasher.scss'
 import type { Envelope } from '../../types'
+import { getA11yString, getCloseButtonA11y } from '../shared/accessibility'
+import { CLASS_NAMES, getTitle } from '../shared/constants'
 
 export const flasherTheme = {
     render: (envelope: Envelope): string => {
         const { type, title, message } = envelope
 
-        const isAlert = type === 'error' || type === 'warning'
-        const role = isAlert ? 'alert' : 'status'
-        const ariaLive = isAlert ? 'assertive' : 'polite'
-
-        const displayTitle = title || type.charAt(0).toUpperCase() + type.slice(1)
+        const displayTitle = getTitle(title, type)
 
         return `
-            <div class="fl-flasher fl-${type}" role="${role}" aria-live="${ariaLive}" aria-atomic="true">
-                <div class="fl-content">
-                    <div class="fl-icon"></div>
+            <div class="${CLASS_NAMES.theme('flasher')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
+                <div class="${CLASS_NAMES.content}">
+                    <div class="${CLASS_NAMES.icon}"></div>
                     <div>
-                        <strong class="fl-title">${displayTitle}</strong>
-                        <span class="fl-message">${message}</span>
+                        <strong class="${CLASS_NAMES.title}">${displayTitle}</strong>
+                        <span class="${CLASS_NAMES.message}">${message}</span>
                     </div>
-                    <button class="fl-close" aria-label="Close ${type} message">&times;</button>
+                    <button class="${CLASS_NAMES.close}" ${getCloseButtonA11y(type)}>&times;</button>
                 </div>
-                <span class="fl-progress-bar">
-                    <span class="fl-progress"></span>
+                <span class="${CLASS_NAMES.progressBar}">
+                    <span class="${CLASS_NAMES.progress}"></span>
                 </span>
             </div>`
     },

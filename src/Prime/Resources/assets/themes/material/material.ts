@@ -1,32 +1,28 @@
 import './material.scss'
 import type { Envelope } from '../../types'
+import { getA11yString, getCloseButtonA11y } from '../shared/accessibility'
+import { CLASS_NAMES, DEFAULT_TEXT } from '../shared/constants'
 
 export const materialTheme = {
     render: (envelope: Envelope): string => {
         const { type, message } = envelope
 
-        const isAlert = type === 'error' || type === 'warning'
-        const role = isAlert ? 'alert' : 'status'
-        const ariaLive = isAlert ? 'assertive' : 'polite'
-
-        const actionText = 'DISMISS'
-
         return `
-            <div class="fl-material fl-${type}" role="${role}" aria-live="${ariaLive}" aria-atomic="true">
+            <div class="${CLASS_NAMES.theme('material')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
                 <div class="fl-md-card">
-                    <div class="fl-content">
+                    <div class="${CLASS_NAMES.content}">
                         <div class="fl-text-content">
-                            <div class="fl-message">${message}</div>
+                            <div class="${CLASS_NAMES.message}">${message}</div>
                         </div>
                     </div>
-                    <div class="fl-actions">
-                        <button class="fl-action-button fl-close" aria-label="Close ${type} message">
-                            ${actionText}
+                    <div class="${CLASS_NAMES.actions}">
+                        <button class="fl-action-button ${CLASS_NAMES.close}" ${getCloseButtonA11y(type)}>
+                            ${DEFAULT_TEXT.dismissButton}
                         </button>
                     </div>
                 </div>
-                <div class="fl-progress-bar">
-                    <div class="fl-progress"></div>
+                <div class="${CLASS_NAMES.progressBar}">
+                    <div class="${CLASS_NAMES.progress}"></div>
                 </div>
             </div>`
     },
