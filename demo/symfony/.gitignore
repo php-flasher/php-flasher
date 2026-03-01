@@ -5,10 +5,17 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/public/vendor/flasherg
+/public/vendor/flasher
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
 
 ###> phpstan/phpstan ###
 phpstan.neon

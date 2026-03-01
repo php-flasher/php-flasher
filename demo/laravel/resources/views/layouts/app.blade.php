@@ -14,28 +14,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
 
     {{-- Custom Tailwind components --}}
-    <script type="text/tailwindcss">
+    <style type="text/tailwindcss">
         @layer components {
             .btn {
-                @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-50 inline-flex items-center justify-center gap-2;
+                @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 inline-flex items-center justify-center gap-2 cursor-pointer;
             }
             .btn-primary {
-                @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
+                @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500/50;
             }
             .btn-success {
-                @apply bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500;
+                @apply bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500/50;
             }
             .btn-danger {
-                @apply bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-500;
+                @apply bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-500/50;
             }
             .btn-warning {
-                @apply bg-amber-500 text-white hover:bg-amber-600 focus:ring-amber-400;
+                @apply bg-amber-500 text-white hover:bg-amber-600 focus:ring-amber-400/50;
             }
             .btn-info {
-                @apply bg-sky-500 text-white hover:bg-sky-600 focus:ring-sky-400;
+                @apply bg-sky-500 text-white hover:bg-sky-600 focus:ring-sky-400/50;
             }
             .btn-outline {
-                @apply border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500;
+                @apply border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500/50;
             }
             .btn-sm {
                 @apply px-3 py-1.5 text-sm;
@@ -68,9 +68,30 @@
                 @apply text-indigo-600 bg-indigo-50;
             }
         }
-    </script>
+    </style>
 
     @stack('styles')
+
+    {{-- Preload theme CSS for playground --}}
+    <link rel="stylesheet" href="/vendor/flasher/flasher.min.css">
+    <link rel="stylesheet" href="/vendor/flasher/themes/flasher/flasher.min.css">
+    <link rel="stylesheet" href="/vendor/flasher/themes/material/material.min.css">
+    <link rel="stylesheet" href="/vendor/flasher/themes/ios/ios.min.css">
+    <link rel="stylesheet" href="/vendor/flasher/themes/slack/slack.min.css">
+    <link rel="stylesheet" href="/vendor/flasher/themes/amazon/amazon.min.css">
+    <link rel="stylesheet" href="/vendor/flasher/themes/google/google.min.css">
+
+    {{-- Load main flasher script first, then themes --}}
+    <script src="/vendor/flasher/flasher.min.js"></script>
+    <script src="/vendor/flasher/themes/flasher/flasher.min.js"></script>
+    <script src="/vendor/flasher/themes/material/material.min.js"></script>
+    <script src="/vendor/flasher/themes/ios/ios.min.js"></script>
+    <script src="/vendor/flasher/themes/slack/slack.min.js"></script>
+    <script src="/vendor/flasher/themes/amazon/amazon.min.js"></script>
+    <script src="/vendor/flasher/themes/google/google.min.js"></script>
+
+    {{-- Render server-side notifications --}}
+    @flasher_render
 </head>
 <body class="bg-gray-50 antialiased text-gray-900 min-h-screen flex flex-col">
     {{-- Header --}}
@@ -173,31 +194,84 @@
         // CSRF token for AJAX requests
         window.csrfToken = '{{ csrf_token() }}';
 
-        // Helper function for notifications via AJAX
-        window.showNotification = async function(options) {
-            const response = await fetch('{{ route("notify") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': window.csrfToken,
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(options),
-            });
-            return response.json();
+        // Helper function for notifications using PHPFlasher's JavaScript API
+        window.showNotification = function(options) {
+            const type = options.type || 'success';
+            const message = options.message || 'Notification message';
+            const title = options.title || null;
+            const position = options.position || 'top-right';
+            const timeout = options.timeout || 5000;
+
+            // Use the theme if specified
+            let plugin = 'flasher';
+            if (options.theme && options.theme !== 'flasher') {
+                plugin = 'theme.' + options.theme;
+            }
+
+            // Build notification options
+            const notificationOptions = {
+                position: position,
+                timeout: timeout,
+            };
+
+            // Call PHPFlasher's JavaScript API
+            flasher.use(plugin).flash(type, message, title, notificationOptions);
         };
 
-        // Helper function for running examples
-        window.runExample = async function(scenario) {
-            const response = await fetch(`/example/${scenario}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': window.csrfToken,
-                    'Accept': 'application/json',
-                },
+        // Helper function for running examples using client-side notifications
+        window.runExample = function(scenario) {
+            const examples = {
+                registration: [
+                    { type: 'success', message: 'Welcome! Your account has been created.' },
+                    { type: 'info', message: 'Please check your email to verify your account.' }
+                ],
+                login_failed: [
+                    { type: 'error', message: 'Invalid email or password.' },
+                    { type: 'info', message: 'Forgot your password? Click here to reset.' }
+                ],
+                validation: [
+                    { type: 'error', message: 'The email field is required.' },
+                    { type: 'error', message: 'Password must be at least 8 characters.' },
+                    { type: 'error', message: 'Please accept the terms and conditions.' }
+                ],
+                shopping_cart: [
+                    { type: 'success', message: 'iPhone 15 Pro added to cart!' },
+                    { type: 'warning', message: 'Only 2 items left in stock!' },
+                    { type: 'info', message: 'Add $20 more for free shipping!' }
+                ],
+                file_upload: [
+                    { type: 'success', message: 'document.pdf uploaded successfully!' },
+                    { type: 'info', message: 'File size: 2.4 MB' }
+                ],
+                settings: [
+                    { type: 'success', message: 'Settings saved successfully!' },
+                    { type: 'info', message: 'Some changes may require a page refresh.' }
+                ],
+                payment_success: [
+                    { type: 'success', message: 'Payment of $149.99 confirmed!' },
+                    { type: 'info', message: 'Order #12345 - Receipt sent to your email.' }
+                ],
+                payment_failed: [
+                    { type: 'error', message: 'Payment declined by your bank.' },
+                    { type: 'warning', message: 'Please try a different payment method.' },
+                    { type: 'info', message: 'Your cart has been saved.' }
+                ],
+                delete_confirm: [
+                    { type: 'warning', message: 'Are you sure? This action cannot be undone.' },
+                    { type: 'info', message: 'Click confirm to delete or cancel to keep the item.' }
+                ],
+                session_expiring: [
+                    { type: 'warning', message: 'Your session will expire in 5 minutes.' },
+                    { type: 'info', message: 'Click anywhere to stay logged in.' }
+                ]
+            };
+
+            const notifications = examples[scenario] || [{ type: 'info', message: 'Example not found' }];
+            notifications.forEach((notification, index) => {
+                setTimeout(() => {
+                    flasher.flash(notification.type, notification.message);
+                }, index * 300);
             });
-            return response.json();
         };
     </script>
 

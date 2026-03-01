@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "errors": "npm warn exec The following package was not found and will be installed: vite@7.3.1\nfailed to load config from /Users/yoeunes/projects/flasher/php-flasher/demo/laravel/vite.config.js\nerror during build:\nError [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /Users/yoeunes/projects/flasher/php-flasher/node_modules/.vite-temp/vite.config.js.timestamp-1772405569113-b016e3f78b86a8.mjs\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:255:9)\n    at packageResolve (node:internal/modules/esm/resolve:767:81)\n    at moduleResolve (node:internal/modules/esm/resolve:853:18)\n    at defaultResolve (node:internal/modules/esm/resolve:983:11)\n    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:799:12)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:723:25)\n    at ModuleLoader.resolve (node:internal/modules/esm/loader:706:38)\n    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:307:38)\n    at #link (node:internal/modules/esm/module_job:170:49)\n",
+  "timestamp": "2026-03-01 22:52:49",
+  "vite_ruby": "3.9.3",
+  "digest": "f670d25672cb5f6c5badc00b4d6aca0d4d0f25ae"
+}

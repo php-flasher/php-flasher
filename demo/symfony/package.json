@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production"
+    },
+    "devDependencies": {
+        "@symfony/webpack-encore": "^4.0.0",
+        "webpack": "^5.0.0",
+        "webpack-cli": "^5.0.0",
+        "webpack-notifier": "^1.15.0"
+    }
+}

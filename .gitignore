@@ -16,6 +16,9 @@
 /taskfile.yml
 /phpstan.neon
 
+/demo/laravel/node_modules/
+/demo/symfony/node_modules/
+
 /npm-debug.log
 
 /tests/Symfony/Fixtures/project/public/vendor/

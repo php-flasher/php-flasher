@@ -1,11 +1,12 @@
 /**
- * PHPFlasher Laravel Demo
+ * PHPFlasher Symfony Demo
  *
  * Main JavaScript entry point.
  * Note: PHPFlasher and other libraries are loaded via CDN in the layout.
  */
 
-import './bootstrap';
+// Import styles
+import './styles/app.css';
 
 // Custom demo functionality can be added here
-console.log('PHPFlasher Laravel Demo loaded');
+console.log('PHPFlasher Symfony Demo loaded');

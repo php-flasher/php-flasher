@@ -62,52 +62,27 @@ final class DemoController extends AbstractController
         $type = $data['type'] ?? 'success';
         $message = $data['message'] ?? 'Notification message';
         $title = $data['title'] ?? null;
-        $theme = $data['theme'] ?? 'flasher';
-        $adapter = $data['adapter'] ?? 'flasher';
+        $theme = $data['theme'] ?? null;
         $position = $data['position'] ?? 'top-right';
         $timeout = (int) ($data['timeout'] ?? 5000);
 
-        $flasher = match ($adapter) {
-            'toastr' => toastr(),
-            'sweetalert' => sweetalert(),
-            'noty' => noty(),
-            'notyf' => notyf(),
-            default => flash()->use("theme.{$theme}"),
-        };
+        $flasher = flash();
+
+        // Apply theme if specified
+        if ($theme && 'flasher' !== $theme) {
+            $flasher = $flasher->use("theme.{$theme}");
+        }
 
         $options = [
             'position' => $position,
             'timeout' => $timeout,
         ];
 
-        if ('toastr' === $adapter) {
-            $options['positionClass'] = 'toast-'.str_replace('-', '-', $position);
-            $options['timeOut'] = $timeout;
-        } elseif ('noty' === $adapter) {
-            $options['layout'] = match ($position) {
-                'top-right' => 'topRight',
-                'top-left' => 'topLeft',
-                'top-center' => 'topCenter',
-                'bottom-right' => 'bottomRight',
-                'bottom-left' => 'bottomLeft',
-                'bottom-center' => 'bottomCenter',
-                default => 'topRight',
-            };
-            $options['timeout'] = $timeout;
-        } elseif ('notyf' === $adapter) {
-            $positionParts = explode('-', $position);
-            $options['position'] = [
-                'y' => $positionParts[0] ?? 'top',
-                'x' => $positionParts[1] ?? 'right',
-            ];
-            $options['duration'] = $timeout;
+        if ($title) {
+            $options['title'] = $title;
         }
 
-        if ($title) {
-            $flasher->{$type}($message, $title, $options);
-        } else {
-            $flasher->{$type}($message, $options);
-        }
+        $flasher->{$type}($message, $options);
 
         return new JsonResponse(['success' => true]);
     }
@@ -185,11 +160,8 @@ final class DemoController extends AbstractController
 
     private function deleteConfirmExample(): void
     {
-        sweetalert()
-            ->showCancelButton()
-            ->confirmButtonText('Yes, delete it!')
-            ->cancelButtonText('Cancel')
-            ->warning('Are you sure? This cannot be undone.');
+        flash()->warning('Are you sure? This action cannot be undone.');
+        flash()->info('Click confirm to delete or cancel to keep the item.');
     }
 
     private function sessionExpiringExample(): void
