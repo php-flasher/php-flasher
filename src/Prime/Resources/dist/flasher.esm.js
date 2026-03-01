@@ -170,7 +170,11 @@ class FlasherPlugin extends AbstractPlugin {
             });
         };
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', render);
+            const onDOMReady = () => {
+                document.removeEventListener('DOMContentLoaded', onDOMReady);
+                render();
+            };
+            document.addEventListener('DOMContentLoaded', onDOMReady);
         }
         else {
             render();
@@ -272,15 +276,26 @@ class FlasherPlugin extends AbstractPlugin {
             }
         };
         intervalId = window.setInterval(updateTimer, lapse);
-        notification.addEventListener('mouseout', () => {
+        const handleMouseOut = () => {
             clearInterval(intervalId);
             intervalId = window.setInterval(updateTimer, lapse);
-        });
-        notification.addEventListener('mouseover', () => clearInterval(intervalId));
+        };
+        const handleMouseOver = () => clearInterval(intervalId);
+        notification.addEventListener('mouseout', handleMouseOut);
+        notification.addEventListener('mouseover', handleMouseOver);
+        notification._flasherCleanup = () => {
+            clearInterval(intervalId);
+            notification.removeEventListener('mouseout', handleMouseOut);
+            notification.removeEventListener('mouseover', handleMouseOver);
+        };
     }
     removeNotification(notification) {
         if (!notification) {
             return;
+        }
+        if (notification._flasherCleanup) {
+            notification._flasherCleanup();
+            delete notification._flasherCleanup;
         }
         notification.classList.remove('fl-show');
         notification.ontransitionend = () => {
@@ -294,7 +309,11 @@ class FlasherPlugin extends AbstractPlugin {
     stringToHTML(str) {
         const template = document.createElement('template');
         template.innerHTML = str.trim();
-        return template.content.firstElementChild;
+        const element = template.content.firstElementChild;
+        if (!element) {
+            throw new Error('PHPFlasher: Invalid HTML template - no element found');
+        }
+        return element;
     }
     escapeHtml(str) {
         if (str == null) {
@@ -518,7 +537,8 @@ class Flasher extends AbstractPlugin {
         });
     }
     loadAsset(url, nonce, type) {
-        if (document.querySelector(`${type === 'style' ? 'link' : 'script'}[src="${url}"]`)) {
+        const selector = type === 'style' ? `link[href="${url}"]` : `script[src="${url}"]`;
+        if (document.querySelector(selector)) {
             return Promise.resolve();
         }
         return new Promise((resolve, reject) => {
