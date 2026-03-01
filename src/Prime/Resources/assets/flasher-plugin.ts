@@ -78,7 +78,11 @@ export default class FlasherPlugin extends AbstractPlugin {
 
         // Wait for DOM to be ready if needed
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', render)
+            const onDOMReady = () => {
+                document.removeEventListener('DOMContentLoaded', onDOMReady)
+                render()
+            }
+            document.addEventListener('DOMContentLoaded', onDOMReady)
         } else {
             render()
         }
@@ -235,17 +239,34 @@ export default class FlasherPlugin extends AbstractPlugin {
         // Start timer
         intervalId = window.setInterval(updateTimer, lapse)
 
-        // Pause timer on hover
-        notification.addEventListener('mouseout', () => {
+        // Define event handlers so we can remove them later
+        const handleMouseOut = () => {
             clearInterval(intervalId)
             intervalId = window.setInterval(updateTimer, lapse)
-        })
-        notification.addEventListener('mouseover', () => clearInterval(intervalId))
+        }
+        const handleMouseOver = () => clearInterval(intervalId)
+
+        // Pause timer on hover
+        notification.addEventListener('mouseout', handleMouseOut)
+        notification.addEventListener('mouseover', handleMouseOver)
+
+        // Store cleanup function on the element for later removal
+        ;(notification as any)._flasherCleanup = () => {
+            clearInterval(intervalId)
+            notification.removeEventListener('mouseout', handleMouseOut)
+            notification.removeEventListener('mouseover', handleMouseOver)
+        }
     }
 
     private removeNotification(notification: HTMLElement): void {
         if (!notification) {
             return
+        }
+
+        // Clean up event listeners and timers to prevent memory leaks
+        if ((notification as any)._flasherCleanup) {
+            (notification as any)._flasherCleanup()
+            delete (notification as any)._flasherCleanup
         }
 
         notification.classList.remove('fl-show')
@@ -264,7 +285,13 @@ export default class FlasherPlugin extends AbstractPlugin {
     private stringToHTML(str: string): HTMLElement {
         const template = document.createElement('template')
         template.innerHTML = str.trim()
-        return template.content.firstElementChild as HTMLElement
+
+        const element = template.content.firstElementChild
+        if (!element) {
+            throw new Error('PHPFlasher: Invalid HTML template - no element found')
+        }
+
+        return element as HTMLElement
     }
 
     private escapeHtml(str: string | null | undefined): string {

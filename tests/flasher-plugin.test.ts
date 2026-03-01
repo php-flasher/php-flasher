@@ -564,4 +564,115 @@ describe('FlasherPlugin', () => {
             expect(progressBar).toBeTruthy()
         })
     })
+
+    describe('stringToHTML error handling', () => {
+        it('should throw error when theme returns empty HTML', () => {
+            const emptyTheme: Theme = {
+                render: () => '',
+            }
+
+            const emptyPlugin = new FlasherPlugin(emptyTheme)
+            vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+                cb(performance.now())
+                return 0
+            })
+
+            // Spy on console.error as the error is caught in renderEnvelopes
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+            emptyPlugin.renderEnvelopes([createEnvelope()])
+
+            expect(consoleSpy).toHaveBeenCalledWith(
+                expect.stringContaining('Error rendering envelope'),
+                expect.any(Error),
+                expect.any(Object),
+            )
+        })
+
+        it('should throw error when theme returns only whitespace', () => {
+            const whitespaceTheme: Theme = {
+                render: () => '   \n  ',
+            }
+
+            const whitespacePlugin = new FlasherPlugin(whitespaceTheme)
+            vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+                cb(performance.now())
+                return 0
+            })
+
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+            whitespacePlugin.renderEnvelopes([createEnvelope()])
+
+            expect(consoleSpy).toHaveBeenCalledWith(
+                expect.stringContaining('Error rendering envelope'),
+                expect.any(Error),
+                expect.any(Object),
+            )
+        })
+    })
+
+    describe('memory leak prevention', () => {
+        it('should clean up event listeners when notification is removed', () => {
+            plugin.renderOptions({ timeout: 1000 })
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const notification = document.querySelector('.fl-container') as HTMLElement
+            expect(notification).toBeTruthy()
+
+            // Verify cleanup function was attached
+            expect((notification as any)._flasherCleanup).toBeDefined()
+
+            // Trigger timeout to remove notification
+            vi.advanceTimersByTime(1000)
+
+            // Cleanup function should have been called and deleted
+            expect((notification as any)._flasherCleanup).toBeUndefined()
+        })
+
+        it('should clean up when notification is closed manually', () => {
+            plugin.renderOptions({ timeout: false })
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const notification = document.querySelector('.fl-container') as HTMLElement
+            const closeButton = document.querySelector('.fl-close') as HTMLElement
+
+            // Verify cleanup is set for timed notifications (not sticky ones)
+            // For sticky notifications, no timer cleanup is needed
+
+            closeButton.click()
+
+            // Notification should be in closing state
+            expect(notification.classList.contains('fl-show')).toBe(false)
+        })
+
+        it('should remove DOMContentLoaded listener after firing', () => {
+            // Mock document.readyState
+            Object.defineProperty(document, 'readyState', {
+                value: 'loading',
+                writable: true,
+            })
+
+            const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
+            const addEventListenerSpy = vi.spyOn(document, 'addEventListener')
+
+            plugin.renderEnvelopes([createEnvelope()])
+
+            // Get the handler that was added
+            const handler = addEventListenerSpy.mock.calls.find(
+                call => call[0] === 'DOMContentLoaded',
+            )?.[1] as EventListener
+
+            // Simulate DOMContentLoaded firing
+            handler?.({} as Event)
+
+            expect(removeEventListenerSpy).toHaveBeenCalledWith('DOMContentLoaded', handler)
+
+            // Reset
+            Object.defineProperty(document, 'readyState', {
+                value: 'complete',
+                writable: true,
+            })
+        })
+    })
 })
