@@ -444,6 +444,211 @@ class UserComponent extends Component
                     </div>
                 </div>
 
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Toastr Events</h3>
+                <p class="mb-4">
+                    For Toastr notifications, you can listen to the following events:
+                </p>
+
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Event</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">toastr:click</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when user clicks the notification</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">toastr:close</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when notification is closed by user</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">toastr:show</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when notification is shown</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">toastr:hidden</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when notification is hidden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Toastr Example -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white text-sm">ToastrEventsComponent.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Livewire;
+
+use Livewire\Attributes\On;
+use Livewire\Component;
+
+class ToastrEventsComponent extends Component
+{
+    #[On('toastr:click')]
+    public function onToastrClick(array $payload): void
+    {
+        // Handle notification click
+    }
+
+    #[On('toastr:close')]
+    public function onToastrClose(array $payload): void
+    {
+        // Handle notification close
+    }
+
+    #[On('toastr:show')]
+    public function onToastrShow(array $payload): void
+    {
+        // Handle notification shown
+    }
+
+    #[On('toastr:hidden')]
+    public function onToastrHidden(array $payload): void
+    {
+        // Handle notification hidden
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Noty Events</h3>
+                <p class="mb-4">
+                    For Noty notifications, you can listen to the following events:
+                </p>
+
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Event</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">noty:click</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when user clicks the notification</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">noty:close</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when notification is closed</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">noty:show</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when notification is shown</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">noty:hover</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when user hovers over the notification</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Notyf Events</h3>
+                <p class="mb-4">
+                    For Notyf notifications, you can listen to the following events:
+                </p>
+
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Event</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">notyf:click</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when user clicks the notification</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">notyf:dismiss</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Fired when notification is dismissed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Theme Events</h3>
+                <p class="mb-4">
+                    For PHPFlasher built-in themes, you can listen to the following events. Two types of events are dispatched:
+                    a generic event and a theme-specific event.
+                </p>
+
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Event</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">theme:click</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Generic event fired when any theme notification is clicked</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3"><code class="bg-slate-100 px-2 py-1 rounded text-sm">theme:{name}:click</code></td>
+                                <td class="px-4 py-3 text-sm text-slate-600">Specific event fired for a particular theme (e.g., <code class="bg-slate-100 px-1 rounded text-xs">theme:flasher:click</code>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Theme Example -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center">
+                        <div class="flex space-x-1.5 mr-3">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white text-sm">ThemeEventsComponent.php</div>
+                    </div>
+                    <div>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">&lt;?php
+
+namespace App\Livewire;
+
+use Livewire\Attributes\On;
+use Livewire\Component;
+
+class ThemeEventsComponent extends Component
+{
+    // Listen to clicks on any theme notification
+    #[On('theme:click')]
+    public function onThemeClick(array $payload): void
+    {
+        // Handle notification click
+    }
+
+    // Listen to clicks on a specific theme (e.g., 'flasher')
+    #[On('theme:flasher:click')]
+    public function onFlasherThemeClick(array $payload): void
+    {
+        // Handle flasher theme notification click
+    }
+}</code></pre>
+                    </div>
+                </div>
+
                 <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-3">Event Payload</h3>
                 <p class="mb-4">Each listener method accepts an <code class="bg-slate-200 px-2 py-1 rounded text-slate-700">array $payload</code> parameter, which contains:</p>
 
