@@ -71,7 +71,14 @@ final class InstallCommand extends Command
         }
 
         // Prepare directories
-        $publicDir = $this->getPublicDir().'/vendor/flasher/';
+        $publicBaseDir = $this->getPublicDir();
+        if (null === $publicBaseDir) {
+            $output->writeln('<error>Could not determine the public directory. Please ensure your Symfony project is properly configured.</error>');
+
+            return self::FAILURE;
+        }
+
+        $publicDir = $publicBaseDir.'/vendor/flasher/';
         $configDir = $this->getConfigDir();
 
         $filesystem = new Filesystem();
