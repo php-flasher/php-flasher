@@ -306,7 +306,7 @@ final class FlasherServiceProvider extends PluginServiceProvider
 
     private function registerLivewire(): void
     {
-        if (class_exists(LivewireManager::class) && !$this->app->bound('livewire')) {
+        if (!class_exists(LivewireManager::class) || !$this->app->bound('livewire')) {
             return;
         }
 
