@@ -59,18 +59,12 @@ final class LimitCriteriaTest extends TestCase
         $this->assertCount(2, $result);
     }
 
-    public function testLimitZeroReturnsEmptyArray(): void
+    public function testLimitZeroThrowsException(): void
     {
-        $envelopes = [
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        ];
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Criteria 'limit' must be a positive integer (>= 1).");
 
-        $criteria = new LimitCriteria(0);
-
-        $result = $criteria->apply($envelopes);
-
-        $this->assertCount(0, $result);
+        new LimitCriteria(0);
     }
 
     public function testEmptyArrayReturnsEmpty(): void
@@ -121,17 +115,11 @@ final class LimitCriteriaTest extends TestCase
         $this->assertCount(1, $result);
     }
 
-    public function testNegativeLimitReturnsEmptyArray(): void
+    public function testNegativeLimitThrowsException(): void
     {
-        $envelopes = [
-            new Envelope(new Notification()),
-            new Envelope(new Notification()),
-        ];
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Criteria 'limit' must be a positive integer (>= 1).");
 
-        $criteria = new LimitCriteria(-5);
-
-        $result = $criteria->apply($envelopes);
-
-        $this->assertCount(0, $result);
+        new LimitCriteria(-5);
     }
 }

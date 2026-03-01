@@ -19,6 +19,10 @@ final readonly class LimitCriteria implements CriteriaInterface
             throw new \InvalidArgumentException("Invalid type for criteria 'limit'.");
         }
 
+        if ($criteria < 1) {
+            throw new \InvalidArgumentException("Criteria 'limit' must be a positive integer (>= 1).");
+        }
+
         $this->limit = $criteria;
     }
 
