@@ -20,6 +20,13 @@ final class PresenterCompilerPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds('flasher.presenter') as $id => $tags) {
             foreach ($tags as $attributes) {
+                if (!isset($attributes['alias'])) {
+                    throw new \InvalidArgumentException(\sprintf(
+                        'Service "%s" tagged with "flasher.presenter" must have an "alias" attribute.',
+                        $id
+                    ));
+                }
+
                 $definition->addMethodCall('addPresenter', [
                     $attributes['alias'],
                     new ServiceClosureArgument(new Reference($id)),

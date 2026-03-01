@@ -54,4 +54,18 @@ final class PresenterCompilerPassTest extends TestCase
 
         $this->assertCount(0, $definition->getMethodCalls(), 'No method calls should be made when no tagged services exist.');
     }
+
+    public function testProcessThrowsExceptionWhenAliasIsMissing(): void
+    {
+        $definition = new Definition();
+        $this->container->setDefinition('flasher.response_manager', $definition);
+
+        // Register a service without the required 'alias' attribute
+        $this->container->register('presenter_without_alias')->addTag('flasher.presenter');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Service "presenter_without_alias" tagged with "flasher.presenter" must have an "alias" attribute.');
+
+        $this->compilerPass->process($this->container);
+    }
 }
