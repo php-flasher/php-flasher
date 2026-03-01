@@ -20,4 +20,27 @@ final class HopsStampTest extends TestCase
 
         $this->assertSame($initialAmount, $hopsStamp->getAmount());
     }
+
+    public function testZeroHopsThrowsException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Hops amount must be a positive integer (>= 1).');
+
+        new HopsStamp(0);
+    }
+
+    public function testNegativeHopsThrowsException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Hops amount must be a positive integer (>= 1).');
+
+        new HopsStamp(-5);
+    }
+
+    public function testMinimumValidHops(): void
+    {
+        $stamp = new HopsStamp(1);
+
+        $this->assertSame(1, $stamp->getAmount());
+    }
 }

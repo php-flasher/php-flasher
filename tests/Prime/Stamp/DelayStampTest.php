@@ -26,4 +26,19 @@ final class DelayStampTest extends TestCase
 
         $this->assertSame($this->testDelay, $delay);
     }
+
+    public function testZeroDelayIsValid(): void
+    {
+        $stamp = new DelayStamp(0);
+
+        $this->assertSame(0, $stamp->getDelay());
+    }
+
+    public function testNegativeDelayThrowsException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Delay must be a non-negative integer (>= 0).');
+
+        new DelayStamp(-100);
+    }
 }
