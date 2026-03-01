@@ -9,7 +9,7 @@ use Laravel\Octane\Events\RequestReceived;
 
 final readonly class OctaneListener
 {
-    public function handle(RequestReceived $event): void
+    public function __invoke(RequestReceived $event): void
     {
         /** @var NotificationLoggerListener $listener */
         $listener = $event->sandbox->make('flasher.notification_logger_listener');
