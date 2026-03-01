@@ -125,6 +125,18 @@ run_phpunit() {
     fi
 }
 
+run_vitest() {
+    echo -e "${BOLD}${TEST_TUBE} Running Vitest Tests${RESET}"
+
+    if npm run test -- --run; then
+        echo -e "${CHECK} ${GREEN}Vitest tests passed successfully${RESET}\n"
+        return 0
+    else
+        echo -e "${WARNING} ${YELLOW}Vitest tests failed${RESET}\n"
+        return 1
+    fi
+}
+
 main() {
     local start_time=$(date +%s)
     local issues_found=false
@@ -138,6 +150,7 @@ main() {
     validate_composer_files || issues_found=true
     run_phplint || issues_found=true
     run_phpunit || issues_found=true
+    run_vitest || issues_found=true
 
     local end_time=$(date +%s)
     local duration=$((end_time - start_time))

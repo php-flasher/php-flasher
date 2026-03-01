@@ -43,7 +43,7 @@ final class HtmlPresenter implements PresenterInterface
 
         $mainScript = $response->getMainScript();
         // Escape mainScript for JavaScript string context (prevent XSS)
-        $escapedMainScript = json_encode($mainScript ?? '', \JSON_THROW_ON_ERROR);
+        $escapedMainScript = json_encode($mainScript, \JSON_THROW_ON_ERROR);
         $replaceMe = self::FLASHER_REPLACE_ME;
         // Escape nonce for HTML attribute context (prevent XSS)
         $escapedNonceHtml = $nonce ? htmlspecialchars($nonce, \ENT_QUOTES | \ENT_HTML5, 'UTF-8') : '';
