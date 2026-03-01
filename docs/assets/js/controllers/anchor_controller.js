@@ -15,6 +15,12 @@ export default class extends Controller {
 
     createAnchorNavigation() {
         const ul = this.container.querySelector('ul')
+
+        // Guard against missing ul element
+        if (!ul) {
+            return
+        }
+
         const anchors = document.querySelectorAll('#main-article h3, #main-article h2, #main-article a.anchor')
 
         if (anchors.length === 0) {

@@ -4,6 +4,12 @@ export default class extends Controller {
     connect() {
         const prevNext = document.querySelectorAll('.prev-next')
         const navigation = document.getElementById('main-navigation')
+
+        // Guard against missing navigation element
+        if (!navigation) {
+            return
+        }
+
         const navigationLinks = navigation.querySelectorAll('a')
 
         let previous
@@ -15,6 +21,10 @@ export default class extends Controller {
 
             links.forEach((link) => {
                 const label = link.querySelector('span')
+                // Guard against missing span element
+                if (!label) {
+                    return
+                }
                 label.innerHTML = originalLink.innerHTML.replace(/\d+\. /, '').replace(/<(\S*?)[^>]*>.*?<\/\1>|<.*?\/>/, '')
                 link.href = originalLink.href
                 link.classList.remove('hidden')

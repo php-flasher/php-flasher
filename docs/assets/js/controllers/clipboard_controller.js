@@ -20,7 +20,7 @@ export default class extends Controller {
 
             parent.append(button)
 
-            button.addEventListener('click', () => {
+            button.addEventListener('click', async () => {
                 let code = codeBlock.textContent.trim()
                 if (code.startsWith('#')) {
                     const parts = code.split('\n')
@@ -28,9 +28,19 @@ export default class extends Controller {
                     code = parts.join('\n')
                 }
 
-                window.navigator.clipboard.writeText(code)
+                // Check if clipboard API is available
+                if (!window.navigator?.clipboard?.writeText) {
+                    console.warn('Clipboard API not available')
+                    return
+                }
 
-                button.innerHTML = '<i class="fa-duotone fa-clipboard-check"></i>'
+                try {
+                    await window.navigator.clipboard.writeText(code)
+                    button.innerHTML = '<i class="fa-duotone fa-clipboard-check"></i>'
+                } catch (error) {
+                    console.error('Failed to copy to clipboard:', error)
+                    button.innerHTML = '<i class="fa-duotone fa-clipboard-question"></i>'
+                }
 
                 setTimeout(() => {
                     button.innerHTML = icon
