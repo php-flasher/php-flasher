@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}PHPFlasher Demo{% endblock %} - Symfony</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', 'PHPFlasher Demo') - Laravel</title>
 
-    {# Tailwind CSS v4 CDN #}
+    {{-- Tailwind CSS v4 CDN --}}
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    {# Prism.js for syntax highlighting #}
+    {{-- Prism.js for syntax highlighting --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
 
-    {# Custom Tailwind components #}
+    {{-- Custom Tailwind components --}}
     <script type="text/tailwindcss">
         @layer components {
             .btn {
@@ -69,34 +70,35 @@
         }
     </script>
 
-    {% block stylesheets %}{% endblock %}
+    @stack('styles')
 </head>
 <body class="bg-gray-50 antialiased text-gray-900 min-h-screen flex flex-col">
-    {# Header #}
+    {{-- Header --}}
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                {# Logo #}
-                <a href="{{ path('app_home') }}" class="flex items-center space-x-2">
+                {{-- Logo --}}
+                <a href="{{ route('home') }}" class="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                     <span class="text-xl font-bold text-gray-900">PHPFlasher</span>
-                    <span class="hidden sm:inline-block px-2 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-600 rounded-full">Symfony</span>
+                    <span class="hidden sm:inline-block px-2 py-0.5 text-xs font-medium bg-red-100 text-red-600 rounded-full">Laravel</span>
                 </a>
 
-                {# Desktop Navigation #}
+                {{-- Desktop Navigation --}}
                 <nav class="hidden md:flex items-center space-x-1">
-                    <a href="{{ path('app_home') }}" class="nav-link {% if app.request.get('_route') == 'app_home' %}nav-link-active{% endif %}">Home</a>
-                    <a href="{{ path('app_types') }}" class="nav-link {% if app.request.get('_route') == 'app_types' %}nav-link-active{% endif %}">Types</a>
-                    <a href="{{ path('app_themes') }}" class="nav-link {% if app.request.get('_route') == 'app_themes' %}nav-link-active{% endif %}">Themes</a>
-                    <a href="{{ path('app_adapters') }}" class="nav-link {% if app.request.get('_route') == 'app_adapters' %}nav-link-active{% endif %}">Adapters</a>
-                    <a href="{{ path('app_positions') }}" class="nav-link {% if app.request.get('_route') == 'app_positions' %}nav-link-active{% endif %}">Positions</a>
-                    <a href="{{ path('app_examples') }}" class="nav-link {% if app.request.get('_route') == 'app_examples' %}nav-link-active{% endif %}">Examples</a>
-                    <a href="{{ path('app_playground') }}" class="nav-link {% if app.request.get('_route') == 'app_playground' %}nav-link-active{% endif %}">Playground</a>
+                    <a href="{{ route('home') }}" class="nav-link @if(request()->routeIs('home')) nav-link-active @endif">Home</a>
+                    <a href="{{ route('types') }}" class="nav-link @if(request()->routeIs('types')) nav-link-active @endif">Types</a>
+                    <a href="{{ route('themes') }}" class="nav-link @if(request()->routeIs('themes')) nav-link-active @endif">Themes</a>
+                    <a href="{{ route('adapters') }}" class="nav-link @if(request()->routeIs('adapters')) nav-link-active @endif">Adapters</a>
+                    <a href="{{ route('positions') }}" class="nav-link @if(request()->routeIs('positions')) nav-link-active @endif">Positions</a>
+                    <a href="{{ route('examples') }}" class="nav-link @if(request()->routeIs('examples')) nav-link-active @endif">Examples</a>
+                    <a href="{{ route('playground') }}" class="nav-link @if(request()->routeIs('playground')) nav-link-active @endif">Playground</a>
+                    <a href="{{ route('livewire') }}" class="nav-link @if(request()->routeIs('livewire')) nav-link-active @endif">Livewire</a>
                 </nav>
 
-                {# External Links #}
+                {{-- External Links --}}
                 <div class="hidden md:flex items-center space-x-3">
                     <a href="https://github.com/php-flasher/php-flasher" target="_blank" class="text-gray-500 hover:text-gray-700">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -106,7 +108,7 @@
                     </a>
                 </div>
 
-                {# Mobile menu button #}
+                {{-- Mobile menu button --}}
                 <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -115,28 +117,29 @@
             </div>
         </div>
 
-        {# Mobile Navigation #}
+        {{-- Mobile Navigation --}}
         <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 bg-white">
             <div class="px-4 py-3 space-y-1">
-                <a href="{{ path('app_home') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_home' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Home</a>
-                <a href="{{ path('app_types') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_types' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Types</a>
-                <a href="{{ path('app_themes') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_themes' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Themes</a>
-                <a href="{{ path('app_adapters') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_adapters' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Adapters</a>
-                <a href="{{ path('app_positions') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_positions' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Positions</a>
-                <a href="{{ path('app_examples') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_examples' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Examples</a>
-                <a href="{{ path('app_playground') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_playground' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Playground</a>
+                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('home')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Home</a>
+                <a href="{{ route('types') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('types')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Types</a>
+                <a href="{{ route('themes') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('themes')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Themes</a>
+                <a href="{{ route('adapters') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('adapters')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Adapters</a>
+                <a href="{{ route('positions') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('positions')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Positions</a>
+                <a href="{{ route('examples') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('examples')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Examples</a>
+                <a href="{{ route('playground') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('playground')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Playground</a>
+                <a href="{{ route('livewire') }}" class="block px-3 py-2 rounded-lg @if(request()->routeIs('livewire')) bg-indigo-50 text-indigo-600 @else text-gray-600 hover:bg-gray-50 @endif">Livewire</a>
             </div>
         </div>
     </header>
 
-    {# Main Content #}
+    {{-- Main Content --}}
     <main class="flex-1">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {% block content %}{% endblock %}
+            @yield('content')
         </div>
     </main>
 
-    {# Footer #}
+    {{-- Footer --}}
     <footer class="bg-white border-t border-gray-200 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
@@ -155,7 +158,7 @@
         </div>
     </footer>
 
-    {# Scripts #}
+    {{-- Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
@@ -167,14 +170,17 @@
             document.getElementById('mobile-menu')?.classList.toggle('hidden');
         });
 
+        // CSRF token for AJAX requests
+        window.csrfToken = '{{ csrf_token() }}';
+
         // Helper function for notifications via AJAX
         window.showNotification = async function(options) {
-            const response = await fetch('{{ path("app_notify") }}', {
+            const response = await fetch('{{ route("notify") }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken,
                     'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
                 },
                 body: JSON.stringify(options),
             });
@@ -183,18 +189,18 @@
 
         // Helper function for running examples
         window.runExample = async function(scenario) {
-            const response = await fetch('/example/' + scenario, {
+            const response = await fetch(`/example/${scenario}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken,
                     'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
                 },
             });
             return response.json();
         };
     </script>
 
-    {% block javascripts %}{% endblock %}
+    @stack('scripts')
 </body>
 </html>

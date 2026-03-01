@@ -2,26 +2,19 @@
 
 declare(strict_types=1);
 
-use App\Entity\Book;
+use App\Http\Controllers\DemoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    sweetalert()->timerProgressBar()->success('Your account has been successfully created!');
-    noty()->layout('topCenter')->success('Welcome back, John Doe!');
-    notyf()->ripple(false)->warning('Your subscription is about to expire in 3 days.');
-    toastr()->positionClass('toast-bottom-left')->error('Payment failed. Please try again.');
-    flash()->use('flasher')->success('Your profile has been updated successfully.');
-    flash()->created(new Book('The Great Gatsby'));
-    flash()->saved(new Book('1984'));
-    session()->flash('success', 'Your settings have been saved.');
-    return view('welcome');
-})->name('app_home');
+// Main pages
+Route::get('/', [DemoController::class, 'home'])->name('home');
+Route::get('/types', [DemoController::class, 'types'])->name('types');
+Route::get('/themes', [DemoController::class, 'themes'])->name('themes');
+Route::get('/adapters', [DemoController::class, 'adapters'])->name('adapters');
+Route::get('/positions', [DemoController::class, 'positions'])->name('positions');
+Route::get('/examples', [DemoController::class, 'examples'])->name('examples');
+Route::get('/playground', [DemoController::class, 'playground'])->name('playground');
+Route::get('/livewire', [DemoController::class, 'livewire'])->name('livewire');
 
-Route::get('/redirect', function () {
-    session()->flash('success', 'You have been redirected successfully.');
-    return redirect('/destination');
-});
-
-Route::get('/destination', function () {
-    return view('welcome');
-});
+// AJAX endpoints
+Route::post('/notify', [DemoController::class, 'notify'])->name('notify');
+Route::post('/example/{scenario}', [DemoController::class, 'runExample'])->name('example.run');

@@ -1,25 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use Livewire\Component;
 
 class Counter extends Component
 {
-    public $count = 1;
+    public int $count = 0;
 
-    public function increment()
+    public function increment(): void
     {
-        flash()->success('increment');
-
         $this->count++;
+        flash()->success("Count increased to {$this->count}!");
     }
 
-    public function decrement()
+    public function decrement(): void
     {
-        flash()->info('decrement');
-
         $this->count--;
+        flash()->warning("Count decreased to {$this->count}");
+    }
+
+    public function reset(): void
+    {
+        $this->count = 0;
+        flash()->info('Counter has been reset.');
     }
 
     public function render()

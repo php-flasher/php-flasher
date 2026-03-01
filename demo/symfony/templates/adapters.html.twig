@@ -1,0 +1,243 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adapters{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="section-title">Notification Adapters</h1>
+    <p class="section-subtitle">PHPFlasher supports multiple notification libraries. Choose your favorite!</p>
+</div>
+
+<div class="space-y-8">
+    {# Flasher (Default) #}
+    <div class="card">
+        <div class="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+        <div class="card-body">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="p-3 bg-indigo-100 rounded-xl">
+                    <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Flasher</h2>
+                    <p class="text-gray-500">Default adapter with 17+ themes</p>
+                </div>
+            </div>
+
+            <p class="text-gray-600 mb-4">The default PHPFlasher adapter with beautiful built-in themes. No additional JavaScript libraries required.</p>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="showNotification({type: 'success', message: 'This is the default Flasher notification!', adapter: 'flasher'})"
+                        class="btn btn-success">Success</button>
+                <button onclick="showNotification({type: 'error', message: 'Error notification with Flasher', adapter: 'flasher'})"
+                        class="btn btn-danger">Error</button>
+                <button onclick="showNotification({type: 'warning', message: 'Warning notification with Flasher', adapter: 'flasher'})"
+                        class="btn btn-warning">Warning</button>
+                <button onclick="showNotification({type: 'info', message: 'Info notification with Flasher', adapter: 'flasher'})"
+                        class="btn btn-info">Info</button>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Installation</span></div>
+                <pre class="!m-0"><code class="language-bash">composer require php-flasher/flasher-symfony</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Usage</span></div>
+                <pre class="!m-0"><code class="language-php">flash()->success('Operation completed!');</code></pre>
+            </div>
+        </div>
+    </div>
+
+    {# Toastr #}
+    <div class="card">
+        <div class="h-2 bg-gradient-to-r from-sky-500 to-blue-500"></div>
+        <div class="card-body">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="p-3 bg-sky-100 rounded-xl">
+                    <svg class="w-8 h-8 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Toastr</h2>
+                    <p class="text-gray-500">Simple, elegant toast notifications</p>
+                </div>
+            </div>
+
+            <p class="text-gray-600 mb-4">Classic toast notifications with smooth animations. One of the most popular notification libraries.</p>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="showNotification({type: 'success', message: 'Toastr success notification!', adapter: 'toastr'})"
+                        class="btn btn-success">Success</button>
+                <button onclick="showNotification({type: 'error', message: 'Toastr error notification!', adapter: 'toastr'})"
+                        class="btn btn-danger">Error</button>
+                <button onclick="showNotification({type: 'warning', message: 'Toastr warning notification!', adapter: 'toastr'})"
+                        class="btn btn-warning">Warning</button>
+                <button onclick="showNotification({type: 'info', message: 'Toastr info notification!', adapter: 'toastr'})"
+                        class="btn btn-info">Info</button>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Installation</span></div>
+                <pre class="!m-0"><code class="language-bash">composer require php-flasher/flasher-toastr-symfony</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Usage</span></div>
+                <pre class="!m-0"><code class="language-php">toastr()->success('Data saved successfully!');
+
+// With options
+toastr()
+    ->closeButton()
+    ->progressBar()
+    ->positionClass('toast-top-right')
+    ->success('Profile updated!');</code></pre>
+            </div>
+        </div>
+    </div>
+
+    {# SweetAlert #}
+    <div class="card">
+        <div class="h-2 bg-gradient-to-r from-pink-500 to-rose-500"></div>
+        <div class="card-body">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="p-3 bg-pink-100 rounded-xl">
+                    <svg class="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">SweetAlert 2</h2>
+                    <p class="text-gray-500">Beautiful, responsive, customizable alerts</p>
+                </div>
+            </div>
+
+            <p class="text-gray-600 mb-4">Feature-rich modal dialogs with confirmations, inputs, and beautiful animations. Perfect for important user interactions.</p>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="showNotification({type: 'success', message: 'SweetAlert success!', title: 'Success', adapter: 'sweetalert'})"
+                        class="btn btn-success">Success</button>
+                <button onclick="showNotification({type: 'error', message: 'SweetAlert error message', title: 'Error', adapter: 'sweetalert'})"
+                        class="btn btn-danger">Error</button>
+                <button onclick="showNotification({type: 'warning', message: 'Are you sure you want to proceed?', title: 'Warning', adapter: 'sweetalert'})"
+                        class="btn btn-warning">Warning</button>
+                <button onclick="showNotification({type: 'info', message: 'Here is some information', title: 'Info', adapter: 'sweetalert'})"
+                        class="btn btn-info">Info</button>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Installation</span></div>
+                <pre class="!m-0"><code class="language-bash">composer require php-flasher/flasher-sweetalert-symfony</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Usage</span></div>
+                <pre class="!m-0"><code class="language-php">sweetalert()->success('Great job!', 'Success');
+
+// Confirmation dialog
+sweetalert()
+    ->showDenyButton()
+    ->showCancelButton()
+    ->confirmButtonText('Save')
+    ->denyButtonText("Don't save")
+    ->warning('Do you want to save the changes?');</code></pre>
+            </div>
+        </div>
+    </div>
+
+    {# Noty #}
+    <div class="card">
+        <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <div class="card-body">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="p-3 bg-emerald-100 rounded-xl">
+                    <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Noty</h2>
+                    <p class="text-gray-500">Dependency-free notification library</p>
+                </div>
+            </div>
+
+            <p class="text-gray-600 mb-4">A flexible, dependency-free notification library with multiple layouts and themes.</p>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="showNotification({type: 'success', message: 'Noty success notification!', adapter: 'noty'})"
+                        class="btn btn-success">Success</button>
+                <button onclick="showNotification({type: 'error', message: 'Noty error notification!', adapter: 'noty'})"
+                        class="btn btn-danger">Error</button>
+                <button onclick="showNotification({type: 'warning', message: 'Noty warning notification!', adapter: 'noty'})"
+                        class="btn btn-warning">Warning</button>
+                <button onclick="showNotification({type: 'info', message: 'Noty info notification!', adapter: 'noty'})"
+                        class="btn btn-info">Info</button>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Installation</span></div>
+                <pre class="!m-0"><code class="language-bash">composer require php-flasher/flasher-noty-symfony</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Usage</span></div>
+                <pre class="!m-0"><code class="language-php">noty()->success('Data saved!');
+
+// With layout options
+noty()
+    ->layout('topCenter')
+    ->timeout(3000)
+    ->progressBar()
+    ->info('Processing your request...');</code></pre>
+            </div>
+        </div>
+    </div>
+
+    {# Notyf #}
+    <div class="card">
+        <div class="h-2 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+        <div class="card-body">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="p-3 bg-amber-100 rounded-xl">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Notyf</h2>
+                    <p class="text-gray-500">Minimalist, responsive notifications</p>
+                </div>
+            </div>
+
+            <p class="text-gray-600 mb-4">A minimalist JavaScript library for toast notifications. Tiny footprint with smooth animations.</p>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="showNotification({type: 'success', message: 'Notyf success notification!', adapter: 'notyf'})"
+                        class="btn btn-success">Success</button>
+                <button onclick="showNotification({type: 'error', message: 'Notyf error notification!', adapter: 'notyf'})"
+                        class="btn btn-danger">Error</button>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Installation</span></div>
+                <pre class="!m-0"><code class="language-bash">composer require php-flasher/flasher-notyf-symfony</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span>Usage</span></div>
+                <pre class="!m-0"><code class="language-php">notyf()->success('Minimal and clean!');
+
+// With options
+notyf()
+    ->position('x', 'right')
+    ->position('y', 'top')
+    ->dismissible(true)
+    ->ripple(true)
+    ->success('File uploaded successfully!');</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

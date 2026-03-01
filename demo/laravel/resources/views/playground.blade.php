@@ -1,0 +1,390 @@
+@extends('layouts.app')
+
+@section('title', 'Playground')
+
+@section('content')
+<div class="mb-8">
+    <h1 class="section-title">Interactive Playground</h1>
+    <p class="section-subtitle">Build and customize notifications in real-time. See the generated PHP code instantly.</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    {{-- Configuration Panel --}}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-xl font-bold text-gray-800">Configuration</h2>
+        </div>
+        <div class="card-body space-y-6">
+            {{-- Type --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Notification Type</label>
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="setType('success')" id="type-success" class="type-btn px-3 py-2 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-700 font-medium text-sm">
+                        Success
+                    </button>
+                    <button onclick="setType('error')" id="type-error" class="type-btn px-3 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-600 font-medium text-sm hover:border-rose-500 hover:bg-rose-50 hover:text-rose-700">
+                        Error
+                    </button>
+                    <button onclick="setType('warning')" id="type-warning" class="type-btn px-3 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-600 font-medium text-sm hover:border-amber-500 hover:bg-amber-50 hover:text-amber-700">
+                        Warning
+                    </button>
+                    <button onclick="setType('info')" id="type-info" class="type-btn px-3 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-600 font-medium text-sm hover:border-sky-500 hover:bg-sky-50 hover:text-sky-700">
+                        Info
+                    </button>
+                </div>
+            </div>
+
+            {{-- Title --}}
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Title (optional)</label>
+                <input type="text" id="title" placeholder="Enter a title..."
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                       oninput="updateCode()">
+            </div>
+
+            {{-- Message --}}
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <textarea id="message" rows="2" placeholder="Enter your notification message..."
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          oninput="updateCode()">Operation completed successfully!</textarea>
+            </div>
+
+            {{-- Position --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Position</label>
+                <select id="position" onchange="updateCode()"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="top-right" selected>Top Right (default)</option>
+                    <option value="top-left">Top Left</option>
+                    <option value="top-center">Top Center</option>
+                    <option value="bottom-right">Bottom Right</option>
+                    <option value="bottom-left">Bottom Left</option>
+                    <option value="bottom-center">Bottom Center</option>
+                    <option value="center">Center</option>
+                </select>
+            </div>
+
+            {{-- Theme --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Theme</label>
+                <select id="theme" onchange="updateCode()"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Default (Flasher)</option>
+                    <option value="flasher">Flasher</option>
+                    <option value="material">Material</option>
+                    <option value="ios">iOS</option>
+                    <option value="slack">Slack</option>
+                    <option value="amazon">Amazon</option>
+                    <option value="google">Google</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="neon">Neon</option>
+                    <option value="emerald">Emerald</option>
+                    <option value="sapphire">Sapphire</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="amber">Amber</option>
+                    <option value="jade">Jade</option>
+                    <option value="onyx">Onyx</option>
+                    <option value="crystal">Crystal</option>
+                    <option value="aurora">Aurora</option>
+                </select>
+            </div>
+
+            {{-- Adapter --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Adapter</label>
+                <select id="adapter" onchange="updateCode()"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="flasher" selected>Flasher (default)</option>
+                    <option value="toastr">Toastr</option>
+                    <option value="sweetalert">SweetAlert</option>
+                    <option value="noty">Noty</option>
+                    <option value="notyf">Notyf</option>
+                </select>
+            </div>
+
+            {{-- Timeout --}}
+            <div>
+                <label for="timeout" class="block text-sm font-medium text-gray-700 mb-2">
+                    Timeout: <span id="timeout-value">5000</span>ms
+                </label>
+                <input type="range" id="timeout" min="1000" max="10000" step="500" value="5000"
+                       class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                       oninput="document.getElementById('timeout-value').textContent = this.value; updateCode()">
+            </div>
+
+            {{-- Show Button --}}
+            <button onclick="showPlaygroundNotification()" class="btn btn-primary w-full">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Show Notification
+            </button>
+        </div>
+    </div>
+
+    {{-- Code Preview --}}
+    <div class="space-y-6">
+        <div class="card">
+            <div class="card-header flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-800">Generated Code</h2>
+                <button onclick="copyCode()" class="btn btn-sm btn-outline">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <div class="code-block !my-0 !rounded-none">
+                    <div class="code-header">
+                        <span>PHP</span>
+                    </div>
+                    <pre class="!m-0"><code class="language-php" id="generated-code">flash()->success('Operation completed successfully!');</code></pre>
+                </div>
+            </div>
+        </div>
+
+        {{-- Preview Card --}}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-xl font-bold text-gray-800">Preview</h2>
+            </div>
+            <div class="card-body">
+                <div class="bg-gray-100 rounded-lg p-6 min-h-[200px] flex items-center justify-center">
+                    <div id="preview-notification" class="max-w-sm w-full">
+                        {{-- Preview will be rendered here --}}
+                        <div class="bg-emerald-500 text-white p-4 rounded-lg shadow-lg">
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div>
+                                    <p id="preview-title" class="font-semibold hidden"></p>
+                                    <p id="preview-message" class="text-sm opacity-90">Operation completed successfully!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-3 text-center">This is a static preview. Click "Show Notification" to see the real notification.</p>
+            </div>
+        </div>
+
+        {{-- Quick Examples --}}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-xl font-bold text-gray-800">Quick Examples</h2>
+            </div>
+            <div class="card-body">
+                <div class="space-y-2">
+                    <button onclick="loadExample('simple')" class="btn btn-outline w-full justify-start">
+                        Simple Notification
+                    </button>
+                    <button onclick="loadExample('with_title')" class="btn btn-outline w-full justify-start">
+                        With Title
+                    </button>
+                    <button onclick="loadExample('material_theme')" class="btn btn-outline w-full justify-start">
+                        Material Theme
+                    </button>
+                    <button onclick="loadExample('toastr_adapter')" class="btn btn-outline w-full justify-start">
+                        Toastr Adapter
+                    </button>
+                    <button onclick="loadExample('bottom_center')" class="btn btn-outline w-full justify-start">
+                        Bottom Center Position
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    let currentType = 'success';
+    const typeColors = {
+        success: { border: 'border-emerald-500', bg: 'bg-emerald-50', text: 'text-emerald-700', preview: 'bg-emerald-500' },
+        error: { border: 'border-rose-500', bg: 'bg-rose-50', text: 'text-rose-700', preview: 'bg-rose-500' },
+        warning: { border: 'border-amber-500', bg: 'bg-amber-50', text: 'text-amber-700', preview: 'bg-amber-500' },
+        info: { border: 'border-sky-500', bg: 'bg-sky-50', text: 'text-sky-700', preview: 'bg-sky-500' }
+    };
+
+    function setType(type) {
+        currentType = type;
+
+        // Update button styles
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.className = 'type-btn px-3 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-600 font-medium text-sm';
+        });
+
+        const activeBtn = document.getElementById(`type-${type}`);
+        const colors = typeColors[type];
+        activeBtn.className = `type-btn px-3 py-2 rounded-lg border-2 ${colors.border} ${colors.bg} ${colors.text} font-medium text-sm`;
+
+        // Update preview
+        updatePreview();
+        updateCode();
+    }
+
+    function updatePreview() {
+        const previewDiv = document.querySelector('#preview-notification > div');
+        const colors = typeColors[currentType];
+        previewDiv.className = `${colors.preview} text-white p-4 rounded-lg shadow-lg`;
+
+        const title = document.getElementById('title').value;
+        const message = document.getElementById('message').value;
+
+        document.getElementById('preview-title').textContent = title;
+        document.getElementById('preview-title').classList.toggle('hidden', !title);
+        document.getElementById('preview-message').textContent = message || 'Your notification message...';
+    }
+
+    function updateCode() {
+        const type = currentType;
+        const title = document.getElementById('title').value;
+        const message = document.getElementById('message').value || 'Your message here';
+        const position = document.getElementById('position').value;
+        const theme = document.getElementById('theme').value;
+        const adapter = document.getElementById('adapter').value;
+        const timeout = document.getElementById('timeout').value;
+
+        let code = '';
+        const hasOptions = position !== 'top-right' || timeout !== '5000';
+
+        // Build the code
+        if (theme) {
+            code = `flash()->use('theme.${theme}')`;
+        } else if (adapter !== 'flasher') {
+            code = `${adapter}()`;
+        } else {
+            code = 'flash()';
+        }
+
+        // Add options if needed
+        if (hasOptions) {
+            const options = [];
+            if (position !== 'top-right') {
+                options.push(`'position' => '${position}'`);
+            }
+            if (timeout !== '5000') {
+                options.push(`'timeout' => ${timeout}`);
+            }
+
+            if (title) {
+                code += `\n    ->${type}('${message}', '${title}', [${options.join(', ')}]);`;
+            } else {
+                code += `\n    ->${type}('${message}', [${options.join(', ')}]);`;
+            }
+        } else {
+            if (title) {
+                code += `->${type}('${message}', '${title}');`;
+            } else {
+                code += `->${type}('${message}');`;
+            }
+        }
+
+        document.getElementById('generated-code').textContent = code;
+        Prism.highlightElement(document.getElementById('generated-code'));
+
+        updatePreview();
+    }
+
+    function showPlaygroundNotification() {
+        const options = {
+            type: currentType,
+            message: document.getElementById('message').value || 'Your message here',
+            title: document.getElementById('title').value || undefined,
+            position: document.getElementById('position').value,
+            theme: document.getElementById('theme').value || undefined,
+            adapter: document.getElementById('adapter').value,
+            timeout: parseInt(document.getElementById('timeout').value)
+        };
+
+        showNotification(options);
+    }
+
+    function copyCode() {
+        const code = document.getElementById('generated-code').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            // Show success feedback
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Copied!';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        });
+    }
+
+    function loadExample(example) {
+        const examples = {
+            simple: {
+                type: 'success',
+                title: '',
+                message: 'Data saved successfully!',
+                position: 'top-right',
+                theme: '',
+                adapter: 'flasher',
+                timeout: 5000
+            },
+            with_title: {
+                type: 'info',
+                title: 'New Update',
+                message: 'Version 2.0 is now available!',
+                position: 'top-right',
+                theme: '',
+                adapter: 'flasher',
+                timeout: 5000
+            },
+            material_theme: {
+                type: 'success',
+                title: '',
+                message: 'Material design notification!',
+                position: 'top-right',
+                theme: 'material',
+                adapter: 'flasher',
+                timeout: 5000
+            },
+            toastr_adapter: {
+                type: 'warning',
+                title: 'Warning',
+                message: 'Please review your changes',
+                position: 'top-right',
+                theme: '',
+                adapter: 'toastr',
+                timeout: 5000
+            },
+            bottom_center: {
+                type: 'error',
+                title: '',
+                message: 'Something went wrong!',
+                position: 'bottom-center',
+                theme: '',
+                adapter: 'flasher',
+                timeout: 5000
+            }
+        };
+
+        const ex = examples[example];
+        if (ex) {
+            setType(ex.type);
+            document.getElementById('title').value = ex.title;
+            document.getElementById('message').value = ex.message;
+            document.getElementById('position').value = ex.position;
+            document.getElementById('theme').value = ex.theme;
+            document.getElementById('adapter').value = ex.adapter;
+            document.getElementById('timeout').value = ex.timeout;
+            document.getElementById('timeout-value').textContent = ex.timeout;
+            updateCode();
+        }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCode();
+    });
+</script>
+@endpush

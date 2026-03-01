@@ -1,0 +1,75 @@
+@extends('layouts.app')
+
+@section('title', 'Themes')
+
+@section('content')
+<div class="mb-8">
+    <h1 class="section-title">Theme Gallery</h1>
+    <p class="section-subtitle">Choose from 17+ beautiful themes to match your application's design.</p>
+</div>
+
+{{-- Theme Grid --}}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
+    @php
+    $themes = [
+        ['name' => 'flasher', 'label' => 'Flasher', 'desc' => 'Default theme', 'gradient' => 'from-indigo-500 to-indigo-600'],
+        ['name' => 'material', 'label' => 'Material', 'desc' => 'Google Material', 'gradient' => 'from-blue-500 to-blue-600'],
+        ['name' => 'ios', 'label' => 'iOS', 'desc' => 'Apple style', 'gradient' => 'from-slate-600 to-slate-700'],
+        ['name' => 'slack', 'label' => 'Slack', 'desc' => 'Slack messaging', 'gradient' => 'from-purple-500 to-purple-600'],
+        ['name' => 'amazon', 'label' => 'Amazon', 'desc' => 'Amazon alerts', 'gradient' => 'from-orange-500 to-orange-600'],
+        ['name' => 'google', 'label' => 'Google', 'desc' => 'Google notifications', 'gradient' => 'from-red-500 to-yellow-500'],
+        ['name' => 'facebook', 'label' => 'Facebook', 'desc' => 'Facebook style', 'gradient' => 'from-blue-600 to-blue-700'],
+        ['name' => 'minimal', 'label' => 'Minimal', 'desc' => 'Ultra clean', 'gradient' => 'from-gray-400 to-gray-500'],
+        ['name' => 'neon', 'label' => 'Neon', 'desc' => 'Bright & bold', 'gradient' => 'from-pink-500 to-rose-500'],
+        ['name' => 'emerald', 'label' => 'Emerald', 'desc' => 'Green palette', 'gradient' => 'from-emerald-500 to-green-600'],
+        ['name' => 'sapphire', 'label' => 'Sapphire', 'desc' => 'Blue elegance', 'gradient' => 'from-blue-500 to-indigo-600'],
+        ['name' => 'ruby', 'label' => 'Ruby', 'desc' => 'Red accents', 'gradient' => 'from-red-500 to-rose-600'],
+        ['name' => 'amber', 'label' => 'Amber', 'desc' => 'Warm tones', 'gradient' => 'from-amber-400 to-orange-500'],
+        ['name' => 'jade', 'label' => 'Jade', 'desc' => 'Soft green', 'gradient' => 'from-teal-500 to-green-600'],
+        ['name' => 'onyx', 'label' => 'Onyx', 'desc' => 'Dark mode', 'gradient' => 'from-slate-700 to-slate-900'],
+        ['name' => 'crystal', 'label' => 'Crystal', 'desc' => 'Transparent', 'gradient' => 'from-cyan-400 to-blue-500'],
+        ['name' => 'aurora', 'label' => 'Aurora', 'desc' => 'Gradient effects', 'gradient' => 'from-green-400 via-blue-500 to-purple-500'],
+    ];
+    @endphp
+
+    @foreach($themes as $theme)
+    <div class="card group cursor-pointer" onclick="showNotification({type: 'success', message: 'This is the {{ $theme['label'] }} theme!', title: '{{ $theme['label'] }} Theme', theme: '{{ $theme['name'] }}'})">
+        <div class="h-20 bg-gradient-to-br {{ $theme['gradient'] }} flex items-center justify-center">
+            <span class="text-white text-2xl font-bold">{{ substr($theme['label'], 0, 1) }}</span>
+        </div>
+        <div class="p-4">
+            <h3 class="font-semibold text-gray-800">{{ $theme['label'] }}</h3>
+            <p class="text-sm text-gray-500">{{ $theme['desc'] }}</p>
+        </div>
+    </div>
+    @endforeach
+</div>
+
+{{-- Usage Example --}}
+<div class="card">
+    <div class="card-header">
+        <h2 class="text-xl font-bold text-gray-800">Using Themes</h2>
+    </div>
+    <div class="card-body">
+        <p class="text-gray-600 mb-4">Apply themes to your notifications with the <code class="bg-gray-100 px-2 py-1 rounded">use()</code> method.</p>
+
+        <div class="code-block">
+            <div class="code-header">
+                <span>PHP</span>
+            </div>
+            <pre class="!m-0"><code class="language-php">// Use a specific theme
+flash()->use('theme.material')->success('Material design notification!');
+
+// Different themes for different messages
+flash()->use('theme.ios')->info('iOS style notification');
+flash()->use('theme.slack')->warning('Slack style warning');
+flash()->use('theme.amazon')->success('Amazon style success');
+
+// Set default theme in config/flasher.php
+return [
+    'default' => 'theme.material',
+];</code></pre>
+        </div>
+    </div>
+</div>
+@endsection
