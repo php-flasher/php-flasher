@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
 
+    {# Prism.js code block fixes #}
+    <style>
+        .code-block pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+            background: #2d2d2d !important;
+            padding: 1rem !important;
+            overflow-x: auto;
+        }
+        .code-block code[class*="language-"] {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            background: transparent !important;
+        }
+    </style>
+
     {# Custom Tailwind components #}
     <style type="text/tailwindcss">
         @layer components {
@@ -52,7 +68,7 @@
                 @apply rounded-lg overflow-hidden shadow-lg my-4;
             }
             .code-header {
-                @apply bg-gray-800 text-gray-300 px-4 py-2 flex justify-between items-center text-sm;
+                @apply bg-gray-800 text-gray-300 px-4 py-2 flex justify-between items-center text-sm font-mono;
             }
             .section-title {
                 @apply text-2xl font-bold text-gray-800 mb-2;
@@ -178,6 +194,7 @@
 
     {# Scripts #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
