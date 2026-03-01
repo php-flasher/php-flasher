@@ -168,6 +168,15 @@ export default class FlasherPlugin extends AbstractPlugin {
             })
         }
 
+        // Add click event listener to dispatch theme events
+        notification.addEventListener('click', (event) => {
+            // Don't trigger if clicking the close button
+            if ((event.target as HTMLElement).closest('.fl-close')) {
+                return
+            }
+            this.dispatchClickEvents(envelope)
+        })
+
         // Add timer if timeout is greater than 0 (not sticky)
         if (options.timeout > 0) {
             this.addTimer(notification, options)
@@ -311,5 +320,34 @@ export default class FlasherPlugin extends AbstractPlugin {
         }
 
         return str.replace(/[&<>"'`=/]/g, (char) => htmlEscapes[char] || char)
+    }
+
+    private dispatchClickEvents(envelope: Envelope): void {
+        const detail = { envelope }
+
+        // Dispatch generic theme click event
+        window.dispatchEvent(new CustomEvent('flasher:theme:click', { detail }))
+
+        // Dispatch theme-specific click event (e.g., flasher:theme:flasher:click)
+        const themeName = this.getThemeName(envelope)
+        if (themeName) {
+            window.dispatchEvent(new CustomEvent(`flasher:theme:${themeName}:click`, { detail }))
+        }
+    }
+
+    private getThemeName(envelope: Envelope): string {
+        const plugin = envelope.metadata?.plugin || ''
+
+        // Extract theme name from plugin (e.g., 'theme.flasher' -> 'flasher')
+        if (plugin.startsWith('theme.')) {
+            return plugin.replace('theme.', '')
+        }
+
+        // If it's the default 'flasher' plugin, return 'flasher'
+        if (plugin === 'flasher') {
+            return 'flasher'
+        }
+
+        return plugin
     }
 }

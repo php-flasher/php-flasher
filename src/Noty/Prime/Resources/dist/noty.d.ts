@@ -3,5 +3,6 @@ import type { Envelope, Options } from '@flasher/flasher/dist/types';
 export default class NotyPlugin extends AbstractPlugin {
     private defaultOptions;
     renderEnvelopes(envelopes: Envelope[]): void;
+    private dispatchEvent;
     renderOptions(options: Options): void;
 }

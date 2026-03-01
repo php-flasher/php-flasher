@@ -227,6 +227,12 @@ class FlasherPlugin extends AbstractPlugin {
                 this.removeNotification(notification);
             });
         }
+        notification.addEventListener('click', (event) => {
+            if (event.target.closest('.fl-close')) {
+                return;
+            }
+            this.dispatchClickEvents(envelope);
+        });
         if (options.timeout > 0) {
             this.addTimer(notification, options);
         }
@@ -330,6 +336,25 @@ class FlasherPlugin extends AbstractPlugin {
             '/': '&#47;',
         };
         return str.replace(/[&<>"'`=/]/g, (char) => htmlEscapes[char] || char);
+    }
+    dispatchClickEvents(envelope) {
+        const detail = { envelope };
+        window.dispatchEvent(new CustomEvent('flasher:theme:click', { detail }));
+        const themeName = this.getThemeName(envelope);
+        if (themeName) {
+            window.dispatchEvent(new CustomEvent(`flasher:theme:${themeName}:click`, { detail }));
+        }
+    }
+    getThemeName(envelope) {
+        var _a;
+        const plugin = ((_a = envelope.metadata) === null || _a === void 0 ? void 0 : _a.plugin) || '';
+        if (plugin.startsWith('theme.')) {
+            return plugin.replace('theme.', '');
+        }
+        if (plugin === 'flasher') {
+            return 'flasher';
+        }
+        return plugin;
     }
 }
 

@@ -224,4 +224,99 @@ describe('NotyPlugin', () => {
             })
         })
     })
+
+    describe('event dispatching', () => {
+        it('should set up event callbacks that dispatch custom events', () => {
+            plugin.renderEnvelopes([createEnvelope()])
+
+            // Verify callbacks are set up in options
+            const calledOptions = MockNoty.mock.calls[0][0]
+            expect(calledOptions.callbacks).toBeDefined()
+            expect(calledOptions.callbacks.onShow).toBeInstanceOf(Function)
+            expect(calledOptions.callbacks.onClick).toBeInstanceOf(Function)
+            expect(calledOptions.callbacks.onClose).toBeInstanceOf(Function)
+            expect(calledOptions.callbacks.onHover).toBeInstanceOf(Function)
+        })
+
+        it('should dispatch flasher:noty:show event when onShow callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:noty:show', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({ message: 'Test' })])
+
+            const calledOptions = MockNoty.mock.calls[0][0]
+            calledOptions.callbacks.onShow()
+
+            expect(eventHandler).toHaveBeenCalledWith(expect.objectContaining({
+                detail: expect.objectContaining({
+                    envelope: expect.objectContaining({ message: 'Test' }),
+                }),
+            }))
+
+            window.removeEventListener('flasher:noty:show', eventHandler)
+        })
+
+        it('should dispatch flasher:noty:click event when onClick callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:noty:click', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({ message: 'Click test' })])
+
+            const calledOptions = MockNoty.mock.calls[0][0]
+            calledOptions.callbacks.onClick()
+
+            expect(eventHandler).toHaveBeenCalledWith(expect.objectContaining({
+                detail: expect.objectContaining({
+                    envelope: expect.objectContaining({ message: 'Click test' }),
+                }),
+            }))
+
+            window.removeEventListener('flasher:noty:click', eventHandler)
+        })
+
+        it('should dispatch flasher:noty:close event when onClose callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:noty:close', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const calledOptions = MockNoty.mock.calls[0][0]
+            calledOptions.callbacks.onClose()
+
+            expect(eventHandler).toHaveBeenCalled()
+
+            window.removeEventListener('flasher:noty:close', eventHandler)
+        })
+
+        it('should dispatch flasher:noty:hover event when onHover callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:noty:hover', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const calledOptions = MockNoty.mock.calls[0][0]
+            calledOptions.callbacks.onHover()
+
+            expect(eventHandler).toHaveBeenCalled()
+
+            window.removeEventListener('flasher:noty:hover', eventHandler)
+        })
+
+        it('should call original callbacks if provided', () => {
+            const originalOnClick = vi.fn()
+
+            plugin.renderEnvelopes([createEnvelope({
+                options: {
+                    callbacks: {
+                        onClick: originalOnClick,
+                    },
+                },
+            })])
+
+            const calledOptions = MockNoty.mock.calls[0][0]
+            calledOptions.callbacks.onClick()
+
+            expect(originalOnClick).toHaveBeenCalled()
+        })
+    })
 })

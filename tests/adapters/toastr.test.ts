@@ -81,7 +81,7 @@ describe('ToastrPlugin', () => {
             expect(mockToastr.success).toHaveBeenCalledWith(
                 'Hello World',
                 'Greeting',
-                { timeOut: 5000 },
+                expect.objectContaining({ timeOut: 5000 }),
             )
         })
 
@@ -216,6 +216,96 @@ describe('ToastrPlugin', () => {
             plugin.warning('Warning message')
 
             expect(mockToastr.warning).toHaveBeenCalled()
+        })
+    })
+
+    describe('event dispatching', () => {
+        it('should set up event callbacks that dispatch custom events', () => {
+            plugin.renderEnvelopes([createEnvelope()])
+
+            // Verify options passed to toastr include event callbacks
+            const calledOptions = mockToastr.success.mock.calls[0][2]
+            expect(calledOptions.onShown).toBeInstanceOf(Function)
+            expect(calledOptions.onclick).toBeInstanceOf(Function)
+            expect(calledOptions.onCloseClick).toBeInstanceOf(Function)
+            expect(calledOptions.onHidden).toBeInstanceOf(Function)
+        })
+
+        it('should dispatch flasher:toastr:show event when onShown callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:toastr:show', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({ message: 'Show test' })])
+
+            const calledOptions = mockToastr.success.mock.calls[0][2]
+            calledOptions.onShown()
+
+            expect(eventHandler).toHaveBeenCalledWith(expect.objectContaining({
+                detail: expect.objectContaining({
+                    envelope: expect.objectContaining({ message: 'Show test' }),
+                }),
+            }))
+
+            window.removeEventListener('flasher:toastr:show', eventHandler)
+        })
+
+        it('should dispatch flasher:toastr:click event when onclick callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:toastr:click', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({ message: 'Click test' })])
+
+            const calledOptions = mockToastr.success.mock.calls[0][2]
+            calledOptions.onclick()
+
+            expect(eventHandler).toHaveBeenCalledWith(expect.objectContaining({
+                detail: expect.objectContaining({
+                    envelope: expect.objectContaining({ message: 'Click test' }),
+                }),
+            }))
+
+            window.removeEventListener('flasher:toastr:click', eventHandler)
+        })
+
+        it('should dispatch flasher:toastr:close event when onCloseClick callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:toastr:close', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const calledOptions = mockToastr.success.mock.calls[0][2]
+            calledOptions.onCloseClick()
+
+            expect(eventHandler).toHaveBeenCalled()
+
+            window.removeEventListener('flasher:toastr:close', eventHandler)
+        })
+
+        it('should dispatch flasher:toastr:hidden event when onHidden callback is called', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:toastr:hidden', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const calledOptions = mockToastr.success.mock.calls[0][2]
+            calledOptions.onHidden()
+
+            expect(eventHandler).toHaveBeenCalled()
+
+            window.removeEventListener('flasher:toastr:hidden', eventHandler)
+        })
+
+        it('should call original callbacks if provided', () => {
+            const originalOnClick = vi.fn()
+
+            plugin.renderEnvelopes([createEnvelope({
+                options: { onclick: originalOnClick },
+            })])
+
+            const calledOptions = mockToastr.success.mock.calls[0][2]
+            calledOptions.onclick()
+
+            expect(originalOnClick).toHaveBeenCalled()
         })
     })
 })

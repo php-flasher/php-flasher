@@ -53,6 +53,23 @@ final class FlasherNotyServiceProviderTest extends TestCase
         $this->app->expects('singleton');
         $this->app->expects('alias');
         $this->app->expects('extend');
+        $this->app->expects('bound')->with('livewire')->andReturn(false);
+
+        $this->serviceProvider->register();
+        $this->serviceProvider->boot();
+        $this->addToAssertionCount(1);
+    }
+
+    public function testBootWithLivewire(): void
+    {
+        $this->app->expects()->make('config')->andReturns($configMock = \Mockery::mock(Repository::class));
+        $configMock->expects('get')->andReturns([]);
+        $configMock->expects('set');
+
+        $this->app->expects('singleton');
+        $this->app->expects('alias');
+        $this->app->expects('extend')->twice();
+        $this->app->expects('bound')->with('livewire')->andReturn(true);
 
         $this->serviceProvider->register();
         $this->serviceProvider->boot();

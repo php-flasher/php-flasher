@@ -515,7 +515,10 @@ class NotyfPlugin extends AbstractPlugin {
             var _a;
             try {
                 const options = Object.assign(Object.assign({}, envelope), envelope.options);
-                (_a = this.notyf) === null || _a === void 0 ? void 0 : _a.open(options);
+                const notification = (_a = this.notyf) === null || _a === void 0 ? void 0 : _a.open(options);
+                if (notification) {
+                    this.attachEventListeners(notification, envelope);
+                }
             }
             catch (error) {
                 console.error('PHPFlasher Notyf: Error rendering notification', error, envelope);
@@ -578,6 +581,27 @@ class NotyfPlugin extends AbstractPlugin {
         if (!exists) {
             types.push(newType);
         }
+    }
+    attachEventListeners(notification, envelope) {
+        if (!this.notyf) {
+            return;
+        }
+        const notyf = this.notyf;
+        notyf.on('click', ({ target, event }) => {
+            if (target === notification) {
+                this.dispatchEvent('flasher:notyf:click', envelope, { event });
+            }
+        });
+        notyf.on('dismiss', ({ target, event }) => {
+            if (target === notification) {
+                this.dispatchEvent('flasher:notyf:dismiss', envelope, { event });
+            }
+        });
+    }
+    dispatchEvent(eventName, envelope, extra = {}) {
+        window.dispatchEvent(new CustomEvent(eventName, {
+            detail: Object.assign({ envelope }, extra),
+        }));
     }
 }
 

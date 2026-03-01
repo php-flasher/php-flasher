@@ -17,7 +17,28 @@ export default class ToastrPlugin extends AbstractPlugin {
             try {
                 const { message, title, type, options } = envelope
 
-                const instance = toastr[type as ToastrType](message, title, options as ToastrOptions)
+                // Wrap callbacks to dispatch events
+                const mergedOptions = {
+                    ...options,
+                    onShown: () => {
+                        this.dispatchEvent('flasher:toastr:show', envelope);
+                        (options as any)?.onShown?.()
+                    },
+                    onclick: () => {
+                        this.dispatchEvent('flasher:toastr:click', envelope);
+                        (options as any)?.onclick?.()
+                    },
+                    onCloseClick: () => {
+                        this.dispatchEvent('flasher:toastr:close', envelope);
+                        (options as any)?.onCloseClick?.()
+                    },
+                    onHidden: () => {
+                        this.dispatchEvent('flasher:toastr:hidden', envelope);
+                        (options as any)?.onHidden?.()
+                    },
+                } as ToastrOptions
+
+                const instance = toastr[type as ToastrType](message, title, mergedOptions)
 
                 if (instance && instance.parent) {
                     try {
@@ -33,6 +54,12 @@ export default class ToastrPlugin extends AbstractPlugin {
                 console.error('PHPFlasher Toastr: Error rendering notification', error, envelope)
             }
         })
+    }
+
+    private dispatchEvent(eventName: string, envelope: Envelope): void {
+        window.dispatchEvent(new CustomEvent(eventName, {
+            detail: { envelope },
+        }))
     }
 
     public renderOptions(options: Options): void {

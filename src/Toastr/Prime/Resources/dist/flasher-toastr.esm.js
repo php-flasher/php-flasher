@@ -95,7 +95,24 @@ class ToastrPlugin extends AbstractPlugin {
         envelopes.forEach((envelope) => {
             try {
                 const { message, title, type, options } = envelope;
-                const instance = toastr[type](message, title, options);
+                const mergedOptions = Object.assign(Object.assign({}, options), { onShown: () => {
+                        var _a;
+                        this.dispatchEvent('flasher:toastr:show', envelope);
+                        (_a = options === null || options === void 0 ? void 0 : options.onShown) === null || _a === void 0 ? void 0 : _a.call(options);
+                    }, onclick: () => {
+                        var _a;
+                        this.dispatchEvent('flasher:toastr:click', envelope);
+                        (_a = options === null || options === void 0 ? void 0 : options.onclick) === null || _a === void 0 ? void 0 : _a.call(options);
+                    }, onCloseClick: () => {
+                        var _a;
+                        this.dispatchEvent('flasher:toastr:close', envelope);
+                        (_a = options === null || options === void 0 ? void 0 : options.onCloseClick) === null || _a === void 0 ? void 0 : _a.call(options);
+                    }, onHidden: () => {
+                        var _a;
+                        this.dispatchEvent('flasher:toastr:hidden', envelope);
+                        (_a = options === null || options === void 0 ? void 0 : options.onHidden) === null || _a === void 0 ? void 0 : _a.call(options);
+                    } });
+                const instance = toastr[type](message, title, mergedOptions);
                 if (instance && instance.parent) {
                     try {
                         const parent = instance.parent();
@@ -112,6 +129,11 @@ class ToastrPlugin extends AbstractPlugin {
                 console.error('PHPFlasher Toastr: Error rendering notification', error, envelope);
             }
         });
+    }
+    dispatchEvent(eventName, envelope) {
+        window.dispatchEvent(new CustomEvent(eventName, {
+            detail: { envelope },
+        }));
     }
     renderOptions(options) {
         if (!this.isDependencyAvailable()) {

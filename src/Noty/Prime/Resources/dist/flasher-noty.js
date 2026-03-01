@@ -99,11 +99,35 @@
                 return;
             }
             envelopes.forEach((envelope) => {
+                var _a, _b, _c, _d;
                 try {
                     const options = Object.assign({ text: envelope.message, type: envelope.type }, this.defaultOptions);
                     if (envelope.options) {
                         Object.assign(options, envelope.options);
                     }
+                    const originalCallbacks = {
+                        onShow: (_a = options.callbacks) === null || _a === void 0 ? void 0 : _a.onShow,
+                        onClick: (_b = options.callbacks) === null || _b === void 0 ? void 0 : _b.onClick,
+                        onClose: (_c = options.callbacks) === null || _c === void 0 ? void 0 : _c.onClose,
+                        onHover: (_d = options.callbacks) === null || _d === void 0 ? void 0 : _d.onHover,
+                    };
+                    options.callbacks = Object.assign(Object.assign({}, options.callbacks), { onShow: () => {
+                            var _a;
+                            this.dispatchEvent('flasher:noty:show', envelope);
+                            (_a = originalCallbacks.onShow) === null || _a === void 0 ? void 0 : _a.call(originalCallbacks);
+                        }, onClick: () => {
+                            var _a;
+                            this.dispatchEvent('flasher:noty:click', envelope);
+                            (_a = originalCallbacks.onClick) === null || _a === void 0 ? void 0 : _a.call(originalCallbacks);
+                        }, onClose: () => {
+                            var _a;
+                            this.dispatchEvent('flasher:noty:close', envelope);
+                            (_a = originalCallbacks.onClose) === null || _a === void 0 ? void 0 : _a.call(originalCallbacks);
+                        }, onHover: () => {
+                            var _a;
+                            this.dispatchEvent('flasher:noty:hover', envelope);
+                            (_a = originalCallbacks.onHover) === null || _a === void 0 ? void 0 : _a.call(originalCallbacks);
+                        } });
                     const noty = new Noty(options);
                     noty.show();
                     const layoutDom = noty.layoutDom;
@@ -115,6 +139,11 @@
                     console.error('PHPFlasher Noty: Error rendering notification', error, envelope);
                 }
             });
+        }
+        dispatchEvent(eventName, envelope) {
+            window.dispatchEvent(new CustomEvent(eventName, {
+                detail: { envelope },
+            }));
         }
         renderOptions(options) {
             if (!options) {

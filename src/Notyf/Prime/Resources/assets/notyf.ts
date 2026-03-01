@@ -16,7 +16,11 @@ export default class NotyfPlugin extends AbstractPlugin {
         envelopes.forEach((envelope) => {
             try {
                 const options = { ...envelope, ...envelope.options }
-                this.notyf?.open(options)
+                const notification = this.notyf?.open(options)
+
+                if (notification) {
+                    this.attachEventListeners(notification, envelope)
+                }
             } catch (error) {
                 console.error('PHPFlasher Notyf: Error rendering notification', error, envelope)
             }
@@ -91,5 +95,36 @@ export default class NotyfPlugin extends AbstractPlugin {
         if (!exists) {
             types.push(newType)
         }
+    }
+
+    private attachEventListeners(notification: unknown, envelope: Envelope): void {
+        if (!this.notyf) {
+            return
+        }
+
+        // Notyf supports events at runtime but types don't include them
+        const notyf = this.notyf as unknown as {
+            on: (event: string, callback: (params: { target: unknown, event: Event }) => void) => void
+        }
+
+        // Listen for click events
+        notyf.on('click', ({ target, event }) => {
+            if (target === notification) {
+                this.dispatchEvent('flasher:notyf:click', envelope, { event })
+            }
+        })
+
+        // Listen for dismiss events
+        notyf.on('dismiss', ({ target, event }) => {
+            if (target === notification) {
+                this.dispatchEvent('flasher:notyf:dismiss', envelope, { event })
+            }
+        })
+    }
+
+    private dispatchEvent(eventName: string, envelope: Envelope, extra: Record<string, any> = {}): void {
+        window.dispatchEvent(new CustomEvent(eventName, {
+            detail: { envelope, ...extra },
+        }))
     }
 }

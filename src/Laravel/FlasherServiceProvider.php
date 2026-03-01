@@ -8,6 +8,7 @@ use Flasher\Laravel\Command\InstallCommand;
 use Flasher\Laravel\Component\FlasherComponent;
 use Flasher\Laravel\EventListener\LivewireListener;
 use Flasher\Laravel\EventListener\OctaneListener;
+use Flasher\Laravel\EventListener\ThemeLivewireListener;
 use Flasher\Laravel\Middleware\FlasherMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
 use Flasher\Laravel\Storage\SessionBag;
@@ -17,6 +18,7 @@ use Flasher\Laravel\Translation\Translator;
 use Flasher\Prime\Asset\AssetManager;
 use Flasher\Prime\Container\FlasherContainer;
 use Flasher\Prime\EventDispatcher\EventDispatcher;
+use Flasher\Prime\EventDispatcher\EventDispatcherInterface;
 use Flasher\Prime\EventDispatcher\EventListener\ApplyPresetListener;
 use Flasher\Prime\EventDispatcher\EventListener\NotificationLoggerListener;
 use Flasher\Prime\EventDispatcher\EventListener\TranslationListener;
@@ -316,6 +318,17 @@ final class FlasherServiceProvider extends PluginServiceProvider
             $request = fn () => $app->make('request');
 
             $livewire->listen('dehydrate', new LivewireListener($livewire, $flasher, $cspHandler, $request));
+        });
+
+        $this->registerThemeLivewireListener();
+    }
+
+    private function registerThemeLivewireListener(): void
+    {
+        $this->app->extend('flasher.event_dispatcher', static function (EventDispatcherInterface $dispatcher) {
+            $dispatcher->addListener(new ThemeLivewireListener());
+
+            return $dispatcher;
         });
     }
 }

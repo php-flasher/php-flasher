@@ -7,4 +7,6 @@ export default class NotyfPlugin extends AbstractPlugin {
     renderOptions(options: Options): void;
     private initializeNotyf;
     private addTypeIfNotExists;
+    private attachEventListeners;
+    private dispatchEvent;
 }

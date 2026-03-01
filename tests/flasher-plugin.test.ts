@@ -675,4 +675,99 @@ describe('FlasherPlugin', () => {
             })
         })
     })
+
+    describe('click event dispatching', () => {
+        it('should dispatch flasher:theme:click event when notification is clicked', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:theme:click', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({ message: 'Click me' })])
+
+            const notification = document.querySelector('.fl-notification') as HTMLElement
+            expect(notification).toBeTruthy()
+
+            notification.click()
+
+            expect(eventHandler).toHaveBeenCalledWith(expect.objectContaining({
+                detail: expect.objectContaining({
+                    envelope: expect.objectContaining({ message: 'Click me' }),
+                }),
+            }))
+
+            window.removeEventListener('flasher:theme:click', eventHandler)
+        })
+
+        it('should dispatch theme-specific click event (flasher:theme:{name}:click)', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:theme:test:click', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({
+                message: 'Theme specific',
+                metadata: { plugin: 'theme.test' },
+            })])
+
+            const notification = document.querySelector('.fl-notification') as HTMLElement
+            notification.click()
+
+            expect(eventHandler).toHaveBeenCalledWith(expect.objectContaining({
+                detail: expect.objectContaining({
+                    envelope: expect.objectContaining({ message: 'Theme specific' }),
+                }),
+            }))
+
+            window.removeEventListener('flasher:theme:test:click', eventHandler)
+        })
+
+        it('should dispatch both generic and specific events on click', () => {
+            const genericHandler = vi.fn()
+            const specificHandler = vi.fn()
+            window.addEventListener('flasher:theme:click', genericHandler)
+            window.addEventListener('flasher:theme:test:click', specificHandler)
+
+            plugin.renderEnvelopes([createEnvelope({
+                metadata: { plugin: 'theme.test' },
+            })])
+
+            const notification = document.querySelector('.fl-notification') as HTMLElement
+            notification.click()
+
+            expect(genericHandler).toHaveBeenCalled()
+            expect(specificHandler).toHaveBeenCalled()
+
+            window.removeEventListener('flasher:theme:click', genericHandler)
+            window.removeEventListener('flasher:theme:test:click', specificHandler)
+        })
+
+        it('should not dispatch click event when close button is clicked', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:theme:click', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope()])
+
+            const closeButton = document.querySelector('.fl-close') as HTMLElement
+            expect(closeButton).toBeTruthy()
+
+            closeButton.click()
+
+            expect(eventHandler).not.toHaveBeenCalled()
+
+            window.removeEventListener('flasher:theme:click', eventHandler)
+        })
+
+        it('should handle flasher plugin alias correctly', () => {
+            const eventHandler = vi.fn()
+            window.addEventListener('flasher:theme:flasher:click', eventHandler)
+
+            plugin.renderEnvelopes([createEnvelope({
+                metadata: { plugin: 'flasher' },
+            })])
+
+            const notification = document.querySelector('.fl-notification') as HTMLElement
+            notification.click()
+
+            expect(eventHandler).toHaveBeenCalled()
+
+            window.removeEventListener('flasher:theme:flasher:click', eventHandler)
+        })
+    })
 })

@@ -14,4 +14,6 @@ export default class FlasherPlugin extends AbstractPlugin {
     private removeNotification;
     private stringToHTML;
     private escapeHtml;
+    private dispatchClickEvents;
+    private getThemeName;
 }
