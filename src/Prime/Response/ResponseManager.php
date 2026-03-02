@@ -68,6 +68,7 @@ final class ResponseManager implements ResponseManagerInterface
 
     /**
      * @throws PresenterNotFoundException
+     * @throws \InvalidArgumentException
      */
     private function createPresenter(string $alias): PresenterInterface
     {
@@ -77,7 +78,20 @@ final class ResponseManager implements ResponseManagerInterface
 
         $presenter = $this->presenters[$alias];
 
-        return \is_callable($presenter) ? $presenter() : $presenter;
+        if (\is_callable($presenter)) {
+            $presenter = $presenter();
+
+            if (!$presenter instanceof PresenterInterface) {
+                throw new \InvalidArgumentException(\sprintf(
+                    'Presenter callable for "%s" must return an instance of %s, %s returned.',
+                    $alias,
+                    PresenterInterface::class,
+                    \get_debug_type($presenter)
+                ));
+            }
+        }
+
+        return $presenter;
     }
 
     /**

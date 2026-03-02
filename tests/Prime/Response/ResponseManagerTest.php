@@ -169,4 +169,58 @@ final class ResponseManagerTest extends TestCase
             });
         JAVASCRIPT;
     }
+
+    public function testAddPresenterWithCallable(): void
+    {
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
+
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
+
+        $customPresenter = new \Flasher\Prime\Response\Presenter\ArrayPresenter();
+        $responseManager->addPresenter('custom', fn () => $customPresenter);
+
+        $result = $responseManager->render('custom');
+
+        $this->assertIsArray($result);
+    }
+
+    public function testAddPresenterWithCallableReturningInvalidTypeThrowsException(): void
+    {
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
+
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
+
+        $responseManager->addPresenter('invalid', fn () => 'not a presenter');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Presenter callable for "invalid" must return an instance of');
+
+        $responseManager->render('invalid');
+    }
+
+    public function testAddPresenterWithDirectInstance(): void
+    {
+        $resourceManager = $this->createMock(ResourceManagerInterface::class);
+        $resourceManager->method('populateResponse')->willReturnArgument(0);
+
+        $storageManager = $this->createMock(StorageManagerInterface::class);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $responseManager = new ResponseManager($resourceManager, $storageManager, $eventDispatcher);
+
+        $customPresenter = new \Flasher\Prime\Response\Presenter\ArrayPresenter();
+        $responseManager->addPresenter('direct', $customPresenter);
+
+        $result = $responseManager->render('direct');
+
+        $this->assertIsArray($result);
+    }
 }

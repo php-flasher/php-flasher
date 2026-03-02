@@ -25,6 +25,7 @@
 * fix [Flasher] Remove redundant callable check in FlasherContainer::getContainer()
 * fix [Flasher] Fix NotificationStorageMethods::resolveResourceName() return type from ?string to string (never returns null)
 * fix [Flasher] Fix parameter name inconsistency in NotificationBuilderInterface::options() - changed $merge to $append to match implementation
+* fix [Flasher] Add type validation for callable presenter return values in ResponseManager with descriptive error messages
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 
