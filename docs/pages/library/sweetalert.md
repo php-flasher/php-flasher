@@ -87,7 +87,7 @@ flasher:
 
 ---
 
-> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `sweetalert` adapter.
 
 ---
 
@@ -96,7 +96,7 @@ Then, before returning a view or redirecting, call the `success()` method and pa
 
 <p id="method-success"><a href="#method-success" class="anchor"><i class="fa-duotone fa-link"></i> success</a></p>
 
-{% assign id = '#/ noty' %}
+{% assign id = '#/ sweetalert' %}
 {% assign type = 'success' %}
 {% assign message = site.data.messages[type] | sample %}
 {% assign options = '{}' %}
@@ -180,7 +180,7 @@ For more information on Sweetalert2 alert  options and usage, please refer to th
 
 ---
 
-> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `sweetalert` adapter.
 
 ---
 

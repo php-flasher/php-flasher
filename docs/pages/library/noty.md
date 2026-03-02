@@ -89,7 +89,7 @@ flasher:
 
 ---
 
-> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `noty` adapter.
 
 ---
 
@@ -182,7 +182,7 @@ For more information on Noty options and usage, please refer to the original doc
 
 ---
 
-> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `noty` adapter.
 
 ---
 

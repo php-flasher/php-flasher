@@ -94,7 +94,7 @@ Then, before returning a view or redirecting, call the `success()` method and pa
 
 <p id="method-success"><a href="#method-success" class="anchor"><i class="fa-duotone fa-link"></i> success</a></p>
 
-{% assign id = '#/ noty' %}
+{% assign id = '#/ notyf' %}
 {% assign type = 'success' %}
 {% assign message = site.data.messages[type] | sample %}
 {% assign options = '{}' %}

@@ -1,11 +1,19 @@
 ---
 permalink: /installation/
 title: Installation
-description: Install PHPFlasher in your project easily. It’s modular, so you can install only the parts you need. Just include the library in your composer.json file and run composer install to get started.
+description: Install PHPFlasher in your project easily. It's modular, so you can install only the parts you need. Just include the library in your composer.json file and run composer install to get started.
 ---
 
 **<span class="text-indigo-900">PHP<span class="text-indigo-500">Flasher</span></span>** is modular and consists of multiple libraries,
 allowing users to install and use only the specific components they need for their project.
+
+## <i class="fa-duotone fa-list-radio"></i> Requirements
+
+- **PHP 8.2** or higher
+- **Composer**
+- **Laravel 11+** or **Symfony 7+**
+
+---
 
 ## <i class="fa-duotone fa-list-radio"></i> Installation
 
@@ -22,6 +30,8 @@ After installation, you need to run another command to set up the necessary asse
 php artisan flasher:install
 ```
 
+This command publishes the required JavaScript and CSS files to your `public/vendor/flasher` directory. These assets are automatically injected into your HTML responses.
+
 <br />
 
 **<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony**:
@@ -34,6 +44,8 @@ After installation, you need to run another command to set up the necessary asse
 ```shell
 php bin/console flasher:install
 ```
+
+This command publishes the required JavaScript and CSS files to your `public/vendor/flasher` directory. These assets are automatically injected into your HTML responses.
 
 ---
 
@@ -390,3 +402,227 @@ return [
     'Congratulations!' => 'تهانينا',
 ];
 ```
+
+---
+
+<p id="method-created"><a href="#method-created" class="anchor"><i class="fa-duotone fa-link"></i> Resource Operations</a></p>
+
+PHPFlasher provides convenient methods for common CRUD operations. These methods automatically generate appropriate success messages with the resource name.
+
+```php
+flash()->created(string|object|null $resource = null): Envelope
+flash()->updated(string|object|null $resource = null): Envelope
+flash()->saved(string|object|null $resource = null): Envelope
+flash()->deleted(string|object|null $resource = null): Envelope
+```
+
+{% assign id = '#/ usage created' %}
+{% assign type = 'success' %}
+{% assign message = 'The resource was created' %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+// Basic usage - displays "The resource was created"
+flash()->created();
+
+// With a string - displays "The user was created"
+flash()->created('user');
+
+// With an object - automatically resolves the class name
+flash()->created($user); // displays "The User was created"
+```
+
+{% assign id = '#/ usage updated' %}
+{% assign message = 'The post was updated' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+flash()->updated('post');
+```
+
+{% assign id = '#/ usage deleted' %}
+{% assign message = 'The comment was deleted' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+flash()->deleted('comment');
+```
+
+| param       | description                                                                                |
+|-------------|--------------------------------------------------------------------------------------------|
+| `$resource` | A string name, an object (class name will be extracted), or null (defaults to "resource") |
+
+> If you pass an object that implements a `getFlashIdentifier()` method, that value will be used as the resource name.
+
+---
+
+<p id="method-when"><a href="#method-when" class="anchor"><i class="fa-duotone fa-link"></i> Conditional Notifications</a></p>
+
+Use `when()` and `unless()` to conditionally display notifications without wrapping your code in if statements.
+
+```php
+flash()->when(bool|\Closure $condition): static
+flash()->unless(bool|\Closure $condition): static
+```
+
+{% assign id = '#/ usage when' %}
+{% assign type = 'success' %}
+{% assign message = 'Profile updated successfully!' %}
+{% assign options = '{}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+// Only show notification if condition is true
+flash()
+    ->when($user->isVerified())
+    ->success('Profile updated successfully!');
+
+// Using a closure for more complex conditions
+flash()
+    ->when(fn() => $order->total() > 100)
+    ->success('You qualify for free shipping!');
+```
+
+{% assign id = '#/ usage unless' %}
+{% assign type = 'warning' %}
+{% assign message = 'Please verify your email address.' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+// Show notification unless condition is true
+flash()
+    ->unless($user->hasVerifiedEmail())
+    ->warning('Please verify your email address.');
+```
+
+| param        | description                                                    |
+|--------------|----------------------------------------------------------------|
+| `$condition` | A boolean or a Closure that returns a boolean                  |
+
+---
+
+<p id="method-keep"><a href="#method-keep" class="anchor"><i class="fa-duotone fa-link"></i> keep</a></p>
+
+The `keep()` method increments the notification's hop count by 1, allowing it to persist through an additional request. This is useful when you need a notification to survive one more redirect.
+
+```php
+flash()->keep(): static
+```
+
+```php
+// Notification will persist through one additional redirect
+flash()
+    ->keep()
+    ->success('This message will survive one more redirect.');
+```
+
+| behavior    | description                                                    |
+|-------------|----------------------------------------------------------------|
+| Default     | Notifications are shown once and then removed                  |
+| With keep() | Notification persists through one additional request           |
+
+> The `keep()` method is a shorthand for incrementing the current hops by 1. For more control, use the `hops()` method directly.
+
+---
+
+<p id="method-delay"><a href="#method-delay" class="anchor"><i class="fa-duotone fa-link"></i> delay</a></p>
+
+The `delay()` method sets a delay (in milliseconds) before the notification is displayed. This is useful for staggered notifications or giving users time to focus on content before showing a message.
+
+```php
+flash()->delay(int $delay): static
+```
+
+{% assign id = '#/ usage delay' %}
+{% assign type = 'info' %}
+{% assign message = 'Check out our new features!' %}
+{% assign options = '{"delay": 2000}' %}
+{% include example.html %}
+
+```php
+{{ id }}
+
+// Notification appears after 2 seconds
+flash()
+    ->delay(2000) // 2000 milliseconds = 2 seconds
+    ->info('Check out our new features!');
+```
+
+| param    | description                                      |
+|----------|--------------------------------------------------|
+| `$delay` | Delay in milliseconds before showing the notification |
+
+---
+
+<p id="method-preset"><a href="#method-preset" class="anchor"><i class="fa-duotone fa-link"></i> preset</a></p>
+
+Presets allow you to define reusable notification configurations in your config file, then reference them by name in your code.
+
+```php
+flash()->preset(string $preset, array $parameters = []): Envelope
+```
+
+First, define presets in your configuration file:
+
+**<i class="fa-brands fa-laravel text-red-900 fa-xl"></i> Laravel** - `config/flasher.php`:
+
+```php
+return [
+    'presets' => [
+        'entity_saved' => [
+            'type' => 'success',
+            'title' => 'Saved',
+            'message' => 'The :entity has been saved successfully.',
+        ],
+        'welcome' => [
+            'type' => 'info',
+            'message' => 'Welcome back, :name!',
+            'options' => [
+                'timeout' => 3000,
+            ],
+        ],
+    ],
+];
+```
+
+**<i class="fa-brands fa-symfony text-black fa-xl"></i> Symfony** - `config/packages/flasher.yaml`:
+
+```yaml
+flasher:
+    presets:
+        entity_saved:
+            type: success
+            title: Saved
+            message: 'The :entity has been saved successfully.'
+        welcome:
+            type: info
+            message: 'Welcome back, :name!'
+            options:
+                timeout: 3000
+```
+
+Then use the preset in your code:
+
+```php
+// Use a preset with parameter substitution
+flash()->preset('entity_saved', [':entity' => 'product']);
+
+// Another example
+flash()->preset('welcome', [':name' => $user->name]);
+```
+
+| param         | description                                                |
+|---------------|------------------------------------------------------------|
+| `$preset`     | The name of the preset as defined in your configuration    |
+| `$parameters` | Key-value pairs for placeholder substitution in the message |

@@ -72,7 +72,7 @@ php bin/console flasher:install
 
 flasher:
     plugins:
-        noty:
+        toastr:
             scripts:
                 - '/vendor/flasher/jquery.min.js'
                 - '/vendor/flasher/toastr.min.js'
@@ -90,7 +90,7 @@ flasher:
 
 ---
 
-> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `toastr` adapter.
 
 ---
 
@@ -99,7 +99,7 @@ Then, before returning a view or redirecting, call the `success()` method and pa
 
 <p id="method-success"><a href="#method-success" class="anchor"><i class="fa-duotone fa-link"></i> success</a></p>
 
-{% assign id = '#/ noty' %}
+{% assign id = '#/ toastr' %}
 {% assign type = 'success' %}
 {% assign message = site.data.messages[type] | sample %}
 {% assign options = '{}' %}
@@ -183,7 +183,7 @@ For more information on Toastr options and usage, please refer to the original d
 
 ---
 
-> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `notyf` adapter.
+> The methods described in the **[Usage](/installation/#-usage)** section can also be used with the `toastr` adapter.
 
 ---
 

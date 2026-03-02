@@ -74,3 +74,29 @@ html_structure: |
       </div>
   </div>
 ---
+
+## Usage
+
+To use the Amazon theme, specify it in your flash notification:
+
+```php
+flash()->use('theme.amazon')->success('Your order has been placed successfully!');
+flash()->use('theme.amazon')->error('Unable to process your payment.');
+flash()->use('theme.amazon')->warning('This item is almost out of stock.');
+flash()->use('theme.amazon')->info('Free shipping on orders over $25.');
+```
+
+Or set it as the default theme in your configuration:
+
+**Laravel** - `config/flasher.php`:
+```php
+return [
+    'default' => 'theme.amazon',
+];
+```
+
+**Symfony** - `config/packages/flasher.yaml`:
+```yaml
+flasher:
+    default: theme.amazon
+```
