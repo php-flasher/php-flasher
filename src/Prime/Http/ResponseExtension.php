@@ -94,7 +94,15 @@ final readonly class ResponseExtension implements ResponseExtensionInterface
         $url = $request->getUri();
 
         foreach ($this->excludedPaths as $regexPattern) {
-            if (preg_match($regexPattern, $url)) {
+            $result = @preg_match($regexPattern, $url);
+
+            if (false === $result) {
+                trigger_error(\sprintf('Invalid regex pattern "%s" in excluded_paths configuration', $regexPattern), \E_USER_WARNING);
+
+                continue;
+            }
+
+            if (1 === $result) {
                 return true;
             }
         }

@@ -20,4 +20,9 @@ interface ContentSecurityPolicyHandlerInterface
      * @return array{csp_script_nonce?: ?string, csp_style_nonce?: ?string}
      */
     public function updateResponseHeaders(RequestInterface $request, ResponseInterface $response): array;
+
+    /**
+     * Reset the handler state for long-running processes (Octane, FrankenPHP, etc.).
+     */
+    public function reset(): void;
 }

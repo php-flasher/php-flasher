@@ -44,6 +44,11 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
         $this->cspDisabled = true;
     }
 
+    public function reset(): void
+    {
+        $this->cspDisabled = false;
+    }
+
     public function updateResponseHeaders(RequestInterface $request, ResponseInterface $response): array
     {
         if ($this->cspDisabled) {
@@ -168,10 +173,13 @@ final class ContentSecurityPolicyHandler implements ContentSecurityPolicyHandler
         $directives = [];
 
         foreach (explode(';', $header ?: '') as $directive) {
-            $parts = explode(' ', trim($directive));
-            if (\count($parts) < 1) { // @phpstan-ignore-line
+            $directive = trim($directive);
+
+            if ('' === $directive) {
                 continue;
             }
+
+            $parts = explode(' ', $directive);
             $name = array_shift($parts);
             $directives[$name] = $parts;
         }
