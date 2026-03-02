@@ -26,6 +26,8 @@
 * fix [Flasher] Fix NotificationStorageMethods::resolveResourceName() return type from ?string to string (never returns null)
 * fix [Flasher] Fix parameter name inconsistency in NotificationBuilderInterface::options() - changed $merge to $append to match implementation
 * fix [Flasher] Add type validation for callable presenter return values in ResponseManager with descriptive error messages
+* fix [Flasher] Fix FlasherPlugin::normalizePlugins() losing scripts/styles when both top-level and plugin-level configs are provided - replaced array union operator with array_merge
+* fix [Flasher] Simplify FlasherPlugin::normalizeFlashBag() by replacing redundant array union with direct array_merge
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 

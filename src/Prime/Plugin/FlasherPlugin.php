@@ -127,18 +127,24 @@ final class FlasherPlugin extends Plugin
         }
 
         if (!empty($config['scripts'])) {
-            $config['plugins']['flasher']['scripts'] ??= [];
-            $config['plugins']['flasher']['scripts'] += $config['scripts'];
+            $config['plugins']['flasher']['scripts'] = array_merge(
+                $config['plugins']['flasher']['scripts'] ?? [],
+                $config['scripts']
+            );
         }
 
         if (!empty($config['styles'])) {
-            $config['plugins']['flasher']['styles'] ??= [];
-            $config['plugins']['flasher']['styles'] += $config['styles'];
+            $config['plugins']['flasher']['styles'] = array_merge(
+                $config['plugins']['flasher']['styles'] ?? [],
+                $config['styles']
+            );
         }
 
         if (!empty($config['options'])) {
-            $config['plugins']['flasher']['options'] ??= [];
-            $config['plugins']['flasher']['options'] += $config['options'];
+            $config['plugins']['flasher']['options'] = array_merge(
+                $config['options'],
+                $config['plugins']['flasher']['options'] ?? []
+            );
         }
 
         foreach ($config['plugins'] as $name => $options) {
@@ -345,7 +351,7 @@ final class FlasherPlugin extends Plugin
             return $config;
         }
 
-        $config['flash_bag'] += array_merge($mapping, $config['flash_bag']);
+        $config['flash_bag'] = array_merge($mapping, $config['flash_bag']);
 
         return $config;
     }

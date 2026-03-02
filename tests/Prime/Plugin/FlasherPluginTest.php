@@ -406,4 +406,57 @@ final class FlasherPluginTest extends TestCase
         $plugin = new FlasherPlugin();
         $this->assertSame([], $plugin->getOptions());
     }
+
+    public function testNormalizeConfigMergesTopLevelAndPluginLevelScripts(): void
+    {
+        $plugin = new FlasherPlugin();
+        $config = $plugin->normalizeConfig([
+            'scripts' => ['/top-level.js'],
+            'plugins' => [
+                'flasher' => [
+                    'scripts' => ['/plugin-level.js'],
+                ],
+            ],
+        ]);
+
+        // Both scripts should be present - plugin-level first, then top-level
+        $this->assertCount(2, $config['plugins']['flasher']['scripts']);
+        $this->assertContains('/plugin-level.js', $config['plugins']['flasher']['scripts']);
+        $this->assertContains('/top-level.js', $config['plugins']['flasher']['scripts']);
+    }
+
+    public function testNormalizeConfigMergesTopLevelAndPluginLevelStyles(): void
+    {
+        $plugin = new FlasherPlugin();
+        $config = $plugin->normalizeConfig([
+            'styles' => ['/top-level.css'],
+            'plugins' => [
+                'flasher' => [
+                    'styles' => ['/plugin-level.css'],
+                ],
+            ],
+        ]);
+
+        // Both styles should be present
+        $this->assertContains('/plugin-level.css', $config['plugins']['flasher']['styles']);
+        $this->assertContains('/top-level.css', $config['plugins']['flasher']['styles']);
+    }
+
+    public function testNormalizeConfigMergesOptionsWithPluginLevelOverride(): void
+    {
+        $plugin = new FlasherPlugin();
+        $config = $plugin->normalizeConfig([
+            'options' => ['timeout' => 5000, 'position' => 'top-right'],
+            'plugins' => [
+                'flasher' => [
+                    'options' => ['timeout' => 3000],
+                ],
+            ],
+        ]);
+
+        // Plugin-level timeout should override top-level
+        $this->assertSame(3000, $config['plugins']['flasher']['options']['timeout']);
+        // Top-level position should be preserved as default
+        $this->assertSame('top-right', $config['plugins']['flasher']['options']['position']);
+    }
 }
