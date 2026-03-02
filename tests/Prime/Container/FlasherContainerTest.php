@@ -89,7 +89,7 @@ final class FlasherContainerTest extends TestCase
     public function testFromWithClosureReturningInvalidTypeThrowsException(): void
     {
         // Pass a closure that returns something other than ContainerInterface
-        FlasherContainer::from(fn () => 'not a container');
+        FlasherContainer::from(fn () => 'not a container'); // @phpstan-ignore argument.type
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected an instance of "Psr\Container\ContainerInterface"');

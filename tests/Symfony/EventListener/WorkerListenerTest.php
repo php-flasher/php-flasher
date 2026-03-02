@@ -7,12 +7,14 @@ namespace Flasher\Tests\Symfony\EventListener;
 use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandlerInterface;
 use Flasher\Symfony\EventListener\WorkerListener;
 use Flasher\Symfony\Storage\FallbackSession;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Service\ResetInterface;
 
 final class WorkerListenerTest extends TestCase
 {
-    private ContentSecurityPolicyHandlerInterface $cspHandler;
+    /** @var MockObject&ContentSecurityPolicyHandlerInterface */
+    private MockObject $cspHandler;
 
     protected function setUp(): void
     {

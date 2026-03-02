@@ -29,12 +29,7 @@ final class NotificationFactoryLocator implements NotificationFactoryLocatorInte
             $factory = $factory();
 
             if (!$factory instanceof NotificationFactoryInterface) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Factory callable for "%s" must return an instance of %s, %s returned.',
-                    $id,
-                    NotificationFactoryInterface::class,
-                    \get_debug_type($factory)
-                ));
+                throw new \InvalidArgumentException(\sprintf('Factory callable for "%s" must return an instance of %s, %s returned.', $id, NotificationFactoryInterface::class, get_debug_type($factory)));
             }
         }
 

@@ -15,10 +15,10 @@ use Symfony\Contracts\Service\ResetInterface;
  * Tagged with kernel.reset in services.php to be automatically called
  * by Symfony's kernel between requests.
  */
-final class WorkerListener implements ResetInterface
+final readonly class WorkerListener implements ResetInterface
 {
     public function __construct(
-        private readonly ContentSecurityPolicyHandlerInterface $cspHandler,
+        private ContentSecurityPolicyHandlerInterface $cspHandler,
     ) {
     }
 

@@ -72,7 +72,7 @@ final class FlasherContainer
      * @param string $id The service identifier (e.g., 'flasher', 'flasher.toastr')
      *
      * @throws \InvalidArgumentException If the service is not found or invalid
-     * @throws \LogicException If the container has not been initialized
+     * @throws \LogicException           If the container has not been initialized
      *
      * @phpstan-return ($id is 'flasher' ? \Flasher\Prime\FlasherInterface :
      *          ($id is 'flasher.noty' ? \Flasher\Noty\Prime\NotyInterface :
@@ -111,7 +111,7 @@ final class FlasherContainer
     /**
      * Get the underlying PSR-11 container.
      *
-     * @throws \LogicException If the container has not been initialized
+     * @throws \LogicException           If the container has not been initialized
      * @throws \InvalidArgumentException If the container closure returns an invalid type
      */
     public static function getContainer(): ContainerInterface

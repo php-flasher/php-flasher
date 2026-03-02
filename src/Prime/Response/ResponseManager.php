@@ -82,12 +82,7 @@ final class ResponseManager implements ResponseManagerInterface
             $presenter = $presenter();
 
             if (!$presenter instanceof PresenterInterface) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Presenter callable for "%s" must return an instance of %s, %s returned.',
-                    $alias,
-                    PresenterInterface::class,
-                    \get_debug_type($presenter)
-                ));
+                throw new \InvalidArgumentException(\sprintf('Presenter callable for "%s" must return an instance of %s, %s returned.', $alias, PresenterInterface::class, get_debug_type($presenter)));
             }
         }
 

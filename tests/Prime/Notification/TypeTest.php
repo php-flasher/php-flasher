@@ -23,19 +23,37 @@ final class TypeTest extends TestCase
         $this->assertSame($expected, Type::all());
     }
 
-    public function testIsValidWithValidTypes(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('validTypesProvider')]
+    public function testIsValidWithValidTypes(string $type): void
     {
-        $this->assertTrue(Type::isValid('success'));
-        $this->assertTrue(Type::isValid('error'));
-        $this->assertTrue(Type::isValid('info'));
-        $this->assertTrue(Type::isValid('warning'));
+        $this->assertTrue(Type::isValid($type));
     }
 
-    public function testIsValidWithInvalidTypes(): void
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function validTypesProvider(): iterable
     {
-        $this->assertFalse(Type::isValid('invalid'));
-        $this->assertFalse(Type::isValid(''));
-        $this->assertFalse(Type::isValid('SUCCESS'));
-        $this->assertFalse(Type::isValid('notice'));
+        yield 'success' => ['success'];
+        yield 'error' => ['error'];
+        yield 'info' => ['info'];
+        yield 'warning' => ['warning'];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidTypesProvider')]
+    public function testIsValidWithInvalidTypes(string $type): void
+    {
+        $this->assertFalse(Type::isValid($type));
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function invalidTypesProvider(): iterable
+    {
+        yield 'invalid' => ['invalid'];
+        yield 'empty' => [''];
+        yield 'uppercase SUCCESS' => ['SUCCESS'];
+        yield 'notice' => ['notice'];
     }
 }
