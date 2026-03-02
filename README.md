@@ -59,7 +59,7 @@ flash()->success('Welcome aboard! Your account is ready.');
 |---|:---:|:---:|
 | **Zero JavaScript** | Write PHP only, frontend handled automatically | Requires manual JS setup |
 | **Auto Asset Injection** | CSS/JS injected automatically | Manual script tags needed |
-| **26 Built-in Themes** | Amazon, iOS, Slack, Material & more | Limited or no themes |
+| **17 Built-in Themes** | Amazon, iOS, Slack, Material & more | Limited or no themes |
 | **4 Notification Libraries** | Toastr, SweetAlert, Noty, Notyf | Single library only |
 | **Livewire Integration** | Full event system support | Limited or none |
 | **RTL Support** | Built-in right-to-left | Often missing |
@@ -94,9 +94,9 @@ flash()->success('Profile updated!', [
 
 ---
 
-## 26 Beautiful Themes
+## 17 Beautiful Themes
 
-PHPFlasher includes **26 professionally designed themes** ready to use:
+PHPFlasher includes **17 professionally designed themes** ready to use:
 
 ```php
 flash()->success('Welcome!', ['theme' => 'amazon']);
@@ -111,12 +111,10 @@ flash()->success('Welcome!', ['theme' => 'material']);
 | Theme | Style |
 |-------|-------|
 | `flasher` | Default clean design |
-| `amazon` | Amazon-inspired |
-| `bootstrap` | Bootstrap style |
+| `amazon` | Amazon-inspired e-commerce |
 | `ios` | Apple iOS notifications |
 | `slack` | Slack messaging style |
 | `material` | Google Material Design |
-| `tailwind` | Tailwind CSS inspired |
 | `google` | Google notifications |
 | `facebook` | Facebook style |
 | `minimal` | Ultra-clean minimal |
@@ -129,10 +127,6 @@ flash()->success('Welcome!', ['theme' => 'material']);
 | `onyx` | Dark mode sleek |
 | `ruby` | Bold ruby accents |
 | `sapphire` | Elegant blue style |
-| `shadow` | Soft shadow effects |
-| `spectrum` | Colorful spectrum |
-| `sunset` | Warm sunset colors |
-| `zen` | Calm minimal design |
 
 [**See all themes with live demos →**](https://php-flasher.io/themes)
 
@@ -296,11 +290,9 @@ flasher:
 For complete documentation, visit **[php-flasher.io](https://php-flasher.io)**
 
 - [Installation Guide](https://php-flasher.io/installation)
-- [Usage & Examples](https://php-flasher.io/usage)
 - [Themes Gallery](https://php-flasher.io/themes)
 - [Livewire Integration](https://php-flasher.io/livewire)
-- [Configuration Reference](https://php-flasher.io/configuration)
-- [API Reference](https://php-flasher.io/api)
+- [JavaScript Usage](https://php-flasher.io/javascript)
 
 ---
 
