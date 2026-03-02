@@ -23,6 +23,7 @@ use Flasher\Symfony\Command\InstallCommand;
 use Flasher\Symfony\Component\FlasherComponent;
 use Flasher\Symfony\EventListener\FlasherListener;
 use Flasher\Symfony\EventListener\SessionListener;
+use Flasher\Symfony\EventListener\WorkerListener;
 use Flasher\Symfony\Factory\NotificationFactoryLocator;
 use Flasher\Symfony\Profiler\FlasherDataCollector;
 use Flasher\Symfony\Storage\SessionBag;
@@ -76,6 +77,9 @@ return static function (ContainerConfigurator $container): void {
 
         ->set('flasher.notification_logger_listener', NotificationLoggerListener::class)
             ->tag('flasher.event_listener')
+            ->tag('kernel.reset', ['method' => 'reset'])
+
+        ->set('flasher.worker_listener', WorkerListener::class)
             ->tag('kernel.reset', ['method' => 'reset'])
 
         ->set('flasher.translation_listener', TranslationListener::class)

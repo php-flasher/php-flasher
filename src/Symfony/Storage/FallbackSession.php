@@ -18,4 +18,13 @@ final class FallbackSession implements FallbackSessionInterface
     {
         self::$storage[$name] = $value;
     }
+
+    /**
+     * Reset the static storage to prevent state leakage between requests
+     * in long-running processes (e.g., FrankenPHP, Swoole).
+     */
+    public static function reset(): void
+    {
+        self::$storage = [];
+    }
 }
