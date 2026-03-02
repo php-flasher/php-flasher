@@ -17,7 +17,7 @@ interface NotificationBuilderInterface
     /**
      * @param array<string, mixed> $options
      */
-    public function options(array $options, bool $merge = true): static;
+    public function options(array $options, bool $append = true): static;
 
     public function option(string $name, mixed $value): static;
 

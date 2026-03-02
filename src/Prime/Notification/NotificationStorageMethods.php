@@ -117,7 +117,7 @@ trait NotificationStorageMethods
         return $envelope;
     }
 
-    private function resolveResourceName(object $object): ?string
+    private function resolveResourceName(object $object): string
     {
         $displayName = \is_callable([$object, 'getFlashIdentifier']) ? $object->getFlashIdentifier() : null;
 
