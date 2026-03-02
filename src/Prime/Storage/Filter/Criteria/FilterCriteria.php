@@ -11,7 +11,7 @@ final class FilterCriteria implements CriteriaInterface
     /**
      * @var \Closure[]
      */
-    private array $callbacks;
+    private array $callbacks = [];
 
     /**
      * @throws \InvalidArgumentException

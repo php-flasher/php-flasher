@@ -166,4 +166,32 @@ final class FilterCriteriaTest extends TestCase
         $this->assertSame(['first', 'second'], $order);
         $this->assertCount(2, $result);
     }
+
+    public function testConstructorWithEmptyArrayDoesNotThrow(): void
+    {
+        // This test verifies the fix for uninitialized $callbacks property
+        // Previously, new FilterCriteria([]) would leave $callbacks uninitialized
+        // causing "must not be accessed before initialization" error on apply()
+        $criteria = new FilterCriteria([]);
+
+        $envelopes = [new Envelope(new Notification())];
+        $result = $criteria->apply($envelopes);
+
+        // With no callbacks, envelopes should pass through unchanged
+        $this->assertSame($envelopes, $result);
+    }
+
+    public function testApplyWithEmptyCallbacksReturnsEnvelopesUnchanged(): void
+    {
+        $criteria = new FilterCriteria([]);
+
+        $notification = new Notification();
+        $notification->setMessage('test');
+        $envelopes = [new Envelope($notification)];
+
+        $result = $criteria->apply($envelopes);
+
+        $this->assertCount(1, $result);
+        $this->assertSame('test', $result[0]->getMessage());
+    }
 }

@@ -229,4 +229,52 @@ final class HopsCriteriaTest extends TestCase
 
         $this->assertCount(1, $result);
     }
+
+    public function testMatchWithOnlyMaxAndNullMin(): void
+    {
+        // This test verifies explicit null handling for min
+        // Previously relied on PHP's implicit null-to-0 coercion
+        $envelope = new Envelope(new Notification(), [new HopsStamp(2)]);
+
+        $criteria = new HopsCriteria(['max' => 5]);
+
+        // With min=null and max=5, hops=2 should match
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testMatchWithOnlyMaxRejectsHigherHops(): void
+    {
+        $envelope = new Envelope(new Notification(), [new HopsStamp(10)]);
+
+        $criteria = new HopsCriteria(['max' => 5]);
+
+        // With min=null and max=5, hops=10 should NOT match
+        $this->assertFalse($criteria->match($envelope));
+    }
+
+    public function testMatchWithBothNullMinAndMax(): void
+    {
+        // When both min and max are null, all envelopes with hops stamp should match
+        $envelope = new Envelope(new Notification(), [new HopsStamp(100)]);
+
+        $criteria = new HopsCriteria([]);
+
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testApplyWithNullMinAndMaxMatchesAll(): void
+    {
+        $envelopes = [
+            new Envelope(new Notification(), [new HopsStamp(1)]),
+            new Envelope(new Notification(), [new HopsStamp(50)]),
+            new Envelope(new Notification(), [new HopsStamp(100)]),
+        ];
+
+        $criteria = new HopsCriteria([]);
+
+        $result = $criteria->apply($envelopes);
+
+        // All envelopes with hops stamp should match when no constraints
+        $this->assertCount(3, $result);
+    }
 }

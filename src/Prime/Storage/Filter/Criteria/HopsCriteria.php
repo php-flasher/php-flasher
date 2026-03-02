@@ -11,9 +11,9 @@ final readonly class HopsCriteria implements CriteriaInterface
 {
     use RangeExtractor;
 
-    private readonly ?int $minAmount;
+    private ?int $minAmount;
 
-    private readonly ?int $maxAmount;
+    private ?int $maxAmount;
 
     /**
      * @throws \InvalidArgumentException
@@ -44,14 +44,11 @@ final readonly class HopsCriteria implements CriteriaInterface
             return false;
         }
 
-        if (null === $this->maxAmount) {
-            return $stamp->getAmount() >= $this->minAmount;
-        }
+        $amount = $stamp->getAmount();
 
-        if ($stamp->getAmount() <= $this->maxAmount) {
-            return $stamp->getAmount() >= $this->minAmount;
-        }
+        $meetsMin = null === $this->minAmount || $amount >= $this->minAmount;
+        $meetsMax = null === $this->maxAmount || $amount <= $this->maxAmount;
 
-        return false;
+        return $meetsMin && $meetsMax;
     }
 }

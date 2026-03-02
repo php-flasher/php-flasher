@@ -248,4 +248,52 @@ final class DelayCriteriaTest extends TestCase
 
         $this->assertCount(3, $result);
     }
+
+    public function testMatchWithOnlyMaxAndNullMin(): void
+    {
+        // This test verifies explicit null handling for min
+        // Previously relied on PHP's implicit null-to-0 coercion
+        $envelope = new Envelope(new Notification(), [new DelayStamp(3)]);
+
+        $criteria = new DelayCriteria(['max' => 5]);
+
+        // With min=null and max=5, delay=3 should match
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testMatchWithOnlyMaxRejectsHigherDelay(): void
+    {
+        $envelope = new Envelope(new Notification(), [new DelayStamp(10)]);
+
+        $criteria = new DelayCriteria(['max' => 5]);
+
+        // With min=null and max=5, delay=10 should NOT match
+        $this->assertFalse($criteria->match($envelope));
+    }
+
+    public function testMatchWithBothNullMinAndMax(): void
+    {
+        // When both min and max are null, all envelopes with delay stamp should match
+        $envelope = new Envelope(new Notification(), [new DelayStamp(100)]);
+
+        $criteria = new DelayCriteria([]);
+
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testApplyWithNullMinAndMaxMatchesAll(): void
+    {
+        $envelopes = [
+            new Envelope(new Notification(), [new DelayStamp(0)]),
+            new Envelope(new Notification(), [new DelayStamp(50)]),
+            new Envelope(new Notification(), [new DelayStamp(100)]),
+        ];
+
+        $criteria = new DelayCriteria([]);
+
+        $result = $criteria->apply($envelopes);
+
+        // All envelopes with delay stamp should match when no constraints
+        $this->assertCount(3, $result);
+    }
 }

@@ -46,14 +46,9 @@ final readonly class PriorityCriteria implements CriteriaInterface
 
         $priority = $stamp->getPriority();
 
-        if (null === $this->maxPriority) {
-            return $priority >= $this->minPriority;
-        }
+        $meetsMin = null === $this->minPriority || $priority >= $this->minPriority;
+        $meetsMax = null === $this->maxPriority || $priority <= $this->maxPriority;
 
-        if ($priority <= $this->maxPriority) {
-            return $priority >= $this->minPriority;
-        }
-
-        return false;
+        return $meetsMin && $meetsMax;
     }
 }

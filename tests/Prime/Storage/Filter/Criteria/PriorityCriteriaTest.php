@@ -245,4 +245,52 @@ final class PriorityCriteriaTest extends TestCase
 
         $this->assertCount(1, $result);
     }
+
+    public function testMatchWithOnlyMaxAndNullMin(): void
+    {
+        // This test verifies explicit null handling for min
+        // Previously relied on PHP's implicit null-to-0 coercion
+        $envelope = new Envelope(new Notification(), [new PriorityStamp(3)]);
+
+        $criteria = new PriorityCriteria(['max' => 5]);
+
+        // With min=null and max=5, priority 3 should match
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testMatchWithOnlyMaxRejectsHigherPriority(): void
+    {
+        $envelope = new Envelope(new Notification(), [new PriorityStamp(10)]);
+
+        $criteria = new PriorityCriteria(['max' => 5]);
+
+        // With min=null and max=5, priority 10 should NOT match
+        $this->assertFalse($criteria->match($envelope));
+    }
+
+    public function testMatchWithBothNullMinAndMax(): void
+    {
+        // When both min and max are null, all envelopes with priority stamp should match
+        $envelope = new Envelope(new Notification(), [new PriorityStamp(100)]);
+
+        $criteria = new PriorityCriteria([]);
+
+        $this->assertTrue($criteria->match($envelope));
+    }
+
+    public function testApplyWithNullMinAndMaxMatchesAll(): void
+    {
+        $envelopes = [
+            new Envelope(new Notification(), [new PriorityStamp(-100)]),
+            new Envelope(new Notification(), [new PriorityStamp(0)]),
+            new Envelope(new Notification(), [new PriorityStamp(100)]),
+        ];
+
+        $criteria = new PriorityCriteria([]);
+
+        $result = $criteria->apply($envelopes);
+
+        // All envelopes with priority stamp should match when no constraints
+        $this->assertCount(3, $result);
+    }
 }
