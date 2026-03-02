@@ -15,6 +15,7 @@ final class NotificationFactoryLocator implements NotificationFactoryLocatorInte
 
     /**
      * @throws FactoryNotFoundException
+     * @throws \InvalidArgumentException
      */
     public function get(string $id): NotificationFactoryInterface
     {
@@ -24,7 +25,20 @@ final class NotificationFactoryLocator implements NotificationFactoryLocatorInte
 
         $factory = $this->factories[$id];
 
-        return \is_callable($factory) ? $factory() : $factory;
+        if (\is_callable($factory)) {
+            $factory = $factory();
+
+            if (!$factory instanceof NotificationFactoryInterface) {
+                throw new \InvalidArgumentException(\sprintf(
+                    'Factory callable for "%s" must return an instance of %s, %s returned.',
+                    $id,
+                    NotificationFactoryInterface::class,
+                    \get_debug_type($factory)
+                ));
+            }
+        }
+
+        return $factory;
     }
 
     public function has(string $id): bool

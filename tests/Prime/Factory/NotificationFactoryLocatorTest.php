@@ -53,4 +53,65 @@ final class NotificationFactoryLocatorTest extends TestCase
 
         $this->assertTrue($notificationFactoryLocator->has('alias'));
     }
+
+    public function testGetWithCallableFactory(): void
+    {
+        $factoryMock = \Mockery::mock(NotificationFactoryInterface::class);
+        $notificationFactoryLocator = new NotificationFactoryLocator();
+        $notificationFactoryLocator->addFactory('alias', fn () => $factoryMock);
+
+        $retrievedFactory = $notificationFactoryLocator->get('alias');
+
+        $this->assertSame($factoryMock, $retrievedFactory);
+    }
+
+    public function testGetWithCallableFactoryCalledEachTime(): void
+    {
+        $callCount = 0;
+        $notificationFactoryLocator = new NotificationFactoryLocator();
+        $notificationFactoryLocator->addFactory('alias', function () use (&$callCount) {
+            ++$callCount;
+
+            return \Mockery::mock(NotificationFactoryInterface::class);
+        });
+
+        $notificationFactoryLocator->get('alias');
+        $notificationFactoryLocator->get('alias');
+
+        $this->assertSame(2, $callCount);
+    }
+
+    public function testGetWithCallableReturningInvalidTypeThrowsException(): void
+    {
+        $notificationFactoryLocator = new NotificationFactoryLocator();
+        $notificationFactoryLocator->addFactory('invalid', fn () => 'not a factory');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Factory callable for "invalid" must return an instance of');
+
+        $notificationFactoryLocator->get('invalid');
+    }
+
+    public function testGetWithCallableReturningNullThrowsException(): void
+    {
+        $notificationFactoryLocator = new NotificationFactoryLocator();
+        $notificationFactoryLocator->addFactory('null_factory', fn () => null);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Factory callable for "null_factory" must return an instance of');
+
+        $notificationFactoryLocator->get('null_factory');
+    }
+
+    public function testAddFactoryOverwritesExistingFactory(): void
+    {
+        $factory1 = \Mockery::mock(NotificationFactoryInterface::class);
+        $factory2 = \Mockery::mock(NotificationFactoryInterface::class);
+
+        $notificationFactoryLocator = new NotificationFactoryLocator();
+        $notificationFactoryLocator->addFactory('alias', $factory1);
+        $notificationFactoryLocator->addFactory('alias', $factory2);
+
+        $this->assertSame($factory2, $notificationFactoryLocator->get('alias'));
+    }
 }

@@ -17,6 +17,7 @@
   - [Laravel] Add LivewireListener classes for all adapters and themes to enable Livewire event handling
 * fix [Flasher] Fix FilterCriteria uninitialized property error when constructed with empty array
 * fix [Flasher] Fix null comparison issues in PriorityCriteria, HopsCriteria, and DelayCriteria that relied on PHP's implicit null-to-0 coercion
+* fix [Flasher] Add type validation for callable factory return values in NotificationFactoryLocator with descriptive error messages
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 
