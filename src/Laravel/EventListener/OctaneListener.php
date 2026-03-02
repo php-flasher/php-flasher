@@ -6,6 +6,7 @@ namespace Flasher\Laravel\EventListener;
 
 use Flasher\Laravel\Storage\FallbackSession;
 use Flasher\Prime\EventDispatcher\EventListener\NotificationLoggerListener;
+use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandlerInterface;
 use Laravel\Octane\Events\RequestReceived;
 
 final readonly class OctaneListener
@@ -16,6 +17,11 @@ final readonly class OctaneListener
         /** @var NotificationLoggerListener $listener */
         $listener = $event->sandbox->make('flasher.notification_logger_listener');
         $listener->reset();
+
+        // Reset the CSP handler to re-enable CSP for new requests
+        /** @var ContentSecurityPolicyHandlerInterface $cspHandler */
+        $cspHandler = $event->sandbox->make('flasher.csp_handler');
+        $cspHandler->reset();
 
         // Reset the fallback session static storage to prevent notification leakage
         // when session is not started (e.g., during API requests)

@@ -80,6 +80,7 @@ return static function (ContainerConfigurator $container): void {
             ->tag('kernel.reset', ['method' => 'reset'])
 
         ->set('flasher.worker_listener', WorkerListener::class)
+            ->args([service('flasher.csp_handler')])
             ->tag('kernel.reset', ['method' => 'reset'])
 
         ->set('flasher.translation_listener', TranslationListener::class)

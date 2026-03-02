@@ -18,6 +18,9 @@
 * fix [Flasher] Fix FilterCriteria uninitialized property error when constructed with empty array
 * fix [Flasher] Fix null comparison issues in PriorityCriteria, HopsCriteria, and DelayCriteria that relied on PHP's implicit null-to-0 coercion
 * fix [Flasher] Add type validation for callable factory return values in NotificationFactoryLocator with descriptive error messages
+* fix [Flasher] Add error handling for invalid regex patterns in ResponseExtension::isPathExcluded()
+* fix [Flasher] Fix ContentSecurityPolicyHandler parsing of CSP headers with trailing semicolons creating empty directive keys
+* fix [Flasher] Add reset() method to ContentSecurityPolicyHandler to fix CSP state leak in long-running processes (Octane, FrankenPHP)
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 

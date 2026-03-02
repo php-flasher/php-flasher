@@ -454,4 +454,69 @@ final class ContentSecurityPolicyHandlerTest extends TestCase
             'csp_style_nonce' => 'noresponsenonce',
         ], $nonces);
     }
+
+    public function testResetRestoresCspEnabled(): void
+    {
+        // First, disable CSP
+        $this->cspHandler->disableCsp();
+
+        // Verify it's disabled by checking updateResponseHeaders returns empty
+        $removedHeaders = [];
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($headerName) use (&$removedHeaders) {
+            $removedHeaders[] = $headerName;
+        });
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+        $this->assertSame([], $nonces, 'CSP should be disabled');
+
+        // Reset the handler
+        $this->cspHandler->reset();
+
+        // Now CSP should be enabled again
+        $this->nonceGeneratorMock->method('generate')->willReturn('resetnonce');
+
+        $setHeaders = [];
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($headerName, $value) use (&$setHeaders) {
+            $setHeaders[$headerName] = $value;
+        });
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        $this->assertNotEmpty($nonces, 'CSP should be enabled after reset');
+        $this->assertArrayHasKey('csp_script_nonce', $nonces);
+        $this->assertArrayHasKey('csp_style_nonce', $nonces);
+    }
+
+    public function testParseDirectivesWithTrailingSemicolons(): void
+    {
+        $this->nonceGeneratorMock->method('generate')->willReturn('testnonce');
+
+        $this->requestMock->method('hasHeader')->willReturn(false);
+
+        $headers = [];
+        $this->responseMock->method('hasHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return isset($headers[$name]);
+        });
+        $this->responseMock->method('getHeader')->willReturnCallback(function ($name) use (&$headers) {
+            return $headers[$name] ?? null;
+        });
+        $this->responseMock->method('setHeader')->willReturnCallback(function ($name, $value) use (&$headers) {
+            $headers[$name] = $value;
+        });
+        $this->responseMock->method('removeHeader')->willReturnCallback(function ($name) use (&$headers) {
+            unset($headers[$name]);
+        });
+
+        // CSP with trailing semicolons and empty directives
+        $headers['Content-Security-Policy'] = "script-src 'self'; ; style-src 'self'; ";
+
+        $nonces = $this->cspHandler->updateResponseHeaders($this->requestMock, $this->responseMock);
+
+        // Should parse correctly without creating empty key entries
+        $this->assertNotEmpty($nonces);
+
+        // Verify the resulting CSP header doesn't have empty directives
+        $resultCsp = $headers['Content-Security-Policy'];
+        $this->assertStringNotContainsString('; ;', $resultCsp);
+    }
 }

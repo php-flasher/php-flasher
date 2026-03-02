@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Symfony\EventListener;
 
+use Flasher\Prime\Http\Csp\ContentSecurityPolicyHandlerInterface;
 use Flasher\Symfony\Storage\FallbackSession;
 use Symfony\Contracts\Service\ResetInterface;
 
@@ -16,8 +17,14 @@ use Symfony\Contracts\Service\ResetInterface;
  */
 final class WorkerListener implements ResetInterface
 {
+    public function __construct(
+        private readonly ContentSecurityPolicyHandlerInterface $cspHandler,
+    ) {
+    }
+
     public function reset(): void
     {
         FallbackSession::reset();
+        $this->cspHandler->reset();
     }
 }

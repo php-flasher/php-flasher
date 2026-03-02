@@ -458,4 +458,95 @@ final class ResponseExtensionTest extends TestCase
 
         $this->assertSame($response, $result);
     }
+
+    public function testRenderWithInvalidRegexPatternInExcludedPaths(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+        $htmlResponse = '<div>Flasher</div>';
+
+        $contentBefore = 'content '.HtmlPresenter::BODY_END_PLACE_HOLDER;
+
+        // Create a concrete request class with getUri method
+        $request = new class implements RequestInterface {
+            public function isXmlHttpRequest(): bool
+            {
+                return false;
+            }
+
+            public function isHtmlRequestFormat(): bool
+            {
+                return true;
+            }
+
+            public function getUri(): string
+            {
+                return '/user/profile';
+            }
+
+            public function hasSession(): bool
+            {
+                return false;
+            }
+
+            public function isSessionStarted(): bool
+            {
+                return false;
+            }
+
+            public function hasType(string $type): bool
+            {
+                return false;
+            }
+
+            public function getType(string $type): string|array
+            {
+                return [];
+            }
+
+            public function forgetType(string $type): void
+            {
+            }
+
+            public function hasHeader(string $name): bool
+            {
+                return false;
+            }
+
+            public function getHeader(string $name): ?string
+            {
+                return null;
+            }
+        };
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($htmlResponse);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+            'setContent' => \Mockery::any(),
+        ]);
+
+        // Test with invalid regex - should trigger warning but continue
+        $invalidPatterns = ['[invalid regex'];
+
+        // Suppress the expected warning
+        $previousHandler = set_error_handler(fn () => true, \E_USER_WARNING);
+
+        try {
+            $responseExtension = new ResponseExtension($flasher, $cspHandler, $invalidPatterns);
+            $result = $responseExtension->render($request, $response);
+
+            // Should still render since invalid regex is skipped
+            $this->assertInstanceOf(ResponseInterface::class, $result);
+        } finally {
+            set_error_handler($previousHandler);
+        }
+    }
 }
