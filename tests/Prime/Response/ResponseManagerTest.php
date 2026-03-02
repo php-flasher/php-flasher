@@ -119,6 +119,9 @@ final class ResponseManagerTest extends TestCase
                     const addRenderListener = () => {
                         if (1 === document.querySelectorAll('script.flasher-js').length) {
                             document.addEventListener('flasher:render', render);
+                            document.addEventListener('turbo:before-cache', () => {
+                                document.querySelectorAll('.fl-wrapper').forEach(el => el.remove());
+                            });
                         }
 
                         {$livewireListener}
@@ -162,7 +165,7 @@ final class ResponseManagerTest extends TestCase
 
         return <<<JAVASCRIPT
             document.addEventListener('livewire:navigating', () => {
-              document.querySelectorAll('.fl-no-cache').forEach(el => el.remove());
+                document.querySelectorAll('.fl-wrapper').forEach(el => el.remove());
             });
         JAVASCRIPT;
     }
