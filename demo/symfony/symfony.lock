@@ -11,6 +11,21 @@
             "config/packages/nelmio_security.yaml"
         ]
     },
+    "php-flasher/flasher-noty-symfony": {
+        "version": "2.x-dev"
+    },
+    "php-flasher/flasher-notyf-symfony": {
+        "version": "2.x-dev"
+    },
+    "php-flasher/flasher-sweetalert-symfony": {
+        "version": "2.x-dev"
+    },
+    "php-flasher/flasher-symfony": {
+        "version": "2.x-dev"
+    },
+    "php-flasher/flasher-toastr-symfony": {
+        "version": "2.x-dev"
+    },
     "phpstan/phpstan": {
         "version": "1.10",
         "recipe": {
@@ -99,16 +114,16 @@
             "config/packages/monolog.yaml"
         ]
     },
-    "symfony/notifier": {
-        "version": "7.0",
+    "symfony/property-info": {
+        "version": "7.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "5.0",
-            "ref": "178877daf79d2dbd62129dd03612cb1a2cb407cc"
+            "version": "7.3",
+            "ref": "dae70df71978ae9226ae915ffd5fad817f5ca1f7"
         },
         "files": [
-            "config/packages/notifier.yaml"
+            "config/packages/property_info.yaml"
         ]
     },
     "symfony/routing": {

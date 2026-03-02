@@ -124,13 +124,13 @@
 
                 {# Desktop Navigation #}
                 <nav class="hidden md:flex items-center space-x-1">
-                    <a href="{{ path('app_home') }}" class="nav-link {% if app.request.get('_route') == 'app_home' %}nav-link-active{% endif %}">Home</a>
-                    <a href="{{ path('app_types') }}" class="nav-link {% if app.request.get('_route') == 'app_types' %}nav-link-active{% endif %}">Types</a>
-                    <a href="{{ path('app_themes') }}" class="nav-link {% if app.request.get('_route') == 'app_themes' %}nav-link-active{% endif %}">Themes</a>
-                    <a href="{{ path('app_adapters') }}" class="nav-link {% if app.request.get('_route') == 'app_adapters' %}nav-link-active{% endif %}">Adapters</a>
-                    <a href="{{ path('app_positions') }}" class="nav-link {% if app.request.get('_route') == 'app_positions' %}nav-link-active{% endif %}">Positions</a>
-                    <a href="{{ path('app_examples') }}" class="nav-link {% if app.request.get('_route') == 'app_examples' %}nav-link-active{% endif %}">Examples</a>
-                    <a href="{{ path('app_playground') }}" class="nav-link {% if app.request.get('_route') == 'app_playground' %}nav-link-active{% endif %}">Playground</a>
+                    <a href="{{ path('app_home') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}nav-link-active{% endif %}">Home</a>
+                    <a href="{{ path('app_types') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_types' %}nav-link-active{% endif %}">Types</a>
+                    <a href="{{ path('app_themes') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_themes' %}nav-link-active{% endif %}">Themes</a>
+                    <a href="{{ path('app_adapters') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_adapters' %}nav-link-active{% endif %}">Adapters</a>
+                    <a href="{{ path('app_positions') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_positions' %}nav-link-active{% endif %}">Positions</a>
+                    <a href="{{ path('app_examples') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_examples' %}nav-link-active{% endif %}">Examples</a>
+                    <a href="{{ path('app_playground') }}" class="nav-link {% if app.request.attributes.get('_route') == 'app_playground' %}nav-link-active{% endif %}">Playground</a>
                 </nav>
 
                 {# External Links #}
@@ -155,13 +155,13 @@
         {# Mobile Navigation #}
         <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 bg-white">
             <div class="px-4 py-3 space-y-1">
-                <a href="{{ path('app_home') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_home' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Home</a>
-                <a href="{{ path('app_types') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_types' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Types</a>
-                <a href="{{ path('app_themes') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_themes' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Themes</a>
-                <a href="{{ path('app_adapters') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_adapters' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Adapters</a>
-                <a href="{{ path('app_positions') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_positions' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Positions</a>
-                <a href="{{ path('app_examples') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_examples' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Examples</a>
-                <a href="{{ path('app_playground') }}" class="block px-3 py-2 rounded-lg {% if app.request.get('_route') == 'app_playground' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Playground</a>
+                <a href="{{ path('app_home') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_home' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Home</a>
+                <a href="{{ path('app_types') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_types' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Types</a>
+                <a href="{{ path('app_themes') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_themes' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Themes</a>
+                <a href="{{ path('app_adapters') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_adapters' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Adapters</a>
+                <a href="{{ path('app_positions') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_positions' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Positions</a>
+                <a href="{{ path('app_examples') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_examples' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Examples</a>
+                <a href="{{ path('app_playground') }}" class="block px-3 py-2 rounded-lg {% if app.request.attributes.get('_route') == 'app_playground' %}bg-indigo-50 text-indigo-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">Playground</a>
             </div>
         </div>
     </header>

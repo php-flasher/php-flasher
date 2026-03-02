@@ -6,7 +6,70 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../..",
+            "url": "../../src/Prime",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Noty/Prime",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Noty/Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Notyf/Prime",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Notyf/Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/SweetAlert/Prime",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/SweetAlert/Symfony",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Toastr/Prime",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../src/Toastr/Symfony",
             "options": {
                 "symlink": true
             }
@@ -16,27 +79,35 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "nelmio/security-bundle": "^3.4.2",
-        "php-flasher/php-flasher": "@dev",
-        "phpstan/phpstan-symfony": "^2.0.2",
-        "symfony/console": "7.2.*",
-        "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2.4.7",
-        "symfony/framework-bundle": "7.2.*",
-        "symfony/monolog-bundle": "^3.10",
-        "symfony/notifier": "7.2.*",
-        "symfony/runtime": "7.2.*",
-        "symfony/translation": "7.2.*",
-        "symfony/twig-bundle": "7.2.*",
-        "symfony/yaml": "7.2.*",
-        "twig/extra-bundle": "^2.12|^3.20",
-        "twig/twig": "^2.12|^3.20"
+        "nelmio/security-bundle": "^3.4",
+        "php-flasher/flasher": "@dev",
+        "php-flasher/flasher-symfony": "@dev",
+        "php-flasher/flasher-noty": "@dev",
+        "php-flasher/flasher-noty-symfony": "@dev",
+        "php-flasher/flasher-notyf": "@dev",
+        "php-flasher/flasher-notyf-symfony": "@dev",
+        "php-flasher/flasher-sweetalert": "@dev",
+        "php-flasher/flasher-sweetalert-symfony": "@dev",
+        "php-flasher/flasher-toastr": "@dev",
+        "php-flasher/flasher-toastr-symfony": "@dev",
+        "phpstan/phpstan-symfony": "^2.0",
+        "symfony/console": "8.0.*",
+        "symfony/dotenv": "8.0.*",
+        "symfony/flex": "^2.4",
+        "symfony/framework-bundle": "8.0.*",
+        "symfony/monolog-bundle": "^4.0",
+        "symfony/runtime": "8.0.*",
+        "symfony/translation": "8.0.*",
+        "symfony/twig-bundle": "8.0.*",
+        "symfony/yaml": "8.0.*",
+        "twig/extra-bundle": "^3.20",
+        "twig/twig": "^3.20"
     },
     "require-dev": {
-        "spatie/ray": "^1.41.5",
-        "symfony/maker-bundle": "^1.62.1",
-        "symfony/stopwatch": "7.2.*",
-        "symfony/web-profiler-bundle": "7.2.*"
+        "spatie/ray": "^1.41",
+        "symfony/maker-bundle": "^1.62",
+        "symfony/stopwatch": "8.0.*",
+        "symfony/web-profiler-bundle": "8.0.*"
     },
     "config": {
         "allow-plugins": {
@@ -85,7 +156,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.2.*",
+            "require": "8.0.*",
             "docker": false
         }
     }
