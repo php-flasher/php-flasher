@@ -6,12 +6,37 @@ namespace Flasher\Prime\Notification;
 
 use Flasher\Prime\Stamp\StampInterface;
 
+/**
+ * Builder interface for creating flash notifications.
+ *
+ * Provides a fluent API for constructing notifications with various
+ * properties like title, message, type, and options.
+ *
+ * @phpstan-import-type NotificationType from Type
+ */
 interface NotificationBuilderInterface
 {
+    /**
+     * Set the notification title.
+     *
+     * @param string $title The title to display
+     */
     public function title(string $title): static;
 
+    /**
+     * Set the notification message.
+     *
+     * @param string $message The message content
+     */
     public function message(string $message): static;
 
+    /**
+     * Set the notification type.
+     *
+     * @param string $type The notification type (success, error, info, warning)
+     *
+     * @phpstan-param NotificationType|string $type
+     */
     public function type(string $type): static;
 
     /**

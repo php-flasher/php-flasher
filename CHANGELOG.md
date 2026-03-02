@@ -30,6 +30,11 @@
 * fix [Flasher] Simplify FlasherPlugin::normalizeFlashBag() by replacing redundant array union with direct array_merge
 * fix [Flasher] Standardize exception message format in PresetNotFoundException to use brackets like other exceptions
 * fix [Flasher] Standardize exception message wording in CriteriaNotRegisteredException to use "not found" instead of "is not found"
+* feature [DX] Add `@method` annotations to FlasherInterface and NotificationFactoryInterface for better IDE autocompletion
+* feature [DX] Add Type::all() and Type::isValid() helper methods with PHPStan type narrowing
+* feature [DX] Add `@throws` annotations to FlasherContainer methods for better exception documentation
+* feature [DX] Add FlasherContainer::setContainer() method as convenient alias for testing
+* feature [DX] Add PHPStan type alias `NotificationType` for valid notification types
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 
