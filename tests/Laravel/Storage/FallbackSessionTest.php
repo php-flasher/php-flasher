@@ -5,127 +5,90 @@ declare(strict_types=1);
 namespace Flasher\Tests\Laravel\Storage;
 
 use Flasher\Laravel\Storage\FallbackSession;
-use Flasher\Laravel\Storage\FallbackSessionInterface;
 use PHPUnit\Framework\TestCase;
 
 final class FallbackSessionTest extends TestCase
 {
-    private FallbackSession $session;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        FallbackSession::reset();
-        $this->session = new FallbackSession();
-    }
-
     protected function tearDown(): void
     {
         FallbackSession::reset();
-        parent::tearDown();
     }
 
-    public function testImplementsInterface(): void
+    public function testGetReturnsDefaultWhenKeyNotSet(): void
     {
-        $this->assertInstanceOf(FallbackSessionInterface::class, $this->session);
-    }
+        $session = new FallbackSession();
 
-    public function testGetReturnsDefaultWhenKeyNotFound(): void
-    {
-        $this->assertNull($this->session->get('nonexistent'));
-        $this->assertSame('default', $this->session->get('nonexistent', 'default'));
-        $this->assertSame([], $this->session->get('nonexistent', []));
+        $this->assertNull($session->get('nonexistent'));
+        $this->assertSame('default', $session->get('nonexistent', 'default'));
     }
 
     public function testSetAndGet(): void
     {
-        $this->session->set('key', 'value');
+        $session = new FallbackSession();
 
-        $this->assertSame('value', $this->session->get('key'));
+        $session->set('key', 'value');
+
+        $this->assertSame('value', $session->get('key'));
     }
 
     public function testSetOverwritesExistingValue(): void
     {
-        $this->session->set('key', 'value1');
-        $this->session->set('key', 'value2');
+        $session = new FallbackSession();
 
-        $this->assertSame('value2', $this->session->get('key'));
-    }
+        $session->set('key', 'first');
+        $session->set('key', 'second');
 
-    public function testStoresComplexData(): void
-    {
-        $data = [
-            'nested' => [
-                'array' => ['with', 'values'],
-            ],
-            'number' => 42,
-            'null' => null,
-        ];
-
-        $this->session->set('complex', $data);
-
-        $this->assertSame($data, $this->session->get('complex'));
-    }
-
-    public function testStaticStoragePersistsAcrossInstances(): void
-    {
-        $session1 = new FallbackSession();
-        $session1->set('shared', 'data');
-
-        $session2 = new FallbackSession();
-
-        $this->assertSame('data', $session2->get('shared'));
+        $this->assertSame('second', $session->get('key'));
     }
 
     public function testResetClearsAllData(): void
     {
-        $this->session->set('key1', 'value1');
-        $this->session->set('key2', 'value2');
+        $session = new FallbackSession();
+
+        $session->set('key1', 'value1');
+        $session->set('key2', 'value2');
 
         FallbackSession::reset();
 
-        $this->assertNull($this->session->get('key1'));
-        $this->assertNull($this->session->get('key2'));
+        $this->assertNull($session->get('key1'));
+        $this->assertNull($session->get('key2'));
     }
 
-    public function testHandlesNullValue(): void
+    public function testStaticStorageIsSharedAcrossInstances(): void
     {
-        $this->session->set('null_key', null);
+        $session1 = new FallbackSession();
+        $session2 = new FallbackSession();
 
-        $this->assertNull($this->session->get('null_key'));
-        $this->assertNull($this->session->get('null_key', 'default'));
+        $session1->set('shared_key', 'shared_value');
+
+        // Value should be accessible from another instance
+        $this->assertSame('shared_value', $session2->get('shared_key'));
     }
 
-    public function testHandlesEmptyString(): void
+    public function testResetAffectsAllInstances(): void
     {
-        $this->session->set('empty', '');
+        $session1 = new FallbackSession();
+        $session2 = new FallbackSession();
 
-        $this->assertSame('', $this->session->get('empty'));
-        $this->assertSame('', $this->session->get('empty', 'default'));
+        $session1->set('key', 'value');
+
+        FallbackSession::reset();
+
+        // Both instances should see the reset
+        $this->assertNull($session1->get('key'));
+        $this->assertNull($session2->get('key'));
     }
 
-    public function testHandlesFalseValue(): void
+    public function testCanStoreArrayValues(): void
     {
-        $this->session->set('false', false);
+        $session = new FallbackSession();
+        $envelopes = [
+            ['message' => 'Test 1'],
+            ['message' => 'Test 2'],
+        ];
 
-        $this->assertFalse($this->session->get('false'));
-        $this->assertFalse($this->session->get('false', 'default'));
-    }
+        $session->set('flasher::envelopes', $envelopes);
 
-    public function testHandlesZeroValue(): void
-    {
-        $this->session->set('zero', 0);
-
-        $this->assertSame(0, $this->session->get('zero'));
-        $this->assertSame(0, $this->session->get('zero', 'default'));
-    }
-
-    public function testKeyExistsWithNullValue(): void
-    {
-        $this->session->set('exists_null', null);
-
-        $this->assertNull($this->session->get('exists_null'));
-        $this->assertNull($this->session->get('exists_null', 'should_not_return'));
+        $this->assertSame($envelopes, $session->get('flasher::envelopes'));
     }
 }

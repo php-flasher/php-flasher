@@ -2,6 +2,13 @@
 
 ## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.1.4...2.x)
 
+* feature [Laravel] Improve Laravel Octane support by resetting FallbackSession static storage between requests to prevent notification leakage
+* feature [Symfony] Add FrankenPHP/Swoole/RoadRunner support with WorkerListener that implements ResetInterface and is tagged with kernel.reset
+* feature [Symfony] Add reset() method to FallbackSession for long-running process support
+* feature [Flasher] Add Hotwire/Turbo Drive support with turbo:before-cache event listener to clean up notifications before page caching
+* fix [Flasher] Fix potential runtime error in Envelope::toArray() when no PresentableStampInterface stamps exist
+* fix [Flasher] Use more specific \Random\RandomException in IdStamp instead of broad \Exception
+* fix [Flasher] Update Livewire navigation cleanup to use correct .fl-wrapper selector instead of unused .fl-no-cache class
 * feature [Flasher] Add event dispatching system for all notification adapters and themes with Livewire integration:
   - [Toastr] Dispatch events: `flasher:toastr:click`, `flasher:toastr:close`, `flasher:toastr:show`, `flasher:toastr:hidden`
   - [Noty] Dispatch events: `flasher:noty:click`, `flasher:noty:close`, `flasher:noty:show`, `flasher:noty:hover`

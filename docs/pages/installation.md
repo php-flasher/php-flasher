@@ -626,3 +626,50 @@ flash()->preset('welcome', [':name' => $user->name]);
 |---------------|------------------------------------------------------------|
 | `$preset`     | The name of the preset as defined in your configuration    |
 | `$parameters` | Key-value pairs for placeholder substitution in the message |
+
+---
+
+<p id="long-running-processes"><a href="#long-running-processes" class="anchor"><i class="fa-duotone fa-link"></i> Long-Running Processes</a></p>
+
+PHPFlasher fully supports long-running PHP processes like **Laravel Octane**, **FrankenPHP**, **Swoole**, and **RoadRunner**. The library automatically resets its internal state between requests to prevent notification leakage.
+
+### Laravel Octane
+
+PHPFlasher automatically integrates with Laravel Octane. No additional configuration is required. The library listens for the `RequestReceived` event and resets all internal state including:
+
+- Notification logger (tracked notifications)
+- Fallback session storage (used when session is not started)
+
+```php
+// This works seamlessly with Octane - no special handling needed
+flash()->success('Welcome back!');
+```
+
+### Symfony with FrankenPHP / Swoole / RoadRunner
+
+PHPFlasher uses Symfony's `kernel.reset` mechanism to automatically reset state between requests. The following services are registered with the `kernel.reset` tag:
+
+- `flasher.notification_logger_listener` - Resets the notification tracking
+- `flasher.worker_listener` - Resets fallback session storage
+
+No additional configuration is required. Just install PHPFlasher as usual and it will work correctly in worker mode.
+
+```php
+// This works seamlessly in worker mode - no special handling needed
+flash()->success('Operation completed!');
+```
+
+### Hotwire / Turbo Drive
+
+PHPFlasher includes built-in support for Hotwire Turbo Drive. The library:
+
+1. Marks notification containers with `data-turbo-temporary` to prevent caching
+2. Listens for `turbo:before-cache` events to clean up notifications before page caching
+3. Properly renders notifications after Turbo Drive navigation
+
+```php
+// Notifications work seamlessly with Turbo Drive navigation
+flash()->success('Profile updated successfully!');
+```
+
+> No additional JavaScript configuration is required. PHPFlasher handles Turbo Drive integration automatically.

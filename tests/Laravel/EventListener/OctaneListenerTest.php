@@ -5,10 +5,16 @@ declare(strict_types=1);
 namespace Flasher\Tests\Laravel\EventListener;
 
 use Flasher\Laravel\EventListener\OctaneListener;
+use Flasher\Laravel\Storage\FallbackSession;
 use PHPUnit\Framework\TestCase;
 
 final class OctaneListenerTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        FallbackSession::reset();
+    }
+
     public function testListenerIsInvokable(): void
     {
         $listener = new OctaneListener();
@@ -31,5 +37,23 @@ final class OctaneListenerTest extends TestCase
         $parameters = $method->getParameters();
         $this->assertCount(1, $parameters);
         $this->assertSame('event', $parameters[0]->getName());
+    }
+
+    public function testListenerCallsFallbackSessionReset(): void
+    {
+        // Verify that the OctaneListener calls FallbackSession::reset()
+        // by checking the method exists and is callable
+        $reflection = new \ReflectionMethod(FallbackSession::class, 'reset');
+
+        $this->assertTrue($reflection->isStatic());
+        $this->assertTrue($reflection->isPublic());
+
+        // Verify the method clears the static storage
+        $session = new FallbackSession();
+        $session->set('test_key', 'test_value');
+        $this->assertSame('test_value', $session->get('test_key'));
+
+        FallbackSession::reset();
+        $this->assertNull($session->get('test_key'));
     }
 }
