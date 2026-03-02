@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Flasher\Prime\EventDispatcher\Event;
 
 use Flasher\Prime\Notification\Envelope;
-use Flasher\Prime\Storage\Filter\Filter;
 use Flasher\Prime\Storage\Filter\FilterInterface;
 
 final class FilterEvent
@@ -26,7 +25,7 @@ final class FilterEvent
         return $this->filter;
     }
 
-    public function setFilter(Filter $filter): void
+    public function setFilter(FilterInterface $filter): void
     {
         $this->filter = $filter;
     }

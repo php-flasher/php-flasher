@@ -61,7 +61,7 @@ final class FlasherContainer
     {
         $container = self::getInstance()->container;
 
-        $resolved = $container instanceof \Closure || \is_callable($container) ? $container() : $container;
+        $resolved = $container instanceof \Closure ? $container() : $container;
 
         if (!$resolved instanceof ContainerInterface) {
             throw new \InvalidArgumentException(\sprintf('Expected an instance of "%s", got "%s".', ContainerInterface::class, get_debug_type($resolved)));

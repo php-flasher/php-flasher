@@ -8,6 +8,7 @@ use Flasher\Prime\EventDispatcher\Event\FilterEvent;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
 use Flasher\Prime\Storage\Filter\Filter;
+use Flasher\Prime\Storage\Filter\FilterInterface;
 use PHPUnit\Framework\TestCase;
 
 final class FilterEventTest extends TestCase
@@ -140,5 +141,32 @@ final class FilterEventTest extends TestCase
         $this->assertSame('First', $retrievedEnvelopes[0]->getMessage());
         $this->assertSame('Second', $retrievedEnvelopes[1]->getMessage());
         $this->assertSame('Third', $retrievedEnvelopes[2]->getMessage());
+    }
+
+    public function testSetFilterAcceptsFilterInterface(): void
+    {
+        $originalFilter = new Filter();
+        $event = new FilterEvent($originalFilter, [], []);
+
+        // Create a mock that implements FilterInterface
+        $mockFilter = $this->createMock(FilterInterface::class);
+
+        // setFilter should accept any FilterInterface implementation
+        $event->setFilter($mockFilter);
+
+        $this->assertSame($mockFilter, $event->getFilter());
+    }
+
+    public function testConstructorAcceptsFilterInterface(): void
+    {
+        $mockFilter = $this->createMock(FilterInterface::class);
+        $envelopes = [new Envelope(new Notification())];
+        $criteria = ['limit' => 5];
+
+        $event = new FilterEvent($mockFilter, $envelopes, $criteria);
+
+        $this->assertSame($mockFilter, $event->getFilter());
+        $this->assertSame($envelopes, $event->getEnvelopes());
+        $this->assertSame($criteria, $event->getCriteria());
     }
 }

@@ -71,4 +71,49 @@ final class FlasherContainerTest extends TestCase
 
         FlasherContainer::create('flasher');
     }
+
+    public function testFromWithClosureResolvesContainer(): void
+    {
+        $flasher = $this->createMock(FlasherInterface::class);
+
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('has')->willReturn(true);
+        $container->method('get')->willReturn($flasher);
+
+        // Pass a closure that returns the container
+        FlasherContainer::from(fn () => $container);
+
+        $this->assertInstanceOf(FlasherInterface::class, FlasherContainer::create('flasher'));
+    }
+
+    public function testFromWithClosureReturningInvalidTypeThrowsException(): void
+    {
+        // Pass a closure that returns something other than ContainerInterface
+        FlasherContainer::from(fn () => 'not a container');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected an instance of "Psr\Container\ContainerInterface"');
+
+        FlasherContainer::getContainer();
+    }
+
+    public function testHasReturnsTrueForExistingService(): void
+    {
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('has')->with('flasher')->willReturn(true);
+
+        FlasherContainer::from($container);
+
+        $this->assertTrue(FlasherContainer::has('flasher'));
+    }
+
+    public function testHasReturnsFalseForNonExistingService(): void
+    {
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('has')->with('nonexistent')->willReturn(false);
+
+        FlasherContainer::from($container);
+
+        $this->assertFalse(FlasherContainer::has('nonexistent'));
+    }
 }

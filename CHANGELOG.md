@@ -21,6 +21,8 @@
 * fix [Flasher] Add error handling for invalid regex patterns in ResponseExtension::isPathExcluded()
 * fix [Flasher] Fix ContentSecurityPolicyHandler parsing of CSP headers with trailing semicolons creating empty directive keys
 * fix [Flasher] Add reset() method to ContentSecurityPolicyHandler to fix CSP state leak in long-running processes (Octane, FrankenPHP)
+* fix [Flasher] Fix FilterEvent::setFilter() type inconsistency - now accepts FilterInterface instead of concrete Filter class
+* fix [Flasher] Remove redundant callable check in FlasherContainer::getContainer()
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 
