@@ -290,15 +290,18 @@ flasher:
 For complete documentation, visit **[php-flasher.io](https://php-flasher.io)**
 
 - [Installation Guide](https://php-flasher.io/installation)
-- [Themes Gallery](https://php-flasher.io/themes)
+- [Laravel Integration](https://php-flasher.io/laravel)
+- [Symfony Integration](https://php-flasher.io/symfony)
 - [Livewire Integration](https://php-flasher.io/livewire)
+- [Inertia.js Integration](https://php-flasher.io/inertia)
+- [Themes Gallery](https://php-flasher.io/themes)
 - [JavaScript Usage](https://php-flasher.io/javascript)
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/php-flasher/php-flasher/pulls).
 
 ## Contributors
 

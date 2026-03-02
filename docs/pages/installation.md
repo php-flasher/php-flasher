@@ -173,10 +173,10 @@ flash()->flash('{{ type }}', '{{ message }}');
 
 | param      | description                                                                                                                                                                                                                                                                                                         |
 |------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `$type`    | Notification type : <span class="text-white bg-green-600 px-2 py-1 rounded">success</span>, <span class="text-white bg-red-600 px-2 py-1 rounded">error</span>, <span class="text-white bg-yellow-600 px-2 py-1 rounded">warning</span>, <span class="text-white bg-blue-600 px-2 py-1 rounded">info</span> ....etc |
+| `$type`    | Notification type : <span class="text-white bg-green-600 px-2 py-1 rounded">success</span>, <span class="text-white bg-red-600 px-2 py-1 rounded">error</span>, <span class="text-white bg-yellow-600 px-2 py-1 rounded">warning</span>, <span class="text-white bg-blue-600 px-2 py-1 rounded">info</span> etc. |
 | `$message` | The body of the message you want to deliver to your user. This may contain HTML. If you add links, be sure to add the appropriate classes for the framework you are using.                                                                                                                                          |
 | `$title`   | The notification title, Can also include HTML                                                                                                                                                                                                                                                                       |
-| `$options` | Custom options for javascript libraries (toastr, noty, notyf ...etc)                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                       |
+| `$options` | Custom options for javascript libraries (toastr, noty, notyf etc.)                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                       |
 
 
 --- 
@@ -214,7 +214,7 @@ flash()
 
 | param      | description                                                                          |
 |------------|--------------------------------------------------------------------------------------|
-| `$options` | Custom options to be passed to the javascript libraries (toastr, noty, notyf ...etc) |
+| `$options` | Custom options to be passed to the javascript libraries (toastr, noty, notyf etc.) |
 | `$merge`   | Merge options if you call the options method multiple times                          |
 
 ---

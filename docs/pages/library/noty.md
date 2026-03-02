@@ -317,7 +317,7 @@ noty()
 ```php
 #/ noty theme relax
 
-// don't the load the theme css file: https://github.com/needim/noty/blob/master/lib/themes/relax.css
+// don't forget to load the theme css file: https://github.com/needim/noty/blob/master/lib/themes/relax.css
 
 noty()
     ->theme('relax')
@@ -609,8 +609,8 @@ noty()
 
 <p id="method-sounds"><a href="#method-sounds" class="anchor"><i class="fa-duotone fa-link"></i> sounds</a></p>
 
-`sources` : Array of audio sources e.g 'some.wav' <br />
-`volume` : nteger value between 0-1 e.g 0.5 <br />
+`sources` : Array of audio sources e.g. 'some.wav' <br />
+`volume` : Integer value between 0-1 e.g. 0.5 <br />
 `conditions` : There are two conditions for now: 'docVisible' & 'docHidden'. You can use one of them or both. <br />
 
 ```php
