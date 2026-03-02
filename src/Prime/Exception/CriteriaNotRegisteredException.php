@@ -11,7 +11,7 @@ final class CriteriaNotRegisteredException extends \Exception
      */
     public static function create(string $alias, array $availableCriteria = []): self
     {
-        $message = \sprintf('Criteria "%s" is not found, did you forget to register it?', $alias);
+        $message = \sprintf('Criteria "%s" not found, did you forget to register it?', $alias);
 
         if ([] !== $availableCriteria) {
             $message .= \sprintf(' Available criteria: [%s]', implode(', ', $availableCriteria));

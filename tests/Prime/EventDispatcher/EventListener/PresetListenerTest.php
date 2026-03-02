@@ -54,7 +54,7 @@ final class PresetListenerTest extends TestCase
             PresetNotFoundException::class
         );
         $this->expectExceptionMessage(
-            'Preset "entity_deleted" not found, did you forget to register it? Available presets: "entity_saved"'
+            'Preset "entity_deleted" not found, did you forget to register it? Available presets: [entity_saved]'
         );
 
         $eventDispatcher = new EventDispatcher();

@@ -28,6 +28,8 @@
 * fix [Flasher] Add type validation for callable presenter return values in ResponseManager with descriptive error messages
 * fix [Flasher] Fix FlasherPlugin::normalizePlugins() losing scripts/styles when both top-level and plugin-level configs are provided - replaced array union operator with array_merge
 * fix [Flasher] Simplify FlasherPlugin::normalizeFlashBag() by replacing redundant array union with direct array_merge
+* fix [Flasher] Standardize exception message format in PresetNotFoundException to use brackets like other exceptions
+* fix [Flasher] Standardize exception message wording in CriteriaNotRegisteredException to use "not found" instead of "is not found"
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 
