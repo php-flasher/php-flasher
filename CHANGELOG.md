@@ -1,20 +1,34 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.1.4...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.2.0...2.x)
+
+## [v2.5.0](https://github.com/php-flasher/php-flasher/compare/v2.1.4...v2.2.0) - 2026-03-07
+
+### Added
 
 * feature [Laravel] Improve Laravel Octane support by resetting FallbackSession static storage between requests to prevent notification leakage
 * feature [Symfony] Add FrankenPHP/Swoole/RoadRunner support with WorkerListener that implements ResetInterface and is tagged with kernel.reset
 * feature [Symfony] Add reset() method to FallbackSession for long-running process support
 * feature [Flasher] Add Hotwire/Turbo Drive support with turbo:before-cache event listener to clean up notifications before page caching
-* fix [Flasher] Fix potential runtime error in Envelope::toArray() when no PresentableStampInterface stamps exist
-* fix [Flasher] Use more specific \Random\RandomException in IdStamp instead of broad \Exception
-* fix [Flasher] Update Livewire navigation cleanup to use correct .fl-wrapper selector instead of unused .fl-no-cache class
 * feature [Flasher] Add event dispatching system for all notification adapters and themes with Livewire integration:
   - [Toastr] Dispatch events: `flasher:toastr:click`, `flasher:toastr:close`, `flasher:toastr:show`, `flasher:toastr:hidden`
   - [Noty] Dispatch events: `flasher:noty:click`, `flasher:noty:close`, `flasher:noty:show`, `flasher:noty:hover`
   - [Notyf] Dispatch events: `flasher:notyf:click`, `flasher:notyf:dismiss`
   - [Themes] Dispatch events: `flasher:theme:click` (generic) and `flasher:theme:{name}:click` (specific)
   - [Laravel] Add LivewireListener classes for all adapters and themes to enable Livewire event handling
+* feature [Flasher] Add 16 notification themes: Amazon, Amber, Jade, Crystal, and more
+* feature [DX] Add `@method` annotations to FlasherInterface and NotificationFactoryInterface for better IDE autocompletion
+* feature [DX] Add Type::all() and Type::isValid() helper methods with PHPStan type narrowing
+* feature [DX] Add `@throws` annotations to FlasherContainer methods for better exception documentation
+* feature [DX] Add FlasherContainer::setContainer() method as convenient alias for testing
+* feature [DX] Add PHPStan type alias `NotificationType` for valid notification types
+
+### Fixed
+
+* fix [SweetAlert] Fix SweetAlertBuilder::question() bug where options parameter was being ignored
+* fix [Flasher] Fix potential runtime error in Envelope::toArray() when no PresentableStampInterface stamps exist
+* fix [Flasher] Use more specific \Random\RandomException in IdStamp instead of broad \Exception
+* fix [Flasher] Update Livewire navigation cleanup to use correct .fl-wrapper selector instead of unused .fl-no-cache class
 * fix [Flasher] Fix FilterCriteria uninitialized property error when constructed with empty array
 * fix [Flasher] Fix null comparison issues in PriorityCriteria, HopsCriteria, and DelayCriteria that relied on PHP's implicit null-to-0 coercion
 * fix [Flasher] Add type validation for callable factory return values in NotificationFactoryLocator with descriptive error messages
@@ -28,13 +42,15 @@
 * fix [Flasher] Add type validation for callable presenter return values in ResponseManager with descriptive error messages
 * fix [Flasher] Fix FlasherPlugin::normalizePlugins() losing scripts/styles when both top-level and plugin-level configs are provided - replaced array union operator with array_merge
 * fix [Flasher] Simplify FlasherPlugin::normalizeFlashBag() by replacing redundant array union with direct array_merge
-* fix [Flasher] Standardize exception message format in PresetNotFoundException to use brackets like other exceptions
-* fix [Flasher] Standardize exception message wording in CriteriaNotRegisteredException to use "not found" instead of "is not found"
-* feature [DX] Add `@method` annotations to FlasherInterface and NotificationFactoryInterface for better IDE autocompletion
-* feature [DX] Add Type::all() and Type::isValid() helper methods with PHPStan type narrowing
-* feature [DX] Add `@throws` annotations to FlasherContainer methods for better exception documentation
-* feature [DX] Add FlasherContainer::setContainer() method as convenient alias for testing
-* feature [DX] Add PHPStan type alias `NotificationType` for valid notification types
+* fix [Flasher] Fix array_merge() syntax in InstallCommand by removing unnecessary empty array
+* fix [Flasher] Add return type validation in FilterCriteria::apply() with proper exception handling
+
+### Changed
+
+* refactor [Flasher] Reduce theme configuration duplication by generating themes programmatically
+* refactor [Flasher] Standardize exception message format in PresetNotFoundException to use brackets like other exceptions
+* refactor [Flasher] Standardize exception message wording in CriteriaNotRegisteredException to use "not found" instead of "is not found"
+* refactor [SweetAlert] Replace @phpstan-ignore-line suppressions with proper @var annotations
 
 ## [v2.1.3](https://github.com/php-flasher/php-flasher/compare/v2.1.2...v2.1.3) - 2025-01-25
 

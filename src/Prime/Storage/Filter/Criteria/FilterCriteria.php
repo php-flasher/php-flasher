@@ -45,10 +45,7 @@ final class FilterCriteria implements CriteriaInterface
             $result = $callback($envelopes);
 
             if (!\is_array($result)) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Filter callback must return an array, got "%s".',
-                    get_debug_type($result)
-                ));
+                throw new \InvalidArgumentException(\sprintf('Filter callback must return an array, got "%s".', get_debug_type($result)));
             }
 
             /** @var Envelope[] $result */

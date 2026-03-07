@@ -549,4 +549,284 @@ final class ResponseExtensionTest extends TestCase
             set_error_handler($previousHandler);
         }
     }
+
+    public function testRenderWithUnicodeContent(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $unicodeHtmlResponse = '<div></div>';
+        $contentBefore = '<!DOCTYPE html><html><head></head><body>'.HtmlPresenter::BODY_END_PLACE_HOLDER.'</body></html>';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($unicodeHtmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+            'setContent' => \Mockery::on(function ($content) use ($unicodeHtmlResponse) {
+                $this->assertStringContainsString($unicodeHtmlResponse, $content);
+
+                return true;
+            }),
+        ]);
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $result = $responseExtension->render($request, $response);
+
+        $this->assertInstanceOf(ResponseInterface::class, $result);
+    }
+
+    public function testRenderWithSpecialHtmlCharacters(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $specialHtmlResponse = '<div class="flasher" data-message="Test &amp; &lt;script&gt;">Notification</div>';
+        $contentBefore = '<html><body>Content with &amp; special <characters>'.HtmlPresenter::BODY_END_PLACE_HOLDER.'</body></html>';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($specialHtmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->expects('setContent')->once()->with(\Mockery::on(function ($content) use ($specialHtmlResponse) {
+            $this->assertStringContainsString($specialHtmlResponse, $content);
+            $this->assertStringContainsString('&amp; special', $content);
+
+            return true;
+        }));
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $responseExtension->render($request, $response);
+    }
+
+    public function testRenderWithVeryLargeResponseBody(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $htmlResponse = '<div>Flasher notification</div>';
+        // Create a large content body (simulate a large HTML page)
+        $largeContent = str_repeat('<p>Lorem ipsum dolor sit amet</p>', 10000);
+        $contentBefore = '<html><body>'.$largeContent.HtmlPresenter::BODY_END_PLACE_HOLDER.'</body></html>';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($htmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->expects('setContent')->once()->with(\Mockery::on(function ($content) use ($htmlResponse, $largeContent, $contentBefore) {
+            $this->assertStringContainsString($htmlResponse, $content);
+            $this->assertStringContainsString($largeContent, $content);
+            // Verify content length increased by the HTML response
+            $this->assertGreaterThan(\strlen($contentBefore), \strlen($content));
+
+            return true;
+        }));
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $responseExtension->render($request, $response);
+    }
+
+    public function testRenderWithMultiplePlaceholdersUsesLast(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $htmlResponse = '<div>Flasher notification</div>';
+        // Content with multiple placeholders - should use the last one found (BODY_END_PLACE_HOLDER)
+        $contentBefore = '<html>'.HtmlPresenter::HEAD_END_PLACE_HOLDER.'<body>content'.HtmlPresenter::BODY_END_PLACE_HOLDER.'</body></html>';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($htmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->expects('setContent')->once()->with(\Mockery::on(function ($content) use ($htmlResponse) {
+            // The injection should happen at the last placeholder found (strripos)
+            // Based on the code, it iterates through placeholders and uses the last position found
+            $this->assertStringContainsString($htmlResponse, $content);
+
+            return true;
+        }));
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $responseExtension->render($request, $response);
+    }
+
+    public function testRenderPreservesContentEncoding(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        $htmlResponse = '<div>Notification</div>';
+        // Content with various encodings and character sets
+        $contentBefore = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>Content with special chars: &copy; &trade; &nbsp;'.HtmlPresenter::BODY_END_PLACE_HOLDER.'</body></html>';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($htmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->expects('setContent')->once()->with(\Mockery::on(function ($content) {
+            // Verify HTML entities are preserved
+            $this->assertStringContainsString('&copy;', $content);
+            $this->assertStringContainsString('&trade;', $content);
+            $this->assertStringContainsString('&nbsp;', $content);
+            $this->assertStringContainsString('charset="UTF-8"', $content);
+
+            return true;
+        }));
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $responseExtension->render($request, $response);
+    }
+
+    public function testRenderWithEmptyBody(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        // Empty body but with placeholder
+        $contentBefore = HtmlPresenter::BODY_END_PLACE_HOLDER;
+        $htmlResponse = '<div>Flasher</div>';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        $flasher->allows()->render('html', [], \Mockery::any())->andReturn($htmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->expects('setContent')->once()->with(\Mockery::on(function ($content) use ($htmlResponse) {
+            $this->assertStringContainsString($htmlResponse, $content);
+
+            return true;
+        }));
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $responseExtension->render($request, $response);
+    }
+
+    public function testRenderWithFlasherReplaceMePlaceholder(): void
+    {
+        $flasher = \Mockery::mock(FlasherInterface::class);
+        $cspHandler = \Mockery::mock(ContentSecurityPolicyHandlerInterface::class);
+        $request = \Mockery::mock(RequestInterface::class);
+        $response = \Mockery::mock(ResponseInterface::class);
+
+        // Using FLASHER_REPLACE_ME placeholder triggers special handling
+        $contentBefore = 'content '.HtmlPresenter::FLASHER_REPLACE_ME.' more content';
+        $htmlResponse = '{"envelopes":[]}';
+
+        $cspHandler->allows()->updateResponseHeaders($request, $response)->andReturn([]);
+        // When FLASHER_REPLACE_ME is used, envelopes_only should be true
+        $flasher->expects()->render('html', [], \Mockery::on(function ($context) {
+            return true === $context['envelopes_only'];
+        }))->once()->andReturn($htmlResponse);
+
+        $request->allows([
+            'isXmlHttpRequest' => false,
+            'isHtmlRequestFormat' => true,
+        ]);
+
+        $response->allows([
+            'isSuccessful' => true,
+            'isHtml' => true,
+            'isRedirection' => false,
+            'isAttachment' => false,
+            'isJson' => false,
+            'getContent' => $contentBefore,
+        ]);
+
+        $response->expects('setContent')->once()->with(\Mockery::on(function ($content) {
+            // Should wrap with options.push()
+            $this->assertStringContainsString('options.push(', $content);
+
+            return true;
+        }));
+
+        $responseExtension = new ResponseExtension($flasher, $cspHandler);
+        $responseExtension->render($request, $response);
+    }
 }

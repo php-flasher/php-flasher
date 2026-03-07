@@ -88,4 +88,118 @@ final class RequestExtensionTest extends TestCase
 
         $this->assertSame($expectedFlatMapping, $flatMappingProperty->getValue($extension), 'Mapping should be flattened correctly.');
     }
+
+    public function testProcessMultipleMessagesInSingleBag(): void
+    {
+        $messages = ['First message', 'Second message', 'Third message'];
+
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? $messages : []);
+
+        // Should flash all three messages
+        $this->flasher->expects()->flash('success', 'First message')->once();
+        $this->flasher->expects()->flash('success', 'Second message')->once();
+        $this->flasher->expects()->flash('success', 'Third message')->once();
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
+
+    public function testProcessMessagesWithSpecialCharacters(): void
+    {
+        $specialMessage = '<script>alert("XSS")</script> & "quotes" \'single\' < > &amp;';
+
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? [$specialMessage] : []);
+
+        $this->flasher->expects()->flash('success', $specialMessage)->once();
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
+
+    public function testProcessMessagesWithUnicodeContent(): void
+    {
+        $unicodeMessages = [
+            'Hello',
+            'Bonjour',
+            'Hola',
+        ];
+
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? $unicodeMessages : []);
+
+        foreach ($unicodeMessages as $message) {
+            $this->flasher->expects()->flash('success', $message)->once();
+        }
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
+
+    public function testProcessEmptyMessageValue(): void
+    {
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? [''] : []);
+
+        // Empty string message should still be flashed
+        $this->flasher->expects()->flash('success', '')->once();
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
+
+    public function testProcessNullMessageValue(): void
+    {
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? [null] : []);
+
+        // Null values in the messages array should be passed through
+        $this->flasher->expects()->flash('success', null)->once();
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
+
+    public function testProcessMixedMessageTypes(): void
+    {
+        // Messages can include strings, nulls, and empty strings
+        $mixedMessages = ['Valid message', '', 'Another valid message'];
+
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? $mixedMessages : []);
+
+        $this->flasher->expects()->flash('success', 'Valid message')->once();
+        $this->flasher->expects()->flash('success', '')->once();
+        $this->flasher->expects()->flash('success', 'Another valid message')->once();
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
+
+    public function testProcessStringMessageAsArray(): void
+    {
+        // getType can return a string which gets cast to array
+        $this->request->expects()->hasSession()->andReturns(true);
+        $this->request->allows('hasType')->andReturnUsing(fn ($type) => 'happy' === $type);
+        $this->request->allows('getType')->andReturnUsing(fn ($type) => 'happy' === $type ? 'Single string message' : []);
+
+        $this->flasher->expects()->flash('success', 'Single string message')->once();
+        $this->request->expects()->forgetType('happy')->once();
+
+        $extension = new RequestExtension($this->flasher, $this->mapping);
+        $extension->flash($this->request, $this->response);
+    }
 }
