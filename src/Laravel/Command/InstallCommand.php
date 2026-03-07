@@ -119,7 +119,7 @@ final class InstallCommand extends Command
             $output->writeln('<bg=red;options=bold> ERROR </> An error occurred during the installation of <fg=blue;options=bold>PHPFlasher</> resources.');
         }
 
-        $this->assetManager->createManifest(array_merge([], ...$files));
+        $this->assetManager->createManifest(array_merge(...$files));
 
         $output->writeln('');
 

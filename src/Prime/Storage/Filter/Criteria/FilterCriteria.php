@@ -36,11 +36,23 @@ final class FilterCriteria implements CriteriaInterface
      * @param Envelope[] $envelopes
      *
      * @return Envelope[]
+     *
+     * @throws \InvalidArgumentException
      */
     public function apply(array $envelopes): array
     {
         foreach ($this->callbacks as $callback) {
-            $envelopes = $callback($envelopes);
+            $result = $callback($envelopes);
+
+            if (!\is_array($result)) {
+                throw new \InvalidArgumentException(\sprintf(
+                    'Filter callback must return an array, got "%s".',
+                    get_debug_type($result)
+                ));
+            }
+
+            /** @var Envelope[] $result */
+            $envelopes = $result;
         }
 
         return $envelopes;

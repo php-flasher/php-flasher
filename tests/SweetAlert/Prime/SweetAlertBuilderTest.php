@@ -29,7 +29,7 @@ final class SweetAlertBuilderTest extends TestCase
         $envelope = $this->sweetAlertBuilder->getEnvelope();
         $options = $envelope->getNotification()->getOptions();
 
-        $this->assertSame(['showCancelButton' => true, 'text' => 'Are you sure?'], $options);
+        $this->assertSame(['showCancelButton' => true, 'text' => 'Are you sure?', 'option1' => 'value1'], $options);
     }
 
     public function testTitle(): void

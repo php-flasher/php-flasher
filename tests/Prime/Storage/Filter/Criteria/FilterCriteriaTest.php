@@ -194,4 +194,34 @@ final class FilterCriteriaTest extends TestCase
         $this->assertCount(1, $result);
         $this->assertSame('test', $result[0]->getMessage());
     }
+
+    public function testApplyThrowsExceptionWhenCallbackReturnsNonArray(): void
+    {
+        $criteria = new FilterCriteria(fn ($e) => 'not an array');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Filter callback must return an array, got "string".');
+
+        $criteria->apply([new Envelope(new Notification())]);
+    }
+
+    public function testApplyThrowsExceptionWhenCallbackReturnsNull(): void
+    {
+        $criteria = new FilterCriteria(fn ($e) => null);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Filter callback must return an array, got "null".');
+
+        $criteria->apply([new Envelope(new Notification())]);
+    }
+
+    public function testApplyThrowsExceptionWhenCallbackReturnsObject(): void
+    {
+        $criteria = new FilterCriteria(fn ($e) => new \stdClass());
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Filter callback must return an array, got "stdClass".');
+
+        $criteria->apply([new Envelope(new Notification())]);
+    }
 }

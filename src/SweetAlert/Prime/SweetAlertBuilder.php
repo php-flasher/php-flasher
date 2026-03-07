@@ -152,7 +152,7 @@ final class SweetAlertBuilder extends NotificationBuilder
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
+     * @phpstan-param OptionsType $options
      */
     public function question(?string $message = null, array $options = []): self
     {
@@ -162,7 +162,7 @@ final class SweetAlertBuilder extends NotificationBuilder
             $this->messages($message);
         }
 
-        if ([] === $options) {
+        if ([] !== $options) {
             $this->options($options);
         }
 
@@ -229,8 +229,9 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     public function showClass(string $showClass, string $value): self
     {
+        /** @var array<string, string> $option */
         $option = $this->getEnvelope()->getOption('showClass', []);
-        $option[$showClass] = $value; // @phpstan-ignore-line
+        $option[$showClass] = $value;
 
         $this->option('showClass', $option);
 
@@ -239,8 +240,9 @@ final class SweetAlertBuilder extends NotificationBuilder
 
     public function hideClass(string $hideClass, string $value): self
     {
+        /** @var array<string, string> $option */
         $option = $this->getEnvelope()->getOption('hideClass', []);
-        $option[$hideClass] = $value; // @phpstan-ignore-line
+        $option[$hideClass] = $value;
 
         $this->option('hideClass', $option);
 

@@ -134,7 +134,7 @@ final class InstallCommand extends Command
         }
 
         // Create asset manifest
-        $this->assetManager->createManifest(array_merge([], ...$files));
+        $this->assetManager->createManifest(array_merge(...$files));
 
         $output->writeln('');
 
