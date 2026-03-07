@@ -32,7 +32,7 @@ export function buildPrimePlugin() {
                 compilerOptions: {
                     outDir: `${primePath}/dist`,
                 },
-                include: [`${primePath}/assets/**/**`],
+                include: [`${primePath}/assets/**/*.ts`],
             }),
         ],
         output: [
