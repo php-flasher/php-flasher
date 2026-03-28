@@ -1,8 +1,14 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.2.0...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.5.1...2.x)
 
-## [v2.5.0](https://github.com/php-flasher/php-flasher/compare/v2.1.4...v2.2.0) - 2026-03-07
+## [v2.5.1](https://github.com/php-flasher/php-flasher/compare/v2.5.0...v2.5.1) - 2026-03-28
+
+### Fixed
+
+* fix [Laravel] Fix Laravel 13 JSON session serialization compatibility - StorageManager now handles both array and object formats returned by session
+
+## [v2.5.0](https://github.com/php-flasher/php-flasher/compare/v2.1.4...v2.5.0) - 2026-03-07
 
 ### Added
 
