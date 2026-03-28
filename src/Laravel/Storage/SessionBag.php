@@ -25,10 +25,26 @@ final readonly class SessionBag implements BagInterface
     {
         $session = $this->getSession();
 
-        /** @var Envelope[] $envelopes */
         $envelopes = $session->get(self::ENVELOPES_NAMESPACE, []);
 
-        return $envelopes;
+        if (!\is_array($envelopes)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($envelopes as $envelope) {
+            if ($envelope instanceof Envelope) {
+                $result[] = $envelope;
+            } elseif (\is_string($envelope)) {
+                $unserialized = @unserialize($envelope);
+                if ($unserialized instanceof Envelope) {
+                    $result[] = $unserialized;
+                }
+            }
+            // Arrays and invalid data silently skipped (graceful degradation)
+        }
+
+        return $result;
     }
 
     public function set(array $envelopes): void
@@ -41,7 +57,7 @@ final readonly class SessionBag implements BagInterface
             return;
         }
 
-        $session->put(self::ENVELOPES_NAMESPACE, $envelopes);
+        $session->put(self::ENVELOPES_NAMESPACE, array_map(serialize(...), $envelopes));
     }
 
     private function getSession(): Session|FallbackSessionInterface
