@@ -51,6 +51,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Session Serialization
+    |--------------------------------------------------------------------------
+    |
+    | This option determines how session data is serialized before being stored.
+    | The "json" driver is more secure and performant but cannot serialize
+    | PHP objects. The "php" driver uses PHP's native serialization.
+    |
+    */
+
+    'serialization' => env('SESSION_SERIALIZATION', 'json'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Session File Location
     |--------------------------------------------------------------------------
     |
