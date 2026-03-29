@@ -26,7 +26,7 @@ To pull in the <strong><span class="text-indigo-900">PHP<span class="text-indigo
 </span>
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.2.0/dist/flasher.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.5.1/dist/flasher.min.js"></script>
 ```
 
 ---
@@ -55,7 +55,7 @@ flasher.info("Welcome back");
 
 or if you are using a cdn like this:
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.2.0/dist/flasher.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.5.1/dist/flasher.min.js"></script>
 <script>
     flasher.error("Oops! Something went wrong!");
     flasher.warning("Are you sure you want to proceed ?");
@@ -72,8 +72,8 @@ First grab the CDN for any js library adapter supported by <strong><span class="
 and then call the `create()` method on flasher object :
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.2.0/dist/flasher.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@2.2.0/dist/flasher-toastr.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.5.1/dist/flasher.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@2.5.1/dist/flasher-toastr.min.js"></script>
 <script>
     const factory = flasher.use('toastr');
     factory.error("Oops! Something went wrong!");

@@ -9,7 +9,7 @@ Notyf adapter for PHPFlasher. Lightweight and modern toast notifications.
 ## Requirements
 
 - PHP >= 8.2
-- PHPFlasher ^2.4.0
+- PHPFlasher ^2.5.1
 
 ## Installation
 

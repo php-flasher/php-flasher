@@ -22,7 +22,7 @@
     <a href="https://github.com/php-flasher/php-flasher"><img src="https://img.shields.io/github/stars/php-flasher/php-flasher.svg?style=flat-square&label=stars" alt="Stars"></a>
     <a href="https://github.com/php-flasher/php-flasher/releases"><img src="https://img.shields.io/github/v/release/php-flasher/flasher.svg?style=flat-square" alt="Release"></a>
     <a href="https://packagist.org/packages/php-flasher/flasher"><img src="https://img.shields.io/packagist/php-v/php-flasher/flasher.svg?style=flat-square" alt="PHP Version"></a>
-    <a href="https://github.com/php-flasher/flasher/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
+    <a href="https://github.com/php-flasher/php-flasher/blob/2.x/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
 </p>
 
 <p align="center">

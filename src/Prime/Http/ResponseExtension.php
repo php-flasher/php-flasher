@@ -64,7 +64,6 @@ final readonly class ResponseExtension implements ResponseExtensionInterface
             $htmlResponse = \sprintf('options.push(%s);', $htmlResponse);
         }
 
-        // $htmlResponse = "\n".str_replace("\n", '', (string) $htmlResponse)."\n";
         $htmlResponse .= "\n";
 
         $content = substr($content, 0, $insertPosition).$htmlResponse.substr($content, $insertPosition);
