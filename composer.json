@@ -27,7 +27,6 @@
         "illuminate/support": "^11.0|^12.0|^13.0",
         "laravel/octane": "^2.3",
         "livewire/livewire": "^3.0",
-        "paragonie/random_compat": "^2.0",
         "psr/container": "^1.1|^2.0",
         "symfony/config": "^7.0|^8.0",
         "symfony/console": "^7.0|^8.0",

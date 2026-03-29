@@ -172,6 +172,11 @@ update_version() {
         update_package_file "$file" "$current_version" "$new_version"
     done
 
+    # Update root package.json
+    if [ -f "package.json" ]; then
+        update_package_file "package.json" "$current_version" "$new_version"
+    fi
+
     echo -e "\n ${SUCCESS} Version bump complete!\n"
 }
 
