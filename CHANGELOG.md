@@ -1,6 +1,8 @@
 # CHANGELOG for 2.x
 
-## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.5.1...2.x)
+## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.5.2...2.x)
+
+## [v2.5.2](https://github.com/php-flasher/php-flasher/compare/v2.5.1...v2.5.2) - 2026-04-05
 
 ### Fixed
 
