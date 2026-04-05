@@ -13,9 +13,9 @@ const AMAZON_TITLES: Record<string, string> = {
 
 export const amazonTheme = {
     render: (envelope: Envelope): string => {
-        const { type, message } = envelope
+        const { type, message, title } = envelope
 
-        const alertTitle = AMAZON_TITLES[type] || DEFAULT_TITLES[type] || 'Alert'
+        const alertTitle = title || AMAZON_TITLES[type] || DEFAULT_TITLES[type] || 'Alert'
 
         return `
             <div class="${CLASS_NAMES.theme('amazon')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
