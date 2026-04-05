@@ -1,6 +1,6 @@
 {
     "name": "@flasher/flasher-noty",
-    "version": "2.5.1",
+    "version": "2.5.2",
     "type": "module",
     "license": "MIT",
     "main": "dist/flasher-noty.cjs.js",
@@ -11,7 +11,7 @@
         "ncu": "ncu -u"
     },
     "peerDependencies": {
-        "@flasher/flasher": "^2.5.1",
+        "@flasher/flasher": "^2.5.2",
         "noty": "^3.2.0-beta-deprecated"
     }
 }

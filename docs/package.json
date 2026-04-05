@@ -1,6 +1,6 @@
 {
     "name": "@flasher/docs",
-    "version": "2.5.1",
+    "version": "2.5.2",
     "license": "MIT",
     "scripts": {
         "build": "cross-env NODE_ENV=production encore production --progress",
@@ -13,11 +13,11 @@
         "deploy": "JEKYLL_ENV=production bundle exec jekyll build"
     },
     "dependencies": {
-        "@flasher/flasher": "file:../src/Prime/Resources",
-        "@flasher/flasher-noty": "file:../src/Noty/Prime/Resources",
-        "@flasher/flasher-notyf": "file:../src/Notyf/Prime/Resources",
-        "@flasher/flasher-sweetalert": "file:../src/SweetAlert/Prime/Resources",
-        "@flasher/flasher-toastr": "file:../src/Toastr/Prime/Resources",
+        "@flasher/flasher": "^2.5.2",
+        "@flasher/flasher-noty": "^2.5.2",
+        "@flasher/flasher-notyf": "^2.5.2",
+        "@flasher/flasher-sweetalert": "^2.5.2",
+        "@flasher/flasher-toastr": "^2.5.2",
         "@hotwired/stimulus": "^3.2.2",
         "@symfony/stimulus-bridge": "^3.2.3",
         "@symfony/webpack-encore": "^5.1.0",

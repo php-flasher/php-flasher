@@ -1,6 +1,6 @@
 {
     "name": "@flasher/flasher-toastr",
-    "version": "2.5.1",
+    "version": "2.5.2",
     "type": "module",
     "license": "MIT",
     "main": "dist/flasher-toastr.cjs.js",
@@ -11,7 +11,7 @@
         "ncu": "ncu -u"
     },
     "peerDependencies": {
-        "@flasher/flasher": "^2.5.1",
+        "@flasher/flasher": "^2.5.2",
         "toastr": "^2.1.4"
     },
     "devDependencies": {

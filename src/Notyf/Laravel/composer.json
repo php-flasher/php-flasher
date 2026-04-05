@@ -29,8 +29,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "php-flasher/flasher-laravel": "^2.5.1",
-        "php-flasher/flasher-notyf": "^2.5.1"
+        "php-flasher/flasher-laravel": "^2.5.2",
+        "php-flasher/flasher-notyf": "^2.5.2"
     },
     "autoload": {
         "psr-4": {
