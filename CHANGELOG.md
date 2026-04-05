@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.5.1...2.x)
 
+### Fixed
+
+* fix [Theme] Fix Amazon theme ignoring dynamic title from envelope and always displaying static hardcoded titles
+
 ## [v2.5.1](https://github.com/php-flasher/php-flasher/compare/v2.5.0...v2.5.1) - 2026-03-28
 
 ### Fixed
