@@ -91,8 +91,8 @@
     };
     const amazonTheme = {
         render: (envelope) => {
-            const { type, message } = envelope;
-            const alertTitle = AMAZON_TITLES[type] || DEFAULT_TITLES[type] || 'Alert';
+            const { type, message, title } = envelope;
+            const alertTitle = title || AMAZON_TITLES[type] || DEFAULT_TITLES[type] || 'Alert';
             return `
             <div class="${CLASS_NAMES.theme('amazon')} ${CLASS_NAMES.type(type)}" ${getA11yString(type)}>
                 <div class="fl-amazon-alert">
