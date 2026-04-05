@@ -1,101 +1,140 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# docs v1.0.0
+#
+# Description:
+#   Build PHP-Flasher documentation site.
+#
+# Usage:
+#   docs [options]
+#
+# Examples:
+#   docs                         # Install deps and build
+#   docs --dry-run               # Preview what would run
+#   docs -q                      # Quiet mode
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-set -o pipefail
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options]
 
-# Colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly DIM='\033[2m'
-readonly UNDERLINE='\033[4m'
-readonly BLUE='\033[34m'
-readonly GREEN='\033[32m'
-readonly RED='\033[31m'
-readonly YELLOW='\033[33m'
-readonly CYAN='\033[36m'
-readonly MAGENTA='\033[35m'
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Build PHP-Flasher documentation site.
 
-# Essential emojis
-readonly ROCKET="🚀"
-readonly CHECK="✓"
-readonly ERROR="❌"
-readonly WARNING="⚠️"
-readonly BOOKS="📚"
-readonly HAMMER="🏗️"
-readonly SPARKLES="✨"
-
-print_header() {
-    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Documentation Builder ${ROCKET}${RESET}\n"
-    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${BOLD}User      : ${RESET}${MAGENTA}yoeunes${RESET}"
-    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
-    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-n, --dry-run${COLOR_RESET}     Show what would run without executing
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}       Suppress output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}       Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}     Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}        Display this help message
+EOF
 }
 
-install_dependencies() {
-    echo -e "${BOLD}${BOOKS} Installing dependencies${RESET}"
-
-    if npm install --force; then
-        echo -e "${CHECK} ${GREEN}Dependencies installed successfully${RESET}\n"
-        return 0
+# --- Argument Parsing ---
+while [[ $# -gt 0 ]]; do
+    if parse_common_flag "$1"; then
+        shift
     else
-        echo -e "${WARNING} ${YELLOW}Dependency installation had issues${RESET}\n"
-        return 1
+        error_log "Unknown option: $1"
+        usage
+        exit 1
     fi
+done
+
+# --- Steps ---
+typeset -A RESULT_STATUS RESULT_DURATION
+
+ALL_STEPS=(install build)
+typeset -A STEP_NAME STEP_ICON
+STEP_NAME=(install "Install Dependencies" build "Build Documentation")
+STEP_ICON=(install "📦" build "🏗️")
+
+step_install() {
+    run_cmd npm install --force || return 1
 }
 
-build_documentation() {
-    echo -e "${BOLD}${HAMMER} Building documentation${RESET}"
+step_build() {
+    run_cmd npm run build || return 1
+}
 
-    if npm run build; then
-        echo -e "${CHECK} ${GREEN}Documentation built successfully${RESET}\n"
-        return 0
+run_step() {
+    local step="$1"
+    local name="${STEP_NAME[$step]}"
+    local icon="${STEP_ICON[$step]}"
+    local start=$SECONDS
+
+    echo ""
+    info_log "── ${icon} ${COLOR_BOLD}${name}${COLOR_RESET} ──"
+
+    local exit_code=0
+    "step_${step}" || exit_code=$?
+
+    local duration=$(printf '%.1f' $(( SECONDS - start )))
+
+    if [[ $exit_code -eq 0 ]]; then
+        RESULT_STATUS[$step]="success"
+        ok_log "${name} (${duration}s)"
     else
-        echo -e "${ERROR} ${RED}Documentation build failed${RESET}\n"
-        return 1
+        RESULT_STATUS[$step]="failed"
+        error_log "${name} failed (${duration}s)"
     fi
+    RESULT_DURATION[$step]="$duration"
 }
 
+show_summary() {
+    local total_duration=$(printf '%.1f' $(( SECONDS - TOTAL_START )))
+    local success=0 failed=0
+
+    echo ""
+    echo ""
+    info_log "── ${COLOR_BOLD}Summary${COLOR_RESET} ──"
+    echo ""
+
+    for step in $ALL_STEPS; do
+        local name="${STEP_NAME[$step]}"
+        local icon="${STEP_ICON[$step]}"
+        local step_status="${RESULT_STATUS[$step]}"
+        local duration="${RESULT_DURATION[$step]}"
+        local symbol="" color=""
+
+        case "$step_status" in
+            success) symbol="✓"; color="$COLOR_GREEN"; success=$((success + 1)) ;;
+            failed)  symbol="✗"; color="$COLOR_RED"; failed=$((failed + 1)) ;;
+        esac
+
+        printf "  %s %-24s %s%s%s  %ss\n" "$icon" "$name" "$color" "$symbol" "$COLOR_RESET" "$duration"
+    done
+
+    echo ""
+    printf "  ${COLOR_DIM}Total: ${total_duration}s${COLOR_RESET}  "
+    printf "${COLOR_GREEN}✓ ${success}${COLOR_RESET}  "
+    printf "${COLOR_RED}✗ ${failed}${COLOR_RESET}\n"
+    echo ""
+
+    [[ $failed -eq 0 ]]
+}
+
+# --- Main ---
 main() {
-    local command=${1:-"build"}
-    local start_time=$(date +%s)
-    local success=true
-
-    # Change directory to docs/
     if [[ ! -d "docs/" ]]; then
-        echo -e "${ERROR} ${RED}Documentation directory 'docs/' not found${RESET}\n"
+        error_log "Documentation directory 'docs/' not found"
         exit 1
     fi
 
     cd docs/
 
-    print_header
-    echo -e "${BOLD}Command   : ${RESET}${CYAN}${command}${RESET}\n"
+    echo "${COLOR_BOLD}${COLOR_CYAN}📚 Build${COLOR_RESET} ${COLOR_DIM}PHP-Flasher documentation...${COLOR_RESET}"
 
-    case $command in
-        "build")
-            install_dependencies || success=false
-            build_documentation || success=false
-            ;;
-        *)
-            echo -e "${ERROR} ${RED}Unknown command: ${command}${RESET}"
-            echo -e "Available commands: build"
-            exit 1
-            ;;
-    esac
+    TOTAL_START=$SECONDS
 
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
+    for step in $ALL_STEPS; do
+        run_step "$step"
+    done
 
-    # Summary
-    echo -e "${BOLD}${CYAN}Documentation ${command^} Summary${RESET}"
-    if [ "$success" = true ]; then
-        echo -e "${SPARKLES} ${GREEN}Documentation ${command} completed successfully${RESET}"
-    else
-        echo -e "${WARNING} ${YELLOW}Documentation ${command} completed with issues${RESET}"
-    fi
-    echo -e "Duration    : ${YELLOW}${duration}s${RESET}\n"
-
-    [ "$success" = true ] && exit 0 || exit 1
+    show_summary
 }
 
-main "$@"
+main

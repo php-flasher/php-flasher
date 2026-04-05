@@ -1,154 +1,198 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# split v1.0.0
+#
+# Description:
+#   Split PHP-Flasher monorepo into individual read-only repositories.
+#   Uses splitsh-lite to extract subtrees and pushes to GitHub remotes.
+#
+# Usage:
+#   split [options]
+#
+# Examples:
+#   split                        # Split all packages
+#   split --dry-run              # Preview what would be split
+#   split -q                     # Quiet mode
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-set -o pipefail
-
-# Colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly DIM='\033[2m'
-readonly UNDERLINE='\033[4m'
-readonly BLUE='\033[34m'
-readonly GREEN='\033[32m'
-readonly RED='\033[31m'
-readonly YELLOW='\033[33m'
-readonly CYAN='\033[36m'
-readonly MAGENTA='\033[35m'
-
-# Essential emojis
-readonly ROCKET="🚀"
-readonly CHECK="✓"
-readonly ERROR="❌"
-
-# Repository mappings
-declare -A REPOSITORIES=(
-    # Core packages
-    ["src/Prime"]="flasher"
-    ["src/Laravel"]="flasher-laravel"
-    ["src/Symfony"]="flasher-symfony"
-
-    # Toastr packages
-    ["src/Toastr/Prime"]="flasher-toastr"
-    ["src/Toastr/Laravel"]="flasher-toastr-laravel"
-    ["src/Toastr/Symfony"]="flasher-toastr-symfony"
-
-    # Notyf packages
-    ["src/Notyf/Prime"]="flasher-notyf"
-    ["src/Notyf/Laravel"]="flasher-notyf-laravel"
-    ["src/Notyf/Symfony"]="flasher-notyf-symfony"
-
-    # SweetAlert packages
-    ["src/SweetAlert/Prime"]="flasher-sweetalert"
-    ["src/SweetAlert/Laravel"]="flasher-sweetalert-laravel"
-    ["src/SweetAlert/Symfony"]="flasher-sweetalert-symfony"
-
-    # Noty packages
-    ["src/Noty/Prime"]="flasher-noty"
-    ["src/Noty/Laravel"]="flasher-noty-laravel"
-    ["src/Noty/Symfony"]="flasher-noty-symfony"
+# --- Repository Configuration ---
+# Ordered list for deterministic iteration
+ALL_SPLITS=(
+    src/Prime
+    src/Laravel
+    src/Symfony
+    src/Toastr/Prime
+    src/Toastr/Laravel
+    src/Toastr/Symfony
+    src/Notyf/Prime
+    src/Notyf/Laravel
+    src/Notyf/Symfony
+    src/SweetAlert/Prime
+    src/SweetAlert/Laravel
+    src/SweetAlert/Symfony
+    src/Noty/Prime
+    src/Noty/Laravel
+    src/Noty/Symfony
 )
 
-print_header() {
-    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Split ${ROCKET}${RESET}\n"
-    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${BOLD}User      : ${RESET}${MAGENTA}$(whoami)${RESET}"
-    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
-    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+typeset -A SPLIT_REMOTE
+SPLIT_REMOTE=(
+    "src/Prime"                "flasher"
+    "src/Laravel"              "flasher-laravel"
+    "src/Symfony"              "flasher-symfony"
+    "src/Toastr/Prime"         "flasher-toastr"
+    "src/Toastr/Laravel"       "flasher-toastr-laravel"
+    "src/Toastr/Symfony"       "flasher-toastr-symfony"
+    "src/Notyf/Prime"          "flasher-notyf"
+    "src/Notyf/Laravel"        "flasher-notyf-laravel"
+    "src/Notyf/Symfony"        "flasher-notyf-symfony"
+    "src/SweetAlert/Prime"     "flasher-sweetalert"
+    "src/SweetAlert/Laravel"   "flasher-sweetalert-laravel"
+    "src/SweetAlert/Symfony"   "flasher-sweetalert-symfony"
+    "src/Noty/Prime"           "flasher-noty"
+    "src/Noty/Laravel"         "flasher-noty-laravel"
+    "src/Noty/Symfony"         "flasher-noty-symfony"
+)
+
+# Results tracking
+typeset -A RESULT_STATUS RESULT_DURATION
+TOTAL_START=0
+
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options]
+
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Split PHP-Flasher monorepo into individual read-only repositories.
+
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-n, --dry-run${COLOR_RESET}       Show what would be split without executing
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}         Suppress command output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}         Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}       Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}          Display this help message
+
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME}                        # Split all packages
+  ${SCRIPT_NAME} --dry-run              # Preview what would be split
+EOF
 }
 
+# --- Argument Parsing ---
+while [[ $# -gt 0 ]]; do
+    if parse_common_flag "$1"; then
+        shift
+    else
+        error_log "Unknown option: $1"
+        usage
+        exit 1
+    fi
+done
+
+# --- Split Function ---
 process_split() {
-    local prefix=$1
-    local remote=${REPOSITORIES[$prefix]}
+    local prefix="$1"
+    local remote="${SPLIT_REMOTE[$prefix]}"
     local branch=$(git rev-parse --abbrev-ref HEAD)
-    local repo_url="https://github.com/php-flasher/${remote}"
-    local packagist_url="https://packagist.org/packages/php-flasher/${remote}"
 
-    echo -e "\nGitHub  : ${UNDERLINE}${BLUE}${repo_url}${RESET}"
-    echo -e "Package : ${UNDERLINE}${BLUE}${packagist_url}${RESET}"
-    echo -e "Prefix  : ${YELLOW}$prefix${RESET}"
-    echo -e "Branch  : ${GREEN}$branch${RESET}\n"
+    debug_log "Splitting $prefix -> $remote (branch: $branch)"
 
-    # Split the repository
-    echo -e "${CYAN}Splitting code...${RESET}"
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}splitsh-lite --prefix=$prefix${COLOR_RESET}\n"
+        printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}git push $remote <sha>:refs/heads/$branch -f${COLOR_RESET}\n"
+        return 0
+    fi
+
     local sha1
     if ! sha1=$(./bin/splitsh-lite --prefix="$prefix" 2>/dev/null); then
-        echo -e "${ERROR} ${RED}Split failed${RESET}"
+        error_log "Split failed for $prefix"
         return 1
     fi
 
-    echo -e "${CHECK} Split complete (SHA: ${YELLOW}${sha1:0:8}${RESET})"
-    echo -e "${CYAN}Pushing to remote...${RESET}"
+    debug_log "Split SHA: $sha1"
 
     if ! git push "$remote" "$sha1:refs/heads/$branch" -f > /dev/null 2>&1; then
-        echo -e "${ERROR} ${RED}Failed to push to $remote${RESET}"
+        error_log "Failed to push to $remote"
         return 1
     fi
 
-    echo -e "${CHECK} ${GREEN}Pushed to $remote (branch: $branch)${RESET}"
-    return 0
+    ok_log "Pushed to ${COLOR_BOLD}$remote${COLOR_RESET} (${COLOR_DIM}${sha1:0:8}${COLOR_RESET})"
 }
 
-update_repository() {
-    echo -e "\n${CYAN}Fetching latest changes...${RESET}"
-    if ! git fetch origin "$(git rev-parse --abbrev-ref HEAD)" > /dev/null 2>&1; then
-        echo -e "${ERROR} ${RED}Failed to fetch latest changes, continuing...${RESET}"
-    else
-        echo -e "${CHECK} ${GREEN}Repository updated successfully${RESET}"
-    fi
-    echo
-}
-
-draw_progress_bar() {
-    local percent=$1
-    local width=50
-    local filled=$(( (width * percent + 99) / 100 ))  # Rounded up division
-    local empty=$(( width - filled ))
-
-    echo -n "["
-    printf "${GREEN}█%.0s${RESET}" $(seq 1 $filled)
-    printf "${DIM}─%.0s${RESET}" $(seq 1 $empty)
-    echo -n "] ${percent}%"
-}
-
+# --- Main ---
 main() {
-    print_header
-    update_repository
+    TOTAL_START=$SECONDS
 
-    local success_count=0
-    local failed_count=0
-    local total_count=${#REPOSITORIES[@]}
-    local start_time=$(date +%s)
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo "${COLOR_BOLD}${COLOR_YELLOW}✂️  Split${COLOR_RESET} ${COLOR_DIM}PHP-Flasher monorepo...${COLOR_RESET} ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET}"
+    else
+        echo "${COLOR_BOLD}${COLOR_CYAN}✂️  Split${COLOR_RESET} ${COLOR_DIM}PHP-Flasher monorepo...${COLOR_RESET}"
+    fi
 
-    for prefix in "${!REPOSITORIES[@]}"; do
-        local current_count=$((success_count + failed_count + 1))
-        local percent=$((current_count * 100 / total_count))
+    # Fetch latest
+    echo ""
+    info_log "── 🔄 ${COLOR_BOLD}Fetch Latest${COLOR_RESET} ──"
+    run_cmd git fetch origin "$(git rev-parse --abbrev-ref HEAD)" || true
 
-        echo -e "\nProgress: ${BOLD}$current_count/$total_count${RESET}"
-        # draw_progress_bar $percent
+    local success=0 failed=0
+    local total=${#ALL_SPLITS[@]}
+    local current=0
 
-        if process_split "$prefix"; then
-            ((success_count++))
+    for prefix in $ALL_SPLITS; do
+        current=$((current + 1))
+        local remote="${SPLIT_REMOTE[$prefix]}"
+        local start=$SECONDS
+
+        echo ""
+        info_log "── ✂️  ${COLOR_BOLD}${remote}${COLOR_RESET} ${COLOR_DIM}($current/$total)${COLOR_RESET} ──"
+
+        local exit_code=0
+        process_split "$prefix" || exit_code=$?
+
+        local duration=$(printf '%.1f' $(( SECONDS - start )))
+
+        if [[ $exit_code -eq 0 ]]; then
+            RESULT_STATUS[$prefix]="success"
+            success=$((success + 1))
         else
-            ((failed_count++))
+            RESULT_STATUS[$prefix]="failed"
+            failed=$((failed + 1))
         fi
+        RESULT_DURATION[$prefix]="$duration"
     done
 
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-
     # Summary
-    echo -e "\n${BOLD}${CYAN}Split Summary${RESET}"
-    echo -e "Successful  : ${GREEN}$success_count${RESET}"
-    [ $failed_count -gt 0 ] && echo -e "Failed      : ${RED}$failed_count${RESET}"
-    echo -e "Duration    : ${YELLOW}${duration}s${RESET}"
-    echo -e "Total repos : ${CYAN}$total_count${RESET}"
+    local total_duration=$(printf '%.1f' $(( SECONDS - TOTAL_START )))
 
-    # Links
-    echo -e "\n${BOLD}${CYAN}Quick Links${RESET}"
-    echo -e "Packagist : ${UNDERLINE}${BLUE}https://packagist.org/packages/php-flasher/${RESET}"
-    echo -e "NPM       : ${UNDERLINE}${BLUE}https://www.npmjs.com/org/flasher${RESET}"
-    echo -e "GitHub    : ${UNDERLINE}${BLUE}https://github.com/php-flasher${RESET}\n"
+    echo ""
+    echo ""
+    info_log "── ${COLOR_BOLD}Summary${COLOR_RESET} ──"
+    echo ""
+    printf "  ${COLOR_GREEN}✓ ${success}${COLOR_RESET} succeeded  "
+    printf "${COLOR_RED}✗ ${failed}${COLOR_RESET} failed  "
+    printf "${COLOR_DIM}(${total} total, ${total_duration}s)${COLOR_RESET}\n"
 
-    [ $failed_count -gt 0 ] && exit 1 || exit 0
+    # List failures
+    if [[ $failed -gt 0 ]]; then
+        echo ""
+        error_log "Failed splits:"
+        for prefix in $ALL_SPLITS; do
+            if [[ "${RESULT_STATUS[$prefix]}" == "failed" ]]; then
+                printf "  ${COLOR_RED}✗${COLOR_RESET} %s → %s\n" "$prefix" "${SPLIT_REMOTE[$prefix]}"
+            fi
+        done
+    fi
+
+    echo ""
+    if [[ $failed -eq 0 ]]; then
+        ok_log "All splits complete!"
+    else
+        error_log "Some splits failed."
+        return 1
+    fi
 }
 
 main

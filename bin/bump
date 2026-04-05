@@ -1,69 +1,76 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# bump v1.0.0
+#
+# Description:
+#   Bump PHP-Flasher version across all package files.
+#   Updates Flasher.php, composer.json, and package.json files.
+#
+# Usage:
+#   bump [options] <version>
+#
+# Examples:
+#   bump 2.6.0                   # Bump to version 2.6.0
+#   bump --dry-run 2.6.0         # Preview changes without modifying files
+#   bump -q 2.6.0                # Quiet mode
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-set -e
-set -o pipefail
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options] <version>
 
-# Colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly BLUE='\033[34m'
-readonly GREEN='\033[32m'
-readonly RED='\033[31m'
-readonly YELLOW='\033[33m'
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Bump PHP-Flasher version across all package files.
 
-# Emojis
-readonly ROCKET="🚀"
-readonly UPDATE="🔄"
-readonly PACKAGE="📦"
-readonly SUCCESS="✨"
-readonly ERROR="❌"
-readonly WARNING="⚠️"
-readonly CHECK="✓"
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-n, --dry-run${COLOR_RESET}       Show what would change without modifying files
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}         Suppress output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}         Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}       Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}          Display this help message
 
-# Header
-print_header() {
-    echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
-    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Version ${ROCKET}            │${RESET}"
-    echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
-    echo -e "    Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
-    echo -e "    User     : $(whoami)"
-    echo -e "    Directory: $(pwd)\n"
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME} 2.6.0                   # Bump to version 2.6.0
+  ${SCRIPT_NAME} --dry-run 2.6.0         # Preview changes
+EOF
 }
 
-# Version validation
+# --- Steps ---
+typeset -A RESULT_STATUS RESULT_DURATION
+ALL_STEPS=(php composer package)
+typeset -A STEP_NAME STEP_ICON
+STEP_NAME=(php "PHP Class Version" composer "Composer Files" package "Package.json Files")
+STEP_ICON=(php "🐘" composer "🎼" package "📦")
+
+# --- Version Helpers ---
 validate_version() {
-    local version=$1
-    if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-        echo -e "\n${RED}${ERROR} Invalid version format: $version${RESET}"
-        echo -e "    Version must be in format X.Y.Z (e.g., 2.1.6)\n"
+    if [[ ! $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        error_log "Invalid version format: $1"
+        info_log "Version must be in format X.Y.Z (e.g., 2.6.0)"
         exit 1
     fi
 }
 
-# Get current version from Flasher class
 get_current_version() {
     local file="src/Prime/Flasher.php"
-    if [ -f "$file" ]; then
-        local version=$(grep -o "const VERSION = '[0-9]\+\.[0-9]\+\.[0-9]\+'" "$file" | grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+")
-        echo "$version"
+    if [[ -f "$file" ]]; then
+        grep -o "const VERSION = '[0-9]\+\.[0-9]\+\.[0-9]\+'" "$file" | grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+"
     else
-        echo -e "${RED}${ERROR} Flasher.php not found in src/Prime/Flasher.php${RESET}"
+        error_log "Flasher.php not found at $file"
         exit 1
     fi
 }
 
-# Update composer.json file
+# --- Update Functions ---
 update_composer_file() {
-    local file=$1
-    local current_version=$2
-    local new_version=$3
-
-    # Create a temporary file
+    local file=$1 current=$2 new=$3
     local tmp_file="${file}.tmp"
 
-    # Use jq with 4-space indentation
     if command -v jq >/dev/null 2>&1; then
-        jq --indent 4 --arg cv "^${current_version}" --arg nv "^${new_version}" '
+        jq --indent 4 --arg cv "^${current}" --arg nv "^${new}" '
             walk(
                 if type == "object" and has("require") then
                     .require |= with_entries(
@@ -79,121 +86,224 @@ update_composer_file() {
             )
         ' "$file" > "$tmp_file"
     else
-        # Fallback to sed for simple replacement
-        sed -E "s/\"php-flasher\/[^\"]+\": \"\\^${current_version}\"/\"\\0\": \"^${new_version}\"/" "$file" > "$tmp_file"
+        sed -E "s/\"php-flasher\/[^\"]+\": \"\\^${current}\"/\"\\0\": \"^${new}\"/" "$file" > "$tmp_file"
     fi
 
-    # Check if the temporary file exists and has content
-    if [ -s "$tmp_file" ]; then
+    if [[ -s "$tmp_file" ]]; then
         mv "$tmp_file" "$file"
-        echo "    ${CHECK} Updated $file"
+        ok_log "Updated $file"
     else
-        echo "    ${WARNING} Failed to update $file"
+        warn_log "Failed to update $file"
         rm -f "$tmp_file"
     fi
 }
 
-# Update package.json file
 update_package_file() {
-    local file=$1
-    local current_version=$2
-    local new_version=$3
-
-    # Create a temporary file
+    local file=$1 current=$2 new=$3
     local tmp_file="${file}.tmp"
 
-    # Use jq with 4-space indentation
     if command -v jq >/dev/null 2>&1; then
-        jq --indent 4 --arg cv "^${current_version}" --arg nv "^${new_version}" --arg v "${new_version}" '
+        jq --indent 4 --arg cv "^${current}" --arg nv "^${new}" --arg v "${new}" '
             .version = $v |
             if has("peerDependencies") then
                 .peerDependencies |= with_entries(
-                    if .key | startswith("@flasher/") then
-                        .value = $nv
-                    else
-                        .
-                    end
+                    if .key | startswith("@flasher/") then .value = $nv else . end
                 )
-            else
-                .
-            end |
+            else . end |
             if has("dependencies") then
                 .dependencies |= with_entries(
-                    if .key | startswith("@flasher/") then
-                        .value = $nv
-                    else
-                        .
-                    end
+                    if .key | startswith("@flasher/") then .value = $nv else . end
                 )
-            else
-                .
-            end
+            else . end
         ' "$file" > "$tmp_file"
     else
-        # Fallback to sed for simple replacement
-        sed -E -e "s/\"version\": \"${current_version}\"/\"version\": \"${new_version}\"/" \
-               -e "s/\"@flasher\/[^\"]+\": \"\\^${current_version}\"/\"\\0\": \"^${new_version}\"/" \
+        sed -E -e "s/\"version\": \"${current}\"/\"version\": \"${new}\"/" \
+               -e "s/\"@flasher\/[^\"]+\": \"\\^${current}\"/\"\\0\": \"^${new}\"/" \
                "$file" > "$tmp_file"
     fi
 
-    # Check if the temporary file exists and has content
-    if [ -s "$tmp_file" ]; then
+    if [[ -s "$tmp_file" ]]; then
         mv "$tmp_file" "$file"
-        echo "    ${CHECK} Updated $file"
+        ok_log "Updated $file"
     else
-        echo "    ${WARNING} Failed to update $file"
+        warn_log "Failed to update $file"
         rm -f "$tmp_file"
     fi
 }
 
-# Update version in files
-update_version() {
-    local current_version=$1
-    local new_version=$2
-
-    echo -e " ${UPDATE} Updating version numbers ($current_version → $new_version)\n"
-
-    # Update PHP class version
-    echo -e " ${PACKAGE} Updating Flasher class version..."
-    if [ -f "src/Prime/Flasher.php" ]; then
-        sed -i '' "s/const VERSION = '$current_version'/const VERSION = '$new_version'/" src/Prime/Flasher.php
-        echo -e "    ${CHECK} Updated src/Prime/Flasher.php"
+# --- Step Functions ---
+step_php() {
+    local file="src/Prime/Flasher.php"
+    if [[ ! -f "$file" ]]; then
+        error_log "$file not found"
+        return 1
     fi
-
-    # Update composer.json files in src directory
-    echo -e "\n ${PACKAGE} Updating composer.json files..."
-    find src -name "composer.json" -type f | while read -r file; do
-        update_composer_file "$file" "$current_version" "$new_version"
-    done
-
-    # Update package.json files in src directory
-    echo -e "\n ${PACKAGE} Updating package.json files..."
-    find src -name "package.json" -type f | while read -r file; do
-        update_package_file "$file" "$current_version" "$new_version"
-    done
-
-    # Update root package.json
-    if [ -f "package.json" ]; then
-        update_package_file "package.json" "$current_version" "$new_version"
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}sed const VERSION '$CURRENT_VER' -> '$NEW_VER' in $file${COLOR_RESET}\n"
+        return 0
     fi
-
-    # Update docs package.json
-    if [ -f "docs/package.json" ]; then
-        update_package_file "docs/package.json" "$current_version" "$new_version"
-    fi
-
-    echo -e "\n ${SUCCESS} Version bump complete!\n"
+    sed -i '' "s/const VERSION = '$CURRENT_VER'/const VERSION = '$NEW_VER'/" "$file"
+    ok_log "Updated $file"
 }
 
-# Main execution
-if [ -z "$1" ]; then
-    echo -e "${RED}${ERROR} Version number is required${RESET}"
-    echo -e "Usage: $0 <version>\n"
-    exit 1
-fi
+step_composer() {
+    local files=()
+    for f in src/*/composer.json src/*/*/composer.json; do
+        [[ -f "$f" ]] && files+=("$f")
+    done
 
-print_header
-new_version=$1
-current_version=$(get_current_version)
-validate_version "$new_version"
-update_version "$current_version" "$new_version"
+    if [[ ${#files[@]} -eq 0 ]]; then
+        warn_log "No composer.json files found in src/"
+        return 0
+    fi
+
+    for file in "${files[@]}"; do
+        if [[ "$DRY_RUN" -eq 1 ]]; then
+            printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}update php-flasher deps in $file${COLOR_RESET}\n"
+        else
+            update_composer_file "$file" "$CURRENT_VER" "$NEW_VER"
+        fi
+    done
+}
+
+step_package() {
+    local files=()
+    for f in package.json docs/package.json src/*/package.json src/*/*/package.json src/*/*/*/package.json; do
+        [[ -f "$f" ]] && files+=("$f")
+    done
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        warn_log "No package.json files found"
+        return 0
+    fi
+
+    for file in "${files[@]}"; do
+        if [[ "$DRY_RUN" -eq 1 ]]; then
+            printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}update @flasher deps in $file${COLOR_RESET}\n"
+        else
+            update_package_file "$file" "$CURRENT_VER" "$NEW_VER"
+        fi
+    done
+}
+
+# --- Step Runner ---
+run_step() {
+    local step="$1"
+    local name="${STEP_NAME[$step]}"
+    local icon="${STEP_ICON[$step]}"
+    local start=$SECONDS
+
+    echo ""
+    info_log "── ${icon} ${COLOR_BOLD}${name}${COLOR_RESET} ──"
+
+    local exit_code=0
+    "step_${step}" || exit_code=$?
+
+    local duration=$(printf '%.1f' $(( SECONDS - start )))
+
+    if [[ $exit_code -eq 0 ]]; then
+        RESULT_STATUS[$step]="success"
+        ok_log "${name} (${duration}s)"
+    else
+        RESULT_STATUS[$step]="failed"
+        error_log "${name} failed (${duration}s)"
+    fi
+    RESULT_DURATION[$step]="$duration"
+}
+
+# --- Summary ---
+show_summary() {
+    local total_duration=$(printf '%.1f' $(( SECONDS - TOTAL_START )))
+    local success=0 failed=0
+
+    echo ""
+    echo ""
+    info_log "── ${COLOR_BOLD}Summary${COLOR_RESET} ──"
+    echo ""
+
+    printf "  ${COLOR_DIM}Version:${COLOR_RESET} ${COLOR_BOLD}${CURRENT_VER}${COLOR_RESET} → ${COLOR_BOLD}${NEW_VER}${COLOR_RESET}\n"
+    echo ""
+
+    for step in $ALL_STEPS; do
+        local name="${STEP_NAME[$step]}"
+        local icon="${STEP_ICON[$step]}"
+        local step_status="${RESULT_STATUS[$step]}"
+        local duration="${RESULT_DURATION[$step]}"
+        local symbol="" color=""
+
+        case "$step_status" in
+            success) symbol="✓"; color="$COLOR_GREEN"; success=$((success + 1)) ;;
+            failed)  symbol="✗"; color="$COLOR_RED"; failed=$((failed + 1)) ;;
+        esac
+
+        printf "  %s %-24s %s%s%s  %ss\n" "$icon" "$name" "$color" "$symbol" "$COLOR_RESET" "$duration"
+    done
+
+    echo ""
+    printf "  ${COLOR_DIM}Total: ${total_duration}s${COLOR_RESET}  "
+    printf "${COLOR_GREEN}✓ ${success}${COLOR_RESET}  "
+    printf "${COLOR_RED}✗ ${failed}${COLOR_RESET}\n"
+    echo ""
+
+    if [[ $failed -eq 0 ]]; then
+        ok_log "Version bump complete!"
+    else
+        error_log "Version bump had failures."
+        return 1
+    fi
+}
+
+# --- Argument Parsing ---
+NEW_VER=""
+
+parse_arguments() {
+    while [[ $# -gt 0 ]]; do
+        if parse_common_flag "$1"; then
+            shift
+            continue
+        fi
+        case "$1" in
+            -*)
+                error_log "Unknown option: $1"
+                usage
+                exit 1 ;;
+            *)
+                NEW_VER="$1"
+                shift ;;
+        esac
+    done
+
+    if [[ -z "$NEW_VER" ]]; then
+        error_log "Version number is required"
+        usage
+        exit 1
+    fi
+
+    validate_version "$NEW_VER"
+}
+
+# --- Main ---
+CURRENT_VER=""
+TOTAL_START=0
+
+main() {
+    parse_arguments "$@"
+
+    CURRENT_VER=$(get_current_version)
+    TOTAL_START=$SECONDS
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo "${COLOR_BOLD}${COLOR_YELLOW}🔄 Bump${COLOR_RESET} ${COLOR_DIM}PHP-Flasher version...${COLOR_RESET} ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET}"
+    else
+        echo "${COLOR_BOLD}${COLOR_CYAN}🔄 Bump${COLOR_RESET} ${COLOR_DIM}PHP-Flasher version...${COLOR_RESET}"
+    fi
+    info_log "${CURRENT_VER} → ${COLOR_BOLD}${NEW_VER}${COLOR_RESET}"
+
+    for step in $ALL_STEPS; do
+        run_step "$step"
+    done
+
+    show_summary
+}
+
+main "$@"

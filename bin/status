@@ -1,113 +1,102 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# status v1.0.0
+#
+# Description:
+#   Display PHP-Flasher repository status dashboard.
+#   Shows git status, dependencies, repo info, and release readiness.
+#
+# Usage:
+#   status [options]
+#
+# Examples:
+#   status                       # Full status dashboard
+#   status -q                    # Quiet mode (summary only)
+#   status --debug               # Show debug info
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-# Set options
-set -e
-set -o pipefail
+# Disable errexit for this script — many API calls can fail
+set +e
 
-# Define colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly DIM='\033[2m'
-readonly ITALIC='\033[3m'
-readonly UNDERLINE='\033[4m'
-readonly RED='\033[31m'
-readonly GREEN='\033[32m'
-readonly YELLOW='\033[33m'
-readonly BLUE='\033[34m'
-readonly MAGENTA='\033[35m'
-readonly CYAN='\033[36m'
-readonly WHITE='\033[37m'
+ORGANIZATION="php-flasher"
+MAIN_BRANCH="2.x"
 
-# Define emoji
-readonly ROCKET="🚀"
-readonly PACKAGE="📦"
-readonly CALENDAR="📅"
-readonly CLOCK="🕒"
-readonly INFO="ℹ️"
-readonly WARNING="⚠️"
-readonly CHECK="✓"
-readonly BRANCH="🌿"
-readonly TAG="🏷️"
-readonly GITHUB="⭐"
-readonly STAR="⭐"
-readonly NPM="📦"
-readonly PACKAGIST="🎯"
-
-# Configuration
-readonly ORGANIZATION="php-flasher"
-readonly MAIN_BRANCH="2.x"
-readonly REPOSITORIES=(
-    "flasher"
-    "flasher-laravel"
-    "flasher-symfony"
-    "flasher-noty"
-    "flasher-noty-laravel"
-    "flasher-noty-symfony"
-    "flasher-notyf"
-    "flasher-notyf-laravel"
-    "flasher-notyf-symfony"
-    "flasher-sweetalert"
-    "flasher-sweetalert-laravel"
-    "flasher-sweetalert-symfony"
-    "flasher-toastr"
-    "flasher-toastr-laravel"
-    "flasher-toastr-symfony"
+ALL_REPOS=(
+    flasher
+    flasher-laravel
+    flasher-symfony
+    flasher-noty
+    flasher-noty-laravel
+    flasher-noty-symfony
+    flasher-notyf
+    flasher-notyf-laravel
+    flasher-notyf-symfony
+    flasher-sweetalert
+    flasher-sweetalert-laravel
+    flasher-sweetalert-symfony
+    flasher-toastr
+    flasher-toastr-laravel
+    flasher-toastr-symfony
 )
 
-# Print functions
-print_header() {
-    echo -e "\n${BOLD}${BLUE}╭──────────────────────────────────────────╮${RESET}"
-    echo -e "${BOLD}${BLUE}│     ${ROCKET} PHP-Flasher Status ${ROCKET}             │${RESET}"
-    echo -e "${BOLD}${BLUE}╰──────────────────────────────────────────╯${RESET}\n"
-    echo -e "    ${DIM}Date     : $(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "    ${DIM}User     : $(whoami)${RESET}"
-    echo -e "    ${DIM}Directory: $(pwd)${RESET}"
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options]
+
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Display PHP-Flasher repository status dashboard.
+
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}         Summary only
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}         Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}       Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}          Display this help message
+
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME}                       # Full status dashboard
+  ${SCRIPT_NAME} --debug               # Show debug info
+EOF
 }
 
-print_section() {
-    echo -e "\n${BOLD}${CYAN} $1 ${2:-}${RESET}"
+# --- Argument Parsing ---
+while [[ $# -gt 0 ]]; do
+    if parse_common_flag "$1"; then
+        shift
+    else
+        error_log "Unknown option: $1"
+        usage
+        exit 1
+    fi
+done
+
+# --- API Helpers ---
+curl_cmd() {
+    local gh_token=${GITHUB_TOKEN:-""}
+    local auth_header=""
+    [[ -n "$gh_token" ]] && auth_header="-H" && auth_header2="Authorization: token $gh_token"
+
+    if [[ -n "$gh_token" ]]; then
+        curl -s -H "User-Agent: PHP-Flasher-Status" -H "Authorization: token $gh_token" "$@"
+    else
+        curl -s -H "User-Agent: PHP-Flasher-Status" "$@"
+    fi
 }
 
-warning_msg() {
-    echo -e "    ${YELLOW}${WARNING} $*${RESET}"
-}
-
-success_msg() {
-    echo -e "    ${GREEN}${CHECK} $*${RESET}"
-}
-
-error_msg() {
-    echo -e "    ${RED}${ERROR} $*${RESET}"
-}
-
-info_msg() {
-    echo -e "${BLUE}${INFO} $*${RESET}"
-}
-
-# Get the latest tag for a repository
 get_latest_tag() {
-    local repo=$1
-    git ls-remote --tags --refs "git@github.com:${ORGANIZATION}/${repo}.git" |
-    sort -t '/' -k 3 -V |
-    tail -n1 |
-    awk -F/ '{print $3}'
+    git ls-remote --tags --refs "git@github.com:${ORGANIZATION}/$1.git" 2>/dev/null |
+        sort -t '/' -k 3 -V | tail -n1 | awk -F/ '{print $3}'
 }
 
-# Get commit count since last tag
-get_commit_count_since_tag() {
-    local repo=$1
-    local tag=$2
-    git rev-list "${tag}..HEAD" --count 2>/dev/null || echo "0"
-}
-
-# Get repository statistics
 get_repo_stats() {
     local repo=$1
     local tmp_dir="/tmp/php-flasher-status/${repo}"
 
     mkdir -p "$tmp_dir"
-    if [ ! -d "$tmp_dir/.git" ]; then
-        git clone -q "git@github.com:${ORGANIZATION}/${repo}.git" "$tmp_dir" 2>/dev/null
+    if [[ ! -d "$tmp_dir/.git" ]]; then
+        git clone -q "git@github.com:${ORGANIZATION}/${repo}.git" "$tmp_dir" 2>/dev/null || return 1
     fi
 
     (
@@ -117,215 +106,163 @@ get_repo_stats() {
     )
 }
 
-# Check composer.json version
-check_composer_version() {
-    local file="composer.json"
-    if [ -f "$file" ]; then
-        grep -o '"version": *"[^"]*"' "$file" 2>/dev/null | cut -d'"' -f4 || echo "N/A"
-    else
-        echo "N/A"
-    fi
-}
-
-# Add curl with proper user agent for API calls
-curl_cmd() {
-    # You can set your GitHub token as an environment variable
-    local gh_token=${GITHUB_TOKEN:-""}
-    local auth_header=""
-    if [ ! -z "$gh_token" ]; then
-        auth_header="-H \"Authorization: token $gh_token\""
-    fi
-
-    curl -s -H "User-Agent: PHP-Flasher-Status-Check" $auth_header "$@"
-}
-
-# Get GitHub stars for a repository
 get_github_stars() {
-    local repo=$1
-    local response=$(curl_cmd "https://api.github.com/repos/${ORGANIZATION}/${repo}")
-    local stars=$(echo "$response" | grep -o '"stargazers_count":[0-9]*' | cut -d':' -f2)
-    echo "${stars:-0}"
+    local response=$(curl_cmd "https://api.github.com/repos/${ORGANIZATION}/$1")
+    echo "$response" | grep -o '"stargazers_count":[0-9]*' | cut -d':' -f2
 }
 
-# Get Packagist version
 get_packagist_version() {
-    local package=$1
-    local response=$(curl -s -f "https://repo.packagist.org/p2/php-flasher/${package}.json")
-    if [ $? -eq 0 ] && [ ! -z "$response" ]; then
+    local response=$(curl -s -f "https://repo.packagist.org/p2/php-flasher/$1.json" 2>/dev/null)
+    if [[ $? -eq 0 && -n "$response" ]]; then
         local version=$(echo "$response" | grep -o '"latest":"[^"]*"' | cut -d'"' -f4)
-        if [ ! -z "$version" ]; then
-            echo "$version"
-        else
-            echo "N/A"
-        fi
+        echo "${version:-N/A}"
     else
         echo "N/A"
     fi
 }
 
-# Get NPM version
 get_npm_version() {
     local package=$1
-    # Convert package name format
-    if [[ "$package" == "flasher" ]]; then
-        package="flasher"
-    elif [[ "$package" == *"-prime" ]]; then
-        # Remove -prime suffix for npm package name
-        package=${package%-prime}
-    elif [[ "$package" == *"-laravel" || "$package" == *"-symfony" ]]; then
-        # These packages don't have npm versions
+    if [[ "$package" == *"-laravel" || "$package" == *"-symfony" ]]; then
         echo "N/A"
         return
     fi
-
-    local response=$(curl_cmd "https://registry.npmjs.org/@flasher/${package}/latest")
+    local response=$(curl_cmd "https://registry.npmjs.org/@flasher/${package}/latest" 2>/dev/null)
     local version=$(echo "$response" | grep -o '"version":"[^"]*"' | cut -d'"' -f4)
     echo "${version:-N/A}"
 }
 
-# Display repository information
+# --- Dashboard Sections ---
+check_git_status() {
+    echo ""
+    info_log "── 🌿 ${COLOR_BOLD}Git Status${COLOR_RESET} ──"
+    echo ""
+
+    local current_branch=$(git rev-parse --abbrev-ref HEAD)
+    printf "  Branch: ${COLOR_BOLD}%s${COLOR_RESET}" "$current_branch"
+    if [[ "$current_branch" != "$MAIN_BRANCH" ]]; then
+        printf " ${COLOR_YELLOW}(not on $MAIN_BRANCH)${COLOR_RESET}"
+    fi
+    echo ""
+
+    if [[ -n "$(git status --porcelain)" ]]; then
+        warn_log "Working directory is not clean"
+        git status --short | sed 's/^/    /'
+    else
+        ok_log "Working directory is clean"
+    fi
+
+    local behind=$(git rev-list "HEAD..origin/$current_branch" --count 2>/dev/null || echo "0")
+    local ahead=$(git rev-list "origin/$current_branch..HEAD" --count 2>/dev/null || echo "0")
+
+    if [[ "$behind" -gt 0 ]]; then warn_log "Branch is behind by $behind commit(s)"; fi
+    if [[ "$ahead" -gt 0 ]]; then warn_log "Branch is ahead by $ahead commit(s)"; fi
+    if [[ "$behind" -eq 0 && "$ahead" -eq 0 ]]; then ok_log "Branch is up to date with origin"; fi
+}
+
+check_dependencies() {
+    echo ""
+    info_log "── 📦 ${COLOR_BOLD}Dependencies${COLOR_RESET} ──"
+    echo ""
+
+    if [[ -f "composer.json" ]]; then
+        printf "  ${COLOR_BOLD}Composer:${COLOR_RESET}\n"
+        composer show 2>/dev/null | grep "php-flasher/" | sed 's/^/    /' || echo "    No PHP-Flasher dependencies"
+    fi
+
+    if [[ -f "package.json" ]]; then
+        echo ""
+        printf "  ${COLOR_BOLD}NPM:${COLOR_RESET}\n"
+        command npm list 2>/dev/null | grep "@flasher/" | sed 's/^/    /' || echo "    No Flasher dependencies"
+    fi
+}
+
+display_modified_files() {
+    echo ""
+    info_log "── 📝 ${COLOR_BOLD}Modified Files${COLOR_RESET} ──"
+    echo ""
+
+    local modified=$(git diff --name-only 2>/dev/null)
+    if [[ -n "$modified" ]]; then
+        echo "$modified" | sed 's/^/    /'
+    else
+        ok_log "No modified files"
+    fi
+}
+
 display_repo_info() {
     local repo=$1
     local latest_tag=$(get_latest_tag "$repo")
-    local stats=($(get_repo_stats "$repo" | tr '|' ' '))
+    local stats=$(get_repo_stats "$repo")
     local github_stars=$(get_github_stars "$repo")
-    local npm_version="N/A"
-    local packagist_version="N/A"
+    local packagist_version=$(get_packagist_version "$repo")
 
-    # Get NPM version for specific packages
-    if [[ "$repo" == "flasher" || \
-          "$repo" == "flasher-noty" || \
-          "$repo" == "flasher-notyf" || \
-          "$repo" == "flasher-sweetalert" || \
-          "$repo" == "flasher-toastr" ]]; then
-        npm_version=$(get_npm_version "$repo")
+    local sha branch time_ago message
+    IFS='|' read -r sha branch time_ago message <<< "$stats"
+
+    echo ""
+    printf "  ${COLOR_BOLD}${COLOR_MAGENTA}📦 %s${COLOR_RESET}\n" "$repo"
+    printf "    🌿 Branch    : %s\n" "${branch:-unknown}"
+    printf "    🏷️  Tag       : %s\n" "${latest_tag:-none}"
+    printf "    ⭐ Stars     : %s\n" "${github_stars:-0}"
+    printf "    🎯 Packagist : v%s\n" "$packagist_version"
+
+    # NPM version for applicable packages
+    if [[ "$repo" == "flasher" || "$repo" == flasher-noty || "$repo" == flasher-notyf || \
+          "$repo" == flasher-sweetalert || "$repo" == flasher-toastr ]]; then
+        local npm_ver=$(get_npm_version "$repo")
+        [[ "$npm_ver" != "N/A" ]] && printf "    📦 NPM       : v%s\n" "$npm_ver"
     fi
 
-    # Get Packagist version
-    packagist_version=$(get_packagist_version "$repo")
-
-    # Display repository information
-    echo -e "\n${BOLD}${MAGENTA} ${PACKAGE} ${repo}${RESET}"
-    echo -e "    ${BRANCH} Branch      : ${stats[1]:-unknown}"
-    echo -e "    ${TAG} Latest Tag  : ${latest_tag:-none}"
-    echo -e "    ${STAR} Stars       : ${github_stars}"
-    echo -e "    ${PACKAGIST} Packagist   : v${packagist_version}"
-
-    if [ "$npm_version" != "N/A" ]; then
-        echo -e "    ${NPM} NPM         : v${npm_version}"
-    fi
-
-    echo -e "    ${GITHUB} Last Commit : ${stats[0]:-unknown} (${stats[2]:-unknown})"
-    echo -e "    ${INFO} Message     : ${stats[3]:-unknown}"
-
-    local commits_since_tag=$(get_commit_count_since_tag "$repo" "$latest_tag")
-    if [ "$commits_since_tag" -gt 0 ]; then
-        warning_msg "$commits_since_tag commit(s) since last tag"
-    fi
+    printf "    ⭐ Commit    : %s (%s)\n" "${sha:-unknown}" "${time_ago:-unknown}"
+    printf "    ℹ️  Message   : %s\n" "${message:-unknown}"
 }
 
-# Check git status
-check_git_status() {
-    print_section "Git Status" "${GITHUB}"
+check_release_readiness() {
+    echo ""
+    info_log "── 🚀 ${COLOR_BOLD}Release Readiness${COLOR_RESET} ──"
+    echo ""
 
-    local current_branch=$(git rev-parse --abbrev-ref HEAD)
-    echo -e "    ${BRANCH} Current Branch : ${current_branch}"
-
-    if [ "$current_branch" != "$MAIN_BRANCH" ]; then
-        warning_msg "    Not on main branch ($MAIN_BRANCH)"
-    fi
-
-    if [[ ! -z "$(git status --porcelain)" ]]; then
-        warning_msg "    Working directory is not clean"
-        git status --short | sed 's/^/        /'
-    else
-        success_msg "    Working directory is clean"
-    fi
-
-    local behind=$(git rev-list HEAD..origin/$current_branch --count 2>/dev/null || echo "0")
-    local ahead=$(git rev-list origin/$current_branch..HEAD --count 2>/dev/null || echo "0")
-
-    if [ "$behind" -gt 0 ]; then
-        warning_msg "    Branch is behind by $behind commit(s)"
-    fi
-    if [ "$ahead" -gt 0 ]; then
-        warning_msg "    Branch is ahead by $ahead commit(s)"
-    fi
-    if [ "$behind" -eq 0 ] && [ "$ahead" -eq 0 ]; then
-        success_msg "    Branch is up to date with origin"
-    fi
-}
-
-# Check dependencies
-check_dependencies() {
-    print_section "Dependencies" "${PACKAGE}"
-
-    if [ -f "composer.json" ]; then
-        echo -e "    ${BOLD}Composer Dependencies:${RESET}"
-        composer show | grep "php-flasher/" | sed 's/^/        /' || echo "        No PHP-Flasher dependencies found"
-    fi
-
-    if [ -f "package.json" ]; then
-        echo -e "\n    ${BOLD}NPM Dependencies:${RESET}"
-        npm list | grep "@flasher/" | sed 's/^/        /' || echo "        No Flasher dependencies found"
-    fi
-}
-
-# Display modified files
-display_modified_files() {
-    print_section "Modified Files" "📝"
-
-    local modified_files=$(git diff --name-only)
-    if [ ! -z "$modified_files" ]; then
-        echo -e "    ${BOLD}Modified files:${RESET}"
-        echo "$modified_files" | sed 's/^/        /'
-    else
-        success_msg "    No modified files"
-    fi
-}
-
-# Main execution
-main() {
-    print_header
-
-    # Check current repository status
-    check_git_status
-
-    # Check dependencies
-    check_dependencies
-
-    # Display modified files
-    display_modified_files
-
-    # Display repositories information
-    print_section "Repositories Status" "${PACKAGE}"
-    for repo in "${REPOSITORIES[@]}"; do
-        display_repo_info "$repo"
-    done
-
-    # Display release readiness
-    print_section "Release Readiness" "${ROCKET}"
     local ready=true
 
-    if [ ! -z "$(git status --porcelain)" ]; then
-        warning_msg "Working directory is not clean"
+    if [[ -n "$(git status --porcelain)" ]]; then
+        warn_log "Working directory is not clean"
         ready=false
     fi
 
-    if [ "$(git rev-parse --abbrev-ref HEAD)" != "$MAIN_BRANCH" ]; then
-        warning_msg "Not on main branch ($MAIN_BRANCH)"
+    if [[ "$(git rev-parse --abbrev-ref HEAD)" != "$MAIN_BRANCH" ]]; then
+        warn_log "Not on main branch ($MAIN_BRANCH)"
         ready=false
     fi
 
     if $ready; then
-        success_msg "Ready for release!"
-        echo -e "\n${BOLD}${GREEN}Suggested next steps:${RESET}"
-        echo -e "1. Run: ${ITALIC}./bin/split${RESET}"
-        echo -e "2. Run: ${ITALIC}./bin/release <version>${RESET}"
+        ok_log "Ready for release!"
+        echo ""
+        printf "  ${COLOR_BOLD}Suggested next steps:${COLOR_RESET}\n"
+        printf "    1. ${COLOR_DIM}./bin/split${COLOR_RESET}\n"
+        printf "    2. ${COLOR_DIM}./bin/release <version>${COLOR_RESET}\n"
     else
-        warning_msg "Not ready for release. Please fix the issues above."
+        warn_log "Not ready for release. Fix the issues above."
     fi
 }
 
-# Execute main function
+# --- Main ---
+main() {
+    echo "${COLOR_BOLD}${COLOR_CYAN}📊 Status${COLOR_RESET} ${COLOR_DIM}PHP-Flasher repository dashboard...${COLOR_RESET}"
+
+    check_git_status
+    check_dependencies
+    display_modified_files
+
+    echo ""
+    info_log "── 📦 ${COLOR_BOLD}Repositories${COLOR_RESET} ──"
+
+    for repo in $ALL_REPOS; do
+        display_repo_info "$repo"
+    done
+
+    check_release_readiness
+    echo ""
+}
+
 main

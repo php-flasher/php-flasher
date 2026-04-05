@@ -1,35 +1,79 @@
-#!/bin/bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# copy v1.0.0
+#
+# Description:
+#   Copy file contents to clipboard for sharing or pasting.
+#
+# Usage:
+#   copy [options] [directory] [extensions...]
+#
+# Examples:
+#   copy                         # Copy all files in current directory
+#   copy src                     # Copy all files in src/
+#   copy src php                 # Copy only .php files in src/
+#   copy src "php md"            # Copy .php and .md files in src/
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-# Default to the current directory if no directory is provided
-dir=${1:-.}
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options] [directory] [extensions...]
 
-# Optional: A list of file extensions to filter by, e.g., "txt md". Leave empty to include all files.
-extensions=($2)
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Copy file contents to clipboard for sharing or pasting.
 
-# Temporary file to store results
-temp_file=$(mktemp)
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}       Suppress output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}       Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}     Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}        Display this help message
 
-# Function to print file details (now inline within find command)
-print_file_details() {
-    echo "File Path: $1"
-    echo "Contents:"
-    cat "$1"
-    echo
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME}                         # Copy all files in current directory
+  ${SCRIPT_NAME} src                     # Copy all files in src/
+  ${SCRIPT_NAME} src php                 # Copy only .php files in src/
+  ${SCRIPT_NAME} src "php md"            # Copy .php and .md files in src/
+EOF
 }
 
-# Finding and processing files
-if [ ${#extensions[@]} -eq 0 ]; then
-    # If no extensions are specified, process all files
-    find "$dir" -type f -exec bash -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' bash {} \; >> "$temp_file"
-else
-    # Process only files with specified extensions
-    for ext in "${extensions[@]}"; do
-        find "$dir" -type f -name "*.$ext" -exec bash -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' bash {} \; >> "$temp_file"
-    done
-fi
+# --- Argument Parsing ---
+POSITIONAL=()
 
-# Copy results to clipboard and remove the temporary file
-cat "$temp_file" | pbcopy
-rm "$temp_file"
+while [[ $# -gt 0 ]]; do
+    if parse_common_flag "$1"; then
+        shift
+    else
+        POSITIONAL+=("$1")
+        shift
+    fi
+done
 
-echo "Results copied to clipboard."
+DIR="${POSITIONAL[1]:-.}"
+EXTENSIONS=(${(s: :)POSITIONAL[2]})
+
+# --- Main ---
+main() {
+    echo "${COLOR_BOLD}${COLOR_CYAN}📋 Copy${COLOR_RESET} ${COLOR_DIM}file contents to clipboard...${COLOR_RESET}"
+
+    local temp_file=$(mktemp)
+    trap "rm -f '$temp_file'" EXIT
+
+    debug_log "Directory: $DIR"
+    debug_log "Extensions: ${EXTENSIONS[*]:-all}"
+
+    if [[ ${#EXTENSIONS[@]} -eq 0 ]]; then
+        find "$DIR" -type f -exec sh -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' _ {} \; >> "$temp_file"
+    else
+        for ext in "${EXTENSIONS[@]}"; do
+            find "$DIR" -type f -name "*.$ext" -exec sh -c 'echo "File Path: $1"; echo "Contents:"; cat "$1"; echo' _ {} \; >> "$temp_file"
+        done
+    fi
+
+    cat "$temp_file" | pbcopy
+    ok_log "Results copied to clipboard."
+}
+
+main

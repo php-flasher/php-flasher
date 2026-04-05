@@ -1,124 +1,211 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# update v1.0.0
+#
+# Description:
+#   Update PHP-Flasher project dependencies and rebuild assets.
+#
+# Usage:
+#   update [options]
+#
+# Examples:
+#   update                       # Run all modules
+#   update --no-build            # Skip asset build
+#   update --no-composer         # Skip Composer update
+#   update --dry-run             # Preview what would run
+#   update -q                    # Quiet mode
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-set -o pipefail
+# --- Module Configuration ---
+ALL_MODULES=(composer ncu npm build)
 
-# Colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly DIM='\033[2m'
-readonly UNDERLINE='\033[4m'
-readonly BLUE='\033[34m'
-readonly GREEN='\033[32m'
-readonly RED='\033[31m'
-readonly YELLOW='\033[33m'
-readonly CYAN='\033[36m'
-readonly MAGENTA='\033[35m'
+typeset -A MODULE_NAME MODULE_ICON MODULE_ACTIVE
+MODULE_NAME=(
+    composer "Composer Update"
+    ncu      "NPM Update Check"
+    npm      "NPM Install"
+    build    "Build Assets"
+)
+MODULE_ICON=(
+    composer "🎼"
+    ncu      "🔍"
+    npm      "📦"
+    build    "🏗️"
+)
 
-# Essential emojis
-readonly ROCKET="🚀"
-readonly CHECK="✓"
-readonly ERROR="❌"
-readonly PACKAGE="📦"
-readonly SEARCH="🔍"
-readonly HAMMER="🏗️"
-readonly SPARKLES="✨"
-readonly WARNING="⚠️"
+for mod in $ALL_MODULES; do MODULE_ACTIVE[$mod]=1; done
 
-print_header() {
-    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Update ${ROCKET}${RESET}\n"
-    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${BOLD}User      : ${RESET}${MAGENTA}$(whoami)${RESET}"
-    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
-    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+# Results tracking
+typeset -A RESULT_STATUS RESULT_DURATION
+ENABLED_MODULES=()
+TOTAL_START=0
+
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options]
+
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Update PHP-Flasher project dependencies and rebuild assets.
+
+${COLOR_BOLD}${COLOR_YELLOW}Modules:${COLOR_RESET} (use --no-MODULE to skip)
+  ${COLOR_CYAN}composer${COLOR_RESET}            Composer update (prefer-lowest)
+  ${COLOR_CYAN}ncu${COLOR_RESET}                 Check for npm package updates
+  ${COLOR_CYAN}npm${COLOR_RESET}                 Install npm dependencies
+  ${COLOR_CYAN}build${COLOR_RESET}               Build front-end assets
+
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-n, --dry-run${COLOR_RESET}       Show what would run without executing
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}         Suppress command output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}         Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}       Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}          Display this help message
+
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME}                       # Run all modules
+  ${SCRIPT_NAME} --no-build            # Skip asset build
+  ${SCRIPT_NAME} --no-composer         # Skip Composer update
+  ${SCRIPT_NAME} --dry-run             # Preview what would run
+EOF
 }
 
-update_composer_dependencies() {
-    echo -e "${BOLD}${PACKAGE} Composer Dependencies${RESET}"
+# --- Argument Parsing ---
+parse_arguments() {
+    while [[ $# -gt 0 ]]; do
+        if parse_common_flag "$1"; then
+            shift
+            continue
+        fi
+        case "$1" in
+            --no-*)
+                local mod="${1#--no-}"
+                if [[ -n "${MODULE_NAME[$mod]:-}" ]]; then
+                    MODULE_ACTIVE[$mod]=0
+                else
+                    error_log "Unknown module: $mod"
+                    exit 1
+                fi
+                shift ;;
+            *)
+                error_log "Unknown option: $1"
+                usage
+                exit 1 ;;
+        esac
+    done
 
-    if composer update --prefer-lowest -W; then
-        echo -e "${CHECK} ${GREEN}Dependencies updated successfully${RESET}\n"
-        return 0
+    for mod in $ALL_MODULES; do
+        if [[ "${MODULE_ACTIVE[$mod]}" -eq 1 ]]; then
+            ENABLED_MODULES+=("$mod")
+        fi
+    done
+}
+
+# --- Module Update Functions ---
+step_composer() {
+    run_cmd composer update --prefer-lowest -W || return 1
+}
+
+step_ncu() {
+    run_cmd ncu -u || true
+    run_cmd npm run ncu --workspaces || true
+}
+
+step_npm() {
+    run_cmd npm install --force || return 1
+}
+
+step_build() {
+    run_cmd npm run build || return 1
+}
+
+# --- Module Runner ---
+run_module() {
+    local mod="$1"
+    local name="${MODULE_NAME[$mod]}"
+    local icon="${MODULE_ICON[$mod]}"
+    local start=$SECONDS
+
+    echo ""
+    info_log "── ${icon} ${COLOR_BOLD}${name}${COLOR_RESET} ──"
+
+    local exit_code=0
+    "step_${mod}" || exit_code=$?
+
+    local duration=$(printf '%.1f' $(( SECONDS - start )))
+
+    if [[ $exit_code -eq 0 ]]; then
+        RESULT_STATUS[$mod]="success"
+        ok_log "${name} (${duration}s)"
     else
-        echo -e "${ERROR} ${RED}Failed to update Composer dependencies${RESET}\n"
+        RESULT_STATUS[$mod]="failed"
+        error_log "${name} failed (${duration}s)"
+    fi
+    RESULT_DURATION[$mod]="$duration"
+}
+
+# --- Summary ---
+show_summary() {
+    local total_duration=$(printf '%.1f' $(( SECONDS - TOTAL_START )))
+    local success=0 failed=0
+
+    echo ""
+    echo ""
+    info_log "── ${COLOR_BOLD}Summary${COLOR_RESET} ──"
+    echo ""
+
+    for mod in $ENABLED_MODULES; do
+        local name="${MODULE_NAME[$mod]}"
+        local icon="${MODULE_ICON[$mod]}"
+        local mod_status="${RESULT_STATUS[$mod]}"
+        local duration="${RESULT_DURATION[$mod]}"
+        local symbol="" color=""
+
+        case "$mod_status" in
+            success) symbol="✓"; color="$COLOR_GREEN"; success=$((success + 1)) ;;
+            failed)  symbol="✗"; color="$COLOR_RED"; failed=$((failed + 1)) ;;
+        esac
+
+        printf "  %s %-24s %s%s%s  %ss\n" "$icon" "$name" "$color" "$symbol" "$COLOR_RESET" "$duration"
+    done
+
+    echo ""
+    printf "  ${COLOR_DIM}Total: ${total_duration}s${COLOR_RESET}  "
+    printf "${COLOR_GREEN}✓ ${success}${COLOR_RESET}  "
+    printf "${COLOR_RED}✗ ${failed}${COLOR_RESET}\n"
+    echo ""
+
+    if [[ $failed -eq 0 ]]; then
+        ok_log "All updates complete!"
+    else
+        error_log "Some updates failed."
         return 1
     fi
 }
 
-check_npm_updates() {
-    echo -e "${BOLD}${SEARCH} NPM Updates Check${RESET}"
-
-    # Run the commands and capture their exit codes
-    ncu -u
-    NCU_EXIT_CODE=$?
-
-    npm run ncu --workspaces
-    NPM_EXIT_CODE=$?
-
-    # Check if both commands were successful
-    if [ $NCU_EXIT_CODE -eq 0 ] && [ $NPM_EXIT_CODE -eq 0 ]; then
-        echo -e "${CHECK} ${GREEN}NPM check completed successfully${RESET}\n"
-    else
-        echo -e "${WARNING} ${YELLOW}NPM check failed, continuing...${RESET}\n"
-    fi
-
-    return 0  # Continue regardless of outcome
-}
-
-update_npm_dependencies() {
-    echo -e "${BOLD}${PACKAGE} NPM Dependencies${RESET}"
-
-    if npm install --force; then
-        echo -e "${CHECK} ${GREEN}NPM dependencies installed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}NPM install failed, continuing...${RESET}\n"
-        return 0  # Continue despite failure
-    fi
-}
-
-build_assets() {
-    echo -e "${BOLD}${HAMMER} Building Assets${RESET}"
-
-    if npm run build; then
-        echo -e "${CHECK} ${GREEN}Assets built successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}Build failed, continuing...${RESET}\n"
-        return 0  # Continue despite failure
-    fi
-}
-
+# --- Main ---
 main() {
-    local start_time=$(date +%s)
-    local success=true
+    parse_arguments "$@"
 
-    print_header
+    TOTAL_START=$SECONDS
 
-    # Update composer dependencies
-    update_composer_dependencies || success=false
-
-    # Check NPM updates
-    check_npm_updates
-
-    # Update NPM dependencies
-    update_npm_dependencies
-
-    # Build assets
-    build_assets
-
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-
-    # Summary
-    echo -e "${BOLD}${CYAN}Update Summary${RESET}"
-    if [ "$success" = true ]; then
-        echo -e "${SPARKLES} ${GREEN}Update completed successfully${RESET}"
-    else
-        echo -e "${WARNING} ${YELLOW}Update completed with some issues${RESET}"
+    if [[ ${#ENABLED_MODULES[@]} -eq 0 ]]; then
+        warn_log "No modules selected."
+        exit 1
     fi
-    echo -e "Duration    : ${YELLOW}${duration}s${RESET}\n"
 
-    [ "$success" = true ] && exit 0 || exit 1
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo "${COLOR_BOLD}${COLOR_YELLOW}⚡ Update${COLOR_RESET} ${COLOR_DIM}PHP-Flasher dependencies...${COLOR_RESET} ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET}"
+    else
+        echo "${COLOR_BOLD}${COLOR_CYAN}⚡ Update${COLOR_RESET} ${COLOR_DIM}PHP-Flasher dependencies...${COLOR_RESET}"
+    fi
+
+    for mod in $ENABLED_MODULES; do
+        run_module "$mod"
+    done
+
+    show_summary
 }
 
-main
+main "$@"

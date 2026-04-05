@@ -1,243 +1,267 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# release v1.0.0
+#
+# Description:
+#   Create release tags across all PHP-Flasher repositories.
+#   Validates environment, clones each repo, creates and pushes tags.
+#
+# Usage:
+#   release <version> [options]
+#
+# Examples:
+#   release 2.6.0                # Tag all repos with v2.6.0
+#   release --dry-run 2.6.0      # Preview what would be tagged
+#   release -q 2.6.0             # Quiet mode
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-set -o pipefail
+RELEASE_BRANCH="2.x"
 
-# Colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly DIM='\033[2m'
-readonly UNDERLINE='\033[4m'
-readonly BLUE='\033[34m'
-readonly GREEN='\033[32m'
-readonly RED='\033[31m'
-readonly YELLOW='\033[33m'
-readonly CYAN='\033[36m'
-readonly MAGENTA='\033[35m'
-
-# Essential emojis
-readonly ROCKET="🚀"
-readonly CHECK="✓"
-readonly ERROR="❌"
-readonly SKIP="⏭️"
-
-# Configuration
-readonly RELEASE_BRANCH="2.x"
-readonly REPOSITORIES=(
-    "flasher"
-    "flasher-laravel"
-    "flasher-symfony"
-    "flasher-noty"
-    "flasher-noty-laravel"
-    "flasher-noty-symfony"
-    "flasher-notyf"
-    "flasher-notyf-laravel"
-    "flasher-notyf-symfony"
-    "flasher-sweetalert"
-    "flasher-sweetalert-laravel"
-    "flasher-sweetalert-symfony"
-    "flasher-toastr"
-    "flasher-toastr-laravel"
-    "flasher-toastr-symfony"
+# --- Repository Configuration ---
+ALL_REPOS=(
+    flasher
+    flasher-laravel
+    flasher-symfony
+    flasher-noty
+    flasher-noty-laravel
+    flasher-noty-symfony
+    flasher-notyf
+    flasher-notyf-laravel
+    flasher-notyf-symfony
+    flasher-sweetalert
+    flasher-sweetalert-laravel
+    flasher-sweetalert-symfony
+    flasher-toastr
+    flasher-toastr-laravel
+    flasher-toastr-symfony
 )
 
-print_header() {
-    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Release ${ROCKET}${RESET}\n"
-    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${BOLD}User      : ${RESET}${MAGENTA}$(whoami)${RESET}"
-    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$RELEASE_BRANCH${RESET}"
-    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+# Results tracking
+typeset -A RESULT_STATUS RESULT_DURATION
+TOTAL_START=0
+
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options] <version>
+
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Create release tags across all PHP-Flasher repositories.
+
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}-n, --dry-run${COLOR_RESET}       Show what would be tagged without executing
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}         Suppress command output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}         Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}       Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}          Display this help message
+
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME} 2.6.0                # Tag all repos with v2.6.0
+  ${SCRIPT_NAME} --dry-run 2.6.0      # Preview what would be tagged
+EOF
 }
 
-draw_progress_bar() {
-    local percent=$1
-    local width=50
-    local filled=$(((width * percent + 99) / 100)) # Rounded up division
-    local empty=$((width - filled))
+# --- Argument Parsing ---
+TAG_VERSION=""
 
-    echo -n "["
-    printf "${GREEN}█%.0s${RESET}" $(seq 1 $filled)
-    printf "${DIM}─%.0s${RESET}" $(seq 1 $empty)
-    echo -n "] ${percent}%"
-}
-
-check_tag_exists() {
-    local repo=$1
-    local tag=$2
-    local remote_url="git@github.com:php-flasher/$repo.git"
-
-    if git ls-remote --tags "$remote_url" | grep -q "refs/tags/$tag$"; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-release_repository() {
-    local repo=$1
-    local version=$2
-    local tmp_dir="/tmp/php-flasher"
-    local remote_url="git@github.com:php-flasher/$repo.git"
-
-    echo -e "\nGitHub : ${UNDERLINE}${BLUE}https://github.com/php-flasher/${repo}${RESET}"
-    echo -e "Tag    : ${YELLOW}$version${RESET}"
-
-    if check_tag_exists "$repo" "$version"; then
-        echo -e "${SKIP} ${YELLOW}Tag $version already exists, skipping...${RESET}"
-        return 0
-    fi
-
-    # Clean and create temporary directory
-    rm -rf "$tmp_dir"
-    mkdir -p "$tmp_dir"
-
-    echo -e "${CYAN}Cloning repository...${RESET}"
-    if ! git clone "$remote_url" "$tmp_dir" >/dev/null 2>&1; then
-        echo -e "${ERROR} ${RED}Failed to clone repository${RESET}"
-        return 1
-    fi
-
-    (
-        cd "$tmp_dir"
-        echo -e "${CYAN}Creating tag $version...${RESET}"
-        git checkout "$RELEASE_BRANCH" >/dev/null 2>&1
-        git tag "$version"
-
-        if ! git push origin --tags --force >/dev/null 2>&1; then
-            echo -e "${ERROR} ${RED}Failed to push tag${RESET}"
-            return 1
+parse_arguments() {
+    while [[ $# -gt 0 ]]; do
+        if parse_common_flag "$1"; then
+            shift
+            continue
         fi
-    )
+        case "$1" in
+            -*)
+                error_log "Unknown option: $1"
+                usage
+                exit 1 ;;
+            *)
+                TAG_VERSION="$1"
+                shift ;;
+        esac
+    done
 
-    echo -e "${CHECK} ${GREEN}Successfully tagged${RESET}"
-    return 0
+    if [[ -z "$TAG_VERSION" ]]; then
+        error_log "Version tag is required"
+        usage
+        exit 1
+    fi
+
+    [[ $TAG_VERSION != v* ]] && TAG_VERSION="v$TAG_VERSION"
 }
 
+# --- Validation ---
 validate_version() {
-    local version=$1
-    if [[ ! $version =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-        echo -e "\n${ERROR} ${RED}Invalid version format: $version${RESET}"
-        echo -e "Version must be in format X.Y.Z or vX.Y.Z (e.g., 2.1.6 or v2.1.6)\n"
+    if [[ ! $TAG_VERSION =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        error_log "Invalid version format: $TAG_VERSION"
+        info_log "Version must be X.Y.Z or vX.Y.Z (e.g., 2.6.0 or v2.6.0)"
         exit 1
     fi
 }
 
 validate_environment() {
-    echo -e "${CYAN}Validating environment...${RESET}"
+    info_log "── 🔐 ${COLOR_BOLD}Environment Validation${COLOR_RESET} ──"
+
     local has_error=0
 
     # Check branch
     local current_branch=$(git rev-parse --abbrev-ref HEAD)
-    echo -ne "${CYAN}Checking branch...${RESET} "
     if [[ "$RELEASE_BRANCH" != "$current_branch" ]]; then
-        echo -e "${ERROR} ${RED}Wrong branch: $current_branch (expected: $RELEASE_BRANCH)${RESET}"
+        error_log "Wrong branch: $current_branch (expected: $RELEASE_BRANCH)"
         has_error=1
     else
-        echo -e "${CHECK} ${GREEN}On correct branch: $current_branch${RESET}"
+        ok_log "On correct branch: $current_branch"
     fi
 
     # Check working directory
-    echo -ne "${CYAN}Checking working directory...${RESET} "
-    if [[ ! -z "$(git status --porcelain)" ]]; then
-        echo -e "${ERROR} ${RED}Working directory is not clean${RESET}"
-        echo -e "${DIM}Hint: Commit or stash your changes first${RESET}"
+    if [[ -n "$(git status --porcelain)" ]]; then
+        error_log "Working directory is not clean"
         has_error=1
     else
-        echo -e "${CHECK} ${GREEN}Working directory is clean${RESET}"
+        ok_log "Working directory is clean"
     fi
 
     # Check sync with remote
-    echo -ne "${CYAN}Checking remote synchronization...${RESET} "
     git fetch origin > /dev/null 2>&1
     local local_sha=$(git rev-parse HEAD)
-    local remote_sha=$(git rev-parse origin/$RELEASE_BRANCH)
+    local remote_sha=$(git rev-parse "origin/$RELEASE_BRANCH")
 
-    if [[ $local_sha != $remote_sha ]]; then
-        echo -e "${ERROR} ${RED}Branch is not in sync with origin/$RELEASE_BRANCH${RESET}"
-        echo -e "\n${YELLOW}Local  SHA: ${local_sha}${RESET}"
-        echo -e "${YELLOW}Remote SHA: ${remote_sha}${RESET}"
-        echo -e "\n${DIM}To fix this, try:${RESET}"
-
-        # Check if we have unpushed commits
-        if git rev-list origin/$RELEASE_BRANCH..$RELEASE_BRANCH --count > /dev/null 2>&1; then
-            local ahead=$(git rev-list origin/$RELEASE_BRANCH..$RELEASE_BRANCH --count)
-            local behind=$(git rev-list $RELEASE_BRANCH..origin/$RELEASE_BRANCH --count)
-
-            if [[ $ahead -gt 0 && $behind -gt 0 ]]; then
-                echo -e "${YELLOW}Your branch is $ahead commits ahead and $behind commits behind origin/$RELEASE_BRANCH${RESET}"
-                echo -e "1. ${CYAN}git pull origin $RELEASE_BRANCH${RESET} (to get remote changes)"
-                echo -e "2. ${CYAN}git push origin $RELEASE_BRANCH${RESET} (to push your changes)"
-            elif [[ $ahead -gt 0 ]]; then
-                echo -e "${YELLOW}Your branch is $ahead commits ahead of origin/$RELEASE_BRANCH${RESET}"
-                echo -e "Run: ${CYAN}git push origin $RELEASE_BRANCH${RESET}"
-            elif [[ $behind -gt 0 ]]; then
-                echo -e "${YELLOW}Your branch is $behind commits behind origin/$RELEASE_BRANCH${RESET}"
-                echo -e "Run: ${CYAN}git pull origin $RELEASE_BRANCH${RESET}"
-            fi
-        fi
+    if [[ "$local_sha" != "$remote_sha" ]]; then
+        error_log "Branch is not in sync with origin/$RELEASE_BRANCH"
         has_error=1
     else
-        echo -e "${CHECK} ${GREEN}Branch is in sync with remote${RESET}"
+        ok_log "Branch is in sync with remote"
     fi
 
     if [[ $has_error -eq 1 ]]; then
-        echo -e "\n${ERROR} ${RED}Environment validation failed${RESET}"
+        echo ""
+        error_log "Environment validation failed"
         exit 1
     fi
 
-    echo -e "\n${CHECK} ${GREEN}Environment validated successfully${RESET}\n"
+    echo ""
+    ok_log "Environment validated"
 }
 
-main() {
-    if [ "$#" -ne 1 ]; then
-        echo -e "${ERROR} ${RED}Version tag required${RESET}"
-        echo -e "Usage: $0 <version>"
-        echo -e "Example: $0 2.1.6\n"
-        exit 1
+# --- Release Function ---
+check_tag_exists() {
+    local repo=$1 tag=$2
+    git ls-remote --tags "git@github.com:php-flasher/$repo.git" | grep -q "refs/tags/$tag$"
+}
+
+release_repository() {
+    local repo=$1 version=$2
+    local tmp_dir="/tmp/php-flasher"
+    local remote_url="git@github.com:php-flasher/$repo.git"
+
+    debug_log "Releasing $repo with tag $version"
+
+    if check_tag_exists "$repo" "$version"; then
+        warn_log "Tag $version already exists, skipping"
+        return 2
     fi
 
-    local version=$1
-    [[ $version != v* ]] && version="v$version"
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}git clone $remote_url${COLOR_RESET}\n"
+        printf "  ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET} ${COLOR_DIM}git tag $version && git push origin --tags${COLOR_RESET}\n"
+        return 0
+    fi
 
-    print_header
-    validate_version "$version"
+    rm -rf "$tmp_dir"
+    mkdir -p "$tmp_dir"
+
+    if ! git clone "$remote_url" "$tmp_dir" >/dev/null 2>&1; then
+        error_log "Failed to clone $repo"
+        return 1
+    fi
+
+    (
+        cd "$tmp_dir"
+        git checkout "$RELEASE_BRANCH" >/dev/null 2>&1
+        git tag "$version"
+
+        if ! git push origin --tags --force >/dev/null 2>&1; then
+            error_log "Failed to push tag to $repo"
+            return 1
+        fi
+    ) || return 1
+
+    ok_log "Tagged ${COLOR_BOLD}${repo}${COLOR_RESET} with ${COLOR_YELLOW}${version}${COLOR_RESET}"
+}
+
+# --- Main ---
+main() {
+    parse_arguments "$@"
+    validate_version
+
+    TOTAL_START=$SECONDS
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo "${COLOR_BOLD}${COLOR_YELLOW}🏷️  Release${COLOR_RESET} ${COLOR_DIM}PHP-Flasher tags...${COLOR_RESET} ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET}"
+    else
+        echo "${COLOR_BOLD}${COLOR_CYAN}🏷️  Release${COLOR_RESET} ${COLOR_DIM}PHP-Flasher tags...${COLOR_RESET}"
+    fi
+    info_log "Version: ${COLOR_BOLD}${TAG_VERSION}${COLOR_RESET}"
+
+    echo ""
     validate_environment
 
-    local success_count=0
-    local skipped_count=0
-    local failed_count=0
-    local total_count=${#REPOSITORIES[@]}
-    local start_time=$(date +%s)
+    local success=0 skipped=0 failed=0
+    local failed_repos=()
+    local total=${#ALL_REPOS[@]}
+    local current=0
 
-    for repo in "${REPOSITORIES[@]}"; do
-        local current_count=$((success_count + skipped_count + failed_count + 1))
-        local percent=$((current_count * 100 / total_count))
+    for repo in $ALL_REPOS; do
+        current=$((current + 1))
+        local start=$SECONDS
 
-        echo -e "\nProgress: ${BOLD}$current_count/$total_count${RESET}"
-        # draw_progress_bar $percent
+        echo ""
+        info_log "── 🏷️  ${COLOR_BOLD}${repo}${COLOR_RESET} ${COLOR_DIM}($current/$total)${COLOR_RESET} ──"
 
-        if release_repository "$repo" "$version"; then
-            if check_tag_exists "$repo" "$version"; then
-                ((skipped_count++))
-            else
-                ((success_count++))
-            fi
-        else
-            ((failed_count++))
-        fi
+        local exit_code=0
+        release_repository "$repo" "$TAG_VERSION" || exit_code=$?
+
+        local duration=$(printf '%.1f' $(( SECONDS - start )))
+        RESULT_DURATION[$repo]="$duration"
+
+        case $exit_code in
+            0) RESULT_STATUS[$repo]="success"; success=$((success + 1)) ;;
+            1) RESULT_STATUS[$repo]="failed"; failed=$((failed + 1)); failed_repos+=("$repo") ;;
+            2) RESULT_STATUS[$repo]="skipped"; skipped=$((skipped + 1)) ;;
+        esac
     done
 
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-
     # Summary
-    echo -e "\n${BOLD}${CYAN}Release Summary${RESET}"
-    echo -e "Successful : ${GREEN}$success_count${RESET}"
-    echo -e "Skipped    : ${YELLOW}$skipped_count${RESET}"
-    [ $failed_count -gt 0 ] && echo -e "Failed     : ${RED}$failed_count${RESET}"
-    echo -e "Duration   : ${YELLOW}${duration}s${RESET}"
-    echo -e "Total repos: ${CYAN}$total_count${RESET}\n"
+    local total_duration=$(printf '%.1f' $(( SECONDS - TOTAL_START )))
 
-    [ $failed_count -gt 0 ] && exit 1 || exit 0
+    echo ""
+    echo ""
+    info_log "── ${COLOR_BOLD}Summary${COLOR_RESET} ──"
+    echo ""
+    printf "  ${COLOR_DIM}Tag:${COLOR_RESET} ${COLOR_BOLD}${TAG_VERSION}${COLOR_RESET}\n"
+    echo ""
+    printf "  ${COLOR_GREEN}✓ ${success}${COLOR_RESET} tagged  "
+    printf "${COLOR_YELLOW}⚠ ${skipped}${COLOR_RESET} skipped  "
+    printf "${COLOR_RED}✗ ${failed}${COLOR_RESET} failed  "
+    printf "${COLOR_DIM}(${total} repos, ${total_duration}s)${COLOR_RESET}\n"
+
+    if [[ ${#failed_repos[@]} -gt 0 ]]; then
+        echo ""
+        error_log "Failed repos:"
+        for repo in "${failed_repos[@]}"; do
+            printf "  ${COLOR_RED}✗${COLOR_RESET} %s\n" "$repo"
+        done
+    fi
+
+    echo ""
+    if [[ $failed -eq 0 ]]; then
+        ok_log "Release complete!"
+    else
+        error_log "Release had failures."
+        exit 1
+    fi
 }
 
 main "$@"

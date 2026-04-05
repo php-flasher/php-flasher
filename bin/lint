@@ -1,174 +1,271 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# -----------------------------------------------------------------------------
+# lint v1.0.0
+#
+# Description:
+#   Run PHP-Flasher code quality checks and test suites.
+#
+# Usage:
+#   lint [options]
+#
+# Examples:
+#   lint                         # Run all quality checks
+#   lint --no-phpunit            # Skip PHPUnit tests
+#   lint --no-vitest             # Skip Vitest tests
+#   lint --rector --phpstan      # Run only Rector and PHPStan
+#   lint --dry-run               # Preview what would run
+#   lint -q                      # Quiet mode
+# -----------------------------------------------------------------------------
+VERSION="1.0.0"
+source "${0:A:h}/_lib.zsh"
 
-set -o pipefail
-
-# PHP binary to use (defaults to PHP 8.2)
 PHP_BINARY="${PHP_BINARY:-/opt/homebrew/opt/php@8.2/bin/php}"
 
-# Colors and styles
-readonly RESET='\033[0m'
-readonly BOLD='\033[1m'
-readonly DIM='\033[2m'
-readonly UNDERLINE='\033[4m'
-readonly BLUE='\033[34m'
-readonly GREEN='\033[32m'
-readonly RED='\033[31m'
-readonly YELLOW='\033[33m'
-readonly CYAN='\033[36m'
-readonly MAGENTA='\033[35m'
+# --- Module Configuration ---
+ALL_MODULES=(rector csfixer phpstan composer phplint phpunit vitest)
 
-# Essential emojis
-readonly ROCKET="🚀"
-readonly CHECK="✓"
-readonly ERROR="❌"
-readonly WARNING="⚠️"
-readonly SEARCH="🔍"
-readonly PALETTE="🎨"
-readonly MICROSCOPE="🔬"
-readonly MEMO="📝"
-readonly MAGNIFIER="🔎"
-readonly TEST_TUBE="🧪"
-readonly SPARKLES="✨"
+typeset -A MODULE_NAME MODULE_ICON MODULE_DEFAULT MODULE_ACTIVE
+MODULE_NAME=(
+    rector   "Rector"
+    csfixer  "PHP-CS-Fixer"
+    phpstan  "PHPStan"
+    composer "Composer Validate"
+    phplint  "PHPLint"
+    phpunit  "PHPUnit"
+    vitest   "Vitest"
+)
+MODULE_ICON=(
+    rector   "🔍"
+    csfixer  "🎨"
+    phpstan  "🔬"
+    composer "📝"
+    phplint  "🔎"
+    phpunit  "🧪"
+    vitest   "🧪"
+)
+MODULE_DEFAULT=(
+    rector 1 csfixer 1 phpstan 1 composer 1 phplint 1 phpunit 1 vitest 1
+)
 
-print_header() {
-    echo -e "\n${BOLD}${BLUE}${ROCKET} PHP-Flasher Code Quality Check ${ROCKET}${RESET}\n"
-    echo -e "${BOLD}Date      : ${RESET}${CYAN}$(date -u '+%Y-%m-%d %H:%M:%S') UTC${RESET}"
-    echo -e "${BOLD}User      : ${RESET}${MAGENTA}yoeunes${RESET}"
-    echo -e "${BOLD}Branch    : ${RESET}${GREEN}$(git rev-parse --abbrev-ref HEAD)${RESET}"
-    echo -e "${BOLD}Directory : ${RESET}${BLUE}$(pwd)${RESET}\n"
+for mod in $ALL_MODULES; do MODULE_ACTIVE[$mod]=${MODULE_DEFAULT[$mod]}; done
+
+typeset -A RESULT_STATUS RESULT_DURATION
+ENABLED_MODULES=()
+TOTAL_START=0
+EXPLICIT_ENABLE=0
+
+# --- Usage ---
+usage() {
+    cat <<EOF
+${COLOR_BOLD}${COLOR_GREEN}Usage:${COLOR_RESET} ${SCRIPT_NAME} [options]
+
+${COLOR_BOLD}${COLOR_GREEN}Description:${COLOR_RESET}
+  Run PHP-Flasher code quality checks and test suites.
+
+${COLOR_BOLD}${COLOR_YELLOW}Modules:${COLOR_RESET} (use --MODULE to enable only, --no-MODULE to skip)
+  ${COLOR_CYAN}rector${COLOR_RESET}              Rector automated refactoring
+  ${COLOR_CYAN}csfixer${COLOR_RESET}             PHP-CS-Fixer code style
+  ${COLOR_CYAN}phpstan${COLOR_RESET}             PHPStan static analysis
+  ${COLOR_CYAN}composer${COLOR_RESET}            Composer file validation
+  ${COLOR_CYAN}phplint${COLOR_RESET}             PHP syntax linting
+  ${COLOR_CYAN}phpunit${COLOR_RESET}             PHPUnit test suite
+  ${COLOR_CYAN}vitest${COLOR_RESET}              Vitest JavaScript tests
+
+${COLOR_BOLD}${COLOR_YELLOW}Options:${COLOR_RESET}
+  ${COLOR_CYAN}--php-binary PATH${COLOR_RESET}   Path to PHP binary (default: php@8.2)
+  ${COLOR_CYAN}-n, --dry-run${COLOR_RESET}       Show what would run without executing
+  ${COLOR_CYAN}-q, --quiet${COLOR_RESET}         Suppress command output
+  ${COLOR_CYAN}-d, --debug${COLOR_RESET}         Enable debug logging
+  ${COLOR_CYAN}-v, --version${COLOR_RESET}       Display version
+  ${COLOR_CYAN}-h, --help${COLOR_RESET}          Display this help message
+
+${COLOR_BOLD}${COLOR_BLUE}Examples:${COLOR_RESET}
+  ${SCRIPT_NAME}                         # Run all quality checks
+  ${SCRIPT_NAME} --no-phpunit            # Skip PHPUnit tests
+  ${SCRIPT_NAME} --rector --phpstan      # Run only Rector and PHPStan
+  ${SCRIPT_NAME} --dry-run               # Preview what would run
+EOF
 }
 
-run_rector() {
-    echo -e "${BOLD}${SEARCH} Running Rector${RESET}"
-
-    if $PHP_BINARY vendor/bin/rector; then
-        echo -e "${CHECK} ${GREEN}Rector completed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}Rector found issues${RESET}\n"
-        return 1
-    fi
-}
-
-run_php_cs_fixer() {
-    echo -e "${BOLD}${PALETTE} Running PHP-CS-Fixer${RESET}"
-
-    if $PHP_BINARY vendor/bin/php-cs-fixer fix -v; then
-        echo -e "${CHECK} ${GREEN}PHP-CS-Fixer completed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}CS-Fixer found issues${RESET}\n"
-        return 1
-    fi
-}
-
-run_phpstan() {
-    echo -e "${BOLD}${MICROSCOPE} Running PHPStan${RESET}"
-
-    if $PHP_BINARY vendor/bin/phpstan analyse --memory-limit=-1; then
-        echo -e "${CHECK} ${GREEN}PHPStan analysis completed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}PHPStan found issues${RESET}\n"
-        return 1
-    fi
-}
-
-validate_composer_files() {
-    echo -e "${BOLD}${MEMO} Validating Composer Files${RESET}"
-    local validation_success=true
-
-    if ! composer validate --strict; then
-        echo -e "${WARNING} ${YELLOW}Main composer.json validation failed${RESET}"
-        validation_success=false
-    fi
-
-    # Find and validate all composer.json files in src/
-    find src/ -name "composer.json" | while read file; do
-        echo -e "${DIM}Validating ${file}${RESET}"
-        if ! composer validate --strict "$file"; then
-            echo -e "${WARNING} ${YELLOW}Package validation failed for ${file}${RESET}"
-            validation_success=false
+# --- Argument Parsing ---
+parse_arguments() {
+    while [[ $# -gt 0 ]]; do
+        if parse_common_flag "$1"; then
+            shift
+            continue
         fi
+        case "$1" in
+            --php-binary)
+                if [[ -n "${2:-}" ]]; then
+                    PHP_BINARY="$2"; shift 2
+                else
+                    error_log "--php-binary requires a path"
+                    exit 1
+                fi ;;
+            --no-*)
+                local mod="${1#--no-}"
+                if [[ -n "${MODULE_NAME[$mod]:-}" ]]; then
+                    MODULE_ACTIVE[$mod]=0
+                else
+                    error_log "Unknown module: $mod"
+                    exit 1
+                fi
+                shift ;;
+            --*)
+                local mod="${1#--}"
+                if [[ -n "${MODULE_NAME[$mod]:-}" ]]; then
+                    # First explicit --MODULE disables all defaults
+                    if [[ $EXPLICIT_ENABLE -eq 0 ]]; then
+                        EXPLICIT_ENABLE=1
+                        for m in $ALL_MODULES; do MODULE_ACTIVE[$m]=0; done
+                    fi
+                    MODULE_ACTIVE[$mod]=1
+                else
+                    error_log "Unknown option: $1"
+                    exit 1
+                fi
+                shift ;;
+            *)
+                error_log "Unknown argument: $1"
+                usage
+                exit 1 ;;
+        esac
     done
 
-    if [ "$validation_success" = true ]; then
-        echo -e "${CHECK} ${GREEN}All composer.json files are valid${RESET}\n"
-        return 0
+    for mod in $ALL_MODULES; do
+        if [[ "${MODULE_ACTIVE[$mod]}" -eq 1 ]]; then
+            ENABLED_MODULES+=("$mod")
+        fi
+    done
+}
+
+# --- Module Functions ---
+step_rector() {
+    run_cmd $PHP_BINARY vendor/bin/rector || return 1
+}
+
+step_csfixer() {
+    run_cmd $PHP_BINARY vendor/bin/php-cs-fixer fix -v || return 1
+}
+
+step_phpstan() {
+    run_cmd $PHP_BINARY vendor/bin/phpstan analyse --memory-limit=-1 || return 1
+}
+
+step_composer() {
+    run_cmd composer validate --strict || return 1
+    local validation_ok=true
+    for file in src/*/composer.json src/*/*/composer.json; do
+        [[ -f "$file" ]] || continue
+        debug_log "Validating $file"
+        run_cmd composer validate --strict "$file" || validation_ok=false
+    done
+    $validation_ok || return 1
+}
+
+step_phplint() {
+    run_cmd $PHP_BINARY vendor/bin/phplint || return 1
+}
+
+step_phpunit() {
+    run_cmd $PHP_BINARY vendor/bin/phpunit || return 1
+}
+
+step_vitest() {
+    run_cmd npm run test -- --run || return 1
+}
+
+# --- Module Runner ---
+run_module() {
+    local mod="$1"
+    local name="${MODULE_NAME[$mod]}"
+    local icon="${MODULE_ICON[$mod]}"
+    local start=$SECONDS
+
+    echo ""
+    info_log "── ${icon} ${COLOR_BOLD}${name}${COLOR_RESET} ──"
+
+    local exit_code=0
+    "step_${mod}" || exit_code=$?
+
+    local duration=$(printf '%.1f' $(( SECONDS - start )))
+
+    if [[ $exit_code -eq 0 ]]; then
+        RESULT_STATUS[$mod]="success"
+        ok_log "${name} (${duration}s)"
+    elif [[ $exit_code -eq 2 ]]; then
+        RESULT_STATUS[$mod]="warnings"
+        warn_log "${name} completed with warnings (${duration}s)"
     else
-        echo -e "${WARNING} ${YELLOW}Some composer.json files have issues${RESET}\n"
+        RESULT_STATUS[$mod]="failed"
+        error_log "${name} failed (${duration}s)"
+    fi
+    RESULT_DURATION[$mod]="$duration"
+}
+
+# --- Summary ---
+show_summary() {
+    local total_duration=$(printf '%.1f' $(( SECONDS - TOTAL_START )))
+    local success=0 warnings=0 failed=0
+
+    echo ""
+    echo ""
+    info_log "── ${COLOR_BOLD}Summary${COLOR_RESET} ──"
+    echo ""
+
+    for mod in $ENABLED_MODULES; do
+        local name="${MODULE_NAME[$mod]}"
+        local icon="${MODULE_ICON[$mod]}"
+        local mod_status="${RESULT_STATUS[$mod]}"
+        local duration="${RESULT_DURATION[$mod]}"
+        local symbol="" color=""
+
+        case "$mod_status" in
+            success)  symbol="✓"; color="$COLOR_GREEN"; success=$((success + 1)) ;;
+            warnings) symbol="⚠"; color="$COLOR_YELLOW"; warnings=$((warnings + 1)) ;;
+            failed)   symbol="✗"; color="$COLOR_RED"; failed=$((failed + 1)) ;;
+        esac
+
+        printf "  %s %-24s %s%s%s  %ss\n" "$icon" "$name" "$color" "$symbol" "$COLOR_RESET" "$duration"
+    done
+
+    echo ""
+    printf "  ${COLOR_DIM}Total: ${total_duration}s${COLOR_RESET}  "
+    printf "${COLOR_GREEN}✓ ${success}${COLOR_RESET}  "
+    printf "${COLOR_YELLOW}⚠ ${warnings}${COLOR_RESET}  "
+    printf "${COLOR_RED}✗ ${failed}${COLOR_RESET}\n"
+    echo ""
+
+    if [[ $failed -eq 0 ]]; then
+        ok_log "All quality checks passed!"
+    else
+        error_log "Some quality checks failed."
         return 1
     fi
 }
 
-run_phplint() {
-    echo -e "${BOLD}${MAGNIFIER} Running PHPLint${RESET}"
-
-    if $PHP_BINARY vendor/bin/phplint; then
-        echo -e "${CHECK} ${GREEN}PHPLint completed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}PHPLint found issues${RESET}\n"
-        return 1
-    fi
-}
-
-run_phpunit() {
-    echo -e "${BOLD}${TEST_TUBE} Running PHPUnit Tests${RESET}"
-
-    if $PHP_BINARY vendor/bin/phpunit; then
-        echo -e "${CHECK} ${GREEN}All tests passed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}Tests failed${RESET}\n"
-        return 1
-    fi
-}
-
-run_vitest() {
-    echo -e "${BOLD}${TEST_TUBE} Running Vitest Tests${RESET}"
-
-    if npm run test -- --run; then
-        echo -e "${CHECK} ${GREEN}Vitest tests passed successfully${RESET}\n"
-        return 0
-    else
-        echo -e "${WARNING} ${YELLOW}Vitest tests failed${RESET}\n"
-        return 1
-    fi
-}
-
+# --- Main ---
 main() {
-    local start_time=$(date +%s)
-    local issues_found=false
+    parse_arguments "$@"
 
-    print_header
+    TOTAL_START=$SECONDS
 
-    # Run all quality tools
-    run_rector || issues_found=true
-    run_php_cs_fixer || issues_found=true
-    run_phpstan || issues_found=true
-    validate_composer_files || issues_found=true
-    run_phplint || issues_found=true
-    run_phpunit || issues_found=true
-    run_vitest || issues_found=true
-
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-
-    # Summary
-    echo -e "${BOLD}${CYAN}Quality Check Summary${RESET}"
-    if [ "$issues_found" = true ]; then
-        echo -e "${WARNING} ${YELLOW}Quality check completed with issues${RESET}"
-    else
-        echo -e "${SPARKLES} ${GREEN}All quality checks passed successfully${RESET}"
+    if [[ ${#ENABLED_MODULES[@]} -eq 0 ]]; then
+        warn_log "No modules selected."
+        exit 1
     fi
-    echo -e "Duration    : ${YELLOW}${duration}s${RESET}\n"
 
-    echo -e "${SPARKLES} ${BOLD}Quality Check Complete${RESET}"
-    echo -e "${CHECK} All checks finished\n"
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo "${COLOR_BOLD}${COLOR_YELLOW}🔍 Lint${COLOR_RESET} ${COLOR_DIM}PHP-Flasher code quality checks...${COLOR_RESET} ${COLOR_YELLOW}[DRY-RUN]${COLOR_RESET}"
+    else
+        echo "${COLOR_BOLD}${COLOR_CYAN}🔍 Lint${COLOR_RESET} ${COLOR_DIM}PHP-Flasher code quality checks...${COLOR_RESET}"
+    fi
 
-    # We don't exit with error code because the original task continues despite failures
-    exit 0
+    for mod in $ENABLED_MODULES; do
+        run_module "$mod"
+    done
+
+    show_summary
 }
 
-main
+main "$@"
