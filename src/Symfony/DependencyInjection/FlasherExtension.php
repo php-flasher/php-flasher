@@ -39,6 +39,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
      * @param array{
      *     default: string,
      *     main_script: string,
+     *     public_path: string,
      *     inject_assets: bool,
      *     excluded_paths: list<non-empty-string>,
      *     presets: array<string, mixed>,
@@ -67,6 +68,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
      * @param array{
      *     default: string,
      *     main_script: string,
+     *     public_path: string,
      *     inject_assets: bool,
      *     excluded_paths: list<non-empty-string>,
      *     presets: array<string, mixed>,
@@ -91,6 +93,7 @@ final class FlasherExtension extends AbstractExtension implements CompilerPassIn
             ->set('flasher.json_manifest_path', $manifestPath)
             ->set('flasher.default', $config['default'])
             ->set('flasher.main_script', $config['main_script'])
+            ->set('flasher.public_path', $config['public_path'])
             ->set('flasher.inject_assets', $config['inject_assets'])
             ->set('flasher.excluded_paths', $config['excluded_paths'])
             ->set('flasher.flash_bag', $config['flash_bag'])

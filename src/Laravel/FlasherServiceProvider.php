@@ -285,11 +285,13 @@ final class FlasherServiceProvider extends PluginServiceProvider
 
     private function registerAssetManager(): void
     {
-        $this->app->singleton('flasher.asset_manager', static function () {
+        $this->app->singleton('flasher.asset_manager', static function (Application $app) {
             $publicDir = public_path('/');
             $manifestPath = public_path('vendor'.\DIRECTORY_SEPARATOR.'flasher'.\DIRECTORY_SEPARATOR.'manifest.json');
+            $publicPath = $app->make('config')->get('flasher.public_path', '');
+            $publicPath = \is_string($publicPath) ? $publicPath : '';
 
-            return new AssetManager($publicDir, $manifestPath);
+            return new AssetManager($publicDir, $manifestPath, $publicPath);
         });
     }
 

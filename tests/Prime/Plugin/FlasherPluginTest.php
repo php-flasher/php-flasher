@@ -48,6 +48,7 @@ final class FlasherPluginTest extends TestCase
         $config = [
             'default' => 'flasher',
             'main_script' => '/vendor/flasher/flasher.min.js',
+            'public_path' => '',
             'scripts' => [],
             'styles' => ['/vendor/flasher/flasher.min.css'],
             'options' => [],

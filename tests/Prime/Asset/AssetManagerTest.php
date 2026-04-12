@@ -306,4 +306,87 @@ final class AssetManagerTest extends TestCase
         // Should use forward slashes in keys
         $this->assertArrayHasKey('/test1.css', $decoded);
     }
+
+    public function testEmptyPublicPathLeavesPathsUnchanged(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '');
+
+        $this->assertSame('/vendor/flasher/flasher.min.js', $assetManager->getPath('/vendor/flasher/flasher.min.js'));
+    }
+
+    public function testPublicPathIsPrependedToServerRelativePath(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $this->assertSame('/Symfony/vendor/flasher/flasher.min.js', $assetManager->getPath('/vendor/flasher/flasher.min.js'));
+    }
+
+    public function testPublicPathIsPrependedToCacheBustedManifestEntry(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $assetManager->createManifest([__DIR__.'/../Fixtures/Asset/test1.css']);
+
+        $this->assertSame('/Symfony/test1.css?id=38eeac10df68fe4b49c30f8c6af0b1cc', $assetManager->getPath('/test1.css'));
+    }
+
+    public function testPublicPathIsNotDoublePrefixed(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $this->assertSame('/Symfony/vendor/flasher/flasher.min.js', $assetManager->getPath('/Symfony/vendor/flasher/flasher.min.js'));
+    }
+
+    public function testPublicPathTrailingSlashIsNormalized(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony/');
+
+        $this->assertSame('/Symfony/vendor/flasher/flasher.min.js', $assetManager->getPath('/vendor/flasher/flasher.min.js'));
+    }
+
+    public function testAbsoluteUrlsArePassthrough(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $this->assertSame('https://cdn.example.com/flasher.min.js', $assetManager->getPath('https://cdn.example.com/flasher.min.js'));
+        $this->assertSame('http://cdn.example.com/flasher.min.js', $assetManager->getPath('http://cdn.example.com/flasher.min.js'));
+    }
+
+    public function testProtocolRelativeUrlsArePassthrough(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $this->assertSame('//cdn.example.com/flasher.min.js', $assetManager->getPath('//cdn.example.com/flasher.min.js'));
+    }
+
+    public function testDataUrlsArePassthrough(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $this->assertSame('data:text/css,body{}', $assetManager->getPath('data:text/css,body{}'));
+    }
+
+    public function testPublicPathSupportsCdnHost(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, 'https://cdn.example.com');
+
+        $this->assertSame('https://cdn.example.com/vendor/flasher/flasher.min.js', $assetManager->getPath('/vendor/flasher/flasher.min.js'));
+    }
+
+    public function testGetPathsAppliesPublicPathToEachEntry(): void
+    {
+        $assetManager = new AssetManager($this->publicDir, $this->manifestPath, '/Symfony');
+
+        $result = $assetManager->getPaths([
+            '/vendor/flasher/flasher.min.css',
+            'https://cdn.example.com/extra.css',
+            '/Symfony/already-prefixed.css',
+        ]);
+
+        $this->assertSame([
+            '/Symfony/vendor/flasher/flasher.min.css',
+            'https://cdn.example.com/extra.css',
+            '/Symfony/already-prefixed.css',
+        ], $result);
+    }
 }

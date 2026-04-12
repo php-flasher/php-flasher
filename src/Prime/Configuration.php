@@ -8,6 +8,7 @@ namespace Flasher\Prime;
  * @phpstan-type ConfigType array{
  *     default: string,
  *     main_script?: string,
+ *     public_path?: string,
  *     scripts?: string[],
  *     styles?: string[],
  *     inject_assets?: bool,

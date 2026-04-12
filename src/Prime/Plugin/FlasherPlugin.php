@@ -12,6 +12,7 @@ use Flasher\Prime\Notification\Type;
  * @phpstan-type ConfigType array{
  *     default: string,
  *     main_script: string,
+ *     public_path: string,
  *     translate: bool,
  *     inject_assets: bool,
  *     excluded_paths: list<non-empty-string>,
@@ -259,6 +260,7 @@ final class FlasherPlugin extends Plugin
      * @param array{
      *     default?: string|null,
      *     main_script?: string|null,
+     *     public_path?: string,
      *     translate?: bool,
      *     inject_assets?: bool,
      *     excluded_paths?: list<non-empty-string>,
@@ -273,6 +275,7 @@ final class FlasherPlugin extends Plugin
      * @return array{
      *     default: string|null,
      *     main_script: string|null,
+     *     public_path: string,
      *     translate: bool,
      *     inject_assets: bool,
      *     excluded_paths?: list<non-empty-string>,
@@ -295,6 +298,7 @@ final class FlasherPlugin extends Plugin
 
         $config['default'] = \array_key_exists('default', $config) ? $config['default'] : $this->getDefault();
         $config['main_script'] = \array_key_exists('main_script', $config) ? $config['main_script'] : $this->getRootScript();
+        $config['public_path'] = \array_key_exists('public_path', $config) ? $config['public_path'] : '';
         $config['translate'] = \array_key_exists('translate', $config) ? $config['translate'] : true;
         $config['inject_assets'] = \array_key_exists('inject_assets', $config) ? $config['inject_assets'] : true;
         $config['filter'] = \array_key_exists('filter', $config) ? $config['filter'] : [];
@@ -307,6 +311,7 @@ final class FlasherPlugin extends Plugin
      * @param array{
      *     default: string|null,
      *     main_script: string|null,
+     *     public_path: string,
      *     translate: bool,
      *     inject_assets: bool,
      *     excluded_paths?: list<non-empty-string>,
@@ -322,6 +327,7 @@ final class FlasherPlugin extends Plugin
      * @return array{
      *      default: string|null,
      *      main_script: string|null,
+     *      public_path: string,
      *      translate: bool,
      *      inject_assets: bool,
      *      excluded_paths?: list<non-empty-string>,
@@ -360,6 +366,7 @@ final class FlasherPlugin extends Plugin
      * @param array{
      *      default: string|null,
      *      main_script: string|null,
+     *      public_path: string,
      *      translate: bool,
      *      inject_assets: bool,
      *      excluded_paths?: list<non-empty-string>,
@@ -375,6 +382,7 @@ final class FlasherPlugin extends Plugin
      * @return array{
      *      default: string|null,
      *      main_script: string|null,
+     *      public_path: string,
      *      translate: bool,
      *      inject_assets: bool,
      *      excluded_paths?: list<non-empty-string>,

@@ -246,6 +246,7 @@ final class ConfigurationTest extends TestCase
                 'warning' => ['warning', 'alarm'],
                 'info' => ['info', 'notice', 'alert'],
             ],
+            'public_path' => '',
         ];
 
         $processedConfig = $this->processConfiguration($configs);

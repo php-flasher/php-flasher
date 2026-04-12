@@ -5,6 +5,11 @@ flasher:
     # Path to the main PHPFlasher JavaScript file
     main_script: '/vendor/flasher/flasher.min.js'
 
+    # Prefix prepended to every flasher asset URL. Useful when the app is
+    # served from a subdirectory (e.g. '/Symfony') or a separate asset host
+    # (e.g. 'https://cdn.example.com'). Leave empty when mounted at the root.
+    public_path: ''
+
     # List of CSS files to style your notifications
     styles:
         - '/vendor/flasher/flasher.min.css'

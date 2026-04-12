@@ -152,6 +152,7 @@ return static function (ContainerConfigurator $container): void {
             ->args([
                 param('flasher.public_dir'),
                 param('flasher.json_manifest_path'),
+                param('flasher.public_path'),
             ])
 
         ->set('flasher.data_collector', FlasherDataCollector::class)

@@ -20,6 +20,11 @@ return Configuration::from([
     // Main script path
     'main_script' => '/vendor/flasher/flasher.min.js',
 
+    // Prefix prepended to every flasher asset URL. Useful when the app is
+    // served from a subdirectory (e.g. '/app') or a separate asset host
+    // (e.g. 'https://cdn.example.com'). Leave empty when mounted at the root.
+    'public_path' => '',
+
     // Stylesheet files
     'styles' => [
         '/vendor/flasher/flasher.min.css',
