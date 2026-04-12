@@ -2,6 +2,16 @@
 
 ## [Unreleased](https://github.com/php-flasher/php-flasher/compare/v2.5.2...2.x)
 
+### Added
+
+* feature [Flasher] Add `public_path` configuration option to prefix every flasher asset URL. Fixes asset 404s when the app is served from a subdirectory (e.g. `/Symfony` on IIS or behind a reverse-proxy subpath) and also enables serving assets from a separate host or CDN (e.g. `https://cdn.example.com`). Defaults to `""`, so existing document-root deployments are unaffected ([#298](https://github.com/php-flasher/php-flasher/issues/298)).
+  - [Symfony] Configurable via `flasher.public_path` in `config/packages/flasher.yaml`.
+  - [Laravel] Configurable via `'public_path'` in `config/flasher.php`.
+
+### Fixed
+
+* fix [Flasher] Fix hardcoded asset URLs (`/vendor/flasher/flasher.min.js` and friends) ignoring the application's base path, causing `404 Not Found` when PHPFlasher was deployed in a subdirectory. Asset URL resolution is now idempotent and leaves absolute, protocol-relative, and `data:` URLs untouched.
+
 ## [v2.5.2](https://github.com/php-flasher/php-flasher/compare/v2.5.1...v2.5.2) - 2026-04-05
 
 ### Fixed

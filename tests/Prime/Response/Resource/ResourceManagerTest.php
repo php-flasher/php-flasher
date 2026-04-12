@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flasher\Tests\Prime\Response\Resource;
 
+use Flasher\Prime\Asset\AssetManager;
 use Flasher\Prime\Asset\AssetManagerInterface;
 use Flasher\Prime\Notification\Envelope;
 use Flasher\Prime\Notification\Notification;
@@ -315,5 +316,65 @@ final class ResourceManagerTest extends TestCase
         $this->assertArrayHasKey('toastr', $response->getOptions());
         $this->assertArrayHasKey('noty', $response->getOptions());
         $this->assertArrayHasKey('sweetalert', $response->getOptions());
+    }
+
+    public function testPopulateResponseAppliesPublicPathFromRealAssetManager(): void
+    {
+        $templateEngine = $this->createMock(TemplateEngineInterface::class);
+
+        // Real AssetManager with a subdirectory public path and no manifest.
+        $assetManager = new AssetManager(
+            __DIR__.'/../../Fixtures/Asset',
+            __DIR__.'/../../Fixtures/Asset/non-existent-manifest.json',
+            '/Symfony',
+        );
+
+        $resourceManager = new ResourceManager($templateEngine, $assetManager, '/vendor/flasher/flasher.min.js', [
+            'flasher' => [
+                'scripts' => ['/vendor/flasher/extra.min.js'],
+                'styles' => [
+                    '/vendor/flasher/flasher.min.css',
+                    'https://cdn.example.com/theme.css',
+                ],
+                'options' => [],
+            ],
+        ]);
+
+        $envelope = new Envelope(new Notification(), [new PluginStamp('flasher')]);
+        $response = $resourceManager->populateResponse(new Response([$envelope], []));
+
+        $this->assertSame('/Symfony/vendor/flasher/flasher.min.js', $response->getMainScript());
+        $this->assertSame(['/Symfony/vendor/flasher/extra.min.js'], $response->getScripts());
+        $this->assertSame([
+            '/Symfony/vendor/flasher/flasher.min.css',
+            'https://cdn.example.com/theme.css',
+        ], $response->getStyles());
+    }
+
+    public function testPopulateResponseLeavesAssetsUnchangedWhenPublicPathIsEmpty(): void
+    {
+        $templateEngine = $this->createMock(TemplateEngineInterface::class);
+
+        $assetManager = new AssetManager(
+            __DIR__.'/../../Fixtures/Asset',
+            __DIR__.'/../../Fixtures/Asset/non-existent-manifest.json',
+            '',
+        );
+
+        $resourceManager = new ResourceManager($templateEngine, $assetManager, '/vendor/flasher/flasher.min.js', [
+            'flasher' => [
+                'scripts' => ['/vendor/flasher/extra.min.js'],
+                'styles' => ['/vendor/flasher/flasher.min.css'],
+                'options' => [],
+            ],
+        ]);
+
+        $envelope = new Envelope(new Notification(), [new PluginStamp('flasher')]);
+        $response = $resourceManager->populateResponse(new Response([$envelope], []));
+
+        // Byte-identical to pre-patch behavior: no prefix, no mutation.
+        $this->assertSame('/vendor/flasher/flasher.min.js', $response->getMainScript());
+        $this->assertSame(['/vendor/flasher/extra.min.js'], $response->getScripts());
+        $this->assertSame(['/vendor/flasher/flasher.min.css'], $response->getStyles());
     }
 }

@@ -7,6 +7,7 @@ namespace Flasher\Tests\Laravel;
 use Flasher\Laravel\EventListener\LivewireListener;
 use Flasher\Laravel\Middleware\FlasherMiddleware;
 use Flasher\Laravel\Middleware\SessionMiddleware;
+use Flasher\Prime\Asset\AssetManager;
 use Flasher\Prime\FlasherInterface;
 use Illuminate\Foundation\Application;
 use Livewire\LivewireManager;
@@ -125,6 +126,29 @@ final class ServiceProviderTest extends TestCase
         // Note: In our test environment, livewire may be bound due to setupLivewireMock
         // This test verifies the condition logic works correctly
         $this->assertTrue(class_exists(LivewireManager::class));
+    }
+
+    public function testAssetManagerHasEmptyPublicPathByDefault(): void
+    {
+        $assetManager = $this->app->make('flasher.asset_manager');
+        $this->assertInstanceOf(AssetManager::class, $assetManager);
+
+        // Use an unknown path so the manifest lookup is bypassed and we only
+        // exercise the public_path prefixing logic — default is empty ⇒ untouched.
+        $this->assertSame('/unknown/file.js', $assetManager->getPath('/unknown/file.js'));
+    }
+
+    #[DefineEnvironment('enablePublicPath')]
+    public function testAssetManagerAppliesConfiguredPublicPath(): void
+    {
+        $assetManager = $this->app->make('flasher.asset_manager');
+
+        $this->assertSame('/Symfony/unknown/file.js', $assetManager->getPath('/unknown/file.js'));
+    }
+
+    protected function enablePublicPath(Application $app): void
+    {
+        $app['config']->set('flasher.public_path', '/Symfony');
     }
 
     protected function setupLivewireMock(Application $app): void

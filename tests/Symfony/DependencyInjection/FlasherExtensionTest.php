@@ -96,4 +96,31 @@ final class FlasherExtensionTest extends MockeryTestCase
         $alias = $this->extension->getAlias();
         $this->assertSame('flasher', $alias);
     }
+
+    public function testPublicPathDefaultsToEmptyStringWhenNotConfigured(): void
+    {
+        $this->extension->load([[]], $this->container);
+
+        $this->assertTrue($this->container->hasParameter('flasher.public_path'));
+        $this->assertSame('', $this->container->getParameter('flasher.public_path'));
+    }
+
+    public function testPublicPathParameterReflectsUserConfiguration(): void
+    {
+        $this->extension->load([['public_path' => '/Symfony']], $this->container);
+
+        $this->assertSame('/Symfony', $this->container->getParameter('flasher.public_path'));
+    }
+
+    public function testAssetManagerServiceReceivesPublicPathArgument(): void
+    {
+        $this->extension->load([['public_path' => '/Symfony']], $this->container);
+
+        $definition = $this->container->getDefinition('flasher.asset_manager');
+        $args = $definition->getArguments();
+
+        // Third positional argument is the public_path parameter reference.
+        $this->assertCount(3, $args);
+        $this->assertSame('%flasher.public_path%', (string) $args[2]);
+    }
 }
