@@ -114,8 +114,9 @@ process_split() {
 
     debug_log "Split SHA: $sha1"
 
-    if ! git push "$remote" "$sha1:refs/heads/$branch" -f > /dev/null 2>&1; then
-        error_log "Failed to push to $remote"
+    local push_err
+    if ! push_err=$(git push "$remote" "${sha1}:refs/heads/$branch" -f 2>&1 >/dev/null); then
+        error_log "Failed to push to $remote: $push_err"
         return 1
     fi
 

@@ -6,7 +6,7 @@
 #   source "${0:A:h}/_lib.zsh"
 # -----------------------------------------------------------------------------
 
-set -eo pipefail
+set -o pipefail
 setopt nullglob 2>/dev/null || true
 
 # SCRIPT_NAME must be set by the caller before sourcing.
