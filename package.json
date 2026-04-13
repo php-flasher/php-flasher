@@ -1,7 +1,7 @@
 {
     "name": "@flasher/php-flasher",
     "type": "module",
-    "version": "2.6.0",
+    "version": "2.6.1",
     "description": "A powerful and flexible flash notification system for PHP applications",
     "license": "MIT",
     "author": "Younes ENNAJI <younes.ennaji.pro@gmail.com>",
