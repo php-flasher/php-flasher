@@ -327,7 +327,7 @@ flash()->info('The system will be down for maintenance tonight.');</code></pre>
                         <div class="text-white text-sm">Title.php</div>
                     </div>
                     <div>
-<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your profile has been updated successfully.', 'Profile Updated');</code></pre>
+<pre class="bg-slate-50 rounded-lg p-4 text-sm overflow-x-auto"><code class="language-php">flash()->success('Your profile has been updated successfully.', [], 'Profile Updated');</code></pre>
                     </div>
                 </div>
 
@@ -451,7 +451,7 @@ class PostController extends Controller
 
         Post::create($validated);
 
-        flash()->success('Post created successfully!', 'Success');
+        flash()->success('Post created successfully!', [], 'Success');
 
         return redirect()->route('posts.index');
     }
@@ -696,7 +696,7 @@ class AdminAccessMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!$request->user() || !$request->user()->isAdmin()) {
-            flash()->error('You do not have access to this area.', 'Access Denied');
+            flash()->error('You do not have access to this area.', [], 'Access Denied');
 
             return redirect()->route('home');
         }
