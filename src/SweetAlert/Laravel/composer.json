@@ -30,8 +30,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "php-flasher/flasher-laravel": "^2.6.1",
-        "php-flasher/flasher-sweetalert": "^2.6.1"
+        "php-flasher/flasher-laravel": "^2.6.2",
+        "php-flasher/flasher-sweetalert": "^2.6.2"
     },
     "autoload": {
         "psr-4": {

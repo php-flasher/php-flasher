@@ -29,7 +29,7 @@
     "require": {
         "php": ">=8.2",
         "illuminate/support": "^11.0|^12.0|^13.0",
-        "php-flasher/flasher": "^2.6.1"
+        "php-flasher/flasher": "^2.6.2"
     },
     "autoload": {
         "psr-4": {
