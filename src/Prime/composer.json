@@ -27,8 +27,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
-        "yoeunes/regex-parser": "^1.0"
+        "php": ">=8.2"
     },
     "autoload": {
         "psr-4": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bae119fc55afe5c607e35e693f3e8c59",
+    "content-hash": "d1d8b1bc2df955e0581185d3687ef0b9",
     "packages": [
         {
             "name": "brick/math",
@@ -7217,88 +7217,6 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.0.0"
             },
             "time": "2015-05-12T12:40:29+00:00"
-        },
-        {
-            "name": "yoeunes/regex-parser",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yoeunes/regex-parser.git",
-                "reference": "359668334d04fa04155b62e5cc9cd2751d31c008"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yoeunes/regex-parser/zipball/359668334d04fa04155b62e5cc9cd2751d31c008",
-                "reference": "359668334d04fa04155b62e5cc9cd2751d31c008",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2"
-            },
-            "suggest": {
-                "phpstan/extension-installer": "To automatically enable the PHPStan rule for regex validation.",
-                "phpstan/phpstan": "To run static analysis and detect invalid regex patterns.",
-                "psr/cache": "To share AST cache via PSR-6 pools.",
-                "psr/simple-cache": "To share AST cache via PSR-16 caches."
-            },
-            "bin": [
-                "bin/regex"
-            ],
-            "type": "library",
-            "extra": {
-                "phpstan": {
-                    "includes": [
-                        "extension.neon"
-                    ]
-                },
-                "branch-alias": {
-                    "dev-main": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RegexParser\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Younes ENNAJI",
-                    "email": "younes.ennaji.pro@gmail.com",
-                    "homepage": "https://www.linkedin.com/in/younes--ennaji/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A powerful PCRE regex parser with lexer, AST builder, validation, ReDoS analysis, and syntax highlighting. Zero dependencies, blazing fast, and production-ready.",
-            "homepage": "https://github.com/yoeunes/regex-parser",
-            "keywords": [
-                "PCRE",
-                "ast",
-                "cli",
-                "lexer",
-                "parser",
-                "php",
-                "redos",
-                "regex",
-                "security",
-                "syntax-highlighting",
-                "validation"
-            ],
-            "support": {
-                "docs": "https://github.com/yoeunes/regex-parser#readme",
-                "issues": "https://github.com/yoeunes/regex-parser/issues",
-                "source": "https://github.com/yoeunes/regex-parser"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/yoeunes",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-12-31T10:36:34+00:00"
         }
     ],
     "packages-dev": [

@@ -35,8 +35,7 @@
         "symfony/http-kernel": "^7.0|^8.0",
         "symfony/translation": "^7.0|^8.0",
         "symfony/twig-bundle": "^7.0|^8.0",
-        "symfony/ux-twig-component": "^2.19",
-        "yoeunes/regex-parser": "^1.0"
+        "symfony/ux-twig-component": "^2.19"
     },
     "require-dev": {
         "larastan/larastan": "^2.9.9",
