@@ -3,6 +3,11 @@ import type { Envelope, Options } from '@flasher/flasher/dist/types'
 
 import toastr from 'toastr'
 
+// @types/toastr >= 2.1.44 is a module and exports no named types,
+// so the option/type shapes must be derived from the instance
+type ToastrOptions = typeof toastr.options
+type ToastrType = 'error' | 'info' | 'success' | 'warning'
+
 export default class ToastrPlugin extends AbstractPlugin {
     public renderEnvelopes(envelopes: Envelope[]): void {
         if (!envelopes?.length) {
