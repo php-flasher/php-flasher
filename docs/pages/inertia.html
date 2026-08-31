@@ -821,7 +821,7 @@ class FormController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             // With Inertia, validation errors are automatically passed back
             // Add a generic error message as well
-            flash()->error('Please fix the errors in your form.', 'Form Validation Error');
+            flash()->error('Please fix the errors in your form.', [], 'Form Validation Error');
 
             // With Inertia, this will redirect back with errors
             throw $e;

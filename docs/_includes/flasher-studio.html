@@ -625,7 +625,7 @@ return redirect()->back()
     </div>
 @endif`,
             after: `// WITH PHPFlasher - Clean & simple
-flash()->error('Payment failed!', 'Error');
+flash()->error('Payment failed!', [], 'Error');
 flash()->option('timeout', 10000);
 
 // Auto-dismisses after 10 seconds`
@@ -639,7 +639,7 @@ $notification->save();
 
 // Complex template rendering...`,
             after: `// WITH PHPFlasher - Instant feedback
-flash()->info('Your order is being processed.', 'Order Status');
+flash()->info('Your order is being processed.', [], 'Order Status');
 
 // Beautiful, animated notification instantly`
         },
@@ -650,7 +650,7 @@ Session::put('days_left', 3);
 
 // Template checks and rendering...`,
             after: `// WITH PHPFlasher - Simple & effective
-flash()->warning('Your account will expire in 3 days.', 'Account Expiring');
+flash()->warning('Your account will expire in 3 days.', [], 'Account Expiring');
 
 // Professional warning with minimal code`
         }

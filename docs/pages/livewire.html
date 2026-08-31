@@ -261,7 +261,7 @@ class ContactForm extends Component
             ]);
 
             // Success notification
-            flash()->success('Your message has been sent!', 'Thank you');
+            flash()->success('Your message has been sent!', [], 'Thank you');
 
             // Reset form
             $this->reset(['name', 'email', 'message']);

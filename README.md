@@ -79,8 +79,8 @@ flash()->info('A new version is available for download.');
 ### With Titles
 
 ```php
-flash()->success('Your changes have been saved.', 'Update Complete');
-flash()->error('Unable to connect to server.', 'Connection Failed');
+flash()->success('Your changes have been saved.', [], 'Update Complete');
+flash()->error('Unable to connect to server.', [], 'Connection Failed');
 ```
 
 ### With Options
