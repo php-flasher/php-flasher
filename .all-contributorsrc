@@ -4,7 +4,13 @@
     "repoType": "github",
     "repoHost": "https://github.com",
     "files": [
-        "README.md"
+        "README.md",
+        "src/Noty/Laravel/README.md",
+        "src/Noty/Symfony/README.md",
+        "src/Notyf/Laravel/README.md",
+        "src/Notyf/Symfony/README.md",
+        "src/SweetAlert/Laravel/README.md",
+        "src/SweetAlert/Symfony/README.md"
     ],
     "imageSize": 100,
     "commit": false,
@@ -103,6 +109,24 @@
             "profile": "https://github.com/BrookeDot",
             "contributions": [
                 "doc"
+            ]
+        },
+        {
+            "login": "malitkn",
+            "name": "Muhammet Ali Tekin",
+            "avatar_url": "https://avatars.githubusercontent.com/u/75976862?v=4",
+            "profile": "https://www.linkedin.com/in/muhammet-ali-tekin-516926256/",
+            "contributions": [
+                "doc"
+            ]
+        },
+        {
+            "login": "ImJustToNy",
+            "name": "Antoni Siek",
+            "avatar_url": "https://avatars.githubusercontent.com/u/5730766?v=4",
+            "profile": "https://siek.io/",
+            "contributions": [
+                "code"
             ]
         }
     ]
